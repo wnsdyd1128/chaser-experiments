@@ -1,0 +1,11 @@
+# RTEMS/GR740 build of the exp4 mean-RD workloads, measured under laysim in
+# the time domain. The .c files alongside are the earlier YARDA-analysed
+# sources and are not part of this build.
+APP = $(BUILDDIR)/exp4_ca_mean_rd
+
+APP_C_FILES  = init.c
+APP_C_FILES += mean_rd_workload.c
+APP_OBJS = $(APP_C_FILES:%.c=$(BUILDDIR)/%.o)
+APP_DEPS = $(APP_C_FILES:%.c=$(BUILDDIR)/%.d)
+
+include ../../common.mk
