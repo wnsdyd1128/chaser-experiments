@@ -1,0 +1,11 @@
+# RTEMS/GR740 build of the exp3 sweep, measured under laysim in the time
+# domain. The native Makefile in this directory builds the same access pattern
+# for cachegrind instead; the two use different BUILDDIRs and do not collide.
+APP = $(BUILDDIR)/exp3_ca_saturation
+
+APP_C_FILES  = init.c
+APP_C_FILES += saturation_workload.c
+APP_OBJS = $(APP_C_FILES:%.c=$(BUILDDIR)/%.o)
+APP_DEPS = $(APP_C_FILES:%.c=$(BUILDDIR)/%.d)
+
+include ../../common.mk

@@ -5,11 +5,10 @@
  *
  * The sweep touches `distinct` addresses one cache line apart and repeats that
  * cycle `sweeps` times. Because every reuse of an address sees exactly the same
- * set of other addresses in between, the reuse histogram collapses to two
- * points: RD = 0 for the store that follows each load, and RD = distinct - 1
- * for the next sweep. CA therefore has a closed form in `distinct` and
- * `sweeps` alone, which lets the analysis side compute CA without running a
- * reuse-distance analyzer over a multi-million access trace.
+ * set of other addresses in between, the reuse histogram collapses to a single
+ * point at RD = distinct - 1. CA is therefore exactly 1 / distinct, which lets
+ * the analysis side compute CA without running a reuse-distance analyzer over
+ * a multi-million access trace.
  *
  * The binary carries no measurement of its own. Cost is measured externally by
  * running it under cachegrind with the GR740 cache geometry forced on the
@@ -32,8 +31,10 @@
  * @param[in]     distinct Number of distinct addresses per sweep (> 0).
  * @param[in]     sweeps   Number of times the cycle repeats (> 0).
  *
- * @note Declared volatile so the read-modify-write survives optimization; the
- *       access pattern is the entire point of the program.
+ * @note Declared volatile so the read survives optimization; the access
+ *       pattern is the entire point of the program. The touch is a plain
+ *       read, which keeps the histogram to one point and matches the read
+ *       miss rates this program is measured by.
  */
 static void sweep(volatile uint8_t * buf, long distinct, long sweeps)
 {
@@ -43,7 +44,7 @@ static void sweep(volatile uint8_t * buf, long distinct, long sweeps)
   {
     for (size_t i = 0; i < bytes; i += CA_SWEEP_STRIDE)
     {
-      buf[i] = (uint8_t)(buf[i] + 1);
+      (void)buf[i];
     }
   }
 }
