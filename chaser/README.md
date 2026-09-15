@@ -40,7 +40,7 @@ extracts LAT from C, analyzes element and cache-line RD, and runs assertions.
 The LAT frontend plugin defaults to YARDA's `build-release/libLoopAnnotatedTrace.so`.
 
 Verified with YARDA `6059896` containing `8b12a00` (unroll loop-limit fix):
-**6 pytest tests passed**, including SPARC ELF validation and checks that each
+**10 pytest tests passed**, including SPARC ELF validation and checks that each
 ELF contains only its selected job and checker. The workload exceeds
 the default cumulative limit, and succeeds with an explicit limit of 2,000,000.
 The old YARDA `build-release/backend/yarda_cpp` was stale; rebuilding was necessary.
@@ -69,3 +69,40 @@ script -q -e -c 'make run-conflict' build/laysim-conflict.log
 
 Success requires one `RESULT` line for the selected case with a positive elapsed
 time, followed by `CHASER PASS`.
+
+## L1 CSRD and CLP (stage 2)
+
+D1 is settled: `CA_CSRD` uses only the L1 CSRD histogram. `chaser/ca.py`
+shares the CAAS formula between Global RD and L1 CSRD, excludes cold accesses,
+and returns `None` if there is no reuse. LLC is not folded into this scalar.
+
+```sh
+make -C rtems/baseline hierarchy
+python3 -m tools.export_locality
+```
+
+The hierarchy target selects each job and its object from the generated LAT v2,
+then runs **yarda_cpp** with the corresponding executed SPARC ELF and cache YAML.
+Python selects JSON records and computes the final scalar; it does not compute RD.
+Each input is one task with independent cold caches. Linked ELF addresses are
+used with core 0 geometry; this is not a reconstruction of RTEMS scheduling,
+migration, interrupt accesses, or physical cache state from the measured run.
+
+Outputs: `exports/packed.csrd.json`, `spread.csrd.json`, `conflict.csrd.json`.
+`exports/locality.json` summarizes all three CA variants and CLP, and includes
+hashes of the source exports. CLP order is L1 hit, LLC first hit, all-cache miss.
+
+| Case | Element CA | Line Global CA | L1 CSRD CA | L1 CSRD histogram |
+|---|---:|---:|---:|---|
+| packed | 0.22222354 | 1 | 1 | `{0: 1048591}` |
+| spread | 0.22222354 | 0.22222354 | 1 | `{0: 1048584}` |
+| conflict | 0.22222354 | 0.22222354 | 0.22222354 | `{0: 524296, 7: 524288}` |
+
+Conflict has 524,296 L1 hits, 524,288 LLC first hits and 8 all-cache misses.
+Spread has only 8 cold L1 misses; packed has 1. These are **model counters**,
+not measured GR740 counters. The line Global RD control isolates the set effect
+between spread and conflict; element-to-line comparison also includes grouping.
+
+`sh scripts/verify`: 10 tests pass, including expected histograms, CA,
+CLP conservation, complete resolution, and input hashes. A direct repeated
+analysis produced byte-identical CSRD exports.

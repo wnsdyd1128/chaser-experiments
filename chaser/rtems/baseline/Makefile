@@ -8,7 +8,7 @@ BUILD = build
 EXPORTS = ../../exports
 CASES = packed spread conflict
 
-.PHONY: all analyze $(addprefix run-, $(CASES))
+.PHONY: all analyze hierarchy $(addprefix run-, $(CASES))
 all: $(addprefix $(BUILD)/, $(addsuffix .exe, $(CASES)))
 
 $(BUILD):
@@ -32,3 +32,11 @@ analyze: $(BUILD)/workload_ape.json | $(EXPORTS)
 
 $(addprefix run-, $(CASES)): run-%: $(BUILD)/%.exe
 	/opt/laysim-gr740/laysim-gr740-cli -r -core0 $<
+
+$(BUILD)/%.lat.json: $(BUILD)/workload_ape.json ../../tools/select_baseline_lat.py
+	python3 ../../tools/select_baseline_lat.py $< $* $@
+
+hierarchy: $(addprefix $(EXPORTS)/, $(addsuffix .csrd.json, $(CASES)))
+
+$(EXPORTS)/%.csrd.json: $(BUILD)/%.lat.json $(BUILD)/%.exe cache.yaml $(YARDA_CPP) Makefile | $(EXPORTS)
+	$(YARDA_CPP) $< --analysis hierarchy-rd --elf $(BUILD)/$*.exe --cache cache.yaml --max-source-accesses 1100000 --export $@

@@ -1,0 +1,51 @@
+{
+  "cases": {
+    "conflict": {
+      "analysis_id": "86107c02e23e7047040fb84c0609d093e87a88a04c391e35c9349dc4e0689e88",
+      "ca_caas_element": 0.22222354088076973,
+      "ca_csrd_l1": 0.22222354088076973,
+      "ca_global_line": 0.22222354088076973,
+      "clp": [
+        0.5,
+        0.4999923707218823,
+        7.629278117704503e-06
+      ]
+    },
+    "packed": {
+      "analysis_id": "89b9e9d6de470e255ba846a25b60dd33493c31198bc2d1306d201b0846f33143",
+      "ca_caas_element": 0.22222354088076973,
+      "ca_csrd_l1": 1.0,
+      "ca_global_line": 1.0,
+      "clp": [
+        0.9999990463402353,
+        0.0,
+        9.536597647130628e-07
+      ]
+    },
+    "spread": {
+      "analysis_id": "25524702d148b06a57b11f77c3477ba9dd0130f26cdb1f6a400c3bb872339c78",
+      "ca_caas_element": 0.22222354088076973,
+      "ca_csrd_l1": 1.0,
+      "ca_global_line": 0.22222354088076973,
+      "clp": [
+        0.9999923707218823,
+        0.0,
+        7.629278117704503e-06
+      ]
+    }
+  },
+  "clp_order": [
+    "L1",
+    "LLC",
+    "memory"
+  ],
+  "csrd_level": "L1",
+  "schema_version": 1,
+  "source_sha256": {
+    "conflict.csrd.json": "0b35aaa8a5a652c217d3921b9c46cf8bf5bed9efa98b4aca7a0da34c9aff406a",
+    "element.rdh.json": "ac8d8b86b141e6140ef193b652a9ab9711578e265fd60006d5c8278bf48cf086",
+    "line.rdh.json": "c62ca9c8048f393a4eaa397b808be4919310ce4de0fee8ee050229fe0cb9ecbb",
+    "packed.csrd.json": "86cdef341369602f608d10109e35366e818f5964a8099dc2b2fb437c2ac798b0",
+    "spread.csrd.json": "59e2a69214c9fe1258fc9eab158b5a2a1a88dead05a9a6c485a2998c9f21954d"
+  }
+}

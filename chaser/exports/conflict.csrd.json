@@ -1,0 +1,101 @@
+{
+  "schema_version": 2,
+  "analysis_mode": "hierarchy-rd",
+  "model_id": "exact-two-level-lru-demand-v1",
+  "csrd_mode": "full-exact",
+  "address_basis": "linked_absolute",
+  "tool_version": "0.1.0+git.6059896674880c3dad5b9d3b95fe4414ba591807-dirty",
+  "analysis_id": "86107c02e23e7047040fb84c0609d093e87a88a04c391e35c9349dc4e0689e88",
+  "inputs": {
+    "lat_sha256": "5f488b897d51d4b0497ae6b73d694ba8a5fc276c75bc17f50a2f554018d84be7",
+    "elf_sha256": "80001413d56c65017bc24157ba8fc15b5aa0fcffaf7bb74e6b5e2d47a0c7e852",
+    "cache_config_sha256": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+    "lat_schema_version": 2,
+    "cache_schema_version": 1,
+    "elf_class": "ELF32",
+    "elf_machine": 2
+  },
+  "selected_path": {
+    "core_id": 0,
+    "l1_name": "L1D0",
+    "llc_name": "L2",
+    "memory_name": "Memory"
+  },
+  "cache_hierarchy": {
+    "levels": [
+      {
+        "name": "L1D0",
+        "role": "L1",
+        "size_bytes": 16384,
+        "line_size_bytes": 32,
+        "associativity": 4,
+        "set_count": 128,
+        "replacement": "LRU"
+      },
+      {
+        "name": "L2",
+        "role": "LLC",
+        "size_bytes": 2097152,
+        "line_size_bytes": 32,
+        "associativity": 4,
+        "set_count": 16384,
+        "replacement": "LRU"
+      }
+    ],
+    "allocation": "all-demand-misses",
+    "lower_level_requests": "l1-misses-only",
+    "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+    "task_initial_state": "cold"
+  },
+  "tasks": [
+    {
+      "task_id": "chaser_conflict",
+      "source_accesses": 1048592,
+      "modeled_accesses": 1048592,
+      "l1_first_hit_count": 524296,
+      "llc_first_hit_count": 524288,
+      "all_cache_miss_count": 8,
+      "l1_first_hit_ratio": 0.5,
+      "llc_first_hit_ratio": 0.4999923707218823,
+      "all_cache_miss_ratio": 7.629278117704503e-06,
+      "l1": {
+        "lookups": 1048592,
+        "hits": 524296,
+        "misses": 524296,
+        "cold_misses": 8,
+        "replacement_misses": 524288,
+        "unique_lines": 8,
+        "csrd_histogram": {
+          "0": 524296,
+          "7": 524288
+        }
+      },
+      "llc": {
+        "lookups": 524296,
+        "hits": 524288,
+        "misses": 8,
+        "cold_misses": 8,
+        "replacement_misses": 0,
+        "unique_lines": 8,
+        "csrd_histogram": {
+          "0": 524288
+        }
+      },
+      "coverage": {
+        "source_accesses": 1048592,
+        "resolved_accesses": 1048592,
+        "rejected_accesses": 0,
+        "emitted_line_references": 1048592,
+        "excluded_opaque_call_sites": 0,
+        "complete": true
+      },
+      "invariants": {
+        "level_conservation_l1": true,
+        "level_conservation_llc": true,
+        "llc_input_matches_l1_misses": true,
+        "first_service_conservation": true,
+        "all_passed": true
+      }
+    }
+  ]
+}

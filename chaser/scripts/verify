@@ -4,5 +4,6 @@ cd "$(dirname "$0")/.."
 YARDA_DIR=${YARDA_DIR:-/workspace/Yet-Another-Reuse-Distance-Analyzer}
 cmake -S "$YARDA_DIR" -B rtems/baseline/build/yarda -DCMAKE_BUILD_TYPE=Release
 cmake --build rtems/baseline/build/yarda --target yarda_cpp -j 4
-make -C rtems/baseline all analyze YARDA_DIR="$YARDA_DIR"
+make -C rtems/baseline all analyze hierarchy YARDA_DIR="$YARDA_DIR"
+python3 -m tools.export_locality
 python3 -m pytest -q tests
