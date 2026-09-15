@@ -40,14 +40,15 @@ extracts LAT from C, analyzes element and cache-line RD, and runs assertions.
 The LAT frontend plugin defaults to YARDA's `build-release/libLoopAnnotatedTrace.so`.
 
 Verified with YARDA `6059896` containing `8b12a00` (unroll loop-limit fix):
-**10 pytest tests passed**, including SPARC ELF validation and checks that each
+**12 pytest tests passed**, including SPARC ELF validation and checks that each
 ELF contains only its selected job and checker. The workload exceeds
 the default cumulative limit, and succeeds with an explicit limit of 2,000,000.
 The old YARDA `build-release/backend/yarda_cpp` was stale; rebuilding was necessary.
 
 YARDA exports are saved to `exports/element.rdh.json` and `exports/line.rdh.json`.
 Generated ELF, LAT, and build logs live under `rtems/baseline/build/`.
-Working outputs can be regenerated.
+Working outputs can be regenerated; the verified baseline snapshot is preserved separately
+in `artifacts/baseline/rtems-v1/`.
 
 ## Separate builds and runs
 
@@ -68,7 +69,45 @@ script -q -e -c 'make run-conflict' build/laysim-conflict.log
 ```
 
 Success requires one `RESULT` line for the selected case with a positive elapsed
-time, followed by `CHASER PASS`.
+time, followed by `CHASER PASS`. The split executables each completed in a fresh laysim process with one RESULT,
+CHASER PASS, and RTEMS shutdown. No explicit warm-up or repetition was added.
+The Init task is not pinned to a core; `-core0` selects where the ELF is loaded.
+
+| Case | Independent run elapsed ns |
+|---|---:|
+| packed | 59,868,128 |
+| spread | 59,869,992 |
+| conflict | 89,546,204 |
+
+These single-run timings establish execution, not a statistical performance claim.
+
+The earlier `baseline.exe`, `laysim-final.log`, and `runtime-result.json` under
+`build/` describe the superseded sequential integration test. They are retained
+as historical evidence and are not results for the separate executables.
+Its observed times (packed 59,869,908 ns; spread 59,868,252 ns; conflict 89,544,968 ns)
+are not an isolated performance comparison. That run passed after matching the
+reference example's FPU configuration. No physical GR740 measurements or cache
+miss counters have been collected.
+
+## Frozen baseline
+
+`artifacts/baseline/rtems-v1/manifest.json` records element CA, reuse counts,
+independent execution results, YARDA commit, tool hashes, and SHA-256 for each
+preserved file. The snapshot includes C sources, Makefile, cache YAML, LAT,
+element/line RDH, the three executed ELFs, logs, and verification code.
+Element and line RDH hashes matched after regeneration. Snapshot serialization
+is deterministic for identical inputs, and an existing snapshot cannot be overwritten.
+Runtime measurements themselves are not required to be byte-identical on rerun.
+
+```sh
+python3 tools/freeze_baseline.py --output artifacts/baseline/<new-version>
+```
+
+Run the three independent simulator commands first, then `sh scripts/verify`.
+The snapshot tests require those logs and validate each selected case and PASS
+marker; the simulator's exit status alone does not establish success.
+This baseline covers the three CHASER C workloads, not a reproduction of the
+historical exp2 snapshot or an exact physical-address model of the linked ELF.
 
 ## L1 CSRD and CLP (stage 2)
 
@@ -103,6 +142,7 @@ Spread has only 8 cold L1 misses; packed has 1. These are **model counters**,
 not measured GR740 counters. The line Global RD control isolates the set effect
 between spread and conflict; element-to-line comparison also includes grouping.
 
-`sh scripts/verify`: 10 tests pass, including expected histograms, CA,
+`sh scripts/verify`: 12 tests pass, including expected histograms, CA,
 CLP conservation, complete resolution, and input hashes. A direct repeated
-analysis produced byte-identical CSRD exports.
+analysis produced byte-identical CSRD exports, and all analyzed ELF hashes
+matched the frozen executed ELF hashes. The stage-1 snapshot is unchanged.

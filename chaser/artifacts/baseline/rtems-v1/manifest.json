@@ -1,0 +1,78 @@
+{
+  "files": {
+    "exports/element.rdh.json": "ac8d8b86b141e6140ef193b652a9ab9711578e265fd60006d5c8278bf48cf086",
+    "exports/line.rdh.json": "c62ca9c8048f393a4eaa397b808be4919310ce4de0fee8ee050229fe0cb9ecbb",
+    "rtems/baseline/Makefile": "bdc4a4d0ec86c07ad06f25a03d65f1c36f5c000368c1e02096b1cdf679e32bee",
+    "rtems/baseline/build/conflict.exe": "80001413d56c65017bc24157ba8fc15b5aa0fcffaf7bb74e6b5e2d47a0c7e852",
+    "rtems/baseline/build/laysim-conflict.log": "3bf8656456149f25aabd27eba147701f64b81856a82757277ab02fc868a7b822",
+    "rtems/baseline/build/laysim-packed.log": "3e12758fefb51961149f55e542951e7798e06f34b486d13d9ea03d0de53c2918",
+    "rtems/baseline/build/laysim-spread.log": "4f001dd88c6dea05807f667a46a4ff0b77353695a22171913a23919e9bb68dda",
+    "rtems/baseline/build/packed.exe": "6a2eb5ec22413ba8505880bd7c409733df37c16b641baed2045a8b3c5024d794",
+    "rtems/baseline/build/spread.exe": "43a64ef75d88e0145ba8cf144605d09693771949859ac46b01471cb3e00a595a",
+    "rtems/baseline/build/verify.log": "7e4cf0319621d7a32b96962a55bf6e6c7dc18a3408a79465eda8d19d997831c1",
+    "rtems/baseline/build/workload.ll": "29ce9e94b3ceae0d96dffd4bdc6b7600ce88f88bec39c1c589881be7768ae2f4",
+    "rtems/baseline/build/workload_ape.json": "a9ed511d5b5251548355b12407f9bd7e232973cbb13835395360743bfadeb756",
+    "rtems/baseline/cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+    "rtems/baseline/init.c": "8c4a03f93e2b452d16910675612023866550555147fdfe35cd999edaab192150",
+    "rtems/baseline/workload.c": "a757075b2930fa7f63fdc73a4bd7a284bb00b08b5220e4e5b347435d998f3564",
+    "rtems/baseline/workload.h": "6a0d875273c9d950f1659b933e0b7f8857b640d2e5df58896d39182e5d9194f7",
+    "scripts/verify": "f56e1e64af2a21aebf5e41cfef6b5086084ede211622405c05d92ff0df653713",
+    "tests/test_freeze_baseline.py": "803087ea7d255dde435bb5ce9f6b106ffd34440313e72fdddd7ee8df95973811",
+    "tests/test_rtems_baseline.py": "4f4f9ccb03e018ba17f4b4fdfad2c0df1e73e454cf98766166386aa59e5b4b09",
+    "tools/freeze_baseline.py": "129e1013ad0ba37b729b9f13630f6b21024a06bddbdd375fdd452a7e92ee7725"
+  },
+  "protocol": "Separate ELF and fresh laysim process per case; one run; no explicit warmup; Init task not pinned.",
+  "results": {
+    "conflict": {
+      "ca_caas": 0.22222354088076973,
+      "cold_misses": 8,
+      "command": [
+        "/opt/laysim-gr740/laysim-gr740-cli",
+        "-r",
+        "-core0",
+        "rtems/baseline/build/conflict.exe"
+      ],
+      "elapsed_ns": 89546204,
+      "mean_rd": 3.499973297322866,
+      "reuses": 1048584,
+      "weighted_rd_sum": 3670016
+    },
+    "packed": {
+      "ca_caas": 0.22222354088076973,
+      "cold_misses": 8,
+      "command": [
+        "/opt/laysim-gr740/laysim-gr740-cli",
+        "-r",
+        "-core0",
+        "rtems/baseline/build/packed.exe"
+      ],
+      "elapsed_ns": 59868128,
+      "mean_rd": 3.499973297322866,
+      "reuses": 1048584,
+      "weighted_rd_sum": 3670016
+    },
+    "spread": {
+      "ca_caas": 0.22222354088076973,
+      "cold_misses": 8,
+      "command": [
+        "/opt/laysim-gr740/laysim-gr740-cli",
+        "-r",
+        "-core0",
+        "rtems/baseline/build/spread.exe"
+      ],
+      "elapsed_ns": 59869992,
+      "mean_rd": 3.499973297322866,
+      "reuses": 1048584,
+      "weighted_rd_sum": 3670016
+    }
+  },
+  "schema_version": 1,
+  "scope": "Element Global RD and CAAS formula baseline; timings are smoke observations, not cache counters.",
+  "tool_sha256": {
+    "/opt/laysim-gr740/laysim-gr740-cli": "191c6a94b579d2853017117e4351a2a2f5b65a24b1d6961e6de99d65fe532f3d",
+    "/opt/rtems/6/bin/sparc-rtems6-gcc": "a1e9cd84001683db0bd5c0d09017cca15b5ba2e2b876110f8cf6ed1453df4f1c",
+    "/workspace/Yet-Another-Reuse-Distance-Analyzer/build-release/libLoopAnnotatedTrace.so": "7460c0674b57a278473f2ee1034cd7d9925685b0e0afafc65f890b9f04b3ef82",
+    "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp": "9fadc0ca4962633953a1020009dc04ea58aa1c86854b6beb2e57e791a9cf2405"
+  },
+  "yarda_commit": "6059896674880c3dad5b9d3b95fe4414ba591807"
+}
