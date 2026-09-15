@@ -1,0 +1,49 @@
+{
+  "blocks": [
+    {
+      "name": "chaser_packed  sweep-loop (bound=65537)",
+      "profile": {
+        "cold_misses": 8,
+        "histogram": {
+          "0": 524296,
+          "7": 524288
+        },
+        "total_reuses": 1048584
+      }
+    },
+    {
+      "name": "chaser_spread  sweep-loop (bound=65537)",
+      "profile": {
+        "cold_misses": 8,
+        "histogram": {
+          "0": 524296,
+          "7": 524288
+        },
+        "total_reuses": 1048584
+      }
+    },
+    {
+      "name": "chaser_conflict  sweep-loop (bound=65537)",
+      "profile": {
+        "cold_misses": 8,
+        "histogram": {
+          "0": 524296,
+          "7": 524288
+        },
+        "total_reuses": 1048584
+      }
+    }
+  ],
+  "cache_line_size": null,
+  "file": "build/workload_ape.json",
+  "granularity": "element",
+  "mode": "unroll",
+  "program": {
+    "cold_misses": 24,
+    "histogram": {
+      "0": 1572888,
+      "7": 1572864
+    },
+    "total_reuses": 3145752
+  }
+}
