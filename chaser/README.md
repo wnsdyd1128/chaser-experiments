@@ -3,7 +3,7 @@
 `rtems/baseline/` contains purpose-built C workloads and an RTEMS init task.
 The same `workload.c` is compiled into three separate SPARC RTEMS 6 / GR740 executables and
 into LLVM IR for LAT extraction. All RD analysis uses **yarda_cpp**.
-Python is used only for pytest assertions, not for YARDA analysis.
+Python selects LAT records, computes scalar/features, and runs tests; it does not compute RD/CSRD.
 
 ## Cases
 
