@@ -11,6 +11,20 @@ ROOT = Path(__file__).resolve().parents[1]
 CASES = ('packed', 'spread', 'conflict')
 
 
+def tool_provenance():
+    """Capture installed tool identity only when freezing a new execution."""
+    cache = ROOT / 'rtems/baseline/build/yarda/CMakeCache.txt'
+    repo = Path(re.search(r'^CMAKE_HOME_DIRECTORY:INTERNAL=(.+)$', cache.read_text(), re.M)[1])
+    tools = [ROOT / 'rtems/baseline/build/yarda/backend/yarda_cpp',
+             repo / 'build-release/libLoopAnnotatedTrace.so',
+             Path('/opt/rtems/6/bin/sparc-rtems6-gcc'),
+             Path('/opt/laysim-gr740/laysim-gr740-cli')]
+    return {
+        'yarda_commit': subprocess.check_output(['git', '-C', str(repo), 'rev-parse', 'HEAD'], text=True).strip(),
+        'tool_sha256': {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in tools},
+    }
+
+
 def snapshot(output):
     files = ['rtems/baseline/' + name for name in
              ('init.c', 'workload.c', 'workload.h', 'Makefile', 'cache.yaml',
@@ -41,19 +55,12 @@ def snapshot(output):
                          'ca_caas': reuses / (reuses + weighted) if reuses else None,
                          'command': ['/opt/laysim-gr740/laysim-gr740-cli', '-r', '-core0', elf]}
         files += [elf, log]
-    cache = ROOT / 'rtems/baseline/build/yarda/CMakeCache.txt'
-    repo = Path(re.search(r'^CMAKE_HOME_DIRECTORY:INTERNAL=(.+)$', cache.read_text(), re.M)[1])
-    tools = [ROOT / 'rtems/baseline/build/yarda/backend/yarda_cpp',
-             repo / 'build-release/libLoopAnnotatedTrace.so',
-             Path('/opt/rtems/6/bin/sparc-rtems6-gcc'),
-             Path('/opt/laysim-gr740/laysim-gr740-cli')]
     contents = {name: (ROOT / name).read_bytes() for name in sorted(files)}
     manifest = {
         'schema_version': 1, 'results': results,
         'protocol': 'Separate ELF and fresh laysim process per case; one run; no explicit warmup; Init task not pinned.',
         'scope': 'Element Global RD and CAAS formula baseline; timings are smoke observations, not cache counters.',
-        'yarda_commit': subprocess.check_output(['git', '-C', str(repo), 'rev-parse', 'HEAD'], text=True).strip(),
-        'tool_sha256': {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in tools},
+        **tool_provenance(),
         'files': {name: hashlib.sha256(data).hexdigest() for name, data in contents.items()},
     }
     output.mkdir(parents=True, exist_ok=False)

@@ -1,3 +1,13 @@
 __pycache__/
 .pytest_cache/
 rtems/baseline/build/
+
+# Immutable execution evidence listed in rtems-v1/manifest.json.
+!/artifacts/baseline/rtems-v1/rtems/baseline/build/
+!/artifacts/baseline/rtems-v1/rtems/baseline/build/packed.exe
+!/artifacts/baseline/rtems-v1/rtems/baseline/build/spread.exe
+!/artifacts/baseline/rtems-v1/rtems/baseline/build/conflict.exe
+!/artifacts/baseline/rtems-v1/rtems/baseline/build/laysim-packed.log
+!/artifacts/baseline/rtems-v1/rtems/baseline/build/laysim-spread.log
+!/artifacts/baseline/rtems-v1/rtems/baseline/build/laysim-conflict.log
+!/artifacts/baseline/rtems-v1/rtems/baseline/build/verify.log

@@ -8,6 +8,9 @@ BUILD = build
 EXPORTS = ../../exports
 CASES = packed spread conflict
 
+# Keep analysis inputs for the provenance hash checks after a fresh build.
+.SECONDARY: $(addprefix $(BUILD)/, $(addsuffix .lat.json, $(CASES)))
+
 .PHONY: all analyze hierarchy $(addprefix run-, $(CASES))
 all: $(addprefix $(BUILD)/, $(addsuffix .exe, $(CASES)))
 

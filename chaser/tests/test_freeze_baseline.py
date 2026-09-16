@@ -1,17 +1,39 @@
 import hashlib
 import json
+from pathlib import Path
+import shutil
 
 import pytest
 
 from tools import freeze_baseline
 
+FROZEN = Path(__file__).resolve().parents[1] / 'artifacts/baseline/rtems-v1'
 
-def test_snapshot_is_byte_stable_and_refuses_overwrite(tmp_path):
+
+def test_frozen_manifest_integrity():
+    manifest = json.loads((FROZEN / 'manifest.json').read_bytes())
+    for name, expected in manifest['files'].items():
+        assert hashlib.sha256((FROZEN / name).read_bytes()).hexdigest() == expected
+
+
+@pytest.fixture
+def snapshot_inputs(tmp_path, monkeypatch):
+    source = tmp_path / 'source'
+    shutil.copytree(FROZEN, source)
+    manifest = json.loads((source / 'manifest.json').read_bytes())
+    monkeypatch.setattr(freeze_baseline, 'ROOT', source)
+    monkeypatch.setattr(freeze_baseline, 'tool_provenance', lambda: {
+        key: manifest[key] for key in ('yarda_commit', 'tool_sha256')})
+    return source
+
+
+def test_snapshot_is_byte_stable_and_refuses_overwrite(tmp_path, snapshot_inputs):
     first, second = tmp_path / 'first', tmp_path / 'second'
     freeze_baseline.snapshot(first)
     freeze_baseline.snapshot(second)
     assert (first / 'manifest.json').read_bytes() == (second / 'manifest.json').read_bytes()
     manifest = json.loads((first / 'manifest.json').read_bytes())
+    assert manifest == json.loads((FROZEN / 'manifest.json').read_bytes())
     for name, expected in manifest['files'].items():
         data = (first / name).read_bytes()
         assert data == (second / name).read_bytes()

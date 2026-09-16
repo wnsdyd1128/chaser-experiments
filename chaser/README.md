@@ -104,8 +104,13 @@ python3 tools/freeze_baseline.py --output artifacts/baseline/<new-version>
 ```
 
 Run the three independent simulator commands first, then `sh scripts/verify`.
-The snapshot tests require those logs and validate each selected case and PASS
-marker; the simulator's exit status alone does not establish success.
+Freezing a new snapshot requires those fresh logs and a saved verification log
+(`sh scripts/verify > rtems/baseline/build/verify.log 2>&1`). Each selected case,
+PASS marker and shutdown are checked; simulator exit status alone does not establish success.
+Normal verification tests use an isolated copy of the frozen evidence and do not
+require working simulator logs, a working verify.log, or an installed laysim binary.
+They also check every frozen file against its manifest hash. Toolchain, YARDA
+source and the prebuilt LAT plugin are still required for the build/analysis checks.
 This baseline covers the three CHASER C workloads, not a reproduction of the
 historical exp2 snapshot or an exact physical-address model of the linked ELF.
 
@@ -146,3 +151,32 @@ between spread and conflict; element-to-line comparison also includes grouping.
 CLP conservation, complete resolution, and input hashes. A direct repeated
 analysis produced byte-identical CSRD exports, and all analyzed ELF hashes
 matched the frozen executed ELF hashes. The stage-1 snapshot is unchanged.
+
+## Stage 1 acceptance and downstream feature interface
+
+Stage 1 acceptance uses the purpose-built CHASER workloads and their closed-form
+RD/CA expectations, deterministic analysis and preserved standalone execution evidence.
+This replaces the original plan's historical CAAS workload reproduction requirement;
+no exp2 reproduction is claimed. The frozen rtems-v1 bytes and manifest are unchanged.
+Its nine previously ignored build files are now eligible for Git tracking through
+narrow ignore exceptions; include them with the change when committing.
+
+`chaser.features.locality_scalar(kind, record, alpha=...)` selects `caas-ca`,
+`ca-line`, `ca-csrd`, or precomputed `cls`. Records use the field names from
+`exports/locality.json`: `ca_caas_element`, `ca_global_line`, `ca_csrd_l1`.
+CLS records additionally carry a string-keyed map such as `cls: {"0.5": 0.75}`.
+CLS calculation itself remains stage 3 work; missing alpha results are rejected.
+
+Join each record with its task's `utilization` by task ID before calling
+`build_features(records, kind, alpha=...)`. The result is an ordered list matching
+`FEATURE_NAMES`: five locality statistics (mean, population std, min, max, median),
+then six utilization statistics (the same five plus sum). Legacy `ca_*` names stay
+fixed across representations. No scaling is applied here. Empty workloads,
+undefined/nonfinite scalars or utilization, negative utilization, and locality
+outside [0, 1] are rejected rather than silently converted to zero. Dataset assembly
+must still select a common complete-case workload set across all variants.
+
+Verification on 2026-09-16: `sh scripts/verify` passed all 23 tests both in the
+working tree and in a temporary checkout containing the proposed files but no
+working build directory or simulator logs. The Makefile preserves per-case LAT
+inputs for provenance checks. No new simulator measurements were taken.
