@@ -166,7 +166,29 @@ narrow ignore exceptions; include them with the change when committing.
 `ca-line`, `ca-csrd`, or precomputed `cls`. Records use the field names from
 `exports/locality.json`: `ca_caas_element`, `ca_global_line`, `ca_csrd_l1`.
 CLS records additionally carry a string-keyed map such as `cls: {"0.5": 0.75}`.
-CLS calculation itself remains stage 3 work; missing alpha results are rejected.
+`chaser.cls` computes `CLS = p_L1 + (K_L1 / K_LLC)^alpha * p_LLC`
+from unconditional first-hit ratios and cache capacities in bytes. Empty profiles
+produce `None`; missing alpha results are rejected by the selector.
+
+The normal locality export includes alpha values `0, 0.3, 0.5, 0.7, 1.0`.
+To recompute a sweep from existing analyzer exports without rerunning analysis:
+
+```sh
+python3 -m tools.run_cls_sweep --alpha 0,0.3,0.5,0.7,1.0
+# Optional separate output:
+python3 -m tools.run_cls_sweep --alpha 0,0.5,1 --output exports/cls-sweep.json
+```
+
+The default output is `exports/locality.json`, retaining CA, CLP, analysis IDs,
+source hashes, and modeled-access counts alongside CLS. Per-case provenance
+preserves the analyzer version (including its Git revision and dirty marker),
+input hashes including the cache config hash, selected path, and cache hierarchy
+with capacity, line size, and associativity. Capacities come from that analyzed
+hierarchy, so subsequent config edits do not change the meaning of stored CLP.
+These records feed `fit_rf(..., 'cls', seed=42, alpha=0.5)` and
+`allocate(..., kind='cls', alpha=0.5, threshold=...)` directly. Each alpha requires
+its own RF/scaler training. Alpha 0.5 is the primary setting; this sweep implements
+scalar generation, not measured RF sensitivity or scheduling experiments.
 
 Join each record with its task's `utilization` by task ID before calling
 `build_features(records, kind, alpha=...)`. The result is an ordered list matching

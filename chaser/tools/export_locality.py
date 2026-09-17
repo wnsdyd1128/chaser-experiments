@@ -5,11 +5,12 @@ import json
 from pathlib import Path
 
 from chaser.ca import ca_caas, ca_csrd
+from chaser.cls import DEFAULT_ALPHAS, cls
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def summary():
+def summary(alphas: tuple[float, ...] = DEFAULT_ALPHAS):
     sources = {}
 
     def read(name):
@@ -26,6 +27,10 @@ def summary():
         name = 'chaser_' + case
         if len(result['tasks']) != 1 or task['task_id'] != name:
             raise ValueError(f'Expected one matching task for {case}')
+        levels = {level['name']: level for level in result['cache_hierarchy']['levels']}
+        path = result['selected_path']
+        cache = {'l1_capacity': levels[path['l1_name']]['size_bytes'],
+                 'llc_capacity': levels[path['llc_name']]['size_bytes']}
         cases[case] = {
             'ca_caas_element': ca_caas(element[name]),
             'ca_global_line': ca_caas(line[name]),
@@ -33,6 +38,10 @@ def summary():
             'clp': [task[k] for k in ('l1_first_hit_ratio', 'llc_first_hit_ratio',
                                       'all_cache_miss_ratio')],
             'analysis_id': result['analysis_id'],
+            'modeled_accesses': task['modeled_accesses'],
+            'cls': {str(float(alpha)): cls(task, cache, alpha) for alpha in alphas},
+            'provenance': {key: result[key] for key in (
+                'tool_version', 'model_id', 'inputs', 'selected_path', 'cache_hierarchy')},
         }
     return {'schema_version': 1, 'csrd_level': 'L1',
             'clp_order': ['L1', 'LLC', 'memory'], 'source_sha256': sources, 'cases': cases}

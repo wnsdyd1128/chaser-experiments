@@ -9,7 +9,60 @@
         0.5,
         0.4999923707218823,
         7.629278117704503e-06
-      ]
+      ],
+      "cls": {
+        "0.0": 0.9999923707218823,
+        "0.3": 0.6166273443500546,
+        "0.5": 0.5441934994848726,
+        "0.7": 0.5167462048253225,
+        "1.0": 0.5039061903962647
+      },
+      "modeled_accesses": 1048592,
+      "provenance": {
+        "cache_hierarchy": {
+          "allocation": "all-demand-misses",
+          "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+          "levels": [
+            {
+              "associativity": 4,
+              "line_size_bytes": 32,
+              "name": "L1D0",
+              "replacement": "LRU",
+              "role": "L1",
+              "set_count": 128,
+              "size_bytes": 16384
+            },
+            {
+              "associativity": 4,
+              "line_size_bytes": 32,
+              "name": "L2",
+              "replacement": "LRU",
+              "role": "LLC",
+              "set_count": 16384,
+              "size_bytes": 2097152
+            }
+          ],
+          "lower_level_requests": "l1-misses-only",
+          "task_initial_state": "cold"
+        },
+        "inputs": {
+          "cache_config_sha256": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+          "cache_schema_version": 1,
+          "elf_class": "ELF32",
+          "elf_machine": 2,
+          "elf_sha256": "80001413d56c65017bc24157ba8fc15b5aa0fcffaf7bb74e6b5e2d47a0c7e852",
+          "lat_schema_version": 2,
+          "lat_sha256": "5f488b897d51d4b0497ae6b73d694ba8a5fc276c75bc17f50a2f554018d84be7"
+        },
+        "model_id": "exact-two-level-lru-demand-v1",
+        "selected_path": {
+          "core_id": 0,
+          "l1_name": "L1D0",
+          "llc_name": "L2",
+          "memory_name": "Memory"
+        },
+        "tool_version": "0.1.0+git.6059896674880c3dad5b9d3b95fe4414ba591807-dirty"
+      }
     },
     "packed": {
       "analysis_id": "89b9e9d6de470e255ba846a25b60dd33493c31198bc2d1306d201b0846f33143",
@@ -20,7 +73,60 @@
         0.9999990463402353,
         0.0,
         9.536597647130628e-07
-      ]
+      ],
+      "cls": {
+        "0.0": 0.9999990463402353,
+        "0.3": 0.9999990463402353,
+        "0.5": 0.9999990463402353,
+        "0.7": 0.9999990463402353,
+        "1.0": 0.9999990463402353
+      },
+      "modeled_accesses": 1048592,
+      "provenance": {
+        "cache_hierarchy": {
+          "allocation": "all-demand-misses",
+          "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+          "levels": [
+            {
+              "associativity": 4,
+              "line_size_bytes": 32,
+              "name": "L1D0",
+              "replacement": "LRU",
+              "role": "L1",
+              "set_count": 128,
+              "size_bytes": 16384
+            },
+            {
+              "associativity": 4,
+              "line_size_bytes": 32,
+              "name": "L2",
+              "replacement": "LRU",
+              "role": "LLC",
+              "set_count": 16384,
+              "size_bytes": 2097152
+            }
+          ],
+          "lower_level_requests": "l1-misses-only",
+          "task_initial_state": "cold"
+        },
+        "inputs": {
+          "cache_config_sha256": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+          "cache_schema_version": 1,
+          "elf_class": "ELF32",
+          "elf_machine": 2,
+          "elf_sha256": "6a2eb5ec22413ba8505880bd7c409733df37c16b641baed2045a8b3c5024d794",
+          "lat_schema_version": 2,
+          "lat_sha256": "75fcc17e8d36376bab21d0d489fd9a55423bb4dbfac85db3a292bc60319824d3"
+        },
+        "model_id": "exact-two-level-lru-demand-v1",
+        "selected_path": {
+          "core_id": 0,
+          "l1_name": "L1D0",
+          "llc_name": "L2",
+          "memory_name": "Memory"
+        },
+        "tool_version": "0.1.0+git.6059896674880c3dad5b9d3b95fe4414ba591807-dirty"
+      }
     },
     "spread": {
       "analysis_id": "25524702d148b06a57b11f77c3477ba9dd0130f26cdb1f6a400c3bb872339c78",
@@ -31,7 +137,60 @@
         0.9999923707218823,
         0.0,
         7.629278117704503e-06
-      ]
+      ],
+      "cls": {
+        "0.0": 0.9999923707218823,
+        "0.3": 0.9999923707218823,
+        "0.5": 0.9999923707218823,
+        "0.7": 0.9999923707218823,
+        "1.0": 0.9999923707218823
+      },
+      "modeled_accesses": 1048592,
+      "provenance": {
+        "cache_hierarchy": {
+          "allocation": "all-demand-misses",
+          "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+          "levels": [
+            {
+              "associativity": 4,
+              "line_size_bytes": 32,
+              "name": "L1D0",
+              "replacement": "LRU",
+              "role": "L1",
+              "set_count": 128,
+              "size_bytes": 16384
+            },
+            {
+              "associativity": 4,
+              "line_size_bytes": 32,
+              "name": "L2",
+              "replacement": "LRU",
+              "role": "LLC",
+              "set_count": 16384,
+              "size_bytes": 2097152
+            }
+          ],
+          "lower_level_requests": "l1-misses-only",
+          "task_initial_state": "cold"
+        },
+        "inputs": {
+          "cache_config_sha256": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+          "cache_schema_version": 1,
+          "elf_class": "ELF32",
+          "elf_machine": 2,
+          "elf_sha256": "43a64ef75d88e0145ba8cf144605d09693771949859ac46b01471cb3e00a595a",
+          "lat_schema_version": 2,
+          "lat_sha256": "e98862a9df840ce688bfc5bfd66028ec47e0c9141e98ce93890bae47784769cd"
+        },
+        "model_id": "exact-two-level-lru-demand-v1",
+        "selected_path": {
+          "core_id": 0,
+          "l1_name": "L1D0",
+          "llc_name": "L2",
+          "memory_name": "Memory"
+        },
+        "tool_version": "0.1.0+git.6059896674880c3dad5b9d3b95fe4414ba591807-dirty"
+      }
     }
   },
   "clp_order": [
