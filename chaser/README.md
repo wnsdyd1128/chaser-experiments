@@ -220,3 +220,39 @@ for kind in ('caas-ca', 'ca-csrd'):
 For experiments, replace these fixtures with training data and labels from the
 measurement pipeline, then predict on held-out workloads. This completes the RF
 consumer connection; S2 evaluation remains separate work.
+
+## Offline allocator connection (stage 2)
+
+`chaser.allocator.allocate` consumes the same locality cases and task-ID-to-U
+mapping as the RF interface. It returns `Placement(mapping, residual, infeasible)`.
+Types and annotations target Python 3.10.
+
+```python
+from chaser.allocator import CoreGroups, allocate
+
+# Explicit example configuration, not a calibrated experimental default.
+cores = CoreGroups(isolated=(0,), non_isolated=(1, 2, 3))
+placement = allocate(cases, {'spread': 0.6, 'conflict': 0.3}, cores,
+                     kind='ca-csrd', threshold=0.5)
+```
+
+The policy follows Algorithm 1 as transcribed in the project plan: descending U,
+scalar below threshold → least-loaded isolated Ω core; scalar at or above threshold
+→ worst-fit non-isolated NΩ core. The same policy consumes `caas-ca` or `ca-csrd`;
+`ca-line` and explicitly selected precomputed CLS are also accepted by the selector.
+The split and finite threshold are required inputs. No experimental split or
+threshold is selected implicitly; finite thresholds outside [0, 1] can represent
+all-low/all-high calibration endpoints.
+
+The paper's partial policy is completed with explicit rules: capacity 1 per core
+in both branches, no spill between groups, and failed tasks recorded while remaining
+tasks continue. U > 1 is infeasible, not an invalid measurement. Task ties use
+ascending task ID; core ties use ascending core ID. Empty groups are allowed and
+cannot receive tasks; groups must be disjoint with distinct nonnegative IDs and
+at least one core overall. Empty workloads return the unused cores. Missing or
+undefined inputs are rejected. Residual capacity uses the sum of assigned U values.
+
+This is a greedy placement policy, not a globally optimal feasibility solver or
+a schedulability proof. It completes the stage-2 offline RF/allocator consumer
+interfaces. RTEMS affinity application, topology-specific scheduling, measured
+labels, threshold calibration and S2/S3 performance evaluation remain later work.
