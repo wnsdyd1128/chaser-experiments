@@ -1,16 +1,37 @@
 """Select exported locality scalars and preserve the CAAS 11-feature interface."""
 
+from collections.abc import Iterable, Mapping, Sequence
 from math import fsum, isfinite
 from statistics import mean, median, pstdev
+from typing import Literal, TypeAlias, TypedDict
 
-FEATURE_NAMES = ('ca_mean', 'ca_std', 'ca_min', 'ca_max', 'ca_median',
-                 'u_mean', 'u_std', 'u_min', 'u_max', 'u_median', 'u_sum')
+Representation: TypeAlias = Literal['caas-ca', 'ca-line', 'ca-csrd', 'cls']
+ScalarField: TypeAlias = Literal['ca_caas_element', 'ca_global_line', 'ca_csrd_l1']
 
 
-def locality_scalar(kind, task_result, *, alpha=None):
+class LocalityRecord(TypedDict, total=False):
+    """Fields consumed from an export; missing or null inputs are checked at use."""
+
+    ca_caas_element: float | None
+    ca_global_line: float | None
+    ca_csrd_l1: float | None
+    cls: Mapping[str, float | None]
+    utilization: float | None
+
+
+FEATURE_NAMES: tuple[str, ...] = (
+    'ca_mean', 'ca_std', 'ca_min', 'ca_max', 'ca_median',
+    'u_mean', 'u_std', 'u_min', 'u_max', 'u_median', 'u_sum',
+)
+
+
+def locality_scalar(kind: Representation, task_result: LocalityRecord, *,
+                    alpha: float | None = None) -> float | None:
     """Read a locality.json case; CLS requires a precomputed string-keyed alpha map."""
-    fields = {'caas-ca': 'ca_caas_element', 'ca-line': 'ca_global_line',
-              'ca-csrd': 'ca_csrd_l1'}
+    fields: dict[str, ScalarField] = {
+        'caas-ca': 'ca_caas_element', 'ca-line': 'ca_global_line',
+        'ca-csrd': 'ca_csrd_l1',
+    }
     if kind == 'cls':
         if alpha is None:
             raise ValueError('CLS requires an explicit alpha')
@@ -26,13 +47,15 @@ def locality_scalar(kind, task_result, *, alpha=None):
     return task_result[fields[kind]]
 
 
-def build_features(tasks, kind, *, alpha=None):
+def build_features(tasks: Iterable[LocalityRecord], kind: Representation, *,
+                   alpha: float | None = None) -> list[float]:
     """Reject incomplete samples; use population std (NumPy ddof=0), without scaling.
 
     Each case record must include utilization joined by task ID by the caller.
     Legacy ca_* names refer to the selected scalar for every representation.
     """
-    locality, utilization = [], []
+    locality: list[float] = []
+    utilization: list[float] = []
     for task in tasks:
         scalar = locality_scalar(kind, task, alpha=alpha)
         u = task.get('utilization')
@@ -45,7 +68,7 @@ def build_features(tasks, kind, *, alpha=None):
     if not locality:
         raise ValueError('A workload must contain at least one task')
 
-    def stats(values):
+    def stats(values: Sequence[float]) -> list[float]:
         return [mean(values), pstdev(values), min(values), max(values), median(values)]
 
     return stats(locality) + stats(utilization) + [fsum(utilization)]
