@@ -33,8 +33,9 @@ LRU/write-allocate policy; it is not an exact model of GR740 write policy.
 sh scripts/verify
 ```
 
-Requires the existing RTEMS toolchain, LLVM 14, CMake, YARDA dependencies, and
-pytest. Set `YARDA_DIR` to relocate the source checkout. The script builds a
+Requires the existing RTEMS toolchain, LLVM 14, CMake, YARDA dependencies,
+pytest, and scikit-learn (also used by the existing CAAS RF framework).
+Set `YARDA_DIR` to relocate the source checkout. The script builds a
 fresh C++ analyzer inside `rtems/baseline/build/yarda`, builds the three RTEMS ELFs,
 extracts LAT from C, analyzes element and cache-line RD, and runs assertions.
 The LAT frontend plugin defaults to YARDA's `build-release/libLoopAnnotatedTrace.so`.
@@ -180,3 +181,42 @@ Verification on 2026-09-16: `sh scripts/verify` passed all 23 tests both in the
 working tree and in a temporary checkout containing the proposed files but no
 working build directory or simulator logs. The Makefile preserves per-case LAT
 inputs for provenance checks. No new simulator measurements were taken.
+
+## RF consumption of selected features
+
+`chaser.rf.fit_rf(cases, workloads, labels, kind, seed=...)` joins locality
+records and utilization by task ID, builds the existing 11 features, and trains
+a fresh sklearn RandomForestClassifier. It uses the same implementation and
+parameters as the CAAS wrapper: 100 trees, unlimited depth, and an explicit seed.
+The external framework and legacy saved weights are not loaded.
+
+Each workload is a mapping `{task_id: utilization}`; `cases` is the mapping from
+`locality.json`. Missing task IDs, missing/invalid utilization, undefined scalars,
+empty workloads, and invalid/mismatched labels are rejected. Labels follow
+`0=Global`, `1=Clustered`, `2=Partitioned`.
+
+The returned model keeps its representation (and CLS alpha, if supplied).
+Its MinMaxScaler is fitted on training features and reused during prediction.
+Train a separate model for each representation using the same training workloads,
+labels and seed. The caller supplies the family-level split and common complete-case
+workload set; this API does not create a research dataset or measure accuracy.
+
+Runnable wiring example, with **synthetic labels and utilization only**:
+
+```python
+import json
+from pathlib import Path
+from chaser.rf import LABEL_NAMES, fit_rf
+
+cases = json.loads(Path('exports/locality.json').read_text())['cases']
+workloads = [{'packed': 0.1}, {'spread': 0.5}, {'conflict': 0.9}]
+labels = [0, 1, 2]  # Test fixtures, not measured scheduling winners.
+for kind in ('caas-ca', 'ca-csrd'):
+    model = fit_rf(cases, workloads, labels, kind, seed=42)
+    predictions = model.predict(cases, workloads)
+    print(kind, [LABEL_NAMES[label] for label in predictions])
+```
+
+For experiments, replace these fixtures with training data and labels from the
+measurement pipeline, then predict on held-out workloads. This completes the RF
+consumer connection; S2 evaluation remains separate work.
