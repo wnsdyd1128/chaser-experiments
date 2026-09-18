@@ -1,7 +1,7 @@
 {
   "cases": {
     "conflict": {
-      "analysis_id": "86107c02e23e7047040fb84c0609d093e87a88a04c391e35c9349dc4e0689e88",
+      "analysis_id": "0cef2f5ff701ef4f706a2aa97b87efe3abd4a158eb01e4cef373370e743c5997",
       "ca_caas_element": 0.22222354088076973,
       "ca_csrd_l1": 0.22222354088076973,
       "ca_global_line": 0.22222354088076973,
@@ -51,8 +51,8 @@
           "elf_class": "ELF32",
           "elf_machine": 2,
           "elf_sha256": "80001413d56c65017bc24157ba8fc15b5aa0fcffaf7bb74e6b5e2d47a0c7e852",
-          "lat_schema_version": 2,
-          "lat_sha256": "5f488b897d51d4b0497ae6b73d694ba8a5fc276c75bc17f50a2f554018d84be7"
+          "map_schema_version": 2,
+          "map_sha256": "5f488b897d51d4b0497ae6b73d694ba8a5fc276c75bc17f50a2f554018d84be7"
         },
         "model_id": "exact-two-level-lru-demand-v1",
         "selected_path": {
@@ -61,11 +61,11 @@
           "llc_name": "L2",
           "memory_name": "Memory"
         },
-        "tool_version": "0.1.0+git.6059896674880c3dad5b9d3b95fe4414ba591807-dirty"
+        "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty"
       }
     },
     "packed": {
-      "analysis_id": "89b9e9d6de470e255ba846a25b60dd33493c31198bc2d1306d201b0846f33143",
+      "analysis_id": "67d063307fcb72f945bed98e5ec4e78c25e1e14f87bb2e0db7ca7fa9137a7cfa",
       "ca_caas_element": 0.22222354088076973,
       "ca_csrd_l1": 1.0,
       "ca_global_line": 1.0,
@@ -115,8 +115,8 @@
           "elf_class": "ELF32",
           "elf_machine": 2,
           "elf_sha256": "6a2eb5ec22413ba8505880bd7c409733df37c16b641baed2045a8b3c5024d794",
-          "lat_schema_version": 2,
-          "lat_sha256": "75fcc17e8d36376bab21d0d489fd9a55423bb4dbfac85db3a292bc60319824d3"
+          "map_schema_version": 2,
+          "map_sha256": "75fcc17e8d36376bab21d0d489fd9a55423bb4dbfac85db3a292bc60319824d3"
         },
         "model_id": "exact-two-level-lru-demand-v1",
         "selected_path": {
@@ -125,11 +125,11 @@
           "llc_name": "L2",
           "memory_name": "Memory"
         },
-        "tool_version": "0.1.0+git.6059896674880c3dad5b9d3b95fe4414ba591807-dirty"
+        "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty"
       }
     },
     "spread": {
-      "analysis_id": "25524702d148b06a57b11f77c3477ba9dd0130f26cdb1f6a400c3bb872339c78",
+      "analysis_id": "6f94406f8b507cc46842132ffeee48a93ada6b7e29573f62204d2599f8dc8fa2",
       "ca_caas_element": 0.22222354088076973,
       "ca_csrd_l1": 1.0,
       "ca_global_line": 0.22222354088076973,
@@ -179,8 +179,8 @@
           "elf_class": "ELF32",
           "elf_machine": 2,
           "elf_sha256": "43a64ef75d88e0145ba8cf144605d09693771949859ac46b01471cb3e00a595a",
-          "lat_schema_version": 2,
-          "lat_sha256": "e98862a9df840ce688bfc5bfd66028ec47e0c9141e98ce93890bae47784769cd"
+          "map_schema_version": 2,
+          "map_sha256": "e98862a9df840ce688bfc5bfd66028ec47e0c9141e98ce93890bae47784769cd"
         },
         "model_id": "exact-two-level-lru-demand-v1",
         "selected_path": {
@@ -189,7 +189,7 @@
           "llc_name": "L2",
           "memory_name": "Memory"
         },
-        "tool_version": "0.1.0+git.6059896674880c3dad5b9d3b95fe4414ba591807-dirty"
+        "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty"
       }
     }
   },
@@ -201,10 +201,10 @@
   "csrd_level": "L1",
   "schema_version": 1,
   "source_sha256": {
-    "conflict.csrd.json": "0b35aaa8a5a652c217d3921b9c46cf8bf5bed9efa98b4aca7a0da34c9aff406a",
+    "conflict.csrd.json": "0bdd1f2b522e1d772c74066fec8e994788fb0b94a529f1205bb37521b8e78341",
     "element.rdh.json": "ac8d8b86b141e6140ef193b652a9ab9711578e265fd60006d5c8278bf48cf086",
     "line.rdh.json": "c62ca9c8048f393a4eaa397b808be4919310ce4de0fee8ee050229fe0cb9ecbb",
-    "packed.csrd.json": "86cdef341369602f608d10109e35366e818f5964a8099dc2b2fb437c2ac798b0",
-    "spread.csrd.json": "59e2a69214c9fe1258fc9eab158b5a2a1a88dead05a9a6c485a2998c9f21954d"
+    "packed.csrd.json": "684d64500091ee0b5f15fc06e3119012aa6b60c2166f706a8e609f08a14f8d9e",
+    "spread.csrd.json": "bdccd3ec260a507d6cf8e5f77012d9f2c00e11b4ce5510df858bae20e6b53bd0"
   }
 }

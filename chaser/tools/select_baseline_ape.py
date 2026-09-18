@@ -9,7 +9,7 @@ def select(data, case):
     function = 'chaser_' + case
     functions = [entry for entry in data['functions'] if entry['function'] == function]
     if len(functions) != 1:
-        raise ValueError(f'Expected exactly one LAT function: {function}')
+        raise ValueError(f'Expected exactly one APE function: {function}')
     object_id = 'global::' + case
     return {**data, 'functions': functions,
             'metadata': {**data['metadata'],

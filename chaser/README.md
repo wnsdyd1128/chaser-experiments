@@ -2,8 +2,8 @@
 
 `rtems/baseline/` contains purpose-built C workloads and an RTEMS init task.
 The same `workload.c` is compiled into three separate SPARC RTEMS 6 / GR740 executables and
-into LLVM IR for LAT extraction. All RD analysis uses **yarda_cpp**.
-Python selects LAT records, computes scalar/features, and runs tests; it does not compute RD/CSRD.
+into LLVM IR for APE extraction. All RD analysis uses **yarda_cpp**.
+Python selects APE records, computes scalar/features, and runs tests; it does not compute RD/CSRD.
 
 ## Cases
 
@@ -37,8 +37,8 @@ Requires the existing RTEMS toolchain, LLVM 14, CMake, YARDA dependencies,
 pytest, and scikit-learn (also used by the existing CAAS RF framework).
 Set `YARDA_DIR` to relocate the source checkout. The script builds a
 fresh C++ analyzer inside `rtems/baseline/build/yarda`, builds the three RTEMS ELFs,
-extracts LAT from C, analyzes element and cache-line RD, and runs assertions.
-The LAT frontend plugin defaults to YARDA's `build-release/libLoopAnnotatedTrace.so`.
+extracts APE from C, analyzes element and cache-line RD, and runs assertions.
+The APE frontend plugin defaults to `rtems/baseline/build/yarda/libMemoryAccessPatterns.so`.
 
 Verified with YARDA `6059896` containing `8b12a00` (unroll loop-limit fix):
 **12 pytest tests passed**, including SPARC ELF validation and checks that each
@@ -47,7 +47,7 @@ the default cumulative limit, and succeeds with an explicit limit of 2,000,000.
 The old YARDA `build-release/backend/yarda_cpp` was stale; rebuilding was necessary.
 
 YARDA exports are saved to `exports/element.rdh.json` and `exports/line.rdh.json`.
-Generated ELF, LAT, and build logs live under `rtems/baseline/build/`.
+Generated ELF, APE, and build logs live under `rtems/baseline/build/`.
 Working outputs can be regenerated; the verified baseline snapshot is preserved separately
 in `artifacts/baseline/rtems-v1/`.
 
@@ -94,7 +94,7 @@ miss counters have been collected.
 
 `artifacts/baseline/rtems-v1/manifest.json` records element CA, reuse counts,
 independent execution results, YARDA commit, tool hashes, and SHA-256 for each
-preserved file. The snapshot includes C sources, Makefile, cache YAML, LAT,
+preserved file. The snapshot includes C sources, Makefile, cache YAML, APE,
 element/line RDH, the three executed ELFs, logs, and verification code.
 Element and line RDH hashes matched after regeneration. Snapshot serialization
 is deterministic for identical inputs, and an existing snapshot cannot be overwritten.
@@ -111,7 +111,7 @@ PASS marker and shutdown are checked; simulator exit status alone does not estab
 Normal verification tests use an isolated copy of the frozen evidence and do not
 require working simulator logs, a working verify.log, or an installed laysim binary.
 They also check every frozen file against its manifest hash. Toolchain, YARDA
-source and the prebuilt LAT plugin are still required for the build/analysis checks.
+source and the LLVM frontend build dependencies are still required for the build/analysis checks.
 This baseline covers the three CHASER C workloads, not a reproduction of the
 historical exp2 snapshot or an exact physical-address model of the linked ELF.
 
@@ -126,7 +126,7 @@ make -C rtems/baseline hierarchy
 python3 -m tools.export_locality
 ```
 
-The hierarchy target selects each job and its object from the generated LAT v2,
+The hierarchy target selects each job and its object from the generated APE v2,
 then runs **yarda_cpp** with the corresponding executed SPARC ELF and cache YAML.
 Python selects JSON records and computes the final scalar; it does not compute RD.
 Each input is one task with independent cold caches. Linked ELF addresses are
@@ -201,7 +201,7 @@ must still select a common complete-case workload set across all variants.
 
 Verification on 2026-09-16: `sh scripts/verify` passed all 23 tests both in the
 working tree and in a temporary checkout containing the proposed files but no
-working build directory or simulator logs. The Makefile preserves per-case LAT
+working build directory or simulator logs. The Makefile preserves per-case APE
 inputs for provenance checks. No new simulator measurements were taken.
 
 ## RF consumption of selected features

@@ -28,7 +28,7 @@ def test_linked_l1_csrd(case, hist, cold, l1_hits, llc_hits):
     assert result['model_id'] == 'exact-two-level-lru-demand-v1'
     assert result['address_basis'] == 'linked_absolute'
     for key, path in [('elf_sha256', f'rtems/baseline/build/{case}.exe'),
-                      ('lat_sha256', f'rtems/baseline/build/{case}.lat.json'),
+                      ('map_sha256', f'rtems/baseline/build/{case}.ape.json'),
                       ('cache_config_sha256', 'rtems/baseline/cache.yaml')]:
         assert result['inputs'][key] == hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
     assert len(result['tasks']) == 1

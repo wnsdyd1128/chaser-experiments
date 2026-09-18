@@ -16,7 +16,7 @@ def tool_provenance():
     cache = ROOT / 'rtems/baseline/build/yarda/CMakeCache.txt'
     repo = Path(re.search(r'^CMAKE_HOME_DIRECTORY:INTERNAL=(.+)$', cache.read_text(), re.M)[1])
     tools = [ROOT / 'rtems/baseline/build/yarda/backend/yarda_cpp',
-             repo / 'build-release/libLoopAnnotatedTrace.so',
+             ROOT / 'rtems/baseline/build/yarda/libMemoryAccessPatterns.so',
              Path('/opt/rtems/6/bin/sparc-rtems6-gcc'),
              Path('/opt/laysim-gr740/laysim-gr740-cli')]
     return {
