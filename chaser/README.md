@@ -277,4 +277,56 @@ undefined inputs are rejected. Residual capacity uses the sum of assigned U valu
 This is a greedy placement policy, not a globally optimal feasibility solver or
 a schedulability proof. It completes the stage-2 offline RF/allocator consumer
 interfaces. RTEMS affinity application, topology-specific scheduling, measured
-labels, threshold calibration and S2/S3 performance evaluation remain later work.
+labels, measured threshold calibration and S2/S3 performance evaluation remain later work.
+
+## Offline threshold calibration (stage 4)
+
+`chaser.threshold.calibrate` connects threshold search to the existing allocator.
+Supply `CalibrationWorkload(workload_id, family_id, split, utilization)` rows,
+explicit core groups, representation, seed, analyzer/feature versions, and a
+`tat(workload_id, mapping)` callback. The callback supplies TAT for that exact
+mapping in a consistent unit, for example the median of repeated measurements.
+Set `measurement_source='measured'` for measured inputs or `'synthetic'` for fixtures.
+Missing, nonpositive or nonfinite TAT aborts selection.
+
+Only validation payloads contribute scalars, mappings and TAT requests. Duplicate
+workload IDs and families crossing train/validation/test splits are rejected.
+The caller supplies the frozen family membership and the same complete-case
+validation population for all representations; the function does not construct
+the split or infer benchmark families.
+
+The fixed selection protocol is:
+
+1. Search midpoints between distinct validation scalars, plus all-high/all-low
+   endpoints. With strict `scalar < threshold`, the minimum scalar is all-high
+   and the next representable float above the maximum is all-low. Adjacent floats
+   without a representable midpoint use the upper scalar.
+2. Minimize the number of workloads with any allocation failure.
+3. Among those candidates, minimize mean TAT over their common successful workload
+   intersection. An empty intersection is an error; differing success populations
+   are not directly compared. Other candidates have no TAT score.
+4. Break TAT ties by the smallest threshold. Reuse each workload/mapping's TAT
+   within the call so duplicate mappings are requested only once.
+
+Call separately for `caas-ca`, `ca-csrd` and `cls`, and again for each CLS alpha.
+The seed records the experiment protocol; the search itself is exhaustive.
+The result records the selected threshold, all candidates and placements,
+failures, common workload IDs, consumed TAT values, core groups, versions, source,
+seed, split hash and validation-input hash. Persist the result before test use:
+
+```python
+from dataclasses import asdict
+
+# result = calibrate(...), using validation measurements supplied by the caller.
+Path('threshold.json').write_text(
+    json.dumps(asdict(result), indent=2, sort_keys=True, allow_nan=False) + '\n')
+test_placement = allocate(cases, test_workload, result.cores, kind=result.kind,
+                          alpha=result.alpha, threshold=result.threshold)
+```
+
+Keep this threshold fixed for test workloads. The API cannot verify the origin
+of callback measurements; the measurement pipeline must ensure they match the
+workload, mapping, binary and execution configuration. This stage implements
+calibration logic and synthetic regression tests, including real locality-export
+integration. No experimental threshold has been selected; measured TAT, frozen
+research splits and S3/S4 calibration experiments remain pending.
