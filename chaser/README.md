@@ -330,3 +330,93 @@ workload, mapping, binary and execution configuration. This stage implements
 calibration logic and synthetic regression tests, including real locality-export
 integration. No experimental threshold has been selected; measured TAT, frozen
 research splits and S3/S4 calibration experiments remain pending.
+
+## PLAN 5: analyzer and dataset bridge
+
+`chaser.analyzer.analyze_task` accepts a prepared single-function APE, matching
+ELF, cache YAML, source file, C++ analyzer executable, a new output directory,
+and explicit analysis limits. It runs **three** C++ paths: element Global RD,
+cache-line Global RD (control), and hierarchy CSRD. Global CA uses the program
+histogram so reuse across blocks is retained. Python performs only scalar and
+feature arithmetic. Each successful `analysis.json` contains `task_id`, `case`
+and `provenance`; raw exports and logs remain alongside it. Provenance includes
+input/output and analyzer binary hashes, the reported revision (including a
+`-dirty` suffix), commands, UTC timestamps and elapsed seconds. The source hash
+identifies the supplied source; compilation and source-to-ELF correspondence
+remain the caller's responsibility.
+
+```python
+from pathlib import Path
+from chaser.analyzer import analyze_task
+
+record = analyze_task(
+    'chaser_packed', ape=Path('rtems/baseline/build/packed.ape.json'),
+    elf=Path('rtems/baseline/build/packed.exe'), cache=Path('rtems/baseline/cache.yaml'),
+    source=Path('rtems/baseline/workload.c'),
+    executable=Path('rtems/baseline/build/yarda/backend/yarda_cpp'),
+    output_dir=Path('/tmp/chaser-packed-analysis'),
+    max_cumulative_loop_iterations=2000000, max_source_accesses=1100000,
+)
+```
+
+The dataset builder consumes one JSON input containing:
+
+- `cases`: task ID → locality record, as returned in `record['case']`.
+- `provenance`: task ID → `record['provenance']`. Required fields are
+  `source_hash`, `elf_hash`, `analyzer_commit`, `cache_model_id`,
+  `cache_config_hash`, and `model_hash` (null before RF training).
+- `workloads`: records with `workload_id`, `family_id`, `utilization` (task ID → U),
+  and `utilization_source` (`measured-mean` or `wcet`). U is never defaulted to zero.
+- `measurements`: `Measurement` records with `workload_id`, numeric `architecture`
+  (0=Global, 1=Clustered, 2=Partitioned), `topology_id`, `allocator_id`,
+  `mapping_hash`, string `run_id`, `tet`, `tat`, `execution_status`, and explicit
+  `measurement_source` (`measured` or `synthetic`). `time_unit` defaults to `ns`.
+  The lowercase `tet`/`tat` fields store the plan's TET/TAT metrics. Failed runs
+  may have null times; only `execution_status='ok'` is eligible for labeling.
+
+```sh
+python3 -m tools.build_dataset input.json --split split.json --seed 42 \
+  --expected-runs 10 --output dataset-v1
+```
+
+`freeze_split` assigns approximately 70/20/10 **by family**, with at least one
+family per split and at least three families required. The experiment designer
+supplies family IDs: repeated runs, layout/parameter variants and period changes
+must retain their family. Existing split membership and seed are reused;
+changed workload/family membership is rejected. This checks declared membership,
+not whether two source programs are semantically related. Exclusion never causes
+resplitting. Small pilots do not establish generalization performance.
+
+`label_measurements` requires all planned runs of all three architectures.
+It selects median TAT, then median TET, then the smallest label, and records
+exact ties. Failed, missing or duplicate runs prevent a label. One dataset has
+one allocator, consistent units/source, and fixed topology per architecture.
+Mappings may vary by workload, but must stay fixed across repeats. Different
+allocator configurations require separate measurement/label datasets.
+
+The new output directory contains `raw_measurements.jsonl`,
+`task_characterization.jsonl`, `rf_samples.jsonl`, `provenance.jsonl`, and
+`metadata.json`. It cannot overwrite an existing artifact. Characterization uses
+`(workload_id, task_id)` because U may vary with period. RF rows contain the
+unchanged 11 features, family/split, representation/alpha, label and label
+evidence. TET/TAT and labels never enter the feature vector. Metadata records
+the frozen split/hash, feature version/order, required repeat count and excluded
+workloads with reasons. Missing schema, provenance or U is an error; unavailable
+locality/CLP or incomplete measurements exclude a workload from **all eight**
+variants (three CA representations and five CLS alphas). Raw evidence remains.
+
+For S2 select `caas-ca`, `ca-csrd`, and `cls` with `alpha=0.5`; the line control
+and other alphas support the separate comparisons. Feed only training workload
+IDs and their labels to the existing `fit_rf` API using the original cases and
+U mappings; train a new model/scaler per representation. Validation workload
+records can be passed to `CalibrationWorkload` with the frozen family split and
+`utilization`; calibration TAT must correspond to its requested exact mapping,
+not merely the architecture-level RF label measurements. No scaler or model is
+fitted by the exporter.
+
+This implements PLAN 5's data construction path. Tests use explicitly synthetic
+measurement fixtures and actual baseline C++ analysis. New scheduling C
+workloads, RTEMS mapping/repeated measurements, measured labels/thresholds, and
+external PolyBench evaluation are not completed by this bridge. PolyBench is
+reserved as a proposed external test population after model/threshold selection;
+it is not added to training or calibration by this change.
