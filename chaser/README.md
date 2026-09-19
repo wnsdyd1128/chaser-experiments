@@ -492,3 +492,69 @@ locality-driven performance improvement. Real experiment collection still needs
 workload families, measured U, analysis of the executed ELF, periodic releases,
 fixed G/C/P topology, and the agreed TET/TAT definitions. Clustered EDF SMP needs
 separate scheduler instances; a partial multi-core affinity mask is insufficient.
+
+## PLAN 7/8: S1 estimator and independent cache reference
+
+`tools.compare_s1` compares one caller-prepared, single-task APE/linked ELF using
+the actual cache geometry and an independent Python resident-cache LRU replay.
+It implements the comparison foundation; the full S1 workload sweeps and target
+execution validation remain subsequent work.
+
+```sh
+python3 -m tools.compare_s1 TASK_ID \
+  --ape /path/to/task.ape.json --elf /path/to/task.exe \
+  --source /path/to/source.c --cache rtems/baseline/cache.yaml \
+  --executable rtems/baseline/build/yarda/backend/yarda_cpp \
+  --max-source-accesses 100000 --max-line-references 100000 \
+  --max-cumulative-loop-iterations 2000000 --timeout 60 \
+  --output /tmp/chaser-s1-task-v1
+```
+
+The output directory must be new. Limits apply to the supplied task; the
+original baseline has 1,048,592 accesses and exceeds the illustrative 100,000
+limit. Complete event exports require memory and disk proportional to reference
+count. This is a bounded correctness-validation path, not an analyzer scalability
+benchmark. Source/APE/ELF correspondence belongs to the caller; the source hash
+does not establish that correspondence.
+
+The Global RD control is `full-linked-stream-capacity-bins-v1`: for equal line
+sizes and L1 capacity no larger than LLC, full-stream cache-line RD below the L1
+line capacity counts as L1 first-hit; RD between the L1 and LLC line capacities
+counts as LLC first-hit; larger RD and cold count as memory. Cold accesses remain
+in the denominator. This is an experimental extension, not a legacy CAAS output
+or a simulation of the demand hierarchy's LLC request stream.
+
+All RD/CSRD computation stays in `yarda_cpp`. The runner analyzes the same APE
+and ELF twice: actual geometry, then a derived config with a single fully
+associative L1 set. That second L1's full-exact CSRD histogram is full-stream
+Global RD, including finite distances exceeding L1 capacity. Its LLC counts
+are not used by the control. This preserves linked line identities, including
+shared lines across objects; the existing object-relative Global RD exports
+used by the dataset path are unchanged.
+
+The reference consumes only ordered linked addresses from complete YARDA events,
+using integer division to form line IDs and independent per-set LRU residency.
+It ignores YARDA's set/tag/RD/outcome fields. Both reference and actual CSRD use
+cold state, allocation on every demand miss, L1 misses only at LLC, and no back
+invalidation, victim insertion, prefetch, or writeback traffic. Events already
+expand cross-line accesses and are not expanded again. The Global RD threshold
+control uses full-stream recency at both capacity boundaries, which can differ
+from demand-only LLC recency even without a set-conflict effect.
+
+`comparison.json` records L1/LLC/memory counts and ratios, component absolute
+errors, per-task MAE/RMSE/maximum error, input/stream/output/implementation hashes,
+cache model, exact commands, tool version, and host wall times. MAE/RMSE weight
+the three ratio components equally; empty input has null ratios/errors and
+status `empty`. CSRD/reference disagreement is preserved with status `mismatch`.
+The CLI exits 0 for `ok`/`empty`, 1 for a model mismatch, and 2 for a failed run
+or invalid input. Input snapshots, both raw result/event pairs, derived config,
+logs, and `failure.json` (on failure) retain the evidence. Truncated events,
+incomplete coverage, malformed counts, mismatched hashes/streams, unsupported
+models, and timeouts cannot produce a successful comparison.
+
+This validates cache decisions on a **shared YARDA-emitted address stream**.
+APE expansion and ELF address resolution are not independently validated here;
+target cache counters or execution traces are not collected. Reports explicitly
+record `execution_validation=not-performed`. Under S1-D, claims remain at the
+abstract-model level until separate execution evidence is available. The current
+smoke timings and host cache results cannot be substituted for GR740 counters.
