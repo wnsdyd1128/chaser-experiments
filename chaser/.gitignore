@@ -1,6 +1,10 @@
 __pycache__/
 .pytest_cache/
 rtems/baseline/build/
+.cache/
+rtems/smoke/.clangd
+rtems/smoke/build/
+rtems/smoke/compile_commands.json
 
 # Immutable execution evidence listed in rtems-v1/manifest.json.
 !/artifacts/baseline/rtems-v1/rtems/baseline/build/

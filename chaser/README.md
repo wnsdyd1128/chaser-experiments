@@ -420,3 +420,75 @@ workloads, RTEMS mapping/repeated measurements, measured labels/thresholds, and
 external PolyBench evaluation are not completed by this bridge. PolyBench is
 reserved as a proposed external test population after model/threshold selection;
 it is not added to training or calibration by this change.
+
+## PLAN 6/7: RTEMS placement and measurement wiring check
+
+`tools.rtems_smoke` connects the offline allocator to real RTEMS singleton
+affinity for the three existing packed/spread/conflict jobs. The supplied
+configuration uses **synthetic U and an uncalibrated threshold** for integration
+verification. It is not a periodic scheduling taskset or a training dataset.
+
+```sh
+python3 -m tools.rtems_smoke prepare configs/rtems-smoke.json --output rtems/smoke/build/check-v1
+python3 -m tools.rtems_smoke editor rtems/smoke/build/check-v1
+python3 -m tools.rtems_smoke run rtems/smoke/build/check-v1 --runs 10 --timeout 60
+```
+
+Preparation rejects incomplete placements, snapshots the source/configuration
+and locality inputs, and builds a SPARC ELF using `waf configure build` and
+`rtems/smoke/wscript`. It copies the installed `/opt/src/rtems/waf` launcher
+into the snapshot and explicitly selects the `/opt/rtems/6` compiler, even if
+the shell defines a different `CC` or `RTEMS_ROOT`. Inputs, the waf launcher,
+wscript, compilation database, compiler and ELF are hashed in `manifest.json`.
+Both the preparation directory and its `runs` directory
+must be new. Use a new directory for subsequent batches. Generated artifacts
+under `rtems/smoke/build/` are ignored by Git.
+
+The `editor` command publishes `rtems/smoke/compile_commands.json` for the
+workspace's `init.c`, using the actual waf compilation command and that
+snapshot's generated `config.h`. Run it again to select a new prepared build.
+The local `.clangd` supplies RTEMS target/newlib settings and removes GCC's
+`-mfpu`, which clangd does not accept. No placeholder headers are used.
+If VS Code retains old diagnostics, run **clangd: Restart language server**.
+The generated editor database is ignored by Git; keep its referenced build
+directory while editing. It can be checked without the editor using:
+
+```sh
+clangd-14 --check="$PWD/rtems/smoke/init.c" --log=error
+```
+
+The target checks the four-core configuration and requested affinity, waits
+until all workers are ready, and releases one job per worker from a common
+uptime epoch. It records the observed start/end cores and checks each job's
+result. Logging occurs after all measured jobs complete. The common epoch
+includes sequential event-dispatch skew; it is not a simultaneous hardware
+release. Each repetition starts a fresh simulator process through `script`;
+`timeout` bounds each process group. This requires the RTEMS toolchain, laysim,
+GNU coreutils and util-linux. In the managed workspace, laysim runs outside the
+sandbox.
+
+`runs/measurements.jsonl` records successful and failed attempts alongside raw
+logs, return codes, UTC start times, host wall time, and log hashes.
+`runs/protocol.json` records the simulator hash, exact command and repeat count.
+Prepared inputs are checked before and after execution. Success requires the
+target's completion marker, complete task records, valid timing, correct
+affinity and successful workload checks; simulator exit code alone is not enough.
+
+Measured fields have deliberately explicit names:
+
+- `cpu_ns`: per-job difference of RTEMS rate-monotonic CPU accounting samples,
+  including sampling overhead but excluding time the worker is preempted.
+  The ten-second active period only enables accounting; expiry fails the run.
+- `start_ns` / `completion_ns`: uptime timestamps bracketing work and accounting.
+- `response_ns`: completion minus the common release epoch, including queueing.
+- `sum_job_cpu_ns`, `sum_response_ns`, `makespan_ns`: respectively CPU-time sum,
+  response-time sum and last completion minus common release.
+
+These are **not** automatically exported as PLAN 5 `Measurement` TET/TAT or RF
+labels. Their aggregation has not been accepted as the research metric contract.
+The baseline locality input describes different linked ELFs from this combined
+executable, so the wiring check cannot establish cache-model accuracy or a
+locality-driven performance improvement. Real experiment collection still needs
+workload families, measured U, analysis of the executed ELF, periodic releases,
+fixed G/C/P topology, and the agreed TET/TAT definitions. Clustered EDF SMP needs
+separate scheduler instances; a partial multi-core affinity mask is insufficient.

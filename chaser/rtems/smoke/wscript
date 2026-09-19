@@ -1,0 +1,52 @@
+"""Build the prepared smoke snapshot with the installed GR740 SDK."""
+
+import json
+from pathlib import Path
+import shlex
+import subprocess
+from waflib import Task
+
+Task.Task.keep_last_cmd = True
+
+top = '.'
+out = 'build'
+
+
+def options(opt):
+    opt.add_option('--rtems-root', default='/opt/rtems/6')
+
+
+def configure(conf):
+    root = Path(conf.options.rtems_root)
+    conf.env.CC = [str(root / 'bin/sparc-rtems6-gcc')]
+    conf.env.AR = [str(root / 'bin/sparc-rtems6-ar')]
+    conf.environ['CC'] = conf.env.CC[0]
+    conf.environ['AR'] = conf.env.AR[0]
+    conf.load('gcc')
+    pc = str(root / 'lib/pkgconfig/sparc-rtems6-gr740.pc')
+    conf.env.CFLAGS = ['-O0', '-g', '-Wall', '-Wextra', '-Werror'] + shlex.split(
+        subprocess.check_output(['pkg-config', '--cflags', pc], text=True))
+    conf.env.CFLAGS += ['-mcpu=leon3', '-mfpu', '-mhard-float']
+    conf.env.LINKFLAGS = shlex.split(
+        subprocess.check_output(['pkg-config', '--libs', pc], text=True))
+    conf.env.LINKFLAGS += ['-mcpu=leon3', '-mfpu', '-mhard-float']
+
+
+def compilation_database(bld):
+    database = bld.bldnode.make_node('compile_commands.json')
+    rows = {row['file']: row for row in json.loads(database.read())} if database.exists() else {}
+    for group in bld.groups:
+        for generator in group:
+            for task in getattr(generator, 'compiled_tasks', []):
+                if hasattr(task, 'last_cmd'):
+                    source = task.inputs[0].abspath()
+                    rows[source] = {'directory': task.get_cwd().abspath(),
+                                    'file': source, 'arguments': task.last_cmd}
+    database.write(json.dumps(list(rows.values()), indent=2) + '\n')
+
+
+def build(bld):
+    bld.program(source=['source/init.c', 'source/workload.c'],
+                target='workload.exe', includes=['.', 'source'],
+                lib=['rtemsbsp', 'rtemscpu', 'm'])
+    bld.add_post_fun(compilation_database)
