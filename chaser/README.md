@@ -497,8 +497,8 @@ separate scheduler instances; a partial multi-core affinity mask is insufficient
 
 `tools.compare_s1` compares one caller-prepared, single-task APE/linked ELF using
 the actual cache geometry and an independent Python resident-cache LRU replay.
-It implements the comparison foundation; the full S1 workload sweeps and target
-execution validation remain subsequent work.
+The source-derived workload sweep below uses this comparison foundation. Target
+cache-counter/trace validation remains subsequent work.
 
 ```sh
 python3 -m tools.compare_s1 TASK_ID \
@@ -558,3 +558,65 @@ target cache counters or execution traces are not collected. Reports explicitly
 record `execution_validation=not-performed`. Under S1-D, claims remain at the
 abstract-model level until separate execution evidence is available. The current
 smoke timings and host cache results cannot be substituted for GR740 counters.
+
+## S1 load-only workload sweep
+
+After `sh scripts/verify` builds the analyzer/plugin and verifies the toolchain,
+run the full 25-case cold-model suite into a new directory:
+
+```sh
+python3 -m tools.run_s1_suite --output rtems/s1/build/evaluation-v1 \
+  --sweeps 3 --max-references 250000 --timeout 60
+python3 -m tools.plot_s1 rtems/s1/build/evaluation-v1/suite.json \
+  --output rtems/s1/build/evaluation-v1/plots
+```
+
+The plotting command uses the environment's Matplotlib installation. For a small
+probe, select `--cases packed_8 spread_8 conflict_4 conflict_5 mean_uniform mean_mixed`.
+The default three sweeps expose cold plus two repeated cycles; they are not three
+independent target runs. The suite rejects existing output directories, records
+partial selections explicitly, and preserves each failure while attempting later
+cases. Exit codes are 0 for all selected cases passing, 1 for any failed case or
+CSRD/reference mismatch, and 2 for invalid input/setup. Global RD prediction error
+is an experimental result and does not fail the suite.
+
+`chaser.s1_workloads` generates a self-contained C source per case. The snapshotted
+`rtems/s1/Makefile` builds that exact source into LLVM/APE and a SPARC RTEMS ELF;
+APE bounds are never edited after extraction. The analyzed function returns an
+accumulator and accesses one aligned volatile byte array using loads only.
+Preparation and checksum checking are outside that function. The suite checks
+the emitted address sequence against each case's logical offsets, load operation,
+alignment, total access count and complete analysis coverage. All RD/CSRD remains
+in C++; line Global RD uses the linked fully associative control described above.
+
+The catalog preserves the original RMW baseline and adds:
+
+- Packed 8 elements; spread/conflict pairs for 3, 4, 5 and 8 distinct lines.
+- Contiguous 32-byte-stride cycles of 256, 448, 511, 512, 513, 576, 1024, 32768,
+  61440, 65535, 65536, 65537, 69632 and 73728 lines.
+- Two distributions with finite mean RD 511, the same 1024 cold lines and the
+  same total references/footprint. `mean_uniform` revisits a 512-line cycle and
+  then reads 512 new lines once. `mean_mixed` revisits a singleton and a disjoint
+  1023-line cycle equally often. At three sweeps their finite histograms are
+  `{511:4092}` and `{0:2046,1022:2046}`, respectively. The `sweeps` parameter controls
+  reuse population here, rather than repeating the entire mixed pattern.
+
+Each case retains source, LLVM, extracted APE, executable, build commands/logs,
+element RD, both linked hierarchy analyses/events and the comparison report.
+`inputs.json` records compiler versions, support/tool hashes and limits;
+`suite.json` adds CA values, cold fractions, histograms, counts, ratios, source
+coverage and per-level error aggregates. `results.csv` is the workload error
+table. Aggregate MAE/RMSE weights evaluated workloads equally, including model
+mismatches; failed cases remain listed and are excluded from numerical errors.
+`resources.json` records operational wall time, disk use and Linux process RSS.
+Full event export and reference replay make these costs unsuitable as analyzer-only
+scalability measurements. Generated raw runs under `rtems/s1/build/` are ignored.
+
+The suite validates modeled array accesses. Matching C/APE/ELF and logical offset
+checks do not establish actual CPU trace equality: target stack/instruction
+accesses, warm state after preparation, and compiler effects remain outside this
+cold model. The checksum-capable ELF does not provide cache counters, TET/TAT or
+scheduling labels. S1 conclusions remain within abstract-model validation.
+
+The first completed 25-case model sweep, error table, scatter and evidence hashes
+are summarized in [S1 model evaluation](artifacts/s1/model-v1/README.md).

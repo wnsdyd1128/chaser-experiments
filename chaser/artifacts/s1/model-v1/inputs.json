@@ -1,0 +1,173 @@
+{
+  "cases": [
+    {
+      "distinct": 8,
+      "family": "layout",
+      "id": "packed_8",
+      "stride": 1
+    },
+    {
+      "distinct": 3,
+      "family": "associativity",
+      "id": "spread_3",
+      "stride": 32
+    },
+    {
+      "distinct": 3,
+      "family": "associativity",
+      "id": "conflict_3",
+      "stride": 4096
+    },
+    {
+      "distinct": 4,
+      "family": "associativity",
+      "id": "spread_4",
+      "stride": 32
+    },
+    {
+      "distinct": 4,
+      "family": "associativity",
+      "id": "conflict_4",
+      "stride": 4096
+    },
+    {
+      "distinct": 5,
+      "family": "associativity",
+      "id": "spread_5",
+      "stride": 32
+    },
+    {
+      "distinct": 5,
+      "family": "associativity",
+      "id": "conflict_5",
+      "stride": 4096
+    },
+    {
+      "distinct": 8,
+      "family": "associativity",
+      "id": "spread_8",
+      "stride": 32
+    },
+    {
+      "distinct": 8,
+      "family": "associativity",
+      "id": "conflict_8",
+      "stride": 4096
+    },
+    {
+      "distinct": 256,
+      "family": "capacity",
+      "id": "capacity_256",
+      "stride": 32
+    },
+    {
+      "distinct": 448,
+      "family": "capacity",
+      "id": "capacity_448",
+      "stride": 32
+    },
+    {
+      "distinct": 511,
+      "family": "capacity",
+      "id": "capacity_511",
+      "stride": 32
+    },
+    {
+      "distinct": 512,
+      "family": "capacity",
+      "id": "capacity_512",
+      "stride": 32
+    },
+    {
+      "distinct": 513,
+      "family": "capacity",
+      "id": "capacity_513",
+      "stride": 32
+    },
+    {
+      "distinct": 576,
+      "family": "capacity",
+      "id": "capacity_576",
+      "stride": 32
+    },
+    {
+      "distinct": 1024,
+      "family": "capacity",
+      "id": "capacity_1024",
+      "stride": 32
+    },
+    {
+      "distinct": 32768,
+      "family": "capacity",
+      "id": "capacity_32768",
+      "stride": 32
+    },
+    {
+      "distinct": 61440,
+      "family": "capacity",
+      "id": "capacity_61440",
+      "stride": 32
+    },
+    {
+      "distinct": 65535,
+      "family": "capacity",
+      "id": "capacity_65535",
+      "stride": 32
+    },
+    {
+      "distinct": 65536,
+      "family": "capacity",
+      "id": "capacity_65536",
+      "stride": 32
+    },
+    {
+      "distinct": 65537,
+      "family": "capacity",
+      "id": "capacity_65537",
+      "stride": 32
+    },
+    {
+      "distinct": 69632,
+      "family": "capacity",
+      "id": "capacity_69632",
+      "stride": 32
+    },
+    {
+      "distinct": 73728,
+      "family": "capacity",
+      "id": "capacity_73728",
+      "stride": 32
+    },
+    {
+      "distinct": 1024,
+      "family": "distribution",
+      "id": "mean_uniform",
+      "stride": 32
+    },
+    {
+      "distinct": 1024,
+      "family": "distribution",
+      "id": "mean_mixed",
+      "stride": 32
+    }
+  ],
+  "command_timeout_seconds": 60.0,
+  "max_references": 250000,
+  "schema_version": 1,
+  "sha256": {
+    "/workspace/experiments/chaser/chaser/s1_suite.py": "ad57527585980fff5e90e4ebf8682d50b6b3103c5c5030422f40eeba393c3a7e",
+    "/workspace/experiments/chaser/chaser/s1_workloads.py": "c417bf729751b352156a75ada7ea59a86e3046c3e480f8c6aff531440023cb11",
+    "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+    "/workspace/experiments/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so": "d804273552901f4e0b0e8f1dfaabbaf26c52a999ccffd1f6bed5f7cccf10f071",
+    "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/build-support/Makefile": "dec27acc3892ff3fcbe3c3f67fb7932ce06a2995a95bebe32c0947e4ae04a387",
+    "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/build-support/cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+    "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/build-support/init.c": "96cd96734568bfb608914be3e43e04c57754c153829eb870d62a56c3a046cfa8"
+  },
+  "sweeps": 3,
+  "toolchain": {
+    "/opt/rtems/6/bin/sparc-rtems6-gcc": "sparc-rtems6-gcc (GCC) 13.3.0 20240521 (RTEMS 6, RSB b1aec32059aa0e86385ff75ec01daf93713fa382-modified, Newlib 1b3dcfd)\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+    "clang-14": "Ubuntu clang version 14.0.0-1ubuntu1.1\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/bin\n",
+    "make": "GNU Make 4.3\nBuilt for x86_64-pc-linux-gnu\nCopyright (C) 1988-2020 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n",
+    "opt-14": "Ubuntu LLVM version 14.0.0\n  \n  Optimized build.\n  Default target: x86_64-pc-linux-gnu\n  Host CPU: znver3\n"
+  }
+}

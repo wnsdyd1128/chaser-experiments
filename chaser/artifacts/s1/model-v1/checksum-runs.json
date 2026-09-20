@@ -1,0 +1,59 @@
+[
+  {
+    "case": "packed_8",
+    "argv": [
+      "timeout",
+      "60s",
+      "script",
+      "-q",
+      "-e",
+      "-c",
+      "/opt/laysim-gr740/laysim-gr740-cli -r -core0 /workspace/experiments/chaser/rtems/s1/build/evaluation-v1/packed_8/build/workload.exe",
+      "/workspace/experiments/chaser/rtems/s1/build/evaluation-v1/packed_8/checksum.log"
+    ],
+    "returncode": 0,
+    "wall_seconds": 0.833024347666651,
+    "elf_sha256": "d65422db7b51c12ab4357b9202f36355eafea3d84feffc09dbadec4cdc7222fb",
+    "log_sha256": "bdea181722310d8a1fdfc579a5fb6ac90a12ff672baa2274c641e82b0478f4d7",
+    "passed": true,
+    "scope": "functional checksum only; no cache trace/counters or TET/TAT"
+  },
+  {
+    "case": "mean_mixed",
+    "argv": [
+      "timeout",
+      "60s",
+      "script",
+      "-q",
+      "-e",
+      "-c",
+      "/opt/laysim-gr740/laysim-gr740-cli -r -core0 /workspace/experiments/chaser/rtems/s1/build/evaluation-v1/mean_mixed/build/workload.exe",
+      "/workspace/experiments/chaser/rtems/s1/build/evaluation-v1/mean_mixed/checksum.log"
+    ],
+    "returncode": 0,
+    "wall_seconds": 0.8678217479027808,
+    "elf_sha256": "2933e40cb234dd519520a096d46d1d88081ae9e725ed6932c0d8d4bface98f48",
+    "log_sha256": "64fb09deaaa318b2bdd2edb0e730b03e15db23ffea5ff7f2a84fb9d374360b4c",
+    "passed": true,
+    "scope": "functional checksum only; no cache trace/counters or TET/TAT"
+  },
+  {
+    "case": "capacity_65537",
+    "argv": [
+      "timeout",
+      "60s",
+      "script",
+      "-q",
+      "-e",
+      "-c",
+      "/opt/laysim-gr740/laysim-gr740-cli -r -core0 /workspace/experiments/chaser/rtems/s1/build/evaluation-v1/capacity_65537/build/workload.exe",
+      "/workspace/experiments/chaser/rtems/s1/build/evaluation-v1/capacity_65537/checksum.log"
+    ],
+    "returncode": 0,
+    "wall_seconds": 2.544284399598837,
+    "elf_sha256": "f127bdd1430e52462f57280f5775f563c4aa16801b28da38c6fd002f43ea2abe",
+    "log_sha256": "5feb4b8147b45cd3d9accec7e8786fb4b0f5cb1742a8e19d4c41aa7a207b4970",
+    "passed": true,
+    "scope": "functional checksum only; no cache trace/counters or TET/TAT"
+  }
+]

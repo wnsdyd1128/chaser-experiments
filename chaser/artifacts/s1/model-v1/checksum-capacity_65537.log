@@ -1,0 +1,67 @@
+Script started on 2026-09-19 16:12:35+00:00 [<not executed on terminal>]
+laysim for GR740 Quad Core Processor CLI v3.0 by layright
+
+CORE#0 RAM file is loaded - /workspace/experiments/chaser/rtems/s1/build/evaluation-v1/capacity_65537/build/workload.exe
+   - .text, addr: 0x00000000, size 154624 bytes
+   - .tdata, addr: 0x00025C00, size 12 bytes
+   - .tbss, addr: 0x00025C0C, size 28 bytes (not loaded, just info.)
+   - .rtemsroset, addr: 0x00025C10, size 128 bytes
+   - .noinit, addr: 0x00025C90, size 8320 bytes (not loaded, just info.)
+   - .rtemsstack, addr: 0x00027D40/0x00025C90, size 16384 bytes (not loaded, just info.)
+   - .data, addr: 0x0002BD40, size 1296 bytes
+   - .bss, addr: 0x0002D000, size 2102928 bytes (not loaded, just info.)
+   - Detect RTEMS v5.1(SMP) with thread information
+Only GR740 CORE#0 RAM file is loaded, starts from RAM
+Set CORE#0 %sp/%fp : 0x07FFFFF0/0x08000000
+Waking CPU 1
+Waking CPU 2
+Waking CPU 3
+S1 checksum=196611 expected=196611 PASS
+
+[ RTEMS shutdown ]
+CPU: 3
+RTEMS version: 6.0.0.0a46769ba42d3476b0f37a85db49b3276658d293
+RTEMS tools: 13.3.0 20240521 (RTEMS 6, RSB b1aec32059aa0e86385ff75ec01daf93713fa382-modified, Newlib 1b3dcfd)
+executing thread ID: 0x0a010001
+executing thread name: UI1 
+
+CORE#3 halts because of Error Mode [74179214cycles/2.34097sec]
+
+ Performance statistics for CORE#0
+   Cycles       : 74179258
+   Instructions : 3135253
+   Overall CPI  : 2.27
+   CORE#0 performance (250MHz) : 110.32 MOPS (110.32 MIPS, 0.00 MFLOPS)
+   Simulated time              : 296.72 ms
+   Processor utilization       : 9.58 %
+
+ Performance statistics for CORE#1
+   Cycles       : 74179245
+   Instructions : 1132210
+   Overall CPI  : 6.27
+   CORE#1 performance (250MHz) : 39.89 MOPS (39.89 MIPS, 0.00 MFLOPS)
+   Simulated time              : 296.72 ms
+   Processor utilization       : 9.56 %
+
+ Performance statistics for CORE#2
+   Cycles       : 74179307
+   Instructions : 601511
+   Overall CPI  : 11.80
+   CORE#2 performance (250MHz) : 21.19 MOPS (21.19 MIPS, 0.00 MFLOPS)
+   Simulated time              : 296.72 ms
+   Processor utilization       : 9.57 %
+
+ Performance statistics for CORE#3
+   Cycles       : 74179214
+   Instructions : 48328104
+   Overall CPI  : 1.53
+   CORE#3 performance (250MHz) : 162.88 MOPS (162.88 MIPS, 0.00 MFLOPS)
+   Simulated time              : 296.72 ms
+   Processor utilization       : 100.00 %
+
+ Performance of laysim-gr740
+   Real-time performance       : 12.67 %
+   laysim-gr740 performance    : 22.72 MIPS
+   Wall clock                  : 2.34 s
+
+Script done on 2026-09-19 16:12:38+00:00 [COMMAND_EXIT_CODE="0"]

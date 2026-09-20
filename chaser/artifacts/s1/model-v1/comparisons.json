@@ -1,0 +1,4752 @@
+{
+  "capacity_1024": {
+    "analysis_ids": [
+      "f43453ad7ca95c629f00d46b597cb2b0d40a7be577527b0d3f2f55a4f05d1384",
+      "6b37e924b670510031d3d0bd4ab8d44814668b41d255ddb72315d72c459ff759"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        0,
+        2048,
+        1024
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        0,
+        2048,
+        1024
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "0c8b0ee4cce5d27b9d5387de3debff1b9b4d8e87228c79f23d2ee53baa9b08f3",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "d9065b63a43b1b6233f1b97cca2642732c89ecb8f59b1d5a5329e73979dad404",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "4de7570985fb31794f049b2a6a076205ddd3ab8c963d5a0553ec1cf8e4807cbf"
+    },
+    "modeled_accesses": 3072,
+    "reference": {
+      "counts": [
+        0,
+        2048,
+        1024
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_1024/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_1024/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_1024/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_1024/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_1024/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "e49832f35fdace9a8fb665f808ca829a8b3c0d2752a5e2d614bb69354229734b",
+        "name": "actual",
+        "result_sha256": "86098ad7cf3b84e99c687d1a66292562eebdfeaae5dff31d253c413e14da0cd8",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:26.988182+00:00",
+        "wall_seconds": 0.06398166110739112
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_1024/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_1024/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_1024/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_1024/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_1024/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "405070780f0ecc98b7b735aacc37d1068387c56608d4297fbb91177ad2bd45ce",
+        "name": "global",
+        "result_sha256": "8b2bc132efddbb1406e647b8df468b84798ea8cfc9df5a7e2f3cae5ccf971c4b",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:27.085907+00:00",
+        "wall_seconds": 0.06389291305094957
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 3072,
+    "status": "ok",
+    "stream_sha256": "8efef611dbcaa60962e2359f831f89cff70d98cc1d9fa8a0e7338b125a04c909",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "capacity_256": {
+    "analysis_ids": [
+      "1722c9c45701a00895c708b6e224d7cf1bf9fcdead1b33d1127b151b6e01d328",
+      "520411799fd4ec6fb51bfb1a12aa557b7e61cff69ce986b9f90e58d38942b096"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        512,
+        0,
+        256
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        512,
+        0,
+        256
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "cb7fe8c44e6c483431258c97a0e6722e72beac6ec7120b24f24ded6dc0a202b8",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "32d4c628c87e5a02568bf1c02bcc38cf9bd7c207db6276651ad8412ec10430b8",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "0249bc08731d25ecf725968be5a56e0d2cce21e1fec68ba5f4c0f96bb8fb981b"
+    },
+    "modeled_accesses": 768,
+    "reference": {
+      "counts": [
+        512,
+        0,
+        256
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_256/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_256/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_256/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_256/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_256/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "60dedb210e0eec462a132aec642bfdae69ef1e3804812d30a08aaa99d3aad3eb",
+        "name": "actual",
+        "result_sha256": "4e0033f1040e4159db4e15f4e421a0e16312037341ebf82557df8ffc45bc0264",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:24.110957+00:00",
+        "wall_seconds": 0.03194976784288883
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_256/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_256/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_256/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_256/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_256/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "b52b2dcfa8cad23d5f74f28a6bc8c0e441ef5a04a4869294843549e4d7d61f40",
+        "name": "global",
+        "result_sha256": "55b2a77af975ff7b494e6b4fdf31e7b73ab315e03149f6f783d12edaa2290526",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:24.156190+00:00",
+        "wall_seconds": 0.03178017819300294
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 768,
+    "status": "ok",
+    "stream_sha256": "f3425891efec64b7ed2894fa36fe135bbe1faa6481e7d67c917fd3e114430aa2",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "capacity_32768": {
+    "analysis_ids": [
+      "b435eafc1798b9e35fca86621d5b74e45a8af207d5a5f6c8429f4b7b768bb3dc",
+      "7c98f14511414cc6495688f04f49360c83b74a946566af639d52144e4618bcb2"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        0,
+        65536,
+        32768
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        0,
+        65536,
+        32768
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "cf93ef76e9c705db5d0b742d2c765d81934fab891eeb0e1f3604b04efaa5d6b4",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "c87c5590d0bcee43cec44baa8f21107c770040267bea3654c95db8e9d264f8a3",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "94b93107fa935fba19b401d08925fc1f84f22e1ac68582e2ff0cac9f99dde11a"
+    },
+    "modeled_accesses": 98304,
+    "reference": {
+      "counts": [
+        0,
+        65536,
+        32768
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_32768/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_32768/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_32768/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_32768/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_32768/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "0f13a3f0722e584cb5e4295a6e2745163ab05ce35ba518f8b6bb55a6475a1cf7",
+        "name": "actual",
+        "result_sha256": "ab46d1a0244fc731115fa383bb5e09d9bfcf2436d6da6862cccd456383103e10",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:27.494709+00:00",
+        "wall_seconds": 1.0162006602622569
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_32768/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_32768/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_32768/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_32768/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_32768/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "ba5c684538a8cb19c06b0f6d6e29cc9112bf6f98d673e9ae0a2f61ef0fa0f372",
+        "name": "global",
+        "result_sha256": "4c187798ee7b3190d604ce9a354715acd7805145f7ee7f13a30fbb843d60ed7a",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:29.506096+00:00",
+        "wall_seconds": 0.9660098049789667
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 98304,
+    "status": "ok",
+    "stream_sha256": "03e2d85d2f40ca24c60f877b681f13924f539dfd1c429d34db71a907b6e005ae",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "capacity_448": {
+    "analysis_ids": [
+      "5e51353a53310f3d4937537f2fb0b661c0ed176ed8d6ccaca7a0fb073d132fc0",
+      "806d98147097887764144711d05ae356497a31a8fb4db0b78621da12f1550b60"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        896,
+        0,
+        448
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        896,
+        0,
+        448
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "39cc7c608dc2bd560de8e59fa2ff2671682ccdb0a5efe8a9fcb55a4212a71342",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "1bde4e7b0f8b72437ec3b4460148ca17a829df6672f223598720dbab78d84a2a",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "a3a8bd17b9c00f12beac28b0cf3d62ba662f5296fa2252d338f32d0aa7de090f"
+    },
+    "modeled_accesses": 1344,
+    "reference": {
+      "counts": [
+        896,
+        0,
+        448
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_448/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_448/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_448/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_448/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_448/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "5354afcc99238a38d9e4aee885b0c26ac1aa5b1e136c1e1a64bbbc38b5709e2d",
+        "name": "actual",
+        "result_sha256": "ea8e33d807168815ece24d885ccb5c636715b3605dab269d0bebbec546cf9fcf",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:24.540147+00:00",
+        "wall_seconds": 0.03182515315711498
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_448/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_448/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_448/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_448/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_448/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "4d0eac63b3b471c7e5ca15e5b6f467188bc3bf542647fd9000a3d723b1895b3a",
+        "name": "global",
+        "result_sha256": "b793aab489f2a3ddf56504f3c7441558da5c31131c0ebae62826d42d3f5f0ac2",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:24.587862+00:00",
+        "wall_seconds": 0.06393473176285625
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 1344,
+    "status": "ok",
+    "stream_sha256": "83c0d5c6029f1d0d0dc1ad1a4d80d007f3e51f8db8f8fa1090dc0c2436edec1c",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "capacity_511": {
+    "analysis_ids": [
+      "2b0b8b5aa140f46b504a2843ffe2fe13c65e465d6ee920dd55e491fe1eb41a57",
+      "33ede1f1dcc2a99cb59767a1879f11171c7873b6f0bebbc63ca966de05bc70b5"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        1022,
+        0,
+        511
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        1022,
+        0,
+        511
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "3ca41fc7dd36e9c21295438709c7da6fbdfbea70d084aaeb0f9f9a0e599c1cf4",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "547706143794fd4c99f0c1157ea8c7c62d4d4bc8e0b51224ec4a89edf1a3d83e",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "8963c55cb67c5dd9dfb0fdc862382f7c68ac031d38d1e2cd9511d9b0706cf26f"
+    },
+    "modeled_accesses": 1533,
+    "reference": {
+      "counts": [
+        1022,
+        0,
+        511
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_511/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_511/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_511/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_511/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_511/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "083b81467cf334b47a8d7d6f94d1702d2c7094b4b0d170a3b3a2a0616c1cc9ab",
+        "name": "actual",
+        "result_sha256": "f13b87d72e7e9030e5127bfb42aebcae17ae676db84a302a48079c77a38cbab2",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:25.012579+00:00",
+        "wall_seconds": 0.03223639912903309
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_511/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_511/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_511/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_511/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_511/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "337ab9186b087a38a060ea67ae7f411295fa13d69326bec59046b78023ba3824",
+        "name": "global",
+        "result_sha256": "9f8c07c37947635cff87a2d1812d44deb4573cbae19c49f6593826a692c69929",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:25.063897+00:00",
+        "wall_seconds": 0.03182370122522116
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 1533,
+    "status": "ok",
+    "stream_sha256": "6e8845865a3fdfd4ddbf8c8b490f982807864187b99eda0916accf9ade174817",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "capacity_512": {
+    "analysis_ids": [
+      "803b6ebba8b8e2b1e979da932ede7ec55df68dc0685389ed511241f5eb9c119d",
+      "5b6445a568484186e1a96188dec4f3c6499bdca988e8a33c1d10b25b4fc86ae5"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        1024,
+        0,
+        512
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        1024,
+        0,
+        512
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "f55da34b2e58335e8b333efaec65609a65b553a8a90dc194a45cf5ce12518ff0",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "0bb05196d8ca62c38170cf392828630bcd161a0bb0cc138bf5be173fbd9dc05e",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "f42c33994d08a4c6c99fd8357a48c25a184603dd7827639a050dc7c36ac7658a"
+    },
+    "modeled_accesses": 1536,
+    "reference": {
+      "counts": [
+        1024,
+        0,
+        512
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_512/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_512/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_512/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_512/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_512/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "de45e6967801a262940a685f8ddcd8f3e7b019284d7a3ffaec97cb3bffa6cb61",
+        "name": "actual",
+        "result_sha256": "0475a2f8650852174079d0a3a76dd19fef2511fe77b373c677e340984c21e8e3",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:25.456039+00:00",
+        "wall_seconds": 0.06387505913153291
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_512/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_512/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_512/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_512/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_512/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "46b99882ca557ea4b8f843c28512806e7f603bf4736587d6b36f03e6a715141d",
+        "name": "global",
+        "result_sha256": "983ad1add62d1c182035a08535ba33cef6d1a5a2c5d8cc189c8e8acefde5737d",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:25.542085+00:00",
+        "wall_seconds": 0.06396418809890747
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 1536,
+    "status": "ok",
+    "stream_sha256": "a5e323b3be9cf0ed461b4711a32085577bd9505bdaf9f62ab8c716d02f7f6861",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "capacity_513": {
+    "analysis_ids": [
+      "d8950b55ddc20c6698ea1e1ec1537081356073805cab07825f5402bdf2ddabc2",
+      "234e4f5bf9f8c183d5be48c004e3cbc9c1e7fbb18a0f2a2f5d8392ea78842583"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        1016,
+        10,
+        513
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6601689408706952,
+        0.00649772579597141,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        0,
+        1026,
+        513
+      ],
+      "error": {
+        "absolute_error": [
+          0.6601689408706952,
+          0.6601689408706952,
+          0.0
+        ],
+        "mae": 0.44011262724713013,
+        "max_absolute_error": 0.6601689408706952,
+        "rmse": 0.5390256830556008
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "4c4bed013f4749bc2ecfa1547444af77d9666b70e7e38571f1754309d24e555e",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "87c0f12e02a474fe5c1638a79e230984cf8c673a23fa3f8f761d48cd7f02787e",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "5a9e919a1756230bce303dce3f44832a995f08b145216dc73ed9a64fd38fb9b4"
+    },
+    "modeled_accesses": 1539,
+    "reference": {
+      "counts": [
+        1016,
+        10,
+        513
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6601689408706952,
+        0.00649772579597141,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_513/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_513/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_513/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_513/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_513/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "c1bd132ba098859d011b3f36958c90bb84817f18fc4a17183996ae5bf52fd90f",
+        "name": "actual",
+        "result_sha256": "beaec5c6290b194d6283070677b9db8422a54218cd28a69b11ccfe09b0db7945",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:25.966074+00:00",
+        "wall_seconds": 0.06397786317393184
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_513/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_513/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_513/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_513/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_513/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "d8d151fa6ac691b1b487dd1db845ff0a5c460e688c113a422e38e7b29b1b3795",
+        "name": "global",
+        "result_sha256": "f062cfa8ca33bcef6b3bee93920aa2dc2731f79a4273b5bfa0632f7c6a104113",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:26.050966+00:00",
+        "wall_seconds": 0.06390124885365367
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 1539,
+    "status": "ok",
+    "stream_sha256": "9f40c1773801bce9e0962b9416e58c19af208b270b1b53e4d6b79b44ba2d4ba8",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "capacity_576": {
+    "analysis_ids": [
+      "05aea3119bfed7f7617752a3133d01042e0cc76e83cea119f25ec05a14e2eb1f",
+      "660d98720039d6f2c19943c3d5bf611868238cdac7e977b1acf4d2bf5e8a6f7a"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        512,
+        640,
+        576
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.2962962962962963,
+        0.37037037037037035,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        0,
+        1152,
+        576
+      ],
+      "error": {
+        "absolute_error": [
+          0.2962962962962963,
+          0.2962962962962963,
+          0.0
+        ],
+        "mae": 0.19753086419753085,
+        "max_absolute_error": 0.2962962962962963,
+        "rmse": 0.2419249128674744
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "fa0be69944bfd21208380961f828e017ff8e6d1fa5c831953b0964c294d6d90d",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "c67a3094d756431b4b8dc8222be8713916077e7deddace03d476dcc9dfb3977f",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "44ace9fd30c892dcaeb4fe7c4d4069e983fac95c89e0837fcd17622107d271db"
+    },
+    "modeled_accesses": 1728,
+    "reference": {
+      "counts": [
+        512,
+        640,
+        576
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.2962962962962963,
+        0.37037037037037035,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_576/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_576/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_576/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_576/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_576/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "5460fa325897bcc7b6b3327591d45876471cf7bb8551977ad65a5290d9d0ded7",
+        "name": "actual",
+        "result_sha256": "aa5e97ccd29cc52c801e3704cfef2a0681b36a262c42bc3341fd0e5ff813eb84",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:26.474473+00:00",
+        "wall_seconds": 0.0639364249072969
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_576/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_576/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_576/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_576/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_576/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "92e388ed9a460d5b89ed7358972574d8fb3d81f5222be7361d27059b7650de0f",
+        "name": "global",
+        "result_sha256": "2ac9a04466a17a02a929a9c6abc936606d8778e42ec0cf880db154465755c6d7",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:26.557624+00:00",
+        "wall_seconds": 0.06392217800021172
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 1728,
+    "status": "ok",
+    "stream_sha256": "2c0a373fdc4658dce2d3777ed0fb36a984999acd84fe8f98b96adf8873b7b3fa",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "capacity_61440": {
+    "analysis_ids": [
+      "120b9273c1f0e138314071938832b2294dc28f3a8088ec7f0fa0b79a179ec7ec",
+      "c901f5aa04c826a28923234d5361d747799a079e8211599855f8f9779a28757c"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        0,
+        122880,
+        61440
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        0,
+        122880,
+        61440
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "115a5abd9da6c1b9a5f7b4f65c86e5b4b66a3d8a1da520cc0ec4126fdc7cd616",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "0a0ffdeb2b70a789a23bbc1fe4476acfd9bbabb2b68dc057d76610b739d32d5d",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "5ae29bd8f2137654750fb2b9ab0ccb2c9883b8a912ace286f622cc11d04265df"
+    },
+    "modeled_accesses": 184320,
+    "reference": {
+      "counts": [
+        0,
+        122880,
+        61440
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_61440/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_61440/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_61440/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_61440/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_61440/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "4cd106464b663562cf05aa02b382ddd74906ed596ec0fcafdf512aca2aad12b8",
+        "name": "actual",
+        "result_sha256": "abad8ebe62ba322f97b4bdc5faf9fa2791666d4b925daa40dc30c11c867e0bc5",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:32.486365+00:00",
+        "wall_seconds": 1.8180930628441274
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_61440/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_61440/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_61440/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_61440/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_61440/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "4ae72ed0106743820efa26102860e227c49d6f591ed4497d868244a6e9806b8e",
+        "name": "global",
+        "result_sha256": "4ce004afb90d91af76b1e1a061e9ce0380c0eb23ad8a83b6b3533347a1049cbe",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:36.148825+00:00",
+        "wall_seconds": 1.8682289998978376
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 184320,
+    "status": "ok",
+    "stream_sha256": "558d44830ae8d47513322d7c6b02a0272432a3695aded22bfc6194deb9714987",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "capacity_65535": {
+    "analysis_ids": [
+      "97890ba41b2906ce4a09cacf239ffe08d819c4aa507eee8062f284a2f243a902",
+      "3f0234a1dc57df7365eb0598bc86f5e30d44080edf0ba29f6e322e57f2ef2c2c"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        0,
+        131070,
+        65535
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        0,
+        131070,
+        65535
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "ec21e1d50edeb5f796434e19a109a397ef2db1d8536f8b8d25efd7c6b32d9228",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "961a64f7e9b331e73180676b6d39f01ad0eabc6f3043f2f6a7b5832d41c9efb9",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "b00dfa324ebe7e96d465a019c766698d8d16b0093f3fa4eb87917314c4dd787e"
+    },
+    "modeled_accesses": 196605,
+    "reference": {
+      "counts": [
+        0,
+        131070,
+        65535
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65535/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65535/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65535/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65535/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65535/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "cb4dd0672c98b4a37fb5927cd271ddcc24105c38b2c3a536805d73b3abeadfd4",
+        "name": "actual",
+        "result_sha256": "ede97cd38b493bbb54cd928c81cd540cbd9fcb1b5ed6622bd80368a93a1573f0",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:41.505862+00:00",
+        "wall_seconds": 1.9686263930052519
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65535/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65535/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65535/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65535/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65535/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "3bc85f6d670302350f30c0eec5e40e86ac89c85575f19b23d8c8d42badf7b462",
+        "name": "global",
+        "result_sha256": "1da0056277c2063b0ded62e61e266ea0b0184387c4971e448275d6d9c987f951",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:45.439347+00:00",
+        "wall_seconds": 1.9688118482008576
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 196605,
+    "status": "ok",
+    "stream_sha256": "5bb15936cd9e9743de5d3c7d9e7107a303d6e6daa07d55577a6fb42dc09d4056",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "capacity_65536": {
+    "analysis_ids": [
+      "fe65e87363c44b89d8c9a0945331c51f357e631bff4c41fadec2d2c84bc183da",
+      "1af88652ed11205dc836716d014f9e48e06ddeb74a7ffd57a1d9739339ebda2b"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        0,
+        131072,
+        65536
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        0,
+        131072,
+        65536
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "a4d93cf2a3501fcf3e5d7afb627a6d14ba2e624466996a5d626099bd8af576bb",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "8d4f4199be9ac3c2cd06ec77dd50e6b2d26c14f6a6938e044b5f8eed03a0bc8d",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "5f910e72588db3c97224ffd4633f80690a2f22bd6659d3bb79984ccbe22c3197"
+    },
+    "modeled_accesses": 196608,
+    "reference": {
+      "counts": [
+        0,
+        131072,
+        65536
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65536/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65536/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65536/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65536/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65536/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "0a0eb9a73f115e27e8b368ebe0031b4cea9509abf53752d1d3e831847283c399",
+        "name": "actual",
+        "result_sha256": "1bcb199cee4f27da7e130e0b04706c0df978830424d98c679f0be29d02e057be",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:51.098684+00:00",
+        "wall_seconds": 1.9689514506608248
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65536/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65536/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65536/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65536/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65536/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "f59902629ea0a2d86a0e47cc13e94211d6d6435e0d2c45ad29997340c1ffd7de",
+        "name": "global",
+        "result_sha256": "d889cfb7262c8420be8dff33fcc3fd0ea0e94617942660d2c1ade0eca9755314",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:55.047995+00:00",
+        "wall_seconds": 1.9691354343667626
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 196608,
+    "status": "ok",
+    "stream_sha256": "3bbf82dda60b8165002720144a9e1b489d9c77ae07a76fbc82a5e9fd6b5d03f5",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "capacity_65537": {
+    "analysis_ids": [
+      "ec76009b63f07cc84f84c8ad01ae6fd9efd2f620e3ce7e9772194cf72e7972e0",
+      "ee1e8d7e43dca19be9bc47ec76fe5e87573e52dee22f29e6eb63248d45930401"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        0,
+        131064,
+        65547
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666158048125487,
+        0.3333841951874514
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        0,
+        0,
+        196611
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.6666158048125487,
+          0.6666158048125486
+        ],
+        "mae": 0.44441053654169904,
+        "max_absolute_error": 0.6666158048125487,
+        "rmse": 0.5442895254218303
+      },
+      "ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "5365d85813086353465b991bf52dd217e0ae1cb21933e8934863d59937833922",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "f485966b86c766133b6c03efdb26a29a08ef994fb0a90a09ad73d76175271e76",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "47be0b88d2982a21abdb712e0a46599452efe6797a8102aa503f88069d2645e7"
+    },
+    "modeled_accesses": 196611,
+    "reference": {
+      "counts": [
+        0,
+        131064,
+        65547
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666158048125487,
+        0.3333841951874514
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65537/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65537/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65537/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65537/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65537/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "ea7114676783d83560e25c5122a7605d14f5366865210c6b9c68715d105fa4a8",
+        "name": "actual",
+        "result_sha256": "98204f71ad546944717aceef60a6c42ce125ba1fd545807cb1a90b3014dd315d",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:47:00.694255+00:00",
+        "wall_seconds": 1.968853228725493
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65537/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65537/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65537/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65537/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_65537/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "52d6de059e5846e44ddaf8a8c1fedcfd863388d22fc369db5e3c19b6dd0ee48b",
+        "name": "global",
+        "result_sha256": "5f21d5f0a75d83cff43ede3901854f909ede23ac9974c17d430c50ee8c29aabb",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:47:04.629890+00:00",
+        "wall_seconds": 1.9687137510627508
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 196611,
+    "status": "ok",
+    "stream_sha256": "cbfe338d0f81b49ffd4c9d19abf97a120facb76f245835c90cc35679b5f4ba4a",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "capacity_69632": {
+    "analysis_ids": [
+      "6483dbe691765681f0720cff0356edf601046a71430daf50c10b0986ef729265",
+      "377e65a08bf953e799ae1c5c3a3cf29485cb4c0517d8ec58c5f52d56308106ed"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        0,
+        98304,
+        110592
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.47058823529411764,
+        0.5294117647058824
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        0,
+        0,
+        208896
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.47058823529411764,
+          0.47058823529411764
+        ],
+        "mae": 0.3137254901960784,
+        "max_absolute_error": 0.47058823529411764,
+        "rmse": 0.3842336851424593
+      },
+      "ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "5bbc0006b88e8a5174d8786ac1e8f7d45537d857e34b1ee5a91099db4809508e",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "0068878320ec119100aec20e440dc6388aa363f5ed59845ea1814c8ea6aabb0b",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "4bee6f3119a94647fcb91537ad308aa1c2650c6b0a76b300727b35f29d219bc0"
+    },
+    "modeled_accesses": 208896,
+    "reference": {
+      "counts": [
+        0,
+        98304,
+        110592
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.47058823529411764,
+        0.5294117647058824
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_69632/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_69632/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_69632/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_69632/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_69632/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "76ddf03baae40648d33d42a6d4a67814dd6c522e38b7929cb8d44fc06a42380e",
+        "name": "actual",
+        "result_sha256": "8cdf03b40e5e00a90f41462d4479ea8794faa273a9490a044285e1d0cba8cfdf",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:47:10.296387+00:00",
+        "wall_seconds": 2.1196785531938076
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_69632/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_69632/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_69632/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_69632/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_69632/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "871e6b418647f2dce71ebf50a6a31f874b7b1308eabd753a62d82917c1a18fcc",
+        "name": "global",
+        "result_sha256": "3d57375af12a493f4a959dbaa18f2fd2df0451e8fc483f7a12c8d66c3b743d0d",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:47:14.492247+00:00",
+        "wall_seconds": 2.118936621583998
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 208896,
+    "status": "ok",
+    "stream_sha256": "2890c813132adfab289f5ab33e37ed2c1963af95139a5722b756f7a04fd19b41",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "capacity_73728": {
+    "analysis_ids": [
+      "5b149df7078b27109f4a0e5ce7a67999c9c10356f0af39decbfa415be4b6b283",
+      "52cf7ed835012b7bc61e8b5e7ee2f5e1cffb4346c0cd48c987c93b0b13c83b44"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        0,
+        65536,
+        155648
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.2962962962962963,
+        0.7037037037037037
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        0,
+        0,
+        221184
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.2962962962962963,
+          0.2962962962962963
+        ],
+        "mae": 0.19753086419753085,
+        "max_absolute_error": 0.2962962962962963,
+        "rmse": 0.2419249128674744
+      },
+      "ratios": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "e7cd6fa223987b5486c140d99119a1ff86d875170bf13e4b97ceadeeebc15979",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "dd16ba300b7f977212e3888e4859ddf0b3391799a1f371666ba491d981fac6ed",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "0348b3b8ba05b0b530734e593a2aac55cd83d7f11765fcd80da53b74a92cec8b"
+    },
+    "modeled_accesses": 221184,
+    "reference": {
+      "counts": [
+        0,
+        65536,
+        155648
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.2962962962962963,
+        0.7037037037037037
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_73728/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_73728/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_73728/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_73728/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_73728/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "031f74d229135c19c891842676f3fc93f25aa60def005a40148f8de643bd4810",
+        "name": "actual",
+        "result_sha256": "848b54b09d99f05e5e39a22af05febadf5fc7e2ed49ee20c2942c7c4db3a9777",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:47:20.490210+00:00",
+        "wall_seconds": 2.219694291241467
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_73728/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_73728/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_73728/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_73728/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/capacity_73728/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "b159fd619b8183eaa4d280896428763a09ddcc6ec160f07a5dc9373f721680a2",
+        "name": "global",
+        "result_sha256": "be4cb908c6671f6914c0f84ac50a134b1090acda9d8baa231e83ad3f2774e78c",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:47:24.901676+00:00",
+        "wall_seconds": 2.219593016896397
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 221184,
+    "status": "ok",
+    "stream_sha256": "f4ee8e6ebbd5cc94db5f34a3243e86417bb87abce47d32d565576d8f53514277",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "conflict_3": {
+    "analysis_ids": [
+      "df9bc2aa6305a4a13ed62b15c10353b50bae6af23217cd42094099ac3104cae0",
+      "d7864091aba8bc6fe02b7deb048cef435040c65c0c41d7d8f24a4489e09f07be"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        6,
+        0,
+        3
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        6,
+        0,
+        3
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "bc99288aeffbf3e0c930e9a7a7d36f1c0864c7aa1c8038edbbb80c5541166dce",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "1f1685152bfc964edffe7103b0758e5e7ab15da5bac603e334183ea1c17fc0ac",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "4dc771d21ca2d3223a3f7ee6658d5d6c1f1adbe130ef359c5874128f826bb76d"
+    },
+    "modeled_accesses": 9,
+    "reference": {
+      "counts": [
+        6,
+        0,
+        3
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_3/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_3/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_3/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_3/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_3/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "8a5d8db6104fb97cea5854c894dbdc4b0424da38514a0f79b2d57122943bbd32",
+        "name": "actual",
+        "result_sha256": "e5436d7c925eed0a4f799198578a8375f5cd2305298c94ffdc5bc926fe729da0",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:21.372351+00:00",
+        "wall_seconds": 0.031833918765187263
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_3/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_3/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_3/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_3/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_3/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "cb62668edfd13b46214c1bf79f990e11055eebb1bf62b1f14568d8b97b207322",
+        "name": "global",
+        "result_sha256": "beac0307e2eef5dcea3e304b04b477d5902fcefc7020f464c8bb2b81daa98d4c",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:21.405384+00:00",
+        "wall_seconds": 0.01573379896581173
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 9,
+    "status": "ok",
+    "stream_sha256": "2f18cc254b81ad0a3e80d7c3a03f63deaec4e1d25e891765b445fb45bddbb24a",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "conflict_4": {
+    "analysis_ids": [
+      "4bb25bbdf1338965366757beb61db32c82c7010a367340e0c0a49147c96884c3",
+      "04db49039d268b84f0792c4f3f75e334441376dd889324ce30743b351f365587"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        8,
+        0,
+        4
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        8,
+        0,
+        4
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "3320403010ac63e73fbe510fa30fc8ae6c3509199daf44cd36e34eba4db47ced",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "1627ac128c6d30aac7b3198b6a9417180b875c57e238bf4457c0ecd04a01bb51",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "a582c8194b101e6a6c058ea671bd47b55ee74abe479403667a5ba0c251a48f33"
+    },
+    "modeled_accesses": 12,
+    "reference": {
+      "counts": [
+        8,
+        0,
+        4
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_4/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_4/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_4/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_4/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_4/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "9914a3de81a3a5ca8bf17642b614c8f5daf9c0b75e76d362b8a95c80f94960a3",
+        "name": "actual",
+        "result_sha256": "af8aed1c9aa2effd488b7a2a92c8343a315a9c57c6fefea67946d55f43c208df",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:22.098965+00:00",
+        "wall_seconds": 0.03188489470630884
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_4/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_4/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_4/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_4/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_4/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "df7a96575dd97e1723591cc5131506d74e4aec64e27cfc4af839764b4ea63dc9",
+        "name": "global",
+        "result_sha256": "d8a66be8b38dfb3d8c897aab0678266f5cfe16f321ea5fd1990355d90d15288e",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:22.132102+00:00",
+        "wall_seconds": 0.03191168513149023
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 12,
+    "status": "ok",
+    "stream_sha256": "a5c797fc8ea77f1a8c050bce6477c1c050f02e18d8ba3aada515219a5d56273b",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "conflict_5": {
+    "analysis_ids": [
+      "1656dd7b4ffa7b84aa00a43af8947e6fada8284eaf679f22ec9276b09dd8c94e",
+      "e4da5b13a9059c062458fa580b4a13f80b720031eb96e3aff28679fab2f678a0"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        0,
+        10,
+        5
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        10,
+        0,
+        5
+      ],
+      "error": {
+        "absolute_error": [
+          0.6666666666666666,
+          0.6666666666666666,
+          0.0
+        ],
+        "mae": 0.4444444444444444,
+        "max_absolute_error": 0.6666666666666666,
+        "rmse": 0.5443310539518174
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "7f757700fd6718f751151f58b4b45c0e81455de8c64c884c34a54a8ac72a03c1",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "99c4aa019fb5131b771c958f34fbf5af3bd6b71d326c5f6edda0ad59cfd7e188",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "a7163965f00587b37722e24704b2f1e4683300939ff8642caabeabd665c47d2e"
+    },
+    "modeled_accesses": 15,
+    "reference": {
+      "counts": [
+        0,
+        10,
+        5
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_5/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_5/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_5/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_5/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_5/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "1bd348e7e53a9db1d481bd77f43caee74e315b5babaeb8abd49e61c339ef9044",
+        "name": "actual",
+        "result_sha256": "c695088a58bddf84bf804ca384d3c2130089b9bb5bf616c4cc37706fc45e3f5c",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:22.900024+00:00",
+        "wall_seconds": 0.03183607291430235
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_5/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_5/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_5/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_5/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_5/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "4faca361c5d4a1ce1dfa3ccef1d9a02a22422330ed67aa2c04253073411993a1",
+        "name": "global",
+        "result_sha256": "d6485cb7212b65c3dbf54223ac7621caaad79969c8c703a43d2719ab3d743c81",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:22.933204+00:00",
+        "wall_seconds": 0.03182629402726889
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 15,
+    "status": "ok",
+    "stream_sha256": "65787e42c9669b6c56fe1bbc047cdc1259e2a64169694a2335265b2b97f51889",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "conflict_8": {
+    "analysis_ids": [
+      "eb7d311f7ab955a5bec7868736dea3389f69c8bdea1e6b033009d0bcabc3c988",
+      "e9748b89eb638005b31e81a82ac985928222f0ceb1f91045944a9c0edf53c26c"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        0,
+        16,
+        8
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        16,
+        0,
+        8
+      ],
+      "error": {
+        "absolute_error": [
+          0.6666666666666666,
+          0.6666666666666666,
+          0.0
+        ],
+        "mae": 0.4444444444444444,
+        "max_absolute_error": 0.6666666666666666,
+        "rmse": 0.5443310539518174
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "10b641a4847b7c530d0118683fdf4c0cea96c0d018fd81323e4ac34518b3c4cb",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "48e43e5f205a8e99db6b6a0fc0f512931875d70e5b23266243a11a8a9be70064",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "b3a81955160cb288fe5bbab796654a2fb6db913f51b9f8021b98d2d71df8a1b4"
+    },
+    "modeled_accesses": 24,
+    "reference": {
+      "counts": [
+        0,
+        16,
+        8
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_8/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_8/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_8/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_8/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_8/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "699a6155b4015180e9f8ea9716ce0f42f82a25bdbf608a41ecfe4cb261e9a7fa",
+        "name": "actual",
+        "result_sha256": "23a97b26d1e4c3f042ed8bc4bf33d74cbefdd2654c1dbb10a72eb086f574e018",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:23.707008+00:00",
+        "wall_seconds": 0.031799683813005686
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_8/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_8/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_8/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_8/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/conflict_8/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "7daa047535f5c4d81461f507a55e9b2ca35e3812b31994a571ef23f13365aa51",
+        "name": "global",
+        "result_sha256": "6d208497c9440af7bd59c5670cb900fdefd6781fb4f374c50bceb506d7a8303f",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:23.740315+00:00",
+        "wall_seconds": 0.03181655704975128
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 24,
+    "status": "ok",
+    "stream_sha256": "29b2512a854a436bce17185fe2f53ec21f7f06613fdc5ae8fde6648b688afc90",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "mean_mixed": {
+    "analysis_ids": [
+      "adb767d3d628e0fe4aa797736d3c916d3de5c7d3c673e6c22546a726dbc8196a",
+      "1c096a459ffe8d4e21130089fbe6d1cffee97c47831c566cce30414872a5b681"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        2046,
+        2046,
+        1024
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.3999218139171227,
+        0.3999218139171227,
+        0.2001563721657545
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        2046,
+        2046,
+        1024
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.3999218139171227,
+        0.3999218139171227,
+        0.2001563721657545
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "25cb294a1bf19e0fe6c3f5ca56186fec1f4f784dda96c4e9622b52aad901082f",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "ac190d84e232f4190d67c8c372a679e17ad19cbe40e0b7617d8e9da80e16351f",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "e851769b0bfd0618711d873bbdea3edaa0acd5036a656d6c867c4600fb62b99e"
+    },
+    "modeled_accesses": 5116,
+    "reference": {
+      "counts": [
+        2046,
+        2046,
+        1024
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.3999218139171227,
+        0.3999218139171227,
+        0.2001563721657545
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_mixed/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_mixed/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_mixed/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_mixed/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_mixed/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "ad233a2c559fc910cd68b015f3551cabc3532da2b821520a77835767a24abe97",
+        "name": "actual",
+        "result_sha256": "5ea20b9172eb7427e1540fdb3f0860d5bb4ccf25cf020a64d99b6fb1275cfbd8",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:47:31.880332+00:00",
+        "wall_seconds": 0.06462218798696995
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_mixed/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_mixed/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_mixed/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_mixed/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_mixed/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "d61a5e91f1c78dd5651e550d05446c2d3528361d85688720de3b757c9fcc08c7",
+        "name": "global",
+        "result_sha256": "dae21f023c1dc0ab278427e46099238bf6d438efeaf0808de97ee5cd24c679d6",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:47:31.998786+00:00",
+        "wall_seconds": 0.06394325103610754
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 5116,
+    "status": "ok",
+    "stream_sha256": "a9300ded18082b6bc4eaaa8ace87a140e2364c1f5cb2a9b15d7b6ca2997eb07e",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "mean_uniform": {
+    "analysis_ids": [
+      "3a0a67dcef381f80bf64dd680a24e0f860f922799d114368c9dc6c725c201874",
+      "65903ee7a10df003ccf76b2254042ea6f5d7b6e5372414c94cfa52b04cd2aad4"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        4092,
+        0,
+        1024
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.7998436278342455,
+        0.0,
+        0.2001563721657545
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        4092,
+        0,
+        1024
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.7998436278342455,
+        0.0,
+        0.2001563721657545
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "bef8225a6f028a2a482008ba2d30e293624cd5dd27851b6d0a31a82d5a19bcd2",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "14fca822b86ba3a01ce6678f07f432ac77788c4956991f540dfef1ce9bb3635a",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "8f0e0d0bff3b7727132c481393cd8ce0922b88ac6d85f3be2020166c779936c3"
+    },
+    "modeled_accesses": 5116,
+    "reference": {
+      "counts": [
+        4092,
+        0,
+        1024
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.7998436278342455,
+        0.0,
+        0.2001563721657545
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_uniform/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_uniform/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_uniform/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_uniform/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_uniform/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "bb83c4ae1c3c0d0db9e886766985510081c18f929a2b2c5f0466b5f09908a9fc",
+        "name": "actual",
+        "result_sha256": "19f713f558710e00b28e0b83e1d6825116584a45ca5d35fb464033feb352802f",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:47:31.278178+00:00",
+        "wall_seconds": 0.06398819014430046
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_uniform/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_uniform/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_uniform/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_uniform/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/mean_uniform/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "52af9d3ec24f9393d2a55a79d56c55f6eddbeb0a36f1de23182b6fe36d1f0a71",
+        "name": "global",
+        "result_sha256": "b29ac4c10565b761c0667f61769e0fef2a99d598ab4de1062cd9998b52ca42a6",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:47:31.395268+00:00",
+        "wall_seconds": 0.06392095098271966
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 5116,
+    "status": "ok",
+    "stream_sha256": "939a304e75f24b398530513982bc0407df0f6e509e92cd0b032875502b7c73cf",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "packed_8": {
+    "analysis_ids": [
+      "32765be332ee780770614a517cd006560f1e2cedaeec589ab702ce8121bec892",
+      "761a6d157a7909d0bda24552c5ce2bb84b8b7824edfda557b8723c692689a608"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        23,
+        0,
+        1
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.9583333333333334,
+        0.0,
+        0.041666666666666664
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        23,
+        0,
+        1
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.9583333333333334,
+        0.0,
+        0.041666666666666664
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "b79e1b43275c75068ef674a8f88896ef1848d4cf5a9f4285cc96ef4b4a82b408",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "21b2168698f68eb80c352eb191447940ab1bd88973966eeeaeb8f17bc349a194",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "4934e7bc634b7673350030ce75eab7dd72f6647e8a3264212a23092406176ee0"
+    },
+    "modeled_accesses": 24,
+    "reference": {
+      "counts": [
+        23,
+        0,
+        1
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.9583333333333334,
+        0.0,
+        0.041666666666666664
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/packed_8/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/packed_8/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/packed_8/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/packed_8/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/packed_8/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "3d2caeef46c9f51b13ac1bfa26ba3d160240c0aeec78d40ac6b89cb6a06902ed",
+        "name": "actual",
+        "result_sha256": "98c67d5cc9aedb5315dd4bea93b874556f774d4f5ea6f74bf01fe90413db4432",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:20.569115+00:00",
+        "wall_seconds": 0.03193901665508747
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/packed_8/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/packed_8/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/packed_8/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/packed_8/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/packed_8/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "979cba30ea29f2797898c89fff290d7096a449c79aa022485d1414cfb0e5bd0f",
+        "name": "global",
+        "result_sha256": "18c1f1e3e513f096d423aeb982002fbf4b489d930ed8ee7f6d02de91f58d920a",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:20.602638+00:00",
+        "wall_seconds": 0.03194895572960377
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 24,
+    "status": "ok",
+    "stream_sha256": "8cb369760bc5ed07e0a905fa9edd9a0bebc715ebf6e44defae52e3ba9e9d6f4a",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "spread_3": {
+    "analysis_ids": [
+      "b841612d9846861d9d0461db80e11c33020003c8292fa85b0434557c1d820cde",
+      "1a6215d18d23296c3ce80d06aa7d5aa15851a602490d801ee0e2dfd2a7c1a5ad"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        6,
+        0,
+        3
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        6,
+        0,
+        3
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "f7e189f9b6578969e00e8e20fc81b44196ec12386b394de66e695229e6fb1352",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "aadfc014ddc7fa3b17ea5ea6aebae89cff71318a973f6d579a029b8a3b780874",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "7e6a83a0eb5fbe4d74e2ddb6f1b75b2d79b8c5a32744d3953d76b422e9b7dd5a"
+    },
+    "modeled_accesses": 9,
+    "reference": {
+      "counts": [
+        6,
+        0,
+        3
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_3/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_3/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_3/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_3/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_3/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "296ee46a09d361c50fd244156da5f55511c47a8d25350d54885624a9c8056cb1",
+        "name": "actual",
+        "result_sha256": "17e3f38f0477606ac6e236e8df34b1f1000e038ada0905a925bc472902f78fc3",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:20.973724+00:00",
+        "wall_seconds": 0.031919019762426615
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_3/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_3/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_3/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_3/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_3/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "857c04794cf2a879d5e8014c423f20194bb8834523364670ac9fb3ffd9702b74",
+        "name": "global",
+        "result_sha256": "6d88a1a8cd95e0cad8176969fccefe7182fb102d4cad549eed8f9f554888175b",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:21.006858+00:00",
+        "wall_seconds": 0.03244831832125783
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 9,
+    "status": "ok",
+    "stream_sha256": "aa7234738e1d19dc1bcba664d4bbb1048643ec8784f90c0a87e53360c8cc43bf",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "spread_4": {
+    "analysis_ids": [
+      "93e6e9e6011ddbd7a2ca885d69e9b85916f69b04298e2c422eb1578d97fc48c1",
+      "83b9008f647b34844be69cdd0d6f5e9e5d263b2567f41957058bb60aab7b2cf3"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        8,
+        0,
+        4
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        8,
+        0,
+        4
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "0a6a4160c6a9587aee3c0555c1a214ba5b810dd7203f250e6b50172e1d0c1ad8",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "cc9cd5dd7399b31319d2105e3a74c080ec6c1e0047b11919729c450ff305f556",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "ada77bddf290a5a930fa53dd8271ac1570a410fec9171691f5b458309e8a0e9e"
+    },
+    "modeled_accesses": 12,
+    "reference": {
+      "counts": [
+        8,
+        0,
+        4
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_4/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_4/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_4/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_4/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_4/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "f98595bd836458c1c559ce6b02ce6fe484acc4caf3b11cf875b8c13220782f5b",
+        "name": "actual",
+        "result_sha256": "4def3d1802e264b0b547ed7ef1a7e9d874d446ed626331e59873934bb7502382",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:21.695848+00:00",
+        "wall_seconds": 0.031853185035288334
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_4/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_4/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_4/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_4/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_4/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "44246ae715ff376c0d37bef76e164e40d626b515108e5fb4d6a5221968b8421d",
+        "name": "global",
+        "result_sha256": "bf8bc6b0dc4fdb5e1803a23c2eee580f4bf82cea2fb820325feef99ad4053297",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:21.728994+00:00",
+        "wall_seconds": 0.031894523184746504
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 12,
+    "status": "ok",
+    "stream_sha256": "3d01c6e2ea1504c84354a9d8957862a1cd53600d981bfb8dd48e28d354723ce8",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "spread_5": {
+    "analysis_ids": [
+      "1bd6e44776c4c05341785eb6537fb492ed6ccff7088481c8750f34e94900747b",
+      "3b2fff4e2cf4499f4e0b81db8099b554aaa1fb8e7345971726db47b502aaaa82"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        10,
+        0,
+        5
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        10,
+        0,
+        5
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "638d23f8549919011ae8bdddc0d4b9272ec47284dcc86af083c1f7d1f798c20b",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "e48f39e587513da30087785bd739c9ea8ab441df407014b03b653af35b39cf51",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "34d42c24e93c07c0e588216940ffb7342cde7fb8147ddada9b1655a75cb55094"
+    },
+    "modeled_accesses": 15,
+    "reference": {
+      "counts": [
+        10,
+        0,
+        5
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_5/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_5/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_5/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_5/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_5/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "c2f7d9472c7a2b64062577c944a58c8dba2c07aa44612f86f6835034d9759ef2",
+        "name": "actual",
+        "result_sha256": "b9c7a79ad4975688ea66ca1ecc83ebb504950813917b21aeef4e066192751f57",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:22.498606+00:00",
+        "wall_seconds": 0.031895535066723824
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_5/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_5/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_5/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_5/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_5/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "ef531cee896e5def34217815557f88f5eed171c96c3fc9776631743414b78679",
+        "name": "global",
+        "result_sha256": "38a26e51329573e86420bc0f601b72e6cebfe855163a0ca6c83e3eca99c52bc8",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:22.531819+00:00",
+        "wall_seconds": 0.031913158018141985
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 15,
+    "status": "ok",
+    "stream_sha256": "c9c04aa7dc014d3e3b8a5f320cd292a301cf18ebfce5eff395d4e2a627cd2880",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  },
+  "spread_8": {
+    "analysis_ids": [
+      "23b580dfc98adc3cd367bc100d73216ac0b12722bbe47bdeef26f40c94a281ae",
+      "865e8ee4640a9ff2817c6c64fdc98547025fe1062c68e2dc36115b04ef9b679b"
+    ],
+    "cache_hierarchy": {
+      "allocation": "all-demand-misses",
+      "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+      "levels": [
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L1D0",
+          "replacement": "LRU",
+          "role": "L1",
+          "set_count": 128,
+          "size_bytes": 16384
+        },
+        {
+          "associativity": 4,
+          "line_size_bytes": 32,
+          "name": "L2",
+          "replacement": "LRU",
+          "role": "LLC",
+          "set_count": 16384,
+          "size_bytes": 2097152
+        }
+      ],
+      "lower_level_requests": "l1-misses-only",
+      "task_initial_state": "cold"
+    },
+    "clp_order": [
+      "L1",
+      "LLC",
+      "memory"
+    ],
+    "csrd": {
+      "counts": [
+        16,
+        0,
+        8
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "execution_validation": "not-performed",
+    "global_rd": {
+      "counts": [
+        16,
+        0,
+        8
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "global_rd_histogram": "global.json:tasks[0].l1.csrd_histogram",
+    "global_rd_rule": "full-linked-stream-capacity-bins-v1",
+    "implementation_sha256": {
+      "cache_reference.py": "bc688bf6e33a6688046b5eb4409729ce945a038edc47614e18e565f00ba0e563",
+      "estimators.py": "a2c94c5d5bb89b885805e7da3994285fc0ca3ef3da7369f7ee0b6c0d1d44ae6f",
+      "s1.py": "0d31c5ac0289225f825c3030355535ccee9e04aa4dba6a7c0a8109648f9d6482",
+      "s1_artifacts.py": "38eba7598177be0cc0937af1fc1982cab5a552666eba7afa7579070cdc75876b"
+    },
+    "input_sha256": {
+      "ape": "bd939d9fa8e1318efdff438c34f694e30e000e8b582816fc353a6c67a1d8d5ff",
+      "cache": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+      "elf": "99eaff2898cb8c4c8f56fb8261ef4954667b0ab9b0a1064e5e07466bf9763d57",
+      "executable": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "source": "d213bc92c9a462dd085b7c0d54c9a37d881f3b02b38caa3344928acb99fad9f7"
+    },
+    "modeled_accesses": 24,
+    "reference": {
+      "counts": [
+        16,
+        0,
+        8
+      ],
+      "error": {
+        "absolute_error": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mae": 0.0,
+        "max_absolute_error": 0.0,
+        "rmse": 0.0
+      },
+      "ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    "reference_model": "cold-lru-all-demand-l1-misses-only-independent-levels-v1",
+    "runs": [
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_8/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_8/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_8/comparison/input.cache.yaml",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_8/comparison/actual.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_8/comparison/actual.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "a05284a5bab45d31c1d851ed32eb0e47eba79c3a3496012a47c0a32c9cd6b9db",
+        "name": "actual",
+        "result_sha256": "161fec57f5fcc9e975f076866d2428f3d13882c1e466b0108d5f6d33ce0d0711",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:23.303784+00:00",
+        "wall_seconds": 0.03187778079882264
+      },
+      {
+        "argv": [
+          "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_8/comparison/input.ape.json",
+          "--analysis",
+          "hierarchy-rd",
+          "--elf",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_8/comparison/input.elf",
+          "--cache",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_8/comparison/global.cache.json",
+          "--export",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_8/comparison/global.json",
+          "--export-events",
+          "/workspace/experiments/chaser/rtems/s1/build/evaluation-v2/spread_8/comparison/global.events.json",
+          "--event-limit",
+          "250000",
+          "--max-source-accesses",
+          "250000",
+          "--max-line-references",
+          "250000",
+          "--max-cumulative-loop-iterations",
+          "500000"
+        ],
+        "events_sha256": "f188d049d1f92d3e94dffc4324bce8c60da296ec04d0e004411ca43ed08366b4",
+        "name": "global",
+        "result_sha256": "953795d16ee93fd60ea3052c89f01c73302c11f0c87ef5b8e77205bb3407d45a",
+        "returncode": 0,
+        "started_at": "2026-09-19T19:46:23.337274+00:00",
+        "wall_seconds": 0.03189103724434972
+      }
+    ],
+    "schema_version": 1,
+    "source_accesses": 24,
+    "status": "ok",
+    "stream_sha256": "d32aa5b7bdd5ca5eb8afa52af1eb3c2ea4887cd26584c5d21e023ed2335dcf28",
+    "task_id": "chaser_s1",
+    "tool_version": "0.1.0+git.bc56f997f0d9dddb8b456280519489a3b963c56a-dirty",
+    "validation_scope": "cache-decisions-on-yarda-emitted-linked-stream"
+  }
+}
