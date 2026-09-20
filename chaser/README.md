@@ -679,3 +679,14 @@ python3 -m tools.run_s1_cachegrind --input rtems/s1/build/host-trace-v2 \
 
 [Cold Cachegrind 결과](artifacts/s1/cachegrind-cold-v1/README.md)는 CSRD와 25/25 count가 일치했다.
 함수 첫 명령 직전에 I1·D1·LL residency만 reset하며, 이후 전체 traffic과 stock cache 판정은 유지한다.
+
+## Periodic RF dataset measurement
+
+The [waf periodic harness](rtems/periodic/README.md) executes finite periodic
+tasksets under actual EDF SMP G/C/P domains, measures job CPU time and nominal
+release-to-completion response time, and collects independent task utilization.
+It checks final-ELF workload layout and YARDA wrapper analysis before constructing
+provisional feature/label rows. Diagnostic traces and empty-job measurements are
+separate from timing datasets. See its README for reproducible build/run commands,
+failure handling and the ten-taskset pilot protocol. Final RF training still
+requires frozen families and validation-calibrated allocation policies.
