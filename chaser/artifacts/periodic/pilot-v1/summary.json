@@ -1,0 +1,377 @@
+{
+  "attempted_runs": 790,
+  "characterization_wall_seconds": 1740.3205907186493,
+  "collection_wall_seconds": 718.7931058211252,
+  "failed_runs": 0,
+  "independent_job_cpu_ms": {
+    "max": 1.62746,
+    "min": 0.910324
+  },
+  "mean_run_wall_seconds": 6.978935325260074,
+  "provisional_sample_rows": 40,
+  "scope": "pilot-only; explicit mapping, no calibrated theta or frozen split",
+  "storage_bytes": 765163771,
+  "successful_runs": 790,
+  "total_simulator_wall_seconds": 5513.358906955458,
+  "workloads": [
+    {
+      "attempted": 70,
+      "label": {
+        "final_ties": [
+          2
+        ],
+        "label": 2,
+        "label_rule_id": "median-tat/median-tet/min-label-v1",
+        "medians": {
+          "0": [
+            18105832.0,
+            16863678.0
+          ],
+          "1": [
+            17964436.0,
+            16762066.0
+          ],
+          "2": [
+            17883556.0,
+            16809725.0
+          ]
+        },
+        "tat_ties": [
+          2
+        ]
+      },
+      "successful": 70,
+      "utilization": {
+        "t0": 0.126775725,
+        "t1": 0.0540948,
+        "t2": 0.15270725,
+        "t3": 0.045782875
+      },
+      "workload_id": "pilot-00"
+    },
+    {
+      "attempted": 80,
+      "label": {
+        "final_ties": [
+          2
+        ],
+        "label": 2,
+        "label_rule_id": "median-tat/median-tet/min-label-v1",
+        "medians": {
+          "0": [
+            24847646.0,
+            21030675.0
+          ],
+          "1": [
+            24876402.0,
+            20930022.0
+          ],
+          "2": [
+            24803230.0,
+            21040441.0
+          ]
+        },
+        "tat_ties": [
+          2
+        ]
+      },
+      "successful": 80,
+      "utilization": {
+        "t0": 0.054097475,
+        "t1": 0.1526817,
+        "t2": 0.045781625,
+        "t3": 0.1267734,
+        "t4": 0.081217525
+      },
+      "workload_id": "pilot-01"
+    },
+    {
+      "attempted": 90,
+      "label": {
+        "final_ties": [
+          0
+        ],
+        "label": 0,
+        "label_rule_id": "median-tat/median-tet/min-label-v1",
+        "medians": {
+          "0": [
+            33938410.0,
+            26109622.0
+          ],
+          "1": [
+            38569170.0,
+            26656584.0
+          ],
+          "2": [
+            37934206.0,
+            26359656.0
+          ]
+        },
+        "tat_ties": [
+          0
+        ]
+      },
+      "successful": 90,
+      "utilization": {
+        "t0": 0.152697775,
+        "t1": 0.0457866,
+        "t2": 0.126759925,
+        "t3": 0.0812219,
+        "t4": 0.098660575,
+        "t5": 0.045873575
+      },
+      "workload_id": "pilot-02"
+    },
+    {
+      "attempted": 70,
+      "label": {
+        "final_ties": [
+          2
+        ],
+        "label": 2,
+        "label_rule_id": "median-tat/median-tet/min-label-v1",
+        "medians": {
+          "0": [
+            16412360.0,
+            15162016.0
+          ],
+          "1": [
+            16376284.0,
+            15155284.0
+          ],
+          "2": [
+            16202572.0,
+            15142367.0
+          ]
+        },
+        "tat_ties": [
+          2
+        ]
+      },
+      "successful": 70,
+      "utilization": {
+        "t0": 0.045791325,
+        "t1": 0.126761675,
+        "t2": 0.081220475,
+        "t3": 0.0986784
+      },
+      "workload_id": "pilot-03"
+    },
+    {
+      "attempted": 80,
+      "label": {
+        "final_ties": [
+          0
+        ],
+        "label": 0,
+        "label_rule_id": "median-tat/median-tet/min-label-v1",
+        "medians": {
+          "0": [
+            24076632.0,
+            20199735.0
+          ],
+          "1": [
+            27578668.0,
+            20505170.0
+          ],
+          "2": [
+            27652972.0,
+            20724640.0
+          ]
+        },
+        "tat_ties": [
+          0
+        ]
+      },
+      "successful": 80,
+      "utilization": {
+        "t0": 0.126763875,
+        "t1": 0.0812128,
+        "t2": 0.098683425,
+        "t3": 0.0458652,
+        "t4": 0.131592175
+      },
+      "workload_id": "pilot-04"
+    },
+    {
+      "attempted": 90,
+      "label": {
+        "final_ties": [
+          0
+        ],
+        "label": 0,
+        "label_rule_id": "median-tat/median-tet/min-label-v1",
+        "medians": {
+          "0": [
+            28765578.0,
+            21767550.0
+          ],
+          "1": [
+            29504238.0,
+            21687333.0
+          ],
+          "2": [
+            31501486.0,
+            21655026.0
+          ]
+        },
+        "tat_ties": [
+          0
+        ]
+      },
+      "successful": 90,
+      "utilization": {
+        "t0": 0.0812217,
+        "t1": 0.098676525,
+        "t2": 0.0458821,
+        "t3": 0.131580625,
+        "t4": 0.054098725,
+        "t5": 0.098732925
+      },
+      "workload_id": "pilot-05"
+    },
+    {
+      "attempted": 70,
+      "label": {
+        "final_ties": [
+          2
+        ],
+        "label": 2,
+        "label_rule_id": "median-tat/median-tet/min-label-v1",
+        "medians": {
+          "0": [
+            14586516.0,
+            13364080.0
+          ],
+          "1": [
+            14559008.0,
+            13362950.0
+          ],
+          "2": [
+            14406208.0,
+            13337105.0
+          ]
+        },
+        "tat_ties": [
+          2
+        ]
+      },
+      "successful": 70,
+      "utilization": {
+        "t0": 0.098697475,
+        "t1": 0.045869325,
+        "t2": 0.131618,
+        "t3": 0.0540875
+      },
+      "workload_id": "pilot-06"
+    },
+    {
+      "attempted": 80,
+      "label": {
+        "final_ties": [
+          1
+        ],
+        "label": 1,
+        "label_rule_id": "median-tat/median-tet/min-label-v1",
+        "medians": {
+          "0": [
+            20207450.0,
+            16611908.0
+          ],
+          "1": [
+            20114306.0,
+            16562536.0
+          ],
+          "2": [
+            24440522.0,
+            20986939.0
+          ]
+        },
+        "tat_ties": [
+          1
+        ]
+      },
+      "successful": 80,
+      "utilization": {
+        "t0": 0.0458638,
+        "t1": 0.131567725,
+        "t2": 0.0540919,
+        "t3": 0.098708475,
+        "t4": 0.0728184
+      },
+      "workload_id": "pilot-07"
+    },
+    {
+      "attempted": 90,
+      "label": {
+        "final_ties": [
+          1
+        ],
+        "label": 1,
+        "label_rule_id": "median-tat/median-tet/min-label-v1",
+        "medians": {
+          "0": [
+            34820726.0,
+            27197959.0
+          ],
+          "1": [
+            33010338.0,
+            22877073.0
+          ],
+          "2": [
+            33265886.0,
+            22794204.0
+          ]
+        },
+        "tat_ties": [
+          1
+        ]
+      },
+      "successful": 90,
+      "utilization": {
+        "t0": 0.1315884,
+        "t1": 0.0541003,
+        "t2": 0.0987297,
+        "t3": 0.0728251,
+        "t4": 0.1267584,
+        "t5": 0.0541195
+      },
+      "workload_id": "pilot-08"
+    },
+    {
+      "attempted": 70,
+      "label": {
+        "final_ties": [
+          2
+        ],
+        "label": 2,
+        "label_rule_id": "median-tat/median-tet/min-label-v1",
+        "medians": {
+          "0": [
+            16541056.0,
+            15263084.0
+          ],
+          "1": [
+            16511100.0,
+            15303002.0
+          ],
+          "2": [
+            16348364.0,
+            15287954.0
+          ]
+        },
+        "tat_ties": [
+          2
+        ]
+      },
+      "successful": 70,
+      "utilization": {
+        "t0": 0.0540981,
+        "t1": 0.098709825,
+        "t2": 0.0728204,
+        "t3": 0.1267473
+      },
+      "workload_id": "pilot-09"
+    }
+  ]
+}

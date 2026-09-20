@@ -4,6 +4,8 @@ rtems/baseline/build/
 .cache/
 *.gz
 !/artifacts/s1/**/*.gz
+!/artifacts/periodic/**/*.gz
+!/artifacts/periodic/pilot-v1/verification.log
 rtems/smoke/.clangd
 rtems/smoke/build/
 rtems/smoke/compile_commands.json

@@ -1,0 +1,123 @@
+{
+  "archive": {
+    "bytes": 9330363,
+    "file": "diagnostics.tar.gz",
+    "sha256": "bd9d9d498526f01acc01b45b9a0381e09f6bcea4906f6dd9792bf839e6b4a1c4"
+  },
+  "empty": {
+    "attempts": 10,
+    "cpu_ns": {
+      "job_count": 20,
+      "max": 6248,
+      "mean": 4983.5,
+      "min": 3719
+    },
+    "errors": [
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      []
+    ],
+    "statuses": [
+      "ok",
+      "ok",
+      "ok",
+      "ok",
+      "ok",
+      "ok",
+      "ok",
+      "ok",
+      "ok",
+      "ok"
+    ]
+  },
+  "overrun": {
+    "attempts": 1,
+    "errors": [
+      [
+        "deadline_miss",
+        "period_state",
+        "postponed_job",
+        "release_mismatch"
+      ]
+    ],
+    "statuses": [
+      "failed"
+    ]
+  },
+  "revalidation_parser_hash": "45ab3dfa55b80c3409458fc44272f04343475f6fc6417ea8ad0853caea5bdeea",
+  "trace-c": {
+    "attempts": 1,
+    "errors": [
+      []
+    ],
+    "statuses": [
+      "ok"
+    ],
+    "worker_dispatch_cores": {
+      "0": [
+        0
+      ],
+      "1": [
+        2,
+        3
+      ],
+      "2": [
+        2,
+        3
+      ]
+    }
+  },
+  "trace-g": {
+    "attempts": 1,
+    "errors": [
+      []
+    ],
+    "statuses": [
+      "ok"
+    ],
+    "worker_dispatch_cores": {
+      "0": [
+        1,
+        2,
+        3
+      ],
+      "1": [
+        1,
+        2,
+        3
+      ],
+      "2": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "trace-p": {
+    "attempts": 1,
+    "errors": [
+      []
+    ],
+    "statuses": [
+      "ok"
+    ],
+    "worker_dispatch_cores": {
+      "0": [
+        0
+      ],
+      "1": [
+        1
+      ],
+      "2": [
+        2
+      ]
+    }
+  }
+}

@@ -690,3 +690,5 @@ provisional feature/label rows. Diagnostic traces and empty-job measurements are
 separate from timing datasets. See its README for reproducible build/run commands,
 failure handling and the ten-taskset pilot protocol. Final RF training still
 requires frozen families and validation-calibrated allocation policies.
+The [first periodic pilot](artifacts/periodic/pilot-v1/README.md) preserves 790
+successful runs, raw job records and provisional feature/label rows.
