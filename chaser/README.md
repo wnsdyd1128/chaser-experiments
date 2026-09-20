@@ -654,3 +654,18 @@ case 실패/주소열·CSRD 불일치 1, 잘못된 입력·초기 설정 실패 
 
 전체 결과와 기존 모델 그래프와의 관계는
 [실행 trace 검증 결과](artifacts/s1/host-trace-v1/README.md)에 정리했다.
+
+## S1 Cachegrind 비교
+
+기존 host 실행 suite의 동일 ELF를 stock Cachegrind로 실행해 정적 예측과 비교한다.
+
+```sh
+python3 -m tools.run_s1_cachegrind --input rtems/s1/build/host-trace-v2 \
+  --output rtems/s1/build/cachegrind-new
+python3 -m tools.plot_s1 rtems/s1/build/cachegrind-new/suite.json \
+  --output rtems/s1/build/cachegrind-new/plots
+```
+
+x축은 배열 load 소스 줄에 귀속된 Cachegrind data count다. 초기화·stack·instruction의
+cache 영향은 유지되며, y축의 cold 배열 전용 모델과 조건이 다르다.
+[25-case 결과와 해석](artifacts/s1/cachegrind-v1/README.md)에 차이와 원본 출력을 보존했다.

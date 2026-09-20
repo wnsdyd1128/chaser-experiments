@@ -1,0 +1,114 @@
+{
+  "artifact_sha256": {
+    "cachegrind.out": "165d726681d76cb7a54c2fb0476a117c4cdc2c766cffdd4311f8b2a3db6d0a68",
+    "cachegrind.out.gz": "d351e46baa719ee55ff868ff36d48763662eda0515a38e9436fd354bc3fa2e3d",
+    "capture.json": "b651621df73b375e59c6048ddefae3df1bdf51495d287fab6e403333bb576bcc",
+    "stdout.txt": "f4826882a22145953beecf2d1b9410b8268f60d9140bcf356b05b8067dc66c61",
+    "trace.log.gz": "0208d4ccccdccbce2e3ff32f5fe6544cc8a7fb49c41007c4f919e02ccfffd68b"
+  },
+  "cachegrind": {
+    "counts": [
+      764,
+      964,
+      0
+    ],
+    "function_events": {
+      "D1mr": 965,
+      "D1mw": 0,
+      "DLmr": 0,
+      "DLmw": 0,
+      "Dr": 1729,
+      "Dw": 0,
+      "I1mr": 2,
+      "ILmr": 2,
+      "Ir": 8660
+    },
+    "load_lines": [
+      26
+    ],
+    "ratios": [
+      0.44212962962962965,
+      0.5578703703703703,
+      0.0
+    ],
+    "selected_events": {
+      "D1mr": 964,
+      "D1mw": 0,
+      "DLmr": 0,
+      "DLmw": 0,
+      "Dr": 1728,
+      "Dw": 0,
+      "I1mr": 1,
+      "ILmr": 1,
+      "Ir": 3456
+    },
+    "summary_events": {
+      "D1mr": 3632,
+      "D1mw": 1815,
+      "DLmr": 2155,
+      "DLmw": 1670,
+      "Dr": 35421,
+      "Dw": 31283,
+      "I1mr": 2394,
+      "ILmr": 2204,
+      "Ir": 209214
+    }
+  },
+  "cold_reference_counts": [
+    512,
+    640,
+    576
+  ],
+  "csrd": [
+    0.2962962962962963,
+    0.37037037037037035,
+    0.3333333333333333
+  ],
+  "csrd_count_equal": false,
+  "csrd_counts": [
+    512,
+    640,
+    576
+  ],
+  "csrd_error": {
+    "absolute_error": [
+      0.14583333333333337,
+      0.1875,
+      0.3333333333333333
+    ],
+    "mae": 0.22222222222222224,
+    "max_absolute_error": 0.3333333333333333,
+    "rmse": 0.2363152712107438
+  },
+  "global_rd": [
+    0.0,
+    0.6666666666666666,
+    0.3333333333333333
+  ],
+  "global_rd_counts": [
+    0,
+    1152,
+    576
+  ],
+  "global_rd_error": {
+    "absolute_error": [
+      0.44212962962962965,
+      0.10879629629629628,
+      0.3333333333333333
+    ],
+    "mae": 0.2947530864197531,
+    "max_absolute_error": 0.44212962962962965,
+    "rmse": 0.32579459510318054
+  },
+  "id": "capacity_576",
+  "input_sha256": {
+    "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_576/workload.c": "44ace9fd30c892dcaeb4fe7c4d4069e983fac95c89e0837fcd17622107d271db",
+    "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_576/workload.exe": "e6c30fb589f350174d2926428ccaef5a378c40b2d20e7d36b224fc7457cafa62"
+  },
+  "reference": [
+    0.44212962962962965,
+    0.5578703703703703,
+    0.0
+  ],
+  "status": "ok"
+}

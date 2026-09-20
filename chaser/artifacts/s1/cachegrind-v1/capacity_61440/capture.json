@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/usr/bin/valgrind",
+    "--command-line-only=yes",
+    "--tool=cachegrind",
+    "--cache-sim=yes",
+    "--branch-sim=no",
+    "--I1=16384,4,32",
+    "--D1=16384,4,32",
+    "--LL=2097152,4,32",
+    "--error-exitcode=97",
+    "--log-fd=2",
+    "--cachegrind-out-file=/workspace/experiments/chaser/rtems/s1/build/cachegrind-v1/capacity_61440/cachegrind.out",
+    "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_61440/workload.exe"
+  ],
+  "timeout_seconds": 120,
+  "max_decoded_bytes": 1048576,
+  "decoded_bytes": 1112,
+  "returncode": 0,
+  "wall_seconds": 0.2839349340647459
+}
