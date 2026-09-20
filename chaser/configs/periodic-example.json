@@ -1,0 +1,11 @@
+{
+  "workload_id": "periodic-example",
+  "family_id": "periodic-layout-example",
+  "policy_id": "pilot-explicit-v1",
+  "horizon_ticks": 40,
+  "tasks": [
+    {"task_id": "packed", "distinct": 8, "stride": 1, "sweeps": 1200, "core": 0, "period_ticks": 20},
+    {"task_id": "spread", "distinct": 8, "stride": 32, "sweeps": 1200, "core": 1, "period_ticks": 20},
+    {"task_id": "conflict", "distinct": 8, "stride": 4096, "sweeps": 1200, "core": 2, "period_ticks": 20}
+  ]
+}

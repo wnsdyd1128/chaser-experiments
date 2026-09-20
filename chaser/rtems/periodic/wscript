@@ -1,0 +1,56 @@
+"""Build all topologies from one workload object and capture real commands."""
+
+import json
+from pathlib import Path
+import shlex
+import subprocess
+from waflib import Task
+
+Task.Task.keep_last_cmd = True
+top = '.'
+out = 'build'
+
+
+def options(opt):
+    opt.add_option('--rtems-root', default='/opt/rtems/6')
+
+
+def configure(conf):
+    root = Path(conf.options.rtems_root)
+    conf.env.CC = [str(root / 'bin/sparc-rtems6-gcc')]
+    conf.env.AR = [str(root / 'bin/sparc-rtems6-ar')]
+    conf.environ['CC'] = conf.env.CC[0]
+    conf.environ['AR'] = conf.env.AR[0]
+    conf.load('gcc')
+    pc = str(root / 'lib/pkgconfig/sparc-rtems6-gr740.pc')
+    conf.env.CFLAGS = ['-O0', '-g', '-Wall', '-Wextra', '-Werror'] + shlex.split(
+        subprocess.check_output(['pkg-config', '--cflags', pc], text=True))
+    conf.env.CFLAGS += ['-mcpu=leon3', '-mfpu', '-mhard-float']
+    conf.env.LINKFLAGS = shlex.split(
+        subprocess.check_output(['pkg-config', '--libs', pc], text=True))
+    conf.env.LINKFLAGS += ['-mcpu=leon3', '-mfpu', '-mhard-float',
+                           '-Wl,-T,' + str(Path('layout.ld').resolve())]
+
+
+def compilation_database(bld):
+    database = bld.bldnode.make_node('compile_commands.json')
+    rows = json.loads(database.read()) if database.exists() else []
+    for group in bld.groups:
+        for generator in group:
+            for task in getattr(generator, 'compiled_tasks', []):
+                if hasattr(task, 'last_cmd'):
+                    output = task.outputs[0].abspath()
+                    rows = [r for r in rows if r['output'] != output]
+                    rows.append({'directory': task.get_cwd().abspath(),
+                                 'file': task.inputs[0].abspath(),
+                                 'output': output, 'arguments': task.last_cmd})
+    database.write(json.dumps(rows, indent=2) + '\n')
+
+
+def build(bld):
+    bld.objects(source='source/workload.c', target='workload', includes=['source'])
+    for name in ('g', 'c', 'p'):
+        bld.program(source=['source/init.c', 'source/probe.c'], target=name + '.exe',
+                    includes=[name, 'source'], use=['workload'],
+                    lib=['rtemsbsp', 'rtemscpu', 'm'])
+    bld.add_post_fun(compilation_database)
