@@ -67,7 +67,7 @@ def main():
             if execution else 'All fractions use total accesses. Overlapping points are retained. '
             'Execution validation: not performed.')
     if cachegrind:
-        state = 'post-initialization state'
+        state = 'cold entry reset' if report.get('initial_state') == 'I1-D1-LL-reset-before-chaser_s1-entry' else 'post-initialization state'
         note = f'Cachegrind: {state}, full traffic. Static prediction: cold, array only.'
     fig.text(0.5, 0.035, note, ha='center', fontsize=9)
     fig.subplots_adjust(left=0.07, right=0.99, bottom=0.18, top=0.76, wspace=0.25)

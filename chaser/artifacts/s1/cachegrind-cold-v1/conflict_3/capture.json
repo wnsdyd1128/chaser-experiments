@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "env",
+    "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+    "/tmp/chaser-cg-cold-install/bin/valgrind",
+    "--s1-cold-entry=0x401160",
+    "--command-line-only=yes",
+    "--tool=cachegrind",
+    "--cache-sim=yes",
+    "--branch-sim=no",
+    "--I1=16384,4,32",
+    "--D1=16384,4,32",
+    "--LL=2097152,4,32",
+    "--error-exitcode=97",
+    "--log-fd=2",
+    "--cachegrind-out-file=/workspace/experiments/chaser/rtems/s1/build/cachegrind-cold-v2/conflict_3/cachegrind.out",
+    "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_3/workload.exe"
+  ],
+  "timeout_seconds": 120,
+  "max_decoded_bytes": 1048576,
+  "decoded_bytes": 1397,
+  "returncode": 0,
+  "wall_seconds": 0.2737868041731417
+}

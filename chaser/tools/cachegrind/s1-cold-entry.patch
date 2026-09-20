@@ -1,0 +1,75 @@
+--- a/cachegrind/cg_main.c
++++ b/cachegrind/cg_main.c
+@@ -56,6 +56,24 @@
+ /*------------------------------------------------------------*/
+ /*--- Options                                              ---*/
+ /*------------------------------------------------------------*/
++
++/* S1 extension: reset residency at an exact non-PIE guest entry PC.
++   Counters and stock cache access/replacement functions remain unchanged. */
++static ULong clo_s1_cold_entry = 0;
++static ULong s1_reset_count = 0;
++
++static void s1_cold_reset(void)
++{
++   cache_t2* caches[3] = { &I1, &D1, &LL };
++   Int i;
++   for (i = 0; i < 3; i++) {
++      cache_t2* c = caches[i];
++      VG_(memset)(c->tags, 0, sizeof(UWord) * c->sets * c->assoc);
++   }
++   s1_reset_count++;
++   VG_(umsg)("S1 cold reset: entry=0x%llx count=%llu I1,D1,LL\n",
++             clo_s1_cold_entry, s1_reset_count);
++}
+ 
+ static Bool  clo_cache_sim  = True;  /* do cache simulation? */
+ static Bool  clo_branch_sim = False; /* do branch simulation? */
+@@ -1107,6 +1125,13 @@
+          case Ist_IMark:
+             cia   = st->Ist.IMark.addr;
+             isize = st->Ist.IMark.len;
++            if (clo_s1_cold_entry && cia == clo_s1_cold_entry) {
++               /* Execute after earlier events, before this instruction's Ir/Dr/Dw. */
++               flushEvents(&cgs);
++               addStmtToIRSB(cgs.sbOut, IRStmt_Dirty(unsafeIRDirty_0_N(
++                  0, "s1_cold_reset", VG_(fnptr_to_fnentry)(&s1_cold_reset),
++                  mkIRExprVec_0())));
++            }
+ 
+             // If Vex fails to decode an instruction, the size will be zero.
+             // Pretend otherwise.
+@@ -1569,6 +1594,8 @@
+          LL_total, LL_total_r, LL_total_w;
+    Int l1, l2, l3;
+ 
++   if (clo_s1_cold_entry)
++      VG_(umsg)("S1 cold reset total: %llu\n", s1_reset_count);
+    fprint_CC_table_and_calc_totals();
+ 
+    if (VG_(clo_verbosity) == 0) 
+@@ -1746,6 +1773,7 @@
+                               &clo_LL_cache)) {}
+ 
+    else if VG_STR_CLO( arg, "--cachegrind-out-file", clo_cachegrind_out_file) {}
++   else if VG_BHEX_CLO(arg, "--s1-cold-entry", clo_s1_cold_entry, 1, ~0ULL) {}
+    else if VG_BOOL_CLO(arg, "--cache-sim",  clo_cache_sim)  {}
+    else if VG_BOOL_CLO(arg, "--branch-sim", clo_branch_sim) {}
+    else
+@@ -1758,6 +1786,7 @@
+ {
+    VG_(print_cache_clo_opts)();
+    VG_(printf)(
++"    --s1-cold-entry=<hex>           S1: reset I1/D1/LL before entry instruction\n"
+ "    --cache-sim=yes|no               collect cache stats? [yes]\n"
+ "    --branch-sim=yes|no              collect branch prediction stats? [no]\n"
+ "    --cachegrind-out-file=<file>     output file name [cachegrind.out.%%p]\n"
+@@ -1803,6 +1832,8 @@
+ 
+ static void cg_post_clo_init(void)
+ {
++   if (clo_s1_cold_entry && !clo_cache_sim)
++      VG_(fmsg_bad_option)("--s1-cold-entry", "Requires --cache-sim=yes\n");
+    cache_t I1c, D1c, LLc; 
+ 
+    CC_table =

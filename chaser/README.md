@@ -669,3 +669,13 @@ python3 -m tools.plot_s1 rtems/s1/build/cachegrind-new/suite.json \
 x축은 배열 load 소스 줄에 귀속된 Cachegrind data count다. 초기화·stack·instruction의
 cache 영향은 유지되며, y축의 cold 배열 전용 모델과 조건이 다르다.
 [25-case 결과와 해석](artifacts/s1/cachegrind-v1/README.md)에 차이와 원본 출력을 보존했다.
+
+함수 진입 시 cache를 비우는 재비교에는 [별도 cold-entry 빌드](tools/cachegrind/README.md)를 사용한다.
+
+```sh
+python3 -m tools.run_s1_cachegrind --input rtems/s1/build/host-trace-v2 \
+  --output rtems/s1/build/cachegrind-cold-new --cold-prefix /tmp/chaser-cg-cold-install
+```
+
+[Cold Cachegrind 결과](artifacts/s1/cachegrind-cold-v1/README.md)는 CSRD와 25/25 count가 일치했다.
+함수 첫 명령 직전에 I1·D1·LL residency만 reset하며, 이후 전체 traffic과 stock cache 판정은 유지한다.

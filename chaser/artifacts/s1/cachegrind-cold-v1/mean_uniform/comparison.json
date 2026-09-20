@@ -1,0 +1,126 @@
+{
+  "artifact_sha256": {
+    "cachegrind.out": "1fc04b4835d8caa69114a48dea9a352ff58f3d58ad7d21f980ea407e8b72611a",
+    "cachegrind.out.gz": "3891985d20cefe4818c1e10c7aa90d6cacd2c42596cbb1a1dab74980dca8dfe5",
+    "capture.json": "00c5432e486a8f29b2889a040d7879557c25207d0074cd86acf1e196e0e42957",
+    "stdout.txt": "b647a0531ed321109c284673c2d510c0af3800668bffc3a965fa514fe75881bb",
+    "symbols.txt": "5774c52a9e4fa668a03c6ece1b79ed2e457d2d606ec32beb0c34c9e1082d7ec0",
+    "trace.log.gz": "7823f92301b8bcde599b0415cdf6849e1689e3065abee0fe5366dd5aa9ae612a"
+  },
+  "cachegrind": {
+    "counts": [
+      4092,
+      0,
+      1024
+    ],
+    "function_events": {
+      "D1mr": 1025,
+      "D1mw": 0,
+      "DLmr": 1025,
+      "DLmw": 0,
+      "Dr": 5117,
+      "Dw": 0,
+      "I1mr": 5,
+      "ILmr": 5,
+      "Ir": 25630
+    },
+    "load_lines": [
+      26,
+      28,
+      30
+    ],
+    "ratios": [
+      0.7998436278342455,
+      0.0,
+      0.2001563721657545
+    ],
+    "selected_events": {
+      "D1mr": 1024,
+      "D1mw": 0,
+      "DLmr": 1024,
+      "DLmw": 0,
+      "Dr": 5116,
+      "Dw": 0,
+      "I1mr": 1,
+      "ILmr": 1,
+      "Ir": 10232
+    },
+    "summary_events": {
+      "D1mr": 3723,
+      "D1mw": 2267,
+      "DLmr": 3327,
+      "DLmw": 2185,
+      "Dr": 38118,
+      "Dw": 45331,
+      "I1mr": 2416,
+      "ILmr": 2256,
+      "Ir": 265650
+    }
+  },
+  "cold_reference_counts": [
+    4092,
+    0,
+    1024
+  ],
+  "cold_reset": {
+    "caches": [
+      "I1",
+      "D1",
+      "LL"
+    ],
+    "count": 1,
+    "entry": 4198752
+  },
+  "csrd": [
+    0.7998436278342455,
+    0.0,
+    0.2001563721657545
+  ],
+  "csrd_count_equal": true,
+  "csrd_counts": [
+    4092,
+    0,
+    1024
+  ],
+  "csrd_error": {
+    "absolute_error": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mae": 0.0,
+    "max_absolute_error": 0.0,
+    "rmse": 0.0
+  },
+  "global_rd": [
+    0.7998436278342455,
+    0.0,
+    0.2001563721657545
+  ],
+  "global_rd_counts": [
+    4092,
+    0,
+    1024
+  ],
+  "global_rd_error": {
+    "absolute_error": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mae": 0.0,
+    "max_absolute_error": 0.0,
+    "rmse": 0.0
+  },
+  "id": "mean_uniform",
+  "input_sha256": {
+    "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/mean_uniform/workload.c": "8f0e0d0bff3b7727132c481393cd8ce0922b88ac6d85f3be2020166c779936c3",
+    "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/mean_uniform/workload.exe": "1bd71bce3019e3a7955a8f1a2d0945bfcd8dfff5bb76d33891c01d9411c3be29"
+  },
+  "reference": [
+    0.7998436278342455,
+    0.0,
+    0.2001563721657545
+  ],
+  "status": "ok"
+}

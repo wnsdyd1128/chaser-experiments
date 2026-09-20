@@ -1,0 +1,756 @@
+{
+  "purpose": "Patched binary with reset disabled vs stock Cachegrind warm run",
+  "rows": [
+    {
+      "id": "packed_8",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/packed_8.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/packed_8.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/packed_8/workload.exe"
+      ],
+      "counts": [
+        24,
+        0,
+        0
+      ],
+      "stock_counts": [
+        24,
+        0,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "db6b86b1904d4809f1f445e95c6eb51cd3b15b1bf5434bc8dd78fb5b346dd973"
+    },
+    {
+      "id": "spread_3",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/spread_3.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/spread_3.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_3/workload.exe"
+      ],
+      "counts": [
+        9,
+        0,
+        0
+      ],
+      "stock_counts": [
+        9,
+        0,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "05b5e6b69d464a3c26e8956025a383135206ae325f74c8a2c73df51c6ea99d95"
+    },
+    {
+      "id": "conflict_3",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/conflict_3.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/conflict_3.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_3/workload.exe"
+      ],
+      "counts": [
+        9,
+        0,
+        0
+      ],
+      "stock_counts": [
+        9,
+        0,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "628f40f846d10202f267988e98401ce41fd389d24ab29859c4fe12b4fc36a775"
+    },
+    {
+      "id": "spread_4",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/spread_4.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/spread_4.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_4/workload.exe"
+      ],
+      "counts": [
+        12,
+        0,
+        0
+      ],
+      "stock_counts": [
+        12,
+        0,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "cbb548fe5ae5c751cd91a5e16d5027b5314bf50e2cc604ec1cfe67fe22a1a740"
+    },
+    {
+      "id": "conflict_4",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/conflict_4.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/conflict_4.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_4/workload.exe"
+      ],
+      "counts": [
+        12,
+        0,
+        0
+      ],
+      "stock_counts": [
+        12,
+        0,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "986093548b43efd97b17f6292ef2bc9b2a71aed0f3104062e7edce3ac631755b"
+    },
+    {
+      "id": "spread_5",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/spread_5.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/spread_5.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_5/workload.exe"
+      ],
+      "counts": [
+        15,
+        0,
+        0
+      ],
+      "stock_counts": [
+        15,
+        0,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "fa905342fb712ef1380bceafa38df6a39588447a977e02d356b5539dfac5c062"
+    },
+    {
+      "id": "conflict_5",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/conflict_5.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/conflict_5.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_5/workload.exe"
+      ],
+      "counts": [
+        0,
+        15,
+        0
+      ],
+      "stock_counts": [
+        0,
+        15,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "3550288220b1b2e4b84680e692f2ae3273060dfb78aca09c2b1da689d9176d13"
+    },
+    {
+      "id": "spread_8",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/spread_8.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/spread_8.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_8/workload.exe"
+      ],
+      "counts": [
+        24,
+        0,
+        0
+      ],
+      "stock_counts": [
+        24,
+        0,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "e0e69f4f10a772a437b4d89efa7fa9ff44a1a3cb40d077058785a87253de0b76"
+    },
+    {
+      "id": "conflict_8",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/conflict_8.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/conflict_8.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_8/workload.exe"
+      ],
+      "counts": [
+        0,
+        24,
+        0
+      ],
+      "stock_counts": [
+        0,
+        24,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "44ba8a46339cd1f45b0be816ca909534dc1eacc2281874800794f9b4bbf29235"
+    },
+    {
+      "id": "capacity_256",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_256.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_256.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_256/workload.exe"
+      ],
+      "counts": [
+        768,
+        0,
+        0
+      ],
+      "stock_counts": [
+        768,
+        0,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "2d88746792e986759b47fa2fab3c5746bda48ac2530ab80cbfb0b42bb956d544"
+    },
+    {
+      "id": "capacity_448",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_448.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_448.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_448/workload.exe"
+      ],
+      "counts": [
+        1344,
+        0,
+        0
+      ],
+      "stock_counts": [
+        1344,
+        0,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "09ce1c1fd314cdc9365e2e4bc34d6bc6f6173bf0b980a363ab04d68f54a0e83d"
+    },
+    {
+      "id": "capacity_511",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_511.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_511.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_511/workload.exe"
+      ],
+      "counts": [
+        1529,
+        4,
+        0
+      ],
+      "stock_counts": [
+        1529,
+        4,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "bf7b32eef95d06102d0c2c4e9a2219b0173f8533479b89c452203837e30b3414"
+    },
+    {
+      "id": "capacity_512",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_512.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_512.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_512/workload.exe"
+      ],
+      "counts": [
+        1532,
+        4,
+        0
+      ],
+      "stock_counts": [
+        1532,
+        4,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "df6c5ac5c4e1477a673d805d360783bb1723493bed11d53787155ecc7043d4be"
+    },
+    {
+      "id": "capacity_513",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_513.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_513.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_513/workload.exe"
+      ],
+      "counts": [
+        1520,
+        19,
+        0
+      ],
+      "stock_counts": [
+        1520,
+        19,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "273318365b5ab75f1bc3c7d4f6de406db8900c52d916cde3bb460eb558b37a2d"
+    },
+    {
+      "id": "capacity_576",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_576.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_576.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_576/workload.exe"
+      ],
+      "counts": [
+        764,
+        964,
+        0
+      ],
+      "stock_counts": [
+        764,
+        964,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "fb3835b45cedd2345f53337086f58fb419985de45870c08f4af5ae4303bd77fc"
+    },
+    {
+      "id": "capacity_1024",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_1024.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_1024.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_1024/workload.exe"
+      ],
+      "counts": [
+        0,
+        3072,
+        0
+      ],
+      "stock_counts": [
+        0,
+        3072,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "ff15d3082a00590bc2041cabc16a1757ca94a9177dc2f3b653e9b21e0f25a71f"
+    },
+    {
+      "id": "capacity_32768",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_32768.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_32768.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_32768/workload.exe"
+      ],
+      "counts": [
+        0,
+        98304,
+        0
+      ],
+      "stock_counts": [
+        0,
+        98304,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "8187de650f2d74a6334d3be0d1cef2eb9b7a74051f5db9b1e94cc21ef2a72d4a"
+    },
+    {
+      "id": "capacity_61440",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_61440.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_61440.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_61440/workload.exe"
+      ],
+      "counts": [
+        0,
+        184320,
+        0
+      ],
+      "stock_counts": [
+        0,
+        184320,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "1f2165926d7ef89f6c336750e1e7e4d5eaf793ad85f0f7a106b68cf6a977a446"
+    },
+    {
+      "id": "capacity_65535",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_65535.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_65535.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65535/workload.exe"
+      ],
+      "counts": [
+        0,
+        196593,
+        12
+      ],
+      "stock_counts": [
+        0,
+        196593,
+        12
+      ],
+      "equal": true,
+      "output_sha256": "92a4f539d1c5257267a1050865f8a2a95f8e59a1e6aa2039cf69983e661f26d3"
+    },
+    {
+      "id": "capacity_65536",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_65536.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_65536.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65536/workload.exe"
+      ],
+      "counts": [
+        0,
+        196596,
+        12
+      ],
+      "stock_counts": [
+        0,
+        196596,
+        12
+      ],
+      "equal": true,
+      "output_sha256": "6a93e77a87212d79029bdae8096b657e2c030c7cbf0d5c77e79e6e543d82784f"
+    },
+    {
+      "id": "capacity_65537",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_65537.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_65537.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65537/workload.exe"
+      ],
+      "counts": [
+        0,
+        196584,
+        27
+      ],
+      "stock_counts": [
+        0,
+        196584,
+        27
+      ],
+      "equal": true,
+      "output_sha256": "3a910ee8b7a1bd82977d69afbf73f9027b71efcb07db378664940797293399f6"
+    },
+    {
+      "id": "capacity_69632",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_69632.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_69632.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_69632/workload.exe"
+      ],
+      "counts": [
+        0,
+        147444,
+        61452
+      ],
+      "stock_counts": [
+        0,
+        147444,
+        61452
+      ],
+      "equal": true,
+      "output_sha256": "63aa1571182d3f3ee0366f81891befaec63ea80405c5bd0d6a83ca9b41488ac4"
+    },
+    {
+      "id": "capacity_73728",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_73728.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/capacity_73728.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_73728/workload.exe"
+      ],
+      "counts": [
+        0,
+        98292,
+        122892
+      ],
+      "stock_counts": [
+        0,
+        98292,
+        122892
+      ],
+      "equal": true,
+      "output_sha256": "b92e9fddaa8861ff6d85cbc1ede123ad79234acfb94511e7e5603b293bc9d134"
+    },
+    {
+      "id": "mean_uniform",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/mean_uniform.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/mean_uniform.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/mean_uniform/workload.exe"
+      ],
+      "counts": [
+        4092,
+        1024,
+        0
+      ],
+      "stock_counts": [
+        4092,
+        1024,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "5cdfda04cdaebfa9fc974a9e686b6b48bd48670fd30b7a01c6e793d11aff13ad"
+    },
+    {
+      "id": "mean_mixed",
+      "argv": [
+        "env",
+        "VALGRIND_LIB=/tmp/chaser-cg-cold-install/libexec/valgrind",
+        "/tmp/chaser-cg-cold-install/bin/valgrind",
+        "--command-line-only=yes",
+        "--tool=cachegrind",
+        "--cache-sim=yes",
+        "--branch-sim=no",
+        "--I1=16384,4,32",
+        "--D1=16384,4,32",
+        "--LL=2097152,4,32",
+        "--cachegrind-out-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/mean_mixed.out",
+        "--log-file=rtems/s1/build/cachegrind-cold-v2/no-reset-control/mean_mixed.log",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/mean_mixed/workload.exe"
+      ],
+      "counts": [
+        2046,
+        3070,
+        0
+      ],
+      "stock_counts": [
+        2046,
+        3070,
+        0
+      ],
+      "equal": true,
+      "output_sha256": "39dff1ea77ab46e62d23386173ad801196f422cb2b8417a56d21321e2aefa80a"
+    }
+  ],
+  "all_equal": true
+}

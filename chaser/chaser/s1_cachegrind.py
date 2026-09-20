@@ -3,6 +3,7 @@
 import csv
 import gzip
 import json
+import re
 from math import isfinite
 from pathlib import Path
 import shutil
@@ -71,13 +72,19 @@ def read_counts(text, source, load_lines, expected):
                 function_events=total, summary_events=summary, load_lines=sorted(seen))
 
 
+def check_cold_reset(text, entry):
+    resets = re.findall(r'S1 cold reset: entry=0x([0-9a-f]+) count=(\d+) I1,D1,LL', text)
+    totals = re.findall(r'S1 cold reset total: (\d+)', text)
+    if resets != [(f'{entry:x}', '1')] or totals != ['1']:
+        raise ValueError('Require exactly one runtime cold reset at the ELF function entry')
+    return dict(entry=entry, count=1, caches=['I1', 'D1', 'LL'])
 
 
 def _write(path, value):
     path.write_text(json.dumps(value, indent=2, sort_keys=True, allow_nan=False) + '\n')
 
 
-def run_cachegrind(*, input_dir: Path, output_dir: Path, timeout=120):
+def run_cachegrind(*, input_dir: Path, output_dir: Path, timeout=120, cold_prefix: Path | None = None):
     """Use exact prior ELF/source/analysis; retain disagreements as results, not failures."""
     if type(timeout) not in (int, float) or not isfinite(timeout) or timeout <= 0:
         raise ValueError('Positive finite timeout required')
@@ -90,6 +97,14 @@ def run_cachegrind(*, input_dir: Path, output_dir: Path, timeout=120):
     output_dir.mkdir(parents=True)
     tool = Path(shutil.which('valgrind') or 'valgrind').resolve()
     tool_command = [str(tool)]
+    cold_files = {}
+    if cold_prefix is not None:
+        cold_prefix = cold_prefix.resolve()
+        tool = cold_prefix / 'bin/valgrind'
+        library = cold_prefix / 'libexec/valgrind'
+        tool_command = ['env', f'VALGRIND_LIB={library}', str(tool)]
+        cold_files = {str(p): file_hash(p) for p in (tool, library / 'cachegrind-amd64-linux',
+                      library / 'vgpreload_core-amd64-linux.so', cold_prefix / 's1-build.json')}
     version = subprocess.check_output([*tool_command, '--version'], text=True, timeout=timeout).strip()
     report = dict(schema_version=1, status='running', rows=[], selection=prior['selection'],
                   execution_validation='cachegrind-source-line-attribution',
@@ -100,6 +115,11 @@ def run_cachegrind(*, input_dir: Path, output_dir: Path, timeout=120):
                   input_suite=str(suite_path), input_suite_sha256=original_hash,
                   tool=dict(path=str(tool), version=version, sha256=file_hash(tool)),
                   implementation_sha256=file_hash(Path(__file__)))
+    if cold_prefix is not None:
+        report.update(initial_state='I1-D1-LL-reset-before-chaser_s1-entry',
+                      validation_scope='patched-cachegrind-cold-entry-full-traffic-array-load-source-lines',
+                      cold_tool_sha256=cold_files,
+                      cold_build=json.loads((cold_prefix / 's1-build.json').read_text()))
     _write(output_dir / 'suite.json', report)
     for previous in prior['rows']:
         case_id = previous['id']
@@ -120,10 +140,20 @@ def run_cachegrind(*, input_dir: Path, output_dir: Path, timeout=120):
                 raise ValueError('Cache geometry differs from comparison settings')
             lines = [i for i, line in enumerate(source.read_text().splitlines(), 1) if 'sum += data[' in line]
             raw = directory / 'cachegrind.out'
-            argv = [*tool_command, '--command-line-only=yes', '--tool=cachegrind', '--cache-sim=yes',
+            cold_options = []
+            if cold_prefix is not None:
+                from chaser.s1_execution import _symbols
+                nm = subprocess.check_output(['nm', '-S', '--defined-only', str(elf)], text=True, timeout=timeout)
+                (directory / 'symbols.txt').write_text(nm)
+                entry = _symbols(nm)['chaser_s1'][0]
+                cold_options = [f'--s1-cold-entry=0x{entry:x}']
+            argv = [*tool_command, *cold_options, '--command-line-only=yes', '--tool=cachegrind', '--cache-sim=yes',
                     '--branch-sim=no', '--I1=16384,4,32', '--D1=16384,4,32', '--LL=2097152,4,32',
                     '--error-exitcode=97', '--log-fd=2', f'--cachegrind-out-file={raw}', str(elf)]
             capture(argv, directory, timeout=timeout, max_bytes=1024 * 1024)
+            if cold_prefix is not None:
+                with gzip.open(directory / 'trace.log.gz', 'rt') as log:
+                    row['cold_reset'] = check_cold_reset(log.read(), entry)
             count = previous['sequence']['observed_count']
             if (directory / 'stdout.txt').read_text() != f'checksum={count} expected={count}\n':
                 raise ValueError('Cachegrind execution checksum mismatch')
@@ -141,6 +171,8 @@ def run_cachegrind(*, input_dir: Path, output_dir: Path, timeout=120):
                 row[model + '_error'] = compare(prediction, reference)
             if any(file_hash(Path(p)) != h for p, h in snapshot.items()) or file_hash(suite_path) != original_hash:
                 raise ValueError('Input changed during collection')
+            if any(file_hash(Path(p)) != h for p, h in cold_files.items()):
+                raise ValueError('Cold Cachegrind tool changed during collection')
         except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
             row.update(status='failed', error=f'{type(error).__name__}: {error}')
         row['artifact_sha256'] = {p.name: file_hash(p) for p in sorted(directory.iterdir()) if p.is_file()}

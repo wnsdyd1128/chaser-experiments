@@ -1,0 +1,124 @@
+{
+  "artifact_sha256": {
+    "cachegrind.out": "5ea35291e4507c5d3a48adb910cb82871ee0b0f1f282afbbdfb409a1a7bb71ac",
+    "cachegrind.out.gz": "d91a58c6772ac281273bd63923ecfe2859fdcd86b46a2cd4bed2a7465171e22c",
+    "capture.json": "0a2823fdca0decbe102d7974802e4b6bb77b4e68618d1ae5172d725ceabb38a9",
+    "stdout.txt": "db081d3cbf0697f6b064de9d151e9644945c126bdbfe7850ca2a971e11157534",
+    "symbols.txt": "7836fffaa8ed0ac394722e7bb79d80faa23db844333bec12f976d0cb358dd73a",
+    "trace.log.gz": "4f7d53d27ad4d10b25b89aed6fd20d57b0206d71a10295ddfe0d89a496e15cb5"
+  },
+  "cachegrind": {
+    "counts": [
+      10,
+      0,
+      5
+    ],
+    "function_events": {
+      "D1mr": 6,
+      "D1mw": 0,
+      "DLmr": 6,
+      "DLmw": 0,
+      "Dr": 16,
+      "Dw": 0,
+      "I1mr": 2,
+      "ILmr": 2,
+      "Ir": 95
+    },
+    "load_lines": [
+      26
+    ],
+    "ratios": [
+      0.6666666666666666,
+      0.0,
+      0.3333333333333333
+    ],
+    "selected_events": {
+      "D1mr": 5,
+      "D1mw": 0,
+      "DLmr": 5,
+      "DLmw": 0,
+      "Dr": 15,
+      "Dw": 0,
+      "I1mr": 1,
+      "ILmr": 1,
+      "Ir": 30
+    },
+    "summary_events": {
+      "D1mr": 2702,
+      "D1mw": 1248,
+      "DLmr": 2308,
+      "DLmw": 1166,
+      "Dr": 33012,
+      "Dw": 12719,
+      "I1mr": 2414,
+      "ILmr": 2253,
+      "Ir": 142222
+    }
+  },
+  "cold_reference_counts": [
+    10,
+    0,
+    5
+  ],
+  "cold_reset": {
+    "caches": [
+      "I1",
+      "D1",
+      "LL"
+    ],
+    "count": 1,
+    "entry": 4198752
+  },
+  "csrd": [
+    0.6666666666666666,
+    0.0,
+    0.3333333333333333
+  ],
+  "csrd_count_equal": true,
+  "csrd_counts": [
+    10,
+    0,
+    5
+  ],
+  "csrd_error": {
+    "absolute_error": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mae": 0.0,
+    "max_absolute_error": 0.0,
+    "rmse": 0.0
+  },
+  "global_rd": [
+    0.6666666666666666,
+    0.0,
+    0.3333333333333333
+  ],
+  "global_rd_counts": [
+    10,
+    0,
+    5
+  ],
+  "global_rd_error": {
+    "absolute_error": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mae": 0.0,
+    "max_absolute_error": 0.0,
+    "rmse": 0.0
+  },
+  "id": "spread_5",
+  "input_sha256": {
+    "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_5/workload.c": "34d42c24e93c07c0e588216940ffb7342cde7fb8147ddada9b1655a75cb55094",
+    "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_5/workload.exe": "f4c9a407ec6d2b2cc0f7b75d0de73e7d0cfaa8959da8aa872b281551c20ab550"
+  },
+  "reference": [
+    0.6666666666666666,
+    0.0,
+    0.3333333333333333
+  ],
+  "status": "ok"
+}

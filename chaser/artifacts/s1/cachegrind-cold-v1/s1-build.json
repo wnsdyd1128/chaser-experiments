@@ -1,0 +1,27 @@
+{
+  "archive_sha256": "00859aa13a772eddf7822225f4b46ee0d39afbe071d32778da4d99984081f7f5",
+  "build": [
+    "make",
+    "-j4"
+  ],
+  "compiler": "gcc (Ubuntu 11.4.0-1ubuntu1~22.04.2) 11.4.0\nCopyright (C) 2021 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "configure": [
+    "./configure",
+    "--prefix=/tmp/chaser-cg-cold-install",
+    "--enable-only64bit"
+  ],
+  "install": [
+    "make",
+    "install"
+  ],
+  "logs_sha256": {
+    "chaser-cg-build.log": "6d76b1ecc0ec5b3d1f9ebdd74b1e9200ff7577372ed7a1f7f8e8c482a010fee3",
+    "chaser-cg-configure.log": "c2958c2efcb325897ec7dc3058e81b04cfa394c87178fbed9e4d7f51d6e16b23",
+    "chaser-cg-install.log": "4746c72fb29c31cd231b6e378972948bb3450c5bfd681acd780dd26e1a61463d"
+  },
+  "patch_sha256": "5732bf6fbb08516bc713b057c28c9d2b521d9f8b0800f15dfb2bd98897b439d3",
+  "patched_cg_main_sha256": "284db0258a9609789717beed6636c676a34652411bfdc08a47845daafea659f2",
+  "source_url": "https://sourceware.org/pub/valgrind/valgrind-3.18.1.tar.bz2",
+  "unchanged_cg_sim_sha256": "f4d48cbd63b2e7a1ec01c522d49d1c5f8b43c568870e1d2918ce54ebcc98dab9",
+  "version": "3.18.1+s1-cold-entry"
+}
