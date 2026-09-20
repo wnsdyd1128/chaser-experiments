@@ -7,7 +7,7 @@ from pathlib import Path
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('report', type=Path, help='S1 model suite.json')
+    parser.add_argument('report', type=Path, help='S1 model or execution trace suite.json')
     parser.add_argument('--output', type=Path, required=True, help='New plot directory')
     args = parser.parse_args()
     import matplotlib
@@ -36,7 +36,11 @@ def main():
     rows = [r for r in report['rows'] if r['status'] in ('ok', 'mismatch')]
     if not rows:
         parser.error('No evaluated workloads to plot')
-    xlabel = 'Reference fraction of accesses'
+    execution = report.get('execution_validation') == 'valgrind-lackey-ordered-accesses'
+    if execution:
+        rows = [{**r, 'reference': r['trace_reference_ratios'],
+                 'global_rd': r['global_rd']['ratios'], 'csrd': r['csrd']['ratios']} for r in rows]
+    xlabel = 'Trace-replay fraction of accesses' if execution else 'Reference fraction of accesses'
     args.output.mkdir(parents=True)
     fig, axes = plt.subplots(1, 3, figsize=(11, 4.1), sharex=True, sharey=True)
     for i, (axis, level) in enumerate(zip(axes, ('L1 hit', 'LLC first hit', 'All-cache miss (Memory)'))):
@@ -56,7 +60,8 @@ def main():
                bbox_to_anchor=(0.5, 0.93), ncol=2, fontsize=12)
     title = 'S1 cold demand-cache model'
     fig.suptitle(f'{title}: {len(rows)} load-only workloads', fontsize=14)
-    note = ('All fractions use total accesses. Overlapping points are retained. '
+    note = ('Host Lackey trace; function/array filtered, cold LRU replay. Target validation: not performed.'
+            if execution else 'All fractions use total accesses. Overlapping points are retained. '
             'Execution validation: not performed.')
     fig.text(0.5, 0.035, note, ha='center', fontsize=9)
     fig.subplots_adjust(left=0.07, right=0.99, bottom=0.18, top=0.76, wspace=0.25)

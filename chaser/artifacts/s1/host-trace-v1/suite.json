@@ -1,0 +1,3742 @@
+{
+  "cache_validation": "independent-cold-LRU-replay-of-filtered-execution-trace",
+  "execution_validation": "valgrind-lackey-ordered-accesses",
+  "rows": [
+    {
+      "artifact_bytes": 344030,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "5a7dab00e94d7659a4484c55ec43a59946c1503a66da0a56c70d507307ff242c",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "98119064c3addeba9b75cb710fb4ea2236450d646200a8d78fa3802c7d0edb7b",
+        "commands.json": "464e883a427c0f40d999544d255af0845c6ed11e52bb3a0f52fa3cd660be2ff1",
+        "comparison/actual.events.json": "8e442694c48062069ba001ca9d1cb2913f7cb28b13f97fc903d4bb1dbcbe10e4",
+        "comparison/actual.json": "dc67122bbb8c5f4dbe81745d141cb8a1adc59966e3e34d2379ef74ae91bfc37a",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "8d08b0993bffeb7d82e019c1601ea002499fbe9f27e43c8f467634051770748e",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "91ba128d28756bb26fcb509d57fe174f7372728c1327c11531e6cde468fab7d4",
+        "comparison/global.json": "ad912979150cce4f8eb031d4b9b10f183725809a2aff80934a5910ed11903df4",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "b79e1b43275c75068ef674a8f88896ef1848d4cf5a9f4285cc96ef4b4a82b408",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "3eaf35f702a4ce852367571ad5fcbef6290574c4c059c1c10c5f74e69a9dc956",
+        "comparison/input.source": "4934e7bc634b7673350030ce75eab7dd72f6647e8a3264212a23092406176ee0",
+        "comparison/inputs.json": "acfcb794f3ad07336a7bcd4770f180379e45342bbe790c56986189845189728b",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "5e2c78ca08a058d9c6a760931170d3b4207e3d7c36445b817109474c848366bd",
+        "stdout.txt": "5e2c78ca08a058d9c6a760931170d3b4207e3d7c36445b817109474c848366bd",
+        "symbols.log": "71f4309e5505ae7a89f0926926438f750b4fbb8106f079836015751bc00d68a1",
+        "trace.log.gz": "76d83455c92d9ac806111074eaa3a1768065e31a8129ccc19c2cab0c6dee2c29",
+        "workload.c": "4934e7bc634b7673350030ce75eab7dd72f6647e8a3264212a23092406176ee0",
+        "workload.exe": "3eaf35f702a4ce852367571ad5fcbef6290574c4c059c1c10c5f74e69a9dc956",
+        "workload.ll": "41a86d2b35284b403defb3910ab1edbfb6f2e8345156fdbc35bb338de39ef783",
+        "workload_ape.json": "b79e1b43275c75068ef674a8f88896ef1848d4cf5a9f4285cc96ef4b4a82b408"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 24,
+      "csrd": {
+        "counts": [
+          23,
+          0,
+          1
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.9583333333333334,
+          0.0,
+          0.041666666666666664
+        ]
+      },
+      "family": "layout",
+      "global_rd": {
+        "counts": [
+          23,
+          0,
+          1
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.9583333333333334,
+          0.0,
+          0.041666666666666664
+        ]
+      },
+      "id": "packed_8",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/packed_8/workload.c": "4934e7bc634b7673350030ce75eab7dd72f6647e8a3264212a23092406176ee0",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/packed_8/workload.exe": "3eaf35f702a4ce852367571ad5fcbef6290574c4c059c1c10c5f74e69a9dc956",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/packed_8/workload.ll": "41a86d2b35284b403defb3910ab1edbfb6f2e8345156fdbc35bb338de39ef783",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/packed_8/workload_ape.json": "b79e1b43275c75068ef674a8f88896ef1848d4cf5a9f4285cc96ef4b4a82b408"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 24,
+        "expected_sha256": "dc0a94781b4839b77a8e9191ff4688181b8407506223d64019c7f3f2686c15d5",
+        "first_mismatch": null,
+        "observed_count": 24,
+        "observed_sha256": "dc0a94781b4839b77a8e9191ff4688181b8407506223d64019c7f3f2686c15d5"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          55
+        ],
+        "data": [
+          4218880,
+          8
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 46800,
+        "instructions": 145348,
+        "roi_instructions": 116,
+        "selected_accesses": 24
+      },
+      "trace_reference_counts": [
+        23,
+        0,
+        1
+      ],
+      "trace_reference_ratios": [
+        0.9583333333333334,
+        0.0,
+        0.041666666666666664
+      ],
+      "wall_seconds": 0.9833140401169658
+    },
+    {
+      "artifact_bytes": 330918,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "540964cb1d9c2794c35975c4d36cc05084370f1daba96108e2abd5fbc26bafda",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "392058963a12b5f5aa1a2f21a7b13e1c68a9859695e60084122d77b34e6c63d0",
+        "commands.json": "11a02dde617106407048e1cceb7c26b96b61b63fac75e9929779a8c66521bbad",
+        "comparison/actual.events.json": "2bc099840fa57f8eaaa9e859a73d9aa08fb2c88a44559ed2ea4e66c8e9576db4",
+        "comparison/actual.json": "08f59502fe7f3a1152011323220fbf5970ecf05c691164994329d0d5cce04edb",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "af66f6e0512ed68e775982b101452968a84c0ec61318dd6430322733829fd30f",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "721fa91c9af95594065838c5d1c09fd2ec3bcd8f86a2cc2c92fd230e8b14c87f",
+        "comparison/global.json": "7965a09bad41be4c97cf1be9a9e006a5cc1d18ba3b775f38d16f5783516b7487",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "f7e189f9b6578969e00e8e20fc81b44196ec12386b394de66e695229e6fb1352",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "2c961892e0889f4e04083f4ce78404cfd34e098a640077cc1aab6e955229bff3",
+        "comparison/input.source": "7e6a83a0eb5fbe4d74e2ddb6f1b75b2d79b8c5a32744d3953d76b422e9b7dd5a",
+        "comparison/inputs.json": "706aabae81ffc93be160a2e6a34dbbb429c7f1cb9042ccba583cf501998a70b4",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "36641afa3ac6ca61eb8834076b9ffcfeeef187afb38fc7365039dc58fd28bd54",
+        "stdout.txt": "36641afa3ac6ca61eb8834076b9ffcfeeef187afb38fc7365039dc58fd28bd54",
+        "symbols.log": "4bd7f507d4ee861507a647603f26cc648549563feec8b19fa95f809e6de64aeb",
+        "trace.log.gz": "72b97179e114dedfabe8144b8311b9f97064e734752ec2c10c051969c2dc8259",
+        "workload.c": "7e6a83a0eb5fbe4d74e2ddb6f1b75b2d79b8c5a32744d3953d76b422e9b7dd5a",
+        "workload.exe": "2c961892e0889f4e04083f4ce78404cfd34e098a640077cc1aab6e955229bff3",
+        "workload.ll": "2182070c2e9a8b54362a9f238166fe92101ee296a594e56a056b4f1bb06c9815",
+        "workload_ape.json": "f7e189f9b6578969e00e8e20fc81b44196ec12386b394de66e695229e6fb1352"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 9,
+      "csrd": {
+        "counts": [
+          6,
+          0,
+          3
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "family": "associativity",
+      "global_rd": {
+        "counts": [
+          6,
+          0,
+          3
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "id": "spread_3",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_3/workload.c": "7e6a83a0eb5fbe4d74e2ddb6f1b75b2d79b8c5a32744d3953d76b422e9b7dd5a",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_3/workload.exe": "2c961892e0889f4e04083f4ce78404cfd34e098a640077cc1aab6e955229bff3",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_3/workload.ll": "2182070c2e9a8b54362a9f238166fe92101ee296a594e56a056b4f1bb06c9815",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_3/workload_ape.json": "f7e189f9b6578969e00e8e20fc81b44196ec12386b394de66e695229e6fb1352"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 9,
+        "expected_sha256": "b275ac9a1eb43230c94ff1a8853b0cf867df2dcb43529daa0ed468f3cb554bbe",
+        "first_mismatch": null,
+        "observed_count": 9,
+        "observed_sha256": "b275ac9a1eb43230c94ff1a8853b0cf867df2dcb43529daa0ed468f3cb554bbe"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          60
+        ],
+        "data": [
+          4218880,
+          96
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 46880,
+        "instructions": 145529,
+        "roi_instructions": 65,
+        "selected_accesses": 9
+      },
+      "trace_reference_counts": [
+        6,
+        0,
+        3
+      ],
+      "trace_reference_ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ],
+      "wall_seconds": 1.0042291139252484
+    },
+    {
+      "artifact_bytes": 369488,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "cb24088f9143d367db988c77ea4fa7b6543a327a424b62a0ad1da5177d3144ff",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "33b3d7ca611429e20b998062fefee479cbc98325d0eadafdc1054cefb6ce9929",
+        "commands.json": "f9105043049ec39776f073d3d72401751dfa3894d37a9424360a4873bb290c75",
+        "comparison/actual.events.json": "652bde24d972446b5efb39e0e909f375ac011decd097622fc63a7670d8b86097",
+        "comparison/actual.json": "22da9bcf91717e3da7e10721d60d3200a6fc7dda82fa395d84173d0e2442cc36",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "774e5dcb00a4089ddd7bbfc7f6a4f02d5c45c48dddd6291451734abb344f83cb",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "016f132241a0a037ae8d68b4f420159dfb09d8fdf0c034d93cfedd3e2840dbaf",
+        "comparison/global.json": "83981ec4c21220b3ecaf59a04ce53df3423ba5525d99b2c130c167b30663a9c7",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "bc99288aeffbf3e0c930e9a7a7d36f1c0864c7aa1c8038edbbb80c5541166dce",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "d965c88bd78a35d1f50a23ad1928545169a8c0977b8e93bcd9b4962e12979570",
+        "comparison/input.source": "4dc771d21ca2d3223a3f7ee6658d5d6c1f1adbe130ef359c5874128f826bb76d",
+        "comparison/inputs.json": "1377275ad0905363d716543c146a6038452e2e1aeace676bfdcef877b0004b33",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "36641afa3ac6ca61eb8834076b9ffcfeeef187afb38fc7365039dc58fd28bd54",
+        "stdout.txt": "36641afa3ac6ca61eb8834076b9ffcfeeef187afb38fc7365039dc58fd28bd54",
+        "symbols.log": "713c304b2fe41bf17ac7d37ac49bbd99ce063f4bcb73263bf091f8e6f8f8b47a",
+        "trace.log.gz": "a9ab775bc360d4278fef7bfe5df9916f920872c61d9365916d4c448ab97178bf",
+        "workload.c": "4dc771d21ca2d3223a3f7ee6658d5d6c1f1adbe130ef359c5874128f826bb76d",
+        "workload.exe": "d965c88bd78a35d1f50a23ad1928545169a8c0977b8e93bcd9b4962e12979570",
+        "workload.ll": "0b46939883489e920f8b80be147736bdaf78f11262258e77b0cf6624be9d9c99",
+        "workload_ape.json": "bc99288aeffbf3e0c930e9a7a7d36f1c0864c7aa1c8038edbbb80c5541166dce"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 9,
+      "csrd": {
+        "counts": [
+          6,
+          0,
+          3
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "family": "associativity",
+      "global_rd": {
+        "counts": [
+          6,
+          0,
+          3
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "id": "conflict_3",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_3/workload.c": "4dc771d21ca2d3223a3f7ee6658d5d6c1f1adbe130ef359c5874128f826bb76d",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_3/workload.exe": "d965c88bd78a35d1f50a23ad1928545169a8c0977b8e93bcd9b4962e12979570",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_3/workload.ll": "0b46939883489e920f8b80be147736bdaf78f11262258e77b0cf6624be9d9c99",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_3/workload_ape.json": "bc99288aeffbf3e0c930e9a7a7d36f1c0864c7aa1c8038edbbb80c5541166dce"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 9,
+        "expected_sha256": "a9fa0b4e281e1e59bce37ec9e4ef5db0f797cda86a18e72b3911e22b50f4c944",
+        "first_mismatch": null,
+        "observed_count": 9,
+        "observed_sha256": "a9fa0b4e281e1e59bce37ec9e4ef5db0f797cda86a18e72b3911e22b50f4c944"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          66
+        ],
+        "data": [
+          4218880,
+          12288
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 59072,
+        "instructions": 182105,
+        "roi_instructions": 65,
+        "selected_accesses": 9
+      },
+      "trace_reference_counts": [
+        6,
+        0,
+        3
+      ],
+      "trace_reference_ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ],
+      "wall_seconds": 1.0910121030174196
+    },
+    {
+      "artifact_bytes": 333903,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "8ca354d92ee849029342213cf7d6458d707dfcdd373018e40e2b81e293f9f941",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "3baa629ab404117a8985f54ac557ad050eb0d9689447700d18f1212ad408af72",
+        "commands.json": "362ecddbdd17152f93ccd77523e2d00fd605798316b0ef9b80da6ed450905900",
+        "comparison/actual.events.json": "dcd7a89a6ba5c21d55bd8ada3849c7acf82523b72f54f4a94481f824a040ccaf",
+        "comparison/actual.json": "f6492332cd828595d22b6ba6545b02d2a1b3c13d2ae26f019a1d57aa67a08c3c",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "b4e9fec04aaec6ef64ffbc8c52072391b216f257f7e517bd634b345487f2de67",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "02e810a3f737baa2035346f43c79dcd26f58263da552945aea4ef21e11fd7bd9",
+        "comparison/global.json": "b829112f1656688cd75b31804f955cd2c76769ec58497fc36192c0200c445bea",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "0a6a4160c6a9587aee3c0555c1a214ba5b810dd7203f250e6b50172e1d0c1ad8",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "2bab643611d938f094564e4056370645498bed896a3206154fc745c13b3b2abc",
+        "comparison/input.source": "ada77bddf290a5a930fa53dd8271ac1570a410fec9171691f5b458309e8a0e9e",
+        "comparison/inputs.json": "0572341d8101523ed76db3de48cf2481b92be664b610b913c94712c42d36a9ea",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "eef7a3ce85ea218f57545ca5aca3d8e9854c64907c2c11dc1244aac5ec42e530",
+        "stdout.txt": "eef7a3ce85ea218f57545ca5aca3d8e9854c64907c2c11dc1244aac5ec42e530",
+        "symbols.log": "98bb977ae798fb4f91cd979c42e3f34d11ec2674a84e529a093b34bc986ffa4a",
+        "trace.log.gz": "e0566c3d606ca1ea30008f8cd8995de33962a1aba7457e9e82c2b7eef971f6fa",
+        "workload.c": "ada77bddf290a5a930fa53dd8271ac1570a410fec9171691f5b458309e8a0e9e",
+        "workload.exe": "2bab643611d938f094564e4056370645498bed896a3206154fc745c13b3b2abc",
+        "workload.ll": "de1cd765d00e871f5c4e11faf6e7d67123d60aa12513e937be9404ba158c54f8",
+        "workload_ape.json": "0a6a4160c6a9587aee3c0555c1a214ba5b810dd7203f250e6b50172e1d0c1ad8"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 12,
+      "csrd": {
+        "counts": [
+          8,
+          0,
+          4
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "family": "associativity",
+      "global_rd": {
+        "counts": [
+          8,
+          0,
+          4
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "id": "spread_4",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_4/workload.c": "ada77bddf290a5a930fa53dd8271ac1570a410fec9171691f5b458309e8a0e9e",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_4/workload.exe": "2bab643611d938f094564e4056370645498bed896a3206154fc745c13b3b2abc",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_4/workload.ll": "de1cd765d00e871f5c4e11faf6e7d67123d60aa12513e937be9404ba158c54f8",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_4/workload_ape.json": "0a6a4160c6a9587aee3c0555c1a214ba5b810dd7203f250e6b50172e1d0c1ad8"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 12,
+        "expected_sha256": "7aeabc98c9364e3baefe897250c0c8f088f37c31bf39f1120955d4c16d6256ba",
+        "first_mismatch": null,
+        "observed_count": 12,
+        "observed_sha256": "7aeabc98c9364e3baefe897250c0c8f088f37c31bf39f1120955d4c16d6256ba"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          60
+        ],
+        "data": [
+          4218880,
+          128
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 46920,
+        "instructions": 145672,
+        "roi_instructions": 80,
+        "selected_accesses": 12
+      },
+      "trace_reference_counts": [
+        8,
+        0,
+        4
+      ],
+      "trace_reference_ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ],
+      "wall_seconds": 0.9831567518413067
+    },
+    {
+      "artifact_bytes": 383875,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "65a381d9385dae48e9176376f6abb68081735d260a1657988aa4a7424f1e7421",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "f2c889edaac68f1fac6e9696adecfa23cc389739ec0cadb9cda08643b30fc566",
+        "commands.json": "2f6ae474813c9d8628d9595168637650a9c836913ae98727e0b9e8f23ec65a25",
+        "comparison/actual.events.json": "7c9618e297855e033783bddb702a4c4f8ffedc9717c588e84155013de991649a",
+        "comparison/actual.json": "d10ae30fbc5110a42844c3e702e0db678dfc9d3c37cbac28d40396f59092fe47",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "0c4a4f3da63f9a87c62d44332dfdd9d192653dc2fbf7abe3b79cc396bddaf399",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "75a292c51a3bdef98561781b5dadb63e5ec07f2070e26a4b8e51bca68d990f99",
+        "comparison/global.json": "e579b2d8a4ebc18c6a7b83f6be0b270b025d4abeaa85507ee018d80b618f0163",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "3320403010ac63e73fbe510fa30fc8ae6c3509199daf44cd36e34eba4db47ced",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "cd92c8d8be7d99e9537f9fcb2b9e661202c84f794daebcb25abfa5cc32bf8cb2",
+        "comparison/input.source": "a582c8194b101e6a6c058ea671bd47b55ee74abe479403667a5ba0c251a48f33",
+        "comparison/inputs.json": "ef40a3aca79a621a63d72f8f41b2f96507f8efb8e83e9f7a746952d8a0d551fb",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "eef7a3ce85ea218f57545ca5aca3d8e9854c64907c2c11dc1244aac5ec42e530",
+        "stdout.txt": "eef7a3ce85ea218f57545ca5aca3d8e9854c64907c2c11dc1244aac5ec42e530",
+        "symbols.log": "ff9fb02006d93b872d3052c30e726fd7df050d7b306270bfc9a16f5e11b8cb79",
+        "trace.log.gz": "a8ab9826ec5070ab31c2747649c98f8891ca05329e30bde2ca5a77d5bea1b778",
+        "workload.c": "a582c8194b101e6a6c058ea671bd47b55ee74abe479403667a5ba0c251a48f33",
+        "workload.exe": "cd92c8d8be7d99e9537f9fcb2b9e661202c84f794daebcb25abfa5cc32bf8cb2",
+        "workload.ll": "13356831661436419c6129ad1a13c5e41a329ca36df00c3de473c69af110b292",
+        "workload_ape.json": "3320403010ac63e73fbe510fa30fc8ae6c3509199daf44cd36e34eba4db47ced"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 12,
+      "csrd": {
+        "counts": [
+          8,
+          0,
+          4
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "family": "associativity",
+      "global_rd": {
+        "counts": [
+          8,
+          0,
+          4
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "id": "conflict_4",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_4/workload.c": "a582c8194b101e6a6c058ea671bd47b55ee74abe479403667a5ba0c251a48f33",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_4/workload.exe": "cd92c8d8be7d99e9537f9fcb2b9e661202c84f794daebcb25abfa5cc32bf8cb2",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_4/workload.ll": "13356831661436419c6129ad1a13c5e41a329ca36df00c3de473c69af110b292",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_4/workload_ape.json": "3320403010ac63e73fbe510fa30fc8ae6c3509199daf44cd36e34eba4db47ced"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 12,
+        "expected_sha256": "7c939c817d8604c2fa6a839441e156d41c411849b46985434833a835713f8e01",
+        "first_mismatch": null,
+        "observed_count": 12,
+        "observed_sha256": "7c939c817d8604c2fa6a839441e156d41c411849b46985434833a835713f8e01"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          66
+        ],
+        "data": [
+          4218880,
+          16384
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 63176,
+        "instructions": 194440,
+        "roi_instructions": 80,
+        "selected_accesses": 12
+      },
+      "trace_reference_counts": [
+        8,
+        0,
+        4
+      ],
+      "trace_reference_ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ],
+      "wall_seconds": 1.127594007179141
+    },
+    {
+      "artifact_bytes": 336734,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "36571431a977464d62a1e0d846b447463c7e78aa230f3ec4812b1ac1d00d2015",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "1b9c6f490a55759b177463f2de1c5ab23e90c8f09159af719e275232ec7feb7d",
+        "commands.json": "1f9bbcde2305463dd140e982e424b7b14441156a504da85e92abafa836b82f44",
+        "comparison/actual.events.json": "1ff7c62c3d7e2eb6c3e6e8c221c54791192f24cc70f81d555b962794a820b570",
+        "comparison/actual.json": "dfc3124ec4208b6e40a14a7e5a432d33b7c792a22d5a1f06c1a80c352ea5ebee",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "a82bd0824ac23a231c6c6fab85c4479eda2bc69edc4ade1d579e66a601fcf8fd",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "28ba119dd14ba080d1c468967fdf568860e6e59381c3a2e805efcb3ae25cc192",
+        "comparison/global.json": "d46ef703494af1a422d38385669346a883b9dabb6a2b37dd6aa47df7ca96d061",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "638d23f8549919011ae8bdddc0d4b9272ec47284dcc86af083c1f7d1f798c20b",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "f4c9a407ec6d2b2cc0f7b75d0de73e7d0cfaa8959da8aa872b281551c20ab550",
+        "comparison/input.source": "34d42c24e93c07c0e588216940ffb7342cde7fb8147ddada9b1655a75cb55094",
+        "comparison/inputs.json": "ec1b6416c6cb9a6e663e28a4c164e7e8facfa9881fcdc29337cd029d979680b4",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "db081d3cbf0697f6b064de9d151e9644945c126bdbfe7850ca2a971e11157534",
+        "stdout.txt": "db081d3cbf0697f6b064de9d151e9644945c126bdbfe7850ca2a971e11157534",
+        "symbols.log": "7836fffaa8ed0ac394722e7bb79d80faa23db844333bec12f976d0cb358dd73a",
+        "trace.log.gz": "4d9a11d4632a6568e065357b226ef79070d28284125f0b7a800c59f75ea89cd0",
+        "workload.c": "34d42c24e93c07c0e588216940ffb7342cde7fb8147ddada9b1655a75cb55094",
+        "workload.exe": "f4c9a407ec6d2b2cc0f7b75d0de73e7d0cfaa8959da8aa872b281551c20ab550",
+        "workload.ll": "a2956f3309f90280b8767c4b88c088e29276fbf2053b3c5ac53fd9441183ee10",
+        "workload_ape.json": "638d23f8549919011ae8bdddc0d4b9272ec47284dcc86af083c1f7d1f798c20b"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 15,
+      "csrd": {
+        "counts": [
+          10,
+          0,
+          5
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "family": "associativity",
+      "global_rd": {
+        "counts": [
+          10,
+          0,
+          5
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "id": "spread_5",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_5/workload.c": "34d42c24e93c07c0e588216940ffb7342cde7fb8147ddada9b1655a75cb55094",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_5/workload.exe": "f4c9a407ec6d2b2cc0f7b75d0de73e7d0cfaa8959da8aa872b281551c20ab550",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_5/workload.ll": "a2956f3309f90280b8767c4b88c088e29276fbf2053b3c5ac53fd9441183ee10",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_5/workload_ape.json": "638d23f8549919011ae8bdddc0d4b9272ec47284dcc86af083c1f7d1f798c20b"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 15,
+        "expected_sha256": "8a9d6ba8b18df06f6831896653b1beab1984d9dfb590995a11a0a42de6d8283a",
+        "first_mismatch": null,
+        "observed_count": 15,
+        "observed_sha256": "8a9d6ba8b18df06f6831896653b1beab1984d9dfb590995a11a0a42de6d8283a"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          160
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 46952,
+        "instructions": 145783,
+        "roi_instructions": 95,
+        "selected_accesses": 15
+      },
+      "trace_reference_counts": [
+        10,
+        0,
+        5
+      ],
+      "trace_reference_ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ],
+      "wall_seconds": 0.9894756302237511
+    },
+    {
+      "artifact_bytes": 398061,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "23ebc8da41836fee55222fa69a5ac0c4c15cab6768130d16824f7080c93bca69",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "11857d31f774c90ca9075b002d745a75c82754ce83c6de5a965a810d21d089ae",
+        "commands.json": "771612c1b9ca57ff87c94ea421d729e438a92185d17021f098e221eecb52046a",
+        "comparison/actual.events.json": "a84c9de26077675e7159b4cbd64085a6b8d46629166c56f25c86e08cac3c2e79",
+        "comparison/actual.json": "76b6876da26d77b2dba28e60d13569ceb49fffe564523e8174a2c3e83b4388bd",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "ba25fcddcf710165fda6fb26c865ad5c462b42bb383e9744b77219ff9e307565",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "0dd108131f6a381e730807ce6ca75afb7f2b064d70353e19124d42d7a41ffd60",
+        "comparison/global.json": "de5d210b8944db3cfb4c9fe50aaeec70f35623b69ab18d4eec5a5c7b24a7b9cb",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "7f757700fd6718f751151f58b4b45c0e81455de8c64c884c34a54a8ac72a03c1",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "d34747cfcfc20166d44219dbf1195db37abed12caa436a584c78a9841943d851",
+        "comparison/input.source": "a7163965f00587b37722e24704b2f1e4683300939ff8642caabeabd665c47d2e",
+        "comparison/inputs.json": "e7c4039dfa9c9b7cefe311a5cbc434d9d0792e8fdb1139a6a84c9635cabc00e6",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "db081d3cbf0697f6b064de9d151e9644945c126bdbfe7850ca2a971e11157534",
+        "stdout.txt": "db081d3cbf0697f6b064de9d151e9644945c126bdbfe7850ca2a971e11157534",
+        "symbols.log": "ef0e06bb1faed26f8111cfebc03f08b1eb0dcc24fdc9a3f9d883da4b6d0ccee0",
+        "trace.log.gz": "acf46dcdd49124d8faba50b0b4cd60a567de59c2ba0be03d3534c182716c3c5d",
+        "workload.c": "a7163965f00587b37722e24704b2f1e4683300939ff8642caabeabd665c47d2e",
+        "workload.exe": "d34747cfcfc20166d44219dbf1195db37abed12caa436a584c78a9841943d851",
+        "workload.ll": "2abb4193c726fdc8f205461c5fcff7b17bed55871a493784db025bb39be79984",
+        "workload_ape.json": "7f757700fd6718f751151f58b4b45c0e81455de8c64c884c34a54a8ac72a03c1"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 15,
+      "csrd": {
+        "counts": [
+          0,
+          10,
+          5
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "family": "associativity",
+      "global_rd": {
+        "counts": [
+          10,
+          0,
+          5
+        ],
+        "error": {
+          "absolute_error": [
+            0.6666666666666666,
+            0.6666666666666666,
+            0.0
+          ],
+          "mae": 0.4444444444444444,
+          "max_absolute_error": 0.6666666666666666,
+          "rmse": 0.5443310539518174
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "id": "conflict_5",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_5/workload.c": "a7163965f00587b37722e24704b2f1e4683300939ff8642caabeabd665c47d2e",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_5/workload.exe": "d34747cfcfc20166d44219dbf1195db37abed12caa436a584c78a9841943d851",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_5/workload.ll": "2abb4193c726fdc8f205461c5fcff7b17bed55871a493784db025bb39be79984",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_5/workload_ape.json": "7f757700fd6718f751151f58b4b45c0e81455de8c64c884c34a54a8ac72a03c1"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 15,
+        "expected_sha256": "d71309573efd1765b20e97001f5ae1d95ec28dfbab7b5b34c8423c388e7faaf3",
+        "first_mismatch": null,
+        "observed_count": 15,
+        "observed_sha256": "d71309573efd1765b20e97001f5ae1d95ec28dfbab7b5b34c8423c388e7faaf3"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          66
+        ],
+        "data": [
+          4218880,
+          20480
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 67272,
+        "instructions": 206743,
+        "roi_instructions": 95,
+        "selected_accesses": 15
+      },
+      "trace_reference_counts": [
+        0,
+        10,
+        5
+      ],
+      "trace_reference_ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ],
+      "wall_seconds": 1.1683838302269578
+    },
+    {
+      "artifact_bytes": 346607,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "11558fe38dbb2155532faf3a184bd624f28b31edc83a995bb6b3af3104284ad6",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "39355cda27fba2fba7c92e672f3f29584629372b01afea5d234ee0d0df137b2d",
+        "commands.json": "02905f2e03af41b06f391906257a1a29a07c7805e1580efd7e3fa063d4483627",
+        "comparison/actual.events.json": "1e4ef4d90bfb16f19a5751d1d72e63a7580fe9695d87842a317bb882f044fce1",
+        "comparison/actual.json": "bdd7fb7f4e504b95dc21695f3906d31fb844623625d9fdace80c0e41dd8ba3ef",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "141e1afad70237dfc2d3dd2b09ef19b6fe01c823be05edafdfcabc121c7740e7",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "090b14d3a1ac0390297c5654efae1847d76cedbfd33112d5807e9c574b2abe87",
+        "comparison/global.json": "a3510feb5f8d135fb8c0cdb1f49a1022003c7cfe5433a6b71495fff33538b97b",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "bd939d9fa8e1318efdff438c34f694e30e000e8b582816fc353a6c67a1d8d5ff",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "f0ccf4669b3a54d985cb76da5cc18613c599cc30d5251663aa3e34cdc5346dd0",
+        "comparison/input.source": "d213bc92c9a462dd085b7c0d54c9a37d881f3b02b38caa3344928acb99fad9f7",
+        "comparison/inputs.json": "a2cfbc2e3325950a4959350357fdac50da956d90ad559cb882831ae0412430f7",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "5e2c78ca08a058d9c6a760931170d3b4207e3d7c36445b817109474c848366bd",
+        "stdout.txt": "5e2c78ca08a058d9c6a760931170d3b4207e3d7c36445b817109474c848366bd",
+        "symbols.log": "7d5f240355246cf440cc8bd8bfea46472566803a0e375a1f4df654758dc4149f",
+        "trace.log.gz": "6e9f1e2250257cf0bf3b1e31763070275c1e8f493f5c0067cd94a1bc22d3b7e7",
+        "workload.c": "d213bc92c9a462dd085b7c0d54c9a37d881f3b02b38caa3344928acb99fad9f7",
+        "workload.exe": "f0ccf4669b3a54d985cb76da5cc18613c599cc30d5251663aa3e34cdc5346dd0",
+        "workload.ll": "0f0b42ac224f701c88495ce246a9c2615d21122aecd8be87d99bce303c6aa2a4",
+        "workload_ape.json": "bd939d9fa8e1318efdff438c34f694e30e000e8b582816fc353a6c67a1d8d5ff"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 24,
+      "csrd": {
+        "counts": [
+          16,
+          0,
+          8
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "family": "associativity",
+      "global_rd": {
+        "counts": [
+          16,
+          0,
+          8
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "id": "spread_8",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_8/workload.c": "d213bc92c9a462dd085b7c0d54c9a37d881f3b02b38caa3344928acb99fad9f7",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_8/workload.exe": "f0ccf4669b3a54d985cb76da5cc18613c599cc30d5251663aa3e34cdc5346dd0",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_8/workload.ll": "0f0b42ac224f701c88495ce246a9c2615d21122aecd8be87d99bce303c6aa2a4",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/spread_8/workload_ape.json": "bd939d9fa8e1318efdff438c34f694e30e000e8b582816fc353a6c67a1d8d5ff"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 24,
+        "expected_sha256": "c386f2f2a426eb8744809f9d57be77bb809cdd6fb1119d05d173a9386b7e553d",
+        "first_mismatch": null,
+        "observed_count": 24,
+        "observed_sha256": "c386f2f2a426eb8744809f9d57be77bb809cdd6fb1119d05d173a9386b7e553d"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          256
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 47048,
+        "instructions": 146116,
+        "roi_instructions": 140,
+        "selected_accesses": 24
+      },
+      "trace_reference_counts": [
+        16,
+        0,
+        8
+      ],
+      "trace_reference_ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ],
+      "wall_seconds": 1.0045875809155405
+    },
+    {
+      "artifact_bytes": 440515,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "9053a16f0caafcd73a97ea02447643d359ab7c0e8f0dda56c86f63de617e4e6e",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "2f5760cd651b05d88ffe3bdb100dcd5bed2015d0c54c1abac1e1a2c7af5f80db",
+        "commands.json": "65a0e15b5bf47278abe0823cca1d1f612cf50170ae31e101f295ff197ea088b8",
+        "comparison/actual.events.json": "a7199f9b407fe8e064ddfc61ff1a58a38d41110f83845c637664cb443f34efd7",
+        "comparison/actual.json": "165fd38daf34ae952ade1925273f8ffcdb3749dafc1bc2e64f0e10fb1a6ab95d",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "0d07c76e795b813ad7419f5cd9f981ac6393b231f97c38bb7ea4369e52a640ee",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "225dc9a0e630ec7279c56b7bf3a096ad384757ce931ea002c99441ed3dd7e02c",
+        "comparison/global.json": "4b4ec883ce637f7e4d6f2d866760fed3c47ef1d3fd3e37b374bbcd7cf2eaa696",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "10b641a4847b7c530d0118683fdf4c0cea96c0d018fd81323e4ac34518b3c4cb",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "b0541c189be9a10cc99922e66d538f99fbd954d0c7e4011647dcb7d7cb7e74e0",
+        "comparison/input.source": "b3a81955160cb288fe5bbab796654a2fb6db913f51b9f8021b98d2d71df8a1b4",
+        "comparison/inputs.json": "6b516ac5b60c85ac7d65e87b1cb8d194960e00ad088f9f52d03749aef61c3665",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "5e2c78ca08a058d9c6a760931170d3b4207e3d7c36445b817109474c848366bd",
+        "stdout.txt": "5e2c78ca08a058d9c6a760931170d3b4207e3d7c36445b817109474c848366bd",
+        "symbols.log": "7311b50e0318fe64a64a6c3e0314214e4f542a4311704129c47a016832c66fb5",
+        "trace.log.gz": "f73c3a21c1abe6ce20ff60a1982024772698e9e4b7b12b9da34f9a9baf64fc45",
+        "workload.c": "b3a81955160cb288fe5bbab796654a2fb6db913f51b9f8021b98d2d71df8a1b4",
+        "workload.exe": "b0541c189be9a10cc99922e66d538f99fbd954d0c7e4011647dcb7d7cb7e74e0",
+        "workload.ll": "f574e3511b87530d1f8c9b17063658d13dedb28a124f188dbd9c3848284fa30d",
+        "workload_ape.json": "10b641a4847b7c530d0118683fdf4c0cea96c0d018fd81323e4ac34518b3c4cb"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 24,
+      "csrd": {
+        "counts": [
+          0,
+          16,
+          8
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "family": "associativity",
+      "global_rd": {
+        "counts": [
+          16,
+          0,
+          8
+        ],
+        "error": {
+          "absolute_error": [
+            0.6666666666666666,
+            0.6666666666666666,
+            0.0
+          ],
+          "mae": 0.4444444444444444,
+          "max_absolute_error": 0.6666666666666666,
+          "rmse": 0.5443310539518174
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "id": "conflict_8",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_8/workload.c": "b3a81955160cb288fe5bbab796654a2fb6db913f51b9f8021b98d2d71df8a1b4",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_8/workload.exe": "b0541c189be9a10cc99922e66d538f99fbd954d0c7e4011647dcb7d7cb7e74e0",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_8/workload.ll": "f574e3511b87530d1f8c9b17063658d13dedb28a124f188dbd9c3848284fa30d",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/conflict_8/workload_ape.json": "10b641a4847b7c530d0118683fdf4c0cea96c0d018fd81323e4ac34518b3c4cb"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 24,
+        "expected_sha256": "e155449e6c18c02551cf1ddf69c1bd21488779cd26c05c3d2d8aec9714a3b4ad",
+        "first_mismatch": null,
+        "observed_count": 24,
+        "observed_sha256": "e155449e6c18c02551cf1ddf69c1bd21488779cd26c05c3d2d8aec9714a3b4ad"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          66
+        ],
+        "data": [
+          4218880,
+          32768
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 79560,
+        "instructions": 243652,
+        "roi_instructions": 140,
+        "selected_accesses": 24
+      },
+      "trace_reference_counts": [
+        0,
+        16,
+        8
+      ],
+      "trace_reference_ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ],
+      "wall_seconds": 1.2696199249476194
+    },
+    {
+      "artifact_bytes": 1051510,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "c17dca35633483a225cbdcb71d94b7aacf1692d3a3238647d2590891fec7352b",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "67b195a2c27acb845164d31f06806623ea10c17dca355fca92562e9c3d461223",
+        "commands.json": "57067266977bf69547f08e817a15324fca20f9835cbb4369df40e5beee8d938b",
+        "comparison/actual.events.json": "170ef93d26707eef68d4194749adbc4c71f28f6faf627491c8c874e066fb2cc2",
+        "comparison/actual.json": "83bb59da256972c121608d88115330607b3d76cbed99beb6be0c131532d9360a",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "0be625097f771187c403a3e77a6bd119e9fbcad7193beb84f4dce1e4d62f5063",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "a0f7d655828b517c8cd5360721a5baa7a4b87a49698002cd4c8e7b040693f6af",
+        "comparison/global.json": "f62285220af43a9c7638801adeb64935b7023910dd60d2b153b85b78fe7e4a2e",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "cb7fe8c44e6c483431258c97a0e6722e72beac6ec7120b24f24ded6dc0a202b8",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "144f2a33019d47229c1adf4f90da96f76127df59c37f4f314fe75a1967f4669f",
+        "comparison/input.source": "0249bc08731d25ecf725968be5a56e0d2cce21e1fec68ba5f4c0f96bb8fb981b",
+        "comparison/inputs.json": "8df1f1fd7ec37fff610925a843986f65878abef06b2940c932ad689af7ebf198",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "01e22b7634397d6df4ec0ce8d43608184896729524e048976a130a4361ce6620",
+        "stdout.txt": "01e22b7634397d6df4ec0ce8d43608184896729524e048976a130a4361ce6620",
+        "symbols.log": "d4289d402d1ad58071f7e23ed738616b1f97fbceed650cc41e568b23203f0bb5",
+        "trace.log.gz": "937b03387b1da13726fc1c0d59ab91226988246751ef6e33ae371cbdb13a78d5",
+        "workload.c": "0249bc08731d25ecf725968be5a56e0d2cce21e1fec68ba5f4c0f96bb8fb981b",
+        "workload.exe": "144f2a33019d47229c1adf4f90da96f76127df59c37f4f314fe75a1967f4669f",
+        "workload.ll": "eaa007182db514547d07435c37eff73e3889ed7d2a4e8a53bf3662862593b681",
+        "workload_ape.json": "cb7fe8c44e6c483431258c97a0e6722e72beac6ec7120b24f24ded6dc0a202b8"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 768,
+      "csrd": {
+        "counts": [
+          512,
+          0,
+          256
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          512,
+          0,
+          256
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "id": "capacity_256",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_256/workload.c": "0249bc08731d25ecf725968be5a56e0d2cce21e1fec68ba5f4c0f96bb8fb981b",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_256/workload.exe": "144f2a33019d47229c1adf4f90da96f76127df59c37f4f314fe75a1967f4669f",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_256/workload.ll": "eaa007182db514547d07435c37eff73e3889ed7d2a4e8a53bf3662862593b681",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_256/workload_ape.json": "cb7fe8c44e6c483431258c97a0e6722e72beac6ec7120b24f24ded6dc0a202b8"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 768,
+        "expected_sha256": "553878035432aa36871f79b7053b9e84075ee2054b83802000404e4b3425b37b",
+        "first_mismatch": null,
+        "observed_count": 768,
+        "observed_sha256": "553878035432aa36871f79b7053b9e84075ee2054b83802000404e4b3425b37b"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          8192
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 54988,
+        "instructions": 173672,
+        "roi_instructions": 3860,
+        "selected_accesses": 768
+      },
+      "trace_reference_counts": [
+        512,
+        0,
+        256
+      ],
+      "trace_reference_ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ],
+      "wall_seconds": 1.1499909590929747
+    },
+    {
+      "artifact_bytes": 1595253,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "e22841f35187b356e140814f14b18db07cc383bb6822563e980952ff3b8ca519",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "57cd2d14e64bffc7ac3d90c336cf6554f4b8c03f3582f00fa0d1c7e2463d3a51",
+        "commands.json": "9b7ebce89c82a9047e8a2bdbb9c0f2135600c152dc7754828e60f24cae74e302",
+        "comparison/actual.events.json": "c1d10cd55b0c300ffc2731e4623ecd0bb91bfd7f9d33c63e77ff9dde0fb4347f",
+        "comparison/actual.json": "785a6607c73f84c654e6916e806d5565c3103fe687a55fb3fe245747180f2bc0",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "21cbd41a87dd52413652f98e58a40026346862e84328b339ef24510d0e6f8b7e",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "44d9a04b516d514ccbfaca188f5930a084f3c4bf959398651b95903c3292fb2f",
+        "comparison/global.json": "0be6cb744f47596512d83360480ccef1d00cf6dcfee06883c4ec97baf5059838",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "39cc7c608dc2bd560de8e59fa2ff2671682ccdb0a5efe8a9fcb55a4212a71342",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "857d1f5a5d46f77fc5600b86dda675f2f1b74a97d3e9b8cda7e71389cbea6161",
+        "comparison/input.source": "a3a8bd17b9c00f12beac28b0cf3d62ba662f5296fa2252d338f32d0aa7de090f",
+        "comparison/inputs.json": "0e4b0d32f294f23ec8f5c7ac28ee2524741b79a1bb70236de61b43339f503a8d",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "13e606b617554c69670c93b5c9fb4700b6e4eca29a87b905e4b508345e03382d",
+        "stdout.txt": "13e606b617554c69670c93b5c9fb4700b6e4eca29a87b905e4b508345e03382d",
+        "symbols.log": "84396b3208ab51b88c13287e50f75b4b21ce384eb573953dd36e53e1cef78459",
+        "trace.log.gz": "716b0c79b7cd6d1ca495273cdc1a3243f3987f90a064ac21168b06917044246e",
+        "workload.c": "a3a8bd17b9c00f12beac28b0cf3d62ba662f5296fa2252d338f32d0aa7de090f",
+        "workload.exe": "857d1f5a5d46f77fc5600b86dda675f2f1b74a97d3e9b8cda7e71389cbea6161",
+        "workload.ll": "8fc66ecf6e3035638869409a90ec21ad5233b78dab9ce4652c2ebe82bed49e8b",
+        "workload_ape.json": "39cc7c608dc2bd560de8e59fa2ff2671682ccdb0a5efe8a9fcb55a4212a71342"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 1344,
+      "csrd": {
+        "counts": [
+          896,
+          0,
+          448
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          896,
+          0,
+          448
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "id": "capacity_448",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_448/workload.c": "a3a8bd17b9c00f12beac28b0cf3d62ba662f5296fa2252d338f32d0aa7de090f",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_448/workload.exe": "857d1f5a5d46f77fc5600b86dda675f2f1b74a97d3e9b8cda7e71389cbea6161",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_448/workload.ll": "8fc66ecf6e3035638869409a90ec21ad5233b78dab9ce4652c2ebe82bed49e8b",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_448/workload_ape.json": "39cc7c608dc2bd560de8e59fa2ff2671682ccdb0a5efe8a9fcb55a4212a71342"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 1344,
+        "expected_sha256": "e138a9cbe74e336d158b380ff7ba586910e44048fa78be318cc7f74493d6a8de",
+        "first_mismatch": null,
+        "observed_count": 1344,
+        "observed_sha256": "e138a9cbe74e336d158b380ff7ba586910e44048fa78be318cc7f74493d6a8de"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          14336
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 61136,
+        "instructions": 195006,
+        "roi_instructions": 6740,
+        "selected_accesses": 1344
+      },
+      "trace_reference_counts": [
+        896,
+        0,
+        448
+      ],
+      "trace_reference_ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ],
+      "wall_seconds": 1.2302025323733687
+    },
+    {
+      "artifact_bytes": 1775344,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "00a73e175c8ccb528f600f441710829b69e4004f484b47f3cabd1cc78f90123e",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "f62f8ff8c8bc2ef63d4171d16007c064495ffa7e161e4cf9d21c0f5388409d0d",
+        "commands.json": "2026022d47b05138444891a16572db873026bd3ee3933bab3477c01ee0aad8b7",
+        "comparison/actual.events.json": "75046b9401e32e398180d19b33c6c0f19da8d9c85dc9803ad61c7b4d3edeaad8",
+        "comparison/actual.json": "365b0442c1e5895c89531d011aefda4bf56e805c42bc8003b6499d66bb7c4f6f",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "5c0db6452f43b2f6195b679dc36bc87936f61b16ff1a5e7e95a8f54c32a91011",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "440a420183d10603e3e6a446890b56b48cb26f80eb38063593a5c9aed78883a5",
+        "comparison/global.json": "f214d52b9c5c9ffac2670bc1ad99bf2adcb33e264d7f103fc8c855aed864a40f",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "3ca41fc7dd36e9c21295438709c7da6fbdfbea70d084aaeb0f9f9a0e599c1cf4",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "c9c6824f1120433343b8090740e470fc5bb58e960bb8a4b0585bc60bb65d90d2",
+        "comparison/input.source": "8963c55cb67c5dd9dfb0fdc862382f7c68ac031d38d1e2cd9511d9b0706cf26f",
+        "comparison/inputs.json": "ccf499760e18a94c209f94d255548f88863fbf3ea0f5297f75c98d2f213617cf",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "ad63f6f4c49ce3ad4e55eeca9138311d39f88331abb23d5fa9a8bd4984907f53",
+        "stdout.txt": "ad63f6f4c49ce3ad4e55eeca9138311d39f88331abb23d5fa9a8bd4984907f53",
+        "symbols.log": "c3a4759cf8f045e4ed6dbe1365fb0c5e4e6e8cefe110569b053b7cd5d94ea73a",
+        "trace.log.gz": "5714abb107d5a09ebd313cb959aeb7a3a97fd3dd1d810a8d69ff6173670d20d7",
+        "workload.c": "8963c55cb67c5dd9dfb0fdc862382f7c68ac031d38d1e2cd9511d9b0706cf26f",
+        "workload.exe": "c9c6824f1120433343b8090740e470fc5bb58e960bb8a4b0585bc60bb65d90d2",
+        "workload.ll": "cf0c0bfc6a58f7f551dd538b82d8bfb8f90cd787158b8eabd1be2e376896e111",
+        "workload_ape.json": "3ca41fc7dd36e9c21295438709c7da6fbdfbea70d084aaeb0f9f9a0e599c1cf4"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 1533,
+      "csrd": {
+        "counts": [
+          1022,
+          0,
+          511
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          1022,
+          0,
+          511
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "id": "capacity_511",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_511/workload.c": "8963c55cb67c5dd9dfb0fdc862382f7c68ac031d38d1e2cd9511d9b0706cf26f",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_511/workload.exe": "c9c6824f1120433343b8090740e470fc5bb58e960bb8a4b0585bc60bb65d90d2",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_511/workload.ll": "cf0c0bfc6a58f7f551dd538b82d8bfb8f90cd787158b8eabd1be2e376896e111",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_511/workload_ape.json": "3ca41fc7dd36e9c21295438709c7da6fbdfbea70d084aaeb0f9f9a0e599c1cf4"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 1533,
+        "expected_sha256": "f35d17806d35b0b2d6e1bd01214cce802e7a4e871331fbf901064d741e147192",
+        "first_mismatch": null,
+        "observed_count": 1533,
+        "observed_sha256": "f35d17806d35b0b2d6e1bd01214cce802e7a4e871331fbf901064d741e147192"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          16352
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 63152,
+        "instructions": 201999,
+        "roi_instructions": 7685,
+        "selected_accesses": 1533
+      },
+      "trace_reference_counts": [
+        1022,
+        0,
+        511
+      ],
+      "trace_reference_ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ],
+      "wall_seconds": 1.2600626470521092
+    },
+    {
+      "artifact_bytes": 1778175,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "89c91e933d746c91369cd81673d060086ab19d62856779e194598b73d654acd8",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "3808b9617fea989bc52d0aef4780a0efe5be3b31cb0495e0fedc942c094d624a",
+        "commands.json": "ffab4fae83eb0eba2fdd09741631229bb0cd9affddd7438832f716b676fcdeef",
+        "comparison/actual.events.json": "8dd2f6cd559ce64cc86946aab35273eb79eb2a7025a962c1933431a691a5f82f",
+        "comparison/actual.json": "fc971e6fce512f530366e069474f37a93ab3ce0edf2f3479efd4f76f5be9b676",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "be1e178a27532ce386f3c6dcda7501736ddaf98ac203a163b2f8878d32678fcf",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "a34b09ae94baddaa8ead7d41b7a7325f1dd4a3a7395c656f995ca18ddb0b42e9",
+        "comparison/global.json": "262b3ce13bf5e47c3d2840afad79e9f9abec311fdbc2f3f90965baf353e61cd0",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "f55da34b2e58335e8b333efaec65609a65b553a8a90dc194a45cf5ce12518ff0",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "a51c9b79d965599f0ddce032caad40542ab78ede7aa351b2579ad1733ee4d363",
+        "comparison/input.source": "f42c33994d08a4c6c99fd8357a48c25a184603dd7827639a050dc7c36ac7658a",
+        "comparison/inputs.json": "efdb740cf1f1613d79fd0595f5779a554fe4368e03702437c3187f7c3f5e432d",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "c97c9b090eb3a9885d55ef4e377f359a55dc9fc615612a7b1ac918ec98325def",
+        "stdout.txt": "c97c9b090eb3a9885d55ef4e377f359a55dc9fc615612a7b1ac918ec98325def",
+        "symbols.log": "3d9ce284f8c99fe0061e319fb656da55c93f141e48b6d5d59bda49ca22cb2cd7",
+        "trace.log.gz": "b8cb09793f077344cba882756ac77e34fb286e2e4795367bcad3272dbef61d12",
+        "workload.c": "f42c33994d08a4c6c99fd8357a48c25a184603dd7827639a050dc7c36ac7658a",
+        "workload.exe": "a51c9b79d965599f0ddce032caad40542ab78ede7aa351b2579ad1733ee4d363",
+        "workload.ll": "03a1937c87f138d6a5b17b84446cdb0ef633b3c20002b7d629452c9e0b4a956c",
+        "workload_ape.json": "f55da34b2e58335e8b333efaec65609a65b553a8a90dc194a45cf5ce12518ff0"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 1536,
+      "csrd": {
+        "counts": [
+          1024,
+          0,
+          512
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          1024,
+          0,
+          512
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6666666666666666,
+          0.0,
+          0.3333333333333333
+        ]
+      },
+      "id": "capacity_512",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_512/workload.c": "f42c33994d08a4c6c99fd8357a48c25a184603dd7827639a050dc7c36ac7658a",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_512/workload.exe": "a51c9b79d965599f0ddce032caad40542ab78ede7aa351b2579ad1733ee4d363",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_512/workload.ll": "03a1937c87f138d6a5b17b84446cdb0ef633b3c20002b7d629452c9e0b4a956c",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_512/workload_ape.json": "f55da34b2e58335e8b333efaec65609a65b553a8a90dc194a45cf5ce12518ff0"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 1536,
+        "expected_sha256": "e989935a18ab391d6a366ff9fc1e0b4e1d7175b9319fd51418612b5f3576c5e5",
+        "first_mismatch": null,
+        "observed_count": 1536,
+        "observed_sha256": "e989935a18ab391d6a366ff9fc1e0b4e1d7175b9319fd51418612b5f3576c5e5"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          16384
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 63184,
+        "instructions": 202110,
+        "roi_instructions": 7700,
+        "selected_accesses": 1536
+      },
+      "trace_reference_counts": [
+        1024,
+        0,
+        512
+      ],
+      "trace_reference_ratios": [
+        0.6666666666666666,
+        0.0,
+        0.3333333333333333
+      ],
+      "wall_seconds": 1.249312947038561
+    },
+    {
+      "artifact_bytes": 1790121,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "0a19ab8f0dac18618afa5e09347cc27892c498a4513fe99f7d2572ca55587907",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "d1025c40b3bdd4e5a3f65c152f423c0e22612bde6a83c16de873f5288cc6f361",
+        "commands.json": "4c8d891ed7b46db97f36e80a2a6207075cd9f7f815b7772476674210c3263e31",
+        "comparison/actual.events.json": "4392ef2a2c7d342ee93f4de63f20bbcf19a562aa49028201f4fda992f61d2726",
+        "comparison/actual.json": "6380af4212a0e74dad3f82812c7307448dac00d4b1807952cd2fc4bc69ba28a5",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "9b578cad631bcc7dfa9b39580b5fcd3591511755b4ec601ef16df0c47aa0136f",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "79a7d4bd00d8c4cd1dc94c9ed0d59973bba500cd90ad642ef7d07cf931a3cd73",
+        "comparison/global.json": "1d48e842108a04794b5e28916bd265ff5b661b071d520539950bd2f20e174868",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "4c4bed013f4749bc2ecfa1547444af77d9666b70e7e38571f1754309d24e555e",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "1f0353a2c32d4e70b5185bf95e61da3f0f906b27d84fa1d6f0814292ea37b9ae",
+        "comparison/input.source": "5a9e919a1756230bce303dce3f44832a995f08b145216dc73ed9a64fd38fb9b4",
+        "comparison/inputs.json": "e4fd7345185110f592f1254d2d0a9ab5faa4622b11db2f4c2d277853089a685f",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "1d8871ba6d9858b41f99fd0bbd4eec99e43e49efcc8de2458bb9e7c8b3420e41",
+        "stdout.txt": "1d8871ba6d9858b41f99fd0bbd4eec99e43e49efcc8de2458bb9e7c8b3420e41",
+        "symbols.log": "b9e3d2a918b89db11114cd3dcaaef73cf0da52cfb9b8bcb9558adeb392f70180",
+        "trace.log.gz": "fb1be636499f25b1f1088b555ba7f095e59706782487181761c716a49c836d50",
+        "workload.c": "5a9e919a1756230bce303dce3f44832a995f08b145216dc73ed9a64fd38fb9b4",
+        "workload.exe": "1f0353a2c32d4e70b5185bf95e61da3f0f906b27d84fa1d6f0814292ea37b9ae",
+        "workload.ll": "1c425cf5ef7ea333624e3098bf4d78357ee6425a354ad5d760173a2c637f2abc",
+        "workload_ape.json": "4c4bed013f4749bc2ecfa1547444af77d9666b70e7e38571f1754309d24e555e"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 1539,
+      "csrd": {
+        "counts": [
+          1016,
+          10,
+          513
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.6601689408706952,
+          0.00649772579597141,
+          0.3333333333333333
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          0,
+          1026,
+          513
+        ],
+        "error": {
+          "absolute_error": [
+            0.6601689408706952,
+            0.6601689408706952,
+            0.0
+          ],
+          "mae": 0.44011262724713013,
+          "max_absolute_error": 0.6601689408706952,
+          "rmse": 0.5390256830556008
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "id": "capacity_513",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_513/workload.c": "5a9e919a1756230bce303dce3f44832a995f08b145216dc73ed9a64fd38fb9b4",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_513/workload.exe": "1f0353a2c32d4e70b5185bf95e61da3f0f906b27d84fa1d6f0814292ea37b9ae",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_513/workload.ll": "1c425cf5ef7ea333624e3098bf4d78357ee6425a354ad5d760173a2c637f2abc",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_513/workload_ape.json": "4c4bed013f4749bc2ecfa1547444af77d9666b70e7e38571f1754309d24e555e"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 1539,
+        "expected_sha256": "b0462f4f76c0e5522cb7230c59942442ec1e017aa05be8fa07273cbc975e0866",
+        "first_mismatch": null,
+        "observed_count": 1539,
+        "observed_sha256": "b0462f4f76c0e5522cb7230c59942442ec1e017aa05be8fa07273cbc975e0866"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          16416
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 63216,
+        "instructions": 202221,
+        "roi_instructions": 7715,
+        "selected_accesses": 1539
+      },
+      "trace_reference_counts": [
+        1016,
+        10,
+        513
+      ],
+      "trace_reference_ratios": [
+        0.6601689408706952,
+        0.00649772579597141,
+        0.3333333333333333
+      ],
+      "wall_seconds": 1.2687033507972956
+    },
+    {
+      "artifact_bytes": 1975382,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "df7b83c9efbbda531d1ff6987666ad54cfb11950806f3169fb1eaef9881e598c",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "cf50451a9dae92c6e7b47c2b256ea6af5c512d9a90eaf97083909addc5c8291c",
+        "commands.json": "938ddbec2ad425d580b12174360027940e05fc74069bb76341b07cc2d268efc1",
+        "comparison/actual.events.json": "499c0e319c28b723e518c3a8838f532a876c9fc19a9ac9ff6efdee97d7b30645",
+        "comparison/actual.json": "0dd9e1db131339e81be6a023c1469ad5a78ebfd9b56b7f7e05d04d3e761266fa",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "09b7e8f14f6ffb32118591ccca060edf8aa605b70a874e8f2cc3a2cf8c8df95a",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "9bc389cf19a4595b014e52bf6b1c9cb0c53b829df2f3d2ef19627ebcbdc7e82a",
+        "comparison/global.json": "3676a95449a6a2d8408e2321c0f6d9c38a31a45cfabaa14c4dccf34405ccf9ed",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "fa0be69944bfd21208380961f828e017ff8e6d1fa5c831953b0964c294d6d90d",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "e6c30fb589f350174d2926428ccaef5a378c40b2d20e7d36b224fc7457cafa62",
+        "comparison/input.source": "44ace9fd30c892dcaeb4fe7c4d4069e983fac95c89e0837fcd17622107d271db",
+        "comparison/inputs.json": "3e8e1825fd774c5d7286b7803d9aafb34af2951bd01e39a58adbc7637a4217e1",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "f4826882a22145953beecf2d1b9410b8268f60d9140bcf356b05b8067dc66c61",
+        "stdout.txt": "f4826882a22145953beecf2d1b9410b8268f60d9140bcf356b05b8067dc66c61",
+        "symbols.log": "3b302ce75d493895e844f108379621d55ef84b02f91242c3971c37594d825f69",
+        "trace.log.gz": "48ab99a62e783e54a60dc56fa928934c982a47f4c34ac723d7a3ec9caf1b6b92",
+        "workload.c": "44ace9fd30c892dcaeb4fe7c4d4069e983fac95c89e0837fcd17622107d271db",
+        "workload.exe": "e6c30fb589f350174d2926428ccaef5a378c40b2d20e7d36b224fc7457cafa62",
+        "workload.ll": "a82f19a3cf6c7c7d3a640a6bdddd76230995068a11914c9bc1960551f0774328",
+        "workload_ape.json": "fa0be69944bfd21208380961f828e017ff8e6d1fa5c831953b0964c294d6d90d"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 1728,
+      "csrd": {
+        "counts": [
+          512,
+          640,
+          576
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.2962962962962963,
+          0.37037037037037035,
+          0.3333333333333333
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          0,
+          1152,
+          576
+        ],
+        "error": {
+          "absolute_error": [
+            0.2962962962962963,
+            0.2962962962962963,
+            0.0
+          ],
+          "mae": 0.19753086419753085,
+          "max_absolute_error": 0.2962962962962963,
+          "rmse": 0.2419249128674744
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "id": "capacity_576",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_576/workload.c": "44ace9fd30c892dcaeb4fe7c4d4069e983fac95c89e0837fcd17622107d271db",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_576/workload.exe": "e6c30fb589f350174d2926428ccaef5a378c40b2d20e7d36b224fc7457cafa62",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_576/workload.ll": "a82f19a3cf6c7c7d3a640a6bdddd76230995068a11914c9bc1960551f0774328",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_576/workload_ape.json": "fa0be69944bfd21208380961f828e017ff8e6d1fa5c831953b0964c294d6d90d"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 1728,
+        "expected_sha256": "4d6dab8ae03fd68a5f474c05b61a55a97247d63b0503ef0a16733d20e7c07ee0",
+        "first_mismatch": null,
+        "observed_count": 1728,
+        "observed_sha256": "4d6dab8ae03fd68a5f474c05b61a55a97247d63b0503ef0a16733d20e7c07ee0"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          18432
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 65232,
+        "instructions": 209214,
+        "roi_instructions": 8660,
+        "selected_accesses": 1728
+      },
+      "trace_reference_counts": [
+        512,
+        640,
+        576
+      ],
+      "trace_reference_ratios": [
+        0.2962962962962963,
+        0.37037037037037035,
+        0.3333333333333333
+      ],
+      "wall_seconds": 1.2827121573500335
+    },
+    {
+      "artifact_bytes": 3267973,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "972016b7b7e11cc70269d47526950295661e6c7ad6e225f2127506bbacaa7be5",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "f72ff2e905c1d4a0e96c8f9745abd6118000748a74341ed43268b45336c25c62",
+        "commands.json": "7917f73b37d00eec1be8082e2ce3d86308c656f1e1660f258fe449d21ffd1bab",
+        "comparison/actual.events.json": "c027ed18f12ad44e6022293c4869984e57396cfe87a55526c780834c3f9a6488",
+        "comparison/actual.json": "6fe81a84f338977fe029bd7941ed77361b445a3c0ad32cb83d43f1e6a1cccf53",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "c22bf599e23b605a2600027488c7056e6f7f2fb3933aa9bfa93c5bfcfc57de97",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "2ae9009acff386c8bf9672cbfc81ad47c6ff6c0f02f250f6719f7e1de8349c28",
+        "comparison/global.json": "d4a1b856d1617e0ac796d7080395bf2aaf443f8c847cd1ac55a6521509fc9fab",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "0c8b0ee4cce5d27b9d5387de3debff1b9b4d8e87228c79f23d2ee53baa9b08f3",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "e7588df3392e353bc6ba76856077446532fc8b4502bfe19f3fd1f1c49bc817d1",
+        "comparison/input.source": "4de7570985fb31794f049b2a6a076205ddd3ab8c963d5a0553ec1cf8e4807cbf",
+        "comparison/inputs.json": "659caa32ab07c2f56f9d364b1d5d73939723c9cfb48935baa15fddb892ba9b19",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "d812bb3ec0b57dbb4dab74e88c4c7fe26d5860e94fb1abfa2efedfadfe816375",
+        "stdout.txt": "d812bb3ec0b57dbb4dab74e88c4c7fe26d5860e94fb1abfa2efedfadfe816375",
+        "symbols.log": "7c6f4aa04fc4deabeb322fe2063cad0cc333a3bb35abe4a603f848435b08f373",
+        "trace.log.gz": "79b844be82b70a4ba60ff04c99e5d6603d6d6f30f010c5faa9c4a359d6428487",
+        "workload.c": "4de7570985fb31794f049b2a6a076205ddd3ab8c963d5a0553ec1cf8e4807cbf",
+        "workload.exe": "e7588df3392e353bc6ba76856077446532fc8b4502bfe19f3fd1f1c49bc817d1",
+        "workload.ll": "b8c8f52b7bf8392a6534940fd0f3fb75c8650c9fe679ebfe11dc99c97de84b8e",
+        "workload_ape.json": "0c8b0ee4cce5d27b9d5387de3debff1b9b4d8e87228c79f23d2ee53baa9b08f3"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 3072,
+      "csrd": {
+        "counts": [
+          0,
+          2048,
+          1024
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          0,
+          2048,
+          1024
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "id": "capacity_1024",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_1024/workload.c": "4de7570985fb31794f049b2a6a076205ddd3ab8c963d5a0553ec1cf8e4807cbf",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_1024/workload.exe": "e7588df3392e353bc6ba76856077446532fc8b4502bfe19f3fd1f1c49bc817d1",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_1024/workload.ll": "b8c8f52b7bf8392a6534940fd0f3fb75c8650c9fe679ebfe11dc99c97de84b8e",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_1024/workload_ape.json": "0c8b0ee4cce5d27b9d5387de3debff1b9b4d8e87228c79f23d2ee53baa9b08f3"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 3072,
+        "expected_sha256": "77b1bc03b7012adfb0659cdbea53e1e251e0ee83b630c0e8c49bb6614a86ff61",
+        "first_mismatch": null,
+        "observed_count": 3072,
+        "observed_sha256": "77b1bc03b7012adfb0659cdbea53e1e251e0ee83b630c0e8c49bb6614a86ff61"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          32768
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 79568,
+        "instructions": 258942,
+        "roi_instructions": 15380,
+        "selected_accesses": 3072
+      },
+      "trace_reference_counts": [
+        0,
+        2048,
+        1024
+      ],
+      "trace_reference_ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ],
+      "wall_seconds": 1.5366756678558886
+    },
+    {
+      "artifact_bytes": 95097745,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "52979c0758c75a3683e3a8024ae87c491570ed033dcaa4398a656184f8f30273",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "35b22f40d0cdf644f95e3f08645a587a296d00fb43230952aa603ca64c27a050",
+        "commands.json": "5f9839663711c6c74209e5bc46cb404cd3db1148e6684498425fa87d76b8a1fb",
+        "comparison/actual.events.json": "49358f17045f514083058c93f8d1d5cd37d7b5832c4341ae2949399e7a0c871c",
+        "comparison/actual.json": "b3fbbb8f794cadd788af8b3d34e071a20496662e139432f82c76abbac5566b36",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "43b37bf719a102cf778cd842ae79e2c67444acbd37c1d7b4ec0d5316d4408bdc",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "42ca5e1538ddfdbd59d07c44e1c15702ab09e6318ef83a3ae190dcceeffb1426",
+        "comparison/global.json": "35c4f4ca6daf16346968570a31201c1ea09914e9f26b25d86f7460d2d0a5d7dc",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "cf93ef76e9c705db5d0b742d2c765d81934fab891eeb0e1f3604b04efaa5d6b4",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "5dbb2d7acee00e00ff3c0549fdfcc9c5a78a080f4cd343a87d92b7a0c5de59aa",
+        "comparison/input.source": "94b93107fa935fba19b401d08925fc1f84f22e1ac68582e2ff0cac9f99dde11a",
+        "comparison/inputs.json": "3464743ed031fda0d359c343c3eda03a6c030fc22f64f422db837c6d8686568b",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "b33300b181654745d3c61eecd659e51a9a53e5ac4350cacdf9dca0e27e422558",
+        "stdout.txt": "b33300b181654745d3c61eecd659e51a9a53e5ac4350cacdf9dca0e27e422558",
+        "symbols.log": "ad76ee4eb9bebc1a3a1195a6205dcec7414d1ec955715612fd1f379636fb432b",
+        "trace.log.gz": "47f09e82fcb92a7aa45ca3394b95a084eb04d573466dfb7b7498391bb4504a5f",
+        "workload.c": "94b93107fa935fba19b401d08925fc1f84f22e1ac68582e2ff0cac9f99dde11a",
+        "workload.exe": "5dbb2d7acee00e00ff3c0549fdfcc9c5a78a080f4cd343a87d92b7a0c5de59aa",
+        "workload.ll": "f585ba0693b70cfef8990e72451a5014f5c58b8f72dbaea3c977c3ac446a2124",
+        "workload_ape.json": "cf93ef76e9c705db5d0b742d2c765d81934fab891eeb0e1f3604b04efaa5d6b4"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 98304,
+      "csrd": {
+        "counts": [
+          0,
+          65536,
+          32768
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          0,
+          65536,
+          32768
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "id": "capacity_32768",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_32768/workload.c": "94b93107fa935fba19b401d08925fc1f84f22e1ac68582e2ff0cac9f99dde11a",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_32768/workload.exe": "5dbb2d7acee00e00ff3c0549fdfcc9c5a78a080f4cd343a87d92b7a0c5de59aa",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_32768/workload.ll": "f585ba0693b70cfef8990e72451a5014f5c58b8f72dbaea3c977c3ac446a2124",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_32768/workload_ape.json": "cf93ef76e9c705db5d0b742d2c765d81934fab891eeb0e1f3604b04efaa5d6b4"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 98304,
+        "expected_sha256": "45860bd5c45bdabd70914a243df293159bb2745f65f74d999f635ed8bb7f3e60",
+        "first_mismatch": null,
+        "observed_count": 98304,
+        "observed_sha256": "45860bd5c45bdabd70914a243df293159bb2745f65f74d999f635ed8bb7f3e60"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          1048576
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 1095380,
+        "instructions": 3782554,
+        "roi_instructions": 491540,
+        "selected_accesses": 98304
+      },
+      "trace_reference_counts": [
+        0,
+        65536,
+        32768
+      ],
+      "trace_reference_ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ],
+      "wall_seconds": 16.82675748085603
+    },
+    {
+      "artifact_bytes": 178367928,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "39b696bd44d3fa3af466cc79f303a904ba34241173428d963736da21a335b7e1",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "b4e0eb1e2307ddd67ae9e0c7df60387d476ed741c05ea166dc5c4ff2520b367b",
+        "commands.json": "766141895b6e1f35f42f92a29579d853c3f1df17ade033a876123c146771d69f",
+        "comparison/actual.events.json": "f05b4b6f07605965233709468204b7521213156b053a879c004c3c4ce33fb7dc",
+        "comparison/actual.json": "a6fb41bf0354aa8657a2b9e8273d70f89ebfa7610034e3ed75bd7b2155d526c3",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "06e20f24f501e9dc09093f95d58f34eed80db0738e9154652837a71eda542e03",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "016c52c5f9998817a118ebb966bb849fcb3211cad3cf6a1495c3673e2a9e879d",
+        "comparison/global.json": "980aecaea86e36eb191a7bbaa6bb5142db463830fb4154f10f490bab2aeafd86",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "115a5abd9da6c1b9a5f7b4f65c86e5b4b66a3d8a1da520cc0ec4126fdc7cd616",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "121aff6969cc98c7136a2a87682fe9b0371ba420e8cad7c7fae5963215becc96",
+        "comparison/input.source": "5ae29bd8f2137654750fb2b9ab0ccb2c9883b8a912ace286f622cc11d04265df",
+        "comparison/inputs.json": "66b7ab9913c63ccff759d3c5cd191669649a0f6a0487a87244185737ee45a72d",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "cb94d8d755d5528b528966f99c2c7aa996b4da7df943a5cdd6eabadf9ed4ccc9",
+        "stdout.txt": "cb94d8d755d5528b528966f99c2c7aa996b4da7df943a5cdd6eabadf9ed4ccc9",
+        "symbols.log": "8bb3b8d71ea9a1a269ec1c34bc9c0259db8df00126a8df90b1eb550f34160182",
+        "trace.log.gz": "d095113741ad95bb810882f3fa1fbdddca73e4b218ef22edde3672bcf7969872",
+        "workload.c": "5ae29bd8f2137654750fb2b9ab0ccb2c9883b8a912ace286f622cc11d04265df",
+        "workload.exe": "121aff6969cc98c7136a2a87682fe9b0371ba420e8cad7c7fae5963215becc96",
+        "workload.ll": "50f5cd7a4d9414e06f47842536a3ff58e00ae8200034bff8191f1eefbf9dbbbc",
+        "workload_ape.json": "115a5abd9da6c1b9a5f7b4f65c86e5b4b66a3d8a1da520cc0ec4126fdc7cd616"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 184320,
+      "csrd": {
+        "counts": [
+          0,
+          122880,
+          61440
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          0,
+          122880,
+          61440
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "id": "capacity_61440",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_61440/workload.c": "5ae29bd8f2137654750fb2b9ab0ccb2c9883b8a912ace286f622cc11d04265df",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_61440/workload.exe": "121aff6969cc98c7136a2a87682fe9b0371ba420e8cad7c7fae5963215becc96",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_61440/workload.ll": "50f5cd7a4d9414e06f47842536a3ff58e00ae8200034bff8191f1eefbf9dbbbc",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_61440/workload_ape.json": "115a5abd9da6c1b9a5f7b4f65c86e5b4b66a3d8a1da520cc0ec4126fdc7cd616"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 184320,
+        "expected_sha256": "7c3a010644e93730e5d3500a99c9e449432e3abb18e75a6cc97d265bc3f0ef45",
+        "first_mismatch": null,
+        "observed_count": 184320,
+        "observed_sha256": "7c3a010644e93730e5d3500a99c9e449432e3abb18e75a6cc97d265bc3f0ef45"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          1966080
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 2012888,
+        "instructions": 6965174,
+        "roi_instructions": 921620,
+        "selected_accesses": 184320
+      },
+      "trace_reference_counts": [
+        0,
+        122880,
+        61440
+      ],
+      "trace_reference_ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ],
+      "wall_seconds": 30.723375173751265
+    },
+    {
+      "artifact_bytes": 190269015,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "7952ebfd95ee48fff3e42006610ee83d76511909c478d6f38a9dbca0e99787f0",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "ac4bda2b75a3d45efaa842bff69a54613a3a2b4687f30023cc2f8eb039ce3a42",
+        "commands.json": "7c6556cee5bb272e7fc4d29af629f2988367cfcabc236e51da0c8e46aa436b90",
+        "comparison/actual.events.json": "791ece863ad165cbb159cc1621e795eb8fce4da53ed2bab92d8095b54e7c7aef",
+        "comparison/actual.json": "a8085542432b2f016d4d45757e9a7dc0b285ae0ac9464bbde7a524160ec166cc",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "a56b6ca675b26a0973467895632bc8bdc85e4dc8a5121d2185ec7591a5df9a3b",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "4c8ae5dcdb1fbfd776bc87040f642ae71bf7528f813567cd7692178cfeae8c49",
+        "comparison/global.json": "0f4afd719b3f01853c2e43eac1b3db967959ab1c185de34ba7c2d43daa103068",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "ec21e1d50edeb5f796434e19a109a397ef2db1d8536f8b8d25efd7c6b32d9228",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "0be0fbbe8b76e13e744b5c1f5c1f58ab74b6b96536dba13cc4ec59e292f6f38d",
+        "comparison/input.source": "b00dfa324ebe7e96d465a019c766698d8d16b0093f3fa4eb87917314c4dd787e",
+        "comparison/inputs.json": "7eeae99f737f27073746d480c7871437ff3392c82877f4e14c6d5dd821e131bb",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "3a5218c33942cc5ace372dd4d93192bbc6f9380bcd757bca921a4255630be90b",
+        "stdout.txt": "3a5218c33942cc5ace372dd4d93192bbc6f9380bcd757bca921a4255630be90b",
+        "symbols.log": "d7ff2cc979254a924cf04d2dfb727fd6917d4daf7e44910f8068d5f9645d46bf",
+        "trace.log.gz": "30440bb358d480918eba8f2935806d433fed2cfd9f885b16cb8e5344931b0d10",
+        "workload.c": "b00dfa324ebe7e96d465a019c766698d8d16b0093f3fa4eb87917314c4dd787e",
+        "workload.exe": "0be0fbbe8b76e13e744b5c1f5c1f58ab74b6b96536dba13cc4ec59e292f6f38d",
+        "workload.ll": "1233c35e1bacecb177165f97799a95d943e6c8752f0f2febc34ebaad8e70a138",
+        "workload_ape.json": "ec21e1d50edeb5f796434e19a109a397ef2db1d8536f8b8d25efd7c6b32d9228"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 196605,
+      "csrd": {
+        "counts": [
+          0,
+          131070,
+          65535
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          0,
+          131070,
+          65535
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "id": "capacity_65535",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65535/workload.c": "b00dfa324ebe7e96d465a019c766698d8d16b0093f3fa4eb87917314c4dd787e",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65535/workload.exe": "0be0fbbe8b76e13e744b5c1f5c1f58ab74b6b96536dba13cc4ec59e292f6f38d",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65535/workload.ll": "1233c35e1bacecb177165f97799a95d943e6c8752f0f2febc34ebaad8e70a138",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65535/workload_ape.json": "ec21e1d50edeb5f796434e19a109a397ef2db1d8536f8b8d25efd7c6b32d9228"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 196605,
+        "expected_sha256": "9bfef47156e90d2c5c49f4e55be632a4bf59a6773bcfa903f049d886b46ed95b",
+        "first_mismatch": null,
+        "observed_count": 196605,
+        "observed_sha256": "9bfef47156e90d2c5c49f4e55be632a4bf59a6773bcfa903f049d886b46ed95b"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          2097120
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 2143928,
+        "instructions": 7419719,
+        "roi_instructions": 983045,
+        "selected_accesses": 196605
+      },
+      "trace_reference_counts": [
+        0,
+        131070,
+        65535
+      ],
+      "trace_reference_ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ],
+      "wall_seconds": 32.891728506889194
+    },
+    {
+      "artifact_bytes": 190271951,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "c723db1c1a5a8164e376b8e478f74580b4d846d02558f0389edce89956ecbb0a",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "da78ad5ae527886f3e3f9d491b21be22bf9b7d0da6077edbc3ad9092ebad33d0",
+        "commands.json": "ed5c5925e3cdd9e0f43ca60e14cee4d72b8e5e02903e34ee6c49e4747c17c015",
+        "comparison/actual.events.json": "ad8c2af7d0a697669f07808629c86754aeebbefdb487d9ed1485b219d83c83d9",
+        "comparison/actual.json": "262eb2e38d029dfac449b790e63e2b5fc744eb21caabd0af8c51ab2cf445c647",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "fee31c8f43b1535fa6e97e5fa91bf921929a00a81f5e596740ed05b992b5c72c",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "fa22c6974e8783635f051b60d9e598ae9ef46b240f404461f9fd43d98940f208",
+        "comparison/global.json": "85825aeab5f251a03ee35bc95394d6d1a0063055d88caf616323c7b509250e9f",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "a4d93cf2a3501fcf3e5d7afb627a6d14ba2e624466996a5d626099bd8af576bb",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "3d45a2b2250b1e4385b768e5d8d586908d3cda3a44cf3e1c07423106c3328a9a",
+        "comparison/input.source": "5f910e72588db3c97224ffd4633f80690a2f22bd6659d3bb79984ccbe22c3197",
+        "comparison/inputs.json": "0aafccb7806626b7ccb425ed4c4966e0ec34aa985d0e4170b7059e4fad877a51",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "8f6122e1a8af7c76c69f7e999652979b8135533f3ae30e6330ba05fb003a3325",
+        "stdout.txt": "8f6122e1a8af7c76c69f7e999652979b8135533f3ae30e6330ba05fb003a3325",
+        "symbols.log": "e9ef67203d13156f1c8eb6a709eeef7a330fd377bf667670984c33d33faa9f98",
+        "trace.log.gz": "dd297501afb70f08b10dfa9545e050fdbbc9f3912189e00ebf01f9ea288cac85",
+        "workload.c": "5f910e72588db3c97224ffd4633f80690a2f22bd6659d3bb79984ccbe22c3197",
+        "workload.exe": "3d45a2b2250b1e4385b768e5d8d586908d3cda3a44cf3e1c07423106c3328a9a",
+        "workload.ll": "1f29be3c2d2d3c328f8b05cc3dd6ac649301e379b0d35d2fe0391ac4892071be",
+        "workload_ape.json": "a4d93cf2a3501fcf3e5d7afb627a6d14ba2e624466996a5d626099bd8af576bb"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 196608,
+      "csrd": {
+        "counts": [
+          0,
+          131072,
+          65536
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          0,
+          131072,
+          65536
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.6666666666666666,
+          0.3333333333333333
+        ]
+      },
+      "id": "capacity_65536",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65536/workload.c": "5f910e72588db3c97224ffd4633f80690a2f22bd6659d3bb79984ccbe22c3197",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65536/workload.exe": "3d45a2b2250b1e4385b768e5d8d586908d3cda3a44cf3e1c07423106c3328a9a",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65536/workload.ll": "1f29be3c2d2d3c328f8b05cc3dd6ac649301e379b0d35d2fe0391ac4892071be",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65536/workload_ape.json": "a4d93cf2a3501fcf3e5d7afb627a6d14ba2e624466996a5d626099bd8af576bb"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 196608,
+        "expected_sha256": "a687f925d98e57fd398519969e54d06c76df74ce4cbebe2d1d028d91bf6e4956",
+        "first_mismatch": null,
+        "observed_count": 196608,
+        "observed_sha256": "a687f925d98e57fd398519969e54d06c76df74ce4cbebe2d1d028d91bf6e4956"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          2097152
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 2143960,
+        "instructions": 7419830,
+        "roi_instructions": 983060,
+        "selected_accesses": 196608
+      },
+      "trace_reference_counts": [
+        0,
+        131072,
+        65536
+      ],
+      "trace_reference_ratios": [
+        0.0,
+        0.6666666666666666,
+        0.3333333333333333
+      ],
+      "wall_seconds": 33.00440137414262
+    },
+    {
+      "artifact_bytes": 190275330,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "78f2025c002209cb48695adb397f7451e786d29dff7e706575b2c0544dbf6686",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "e4f6988406559c312784c69daac1096714777d9f185a79571cd85dd5ff65cd4c",
+        "commands.json": "45edaf00d306793b849e5e55dac6645884e28d2d1389d38b84908b1d9abfe111",
+        "comparison/actual.events.json": "b06936989d36008163891308ac1c967b85126766159ea449a88bf51bb0f79053",
+        "comparison/actual.json": "8e25cfbaeb961c88da54bbe117c915dbf44a52f1d7041e3c7397b6a531843c57",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "8f3b5a7640f905bfda0f1fb1040e0fe5770ac7aa3e021598f7339de04822329c",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "8edf6779efde187a0d3eb5276163159ef6ecc39c699b113892fa0ab67fb33cb1",
+        "comparison/global.json": "5be3c0c67f3f82896c73020851f75b494683d47b6248314e21a8fd63095542a0",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "5365d85813086353465b991bf52dd217e0ae1cb21933e8934863d59937833922",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "ed776100e39ad1850b2ed7212c247f2b29ca5cee9cdd676bdcf89f93fd91997d",
+        "comparison/input.source": "47be0b88d2982a21abdb712e0a46599452efe6797a8102aa503f88069d2645e7",
+        "comparison/inputs.json": "79b0d0ce02b0ebb7bde8e4b81b77897ab407282d0bb230098835425a8196e9c2",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "9c9fac493e7fb062541f6a6077985c8081cb990e45a64fe42b933bc2df3a7cf7",
+        "stdout.txt": "9c9fac493e7fb062541f6a6077985c8081cb990e45a64fe42b933bc2df3a7cf7",
+        "symbols.log": "cb606744d3a49b8f57e8bae771c38e5f711e3c3661edbd74f7d2332e5e51ee80",
+        "trace.log.gz": "cb0e9ef9f9dab0b4e57c5bb24a567e3f43b44cf65aecf8743ec9ce52fe6052cd",
+        "workload.c": "47be0b88d2982a21abdb712e0a46599452efe6797a8102aa503f88069d2645e7",
+        "workload.exe": "ed776100e39ad1850b2ed7212c247f2b29ca5cee9cdd676bdcf89f93fd91997d",
+        "workload.ll": "8103ba4882327cbe2fcf9c72eba36b03edd77420fcbfb6e84efa3d8257084a2d",
+        "workload_ape.json": "5365d85813086353465b991bf52dd217e0ae1cb21933e8934863d59937833922"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 196611,
+      "csrd": {
+        "counts": [
+          0,
+          131064,
+          65547
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.6666158048125487,
+          0.3333841951874514
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          0,
+          0,
+          196611
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.6666158048125487,
+            0.6666158048125486
+          ],
+          "mae": 0.44441053654169904,
+          "max_absolute_error": 0.6666158048125487,
+          "rmse": 0.5442895254218303
+        },
+        "ratios": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "id": "capacity_65537",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65537/workload.c": "47be0b88d2982a21abdb712e0a46599452efe6797a8102aa503f88069d2645e7",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65537/workload.exe": "ed776100e39ad1850b2ed7212c247f2b29ca5cee9cdd676bdcf89f93fd91997d",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65537/workload.ll": "8103ba4882327cbe2fcf9c72eba36b03edd77420fcbfb6e84efa3d8257084a2d",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_65537/workload_ape.json": "5365d85813086353465b991bf52dd217e0ae1cb21933e8934863d59937833922"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 196611,
+        "expected_sha256": "4837cab45e77edcdd189f23e82faca9e08876fdb2e32cc944b05cc987e89d04b",
+        "first_mismatch": null,
+        "observed_count": 196611,
+        "observed_sha256": "4837cab45e77edcdd189f23e82faca9e08876fdb2e32cc944b05cc987e89d04b"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          2097184
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 2143992,
+        "instructions": 7419941,
+        "roi_instructions": 983075,
+        "selected_accesses": 196611
+      },
+      "trace_reference_counts": [
+        0,
+        131064,
+        65547
+      ],
+      "trace_reference_ratios": [
+        0.0,
+        0.6666158048125487,
+        0.3333841951874514
+      ],
+      "wall_seconds": 33.28900792822242
+    },
+    {
+      "artifact_bytes": 203472410,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "cdf3cd3044e21ed735cfbb312c4b15ebabf3715a8b12d8c5cda50c5a897cd01a",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "e556b6afb3a0196242eda36824d8f5d10573f8a20fd3cced57bd09b72c5fa0b6",
+        "commands.json": "c3e47012ab7547dbea9347aad97366b3626e08c7f4307995ae20651088d8550e",
+        "comparison/actual.events.json": "26b39baf7713d5c5eaaa4f4b291823ba1d47215c6bad5348fa2021a6a4b63d39",
+        "comparison/actual.json": "1a47d80aeb0e81a447c775f2fa9981ce4ae5673fe351cae72d55e240845a2e72",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "9f52d79848fde8f9daca05031bf18ec13ee79c60576a1ac352bc94cfd2907fed",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "3a1a7b3c8e4eaf41ab2e5bc650d4148f1e1bde669c28feb4ac9bc225bd37dd16",
+        "comparison/global.json": "51c68e8a3bee65760c59e10c07fc6903179486f353e045585d979d48c0ca4704",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "5bbc0006b88e8a5174d8786ac1e8f7d45537d857e34b1ee5a91099db4809508e",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "e9c20138438a6046ec6c6691d8141d281d6f115707b39b862ee3b4fa66cd1321",
+        "comparison/input.source": "4bee6f3119a94647fcb91537ad308aa1c2650c6b0a76b300727b35f29d219bc0",
+        "comparison/inputs.json": "123c4ace602a2a8e32b18f1ba7d490aacb2a96c9c582920ed44b7989986941b3",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "c863b8b081b65acf97704658cfa4335b74443269d50c665bf192d995945cf2b0",
+        "stdout.txt": "c863b8b081b65acf97704658cfa4335b74443269d50c665bf192d995945cf2b0",
+        "symbols.log": "6f3d9561131fb872bee1592177522b7b8b619b051e45c0986c7af05d028d840a",
+        "trace.log.gz": "37faebf376ba29a865ed581c20354be5d16b94a9e8214ceef35a33c6e836aec0",
+        "workload.c": "4bee6f3119a94647fcb91537ad308aa1c2650c6b0a76b300727b35f29d219bc0",
+        "workload.exe": "e9c20138438a6046ec6c6691d8141d281d6f115707b39b862ee3b4fa66cd1321",
+        "workload.ll": "878f3a8cee198d8644c550ef66f557e7bb3ff0e31aec03b6ad9e9c6808b77012",
+        "workload_ape.json": "5bbc0006b88e8a5174d8786ac1e8f7d45537d857e34b1ee5a91099db4809508e"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 208896,
+      "csrd": {
+        "counts": [
+          0,
+          98304,
+          110592
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.47058823529411764,
+          0.5294117647058824
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          0,
+          0,
+          208896
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.47058823529411764,
+            0.47058823529411764
+          ],
+          "mae": 0.3137254901960784,
+          "max_absolute_error": 0.47058823529411764,
+          "rmse": 0.3842336851424593
+        },
+        "ratios": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "id": "capacity_69632",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_69632/workload.c": "4bee6f3119a94647fcb91537ad308aa1c2650c6b0a76b300727b35f29d219bc0",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_69632/workload.exe": "e9c20138438a6046ec6c6691d8141d281d6f115707b39b862ee3b4fa66cd1321",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_69632/workload.ll": "878f3a8cee198d8644c550ef66f557e7bb3ff0e31aec03b6ad9e9c6808b77012",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_69632/workload_ape.json": "5bbc0006b88e8a5174d8786ac1e8f7d45537d857e34b1ee5a91099db4809508e"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 208896,
+        "expected_sha256": "7d36ef239e38e192affec626b1e78c0ff0d5042caff862d5cfcd3e62497f0fc1",
+        "first_mismatch": null,
+        "observed_count": 208896,
+        "observed_sha256": "7d36ef239e38e192affec626b1e78c0ff0d5042caff862d5cfcd3e62497f0fc1"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          2228224
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 2275032,
+        "instructions": 7874486,
+        "roi_instructions": 1044500,
+        "selected_accesses": 208896
+      },
+      "trace_reference_counts": [
+        0,
+        98304,
+        110592
+      ],
+      "trace_reference_ratios": [
+        0.0,
+        0.47058823529411764,
+        0.5294117647058824
+      ],
+      "wall_seconds": 36.448046871926636
+    },
+    {
+      "artifact_bytes": 216672401,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "a069fb8396f5efe0162c7d8c36b4be5eb748745ba7a535a58df7cd7f165ea21d",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "8360dc3056b5bf37ea371640d03a857abd0c040126fc37f36f5b0ac0fe8a163b",
+        "commands.json": "416a0b1378b2c389b6d547ca54d3ca34272fdf5eafc6cd601b5e199895406644",
+        "comparison/actual.events.json": "9de65a23855cd26c8c02410f77ff23f09b6711c68b451096e96258e7740f6d4c",
+        "comparison/actual.json": "59b18cb01c10f1a79482e5ea1f31ed773c11dec9d85b2aee2c373a7acd540e9d",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "f4c673cdbf24a1cac977a87c82876b27ddc722f11523cb47ab44a60748dcfaa4",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "bca502aea87bd14487621f3af917896b831765b44d184ff0696a66285cff1bbf",
+        "comparison/global.json": "f5451b3c93f0a7dc1422e343a4b492ff74dc2d57200e7caf8f9dae53569897f5",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "e7cd6fa223987b5486c140d99119a1ff86d875170bf13e4b97ceadeeebc15979",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "4a02049ec94f497b826dba9670a99b13213926c44bb7519aa5e5c5e823855180",
+        "comparison/input.source": "0348b3b8ba05b0b530734e593a2aac55cd83d7f11765fcd80da53b74a92cec8b",
+        "comparison/inputs.json": "35b6948f4ea20184f6ebd3d4df8324fb1106fad2eb957f3a23f1df1f2e2cd380",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "e4f7594e7e4154045888584154cfbe4e375422e955b332c56bf5ff2a601681aa",
+        "stdout.txt": "e4f7594e7e4154045888584154cfbe4e375422e955b332c56bf5ff2a601681aa",
+        "symbols.log": "9db3bcac4a9e97cc2079f83b7549a9c63d87d0200820f3dbd3d9f11c475676a0",
+        "trace.log.gz": "fcd64c01f148b03ef870dde9e263377db887d863e90da1286effea35d58617f9",
+        "workload.c": "0348b3b8ba05b0b530734e593a2aac55cd83d7f11765fcd80da53b74a92cec8b",
+        "workload.exe": "4a02049ec94f497b826dba9670a99b13213926c44bb7519aa5e5c5e823855180",
+        "workload.ll": "b79e9729fe5b2af3343ab9ee57d97f79d44e536f489d9c5f5979e8493817a2ec",
+        "workload_ape.json": "e7cd6fa223987b5486c140d99119a1ff86d875170bf13e4b97ceadeeebc15979"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 221184,
+      "csrd": {
+        "counts": [
+          0,
+          65536,
+          155648
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.0,
+          0.2962962962962963,
+          0.7037037037037037
+        ]
+      },
+      "family": "capacity",
+      "global_rd": {
+        "counts": [
+          0,
+          0,
+          221184
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.2962962962962963,
+            0.2962962962962963
+          ],
+          "mae": 0.19753086419753085,
+          "max_absolute_error": 0.2962962962962963,
+          "rmse": 0.2419249128674744
+        },
+        "ratios": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "id": "capacity_73728",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_73728/workload.c": "0348b3b8ba05b0b530734e593a2aac55cd83d7f11765fcd80da53b74a92cec8b",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_73728/workload.exe": "4a02049ec94f497b826dba9670a99b13213926c44bb7519aa5e5c5e823855180",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_73728/workload.ll": "b79e9729fe5b2af3343ab9ee57d97f79d44e536f489d9c5f5979e8493817a2ec",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/capacity_73728/workload_ape.json": "e7cd6fa223987b5486c140d99119a1ff86d875170bf13e4b97ceadeeebc15979"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 221184,
+        "expected_sha256": "a061e74588f9935c02de88c0a37953cfc1a7d92cdbd9a10e940679e1d5a61c55",
+        "first_mismatch": null,
+        "observed_count": 221184,
+        "observed_sha256": "a061e74588f9935c02de88c0a37953cfc1a7d92cdbd9a10e940679e1d5a61c55"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          63
+        ],
+        "data": [
+          4218880,
+          2359296
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 2406104,
+        "instructions": 8329142,
+        "roi_instructions": 1105940,
+        "selected_accesses": 221184
+      },
+      "trace_reference_counts": [
+        0,
+        65536,
+        155648
+      ],
+      "trace_reference_ratios": [
+        0.0,
+        0.2962962962962963,
+        0.7037037037037037
+      ],
+      "wall_seconds": 37.624379304703325
+    },
+    {
+      "artifact_bytes": 5084294,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "c51ace252edfac19b56b65e3d83ace53e56e97002ed8e9115d27c08692cbfed5",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "5235492cb5470b851eb4dff22331eae06c7915a17f75371260c37e05d5be521b",
+        "commands.json": "f056b35ee05bcbc346e7b9d678dcf3aa66ef00971851dd72a07ec24ecf8de102",
+        "comparison/actual.events.json": "cd356fc9a4c664b10f41bae3239096d3dc1fd19a9d4be970d8ee477490661341",
+        "comparison/actual.json": "b509b33db5b1b09a1042bf8a3f272a2f5e48afd6078cd58acd7619a16b82b418",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "beb6ddc745ce0216d0f9552197c1ecf1e930974c1e8e18749a9f997340675ae8",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "d1b2e3683c335e100c0babe7ac54938c1ad8ae236031abdd3c4ca23aa9e6cac2",
+        "comparison/global.json": "ddae4c384185417976dc67c59ff59a7bc6161585e993df43c18978406bd553d0",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "bef8225a6f028a2a482008ba2d30e293624cd5dd27851b6d0a31a82d5a19bcd2",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "1bd71bce3019e3a7955a8f1a2d0945bfcd8dfff5bb76d33891c01d9411c3be29",
+        "comparison/input.source": "8f0e0d0bff3b7727132c481393cd8ce0922b88ac6d85f3be2020166c779936c3",
+        "comparison/inputs.json": "eb90852566fef373956b81d9add8aa40407fcdd761191944b4ecb212ae9bbc43",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "b647a0531ed321109c284673c2d510c0af3800668bffc3a965fa514fe75881bb",
+        "stdout.txt": "b647a0531ed321109c284673c2d510c0af3800668bffc3a965fa514fe75881bb",
+        "symbols.log": "5774c52a9e4fa668a03c6ece1b79ed2e457d2d606ec32beb0c34c9e1082d7ec0",
+        "trace.log.gz": "b934da697da7113bdf0f5d2f907840c4bc90f4c6580592e653aee889c67ae6b6",
+        "workload.c": "8f0e0d0bff3b7727132c481393cd8ce0922b88ac6d85f3be2020166c779936c3",
+        "workload.exe": "1bd71bce3019e3a7955a8f1a2d0945bfcd8dfff5bb76d33891c01d9411c3be29",
+        "workload.ll": "e049f15710f52a09434955d8dc51ff16d37db9bba13d221dd131cab92375cad2",
+        "workload_ape.json": "bef8225a6f028a2a482008ba2d30e293624cd5dd27851b6d0a31a82d5a19bcd2"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 5116,
+      "csrd": {
+        "counts": [
+          4092,
+          0,
+          1024
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.7998436278342455,
+          0.0,
+          0.2001563721657545
+        ]
+      },
+      "family": "distribution",
+      "global_rd": {
+        "counts": [
+          4092,
+          0,
+          1024
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.7998436278342455,
+          0.0,
+          0.2001563721657545
+        ]
+      },
+      "id": "mean_uniform",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/mean_uniform/workload.c": "8f0e0d0bff3b7727132c481393cd8ce0922b88ac6d85f3be2020166c779936c3",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/mean_uniform/workload.exe": "1bd71bce3019e3a7955a8f1a2d0945bfcd8dfff5bb76d33891c01d9411c3be29",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/mean_uniform/workload.ll": "e049f15710f52a09434955d8dc51ff16d37db9bba13d221dd131cab92375cad2",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/mean_uniform/workload_ape.json": "bef8225a6f028a2a482008ba2d30e293624cd5dd27851b6d0a31a82d5a19bcd2"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 5116,
+        "expected_sha256": "318e45ff539836e0a2ab36f18c071ce081247ed40f4871dbffde50ef354c70f3",
+        "first_mismatch": null,
+        "observed_count": 5116,
+        "observed_sha256": "318e45ff539836e0a2ab36f18c071ce081247ed40f4871dbffde50ef354c70f3"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          135
+        ],
+        "data": [
+          4218880,
+          32768
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 79568,
+        "instructions": 269192,
+        "roi_instructions": 25630,
+        "selected_accesses": 5116
+      },
+      "trace_reference_counts": [
+        4092,
+        0,
+        1024
+      ],
+      "trace_reference_ratios": [
+        0.7998436278342455,
+        0.0,
+        0.2001563721657545
+      ],
+      "wall_seconds": 1.75033786194399
+    },
+    {
+      "artifact_bytes": 5108673,
+      "artifact_sha256": {
+        "accesses.jsonl.gz": "a1489949ba60848d58d4a769ca26f60d0b5b5b043addaa86152693c8ab7f9ed6",
+        "ape.log": "66acf04d09d1c6cfeed6c376ff0c9e017dc5e87f6567cb705653c2212d5bb6d7",
+        "capture.json": "fe3d8969df1782770065756c7675ce487e930d3a431a44032409fd4ef2c89fb8",
+        "commands.json": "35554ad76ac6ebd643676ab75ecd702dd79c8e14e9d5083ffc86a3a7e1f6c9c6",
+        "comparison/actual.events.json": "d35103054ed9c92c28b7d0800638a66803c24860533cb5fe210bbf2227dfe18e",
+        "comparison/actual.json": "dfcbfc7dc577401b41039582d718f0e7b29fc9076928fd41ecea051dc0071d69",
+        "comparison/actual.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/comparison.json": "ff0ba26a1fbbc105af87c7e5e22bcbee562a07f3a6938544534bbc000717cd72",
+        "comparison/global.cache.json": "f688432aa575f114fe63bcef44ff1b68242a6d0ab7065aee43a291c6b9b8538a",
+        "comparison/global.events.json": "15b6f6d5e838a7509af245cdfb67cbf37c76c63771bcc1f64434997300be4869",
+        "comparison/global.json": "e5b89cbec25bee8d316762ae493ad934bd784f3ab11e77a32cc1f86054eb71d5",
+        "comparison/global.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "comparison/input.ape.json": "25cb294a1bf19e0fe6c3f5ca56186fec1f4f784dda96c4e9622b52aad901082f",
+        "comparison/input.cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+        "comparison/input.elf": "9087f56dc97a80ed86973c940b64836d22515157952952838b038a92e4a94aac",
+        "comparison/input.source": "e851769b0bfd0618711d873bbdea3edaa0acd5036a656d6c867c4600fb62b99e",
+        "comparison/inputs.json": "2c8b9fd59884bc55583884b59fc529a82a45e1ec6bcbed4e237532f8601b2a80",
+        "host-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "llvm.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "native.log": "b647a0531ed321109c284673c2d510c0af3800668bffc3a965fa514fe75881bb",
+        "stdout.txt": "b647a0531ed321109c284673c2d510c0af3800668bffc3a965fa514fe75881bb",
+        "symbols.log": "21e805512788cea23a12ee4e29acdc1686318dea8b270960de32692ecbe853e3",
+        "trace.log.gz": "5da19165211b883acd6d43735a9f6a79e97dcfa26dd9f6e1a66a2d2ec39b87fe",
+        "workload.c": "e851769b0bfd0618711d873bbdea3edaa0acd5036a656d6c867c4600fb62b99e",
+        "workload.exe": "9087f56dc97a80ed86973c940b64836d22515157952952838b038a92e4a94aac",
+        "workload.ll": "daaed236e2a208a52965c60861b340b388fcfcca6d80cbf09586ed9f7b7e7912",
+        "workload_ape.json": "25cb294a1bf19e0fe6c3f5ca56186fec1f4f784dda96c4e9622b52aad901082f"
+      },
+      "cache_counts_equal": true,
+      "cache_hierarchy": {
+        "allocation": "all-demand-misses",
+        "inclusion": "independent-no-back-invalidation-or-victim-insertion",
+        "levels": [
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L1D0",
+            "replacement": "LRU",
+            "role": "L1",
+            "set_count": 128,
+            "size_bytes": 16384
+          },
+          {
+            "associativity": 4,
+            "line_size_bytes": 32,
+            "name": "L2",
+            "replacement": "LRU",
+            "role": "LLC",
+            "set_count": 16384,
+            "size_bytes": 2097152
+          }
+        ],
+        "lower_level_requests": "l1-misses-only",
+        "task_initial_state": "cold"
+      },
+      "checksum": 5116,
+      "csrd": {
+        "counts": [
+          2046,
+          2046,
+          1024
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.3999218139171227,
+          0.3999218139171227,
+          0.2001563721657545
+        ]
+      },
+      "family": "distribution",
+      "global_rd": {
+        "counts": [
+          2046,
+          2046,
+          1024
+        ],
+        "error": {
+          "absolute_error": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mae": 0.0,
+          "max_absolute_error": 0.0,
+          "rmse": 0.0
+        },
+        "ratios": [
+          0.3999218139171227,
+          0.3999218139171227,
+          0.2001563721657545
+        ]
+      },
+      "id": "mean_mixed",
+      "input_sha256": {
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/mean_mixed/workload.c": "e851769b0bfd0618711d873bbdea3edaa0acd5036a656d6c867c4600fb62b99e",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/mean_mixed/workload.exe": "9087f56dc97a80ed86973c940b64836d22515157952952838b038a92e4a94aac",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/mean_mixed/workload.ll": "daaed236e2a208a52965c60861b340b388fcfcca6d80cbf09586ed9f7b7e7912",
+        "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/mean_mixed/workload_ape.json": "25cb294a1bf19e0fe6c3f5ca56186fec1f4f784dda96c4e9622b52aad901082f"
+      },
+      "sequence": {
+        "equal": true,
+        "expected_count": 5116,
+        "expected_sha256": "ff5d7c4d9703d89cb3359565478404df59a1b7871796715ead1b01cffe5f626d",
+        "first_mismatch": null,
+        "observed_count": 5116,
+        "observed_sha256": "ff5d7c4d9703d89cb3359565478404df59a1b7871796715ead1b01cffe5f626d"
+      },
+      "status": "ok",
+      "symbols": {
+        "chaser_s1": [
+          4198752,
+          79
+        ],
+        "data": [
+          4218880,
+          32768
+        ]
+      },
+      "trace": {
+        "excluded_outside_array": 1,
+        "excluded_outside_roi": 79568,
+        "instructions": 267118,
+        "roi_instructions": 23556,
+        "selected_accesses": 5116
+      },
+      "trace_reference_counts": [
+        2046,
+        2046,
+        1024
+      ],
+      "trace_reference_ratios": [
+        0.3999218139171227,
+        0.3999218139171227,
+        0.2001563721657545
+      ],
+      "wall_seconds": 1.6342312567867339
+    }
+  ],
+  "schema_version": 1,
+  "selection": "full",
+  "status": "ok",
+  "summary": {
+    "failed": [],
+    "mismatched": [],
+    "passed": 25,
+    "requested": 25
+  },
+  "target_execution_validation": "not-performed",
+  "validation_scope": "host-x86_64-execution-function-and-array-filtered"
+}

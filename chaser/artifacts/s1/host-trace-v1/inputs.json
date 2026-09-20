@@ -1,0 +1,190 @@
+{
+  "cases": [
+    {
+      "distinct": 8,
+      "family": "layout",
+      "id": "packed_8",
+      "stride": 1
+    },
+    {
+      "distinct": 3,
+      "family": "associativity",
+      "id": "spread_3",
+      "stride": 32
+    },
+    {
+      "distinct": 3,
+      "family": "associativity",
+      "id": "conflict_3",
+      "stride": 4096
+    },
+    {
+      "distinct": 4,
+      "family": "associativity",
+      "id": "spread_4",
+      "stride": 32
+    },
+    {
+      "distinct": 4,
+      "family": "associativity",
+      "id": "conflict_4",
+      "stride": 4096
+    },
+    {
+      "distinct": 5,
+      "family": "associativity",
+      "id": "spread_5",
+      "stride": 32
+    },
+    {
+      "distinct": 5,
+      "family": "associativity",
+      "id": "conflict_5",
+      "stride": 4096
+    },
+    {
+      "distinct": 8,
+      "family": "associativity",
+      "id": "spread_8",
+      "stride": 32
+    },
+    {
+      "distinct": 8,
+      "family": "associativity",
+      "id": "conflict_8",
+      "stride": 4096
+    },
+    {
+      "distinct": 256,
+      "family": "capacity",
+      "id": "capacity_256",
+      "stride": 32
+    },
+    {
+      "distinct": 448,
+      "family": "capacity",
+      "id": "capacity_448",
+      "stride": 32
+    },
+    {
+      "distinct": 511,
+      "family": "capacity",
+      "id": "capacity_511",
+      "stride": 32
+    },
+    {
+      "distinct": 512,
+      "family": "capacity",
+      "id": "capacity_512",
+      "stride": 32
+    },
+    {
+      "distinct": 513,
+      "family": "capacity",
+      "id": "capacity_513",
+      "stride": 32
+    },
+    {
+      "distinct": 576,
+      "family": "capacity",
+      "id": "capacity_576",
+      "stride": 32
+    },
+    {
+      "distinct": 1024,
+      "family": "capacity",
+      "id": "capacity_1024",
+      "stride": 32
+    },
+    {
+      "distinct": 32768,
+      "family": "capacity",
+      "id": "capacity_32768",
+      "stride": 32
+    },
+    {
+      "distinct": 61440,
+      "family": "capacity",
+      "id": "capacity_61440",
+      "stride": 32
+    },
+    {
+      "distinct": 65535,
+      "family": "capacity",
+      "id": "capacity_65535",
+      "stride": 32
+    },
+    {
+      "distinct": 65536,
+      "family": "capacity",
+      "id": "capacity_65536",
+      "stride": 32
+    },
+    {
+      "distinct": 65537,
+      "family": "capacity",
+      "id": "capacity_65537",
+      "stride": 32
+    },
+    {
+      "distinct": 69632,
+      "family": "capacity",
+      "id": "capacity_69632",
+      "stride": 32
+    },
+    {
+      "distinct": 73728,
+      "family": "capacity",
+      "id": "capacity_73728",
+      "stride": 32
+    },
+    {
+      "distinct": 1024,
+      "family": "distribution",
+      "id": "mean_uniform",
+      "stride": 32
+    },
+    {
+      "distinct": 1024,
+      "family": "distribution",
+      "id": "mean_mixed",
+      "stride": 32
+    }
+  ],
+  "max_decoded_trace_bytes": 536870912,
+  "max_references": 250000,
+  "sha256": {
+    "/workspace/experiments/chaser/chaser/s1_capture.py": "1ee23533560c6b9b53dfc071fbe8079bf0d97c26beaf35a9b20bbf084c596f9c",
+    "/workspace/experiments/chaser/chaser/s1_execution.py": "b784a3b66ece9465c31d090908356ad3da25ccdfa874b5120fa9ba5f0c7c0956",
+    "/workspace/experiments/chaser/chaser/s1_trace.py": "6de4d503fd59ab6ef76629c148a9138e073b77fb6ccdf0fd392cafb39a32b16b",
+    "/workspace/experiments/chaser/chaser/s1_workloads.py": "c417bf729751b352156a75ada7ea59a86e3046c3e480f8c6aff531440023cb11",
+    "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+    "/workspace/experiments/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so": "d804273552901f4e0b0e8f1dfaabbaf26c52a999ccffd1f6bed5f7cccf10f071",
+    "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/cache.yaml": "c85880ce7c42bc2e1fd2e70c06826112f367409584b5d79653f9bafe33bd737f",
+    "/workspace/experiments/chaser/rtems/s1/build/host-trace-v2/main.c": "b6e8245980a6e0aea3a53ac05c4bda544904a23168a95ca828d7eb184b42de44"
+  },
+  "sweeps": 3,
+  "timeout_seconds": 120,
+  "toolchain": {
+    "clang-14": {
+      "path": "/usr/lib/llvm-14/bin/clang",
+      "sha256": "31925065812631303cf9af9a30b2f56427d2102667a87a9fb4ba03a306104589",
+      "version": "Ubuntu clang version 14.0.0-1ubuntu1.1\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/lib/llvm-14/bin\n"
+    },
+    "nm": {
+      "path": "/usr/bin/x86_64-linux-gnu-nm",
+      "sha256": "ed6565c132d6f20019ff3f050043dc1b2b8bc2e8b3b94c1ffe3f34436431a5a4",
+      "version": "GNU nm (GNU Binutils for Ubuntu) 2.38\nCopyright (C) 2022 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) any later version.\nThis program has absolutely no warranty.\n"
+    },
+    "opt-14": {
+      "path": "/usr/lib/llvm-14/bin/opt",
+      "sha256": "2d30c96b490b9fa1f309c4b800c3f22ec88501a8b23e51132d30652963d85546",
+      "version": "Ubuntu LLVM version 14.0.0\n  \n  Optimized build.\n  Default target: x86_64-pc-linux-gnu\n  Host CPU: znver3\n"
+    },
+    "valgrind": {
+      "path": "/usr/bin/valgrind",
+      "sha256": "4652774bd116cb49951ef74115ad4237cad5021b2bd4d80002f09d986ec438b9",
+      "version": "valgrind-3.18.1\n"
+    }
+  }
+}

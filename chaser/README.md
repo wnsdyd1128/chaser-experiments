@@ -620,3 +620,37 @@ scheduling labels. S1 conclusions remain within abstract-model validation.
 
 The first completed 25-case model sweep, error table, scatter and evidence hashes
 are summarized in [S1 model evaluation](artifacts/s1/model-v1/README.md).
+
+## S1 실행 주소열 검증
+
+YARDA가 생성한 주소열과 독립적인 실행 증거는 다음 명령으로 수집한다.
+Clang/opt 14, GNU nm, Valgrind Lackey와 위 verifier가 빌드한 YARDA가 필요하다.
+
+```sh
+python3 -m tools.run_s1_execution --output rtems/s1/build/host-trace-new \
+  --sweeps 3 --max-references 250000 --timeout 120 --max-trace-bytes 536870912
+python3 -m tools.plot_s1 rtems/s1/build/host-trace-new/suite.json \
+  --output rtems/s1/build/host-trace-new/plots
+```
+
+작은 검증에는 `--cases packed_8 conflict_5 capacity_513`을 추가한다.
+동일 생성 C를 host x86-64 non-PIE ELF와 APE로 빌드하고, **실행한 바로 그 ELF**를
+YARDA에 전달한다. Lackey의 instruction PC와 ELF symbol 범위로 `chaser_s1` 함수의
+`data` 배열 접근만 선택한다. 함수는 한 번 실행하는 leaf 함수여야 하며,
+진입·종료 기록이 없거나 배열 경계에 일부만 겹친 접근이 있으면 실패한다.
+
+검증은 두 단계다. 먼저 `(load/store, 절대주소, byte 크기)`의 전체 순서를 비교한다.
+그다음 **필터링된 실행 trace**를 cold LRU로 재생하여 CSRD의 계층별 count와 비교한다.
+최종 cache count만 같고 주소 순서가 다른 경우도 실패로 처리한다.
+초기화·instruction·stack·다른 객체 접근은 replay 전에 제거하므로,
+이 결과는 전체 프로그램 Cachegrind 통계나 GR740 hardware counter 측정값이 아니다.
+
+원본 `trace.log.gz`, 필터 결과 `accesses.jsonl.gz`, native/Valgrind checksum,
+source/LLVM/APE/ELF, 명령·도구 버전·해시와 실패 기록을 보존한다.
+원본 stdout/stderr의 합산 비압축 byte 수와 실행 시간을 제한하며,
+제한 초과·비정상 종료·checksum 오류·불완전 trace를 성공으로 취급하지 않는다.
+기존 output 디렉터리는 덮어쓰지 않는다. CLI 종료 코드는 전체 성공 0,
+case 실패/주소열·CSRD 불일치 1, 잘못된 입력·초기 설정 실패 2다.
+
+전체 결과와 기존 모델 그래프와의 관계는
+[실행 trace 검증 결과](artifacts/s1/host-trace-v1/README.md)에 정리했다.
