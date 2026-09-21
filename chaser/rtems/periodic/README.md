@@ -7,10 +7,19 @@ five workload families**. It evaluates new tasksets from known families.
 Deduplicate identical execution inputs before splitting. Keep each taskset's
 repeated measurements, G/C/P results, representations and policy variants in
 one split. Distinct parameter configurations may cross splits within a family.
-Record the split seed, integer rounding rule, per-family counts and membership
-hash; seed and rounding values remain to be specified before freezing. Train is
+The frozen seed is **20260921**. Use largest-remainder integer allocation with
+ties resolved train, validation, test. Families need at least three unique inputs;
+if rounding leaves a split empty, transfer one from the largest group (same tie
+order). Record per-family counts and the membership hash. Train is
 for fitting, validation for calibration/model selection, and test for final evaluation.
 Do not redraw membership based on performance or replace excluded test samples.
+
+The [input-freeze-v1 artifact](../../artifacts/periodic/input-freeze-v1/README.md)
+freezes the 207 unique V3 tasksets: **train 126 / validation 41 / test 40**, with all
+five families in every split. It retains the 93 excluded duplicates and the 11
+excluded development probes. V1–V3 archives and their family-held-out proposals
+remain historical evidence. `rtems_periodic_pool --version 1/2/3` still reproduces
+those proposals; use `tools.rtems_periodic_freeze` for the main-experiment freeze.
 
 Schema 2 assigns each workload by its policy-independent input signature, using
 ascending SHA-256 of `[policy_id, seed, family_id, input_signature]`. Names,
@@ -21,6 +30,12 @@ rows must include `input_signature` from the frozen population; every policy use
 the same workload ID and signature. The explicit `family-70-20-10-v1` option is
 for legacy reproduction. Existing files are validated and reused without reseeding;
 changed membership, input identities or assignments are rejected.
+
+The input freeze preserves V3 sweep/period/horizon and predeclares measured bounds
+`u_max=0.25`, `U_max=2.0`. Estimated U does not prove these bounds or deadline
+feasibility. Retain failures and exclusions in their original split without
+replacement. Runtime eligibility, dataset sufficiency and wall-time/storage budget
+remain pending; the input freeze does not declare a training-ready dataset.
 
 
 This harness builds RF dataset measurements and supports later allocation/system

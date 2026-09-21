@@ -3,6 +3,9 @@
 현재 본실험은 5개 워크로드군 **각각의 고유 taskset**을 train/test/validation
 60%/20%/20%로 나누는 [분할 정책](README.md#main-experiment-split-policy)을 따른다.
 아래 워크로드군 단위 split 수치는 보존된 후보 생성 당시의 초안이다.
+현재 [입력·split 동결본](../../artifacts/periodic/input-freeze-v1/README.md)은 V3 고유 입력
+207개를 train 126 / validation 41 / test 40개로 배정했다. 다음은 독립 U·정적 feature
+수집이며, validation θ/policy 동결 후 최종 G/C/P label과 RF를 준비한다.
 
 V2의 window/multi-array/block-phase에 두 보수적 워크로드군을 추가한다. 출처 revision은
 `c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08`이며 파일 hash는

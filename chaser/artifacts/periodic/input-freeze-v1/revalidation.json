@@ -1,0 +1,86 @@
+{
+  "U_max": 2.0,
+  "bound_rule": "measured independent U must meet u_max/U_max; estimates do not establish feasibility",
+  "candidate_workloads": 207,
+  "dataset_ready": false,
+  "excluded_development_workloads": 11,
+  "excluded_duplicate_workloads": 93,
+  "expected_runs": 10,
+  "family_counts": {
+    "test": 5,
+    "train": 5,
+    "validation": 5
+  },
+  "independent_u_runs": 21680,
+  "input_version": "periodic-input-freeze-v1",
+  "inputs_frozen": true,
+  "limitations": [
+    "LLC high-load coverage",
+    "role/core/period confounding",
+    "no target hardware cache validation"
+  ],
+  "measured_workloads": 0,
+  "membership_hash": "92574a43fe183e6b3652d894bc97758a9c90b200d638225437fd20d543c1a50f",
+  "pending": [
+    "final ELF analysis and independent U",
+    "wall-time/storage and calibration budget",
+    "validation theta/policy calibration",
+    "common G/C/P eligibility and final labels",
+    "RF learning and sufficiency assessment"
+  ],
+  "per_family": [
+    {
+      "family_id": "family-4d9f56f9b3eafcb7",
+      "recipe_id": "staged-butterfly",
+      "test": 8,
+      "train": 26,
+      "validation": 9
+    },
+    {
+      "family_id": "family-5b094dd8a8f196c6",
+      "recipe_id": "multi-array-reuse",
+      "test": 8,
+      "train": 25,
+      "validation": 8
+    },
+    {
+      "family_id": "family-659aa1d43f3f1c3b",
+      "recipe_id": "window-coefficient",
+      "test": 8,
+      "train": 25,
+      "validation": 8
+    },
+    {
+      "family_id": "family-9e4c7979ebce11ef",
+      "recipe_id": "triangular-solve",
+      "test": 8,
+      "train": 25,
+      "validation": 8
+    },
+    {
+      "family_id": "family-a6f2a4e341f4e301",
+      "recipe_id": "block-phase",
+      "test": 8,
+      "train": 25,
+      "validation": 8
+    }
+  ],
+  "plans_validated": 621,
+  "population_hash": "433b2be33c59ced93d7ab76464ddedce6a43b0030b0f9000f748d48e4d015409",
+  "population_rule": "fixed V3 tasksets; preserve failures and exclusions; no replacement",
+  "primary_families": 5,
+  "schema_version": 1,
+  "seed": 20260921,
+  "split_frozen": true,
+  "split_hash": "b28817d8384184da14d6dac023da473b19a6b58297134487acf8bfad4df8bf20",
+  "split_policy": "taskset-stratified-60-20-20-v1",
+  "status": "PASS",
+  "sufficiency_status": "not_assessed",
+  "timing_runs_one_policy": 6210,
+  "u_max": 0.25,
+  "workload_counts": {
+    "test": 40,
+    "train": 126,
+    "validation": 41
+  }
+}
