@@ -1,0 +1,60 @@
+{
+  "additional_costs": "theta mapping search, other policies/alpha, builds, analysis, diagnostics",
+  "base_runs_one_policy": 27890,
+  "candidate_workloads": 207,
+  "dataset_ready": false,
+  "development_workloads": 11,
+  "duplicate_candidate_workloads": 93,
+  "estimated_total_u_range": [
+    0.25653475460163505,
+    1.4990512568044358
+  ],
+  "family_counts": {
+    "test": 1,
+    "train": 3,
+    "validation": 1
+  },
+  "generated_candidate_workloads": 300,
+  "independent_u_runs": 21680,
+  "max_jobs": 48,
+  "max_padded_bytes": 4317184,
+  "max_record_slots": 64,
+  "measured_workloads": 0,
+  "pattern_count_unit": "workloads containing pattern; mixed workloads count in both roles",
+  "pattern_counts": {
+    "butterfly-scale": 43,
+    "butterfly-twiddle": 43,
+    "matrix-reuse": 41,
+    "paired-pass": 41,
+    "row-column": 41,
+    "row-column-mirrored": 41,
+    "triangular-solve": 41,
+    "triangular-solve-transposed": 41,
+    "window-bank": 41,
+    "window-coeff": 41
+  },
+  "primary_families": 5,
+  "profile_counts": {
+    "l1-half": 55,
+    "l1-skew": 55,
+    "layout-half": 55,
+    "llc-one": 20,
+    "llc-two": 22
+  },
+  "recipe_counts": {
+    "block-phase": 41,
+    "multi-array-reuse": 41,
+    "staged-butterfly": 43,
+    "triangular-solve": 41,
+    "window-coefficient": 41
+  },
+  "split_frozen": false,
+  "split_hash": "518f5b9c97d1a5b9a8b050e9cc4f88ee997ef5a910d9f876f5b4e9afa2c6cc10",
+  "sufficiency_status": "not_assessed",
+  "timing_runs_one_policy": 6210,
+  "workload_counts": {
+    "test": 41,
+    "train": 125,
+    "validation": 41
+  }
+}
