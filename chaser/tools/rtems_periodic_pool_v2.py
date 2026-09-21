@@ -50,6 +50,12 @@ role ratio, period and memory layout. V1 inputs are not relabelled or overwritte
         pending=[*design['pending'], 'only three recipe families; external evaluation is separate'])
     design.pop('period_ratios')
     groups = {group: [p for p, g in RECIPES.items() if g == group] for group in SOURCE_PATHS}
+    candidates = recipe_candidates(design, groups, SOURCE_PATHS, version=2)
+    return dict(design=design, candidates=candidates, dataset_ready=False, split_frozen=False)
+
+
+def recipe_candidates(design: dict, groups: dict, source_paths: dict, *, version: int) -> list[dict]:
+    """Build the same fixed coverage cells for an explicit catalog/version."""
     candidates = []
     for group, patterns in groups.items():
         for count in design['task_counts']:
@@ -69,7 +75,7 @@ role ratio, period and memory layout. V1 inputs are not relabelled or overwritte
                         else:
                             large = i < (1 if profile == 'llc-one' else 2)
                             blocks, stride = (65536 // block + 1 if large else 2), 32
-                        task = dict(task_id=f'v2w{index:04d}_t{i:02d}', pattern=pattern,
+                        task = dict(task_id=f'v{version}w{index:04d}_t{i:02d}', pattern=pattern,
                                     width=width, distinct=blocks*block, stride=stride,
                                     sweeps=1, core=i % 4)
                         task['sweeps'] = max(2, ceil(10240 / job_access_count(task)))
@@ -83,9 +89,9 @@ role ratio, period and memory layout. V1 inputs are not relabelled or overwritte
                                 / TICK_NS)
                     for task, ratio in zip(tasks, ratios):
                         task['period_ticks'] = base * ratio
-                    config = dict(workload_id=f'candidate-v2-{index:04d}',
+                    config = dict(workload_id=f'candidate-v{version}-{index:04d}',
                         family_id='pending-lineage-audit',
-                        policy_id='candidate-explicit-core-order-not-calibrated-v2',
+                        policy_id=f'candidate-explicit-core-order-not-calibrated-v{version}',
                         horizon_ticks=4*base, eligible_for_training=False,
                         test_eligible=False, tasks=tasks)
                     plan = make_plan(config, 2)
@@ -96,11 +102,11 @@ role ratio, period and memory layout. V1 inputs are not relabelled or overwritte
                     candidates.append(dict(configuration=config, recipe_id=group,
                         role='candidate', development_exposed=False, profile=profile,
                         source_basis=[f'https://github.com/tacle/tacle-bench/blob/{REVISION}/{p}'
-                                      for p in SOURCE_PATHS[group]],
+                                      for p in source_paths[group]],
                         target_total_u=target,
                         estimated_cpu_ns=dict(zip((t['task_id'] for t in tasks), costs)),
                         estimated_utilization={t['task_id']: c/(t['period_ticks']*TICK_NS)
                                                for t, c in zip(tasks, costs)},
                         measured_utilization=None, eligibility_status='pending_measurement',
                         logical_jobs=jobs, record_slots=slots))
-    return dict(design=design, candidates=candidates, dataset_ready=False, split_frozen=False)
+    return candidates
