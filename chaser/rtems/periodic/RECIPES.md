@@ -125,3 +125,32 @@ for (c = 0; c < n; ++c)
 
 생략: DCT 연산, 같은 쌍의 source 재참조, in-place store. 두 역할은 `block-phase` 계보다.
 n=2에서는 두 역할의 접근열이 같으므로 정확성 검증 외 후보에는 사용하지 않는다.
+V2 후보의 n=8에서는 다르다. 기존 F5의 매번 전치 쌍 교대와 구분한다.
+
+## 계보·구성·검증
+
+기존 10종은 부분 특성을 통제하는 대조군으로 남긴다. 새 6종은 기존 kernel을 호출하거나
+base-task를 복사하지 않는다. 부분 loop 특성의 공통성만으로 모든 scan을 같은 family로
+합치지는 않지만, 완전한 base-task/recipe를 공유하면 registry의 전이 병합 규칙을 적용한다.
+이 설계의 3개 계보는 통계적 독립성 증명이 아니다. 이후 원형 재사용 관계가 발견되면 병합한다.
+
+V2는 W/M/B 각각 60개, 총 180개 입력 후보다. 각 set은 같은 그룹의 두 역할을 섞는다.
+4/8/12/16 tasks × 아래 5개 cell × 목표 U 0.5/1.0/1.5다. 모든 후보는 n=8.
+
+| Cell | 역할 A:B | 크기·stride | Period 비율 반복 |
+|---|---|---|---|
+| layout-half | 1:1 | 각 2 blocks, stride 1/32/4096 반복 | 1:2 |
+| l1-half | 1:1 | 480 이하/544 이상 위치를 완전 block으로 내림/올림, stride32 | 1:2 |
+| l1-skew | 3:1 | 같은 L1 전후 크기 규칙, stride32 | 1:2:4:2 |
+| llc-one | 1:1 | 첫 task만 65536 초과 위치, 나머지 2 blocks, stride32 | 1:2 |
+| llc-two | 1:1 | 첫 두 task 각각 65536 초과 위치, 나머지 2 blocks, stride32 | 1:2:4:2 |
+
+이는 전체 factorial 설계가 아니라 선택한 대비 cell이다. Role·core·period의 상관도 남아
+있으므로 개별 요인의 인과 효과를 분리한 설계라고 주장하지 않는다. Core는 i%4의 임시 배치다.
+추정 CPU/U와 sweep·period 계산은 v1의 개발 비용 규칙을 재사용한다. 새 구조 적용 타당성은
+미검증이며 최종 독립 U를 대신하지 않는다. 세 그룹만으로 split은 1/1/1 family 초안이다.
+최종 규모·계보 다양성·RF 충분성·실측 적격성은 미확정이다. V1과 결과를 자동 합치지 않는다.
+
+작은 수작업 literal trace, block 이동·반복, 전체 footprint 방문, 허용/거부 shape,
+G/C/P 최종 ELF의 linked stream을 검사한다. 정확성 fixture는 후보 membership에서 제외하고
+timing/label 선택에 사용하지 않는다. 참고 구현: `chaser/periodic_recipes.py`.

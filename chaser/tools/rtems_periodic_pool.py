@@ -99,7 +99,7 @@ independent U must be measured from each final P ELF before main eligibility.
     return dict(design=design, candidates=candidates, dataset_ready=False, split_frozen=False)
 
 
-def initialize(output: Path) -> dict:
+def initialize(output: Path, *, version: int = 1) -> dict:
     """Save inputs, audited registry and a split proposal in a fresh directory.
 
 The proposal uses the existing deterministic family splitter but is not a final
@@ -107,7 +107,13 @@ experiment freeze. No labels, calibration, build or runtime results are invented
 """
     if output.exists():
         raise FileExistsError(output)
-    pool = candidate_pool()
+    if version == 1:
+        pool = candidate_pool()
+    elif version == 2:
+        from tools.rtems_periodic_pool_v2 import candidate_pool as recipe_pool
+        pool = recipe_pool()
+    else:
+        raise ValueError('Unknown candidate pool version')
     history = [dict(configuration=c, recipe_id='development-feasibility-v1',
                     role='development', development_exposed=True) for c in development_probes()]
     registry = build_registry([*history, *pool['candidates']])
@@ -128,7 +134,12 @@ experiment freeze. No labels, calibration, build or runtime results are invented
         additional_costs='theta mapping search, other policies/alpha, builds, analysis, diagnostics',
         max_jobs=max(r['logical_jobs'] for r in candidates),
         max_record_slots=max(r['record_slots'] for r in candidates),
-        pattern_counts=dict(Counter(r['configuration']['tasks'][0]['pattern'] for r in candidates)),
+        pattern_counts=dict(Counter(p for r in candidates
+                                    for p in sorted({t['pattern'] for t in r['configuration']['tasks']}))),
+        pattern_count_unit='workloads containing pattern; mixed workloads count in both roles',
+        recipe_counts=dict(Counter(r['recipe_id'] for r in candidates)),
+        max_padded_bytes=max(sum((t['allocated_bytes'] + 4095)//4096*4096
+                                 for t in r['tasks']) for r in candidates),
         profile_counts=dict(Counter(r['profile'] for r in candidates)),
         estimated_total_u_range=[min(sum(r['estimated_utilization'].values()) for r in candidates),
                                  max(sum(r['estimated_utilization'].values()) for r in candidates)],
@@ -146,6 +157,9 @@ experiment freeze. No labels, calibration, build or runtime results are invented
                'chaser/periodic_structures.py', 'chaser/periodic_recipes.py',
                'chaser/periodic_registry.py', 'chaser/dataset.py',
                'tools/rtems_smoke.py']
+    if version == 2:
+        sources.extend(['tools/rtems_periodic_pool_v2.py', 'rtems/periodic/RECIPES.md',
+                        'rtems/periodic/recipe-sources.json'])
     for source in sources:
         (output / 'implementation' / Path(source).name).write_bytes((ROOT / source).read_bytes())
     files = {str(p.relative_to(output)): file_hash(p) for p in sorted(output.rglob('*')) if p.is_file()}
@@ -160,8 +174,9 @@ experiment freeze. No labels, calibration, build or runtime results are invented
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--version', type=int, choices=(1, 2), default=1)
     args = parser.parse_args()
-    print(json.dumps(initialize(args.output), indent=2, sort_keys=True))
+    print(json.dumps(initialize(args.output, version=args.version), indent=2, sort_keys=True))
 
 
 if __name__ == '__main__':

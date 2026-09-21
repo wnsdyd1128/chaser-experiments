@@ -46,6 +46,13 @@ cache activity. Array data and cache state are not reset between sweeps or jobs.
 
 Source-informed synthetic recipes are specified in [RECIPES.md](RECIPES.md).
 They require an even `width` in 2–32 and complete blocks in `distinct`.
+Generate the mixed v2 input pool (without measurements or labels) in a fresh directory:
+
+```sh
+python3 -m tools.rtems_periodic_pool --version 2 --output .cache/periodic-candidates-v2
+```
+
+PolyBench remains reserved for external evaluation. Omitting `--version` retains v1 generation.
 
 Omitting `pattern` retains the original cyclic source and plan fields. The three
 supported values specify byte-element access order, not an application family:
