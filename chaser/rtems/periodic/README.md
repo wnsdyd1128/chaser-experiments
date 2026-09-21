@@ -73,6 +73,8 @@ each task touches 1088 lines (34 KiB) and executes 10240 loads per job. Use the
 same prepare/analyze/run commands with fresh output paths. This example is not a
 frozen training dataset or evidence of sufficient independent families. Pattern
 names and parameter changes do not establish family independence.
+The [pattern validation evidence](../../artifacts/periodic/patterns-v1/README.md)
+preserves 50 timing/U runs, three diagnostics and ten empty runs from this example.
 
 ## Scheduler and release evidence
 
