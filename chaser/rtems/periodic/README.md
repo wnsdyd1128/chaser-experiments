@@ -111,6 +111,8 @@ high-water mark, not the simultaneous memory sum. The 4096-job logical limit is
 also distinct from C's `TASK_COUNT * MAX_JOBS` static record reservation and from
 the cost of printing all records. Boundary inputs receive build/runtime checks;
 the eleven primary probes receive full G/C/P linked-stream analysis.
+See the [feasibility evidence](../../artifacts/periodic/feasibility-v1/README.md)
+for measured costs, runtime failures, and the additional operating-budget probes.
 
 ## Scheduler and release evidence
 

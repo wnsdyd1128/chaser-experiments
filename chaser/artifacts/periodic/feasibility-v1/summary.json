@@ -1,0 +1,4471 @@
+{
+  "attempted_runs": 772,
+  "eligible_for_training": false,
+  "hardware_cache_validated": false,
+  "jobs": 2687,
+  "rss_scope": "Linux wait4 ru_maxrss: largest process high-water mark, not concurrent RSS sum",
+  "scope": "development feasibility; no labels, RF, frozen policy, or training samples",
+  "stages": {
+    "boundary": {
+      "attempt_wall_seconds": 4014.590026093647,
+      "attempted": 24,
+      "collection_wall_seconds": 1254.6308690682054,
+      "failures": [
+        {
+          "architecture": 0,
+          "error": "Unterminated string starting at: line 1 column 55 (char 54)",
+          "errors": null,
+          "log_hash": "d0f0f600eac971e7150bb4085df87cbdf7c01c8620c455b55aabec5b054b11f8",
+          "mode": 0,
+          "run_id": "0",
+          "workload_id": "jobs-balanced"
+        },
+        {
+          "architecture": 1,
+          "error": "Unterminated string starting at: line 1 column 146 (char 145)",
+          "errors": null,
+          "log_hash": "759513e7170bc8eb1533597e762186f3f9f48d9172925f85f6085e975a3d8139",
+          "mode": 0,
+          "run_id": "0",
+          "workload_id": "jobs-balanced"
+        },
+        {
+          "architecture": 2,
+          "error": "Expecting value: line 1 column 93 (char 92)",
+          "errors": null,
+          "log_hash": "3257b2f7f1b779a9d23f76e425393475f3398e3532eb079982e384e0492824a2",
+          "mode": 0,
+          "run_id": "0",
+          "workload_id": "jobs-balanced"
+        },
+        {
+          "architecture": 0,
+          "error": "Expecting ',' delimiter: line 1 column 56 (char 55)",
+          "errors": null,
+          "log_hash": "0702ec176a9dce144b35588370328712e5805a07a6e3df197a4053ef6af2cf74",
+          "mode": 0,
+          "run_id": "0",
+          "workload_id": "jobs-skewed"
+        },
+        {
+          "architecture": 1,
+          "error": "Expecting ',' delimiter: line 1 column 252 (char 251)",
+          "errors": null,
+          "log_hash": "ed88bd853427ada30ce1651f4b2e390ef5861905e5dc8357fc7bb2d1deb325ea",
+          "mode": 0,
+          "run_id": "0",
+          "workload_id": "jobs-skewed"
+        },
+        {
+          "architecture": 2,
+          "error": "Unterminated string starting at: line 1 column 125 (char 124)",
+          "errors": null,
+          "log_hash": "0df45a2f9e9fe34eed856bf3620025d941c5a4ad29903b5a1036754ef9dec3ab",
+          "mode": 0,
+          "run_id": "0",
+          "workload_id": "jobs-skewed"
+        },
+        {
+          "architecture": 0,
+          "error": null,
+          "errors": [
+            "deadline_miss",
+            "job_completeness",
+            "period_state",
+            "postponed_job"
+          ],
+          "log_hash": "0948624df7a11d0e82194ee776d05f37ad352c2e195b9d97486afff602f78ce8",
+          "mode": 0,
+          "run_id": "0",
+          "workload_id": "data-limit"
+        },
+        {
+          "architecture": 1,
+          "error": null,
+          "errors": [
+            "deadline_miss",
+            "job_completeness",
+            "period_state",
+            "postponed_job"
+          ],
+          "log_hash": "27873901fb89d01274f993eeb7bd5e96d3513adcb8967f30e7aa19c705ac9757",
+          "mode": 0,
+          "run_id": "0",
+          "workload_id": "data-limit"
+        },
+        {
+          "architecture": 2,
+          "error": null,
+          "errors": [
+            "deadline_miss",
+            "job_completeness",
+            "period_state",
+            "postponed_job"
+          ],
+          "log_hash": "1c08b2c61782ae0fba228efc65b60283cda657f01e2c8bdbb7507833300765f8",
+          "mode": 0,
+          "run_id": "0",
+          "workload_id": "data-limit"
+        }
+      ],
+      "jobs": 399,
+      "run_wall_seconds": {
+        "max": 602.0219692690298,
+        "mean": 167.27458442056863,
+        "median": 28.703570262994617,
+        "min": 7.749151727184653
+      },
+      "successful": 15,
+      "successful_jobs": 336,
+      "workers": 4
+    },
+    "diagnostic": {
+      "attempt_wall_seconds": 289.959977815859,
+      "attempted": 33,
+      "collection_wall_seconds": 77.64421744272113,
+      "failures": [],
+      "jobs": 132,
+      "run_wall_seconds": {
+        "max": 10.367293231189251,
+        "mean": 8.78666599441997,
+        "median": 8.45617083646357,
+        "min": 7.82707538921386
+      },
+      "successful": 33,
+      "successful_jobs": 132,
+      "workers": 4
+    },
+    "empty": {
+      "attempt_wall_seconds": 371.77310387045145,
+      "attempted": 110,
+      "collection_wall_seconds": 104.83022220246494,
+      "failures": [],
+      "jobs": 220,
+      "run_wall_seconds": {
+        "max": 4.718795282766223,
+        "mean": 3.3797554897313766,
+        "median": 2.9192626709118485,
+        "min": 2.838173252530396
+      },
+      "successful": 110,
+      "successful_jobs": 220,
+      "workers": 4
+    },
+    "repeat": {
+      "attempt_wall_seconds": 2450.038336819038,
+      "attempted": 550,
+      "collection_wall_seconds": 325.3353454293683,
+      "failures": [],
+      "jobs": 1760,
+      "run_wall_seconds": {
+        "max": 6.681342860683799,
+        "mean": 4.454615157852796,
+        "median": 4.637560239993036,
+        "min": 2.842593366280198
+      },
+      "successful": 550,
+      "successful_jobs": 1760,
+      "workers": 8
+    },
+    "smoke": {
+      "attempt_wall_seconds": 242.2736061802134,
+      "attempted": 55,
+      "collection_wall_seconds": 62.250245325267315,
+      "failures": [],
+      "jobs": 176,
+      "run_wall_seconds": {
+        "max": 6.366958358325064,
+        "mean": 4.404974657822062,
+        "median": 4.612792699597776,
+        "min": 2.84198953025043
+      },
+      "successful": 55,
+      "successful_jobs": 176,
+      "workers": 4
+    }
+  },
+  "storage": {
+    "event_bytes": 827404473,
+    "logical_bytes": 1077778119,
+    "raw_log_bytes": 4666065
+  },
+  "successful_jobs": 2624,
+  "successful_runs": 763,
+  "suite_hash": "f0bd6fc75fca0c90b12954f90faaa389c6a64f349de6fa780c5283e27bfc20de",
+  "test_eligible": false,
+  "workloads": [
+    {
+      "analysis": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "analyze",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/layout-packed"
+        ],
+        "peak_rss_kib": 85044,
+        "returncode": 0,
+        "system_seconds": 0.270887,
+        "user_seconds": 1.490597,
+        "wall_seconds": 1.9850841406732798
+      },
+      "analysis_manifest_hash": "11bb4ec779617bf36bb0b98da08a967ca0384c6e395541ba66f5537bdeb8ddc1",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/layout-packed.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/layout-packed"
+        ],
+        "peak_rss_kib": 49340,
+        "returncode": 0,
+        "system_seconds": 1.633459,
+        "user_seconds": 3.087743,
+        "wall_seconds": 0.7421036185696721
+      },
+      "characterization": {
+        "characterization_id": "f54242b8ce694f347682690c5883d8fed48acc6075830b612144d39f59e600b1",
+        "elf_hash": "b9538cf759f731ed226f6e0b1e2adf8d7a990e07f0f74a11d5fc8911724498d1",
+        "plan_hash": "6d16163a0714153178619df55daa5b38a5272ee8fe78140642b5e384eece4433",
+        "tasks": {
+          "t0": {
+            "cpu_sum_ns": 19608530,
+            "job_count": 20,
+            "log_hashes": [
+              "291155ace4fa5f75f45b04556ace75219b81c648b4800ef834257fb86eeb3753",
+              "5f2f8b32e695a5096d081a7342a211eb645881a195eabef24099d35a4c313611",
+              "5279e9f7efdf33f528869ee25e1dd6079cd82a0f9a4705ff20e5555a31d7144e",
+              "2a46f33c52064efb12c7678c5db1f78a786ba4663f7c7bd4d1c8f9f67ca360dc",
+              "462abb313d45a01dce9a9031988f96c26ad05f57f035c3fd3b24e36af5106401",
+              "856abae4098985cb949afb69b7909f3614de9245f8074d20c0508d02294f3bc5",
+              "ec2375497716312850458fc26d853181d08935714df74fbf00f28d48a5105ab3",
+              "f29cd846db09da6d6466c9ac55518a90401251a127178b62da80ab55ac76b46c",
+              "3d964cf19b73e4a05e5336a46ccaadbd14ea264efa6de28d51a0d1dd71d3ce49",
+              "9ab3346d2ab68e7e959b6ef14412ab3865b07c5a686fdd779ffd496053935fad"
+            ],
+            "mean_cpu_ns": 980426.5
+          },
+          "t1": {
+            "cpu_sum_ns": 19639280,
+            "job_count": 20,
+            "log_hashes": [
+              "34d98967b033b4e04e94509551a9989ac02ce0e8ed2ad413633b9184d54f1a4d",
+              "25fd2073ded7620c7112bb2aee330ef6ccbe029f92325ec7a0cd8aab83e4cea9",
+              "b9501f00a725f2fc49997631b29d62b3edf49aaac3481825d383a103a97296be",
+              "487247e86078ecfa1490942b8a209f9dd6e04c183e346a08a12be4ed0117708a",
+              "a75241326e702d3040ab50feecc8b9920d79f3654147c352219987e6e157cd18",
+              "75799cfdb1eff7f1a36c829f0454134245d971e2588423778a19d202429c4812",
+              "98a1000bc648142ecd3dbbf5eaa72e9e6d6d832b32ad2cdbfc5424173e62350e",
+              "d8592623cfab4b63c32bddce319a5d10a1120fba4a7e698feaab37e3f888b2c6",
+              "62ef7b77b7ca760fea0628b6db278ebfa1e80b8b94aad49f044f3719a5642ba0",
+              "831a2800ab53c5cfc9f4c4715fbaaeadd718dd9d37cbbe14ed75a91a42c4d7c8"
+            ],
+            "mean_cpu_ns": 981964.0
+          }
+        },
+        "utilization": {
+          "t0": 0.049021325,
+          "t1": 0.0490982
+        },
+        "utilization_source": "measured-mean"
+      },
+      "empty_job_cpu_ns": {
+        "max": 9103,
+        "mean": 7301.5,
+        "median": 7301.5,
+        "min": 5500
+      },
+      "empty_to_target_cpu_ratio": 0.007447269122162651,
+      "independent_cpu_ns": {
+        "t0": {
+          "max": 983648,
+          "mean": 980426.5,
+          "median": 980426.5,
+          "min": 977205
+        },
+        "t1": {
+          "max": 986692,
+          "mean": 981964,
+          "median": 981964.0,
+          "min": 977236
+        }
+      },
+      "locality": {
+        "t0": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 1.0,
+          "ca_global_line": 0.9698749526335734,
+          "clp": [
+            0.9998046875,
+            0.0,
+            0.0001953125
+          ],
+          "cls": {
+            "0.0": 0.9998046875,
+            "0.3": 0.9998046875,
+            "0.5": 0.9998046875,
+            "0.7": 0.9998046875,
+            "1.0": 0.9998046875
+          },
+          "modeled_accesses": 10240
+        },
+        "t1": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 1.0,
+          "ca_global_line": 0.015625,
+          "clp": [
+            0.99375,
+            0.0,
+            0.00625
+          ],
+          "cls": {
+            "0.0": 0.99375,
+            "0.3": 0.99375,
+            "0.5": 0.99375,
+            "0.7": 0.99375,
+            "1.0": 0.99375
+          },
+          "modeled_accesses": 10240
+        }
+      },
+      "snapshot_manifest_hash": "7980d00099a23f333bc95938a58a0e66fa74206c329436b82194ba68e9cb5f9b",
+      "static_memory": {
+        "aligned_data_bytes": 8192,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 640,
+        "logical_jobs": 4,
+        "record_slots": 4
+      },
+      "tasks": [
+        {
+          "active_bytes": 64,
+          "active_lines": 2,
+          "allocated_bytes": 64,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 2
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 2
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t1"
+        }
+      ],
+      "workload_id": "layout-packed"
+    },
+    {
+      "analysis": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "analyze",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/layout-spread"
+        ],
+        "peak_rss_kib": 85872,
+        "returncode": 0,
+        "system_seconds": 0.22589399999999998,
+        "user_seconds": 1.5356670000000001,
+        "wall_seconds": 1.9906756384298205
+      },
+      "analysis_manifest_hash": "236ea9af08f8f6a81a6657d5b8bf3831b8a560e5b7fd457e47debcbf7092a3b1",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/layout-spread.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/layout-spread"
+        ],
+        "peak_rss_kib": 49476,
+        "returncode": 0,
+        "system_seconds": 1.891843,
+        "user_seconds": 3.160125,
+        "wall_seconds": 0.7067922474816442
+      },
+      "characterization": {
+        "characterization_id": "c1f7d32fdb1b4bec9492a04b7f363e4d26c3f4d3998315f400d900c82157913c",
+        "elf_hash": "2f2e9719546c632be3a226bbb7f4461c794332bf9a8513dc13d71c182193dbcf",
+        "plan_hash": "b03af441f4f67af6996d08c2e34948b9f0769e409ca4697e09d37c7f5b94e8d6",
+        "tasks": {
+          "t0": {
+            "cpu_sum_ns": 19640960,
+            "job_count": 20,
+            "log_hashes": [
+              "88691d9e225e60fd900c80f8df070ab6a5399fae90d2b0d0babf463aa0199e83",
+              "1f542a08078b8b349ba8868709af5844c6b8dcc395c0955d0c1ac9dddc101dab",
+              "b502808768b96eedba8094ee1f21e23d3aa404a22884a6a810b5bca640d9413b",
+              "765bfd47022c1a2aff095663bd7749e50389f957f071583d8198909807980000",
+              "99c89a577d8a10e01481c4467b3484c9962c140608f87c46cf6cb052104b8750",
+              "3a657e7792ed9a3169a87511db3b7deb77956a6715b7ed7bc919063ba928f559",
+              "4c9d4ae52ed3b4011807a9f9f233f92dec4cc448ae4e3e89f25cd525ba8e2293",
+              "e227092f865e70fb2b98dc2c7c6ddfa3a705e5e0ed99b48a507782e715fba25c",
+              "0a5cb093f49ee3ebf4905a955f6bb60217e3f189610a0c1db85a08130e7e8d3f",
+              "262a19c8dd3486441fdf426bc66d976fb83a9e5d75a69514f360f331b5b70fdd"
+            ],
+            "mean_cpu_ns": 982048.0
+          },
+          "t1": {
+            "cpu_sum_ns": 19639200,
+            "job_count": 20,
+            "log_hashes": [
+              "a2fe89e7921ab906d15482bfe734d0099caffd924c42ba061f7d5cc825a3e51b",
+              "defc703de93127364ddf076523cfb74826651decddca858daf74a4a6d0b1633f",
+              "b50bcc8784b1e59c418c0b17ade44fb7d6c812bc109c87bd1e3d1ac2f3a74dd3",
+              "134f0afe802479d418675a0e96d689126279d2b92b636bf0d3f44fd8d4df241d",
+              "7fc252e9b8067384ee75e726f3b4afdf239bfd73e903c6262f4513ac396d53b2",
+              "224e02ffade0e384f410ce4173f4d456fa4f2571f077986f3b4f48640d02f461",
+              "2650a4c618b2082ac37617558575e3293346df9d2197492a707d4b5c0f890db0",
+              "99d5958df4594142242699238ff5fea03c5fe4fa2eea8cdc51962764954fdf4c",
+              "f3c77bea842c5a99e3a4a7646f4af06ea602090df065d7c6363ed809ecc08db3",
+              "3c22cfc6f793b886ca0d8bf6d6ec5f065d5799baa344787eb8c5f8c51e6056c2"
+            ],
+            "mean_cpu_ns": 981960.0
+          }
+        },
+        "utilization": {
+          "t0": 0.0491024,
+          "t1": 0.049098
+        },
+        "utilization_source": "measured-mean"
+      },
+      "empty_job_cpu_ns": {
+        "max": 9103,
+        "mean": 7301.5,
+        "median": 7301.5,
+        "min": 5500
+      },
+      "empty_to_target_cpu_ratio": 0.00743497262862915,
+      "independent_cpu_ns": {
+        "t0": {
+          "max": 986851,
+          "mean": 982048,
+          "median": 982048.0,
+          "min": 977245
+        },
+        "t1": {
+          "max": 986668,
+          "mean": 981960,
+          "median": 981960.0,
+          "min": 977252
+        }
+      },
+      "locality": {
+        "t0": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 1.0,
+          "ca_global_line": 0.015625,
+          "clp": [
+            0.99375,
+            0.0,
+            0.00625
+          ],
+          "cls": {
+            "0.0": 0.99375,
+            "0.3": 0.99375,
+            "0.5": 0.99375,
+            "0.7": 0.99375,
+            "1.0": 0.99375
+          },
+          "modeled_accesses": 10240
+        },
+        "t1": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 1.0,
+          "ca_global_line": 0.015625,
+          "clp": [
+            0.99375,
+            0.0,
+            0.00625
+          ],
+          "cls": {
+            "0.0": 0.99375,
+            "0.3": 0.99375,
+            "0.5": 0.99375,
+            "0.7": 0.99375,
+            "1.0": 0.99375
+          },
+          "modeled_accesses": 10240
+        }
+      },
+      "snapshot_manifest_hash": "5c821a9683d9f6bb25dc922de508602d57b24d3b4818771b868935f926d8e360",
+      "static_memory": {
+        "aligned_data_bytes": 8192,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 640,
+        "logical_jobs": 4,
+        "record_slots": 4
+      },
+      "tasks": [
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t1"
+        }
+      ],
+      "workload_id": "layout-spread"
+    },
+    {
+      "analysis": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "analyze",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/layout-conflict"
+        ],
+        "peak_rss_kib": 86060,
+        "returncode": 0,
+        "system_seconds": 0.251622,
+        "user_seconds": 1.529929,
+        "wall_seconds": 1.9597934540361166
+      },
+      "analysis_manifest_hash": "31fc7a1322340c6403fcccad49c0d6861cd45b915f4fba0ce1dab6e94fc79072",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/layout-conflict.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/layout-conflict"
+        ],
+        "peak_rss_kib": 49500,
+        "returncode": 0,
+        "system_seconds": 1.522816,
+        "user_seconds": 3.179169,
+        "wall_seconds": 0.8087403923273087
+      },
+      "characterization": {
+        "characterization_id": "500b44247b6547951e4d6c49635c8f3a4cc464d0e560185a56e78ee71b145734",
+        "elf_hash": "b04089b86b65d84365e5dedfe37c18075fe835e8b26c2ae8af685ca93f3acced",
+        "plan_hash": "f19b55cd079527009f2d9c270e0c603d4251ad4ed11638f1c0c0a63690f48b6c",
+        "tasks": {
+          "t0": {
+            "cpu_sum_ns": 31090430,
+            "job_count": 20,
+            "log_hashes": [
+              "049f7f4d65a07d1e7016753dbd727ad6e16097f6ed6f4e79e2b1ea44bf7338f3",
+              "35e30ee712df514ee43a7b06847ea23d486b71e4042dbd0165217da847d1d00d",
+              "7339e3bad5f57a045ac423d58d46848a4dfb62eff58d61936f4e34f003ee772d",
+              "ded6be2f2a965df7a9db6e255915f73e29bced376cc38364d3fbf73f79508468",
+              "ac47d9ac0d4acb803bc07932999ceb7777859ed8ab2485c45f8b6e773e96f4f0",
+              "ca80676b8ad4e2a34425877e46fc79da8fcfb6b1e6c45a9cc48da887116ad95e",
+              "f1c0457c17838a4b7e8e662b7df22bbde7681d6aef7bbd18f93b1d81fd40c3ca",
+              "5f4d7d3dc2b8a3b4dea0af08b46e9328d20f7e2efa980ba38819e341d227fa71",
+              "b7557eedf362290813f90c39f5a536cf79b1a0429d8b1ba37371fc047339ba91",
+              "9682cfc7872b9311960349e5d70ee253224112cb9beaa7e6cbd2742cda6a2c4d"
+            ],
+            "mean_cpu_ns": 1554521.5
+          },
+          "t1": {
+            "cpu_sum_ns": 19639800,
+            "job_count": 20,
+            "log_hashes": [
+              "2ea01f9954f43f56b802a00da4d204481d8783691bc9a8dcded41488d7742b46",
+              "fa74df2033fe6c1b9412a589fa2fd850030c5fe919d3e81af0333691a4418e1f",
+              "439b5ea0cf2a4b12949da4bd3f16e7b55985c0ef2f7cd6aabb495d9930153e68",
+              "e18ec35c66c6427cf2b48ae6a2be455aa76c44fb102937d2e043afe1f93ab878",
+              "4921dee09e0555e5189ff90029309fac2fcfd15951ee51c0f2279fc3b80cf0ad",
+              "ccc0173b2428f19b3b17ab6f22bf58d256981f4ad110b49d971ac47fc9742314",
+              "f84ed46cdd965760b2c7440ca1eb649192142c44ab9d722f04193e5b5357d986",
+              "f15a56c956726851db073ae4dcedf3ab6f111bb176411b7c215da7b47735f1e3",
+              "9d13b52780fdd21766e74a6a906976cdf5869dfb9048a52076eb35796418a01c",
+              "1cc4377b49843489b9c1901dbc57bd07c502f535930eb5d2389f434e856b29c7"
+            ],
+            "mean_cpu_ns": 981990.0
+          }
+        },
+        "utilization": {
+          "t0": 0.077726075,
+          "t1": 0.0490995
+        },
+        "utilization_source": "measured-mean"
+      },
+      "empty_job_cpu_ns": {
+        "max": 9103,
+        "mean": 7301.5,
+        "median": 7301.5,
+        "min": 5500
+      },
+      "empty_to_target_cpu_ratio": 0.004696943721910569,
+      "independent_cpu_ns": {
+        "t0": {
+          "max": 1557667,
+          "mean": 1554521.5,
+          "median": 1554521.5,
+          "min": 1551376
+        },
+        "t1": {
+          "max": 986692,
+          "mean": 981990,
+          "median": 981990.0,
+          "min": 977288
+        }
+      },
+      "locality": {
+        "t0": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 0.015625,
+          "ca_global_line": 0.015625,
+          "clp": [
+            0.0,
+            0.99375,
+            0.00625
+          ],
+          "cls": {
+            "0.0": 0.99375,
+            "0.3": 0.23180038383492563,
+            "0.5": 0.08783592047551646,
+            "0.7": 0.03328358994985755,
+            "1.0": 0.007763671875
+          },
+          "modeled_accesses": 10240
+        },
+        "t1": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 1.0,
+          "ca_global_line": 0.015625,
+          "clp": [
+            0.99375,
+            0.0,
+            0.00625
+          ],
+          "cls": {
+            "0.0": 0.99375,
+            "0.3": 0.99375,
+            "0.5": 0.99375,
+            "0.7": 0.99375,
+            "1.0": 0.99375
+          },
+          "modeled_accesses": 10240
+        }
+      },
+      "snapshot_manifest_hash": "11219150c344ddc2dbfcd0a39ad8424cd31267a3855e23e4383dbbd49bd1d333",
+      "static_memory": {
+        "aligned_data_bytes": 266240,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 640,
+        "logical_jobs": 4,
+        "record_slots": 4
+      },
+      "tasks": [
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 262144,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 64,
+              "occupied_sets": 1
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t1"
+        }
+      ],
+      "workload_id": "layout-conflict"
+    },
+    {
+      "analysis": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "analyze",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/l1-511"
+        ],
+        "peak_rss_kib": 86020,
+        "returncode": 0,
+        "system_seconds": 0.259285,
+        "user_seconds": 1.535267,
+        "wall_seconds": 2.044545866549015
+      },
+      "analysis_manifest_hash": "0beabe6a8078d0f7e5d99d112ee2c4aa4587ff4ef2ba980271e76cf5a408979a",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/l1-511.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/l1-511"
+        ],
+        "peak_rss_kib": 49284,
+        "returncode": 0,
+        "system_seconds": 1.421325,
+        "user_seconds": 2.589206,
+        "wall_seconds": 0.702176040969789
+      },
+      "characterization": {
+        "characterization_id": "31cb4c8eca928c1c7049fe12d6242e6a4a71bcaf7354bb9cddd9b0452784633c",
+        "elf_hash": "02b978540fd5e2fd8a2d5645143d8f62355d497947fbf254b772c5a47c8dbb62",
+        "plan_hash": "4d938d111145ad2dc371407986092dc1266ee107ac0b2640444b85c1d8244fef",
+        "tasks": {
+          "t0": {
+            "cpu_sum_ns": 21735200,
+            "job_count": 20,
+            "log_hashes": [
+              "3e09b4485c21ecfffcb512eaf79d26dc6d9c78b1a4a6f6be1fec689f4fb12153",
+              "aa39ca5d47a3e9aa163100e24eeabf3e46780745c69e8170c8747a6a73e529d2",
+              "823d445981dcd2f069c91e072c37f218da8c49f56fe8461eea9eaf8c19d70e5b",
+              "c7e51de5f5c74c97fb6e9d505cd1ebdde7467277e15c97cf86f6d10d17ebeef6",
+              "2a586daa0fbddcf71eddd024252b0a0187d4845e519c7a65cefdc26c2467d147",
+              "f76da11b1e8065b928d043bcca39224e1d1c9b3235a6a03553f159f7bbaa89c1",
+              "29e4b2718becf2637038765bfb1be6ef9754e09e26d7c60db63d4efc87e0328f",
+              "fe5f6123d491a82a3186e68d062a1767b0181ec2ffbb399eab1d60c7a0323974",
+              "9e66bd6688ba0023ea4b9492e81e06e220689b28673beb6d23f491d269956acc",
+              "7a37da3ca43877b9aab3e0f761ad6e5575303c97ea8678d3b700e799060f8c3e"
+            ],
+            "mean_cpu_ns": 1086760.0
+          },
+          "t1": {
+            "cpu_sum_ns": 19640430,
+            "job_count": 20,
+            "log_hashes": [
+              "8d7a6a9656a2f771f4ab5779bd2d2bde0131d87b999535bd14c352b5c28432b4",
+              "07c975faff50e4bfed1512063b0499920491e6d7b5983dbbb759796871b1a0a6",
+              "1debdda38587679b35e57ab6c74c2678847f5272ec208507f50f40eea2d978c1",
+              "0a9dd4bbab1639bc96a020822be7b9d60eceb405c13faa709477bbc82f621d92",
+              "49e76ed7d07eaa5062723289fd679da65feee3b4b779823f1e57ba669f5a4d5f",
+              "baf5c5d3403db4baa1f5a1c58fad5c6b37be7d6a9f2007effada6d900e37e0df",
+              "253289ab0f073f36376fc1dc083d919dea1c87720c3c272087dca0b739ec5a42",
+              "a57ed9a2805f8b73685e66b0c8a015a1eea03987ebbd1e8d3ed9dba709564d71",
+              "b70637b33e0ea9a56dfafcb7ebf7abec7996fabdb2b4bde7ecdc8d6f38aea091",
+              "7e88e7b75371fd1e4eeb86af9ffe0a35e51adb58603fd72f0550d27041b69724"
+            ],
+            "mean_cpu_ns": 982021.5
+          }
+        },
+        "utilization": {
+          "t0": 0.054338,
+          "t1": 0.049101075
+        },
+        "utilization_source": "measured-mean"
+      },
+      "empty_job_cpu_ns": {
+        "max": 9103,
+        "mean": 7301.5,
+        "median": 7301.5,
+        "min": 5500
+      },
+      "empty_to_target_cpu_ratio": 0.0067185947219257245,
+      "independent_cpu_ns": {
+        "t0": {
+          "max": 1093948,
+          "mean": 1086760,
+          "median": 1086760.0,
+          "min": 1079572
+        },
+        "t1": {
+          "max": 986763,
+          "mean": 982021.5,
+          "median": 982021.5,
+          "min": 977280
+        }
+      },
+      "locality": {
+        "t0": {
+          "ca_caas_element": 0.0019569471624266144,
+          "ca_csrd_l1": 0.25036746692797646,
+          "ca_global_line": 0.0019569471624266144,
+          "clp": [
+            0.9523809523809523,
+            0.0,
+            0.047619047619047616
+          ],
+          "cls": {
+            "0.0": 0.9523809523809523,
+            "0.3": 0.9523809523809523,
+            "0.5": 0.9523809523809523,
+            "0.7": 0.9523809523809523,
+            "1.0": 0.9523809523809523
+          },
+          "modeled_accesses": 10731
+        },
+        "t1": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 1.0,
+          "ca_global_line": 0.015625,
+          "clp": [
+            0.99375,
+            0.0,
+            0.00625
+          ],
+          "cls": {
+            "0.0": 0.99375,
+            "0.3": 0.99375,
+            "0.5": 0.99375,
+            "0.7": 0.99375,
+            "1.0": 0.99375
+          },
+          "modeled_accesses": 10240
+        }
+      },
+      "snapshot_manifest_hash": "01e6f50a28523752281cee8f30eaac4ff3d2150ff336a26174ea9bd60735c47c",
+      "static_memory": {
+        "aligned_data_bytes": 20480,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 640,
+        "logical_jobs": 4,
+        "record_slots": 4
+      },
+      "tasks": [
+        {
+          "active_bytes": 16352,
+          "active_lines": 511,
+          "allocated_bytes": 16352,
+          "job_count": 2,
+          "loads_per_job": 10731,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 4,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 511
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t1"
+        }
+      ],
+      "workload_id": "l1-511"
+    },
+    {
+      "analysis": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "analyze",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/l1-512"
+        ],
+        "peak_rss_kib": 85680,
+        "returncode": 0,
+        "system_seconds": 0.28629699999999997,
+        "user_seconds": 1.491472,
+        "wall_seconds": 2.008468742482364
+      },
+      "analysis_manifest_hash": "a710bcd2f4e8253f1a7661ef2d7924bdee0ab35b145ad7190e9b2d2fb4bed80c",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/l1-512.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/l1-512"
+        ],
+        "peak_rss_kib": 49352,
+        "returncode": 0,
+        "system_seconds": 0.768254,
+        "user_seconds": 1.6260189999999999,
+        "wall_seconds": 0.6863618111237884
+      },
+      "characterization": {
+        "characterization_id": "2da4a3319c0df7d920d9b9e2879c23ad22e6b7711a2734310ea1126782a4a169",
+        "elf_hash": "28713521183f5fcd23c87ce303bc3d6e038acffa1fb6f4acf0bf3a373445bd2f",
+        "plan_hash": "02a7ebe9aa10268a51240603a03b2b4b372319e4b2fe7a0784da3e8b963d414b",
+        "tasks": {
+          "t0": {
+            "cpu_sum_ns": 20786150,
+            "job_count": 20,
+            "log_hashes": [
+              "d033d036465d371dc16462cc5414bc024cd0e3f9fd2382240cf269e63067f136",
+              "26bd402fc0048f47aa848024cf5b5f4bd2d16f0d1ca7d0ea239d6b2c098c47fa",
+              "08aca18af5e5af4ab1266e70132310caf2a04ce6c1fe7a07b32120e931e99ec6",
+              "58d3f4262a695a98037fbc8ffac743163e23aecc6dfaa8dae40c0e10308be7a1",
+              "49d6b6fb9dd45feb07953078a94479d6ed8e9928ff6dee1fe5f7ed1217046a56",
+              "1f5d21b0b539d25cc55cc424802f8a47da692292cb6a0cc835f0c447f507bf2c",
+              "932514cbb71a07e57d5f9cda30b941e7b54c02a4046c9549a405b98803b76621",
+              "98c1167377e2001dec9b67fadd8c013bc5daabbae4da9bd35de2750b86eb49b3",
+              "f1ed2f61fe11bb900c65a52706ff4ef0f74a7a465ebadddde7b7eddf8d23bf8e",
+              "4738a025913b6571c82024b853f58631e6582de8954ff7ec0b1a8f55f0b71a50"
+            ],
+            "mean_cpu_ns": 1039307.5
+          },
+          "t1": {
+            "cpu_sum_ns": 19639760,
+            "job_count": 20,
+            "log_hashes": [
+              "848d5b1e8d6f20f2e403b24a6e981fce0ca9cf71e38968f0579ed6355d55eb8f",
+              "35726aea37f276d6bcfa53be10ec9e96e7722c67ff5941c31bc7bb1d5ed11830",
+              "17ff5e0e3d4c040a206f76a06aa1984bde06d26388f2c15e94d7283e24d19c79",
+              "e654e896b42e997ca4aea3416ba4fe38e6edd472283fe9d3b64ab79bd81e4841",
+              "911a485ef1a4e0036005f57bdfef39d80953bb737f0f5a7955521293133d7c7d",
+              "e46733cd01c0b739c6db4625e7fef7598a28e1f5b2c5841e5176900fa1c5329f",
+              "8d964139d3ef9aa0229d61b202e3ae5a68115a9802eeda830a3f16a33cc4849f",
+              "240ffd1135c64418ee3100db552bfc494ebadf883f782631ad9e02f749beab66",
+              "5bfde55f0af2a902889aef36b01db7eb8ff3589968001b86715970f84d13c433",
+              "b668de2db7e272bde4d45b5fdc610333833e6aba54741c4eb5aafbee75c8bf48"
+            ],
+            "mean_cpu_ns": 981988.0
+          }
+        },
+        "utilization": {
+          "t0": 0.051965375,
+          "t1": 0.0490994
+        },
+        "utilization_source": "measured-mean"
+      },
+      "empty_job_cpu_ns": {
+        "max": 9103,
+        "mean": 7301.5,
+        "median": 7301.5,
+        "min": 5500
+      },
+      "empty_to_target_cpu_ratio": 0.007025351014978724,
+      "independent_cpu_ns": {
+        "t0": {
+          "max": 1046483,
+          "mean": 1039307.5,
+          "median": 1039307.5,
+          "min": 1032132
+        },
+        "t1": {
+          "max": 986659,
+          "mean": 981988,
+          "median": 981988.0,
+          "min": 977317
+        }
+      },
+      "locality": {
+        "t0": {
+          "ca_caas_element": 0.001953125,
+          "ca_csrd_l1": 0.25,
+          "ca_global_line": 0.001953125,
+          "clp": [
+            0.95,
+            0.0,
+            0.05
+          ],
+          "cls": {
+            "0.0": 0.95,
+            "0.3": 0.95,
+            "0.5": 0.95,
+            "0.7": 0.95,
+            "1.0": 0.95
+          },
+          "modeled_accesses": 10240
+        },
+        "t1": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 1.0,
+          "ca_global_line": 0.015625,
+          "clp": [
+            0.99375,
+            0.0,
+            0.00625
+          ],
+          "cls": {
+            "0.0": 0.99375,
+            "0.3": 0.99375,
+            "0.5": 0.99375,
+            "0.7": 0.99375,
+            "1.0": 0.99375
+          },
+          "modeled_accesses": 10240
+        }
+      },
+      "snapshot_manifest_hash": "54e1d6cfccf005fa5cf828dcee1690decc8b2f61a466a7c9f9c42abf84cffe29",
+      "static_memory": {
+        "aligned_data_bytes": 20480,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 640,
+        "logical_jobs": 4,
+        "record_slots": 4
+      },
+      "tasks": [
+        {
+          "active_bytes": 16384,
+          "active_lines": 512,
+          "allocated_bytes": 16384,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 4,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 512
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t1"
+        }
+      ],
+      "workload_id": "l1-512"
+    },
+    {
+      "analysis": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "analyze",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/l1-513"
+        ],
+        "peak_rss_kib": 85048,
+        "returncode": 0,
+        "system_seconds": 0.29771,
+        "user_seconds": 1.462853,
+        "wall_seconds": 1.95499874278903
+      },
+      "analysis_manifest_hash": "a847f3f90363dcce1ac31e5507ae0857050899727db7d3d43f1b87985cbdaf14",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/l1-513.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/l1-513"
+        ],
+        "peak_rss_kib": 49428,
+        "returncode": 0,
+        "system_seconds": 1.319669,
+        "user_seconds": 1.925517,
+        "wall_seconds": 0.7034020088613033
+      },
+      "characterization": {
+        "characterization_id": "1163f30d99a8e7332ef353d377be8f2f0920382676b31a004e0fb4170b7e8ec8",
+        "elf_hash": "b67883199a220aa0543ede289a4bad7b726c5c0a12bbd8ff2815d29ef43b31b5",
+        "plan_hash": "e222d0d95bd23fce107938cb217ef871b1a465059afdb3a4163863d4847b791a",
+        "tasks": {
+          "t0": {
+            "cpu_sum_ns": 20920190,
+            "job_count": 20,
+            "log_hashes": [
+              "1ba47500e28fda28808323fa838c163027f713bfa494e7d48924e50a44dae92a",
+              "9573168ede3302ffabfd5e73b743ee3a39555bcc486761f2ceaf53d3916013a8",
+              "e2d993a87a7c5fa828d8939265aad171e4e521b5a1add391101550f06d49b3d8",
+              "2e60c5b50f3fe2f3e30f1d0a5c15d39a0080e69d0697bc38ef56cbec23d51170",
+              "5ded0a4d5b5838b1f97d939575264c0c20cfdd5c209be6ebdb750e682c4685aa",
+              "0d073820a3cec6fd91a065848a1c8b5cee5df7c708aad64f3dd4ac22658ddcdc",
+              "7b52240f509a51942233a81e63f76b793ef539f71e2db96ee8deafd4396ea819",
+              "ef0b9ea82e65f39264cb6582034fac49a496068c9973fa470ec577ab5f78cc40",
+              "ff77790b6827dc0795ff40a4a6419d62a6734d390590b3e9de325cb515449e0f",
+              "f279fb29e8e53dcb8539371ec640980677270b937fdf42c12958f291783f30df"
+            ],
+            "mean_cpu_ns": 1046009.5
+          },
+          "t1": {
+            "cpu_sum_ns": 19640070,
+            "job_count": 20,
+            "log_hashes": [
+              "c481cb5d21abe747482962d769fab754bde633583fab5e38eea1618d17ebfbfc",
+              "91058aeae7aff46ed7f2b159d2eb994a4a894e3d09cdd6f7063ac96279d0e2ac",
+              "232d110588e331dab451863118206acfe9c83ff56e4cd9833d683d4f83744e1b",
+              "c4336e5a4a1ed04be993c7352b0a787dc1c2f2f713fd21c9a1c1cf5c4ebd75b4",
+              "286fd131bf4e4d9911ab8f7f2b66a7fa25f142ebf6b388cbc9b1847abdd8da6e",
+              "623e527664cbe1656ba65dc47dfde02d26886f150e6a28fe4f239cb6ec63085c",
+              "65cf0f46894c2f813feb24ba3ce67e09d0eb98a907e33c94ed3efc1902b761b4",
+              "1ccb729299d0c400a97b76d7f48ef889be6adc1afeb70c4564b649cf87cc93fc",
+              "c0c944c716ebf28a4c14fd3a5a180eeeea8ff9a0aea61dbb3b4a89118ca32401",
+              "acde69b5c6a68a9c8976b4814e6b9f5b3a43e641c05d5f2d984da1469b7efb3f"
+            ],
+            "mean_cpu_ns": 982003.5
+          }
+        },
+        "utilization": {
+          "t0": 0.052300475,
+          "t1": 0.049100175
+        },
+        "utilization_source": "measured-mean"
+      },
+      "empty_job_cpu_ns": {
+        "max": 9104,
+        "mean": 7302.5,
+        "median": 7302.5,
+        "min": 5501
+      },
+      "empty_to_target_cpu_ratio": 0.0069812941469460845,
+      "independent_cpu_ns": {
+        "t0": {
+          "max": 1053180,
+          "mean": 1046009.5,
+          "median": 1046009.5,
+          "min": 1038839
+        },
+        "t1": {
+          "max": 986719,
+          "mean": 982003.5,
+          "median": 982003.5,
+          "min": 977288
+        }
+      },
+      "locality": {
+        "t0": {
+          "ca_caas_element": 0.001949317738791423,
+          "ca_csrd_l1": 0.2493923189110355,
+          "ca_global_line": 0.001949317738791423,
+          "clp": [
+            0.9407407407407408,
+            0.009259259259259259,
+            0.05
+          ],
+          "cls": {
+            "0.0": 0.9500000000000001,
+            "0.3": 0.9429005393322611,
+            "0.5": 0.9415591513671141,
+            "0.7": 0.9410508603768913,
+            "1.0": 0.9408130787037037
+          },
+          "modeled_accesses": 10260
+        },
+        "t1": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 1.0,
+          "ca_global_line": 0.015625,
+          "clp": [
+            0.99375,
+            0.0,
+            0.00625
+          ],
+          "cls": {
+            "0.0": 0.99375,
+            "0.3": 0.99375,
+            "0.5": 0.99375,
+            "0.7": 0.99375,
+            "1.0": 0.99375
+          },
+          "modeled_accesses": 10240
+        }
+      },
+      "snapshot_manifest_hash": "6e70b9a9facf137c0e48c8547c1c7de4150f45654ac12b5975114dd7817add0a",
+      "static_memory": {
+        "aligned_data_bytes": 24576,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 640,
+        "logical_jobs": 4,
+        "record_slots": 4
+      },
+      "tasks": [
+        {
+          "active_bytes": 16416,
+          "active_lines": 513,
+          "allocated_bytes": 16416,
+          "job_count": 2,
+          "loads_per_job": 10260,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 5,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 513
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t1"
+        }
+      ],
+      "workload_id": "l1-513"
+    },
+    {
+      "analysis": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "analyze",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/llc-65535"
+        ],
+        "peak_rss_kib": 392136,
+        "returncode": 0,
+        "system_seconds": 1.5113189999999999,
+        "user_seconds": 9.313868,
+        "wall_seconds": 11.20511887781322
+      },
+      "analysis_manifest_hash": "c00a9d78112bd18b197b59ceaea16ded4af5cb3deee6905b4d50b6c8cc023777",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/llc-65535.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/llc-65535"
+        ],
+        "peak_rss_kib": 49388,
+        "returncode": 0,
+        "system_seconds": 1.631851,
+        "user_seconds": 3.242127,
+        "wall_seconds": 0.7111731572076678
+      },
+      "characterization": {
+        "characterization_id": "b0e517ff49a62d0e7092f894c2822a184d193f3027abd331ba29b2902fe58ac1",
+        "elf_hash": "0b6189a762a910add176a09ddb2cf3242cfffe25be783d053f4096d63c68d2ef",
+        "plan_hash": "bc24009462803f2ef650a1b27a6bd3401ce13b951146fa082da9b59cbacb5170",
+        "tasks": {
+          "t0": {
+            "cpu_sum_ns": 403601820,
+            "job_count": 20,
+            "log_hashes": [
+              "0ecf0be3a722d2f2af1d846cbfc2cec602bff9fcc143715218d5c5648d481413",
+              "6af7ed8fa51d82cda43a509af169a06c58397a7466e28729511ea094d7495302",
+              "59bc29a0d2cab42de8c26f6181c1f85039bc30db1c5d34c061275444467472c5",
+              "4b60a91f8baeef276249839eb8b6be781fb3c6230fa3a70145a9f24feb0e2e5f",
+              "a51783be6228fefa6dfa1a8743b6d1e4e1dc63d0303242167c537441ee4acad6",
+              "2e2f88cb84f306f8619ccb1366fb3f12c24a4034a41310784b714d8de1df555c",
+              "a0f9209fd695280074087743032b1c4d007035629b69be747d01d57be67e3383",
+              "4340f8dec86d317f708e164019e60ad7f0e385aaef1aba106e0201aa8b452f43",
+              "5c9a1478616db244b22b47d73373439d235d34eb568f86fd1f9ea0a77aef3677",
+              "9f269bfa8b17feec5e75c80032b182ff97df32ed6c77dd5680f5b98de840d494"
+            ],
+            "mean_cpu_ns": 20180091.0
+          },
+          "t1": {
+            "cpu_sum_ns": 19657080,
+            "job_count": 20,
+            "log_hashes": [
+              "bcfd3648659f468ed6de8a82774e1e2044c74eb17612abeb2fe1e9354d5e5b46",
+              "f184d9161b4d000f8eb8853da2014ec6b822447c13a37f3a55bb71fd13dde05f",
+              "53c324610c53cb423edd55c6adae2438f505e84c1deea2941cfef9c3244aab3d",
+              "0709ecb674fc7fb47b0aadbfc8aebbbb4cb8194a4b527fde7015f7408d28621d",
+              "8c15ca1f5ed30acbb5fc395b7618d38308507397109b3d35befdd4c36aae9f42",
+              "74382e9fd8b8d1b83353319bc7790fe7ddead43d51dbc385b91193097d4b024b",
+              "1fa871a89687d7b1019901374ff8219d34b074c9050ca3624a9238f4970040a2",
+              "cd09e3ef7d5dd16c95d7c42e5cd1c5ecc96353f133319a8442eabdb21a3cb190",
+              "36a5883f138e734081491faf56f0b5980b7fe192d42b43563b56ec1b45cae06c",
+              "ecd9a57f18ce70d8541274b3d8d485673979dff012e93ae92fdc17afa15c1feb"
+            ],
+            "mean_cpu_ns": 982854.0
+          }
+        },
+        "utilization": {
+          "t0": 0.20180091,
+          "t1": 0.00982854
+        },
+        "utilization_source": "measured-mean"
+      },
+      "empty_job_cpu_ns": {
+        "max": 9308,
+        "mean": 7505.5,
+        "median": 7505.5,
+        "min": 5703
+      },
+      "empty_to_target_cpu_ratio": 0.0003719259739710787,
+      "independent_cpu_ns": {
+        "t0": {
+          "max": 20456251,
+          "mean": 20180091,
+          "median": 20180091.0,
+          "min": 19903931
+        },
+        "t1": {
+          "max": 988212,
+          "mean": 982854,
+          "median": 982854.0,
+          "min": 977496
+        }
+      },
+      "locality": {
+        "t0": {
+          "ca_caas_element": 1.5259021896696422e-05,
+          "ca_csrd_l1": 0.0019531547450215864,
+          "ca_global_line": 1.5259021896696422e-05,
+          "clp": [
+            0.0,
+            0.5,
+            0.5
+          ],
+          "cls": {
+            "0.0": 0.5,
+            "0.3": 0.11662912394210094,
+            "0.5": 0.04419417382415922,
+            "0.7": 0.016746460352129584,
+            "1.0": 0.00390625
+          },
+          "modeled_accesses": 131070
+        },
+        "t1": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 1.0,
+          "ca_global_line": 0.015625,
+          "clp": [
+            0.99375,
+            0.0,
+            0.00625
+          ],
+          "cls": {
+            "0.0": 0.99375,
+            "0.3": 0.99375,
+            "0.5": 0.99375,
+            "0.7": 0.99375,
+            "1.0": 0.99375
+          },
+          "modeled_accesses": 10240
+        }
+      },
+      "snapshot_manifest_hash": "a69298c2f999ac53b156dcb32ad8cd542143e5f5698abe1f097fef92e9e58c19",
+      "static_memory": {
+        "aligned_data_bytes": 2101248,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 640,
+        "logical_jobs": 4,
+        "record_slots": 4
+      },
+      "tasks": [
+        {
+          "active_bytes": 2097120,
+          "active_lines": 65535,
+          "allocated_bytes": 2097120,
+          "job_count": 2,
+          "loads_per_job": 131070,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 512,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 4,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t1"
+        }
+      ],
+      "workload_id": "llc-65535"
+    },
+    {
+      "analysis": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "analyze",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/llc-65536"
+        ],
+        "peak_rss_kib": 392096,
+        "returncode": 0,
+        "system_seconds": 1.067437,
+        "user_seconds": 9.074722,
+        "wall_seconds": 10.495977905578911
+      },
+      "analysis_manifest_hash": "b4fab4ee82257c9614cbc4c15cec66280efdce969f894a9a849cfdb3f3508636",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/llc-65536.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/llc-65536"
+        ],
+        "peak_rss_kib": 49276,
+        "returncode": 0,
+        "system_seconds": 1.253934,
+        "user_seconds": 2.5853450000000002,
+        "wall_seconds": 0.6873821709305048
+      },
+      "characterization": {
+        "characterization_id": "7e28974270a459a0f1d381fe0df592a2a0b300913e6b12fed19a1b9999b2f04e",
+        "elf_hash": "a462a7a4afb1e47e79c3c6739453bcc21f34b9e5a18135ae2addae083e09996b",
+        "plan_hash": "18768148549c20eece937379fd144a25e1ab34d0180ae36f193ed49d916c7641",
+        "tasks": {
+          "t0": {
+            "cpu_sum_ns": 403612240,
+            "job_count": 20,
+            "log_hashes": [
+              "96c5d26392b83fa3e0e1b012ca99271e18ce6a1c957e60e246bf076ae3f892d7",
+              "21110e4d579af686ac10744c7a8993f67274137015ae1d664ec50449b70efead",
+              "1f8142e85ac8362cd317e28e9c87cc4aa880bf950b6e0d56660a244c196bd217",
+              "b8f12eacaa0f142e62a5ee634d3e1ce31f1d7da37667b5a042329c9989f23fdf",
+              "1502e0e5d9f7c9c09dbcd999bcf3bcb529bc5615e73ddabb3b96dce8700befa7",
+              "0f63db44c16c0262dbd1e6b027c8562561a20c6959898ff186f12902301cbd89",
+              "eacd27df908e5b1d5d6606af17221dbe438e2d48f0c47ce2b848abddfd70253f",
+              "fe664f06b8330193f5c2387a7ea573c3c6009e5678e38eb1d88d354424548b20",
+              "dab992966b11c475302b0b8bb6cb9a2d54758348c08879ed6318a0923c8dece6",
+              "fe46387de91755fe9839a4ac5c8d1c1cee4f9eed13bc42ced6880da76f41eebc"
+            ],
+            "mean_cpu_ns": 20180612.0
+          },
+          "t1": {
+            "cpu_sum_ns": 19657150,
+            "job_count": 20,
+            "log_hashes": [
+              "e01172af7da6fe51df7a00223eaf4be9493e84c84f1f2dd0d9fff8b00795b87e",
+              "7b0528a80b51a56c10399a80da13d7f98d5253d9f4f012a6375d4a59ab91edcf",
+              "31e292cefbc077fd2858779b5db8ca98054601c5f5caa7ccd919dec23faeed39",
+              "05f3bc4c5beca8778780d338b6167a26b50d1be6633c6c4f9c21ec4dc917ab23",
+              "38105b5f687c8c83114c3898c595fba55b093d09a683a64fc8039e9a2f74efb7",
+              "6f6e519ee6558039bcdccc7f84952f73071261c28090df4fc73d9a879d962594",
+              "c515ae269962f456ce87084559dc1f9ed9945807193cb53ce79f501b260ecad9",
+              "68b7fc60bc78cdddb4dfc1baad2c52a77ffd6546c0ef666021f2903d9611ddf2",
+              "319433135fb8f682e45d4beffa3dd8da667d039e55f3d05f5e12d8c072750bc9",
+              "994c77273fe1e1333b3ffcd7a3e0e1c29bbe1213c576bf1dda1b23cd3bc6da72"
+            ],
+            "mean_cpu_ns": 982857.5
+          }
+        },
+        "utilization": {
+          "t0": 0.20180612,
+          "t1": 0.009828575
+        },
+        "utilization_source": "measured-mean"
+      },
+      "empty_job_cpu_ns": {
+        "max": 9308,
+        "mean": 7506,
+        "median": 7506.0,
+        "min": 5704
+      },
+      "empty_to_target_cpu_ratio": 0.00037194114826646484,
+      "independent_cpu_ns": {
+        "t0": {
+          "max": 20456284,
+          "mean": 20180612,
+          "median": 20180612.0,
+          "min": 19904940
+        },
+        "t1": {
+          "max": 988231,
+          "mean": 982857.5,
+          "median": 982857.5,
+          "min": 977484
+        }
+      },
+      "locality": {
+        "t0": {
+          "ca_caas_element": 1.52587890625e-05,
+          "ca_csrd_l1": 0.001953125,
+          "ca_global_line": 1.52587890625e-05,
+          "clp": [
+            0.0,
+            0.5,
+            0.5
+          ],
+          "cls": {
+            "0.0": 0.5,
+            "0.3": 0.11662912394210094,
+            "0.5": 0.04419417382415922,
+            "0.7": 0.016746460352129584,
+            "1.0": 0.00390625
+          },
+          "modeled_accesses": 131072
+        },
+        "t1": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 1.0,
+          "ca_global_line": 0.015625,
+          "clp": [
+            0.99375,
+            0.0,
+            0.00625
+          ],
+          "cls": {
+            "0.0": 0.99375,
+            "0.3": 0.99375,
+            "0.5": 0.99375,
+            "0.7": 0.99375,
+            "1.0": 0.99375
+          },
+          "modeled_accesses": 10240
+        }
+      },
+      "snapshot_manifest_hash": "42a352267aec8be10dfb01599f53beeda76e6d2f3900003b00500c58e0f140b7",
+      "static_memory": {
+        "aligned_data_bytes": 2101248,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 640,
+        "logical_jobs": 4,
+        "record_slots": 4
+      },
+      "tasks": [
+        {
+          "active_bytes": 2097152,
+          "active_lines": 65536,
+          "allocated_bytes": 2097152,
+          "job_count": 2,
+          "loads_per_job": 131072,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 512,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 4,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t1"
+        }
+      ],
+      "workload_id": "llc-65536"
+    },
+    {
+      "analysis": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "analyze",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/llc-65537"
+        ],
+        "peak_rss_kib": 392080,
+        "returncode": 0,
+        "system_seconds": 1.215674,
+        "user_seconds": 9.038412,
+        "wall_seconds": 10.656099756248295
+      },
+      "analysis_manifest_hash": "395f41a562eb745997f9c3ab7c2b4d44327a3cf09b27c5fda4ee3c1fbffbb8c0",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/llc-65537.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/llc-65537"
+        ],
+        "peak_rss_kib": 49492,
+        "returncode": 0,
+        "system_seconds": 1.734224,
+        "user_seconds": 3.110125,
+        "wall_seconds": 0.7126473160460591
+      },
+      "characterization": {
+        "characterization_id": "aecae149b317a62dc54fd01eca7b97f34c6ceabf5a92244b8497ed79910d0560",
+        "elf_hash": "717b654b2af19837a2810aceda2e347af1a14a3893650bb4e76534e65f5dce6f",
+        "plan_hash": "c35dd1f0c9c5d7e7933214d72eb663887185d7177a1c76ba2a63bee6becf43ca",
+        "tasks": {
+          "t0": {
+            "cpu_sum_ns": 403217810,
+            "job_count": 20,
+            "log_hashes": [
+              "d11d137c2c884e91bfe2d4bce36bcfeb96a3fb97063280191983e616f0aede42",
+              "a2a64baab52b0ff36ed1b098fca6fe46daf3e284af136dec124d3e79ec26d6cb",
+              "b8aae3424ccd23d027294ac7c96ac56955908275b85c7583c593416445b73492",
+              "de3446240eb3c625acfaa8801d19073835d884fe1a42e3533ead8c8682adb2dc",
+              "6211495489e38a9eaf0a7f14dc64c45acf1a2e6a5e92d082e7ed9141a053e1da",
+              "5375c9c215b646ae9bf505464bb482d941460e0c210a6d85e829f1ec10bb2a8c",
+              "ee74f5663c808a40a18b6a2ddad1643bcbdf4f28239142529bda5c6cfe6caa68",
+              "9cb2d3a08ad4dfecdc0ed5ed333787b683ec4029783b7566cc8335118bcc43cc",
+              "36a75c8442e9907740fa4cc3327d22be63327cac8200327fa8a5f621ccdfd1ac",
+              "39e97c9db55e03610cb6558dd8cff89ba1f83dbd2b36663c239f761ee2c66f54"
+            ],
+            "mean_cpu_ns": 20160890.5
+          },
+          "t1": {
+            "cpu_sum_ns": 19657200,
+            "job_count": 20,
+            "log_hashes": [
+              "d3a8f4c9995082ec991268101e169bbd939657b76faa8b4d32738d76378f3c33",
+              "e4fabe9df835d36e0c0ae4c49b653229712428cda1855d30b0b87c28ffc7aebd",
+              "1ca3e13ce22e701d70c0a18d15ee1e152ebaae0d28ca8e7f3028eb607faaad22",
+              "5566247206d22d46173d60d6f3d4778b9aa33188db252ddde94351ddd3b56fbc",
+              "671fed46c827d1c2ffa0944bcc540f42f8d3c048e261e7dfc9ae4ee3f9a91bd4",
+              "a932fb9680c64395aa70fc76f30fe6153cea25a0c1863bf167cf19908c4e3141",
+              "ef9b186a317786395a488e5770199232fd294729e98e3d2ea14134bacaa51081",
+              "757efa5d71f6fd6a7aacf4e782d5c714301acdc117c278522ac0b32a7f0a6841",
+              "1e22f2c84def341eff169369275ddd62d09b31f79e6ac2285c16635accbc6ac3",
+              "818c97aeec3760bdd98342d8be8ee1bf93ac0d0b942ef55c3ab7f305fec54366"
+            ],
+            "mean_cpu_ns": 982860.0
+          }
+        },
+        "utilization": {
+          "t0": 0.201608905,
+          "t1": 0.0098286
+        },
+        "utilization_source": "measured-mean"
+      },
+      "empty_job_cpu_ns": {
+        "max": 9307,
+        "mean": 7505.5,
+        "median": 7505.5,
+        "min": 5704
+      },
+      "empty_to_target_cpu_ratio": 0.0003722801827627604,
+      "independent_cpu_ns": {
+        "t0": {
+          "max": 20429804,
+          "mean": 20160890.5,
+          "median": 20160890.5,
+          "min": 19891977
+        },
+        "t1": {
+          "max": 988224,
+          "mean": 982860,
+          "median": 982860.0,
+          "min": 977496
+        }
+      },
+      "locality": {
+        "t0": {
+          "ca_caas_element": 1.5258556235409006e-05,
+          "ca_csrd_l1": 0.0019530951403820846,
+          "ca_global_line": 1.5258556235409006e-05,
+          "clp": [
+            0.0,
+            0.4999618536094115,
+            0.5000381463905885
+          ],
+          "cls": {
+            "0.0": 0.4999618536094115,
+            "0.3": 0.11662022598186915,
+            "0.5": 0.04419080212772636,
+            "0.7": 0.01674518271809445,
+            "1.0": 0.003905951981323527
+          },
+          "modeled_accesses": 131074
+        },
+        "t1": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 1.0,
+          "ca_global_line": 0.015625,
+          "clp": [
+            0.99375,
+            0.0,
+            0.00625
+          ],
+          "cls": {
+            "0.0": 0.99375,
+            "0.3": 0.99375,
+            "0.5": 0.99375,
+            "0.7": 0.99375,
+            "1.0": 0.99375
+          },
+          "modeled_accesses": 10240
+        }
+      },
+      "snapshot_manifest_hash": "eb033f9dc6084238a2080b37e9461e0dbfd72b0dd4b6910750517bfa019d346d",
+      "static_memory": {
+        "aligned_data_bytes": 2105344,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 640,
+        "logical_jobs": 4,
+        "record_slots": 4
+      },
+      "tasks": [
+        {
+          "active_bytes": 2097184,
+          "active_lines": 65537,
+          "allocated_bytes": 2097184,
+          "job_count": 2,
+          "loads_per_job": 131074,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 513,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 5,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t1"
+        }
+      ],
+      "workload_id": "llc-65537"
+    },
+    {
+      "analysis": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "analyze",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/hot-cold"
+        ],
+        "peak_rss_kib": 85456,
+        "returncode": 0,
+        "system_seconds": 0.291804,
+        "user_seconds": 1.502886,
+        "wall_seconds": 2.073118348605931
+      },
+      "analysis_manifest_hash": "b5f77ef724e1b2857e00b2efe7a2443c95fd38704068a1bd78b8a15e5b56061a",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/hot-cold.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/hot-cold"
+        ],
+        "peak_rss_kib": 49452,
+        "returncode": 0,
+        "system_seconds": 1.35248,
+        "user_seconds": 2.375409,
+        "wall_seconds": 0.7014076262712479
+      },
+      "characterization": {
+        "characterization_id": "f7f1c42ea88393ebaac275ff56456870207d1844644da724ac6e4fb81cdb1442",
+        "elf_hash": "915a9718d1c2fdfd09429a9a5191dcc718fdf5e7db96593a82b65c9afdf12812",
+        "plan_hash": "eb140a87117a77930727198f2b805ab6a0ce48e5ec83c7e4cf827282c273a319",
+        "tasks": {
+          "t0": {
+            "cpu_sum_ns": 28984810,
+            "job_count": 20,
+            "log_hashes": [
+              "7ebfffe9d75ca897399bce35181be6d3716aa8fae83322d0f9c8428f441e6313",
+              "a790b2049262a56f6bc043757798b3ecdfb72673918dc4839794f90097bea133",
+              "dddc5927d66d1b06fddef5bb00b418646b8989fab3bb4e8b65ea17c8063aabc8",
+              "d5d9506586cef64eca1cfb0abf50c23b1201865267ff96d4e7cb24110b2f9066",
+              "a46346a370c353fec408f26c8a3f89aa9687f8648e095837fc1073ab3e75d319",
+              "8c07e574422fae9d737ffa71cab33f7165d03f9dc2af6f98146f950c3e00e150",
+              "105aefa132659f5f48d15e0e3b217fb238ec5b64526738a61207a02ce746fb9f",
+              "8ecb831daa8a49ea954a693d1288791613543f30dbeeee067163dfcb5218be75",
+              "550098cdba023c7c5e35a80bc4e019f834fe62d8c7520a6e2d951cbc210eb8f8",
+              "417c1a726aef6680c41e401e0309386562f8914c395b9d1b02243e88d5106e1c"
+            ],
+            "mean_cpu_ns": 1449240.5
+          },
+          "t1": {
+            "cpu_sum_ns": 19640960,
+            "job_count": 20,
+            "log_hashes": [
+              "0c58a866556048d6bd8b0b2327eec4b28e3f1b1db921d444f215f6fad80dedb9",
+              "11a0d9cf639a93107739a50aaf9898fcc071d322d2abedea97283ff115b13f8a",
+              "26de3a6f4e08e7f593863daf4503039c556bdd545b4ef93af2425337ae39fbe5",
+              "7282180a599c0b88c846a00d49895c57018b2aa9880c6bb482a2bba0ba0d0a7e",
+              "7f0e52e17f708fbedc8eb0662e6f6bf805339b4029734f950d9e5a596feb615e",
+              "14879334db3dbc60b348f368b44326cd6bcef5b110537d644122f7390cbaa73e",
+              "64fbdf1966be888ede203e75978134a119b2edaeec743a641e37bf4ef248f334",
+              "9ffb1f12e4e03f457170e7340fb806612588375db86281886f24f7f0efd22c71",
+              "e64877cbdfb3f49c49af2b52fa879a9d40961a916a071ce34ad312b72d783d8d",
+              "5699f0a18294a7fa85b5fa92a4bf68bda821cdf159712f402024b312363dbfeb"
+            ],
+            "mean_cpu_ns": 982048.0
+          }
+        },
+        "utilization": {
+          "t0": 0.072462025,
+          "t1": 0.0491024
+        },
+        "utilization_source": "measured-mean"
+      },
+      "empty_job_cpu_ns": {
+        "max": 9104,
+        "mean": 7328,
+        "median": 7328.0,
+        "min": 5552
+      },
+      "empty_to_target_cpu_ratio": 0.005056441632703475,
+      "independent_cpu_ns": {
+        "t0": {
+          "max": 1452928,
+          "mean": 1449240.5,
+          "median": 1449240.5,
+          "min": 1445553
+        },
+        "t1": {
+          "max": 986808,
+          "mean": 982048,
+          "median": 982048.0,
+          "min": 977288
+        }
+      },
+      "locality": {
+        "t0": {
+          "ca_caas_element": 0.0010915363947239863,
+          "ca_csrd_l1": 0.13763233878729547,
+          "ca_global_line": 0.0010915363947239863,
+          "clp": [
+            0.15,
+            0.74375,
+            0.10625
+          ],
+          "cls": {
+            "0.0": 0.89375,
+            "0.3": 0.32348582186387514,
+            "0.5": 0.21573883356343684,
+            "0.7": 0.17491035977379274,
+            "1.0": 0.15581054687499998
+          },
+          "modeled_accesses": 10240
+        },
+        "t1": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 1.0,
+          "ca_global_line": 0.015625,
+          "clp": [
+            0.99375,
+            0.0,
+            0.00625
+          ],
+          "cls": {
+            "0.0": 0.99375,
+            "0.3": 0.99375,
+            "0.5": 0.99375,
+            "0.7": 0.99375,
+            "1.0": 0.99375
+          },
+          "modeled_accesses": 10240
+        }
+      },
+      "snapshot_manifest_hash": "825ad37a6594281cb87eb6c223dd413635285820aa64fc383686bde3c1895b6f",
+      "static_memory": {
+        "aligned_data_bytes": 40960,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 640,
+        "logical_jobs": 4,
+        "record_slots": 4
+      },
+      "tasks": [
+        {
+          "active_bytes": 34816,
+          "active_lines": 1088,
+          "allocated_bytes": 34816,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 9,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 1088
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t1"
+        }
+      ],
+      "workload_id": "hot-cold"
+    },
+    {
+      "analysis": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "analyze",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/phase"
+        ],
+        "peak_rss_kib": 86092,
+        "returncode": 0,
+        "system_seconds": 0.27554,
+        "user_seconds": 1.6723789999999998,
+        "wall_seconds": 2.282651625573635
+      },
+      "analysis_manifest_hash": "6e66fda03f8337a8991b71dd8a4c475a99edde9f228851174bc0310ed01260a2",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/phase.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/phase"
+        ],
+        "peak_rss_kib": 49400,
+        "returncode": 0,
+        "system_seconds": 1.685481,
+        "user_seconds": 3.090047,
+        "wall_seconds": 0.6918885391205549
+      },
+      "characterization": {
+        "characterization_id": "52def681cedcb733741de2954c8df14e0838454a1468f24026d77d4a49423cab",
+        "elf_hash": "752b493eacb639a4fb9f2b4aa98aef600b54c3f99c6fb3a3bef31f5b92ec8b9a",
+        "plan_hash": "58f1f3c20f4f37e508f41c5086295bb4a74605e87aabe53e840971bab64baafc",
+        "tasks": {
+          "t0": {
+            "cpu_sum_ns": 38292390,
+            "job_count": 20,
+            "log_hashes": [
+              "379fecf33ca367c01351b6027e71a69bddb89d303123626e7c646bcf70c2ec42",
+              "9729405aba2a78a6c5399f292815fdd5349e0d1a0a4c23917394a3a7a31f273f",
+              "bcdb28c85a3d39ef03a5c696054fe75114e18093d88a6af46108d554a8986ec3",
+              "49849e954e8a398cb4acd935337d8cdec8c33a42a6b03e9a1c309816d3d67877",
+              "bb0ac52155b38794465bccc45e745502001724711c109b57b78c0f8f4d716fa9",
+              "c46473a1f2375fdf9e13f3534fb3977ceed06649883d46e19d2cd822da3dacb7",
+              "f901eb8e319cbdc1b1d3d4b691af9faa37cdd2b4177d993b2cea6f9ed6cd2c54",
+              "4eecf97155ae7b861b07488d8ade579bb99398411c070981dd64ee78db4b081c",
+              "eb3228eaf54559b3cea5433339a15e392cdd90323fb473357e818758532e9764",
+              "6408a5336569ac29c8a603e5d61dcc62480f90f82819c30abe03f00c96de905b"
+            ],
+            "mean_cpu_ns": 1914619.5
+          },
+          "t1": {
+            "cpu_sum_ns": 19644520,
+            "job_count": 20,
+            "log_hashes": [
+              "7cb9e6972e9ef51b41cb45c42135894d9f1f5cbc0664c0d786030b607970dd3c",
+              "3b52d5b929a4c952571232e437af46f02d853371d1d77657ab674fb2a3767f43",
+              "41ad96e90565268fc13a1e95c32ac7e5150488227c3dd5af572a9b47c7e8f9b0",
+              "1b8d2e80a1d2837f4f3c671512db91744308d3712592ef4d747614e3f299df7f",
+              "10d2a06cbf78da44fea981f461b67cd38cd3b9453cc4e5c99f562d444008952a",
+              "641b2a7205ac429e87162615d6cbbb24955ba0ccb4e8d6b349cdf1b1af9f53b0",
+              "bd52413c430f49c76d2c102833263927edff61d678aed132810c2c285e5193c3",
+              "60a795ee1d40a85aba95ca4717a9661103bcc522b461b8fe739879d750b5e611",
+              "785d5b2dae0d62805501994c1cf27402ea10e9ab68584964aae6341d69d0d931",
+              "280bd7d52b718ee0dba4db50b42dc28000b45d63e7e79afb99f8dd8239b8ba79"
+            ],
+            "mean_cpu_ns": 982226.0
+          }
+        },
+        "utilization": {
+          "t0": 0.095730975,
+          "t1": 0.0491113
+        },
+        "utilization_source": "measured-mean"
+      },
+      "empty_job_cpu_ns": {
+        "max": 9104,
+        "mean": 7303.5,
+        "median": 7303.5,
+        "min": 5503
+      },
+      "empty_to_target_cpu_ratio": 0.003814596059425907,
+      "independent_cpu_ns": {
+        "t0": {
+          "max": 1920904,
+          "mean": 1914619.5,
+          "median": 1914619.5,
+          "min": 1908335
+        },
+        "t1": {
+          "max": 986920,
+          "mean": 982226,
+          "median": 982226.0,
+          "min": 977532
+        }
+      },
+      "locality": {
+        "t0": {
+          "ca_caas_element": 0.0010335603112840467,
+          "ca_csrd_l1": 0.13178294573643412,
+          "ca_global_line": 0.0010335603112840467,
+          "clp": [
+            0.05392156862745098,
+            0.8627450980392157,
+            0.08333333333333333
+          ],
+          "cls": {
+            "0.0": 0.9166666666666667,
+            "0.3": 0.25516397856676243,
+            "0.5": 0.13017818228482375,
+            "0.7": 0.08281742178406673,
+            "1.0": 0.06066176470588236
+          },
+          "modeled_accesses": 13056
+        },
+        "t1": {
+          "ca_caas_element": 0.015625,
+          "ca_csrd_l1": 1.0,
+          "ca_global_line": 0.015625,
+          "clp": [
+            0.99375,
+            0.0,
+            0.00625
+          ],
+          "cls": {
+            "0.0": 0.99375,
+            "0.3": 0.99375,
+            "0.5": 0.99375,
+            "0.7": 0.99375,
+            "1.0": 0.99375
+          },
+          "modeled_accesses": 10240
+        }
+      },
+      "snapshot_manifest_hash": "278765ccd675d262ff959ef584b2f4f0967b05062a23ca0e0bfa3c022f9c695c",
+      "static_memory": {
+        "aligned_data_bytes": 40960,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 640,
+        "logical_jobs": 4,
+        "record_slots": 4
+      },
+      "tasks": [
+        {
+          "active_bytes": 34816,
+          "active_lines": 1088,
+          "allocated_bytes": 34816,
+          "job_count": 2,
+          "loads_per_job": 13056,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 9,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 1088
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 10240,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t1"
+        }
+      ],
+      "workload_id": "phase"
+    },
+    {
+      "analysis_scope": "build/runtime boundary only",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/tasks-04.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/tasks-04"
+        ],
+        "peak_rss_kib": 49480,
+        "returncode": 0,
+        "system_seconds": 1.884589,
+        "user_seconds": 3.0499,
+        "wall_seconds": 0.7252923930063844
+      },
+      "snapshot_manifest_hash": "9b5323e2840206da7ddec709157b31cb92f332370b23472201c3e3d040b200ea",
+      "static_memory": {
+        "aligned_data_bytes": 16384,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 1280,
+        "logical_jobs": 8,
+        "record_slots": 8
+      },
+      "tasks": [
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t1"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t2"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t3"
+        }
+      ],
+      "workload_id": "tasks-04"
+    },
+    {
+      "analysis_scope": "build/runtime boundary only",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/tasks-08.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/tasks-08"
+        ],
+        "peak_rss_kib": 49440,
+        "returncode": 0,
+        "system_seconds": 1.517427,
+        "user_seconds": 3.096698,
+        "wall_seconds": 0.7033686302602291
+      },
+      "snapshot_manifest_hash": "e893acde36f3845237e82643cdd67ddc39a8d32b5901492ca00aab4075b95007",
+      "static_memory": {
+        "aligned_data_bytes": 32768,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 2560,
+        "logical_jobs": 16,
+        "record_slots": 16
+      },
+      "tasks": [
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t1"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t2"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t3"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t4"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t5"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t6"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t7"
+        }
+      ],
+      "workload_id": "tasks-08"
+    },
+    {
+      "analysis_scope": "build/runtime boundary only",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/tasks-12.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/tasks-12"
+        ],
+        "peak_rss_kib": 49428,
+        "returncode": 0,
+        "system_seconds": 0.944888,
+        "user_seconds": 1.6880359999999999,
+        "wall_seconds": 0.741137994453311
+      },
+      "snapshot_manifest_hash": "84ed6c585c0637d67341808ff114feb94597b9d2a38bd210858ab3a5f00a3887",
+      "static_memory": {
+        "aligned_data_bytes": 49152,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 3840,
+        "logical_jobs": 24,
+        "record_slots": 24
+      },
+      "tasks": [
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t1"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t2"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t3"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t4"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t5"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t6"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t7"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t8"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t9"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t10"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t11"
+        }
+      ],
+      "workload_id": "tasks-12"
+    },
+    {
+      "analysis_scope": "build/runtime boundary only",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/tasks-16.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/tasks-16"
+        ],
+        "peak_rss_kib": 49416,
+        "returncode": 0,
+        "system_seconds": 1.66959,
+        "user_seconds": 3.049071,
+        "wall_seconds": 0.69603705778718
+      },
+      "snapshot_manifest_hash": "fceff01b4576829ec4128ef91ee9b991980a75f5801839ede0319c6fe629f065",
+      "static_memory": {
+        "aligned_data_bytes": 65536,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 5120,
+        "logical_jobs": 32,
+        "record_slots": 32
+      },
+      "tasks": [
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t1"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t2"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t3"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t4"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t5"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t6"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t7"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t8"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t9"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t10"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t11"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t12"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t13"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t14"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 20,
+          "task_id": "t15"
+        }
+      ],
+      "workload_id": "tasks-16"
+    },
+    {
+      "analysis_scope": "build/runtime boundary only",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/jobs-balanced.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/jobs-balanced"
+        ],
+        "peak_rss_kib": 49376,
+        "returncode": 0,
+        "system_seconds": 1.752357,
+        "user_seconds": 3.118299,
+        "wall_seconds": 0.7113317744806409
+      },
+      "snapshot_manifest_hash": "e1bf9e6ecf4cc8da38f74a419916aa53d390143864e87a4f0f976aebcb4433ce",
+      "static_memory": {
+        "aligned_data_bytes": 65536,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 655360,
+        "logical_jobs": 4096,
+        "record_slots": 4096
+      },
+      "tasks": [
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t1"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t2"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t3"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t4"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t5"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t6"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t7"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t8"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t9"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t10"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t11"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t12"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t13"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t14"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 256,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t15"
+        }
+      ],
+      "workload_id": "jobs-balanced"
+    },
+    {
+      "analysis_scope": "build/runtime boundary only",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/jobs-skewed.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/jobs-skewed"
+        ],
+        "peak_rss_kib": 49408,
+        "returncode": 0,
+        "system_seconds": 1.643648,
+        "user_seconds": 3.159815,
+        "wall_seconds": 0.7277807695791125
+      },
+      "snapshot_manifest_hash": "cb63a5a961feee07eb2c5b00578163639ae26b5a1cf41d50247eb541894766b5",
+      "static_memory": {
+        "aligned_data_bytes": 65536,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 10447360,
+        "logical_jobs": 4096,
+        "record_slots": 65296
+      },
+      "tasks": [
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 4081,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 1,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t1"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t2"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t3"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t4"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t5"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t6"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t7"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t8"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t9"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t10"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t11"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t12"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t13"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t14"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 1,
+          "loads_per_job": 64,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 4081,
+          "task_id": "t15"
+        }
+      ],
+      "workload_id": "jobs-skewed"
+    },
+    {
+      "analysis_scope": "build/runtime boundary only",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/data-limit.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/data-limit"
+        ],
+        "peak_rss_kib": 49540,
+        "returncode": 0,
+        "system_seconds": 0.860478,
+        "user_seconds": 1.553804,
+        "wall_seconds": 0.7233417714014649
+      },
+      "snapshot_manifest_hash": "4bf5013ff9f0e4f1a2172282f5fa9f6adb99bc6e21c1a645cbe48d361e9f75f2",
+      "static_memory": {
+        "aligned_data_bytes": 16777216,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 5120,
+        "logical_jobs": 32,
+        "record_slots": 32
+      },
+      "tasks": [
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t1"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t2"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t3"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t4"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t5"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t6"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t7"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t8"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t9"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t10"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t11"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t12"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t13"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t14"
+        },
+        {
+          "active_bytes": 1048576,
+          "active_lines": 32768,
+          "allocated_bytes": 1048576,
+          "job_count": 2,
+          "loads_per_job": 65536,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 256,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 2,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t15"
+        }
+      ],
+      "workload_id": "data-limit"
+    },
+    {
+      "analysis_scope": "build/runtime boundary only",
+      "build": {
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "tools.rtems_periodic",
+          "prepare",
+          "/tmp/chaser-periodic-feasibility-v1-r1/configs/capacity-mixed-16.json",
+          "--output",
+          "/tmp/chaser-periodic-feasibility-v1-r1/snapshots/capacity-mixed-16"
+        ],
+        "peak_rss_kib": 49528,
+        "returncode": 0,
+        "system_seconds": 1.69802,
+        "user_seconds": 3.055676,
+        "wall_seconds": 0.7445228984579444
+      },
+      "snapshot_manifest_hash": "17a4cca6c5f57d8d1a9eac1c9464c76d54bb418de3fbe88941d885a285d67d97",
+      "static_memory": {
+        "aligned_data_bytes": 2162688,
+        "dispatches_bytes": 524288,
+        "jobs_bytes": 5120,
+        "logical_jobs": 32,
+        "record_slots": 32
+      },
+      "tasks": [
+        {
+          "active_bytes": 2097184,
+          "active_lines": 65537,
+          "allocated_bytes": 2097184,
+          "job_count": 2,
+          "loads_per_job": 131074,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 513,
+              "occupied_sets": 128
+            },
+            "llc": {
+              "max_lines_per_set": 5,
+              "occupied_sets": 16384
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t0"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t1"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t2"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t3"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t4"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t5"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t6"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t7"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t8"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t9"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t10"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t11"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t12"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t13"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t14"
+        },
+        {
+          "active_bytes": 2048,
+          "active_lines": 64,
+          "allocated_bytes": 2048,
+          "job_count": 2,
+          "loads_per_job": 128,
+          "occupancy": {
+            "l1": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            },
+            "llc": {
+              "max_lines_per_set": 1,
+              "occupied_sets": 64
+            }
+          },
+          "period_ticks": 100,
+          "task_id": "t15"
+        }
+      ],
+      "workload_id": "capacity-mixed-16"
+    }
+  ]
+}
