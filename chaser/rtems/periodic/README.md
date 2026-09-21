@@ -72,6 +72,11 @@ cells repeat identical inputs across all three target-U tags. See the
 candidate counts or target U as achieved coverage. No measured evidence is reused
 between different ELFs, and the audit does not freeze a split.
 
+`--version 3` adds the [staged/triangular recipes](STAGED-RECIPES.md), yielding five
+source-informed families. It retains one copy of each identical generator input
+and records every duplicate configuration and its representative in `pool.json`.
+The split remains provisional; additional families do not establish sufficiency.
+
 Omitting `pattern` retains the original cyclic source and plan fields. The three
 supported values specify byte-element access order, not an application family:
 

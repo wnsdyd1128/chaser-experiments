@@ -112,6 +112,9 @@ experiment freeze. No labels, calibration, build or runtime results are invented
     elif version == 2:
         from tools.rtems_periodic_pool_v2 import candidate_pool as recipe_pool
         pool = recipe_pool()
+    elif version == 3:
+        from tools.rtems_periodic_pool_v3 import candidate_pool as expanded_pool
+        pool = expanded_pool()
     else:
         raise ValueError('Unknown candidate pool version')
     history = [dict(configuration=c, recipe_id='development-feasibility-v1',
@@ -145,6 +148,9 @@ experiment freeze. No labels, calibration, build or runtime results are invented
                                  max(sum(r['estimated_utilization'].values()) for r in candidates)],
         split_hash=digest(split), dataset_ready=False, split_frozen=False,
         measured_workloads=0, sufficiency_status='not_assessed')
+    if version == 3:
+        report.update(generated_candidate_workloads=pool['design']['generated_candidate_workloads'],
+                      duplicate_candidate_workloads=len(pool['duplicate_candidates']))
     write_json(output / 'pool.json', pool)
     write_json(output / 'registry.json', registry)
     write_json(output / 'summary.json', report)
@@ -158,9 +164,12 @@ experiment freeze. No labels, calibration, build or runtime results are invented
                'chaser/periodic_staged_recipes.py',
                'chaser/periodic_registry.py', 'chaser/dataset.py',
                'tools/rtems_smoke.py']
-    if version == 2:
+    if version >= 2:
         sources.extend(['tools/rtems_periodic_pool_v2.py', 'rtems/periodic/RECIPES.md',
                         'rtems/periodic/recipe-sources.json'])
+    if version == 3:
+        sources.extend(['tools/rtems_periodic_pool_v3.py', 'tools/rtems_periodic_pool_audit.py',
+                        'rtems/periodic/STAGED-RECIPES.md', 'rtems/periodic/staged-recipe-sources.json'])
     for source in sources:
         (output / 'implementation' / Path(source).name).write_bytes((ROOT / source).read_bytes())
     files = {str(p.relative_to(output)): file_hash(p) for p in sorted(output.rglob('*')) if p.is_file()}
@@ -175,7 +184,7 @@ experiment freeze. No labels, calibration, build or runtime results are invented
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--version', type=int, choices=(1, 2), default=1)
+    parser.add_argument('--version', type=int, choices=(1, 2, 3), default=1)
     args = parser.parse_args()
     print(json.dumps(initialize(args.output, version=args.version), indent=2, sort_keys=True))
 

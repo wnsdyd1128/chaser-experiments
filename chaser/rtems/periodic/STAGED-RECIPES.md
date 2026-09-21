@@ -79,3 +79,12 @@ T는 기존 overlap/hot-per-tile/matrix-reuse와 일부 재사용 특성을 공�
 그대로 쓰지 않는다. 역할·width·stride·period·혼합비·저장 배치는 같은 계보 안 변형이다.
 이 판단은 통계적 독립성 증명이 아니며 완전한 base-task 재사용이 발견되면 병합한다.
 
+`tools.rtems_periodic_pool --version 3`은 기존 세 계보와 F/T의 같은 5개 coverage cell을
+열거한다. 총 300개 요청 중 정확히 같은 실행 입력을 첫 등장 하나만 남기고 나머지는
+`duplicate_candidates`에 원본 config·target U·`duplicate_of`·이유를 보존한다.
+V1/V2 archive와 기본 version1 동작은 유지한다. V2 후보도 기존 archive와 동치 검사한다.
+후보 width는 8이며 source-informed catalog는 5개 계보, split은 여전히 초안이다.
+LLC의 높은 부하 부재와 역할/core/period 상관은 이번 계보 확장으로 해결되지 않는다.
+
+작은 literal reference·완전 footprint·load/loop 예산과 G/C/P ELF stream을 검사한다.
+큰 입력의 build/analysis/runtime 비용, 실측 U, 적격성, 충분성·최종 split 동결은 별도 gate다.
