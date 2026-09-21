@@ -9,8 +9,20 @@ import time
 from chaser.ca import ca_csrd, ca_from_histogram
 from chaser.cls import cls, DEFAULT_ALPHAS
 from chaser.periodic_build import YARDA, check_layout, read_symbols
+from chaser.periodic_patterns import access_offsets, job_access_count, loop_iterations
 from chaser.s1_artifacts import read_analysis
 from tools.rtems_smoke import check_inputs, file_hash, write_json
+
+
+def check_stream(task: dict, events: list[dict], address: int) -> None:
+    """Require the full job's specified byte-load order at its linked address."""
+    if len(events) != job_access_count(task):
+        raise ValueError('Wrapper access count differs from the emitted workload')
+    for event, offset in zip(events, access_offsets(task), strict=True):
+        if (event['linked_address'] != address + offset
+                or event['access_size'] != 1 or event['operation'] != 'load'
+                or event['object_id'] != 'global::data_' + task['task_id']):
+            raise ValueError('Wrapper access order/address/kind differs from workload')
 
 
 def analyze(prepared: Path, *, timeout: float = 120) -> dict:
@@ -60,8 +72,8 @@ def analyze(prepared: Path, *, timeout: float = 120) -> dict:
             raise ValueError('Expected the emitted job wrapper and inline kernel')
         ape = output / f'{task_id}.ape.json'
         write_json(ape, {**raw, 'functions': functions})
-        accesses = task['sweeps'] * task['distinct']
-        limit = accesses + task['sweeps'] + 10
+        accesses = job_access_count(task)
+        limit = loop_iterations(task) + 10
         for name in ('g', 'c', 'p'):
             directory = output / name / task_id
             directory.mkdir(parents=True)
@@ -87,13 +99,7 @@ def analyze(prepared: Path, *, timeout: float = 120) -> dict:
             events = json.loads((directory / 'events.json').read_text())
             checked = read_analysis(hierarchy, events, root, expected)
             address = next(r['address'] for r in layout if r['symbol'] == 'data_' + task_id)
-            if len(events['events']) != accesses:
-                raise ValueError('Wrapper access count differs from the emitted workload')
-            for ordinal, event in enumerate(events['events']):
-                if (event['linked_address'] != address + ordinal % task['distinct'] * task['stride']
-                        or event['access_size'] != 1 or event['operation'] != 'load'
-                        or event['object_id'] != 'global::data_' + task_id):
-                    raise ValueError('Wrapper access order/address/kind differs from workload')
+            check_stream(task, events['events'], address)
             case = dict(ca_caas_element=ca_from_histogram(results['element']['program']['histogram']),
                         ca_global_line=ca_from_histogram(results['line']['program']['histogram']),
                         ca_csrd_l1=ca_csrd(checked.task), modeled_accesses=accesses,

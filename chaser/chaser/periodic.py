@@ -5,6 +5,8 @@ from hashlib import sha256
 import json
 import re
 
+from chaser.periodic_patterns import job_access_count, validate_pattern
+
 CONTRACT = 'chaser-periodic-measurement-v2'
 LEGACY_CONTRACT = 'chaser-periodic-measurement-v1'
 TOPOLOGIES = ('g-edfsmp-4-v1', 'c-edfsmp-1-3-v1', 'p-edfsmp-4x1-v1')
@@ -45,9 +47,10 @@ def make_plan(configuration: dict, architecture: int) -> dict:
                 raise ValueError(f'Invalid {key}')
         if horizon % task['period_ticks']:
             raise ValueError('Every period must divide the common horizon')
+        validate_pattern(task)
         task['job_count'] = horizon // task['period_ticks']
         task['data_size'] = task['distinct'] * task['stride']
-        task['expected_checksum'] = (task['distinct'] * task['sweeps']) % (1 << 32)
+        task['expected_checksum'] = job_access_count(task) % (1 << 32)
         task['domain'] = (list(range(4)) if architecture == 0 else
                           ([0] if task['core'] == 0 else [1, 2, 3]) if architecture == 1
                           else [task['core']])

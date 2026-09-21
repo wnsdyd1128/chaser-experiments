@@ -31,8 +31,8 @@ cover the object files, ELFs, sources, build log and SDK compiler/libraries.
 
 The task configuration contains literal `distinct`, byte `stride`, `sweeps`,
 `period_ticks`, and explicit allocator `core`. Tasks read separate volatile byte
-arrays initialized to one. A job calls its annotated inline kernel `sweeps` times
-and returns a load-count checksum. The compiler is not asked to inline helpers;
+arrays initialized to one. A job executes a fixed access sequence and returns a
+load-count checksum modulo 2^32. The compiler is not asked to inline helpers;
 YARDA expands their `ape.inline` annotations under each `ape.analyze` job root.
 The task source and sweep count stay identical across G/C/P and independent runs.
 
@@ -41,6 +41,38 @@ The task source and sweep count stay identical across G/C/P and independent runs
 1–16, at most 4096 total jobs, and at most 16 MiB of aligned workload data.
 The cold job locality is a feature, not a prediction of warm, concurrent periodic
 cache activity. Array data and cache state are not reset between sweeps or jobs.
+
+### Workload patterns
+
+Omitting `pattern` retains the original cyclic source and plan fields. The three
+supported values specify byte-element access order, not an application family:
+
+| Pattern | One job |
+|---|---|
+| `cyclic` | Traverse all `distinct` elements, repeat `sweeps` times |
+| `hot-cold` | Traverse H `hot_repeats` times, then C `cold_repeats` times; repeat that block `sweeps` times |
+| `phase` | Perform all `sweeps * hot_repeats` H traversals, then all `sweeps * cold_repeats` C traversals |
+
+Both region patterns require `hot_distinct`, `hot_repeats`, and `cold_repeats`.
+H consists of the first `hot_distinct` accessed elements; C contains the remaining
+`distinct - hot_distinct` elements in the same private array. Each is nonempty;
+both repeat counts are integers in 1–1000000. These fields are rejected for cyclic
+workloads. All traversals use the same byte stride. Region patterns execute
+`sweeps * (hot_distinct * hot_repeats + (distinct - hot_distinct) * cold_repeats)`
+loads per job. Phase ordering restarts each job; it does not depend on job index.
+Its kernel contains the region sweep loops and the wrapper invokes it once.
+
+For equal parameters, hot/cold and phase have the same data layout and load count
+but different access order. Small literal sequences test the reference checker
+and the emitted APE against each final ELF. Analysis budgets include every nested
+loop trip, not just the number of loads. The checksum alone does not prove access
+order because all elements are initialized to one.
+
+`configs/periodic-patterns-example.json` is a development-only, two-task example:
+each task touches 1088 lines (34 KiB) and executes 10240 loads per job. Use the
+same prepare/analyze/run commands with fresh output paths. This example is not a
+frozen training dataset or evidence of sufficient independent families. Pattern
+names and parameter changes do not establish family independence.
 
 ## Scheduler and release evidence
 

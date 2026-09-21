@@ -1,0 +1,33 @@
+{
+  "workload_id": "periodic-patterns-example",
+  "family_id": "development-region-patterns",
+  "policy_id": "development-explicit-core-order-v1",
+  "horizon_ticks": 40,
+  "eligible_for_training": false,
+  "tasks": [
+    {
+      "task_id": "hot",
+      "pattern": "hot-cold",
+      "distinct": 1088,
+      "hot_distinct": 64,
+      "hot_repeats": 4,
+      "cold_repeats": 1,
+      "stride": 32,
+      "sweeps": 8,
+      "period_ticks": 20,
+      "core": 0
+    },
+    {
+      "task_id": "phase",
+      "pattern": "phase",
+      "distinct": 1088,
+      "hot_distinct": 64,
+      "hot_repeats": 4,
+      "cold_repeats": 1,
+      "stride": 32,
+      "sweeps": 8,
+      "period_ticks": 20,
+      "core": 1
+    }
+  ]
+}

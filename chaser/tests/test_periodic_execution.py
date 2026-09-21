@@ -13,6 +13,7 @@ from tools.rtems_periodic import run
 from tools.rtems_smoke import check_inputs
 from test_periodic import configuration, evidence
 from test_periodic_public import public_evidence
+from test_periodic_patterns import pattern_configuration
 
 
 @pytest.fixture(scope='module')
@@ -70,6 +71,26 @@ def test_cpp_expands_all_sweeps_and_matches_all_final_elfs(prepared):
         ('ape.analyze',), ('ape.inline',)}
 
 
+@pytest.mark.parametrize('cold_repeats', [1, 2])
+def test_region_patterns_match_literal_streams_in_all_final_elfs(tmp_path, cold_repeats):
+    snapshot = tmp_path / 'patterns'
+    config = pattern_configuration()
+    for task in config['tasks']:
+        task['cold_repeats'] = cold_repeats
+    prepare(config, snapshot)
+    result = analyze(snapshot)
+    cold = [64, 96, 128] * cold_repeats
+    offsets = {'hot': [0, 32, 0, 32, *cold] * 2,
+               'phase': [0, 32] * 4 + cold * 2}
+    for name, expected in offsets.items():
+        assert result['cases'][name]['modeled_accesses'] == 8 + 6 * cold_repeats
+        assert set(result['provenance'][name]['elf_hashes']) == {'g', 'c', 'p'}
+        for architecture in ('g', 'c', 'p'):
+            address, _ = read_symbols(snapshot / f'build/{architecture}.exe')['data_' + name]
+            events = json.loads((snapshot / f'analysis/{architecture}/{name}/events.json').read_text())
+            assert [e['linked_address'] - address for e in events['events']] == expected
+
+
 def simulator(tmp_path, body):
     path = tmp_path / 'fake simulator'
     path.write_text('#!/bin/sh\n' + body + '\n')
@@ -85,6 +106,8 @@ def test_fresh_processes_reparse_the_same_raw_evidence(prepared, tmp_path):
     rows = run(prepared, directory, architecture=2, runs=2, timeout=3, simulator=fake)
     assert all(r['execution_status'] == 'ok' for r in rows)
     assert load_batch(prepared, directory) == rows
+    protocol = json.loads((directory / 'protocol.json').read_text())
+    assert 'implementation/chaser/periodic_patterns.py' in protocol['implementation_hashes']
     assert (directory / '0.log').read_text().splitlines()[0] != (
         directory / '1.log').read_text().splitlines()[0]
     stored = directory / 'measurements.jsonl'

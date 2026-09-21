@@ -7,6 +7,7 @@ import subprocess
 import sys
 
 from chaser.periodic import make_plan
+from chaser.periodic_patterns import kernel_body, wrapper_sweeps
 from tools.rtems_smoke import file_hash, write_json, check_inputs
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,13 +28,12 @@ def workload_source(tasks: list[dict]) -> str:
             f'__attribute__((aligned(4096), section(".chaser_data.{i:02d}")));',
             f'INLINE static uint32_t kernel_{name}(void) {{',
             '    uint32_t sum = 0;',
-            f'    for (int i = 0; i < {task["data_size"]}; i += {task["stride"]})',
-            f'        sum += data_{name}[i];', '    return sum;', '}',
+            *kernel_body(task), '    return sum;', '}',
             '/** @brief Execute one fixed job without resetting data or cache.',
             ' * @return Load-count checksum, modulo 2^32. */',
             f'ANALYZE uint32_t task_job_{name}(void) {{',
             '    uint32_t sum = 0;',
-            f'    for (int s = 0; s < {task["sweeps"]}; ++s)',
+            f'    for (int s = 0; s < {wrapper_sweeps(task)}; ++s)',
             f'        sum += kernel_{name}();', '    return sum;', '}'])
     source.append('void workload_prepare(void) {')
     for task in tasks:
