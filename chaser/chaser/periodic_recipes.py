@@ -7,6 +7,8 @@ These synthetic byte loads do not reproduce benchmark arithmetic or stores.
 
 from collections.abc import Iterator
 
+from chaser import periodic_staged_recipes as staged
+
 
 RECIPES = {
     'window-coeff': 'window-coefficient',
@@ -15,11 +17,14 @@ RECIPES = {
     'matrix-reuse': 'multi-array-reuse',
     'row-column': 'block-phase',
     'row-column-mirrored': 'block-phase',
+    **staged.RECIPES,
 }
 
 
 def block_size(pattern: str, width: int) -> int:
     """Return distinct byte positions in one complete block, before stride."""
+    if pattern in staged.RECIPES:
+        return staged.block_size(pattern, width)
     return {'window-coeff': 3*width, 'window-bank': 4*width,
             'paired-pass': 2*width, 'matrix-reuse': 2*width*width,
             'row-column': width*width, 'row-column-mirrored': width*width}[pattern]
@@ -27,6 +32,9 @@ def block_size(pattern: str, width: int) -> int:
 
 def validate_recipe(task: dict) -> None:
     """Require a bounded even width and complete, nonempty blocks."""
+    if task['pattern'] in staged.RECIPES:
+        staged.validate_recipe(task)
+        return
     width = task.get('width')
     if type(width) is not int or not 2 <= width <= 32 or width % 2:
         raise ValueError('Invalid recipe width: require an even integer in [2, 32]')
@@ -38,6 +46,8 @@ def validate_recipe(task: dict) -> None:
 
 def sweep_counts(task: dict) -> tuple[int, int]:
     """Count loads and all dynamic loop trips, excluding the job sweep loop."""
+    if task['pattern'] in staged.RECIPES:
+        return staged.sweep_counts(task)
     n, p = task['width'], task['pattern']
     blocks = task['distinct'] // block_size(p, n)
     loads, trips = {
@@ -53,6 +63,9 @@ def sweep_counts(task: dict) -> tuple[int, int]:
 
 def sweep_indices(task: dict) -> Iterator[int]:
     """Specify array roles and phase ordering independently of emitted C."""
+    if task['pattern'] in staged.RECIPES:
+        yield from staged.sweep_indices(task)
+        return
     n, p = task['width'], task['pattern']
     size = block_size(p, n)
     for base in range(0, task['distinct'], size):
@@ -93,6 +106,8 @@ def sweep_indices(task: dict) -> Iterator[int]:
 
 def recipe_body(task: dict) -> list[str]:
     """Emit ordered volatile byte loads and literal affine loop bounds."""
+    if task['pattern'] in staged.RECIPES:
+        return staged.recipe_body(task)
     n, p = task['width'], task['pattern']
     size = block_size(p, n)
 

@@ -110,6 +110,7 @@ def test_fresh_processes_reparse_the_same_raw_evidence(prepared, tmp_path):
     assert 'implementation/chaser/periodic_patterns.py' in protocol['implementation_hashes']
     assert 'implementation/chaser/periodic_structures.py' in protocol['implementation_hashes']
     assert 'implementation/chaser/periodic_recipes.py' in protocol['implementation_hashes']
+    assert 'implementation/chaser/periodic_staged_recipes.py' in protocol['implementation_hashes']
     assert (directory / '0.log').read_text().splitlines()[0] != (
         directory / '1.log').read_text().splitlines()[0]
     stored = directory / 'measurements.jsonl'

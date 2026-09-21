@@ -1,0 +1,23 @@
+{
+  "excluded_evaluation_suite": "PolyBench",
+  "files": [
+    {
+      "bytes": 8009,
+      "git_blob_sha1": "7aff936ee216e62ac6e39034b83fbbe96fbe5426",
+      "path": "bench/kernel/fft/fft.c",
+      "sha256": "5ec513b40c9eca10c15e634e4462bc453ed68b97d110fc81027f428dcf0ab3ea",
+      "url": "https://raw.githubusercontent.com/tacle/tacle-bench/c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08/bench/kernel/fft/fft.c"
+    },
+    {
+      "bytes": 3654,
+      "git_blob_sha1": "6c9127b6dcab76fdfa4ee799ef59eb03c768aa15",
+      "path": "bench/kernel/ludcmp/ludcmp.c",
+      "sha256": "5e6a50515c2566caacf0790644e4c4c7f6a2a7da2de9207f25ea436a4413d7c0",
+      "url": "https://raw.githubusercontent.com/tacle/tacle-bench/c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08/bench/kernel/ludcmp/ludcmp.c"
+    }
+  ],
+  "repository": "https://github.com/tacle/tacle-bench",
+  "revision": "c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08",
+  "scope": "Source provenance only; not benchmark inputs or training samples.",
+  "survey_date": "2026-09-21"
+}

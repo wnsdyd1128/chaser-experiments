@@ -155,6 +155,7 @@ experiment freeze. No labels, calibration, build or runtime results are invented
     sources = ['tools/rtems_periodic_pool.py', 'tools/rtems_periodic_probes.py',
                'chaser/periodic.py', 'chaser/periodic_patterns.py',
                'chaser/periodic_structures.py', 'chaser/periodic_recipes.py',
+               'chaser/periodic_staged_recipes.py',
                'chaser/periodic_registry.py', 'chaser/dataset.py',
                'tools/rtems_smoke.py']
     if version == 2:
