@@ -76,6 +76,42 @@ names and parameter changes do not establish family independence.
 The [pattern validation evidence](../../artifacts/periodic/patterns-v1/README.md)
 preserves 50 timing/U runs, three diagnostics and ten empty runs from this example.
 
+### Development probes and resource boundaries
+
+`tools.rtems_periodic_probes` freezes eleven two-task probes for line layout,
+L1/LLC capacity boundaries, hot/cold and phase order. Eight additional inputs
+exercise 4/8/12/16 tasks, balanced/skewed 4096-job counts, exactly 16 MiB of
+aligned data, and one LLC-sized task among fifteen small tasks. All inputs are
+development-only and ineligible for training or held-out evaluation.
+
+```sh
+python3 -m tools.rtems_periodic_probes init /tmp/chaser-probes-new
+python3 -m tools.rtems_periodic_probes build /tmp/chaser-probes-new
+python3 -m tools.rtems_periodic_probes build /tmp/chaser-probes-new --group boundaries
+python3 -m tools.rtems_periodic_probes run /tmp/chaser-probes-new --stage smoke
+python3 -m tools.rtems_periodic_probes run /tmp/chaser-probes-new --stage repeat --workers 8
+python3 -m tools.rtems_periodic_probes run /tmp/chaser-probes-new --stage diagnostic
+python3 -m tools.rtems_periodic_probes run /tmp/chaser-probes-new --stage empty
+python3 -m tools.rtems_periodic_probes run /tmp/chaser-probes-new \
+  --group boundaries --stage boundary --timeout 600
+python3 -m tools.rtems_periodic_probe_report /tmp/chaser-probes-new \
+  --output /tmp/chaser-probes-report.json
+```
+
+The simulator needs an accessible X display even in batch mode. Select it with
+`DISPLAY` in the collection environment. Every stage refuses an existing output
+directory; `--only` selects that stage's entire population and cannot append to a
+previous stage. Preserve failures and use a fresh root for a changed environment.
+Repeated collection requires successful smoke and analysis tied to the same
+snapshot. The full-suite reporter rechecks every planned batch and recalculates
+independent U; it does not generate labels or RF samples.
+
+Build and analysis costs are separate. Linux `wait4` RSS is the largest process
+high-water mark, not the simultaneous memory sum. The 4096-job logical limit is
+also distinct from C's `TASK_COUNT * MAX_JOBS` static record reservation and from
+the cost of printing all records. Boundary inputs receive build/runtime checks;
+the eleven primary probes receive full G/C/P linked-stream analysis.
+
 ## Scheduler and release evidence
 
 | Architecture | EDF SMP scheduler ownership | Assignment |
