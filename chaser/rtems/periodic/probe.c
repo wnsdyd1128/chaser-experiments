@@ -31,8 +31,9 @@ void probe_period(rtems_id id, period_probe *out)
 #define TRACE_CAPACITY 8192
 static struct { uint64_t ns; rtems_id task; } dispatches[4][TRACE_CAPACITY];
 static unsigned counts[4];
+static rtems_id extension;
 
-void probe_switch(Thread_Control *executing, Thread_Control *heir)
+static void probe_switch(Thread_Control *executing, Thread_Control *heir)
 {
     (void)executing;
     if (chaser_trace != 1)
@@ -44,6 +45,18 @@ void probe_switch(Thread_Control *executing, Thread_Control *heir)
         dispatches[core][n].ns = rtems_clock_get_uptime_nanoseconds();
         dispatches[core][n].task = heir->Object.id;
     }
+}
+
+rtems_status_code probe_start(void)
+{
+    const rtems_extensions_table callbacks = { .thread_switch = probe_switch };
+    return rtems_extension_create(rtems_build_name('T', 'R', 'C', 'E'),
+                                  &callbacks, &extension);
+}
+
+rtems_status_code probe_stop(void)
+{
+    return rtems_extension_delete(extension);
 }
 
 void probe_print(void)

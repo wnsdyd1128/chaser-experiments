@@ -63,6 +63,12 @@ The barrier allows all workers, including those sharing one core, to arm before
 any workload begins. Subsequent jobs block on their actual task periods. Release
 is `t0_ns + job_index * period_ticks * tick_ns`, never the dispatch timestamp.
 
+Workers cancel their period after the last recorded job and wait at a cleanup
+barrier. Once all measurements finish, the coordinator removes the diagnostic
+extension and releases cleanup. Period deletion and task exit cannot contend on
+the object allocator while another worker is still measuring. Dispatch validation
+covers preparation and measurement; teardown dispatches are outside its scope.
+
 `probe.c` reads the installed RTEMS period epoch, watchdog deadline and EDF
 priority node under the period lock. This is deliberately tied to that SDK ABI;
 the executable embeds the probe and the build manifest identifies RTEMS libraries.

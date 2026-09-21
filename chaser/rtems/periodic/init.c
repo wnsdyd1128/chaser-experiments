@@ -102,6 +102,11 @@ static rtems_task worker(rtems_task_argument argument)
                 || jobs[i][j].checksum != (chaser_empty ? 0 : workload_expected[i]))
             break;
     }
+    /* Keep object-allocator lock contention and teardown dispatches outside
+     * every worker's measurement interval, not only this worker's last job. */
+    require(rtems_rate_monotonic_cancel(period));
+    require(rtems_event_send(coordinator, 1U << i));
+    require(rtems_barrier_wait(start_barrier, RTEMS_NO_TIMEOUT));
     require(rtems_rate_monotonic_delete(period));
     require(rtems_event_send(coordinator, 1U << i));
     rtems_task_exit();
@@ -159,6 +164,7 @@ rtems_task Init(rtems_task_argument argument)
         exit(1);
     }
     coordinator = rtems_task_self();
+    if (chaser_trace) require(probe_start());
     cpu_set_t requested;
     CPU_ZERO(&requested);
     CPU_SET(0, &requested);
@@ -201,6 +207,9 @@ rtems_task Init(rtems_task_argument argument)
     require(rtems_event_receive(all, RTEMS_EVENT_ALL | RTEMS_WAIT, RTEMS_NO_TIMEOUT, &received));
     require(rtems_barrier_wait(start_barrier, RTEMS_NO_TIMEOUT));
     require(rtems_event_receive(all, RTEMS_EVENT_ALL | RTEMS_WAIT, RTEMS_NO_TIMEOUT, &received));
+    if (chaser_trace) require(probe_stop());
+    require(rtems_barrier_wait(start_barrier, RTEMS_NO_TIMEOUT));
+    require(rtems_event_receive(all, RTEMS_EVENT_ALL | RTEMS_WAIT, RTEMS_NO_TIMEOUT, &received));
     print_results();
     exit(0);
 }
@@ -217,7 +226,7 @@ rtems_task Init(rtems_task_argument argument)
 #define CONFIGURE_INIT_TASK_STACK_SIZE 16384
 #define CONFIGURE_INIT_TASK_ATTRIBUTES RTEMS_FLOATING_POINT
 #define CONFIGURE_ENABLE_FLOATING_POINT
-#define CONFIGURE_INITIAL_EXTENSIONS { .thread_switch = probe_switch }
+#define CONFIGURE_MAXIMUM_USER_EXTENSIONS 1
 #include <rtems/scheduler.h>
 #include "topology.h"
 #define CONFIGURE_RTEMS_INIT_TASKS_TABLE

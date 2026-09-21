@@ -2,7 +2,6 @@
 #define CHASER_PERIODIC_PROBE_H
 
 #include <rtems.h>
-#include <rtems/score/thread.h>
 
 /** @brief Kernel period identity, sampled under its lock. */
 typedef struct {
@@ -17,12 +16,15 @@ typedef struct {
  */
 void probe_period(rtems_id id, period_probe *out);
 
-/** @brief Record scheduler dispatches only when trace mode is selected.
- * @param executing Outgoing thread, owned by RTEMS.
- * @param heir Incoming thread, owned by RTEMS.
- * @return None. Overflow is retained and fails trace validation.
+/** @brief Install the dispatch recorder before diagnostic workers start.
+ * @return Public extension creation status; caller must check success.
  */
-void probe_switch(Thread_Control *executing, Thread_Control *heir);
+rtems_status_code probe_start(void);
+
+/** @brief Remove the recorder after all workers reach the cleanup barrier.
+ * @return Public extension deletion status; caller must check success.
+ */
+rtems_status_code probe_stop(void);
 
 /** @brief Emit buffered dispatch evidence after all workers finish.
  * @return None.
