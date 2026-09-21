@@ -1,5 +1,24 @@
 # Periodic G/C/P measurement harness
 
+## Main-experiment split policy
+
+The agreed split is **train/test/validation = 60%/20%/20% within each of the
+five workload families**. It evaluates new tasksets from known families.
+Deduplicate identical execution inputs before splitting. Keep each taskset's
+repeated measurements, G/C/P results, representations and policy variants in
+one split. Distinct parameter configurations may cross splits within a family.
+Record the split seed, integer rounding rule, per-family counts and membership
+hash; seed and rounding values remain to be specified before freezing. Train is
+for fitting, validation for calibration/model selection, and test for final evaluation.
+Do not redraw membership based on performance or replace excluded test samples.
+
+This is the agreed design, **not an implemented or frozen split**. The current
+family-level splitter and archived V3 proposal (3/1/1 families, 125/41/41 tasksets)
+use the earlier policy. Updating the splitter and validating a new manifest are
+next steps; archived artifacts remain unchanged. Historical family-held-out
+proposals below do not define the main-experiment split.
+
+
 This harness builds RF dataset measurements and supports later allocation/system
 experiments. The first pilot uses explicit placements, **not calibrated theta or
 a trained RF**. It does not establish a performance improvement or target cache
@@ -14,12 +33,12 @@ accuracy. The measurement backend is the installed `laysim-gr740`, not silicon.
 | Memory access pattern | 메모리 접근 패턴 | Address and traversal rules within a task |
 | Workload template | 워크로드 생성 원형 | Rules for constructing tasks and tasksets |
 | Workload family | 워크로드군 | Tasksets connected by a common template or reuse of base tasks |
-| Group-based split | 그룹 단위 분할 | Assignment of whole workload families to train, validation or test |
+| Within-family stratified random split | 워크로드군 내 층화 무작위 분할 | Random assignment of unique tasksets within each family: train/test/validation = 60/20/20 |
 
 A workload family includes parameter and role variants, not only identical
 access sequences. Reusing base tasks across templates connects their families
-transitively. Sharing a template does not mean sharing runtime memory. Each
-family belongs to one split; tasksets within it remain distinct samples.
+transitively. Sharing a template does not mean sharing runtime memory. All five
+families appear in every split; unique tasksets are the assignment units.
 The existing `family_id` identifies a workload family. Provenance relationships
 may still be called lineage in code; identifiers and archived evidence are
 unchanged by this terminology choice.

@@ -1,5 +1,9 @@
 # TACLeBench 단계·삼각 범위 읽기 원형
 
+현재 본실험은 5개 워크로드군 **각각의 고유 taskset**을 train/test/validation
+60%/20%/20%로 나누는 [분할 정책](README.md#main-experiment-split-policy)을 따른다.
+아래 워크로드군 단위 split 수치는 보존된 후보 생성 당시의 초안이다.
+
 V2의 window/multi-array/block-phase에 두 보수적 워크로드군을 추가한다. 출처 revision은
 `c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08`이며 파일 hash는
 [staged-recipe-sources.json](staged-recipe-sources.json)에 있다. 보존 조사본을 읽었다.

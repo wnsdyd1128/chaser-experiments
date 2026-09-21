@@ -1,5 +1,9 @@
 # TACLeBench 관찰에서 일반화한 읽기 원형 v2
 
+현재 본실험은 5개 워크로드군 **각각의 고유 taskset**을 train/test/validation
+60%/20%/20%로 나누는 [분할 정책](README.md#main-experiment-split-policy)을 따른다.
+아래 워크로드군 단위 split 수치는 보존된 후보 생성 당시의 초안이다.
+
 이 문서는 합성 입력의 계약이다. Benchmark 코드·입력·trace를 실행하거나 학습 표본으로
 사용하지 않는다. **PolyBench는 외부 평가용이며 원형 도출·입력 선정·튜닝에서 제외한다.**
 
