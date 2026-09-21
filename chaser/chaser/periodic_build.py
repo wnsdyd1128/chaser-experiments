@@ -109,6 +109,7 @@ def prepare(configuration: dict, output: Path) -> dict:
         lines = [f'#define TASK_COUNT {len(tasks)}',
                  f'#define MAX_JOBS {max(t["job_count"] for t in tasks)}',
                  f'#define ARCHITECTURE {plan["architecture"]}',
+                 f'#define CHASER_CONTRACT_ID "{plan["contract_id"]}"',
                  f'#define CHASER_PLAN_HASH "{plan["plan_hash"]}"']
         for key, macro in (('period_ticks', 'PERIODS'), ('job_count', 'JOB_COUNTS'),
                            ('core', 'CORES')):

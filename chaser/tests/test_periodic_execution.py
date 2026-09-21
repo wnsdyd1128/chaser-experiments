@@ -12,6 +12,7 @@ from chaser.periodic_dataset import load_batch
 from tools.rtems_periodic import run
 from tools.rtems_smoke import check_inputs
 from test_periodic import configuration, evidence
+from test_periodic_public import public_evidence
 
 
 @pytest.fixture(scope='module')
@@ -77,7 +78,7 @@ def simulator(tmp_path, body):
 
 
 def test_fresh_processes_reparse_the_same_raw_evidence(prepared, tmp_path):
-    plan, records = evidence()
+    plan, records = public_evidence()
     content = '\n'.join('PERIODIC ' + json.dumps(r) for r in records)
     fake = simulator(tmp_path, 'echo "PID=$$"\n' + "cat <<'LOG'\n" + content + '\nLOG')
     directory = tmp_path / 'runs'
@@ -86,6 +87,15 @@ def test_fresh_processes_reparse_the_same_raw_evidence(prepared, tmp_path):
     assert load_batch(prepared, directory) == rows
     assert (directory / '0.log').read_text().splitlines()[0] != (
         directory / '1.log').read_text().splitlines()[0]
+    stored = directory / 'measurements.jsonl'
+    original = stored.read_text()
+    for field, value in (('mean_elapsed_ns', 1), ('contract_id', 'wrong')):
+        changed = [dict(r) for r in rows]
+        changed[0][field] = value
+        stored.write_text(''.join(json.dumps(r) + '\n' for r in changed))
+        with pytest.raises(ValueError, match='measurement|contract'):
+            load_batch(prepared, directory)
+        stored.write_text(original)
     with pytest.raises(FileExistsError):
         run(prepared, directory, architecture=2, runs=1, simulator=fake)
     (directory / '0.log').write_text('changed')

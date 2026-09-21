@@ -63,57 +63,55 @@ The barrier allows all workers, including those sharing one core, to arm before
 any workload begins. Subsequent jobs block on their actual task periods. Release
 is `t0_ns + job_index * period_ticks * tick_ns`, never the dispatch timestamp.
 
+### Public measurement contract v2
+
+New plans and run headers identify `chaser-periodic-measurement-v2`. Normal timing,
+independent U and empty-job runs use public RTEMS APIs. They never call
+`probe_period()` or install the dispatch extension. The same ELF contains an
+optional diagnostic path selected by `--trace`; workload, layout, topology and
+release settings therefore stay identical between timing and diagnostic runs.
 Workers cancel their period after the last recorded job and wait at a cleanup
 barrier. Once all measurements finish, the coordinator removes the diagnostic
 extension and releases cleanup. Period deletion and task exit cannot contend on
 the object allocator while another worker is still measuring. Dispatch validation
 covers preparation and measurement; teardown dispatches are outside its scope.
 
-`probe.c` reads the installed RTEMS period epoch, watchdog deadline and EDF
-priority node under the period lock. This is deliberately tied to that SDK ABI;
-the executable embeds the probe and the build manifest identifies RTEMS libraries.
-The private timecounter starts at `SBT_1S`; the probe removes that offset to match
-the public zero-based uptime API.
+Both public tick readings around the first `period()` call must equal `t0_tick`.
+For each job, two `get_status()` calls supply CPU time, wall time since period
+initiation, state and postponed-job count. Uptime brackets each status call.
+If a call observes wall duration `w` between uptime readings `lo` and `hi`, its
+epoch is constrained to `[lo-w, hi-w]`. The before/after intervals must overlap
+(allowing 1 ns of conversion rounding). Their intersection must be narrower than
+one tick and entirely within one tick of the nominal release. Preemption may
+widen either individual interval; unresolved uncertainty fails validation.
 
-Watchdog and EDF deadlines must match the nominal table **exactly in ticks**.
-The observed epoch may be slightly early or late relative to `tick * 1 ms`;
-an absolute difference of one tick or more fails. No deadline slack is added to
-job completion checks. `ready_ns` is unavailable: period initiation is not a
-measurement of the exact scheduler ready transition. The raw epoch is retained
-separately. The release/deadline table is recoverable from the run header, task
-periods and job indices.
+These bounds check consistency with one accounting epoch and the release phase;
+they do not directly observe the private watchdog or EDF deadline. Normal raw
+jobs omit `epoch_*`, `timer_*` and `edf_*` fields, and validators reject their
+presence. `ready_ns` remains null because neither path measures the exact ready
+transition. No slack is added to completion deadline checks, including the last
+job where no later `period()` call can report a timeout.
 
-### Planned public-API measurement path
-
-The current `probe_period()` runs before and after every job, including normal
-timing and independent-U runs. `--trace` controls dispatch tracing only; disabling
-it does not disable private period inspection.
-
-The documented next change is to use public RTEMS APIs for normal timing and U,
-and move private period/EDF inspection into separate diagnostic runs. This change
-is **not implemented yet**. Uptime elapsed time includes preemption after job
-start; it is distinct from CPU time and from nominal-release response time.
-Elapsed mean/max will be auxiliary metrics; TET and TAT retain their definitions
-below. Public period status and completion deadlines must detect overruns even
-on the final job, where no subsequent `period()` call can report a timeout.
-
-Public status does not directly expose the private EDF deadline or the exact
-scheduler ready transition. The transition must revise the measurement contract
-ID, raw schema and validators to state what each mode actually observes, then
-revalidate G/C/P, U, overhead and final-job failure handling. Existing pilot
-archives retain their original measurement protocol. See the
-[measurement transition plan](../../system-prompt-extraction/plan/MEASUREMENT-CONTRACT.md#22-공개-rtems-api-중심-측정으로-전환하는-방침--구현-예정).
+Only `--trace` calls `probe.c` to read the locked period epoch, watchdog and EDF
+priority node and installs the dispatch recorder through `rtems_extension_create()`.
+This path depends on the installed SDK ABI; manifest hashes identify its libraries.
+The private `SBT_1S` offset is removed to match zero-based uptime. Watchdog and EDF
+deadlines must match nominal ticks exactly, and the private epoch must agree with
+the public status bounds. Diagnostic timing never enters U or label datasets.
+Historical v1 plans/logs remain readable using their original private-probe rules;
+the archived `pilot-v1` evidence is unchanged.
 
 ## Metrics and failure handling
 
 Per job, `executed_since_last_period` from the public rate-monotonic status API is
-sampled immediately before and after workload execution. Locked period snapshots
-bracket this interval to check that the epoch/deadline did not change. All records
+sampled before and after workload execution within the uptime interval. All records
 are buffered in RAM; printing happens after every worker finishes.
 
 - `TET = sum(cpu_after_ns - cpu_before_ns)` over all measured jobs.
 - `TAT = sum(completion_ns - nominal_release_ns)` over all measured jobs.
 - `makespan_ns = max(completion_ns) - t0_ns` is retained separately.
+- `mean_elapsed_ns` and `max_elapsed_ns` summarize `completion_ns - start_ns`.
+  Elapsed includes preemption after start and excludes waiting before start.
 - CPU sample overhead inside the measured interval is included and never subtracted.
 - Timeout, missing/duplicate job, checksum error, wrong domain, shifted period,
   accounting error, deadline miss and postponed job cause failure, including on

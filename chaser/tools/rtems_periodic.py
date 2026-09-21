@@ -23,7 +23,8 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
     Mode zero executes the taskset; mode i+1 runs task i alone on core zero in
     the very same P ELF. Simulator boot writes select mode before execution;
     the executed ELF remains unchanged and is checked before and after runs.
-    Trace runs are separate evidence and must not enter the timing dataset.
+    Trace enables private period probes and the dispatch extension in v2.
+    These diagnostic runs must not enter the timing dataset.
     """
     if (type(runs) is not int or runs < 1 or not 0 < timeout < float('inf')
             or type(architecture) is not int or architecture not in range(3)):
@@ -56,18 +57,20 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
                    str(simulator), '-core0', str(elf), '-batch', str(batch)]), '/dev/null']
     simulator_hash = file_hash(simulator)
     protocol = dict(runs=runs, timeout_seconds=timeout, command=command,
+                    contract_id=plan['contract_id'],
                     boot_hash=file_hash(batch), elf_hash=file_hash(elf),
                     simulator_hash=simulator_hash, manifest_hash=file_hash(prepared / 'manifest.json'),
                     plan_hash=plan['plan_hash'], mode=mode, trace=trace, empty=empty,
                     implementation_hashes={str(p.relative_to(output)): file_hash(p)
                                            for p in implementation.rglob('*.py')},
                     execution_backend='laysim-gr740', measurement_source='measured',
-                    scope='scheduler-trace' if trace else 'empty-overhead' if empty else 'periodic-timing')
+                    scope='periodic-diagnostic' if trace else 'empty-overhead' if empty else 'periodic-timing')
     write_json(output / 'protocol.json', protocol)
     records = []
     with (output / 'measurements.jsonl').open('x') as stream:
         for index in range(runs):
             record = dict(run_id=str(index), workload_id=plan['workload_id'],
+                          contract_id=plan['contract_id'],
                           architecture=architecture, mapping_hash=plan['mapping_hash'],
                           topology_id=plan['topology_id'], allocator_id=plan['policy_id'],
                           plan_hash=plan['plan_hash'], elf_hash=protocol['elf_hash'],

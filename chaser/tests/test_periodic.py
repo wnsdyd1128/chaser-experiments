@@ -4,7 +4,7 @@ from copy import deepcopy
 
 import pytest
 
-from chaser.periodic import make_plan, aggregate, parse_log
+from chaser.periodic import make_plan, aggregate, parse_log, digest
 
 
 def configuration():
@@ -18,6 +18,9 @@ def configuration():
 
 def evidence():
     plan = make_plan(configuration(), 2)
+    # Archived v1 records remain readable under their original contract.
+    plan['contract_id'] = 'chaser-periodic-measurement-v1'
+    plan['plan_hash'] = digest({k: v for k, v in plan.items() if k != 'plan_hash'})
     header = dict(kind='run', plan_hash=plan['plan_hash'], cpus=4, mode=0,
                   trace=0, empty=0, t0_ns=100_000_000, t0_tick=100, tick_ns=1_000_000)
     tasks, jobs = [], []

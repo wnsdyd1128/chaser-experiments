@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from chaser.labeling import Measurement
-from chaser.periodic import digest, parse_log
+from chaser.periodic import CONTRACT, digest, parse_log
 from tools.rtems_smoke import check_inputs, file_hash
 
 
@@ -26,6 +26,9 @@ def load_batch(prepared: Path, directory: Path) -> list[dict]:
         raise ValueError('Missing or duplicate planned runs')
     for row in records:
         plan = json.loads((prepared / ('g', 'c', 'p')[row['architecture']] / 'plan.json').read_text())
+        if plan['contract_id'] == CONTRACT and (
+                row.get('contract_id') != CONTRACT or protocol.get('contract_id') != CONTRACT):
+            raise ValueError('Measurement contract mismatch')
         elf = prepared / 'build' / (('g', 'c', 'p')[row['architecture']] + '.exe')
         if (row['elf_hash'] != file_hash(elf) or row['elf_hash'] != protocol['elf_hash']
                 or row['plan_hash'] != plan['plan_hash'] or row['plan_hash'] != protocol['plan_hash']
@@ -46,6 +49,9 @@ def load_batch(prepared: Path, directory: Path) -> list[dict]:
                 raise ValueError('Failed raw evidence was marked successful')
             if any(row[k] != parsed[k] for k in ('tet_ns', 'tat_ns', 'makespan_ns', 'jobs')):
                 raise ValueError('Stored measurement differs from raw evidence')
+            if plan['contract_id'] == CONTRACT and any(row[k] != parsed[k] for k in
+                    ('mean_elapsed_ns', 'max_elapsed_ns', 'header', 'task_records')):
+                raise ValueError('Stored public measurement differs from raw evidence')
     return records
 
 

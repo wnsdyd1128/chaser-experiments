@@ -5,7 +5,8 @@ from hashlib import sha256
 import json
 import re
 
-CONTRACT = 'chaser-periodic-measurement-v1'
+CONTRACT = 'chaser-periodic-measurement-v2'
+LEGACY_CONTRACT = 'chaser-periodic-measurement-v1'
 TOPOLOGIES = ('g-edfsmp-4-v1', 'c-edfsmp-1-3-v1', 'p-edfsmp-4x1-v1')
 TICK_NS = 1_000_000
 
@@ -85,9 +86,9 @@ def aggregate(records: list[dict], plan: dict, *, mode: int = 0,
               trace: bool = False, empty: bool = False) -> dict:
     """Preserve failed raw jobs and partial sums; only complete runs are ok.
 
-    Kernel period snapshots bracket the public CPU samples and identify the
-    accounting epoch and EDF deadline. Dispatch timestamps never replace the
-    nominal release table. Mode i+1 characterizes task i alone on P/core 0.
+    Public status call bounds constrain the accounting epoch; private snapshots
+    are required only for v2 diagnostics and historical v1 logs. Dispatch times
+    never replace nominal releases. Mode i+1 runs task i alone on P/core 0.
     """
     errors = set()
     jobs = [r for r in records if r.get('kind') == 'job']
@@ -102,6 +103,11 @@ def aggregate(records: list[dict], plan: dict, *, mode: int = 0,
     header = headers[0]
     result['header'] = header
     try:
+        public = plan['contract_id'] == CONTRACT
+        if plan['contract_id'] not in (CONTRACT, LEGACY_CONTRACT):
+            errors.add('contract')
+        if public and header['contract_id'] != CONTRACT:
+            errors.add('provenance')
         if any(type(header[k]) is not int or header[k] < 0 for k in
                ('cpus', 'tick_ns', 'mode', 'trace', 'empty', 't0_ns', 't0_tick')):
             errors.add('header_schema')
@@ -125,7 +131,12 @@ def aggregate(records: list[dict], plan: dict, *, mode: int = 0,
             if (row['domain_mask'] != sum(1 << c for c in domain)
                     or row['affinity_mask'] != 15 or row['scheduler_ok'] != 1):
                 errors.add('domain')
-        tet, tat, completions = 0, 0, []
+            if public and any(type(row[k]) is not int or row[k] != header['t0_tick']
+                              for k in ('arm_before_tick', 'arm_after_tick')):
+                errors.add('arm_phase')
+        if public and header['t0_ns'] != header['t0_tick'] * plan['tick_ns']:
+            errors.add('release_mismatch')
+        tet, tat, completions, elapsed = 0, 0, [], []
         for job in jobs:
             if job['task'] not in active:
                 errors.add('unknown_task')
@@ -138,20 +149,24 @@ def aggregate(records: list[dict], plan: dict, *, mode: int = 0,
             period_ns = task['period_ticks'] * plan['tick_ns']
             release = header['t0_ns'] + job['job'] * period_ns
             deadline = header['t0_tick'] + (job['job'] + 1) * task['period_ticks']
-            if (job['release_ns'] != release or job['timer_before'] != deadline
-                    or job['timer_after'] != deadline):
+            if job['release_ns'] != release:
                 errors.add('release_mismatch')
-            if job['edf_before'] != deadline or job['edf_after'] != deadline:
-                errors.add('edf_deadline')
-            if job['epoch_before_ns'] != job['epoch_after_ns']:
-                errors.add('accounting_epoch')
-            # Watchdog and EDF deadlines are checked in their exact tick
-            # domain above. Sub-tick clock phase may be early or late relative
-            # to nominal tick*ns; it must not be mistaken for a shifted period.
-            if abs(job['epoch_before_ns'] - release) >= plan['tick_ns']:
-                errors.add('release_mismatch')
-            if job['epoch_before_ns'] > job['start_ns']:
-                errors.add('timestamps')
+            if public:
+                _check_public_status(job, release, plan['tick_ns'], errors)
+            if not public or trace:
+                if job['timer_before'] != deadline or job['timer_after'] != deadline:
+                    errors.add('release_mismatch')
+                if job['edf_before'] != deadline or job['edf_after'] != deadline:
+                    errors.add('edf_deadline')
+                if job['epoch_before_ns'] != job['epoch_after_ns']:
+                    errors.add('accounting_epoch')
+                if abs(job['epoch_before_ns'] - release) >= plan['tick_ns']:
+                    errors.add('release_mismatch')
+                if job['epoch_before_ns'] > job['start_ns']:
+                    errors.add('timestamps')
+            elif any(k in job for k in ('epoch_before_ns', 'epoch_after_ns',
+                                       'timer_before', 'timer_after', 'edf_before', 'edf_after')):
+                errors.add('unexpected_probe')
             if not release <= job['start_ns'] <= job['completion_ns']:
                 errors.add('timestamps')
             if job['completion_ns'] > release + period_ns:
@@ -173,6 +188,7 @@ def aggregate(records: list[dict], plan: dict, *, mode: int = 0,
             tet += cpu
             tat += job['completion_ns'] - release
             completions.append(job['completion_ns'])
+            elapsed.append(job['completion_ns'] - job['start_ns'])
         switches = [r for r in records if r.get('kind') == 'switch']
         if trace:
             result['switches'] = switches
@@ -198,8 +214,39 @@ def aggregate(records: list[dict], plan: dict, *, mode: int = 0,
             result.update(tet_ns=tet, tat_ns=tat,
                           makespan_ns=max(completions) - header['t0_ns'],
                           mean_response_ns=tat / len(completions))
+            if public:
+                result.update(mean_elapsed_ns=sum(elapsed) / len(elapsed),
+                              max_elapsed_ns=max(elapsed))
     except (KeyError, TypeError, ValueError) as error:
         errors.add('record_schema')
         result['schema_error'] = str(error)
     result.update(execution_status='failed' if errors else 'ok', errors=sorted(errors))
     return result
+
+
+def _check_public_status(job: dict, release: int, tick: int, errors: set) -> None:
+    # since_last_period is sampled inside get_status(), not at either uptime
+    # endpoint. Keep an interval rather than inventing an exact kernel epoch.
+    start, end = job['start_ns'], job['completion_ns']
+    before_end, after_start = job['status_before_end_ns'], job['status_after_start_ns']
+    if not start <= before_end <= after_start <= end:
+        errors.add('timestamps')
+    intervals = []
+    for side, lo, hi in (('before', start, before_end), ('after', after_start, end)):
+        wall = job[f'wall_{side}_ns']
+        if wall < 0:
+            errors.add('epoch_resolution')
+        lower, upper = lo - wall, hi - wall
+        intervals.append((lower, upper))
+        if upper <= release - tick or lower >= release + tick:
+            errors.add('release_mismatch')
+        # One nanosecond accounts for separate timespec/uptime rounding.
+        if f'epoch_{side}_ns' in job and not lower - 1 <= job[f'epoch_{side}_ns'] <= upper + 1:
+            errors.add('accounting_epoch')
+    lower, upper = max(i[0] for i in intervals), min(i[1] for i in intervals)
+    if lower > upper + 1:
+        errors.add('accounting_epoch')
+    if upper - lower >= tick:
+        errors.add('epoch_resolution')
+    if lower <= release - tick or upper >= release + tick:
+        errors.add('release_mismatch')

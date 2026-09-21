@@ -19,11 +19,17 @@ static uint64_t t0_ns;
 static uint32_t t0_tick;
 static struct {
     unsigned domain_mask, affinity_mask, scheduler_ok, count;
+    uint32_t arm_before_tick, arm_after_tick;
 } placement[TASK_COUNT];
+typedef struct {
+    uint64_t cpu, wall;
+    unsigned state, postponed;
+} public_status;
 static struct {
-    uint64_t start, completion, cpu_before, cpu_after;
+    uint64_t start, completion, status_before_end, status_after_start;
     unsigned start_core, end_core, checksum, status;
-    period_probe before, after;
+    public_status before, after;
+    period_probe diagnostic_before, diagnostic_after;
 } jobs[TASK_COUNT][MAX_JOBS];
 
 static void require_at(rtems_status_code status, unsigned line)
@@ -56,12 +62,19 @@ static int active(unsigned i)
     return chaser_mode == 0 || chaser_mode == i + 1;
 }
 
-static uint64_t cpu_time(rtems_id id)
+static uint64_t nanoseconds(const struct timespec *time)
+{
+    return (uint64_t)time->tv_sec * 1000000000ULL + time->tv_nsec;
+}
+
+static void read_status(rtems_id id, public_status *out)
 {
     rtems_rate_monotonic_period_status status;
     require(rtems_rate_monotonic_get_status(id, &status));
-    return (uint64_t)status.executed_since_last_period.tv_sec * 1000000000ULL
-        + status.executed_since_last_period.tv_nsec;
+    out->cpu = nanoseconds(&status.executed_since_last_period);
+    out->wall = nanoseconds(&status.since_last_period);
+    out->state = status.state;
+    out->postponed = status.postponed_jobs_count;
 }
 
 static uint32_t empty_job(void) { return 0; }
@@ -77,22 +90,26 @@ static rtems_task worker(rtems_task_argument argument)
     require(rtems_event_receive(ARM, RTEMS_EVENT_ALL | RTEMS_WAIT,
                                 RTEMS_NO_TIMEOUT, &received));
     for (unsigned j = 0; j < job_counts[i]; ++j) {
+        if (j == 0) placement[i].arm_before_tick = rtems_clock_get_ticks_since_boot();
         jobs[i][j].status = rtems_rate_monotonic_period(period, periods[i]);
         if (j == 0) {
+            placement[i].arm_after_tick = rtems_clock_get_ticks_since_boot();
             /* Every worker arms at t0, then blocks so other nonperiodic
              * workers on the same core can arm before EDF workload begins. */
             require(rtems_event_send(coordinator, 1U << i));
             require(rtems_barrier_wait(start_barrier, RTEMS_NO_TIMEOUT));
         }
-        probe_period(period, &jobs[i][j].before);
+        if (chaser_trace) probe_period(period, &jobs[i][j].diagnostic_before);
         jobs[i][j].start_core = rtems_scheduler_get_processor();
         jobs[i][j].start = rtems_clock_get_uptime_nanoseconds();
-        jobs[i][j].cpu_before = cpu_time(period);
+        read_status(period, &jobs[i][j].before);
+        jobs[i][j].status_before_end = rtems_clock_get_uptime_nanoseconds();
         jobs[i][j].checksum = job();
-        jobs[i][j].cpu_after = cpu_time(period);
+        jobs[i][j].status_after_start = rtems_clock_get_uptime_nanoseconds();
+        read_status(period, &jobs[i][j].after);
         jobs[i][j].completion = rtems_clock_get_uptime_nanoseconds();
         jobs[i][j].end_core = rtems_scheduler_get_processor();
-        probe_period(period, &jobs[i][j].after);
+        if (chaser_trace) probe_period(period, &jobs[i][j].diagnostic_after);
         placement[i].count++;
         /* Preserve the offending final record, including a final-job miss. */
         if (jobs[i][j].status != RTEMS_SUCCESSFUL
@@ -114,36 +131,46 @@ static rtems_task worker(rtems_task_argument argument)
 
 static void print_results(void)
 {
-    printf("PERIODIC {\"kind\":\"run\",\"plan_hash\":\"%s\",\"cpus\":4,"
+    printf("PERIODIC {\"kind\":\"run\",\"plan_hash\":\"%s\",\"contract_id\":\"%s\",\"cpus\":4,"
            "\"mode\":%u,\"trace\":%u,\"empty\":%u,\"t0_ns\":%" PRIu64 ",\"t0_tick\":%u,"
-           "\"tick_ns\":%" PRIu64 "}\n", CHASER_PLAN_HASH, (unsigned)chaser_mode,
+           "\"tick_ns\":%" PRIu64 "}\n", CHASER_PLAN_HASH, CHASER_CONTRACT_ID, (unsigned)chaser_mode,
            (unsigned)chaser_trace, (unsigned)chaser_empty, t0_ns, (unsigned)t0_tick, (uint64_t)TICK_NS);
     for (unsigned i = 0; i < TASK_COUNT; ++i) {
         if (!active(i)) continue;
         printf("PERIODIC {\"kind\":\"task\",\"task\":%u,\"thread\":%u,"
-               "\"domain_mask\":%u,\"affinity_mask\":%u,\"scheduler_ok\":%u}\n",
+               "\"domain_mask\":%u,\"affinity_mask\":%u,\"scheduler_ok\":%u,"
+               "\"arm_before_tick\":%u,\"arm_after_tick\":%u}\n",
                i, (unsigned)tasks[i], placement[i].domain_mask,
-               placement[i].affinity_mask, placement[i].scheduler_ok);
+               placement[i].affinity_mask, placement[i].scheduler_ok,
+               (unsigned)placement[i].arm_before_tick, (unsigned)placement[i].arm_after_tick);
         for (unsigned j = 0; j < placement[i].count; ++j) {
             printf("PERIODIC {\"kind\":\"job\",\"task\":%u,\"job\":%u,"
                    "\"release_ns\":%" PRIu64 ",\"start_ns\":%" PRIu64
                    ",\"completion_ns\":%" PRIu64 ",\"cpu_before_ns\":%" PRIu64
-                   ",\"cpu_after_ns\":%" PRIu64 ",\"epoch_before_ns\":%" PRIu64
-                   ",\"epoch_after_ns\":%" PRIu64 ",\"timer_before\":%" PRIu64
-                   ",\"timer_after\":%" PRIu64 ",\"edf_before\":%" PRIu64
-                   ",\"edf_after\":%" PRIu64 ",\"state_before\":%u,\"state_after\":%u,"
+                   ",\"cpu_after_ns\":%" PRIu64 ",\"wall_before_ns\":%" PRIu64
+                   ",\"wall_after_ns\":%" PRIu64 ",\"status_before_end_ns\":%" PRIu64
+                   ",\"status_after_start_ns\":%" PRIu64 ",\"state_before\":%u,\"state_after\":%u,"
                    "\"postponed_before\":%u,\"postponed_after\":%u,\"period_status\":%u,"
-                   "\"start_core\":%u,\"end_core\":%u,\"checksum\":%u}\n",
+                   "\"start_core\":%u,\"end_core\":%u,\"checksum\":%u",
                    i, j, t0_ns + (uint64_t)j * periods[i] * TICK_NS,
                    jobs[i][j].start, jobs[i][j].completion,
-                   jobs[i][j].cpu_before, jobs[i][j].cpu_after,
-                   jobs[i][j].before.epoch_ns, jobs[i][j].after.epoch_ns,
-                   jobs[i][j].before.timer, jobs[i][j].after.timer,
-                   jobs[i][j].before.edf, jobs[i][j].after.edf,
+                   jobs[i][j].before.cpu, jobs[i][j].after.cpu,
+                   jobs[i][j].before.wall, jobs[i][j].after.wall,
+                   jobs[i][j].status_before_end, jobs[i][j].status_after_start,
                    jobs[i][j].before.state, jobs[i][j].after.state,
                    jobs[i][j].before.postponed, jobs[i][j].after.postponed,
                    jobs[i][j].status, jobs[i][j].start_core, jobs[i][j].end_core,
                    jobs[i][j].checksum);
+            if (chaser_trace) {
+                const period_probe *before = &jobs[i][j].diagnostic_before;
+                const period_probe *after = &jobs[i][j].diagnostic_after;
+                printf(",\"epoch_before_ns\":%" PRIu64 ",\"epoch_after_ns\":%" PRIu64
+                       ",\"timer_before\":%" PRIu64 ",\"timer_after\":%" PRIu64
+                       ",\"edf_before\":%" PRIu64 ",\"edf_after\":%" PRIu64,
+                       before->epoch_ns, after->epoch_ns, before->timer, after->timer,
+                       before->edf, after->edf);
+            }
+            puts("}");
         }
     }
     probe_print();
@@ -197,8 +224,8 @@ rtems_task Init(rtems_task_argument argument)
     }
     require(rtems_event_receive(all, RTEMS_EVENT_ALL | RTEMS_WAIT, RTEMS_NO_TIMEOUT, &received));
     /* A fixed future tick is the nominal epoch. Uptime starts at zero on this
-     * BSP; raw kernel epochs verify tick phase instead of assuming dispatch
-     * time equals release time. */
+     * BSP. Arm tick brackets and public status elapsed-time bounds check phase;
+     * exact watchdog/EDF deadlines are available only in diagnostic mode. */
     t0_tick = rtems_clock_get_ticks_since_boot() + 20;
     t0_ns = (uint64_t)t0_tick * TICK_NS;
     require(rtems_task_wake_after(t0_tick - rtems_clock_get_ticks_since_boot()));
