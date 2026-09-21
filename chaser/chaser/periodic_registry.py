@@ -9,6 +9,7 @@ from copy import deepcopy
 
 from chaser.periodic import digest, make_plan
 from chaser.periodic_patterns import job_access_count
+from chaser.periodic_recipes import RECIPES
 from chaser.periodic_structures import STRUCTURES
 
 
@@ -16,6 +17,7 @@ DEVELOPMENT_STRUCTURES = frozenset(('cyclic', 'hot-cold', 'phase'))
 LINEAGES = {p: p for p in (*DEVELOPMENT_STRUCTURES, *STRUCTURES)}
 # Whole-array and tiled directional scans share their base traversal recipe.
 LINEAGES.update({'forward-reverse': 'directional-scan', 'tile-reverse': 'directional-scan'})
+LINEAGES.update(RECIPES)
 
 
 def build_registry(records: list[dict]) -> dict:

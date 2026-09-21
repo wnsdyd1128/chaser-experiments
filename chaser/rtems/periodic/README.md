@@ -44,6 +44,9 @@ cache activity. Array data and cache state are not reset between sweeps or jobs.
 
 ### Workload patterns
 
+Source-informed synthetic recipes are specified in [RECIPES.md](RECIPES.md).
+They require an even `width` in 2–32 and complete blocks in `distinct`.
+
 Omitting `pattern` retains the original cyclic source and plan fields. The three
 supported values specify byte-element access order, not an application family:
 

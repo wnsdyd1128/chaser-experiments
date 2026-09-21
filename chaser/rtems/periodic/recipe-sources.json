@@ -1,0 +1,51 @@
+{
+  "repository": "https://github.com/tacle/tacle-bench",
+  "revision": "c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08",
+  "survey_date": "2026-09-21",
+  "scope": "Source provenance only; not benchmark inputs or training samples.",
+  "excluded_evaluation_suite": "PolyBench",
+  "files": [
+    {
+      "path": "bench/kernel/fir2dim/fir2dim.c",
+      "url": "https://raw.githubusercontent.com/tacle/tacle-bench/c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08/bench/kernel/fir2dim/fir2dim.c",
+      "bytes": 4561,
+      "sha256": "c0f06e2396560c61417d70950360604207f37a144b900b3bb3d186f6a51d7cec",
+      "git_blob_sha1": "054c14452747aa01fb27f29b994f33448077b4ec"
+    },
+    {
+      "path": "bench/kernel/filterbank/filterbank.c",
+      "url": "https://raw.githubusercontent.com/tacle/tacle-bench/c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08/bench/kernel/filterbank/filterbank.c",
+      "bytes": 3895,
+      "sha256": "b2f05eb4e218c72798c9e3a6d570ba29bacf6f4fbb6973eda69e42c227b89f50",
+      "git_blob_sha1": "c9ab6dee336a6fce2ca09f0079445c585c7d7ee1"
+    },
+    {
+      "path": "bench/sequential/fmref/fmref.c",
+      "url": "https://raw.githubusercontent.com/tacle/tacle-bench/c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08/bench/sequential/fmref/fmref.c",
+      "bytes": 7733,
+      "sha256": "5a64ade837ad3e059a851f47385e5db4b514f4e21432f464f5f721d71b55356d",
+      "git_blob_sha1": "c1b06112b89ce4b10da411837a01814b0e34e1dd"
+    },
+    {
+      "path": "bench/kernel/st/st.c",
+      "url": "https://raw.githubusercontent.com/tacle/tacle-bench/c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08/bench/kernel/st/st.c",
+      "bytes": 4239,
+      "sha256": "faf611aac470b7be84abc550491d203d680000be37c034074ad42d950ce9602c",
+      "git_blob_sha1": "8a716fec0940a29b26e892588a16af1749f2bd76"
+    },
+    {
+      "path": "bench/kernel/matrix1/matrix1.c",
+      "url": "https://raw.githubusercontent.com/tacle/tacle-bench/c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08/bench/kernel/matrix1/matrix1.c",
+      "bytes": 3806,
+      "sha256": "de07299ca342c626454bc655a4ba4425935571f36643383e51e5bfc27d46654d",
+      "git_blob_sha1": "2b235041cf089f3b5b5448f8fb74b2f6cf8d1abf"
+    },
+    {
+      "path": "bench/kernel/jfdctint/jfdctint.c",
+      "url": "https://raw.githubusercontent.com/tacle/tacle-bench/c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08/bench/kernel/jfdctint/jfdctint.c",
+      "bytes": 11699,
+      "sha256": "916186c1fcac8f8bec8e4d523c84c055f2693eb87d13e4ea789c34e5911c1468",
+      "git_blob_sha1": "0e2f4fb7ea0f0b60ccb3e90dfd03e956d93334e8"
+    }
+  ]
+}

@@ -44,6 +44,7 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
     root = Path(__file__).resolve().parents[1]
     for relative in ('chaser/periodic.py', 'chaser/periodic_build.py',
                      'chaser/periodic_patterns.py', 'chaser/periodic_structures.py',
+                     'chaser/periodic_recipes.py',
                      'chaser/periodic_dataset.py', 'tools/rtems_periodic.py',
                      'tools/rtems_smoke.py'):
         destination = implementation / relative

@@ -143,7 +143,8 @@ experiment freeze. No labels, calibration, build or runtime results are invented
     (output / 'implementation').mkdir()
     sources = ['tools/rtems_periodic_pool.py', 'tools/rtems_periodic_probes.py',
                'chaser/periodic.py', 'chaser/periodic_patterns.py',
-               'chaser/periodic_structures.py', 'chaser/periodic_registry.py', 'chaser/dataset.py',
+               'chaser/periodic_structures.py', 'chaser/periodic_recipes.py',
+               'chaser/periodic_registry.py', 'chaser/dataset.py',
                'tools/rtems_smoke.py']
     for source in sources:
         (output / 'implementation' / Path(source).name).write_bytes((ROOT / source).read_bytes())

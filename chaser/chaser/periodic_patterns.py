@@ -7,6 +7,7 @@ Absent pattern fields retain the original cyclic plan and generated source.
 
 from collections.abc import Iterator
 
+from chaser import periodic_recipes as recipes
 from chaser.periodic_structures import (
     STRUCTURES, structure_body, sweep_counts, sweep_indices, validate_structure,
 )
@@ -19,6 +20,11 @@ def validate_pattern(task: dict) -> None:
     Region sizes count accessed byte elements, not necessarily cache lines.
     """
     pattern = task.get('pattern', 'cyclic')
+    if pattern in recipes.RECIPES:
+        recipes.validate_recipe(task)
+        return
+    if 'width' in task:
+        raise ValueError('Recipe width is not valid for this pattern')
     if pattern in STRUCTURES:
         validate_structure(task)
         return
@@ -37,6 +43,8 @@ def validate_pattern(task: dict) -> None:
 
 def job_access_count(task: dict) -> int:
     """Count every byte load, including region repetitions in one full job."""
+    if task.get('pattern') in recipes.RECIPES:
+        return task['sweeps'] * recipes.sweep_counts(task)[0]
     if task.get('pattern') in STRUCTURES:
         return task['sweeps'] * sweep_counts(task)[0]
     if task.get('pattern', 'cyclic') == 'cyclic':
@@ -54,6 +62,8 @@ def wrapper_sweeps(task: dict) -> int:
 def loop_iterations(task: dict) -> int:
     """Count dynamic trips at every emitted loop level for YARDA's budget."""
     pattern = task.get('pattern', 'cyclic')
+    if pattern in recipes.RECIPES:
+        return task['sweeps'] * (1 + recipes.sweep_counts(task)[1])
     if pattern in STRUCTURES:
         return task['sweeps'] * (1 + sweep_counts(task)[1])
     overhead = task['sweeps']
@@ -67,6 +77,11 @@ def loop_iterations(task: dict) -> int:
 def access_offsets(task: dict) -> Iterator[int]:
     """Yield the specified job's byte offsets without allocating a full trace."""
     pattern = task.get('pattern', 'cyclic')
+    if pattern in recipes.RECIPES:
+        for _ in range(task['sweeps']):
+            for index in recipes.sweep_indices(task):
+                yield index * task['stride']
+        return
     if pattern in STRUCTURES:
         for _ in range(task['sweeps']):
             for index in sweep_indices(task):
@@ -96,6 +111,8 @@ def kernel_body(task: dict) -> list[str]:
     """Emit literal-bound loads with no branch, shared data, or cache reset."""
     name, stride = task['task_id'], task['stride']
     pattern = task.get('pattern', 'cyclic')
+    if pattern in recipes.RECIPES:
+        return recipes.recipe_body(task)
     if pattern in STRUCTURES:
         return structure_body(task)
     if pattern == 'cyclic':
