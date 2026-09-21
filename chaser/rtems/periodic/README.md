@@ -31,6 +31,20 @@ the same workload ID and signature. The explicit `family-70-20-10-v1` option is
 for legacy reproduction. Existing files are validated and reused without reseeding;
 changed membership, input identities or assignments are rejected.
 
+## Measurement and learning order
+
+1. Freeze input configurations and split membership — completed in input-freeze-v1.
+2. Validate final ELF analysis/layout and collect independent U and static features.
+3. Measure validation mappings, then freeze theta and allocation policy.
+4. Measure G/C/P under each frozen policy and finalize eligible architecture labels.
+5. Fit RF/scaler on train, select models on validation, and evaluate on test.
+
+Independent U precedes calibration because the allocator consumes U. Theta
+calibration does not require RF or architecture labels. Changing theta can change
+C/P mappings and their labels, so final labels and RF follow policy freezing.
+S2 may optionally run earlier under an already fixed CAAS baseline policy; that
+does not supply labels for a later changed allocator. This is not the default order.
+
 The input freeze preserves V3 sweep/period/horizon and predeclares measured bounds
 `u_max=0.25`, `U_max=2.0`. Estimated U does not prove these bounds or deadline
 feasibility. Retain failures and exclusions in their original split without
