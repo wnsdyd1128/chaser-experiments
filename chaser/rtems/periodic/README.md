@@ -260,3 +260,44 @@ must not be mistaken for active working-set size. Broader access patterns,
 working sets, task counts and controlled total utilization remain to be designed
 and collected; candidate axes are documented in the
 [dataset plan](../../system-prompt-extraction/plan/MEASUREMENT-CONTRACT.md#81-pilot의-의미와-본-학습-dataset-구성-방향).
+
+## Candidate pool and family audit
+
+Generate inputs before theta calibration or final label collection:
+
+```sh
+python3 -m tools.rtems_periodic_pool --output .cache/periodic-candidates-new
+```
+
+The output contains 240 executable input configurations in `configs/`, `pool.json`,
+`registry.json`, `split-proposal.json`, budget/coverage in `summary.json`, and a
+hash manifest with implementation copies. Existing output directories are refused.
+Each configuration can be passed to `tools.rtems_periodic prepare`; its explicit
+round-robin mapping is provisional and is not a calibrated allocation policy.
+
+Ten additional affine, load-only structures cover tile reuse, overlapping windows,
+lane scans, forward/reverse scans, mirrored pairs, hub/spoke reuse, tile reversal,
+hot-region reuse between cold tiles, three-region cycles, and coarse/fine scans.
+Their literal trace definitions and actual G/C/P ELF streams are tested. Every
+structure requires `distinct` to be a multiple of 24; no region parameters apply.
+These are synthetic structural recipes, not ten independent application sources.
+
+The registry derives family membership from shared recipes and base-task lineage,
+including transitive links. Numeric/period/stride/task-count variants stay together;
+whole-array and tiled forward/reverse scans are conservatively merged. Known cyclic,
+hot/cold and phase development lineages are excluded from the primary population,
+even if renamed. The resulting **nine candidate families** have a deterministic
+6/2/1 train/validation/test proposal (144/72/24 tasksets). This is a proposal, not a
+final frozen experiment or proof of sufficient diversity. A single test family is
+a material limitation. Correctness-only fixtures do not supply timing or labels.
+
+Each family spans 4/8/12/16 tasks, layout/L1/LLC profiles and target total U 0.5/1.5.
+All tasksets have heterogeneous periods in ratio 1:2, a four-base-period horizon,
+and at most 48 jobs (64 allocated record slots). Proposed bounds are task U<=0.25
+and total U<=2.0. Periods are derived from a **CPU estimate** of twice the largest
+development mean ns/load times the new job's load count. This unvalidated transfer
+estimate is not measured U, WCET, or a deadline guarantee. Actual estimated U and
+target U are stored separately; measured U and snapshot hashes remain absent.
+Independent ten-run characterization of each final P ELF and common G/C/P
+eligibility are still required. No test outcome may be used to retune these inputs.
+
