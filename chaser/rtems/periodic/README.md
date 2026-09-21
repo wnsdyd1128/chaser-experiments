@@ -100,6 +100,9 @@ deadlines must match nominal ticks exactly, and the private epoch must agree wit
 the public status bounds. Diagnostic timing never enters U or label datasets.
 Historical v1 plans/logs remain readable using their original private-probe rules;
 the archived `pilot-v1` evidence is unchanged.
+The [v2 validation evidence](../../artifacts/periodic/public-api-v2/README.md)
+preserves 90 timing/U runs, four diagnostics, ten empty runs, and one expected
+final-job failure, along with superseded attempts and v1 revalidation.
 
 ## Metrics and failure handling
 

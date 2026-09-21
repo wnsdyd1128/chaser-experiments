@@ -692,3 +692,9 @@ failure handling and the ten-taskset pilot protocol. Final RF training still
 requires frozen families and validation-calibrated allocation policies.
 The [first periodic pilot](artifacts/periodic/pilot-v1/README.md) preserves 790
 successful runs, raw job records and provisional feature/label rows.
+
+The [public-API measurement v2 validation](artifacts/periodic/public-api-v2/README.md)
+separates ordinary timing/U from private period/EDF diagnostics on the same ELF.
+It preserves 90 successful timing/U runs, four diagnostics, ten empty runs and
+one expected final-job overrun failure. Historical v1 pilot evidence is unchanged;
+workload/family diversity and final training remain subsequent work.

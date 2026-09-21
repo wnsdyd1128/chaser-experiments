@@ -1,0 +1,241 @@
+{
+  "batches": {
+    "c": {
+      "elf_hash": "1eefceceefa01df087ec92fa4645d19345e54a35120075bf0727bffb2f5ada1f",
+      "errors": [],
+      "ok": 10,
+      "plan_hash": "dbce2c22b1801ae519174090765e4aeb3759146469a2447e675ec4591f9fe91c",
+      "runs": 10
+    },
+    "c-trace": {
+      "elf_hash": "1eefceceefa01df087ec92fa4645d19345e54a35120075bf0727bffb2f5ada1f",
+      "errors": [],
+      "ok": 1,
+      "plan_hash": "dbce2c22b1801ae519174090765e4aeb3759146469a2447e675ec4591f9fe91c",
+      "runs": 1
+    },
+    "empty": {
+      "elf_hash": "96758d0c94e8eef7101b4862dc42261117c2e6314d9be21d8ae21a50e10b784a",
+      "errors": [],
+      "ok": 10,
+      "plan_hash": "d4177c256f81f47786617bfce169b4fca0c576a841c83a79e53154c51c91f2fd",
+      "runs": 10
+    },
+    "g": {
+      "elf_hash": "858c657b8d7e427f52319fa03a335d96c8d981596315c45d17d5972b4f40ec26",
+      "errors": [],
+      "ok": 10,
+      "plan_hash": "1077d5e30c430ae78e72cb8086111ac6a30b55580b49551edd208716c2e1f033",
+      "runs": 10
+    },
+    "g-trace": {
+      "elf_hash": "858c657b8d7e427f52319fa03a335d96c8d981596315c45d17d5972b4f40ec26",
+      "errors": [],
+      "ok": 1,
+      "plan_hash": "1077d5e30c430ae78e72cb8086111ac6a30b55580b49551edd208716c2e1f033",
+      "runs": 1
+    },
+    "overrun": {
+      "elf_hash": "62f264afb42bce9ae9dc7a0145d1bbba3313ff9ccd4dccbc65af25588d6276dd",
+      "errors": [
+        [
+          "deadline_miss",
+          "period_state",
+          "postponed_job"
+        ]
+      ],
+      "ok": 0,
+      "plan_hash": "5625310ca4f4d0cea78a43646c3b23e5f2e94915d9b5e4295299cba8a9927e7f",
+      "runs": 1
+    },
+    "p": {
+      "elf_hash": "96758d0c94e8eef7101b4862dc42261117c2e6314d9be21d8ae21a50e10b784a",
+      "errors": [],
+      "ok": 10,
+      "plan_hash": "d4177c256f81f47786617bfce169b4fca0c576a841c83a79e53154c51c91f2fd",
+      "runs": 10
+    },
+    "p-trace": {
+      "elf_hash": "96758d0c94e8eef7101b4862dc42261117c2e6314d9be21d8ae21a50e10b784a",
+      "errors": [],
+      "ok": 1,
+      "plan_hash": "d4177c256f81f47786617bfce169b4fca0c576a841c83a79e53154c51c91f2fd",
+      "runs": 1
+    },
+    "u0": {
+      "elf_hash": "96758d0c94e8eef7101b4862dc42261117c2e6314d9be21d8ae21a50e10b784a",
+      "errors": [],
+      "ok": 10,
+      "plan_hash": "d4177c256f81f47786617bfce169b4fca0c576a841c83a79e53154c51c91f2fd",
+      "runs": 10
+    },
+    "u0-trace": {
+      "elf_hash": "96758d0c94e8eef7101b4862dc42261117c2e6314d9be21d8ae21a50e10b784a",
+      "errors": [],
+      "ok": 1,
+      "plan_hash": "d4177c256f81f47786617bfce169b4fca0c576a841c83a79e53154c51c91f2fd",
+      "runs": 1
+    },
+    "u1": {
+      "elf_hash": "96758d0c94e8eef7101b4862dc42261117c2e6314d9be21d8ae21a50e10b784a",
+      "errors": [],
+      "ok": 10,
+      "plan_hash": "d4177c256f81f47786617bfce169b4fca0c576a841c83a79e53154c51c91f2fd",
+      "runs": 10
+    },
+    "u2": {
+      "elf_hash": "96758d0c94e8eef7101b4862dc42261117c2e6314d9be21d8ae21a50e10b784a",
+      "errors": [],
+      "ok": 10,
+      "plan_hash": "d4177c256f81f47786617bfce169b4fca0c576a841c83a79e53154c51c91f2fd",
+      "runs": 10
+    },
+    "u3": {
+      "elf_hash": "96758d0c94e8eef7101b4862dc42261117c2e6314d9be21d8ae21a50e10b784a",
+      "errors": [],
+      "ok": 10,
+      "plan_hash": "d4177c256f81f47786617bfce169b4fca0c576a841c83a79e53154c51c91f2fd",
+      "runs": 10
+    },
+    "u4": {
+      "elf_hash": "96758d0c94e8eef7101b4862dc42261117c2e6314d9be21d8ae21a50e10b784a",
+      "errors": [],
+      "ok": 10,
+      "plan_hash": "d4177c256f81f47786617bfce169b4fca0c576a841c83a79e53154c51c91f2fd",
+      "runs": 10
+    },
+    "u5": {
+      "elf_hash": "96758d0c94e8eef7101b4862dc42261117c2e6314d9be21d8ae21a50e10b784a",
+      "errors": [],
+      "ok": 10,
+      "plan_hash": "d4177c256f81f47786617bfce169b4fca0c576a841c83a79e53154c51c91f2fd",
+      "runs": 10
+    }
+  },
+  "contract_id": "chaser-periodic-measurement-v2",
+  "diagnostic_runs": 4,
+  "diagnostic_worker_cores": {
+    "c-trace": {
+      "0": [
+        0
+      ],
+      "1": [
+        1,
+        3
+      ],
+      "2": [
+        1,
+        2,
+        3
+      ],
+      "3": [
+        1,
+        2,
+        3
+      ],
+      "4": [
+        0
+      ],
+      "5": [
+        1,
+        3
+      ]
+    },
+    "g-trace": {
+      "0": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "1": [
+        0,
+        1,
+        2
+      ],
+      "2": [
+        2,
+        3
+      ],
+      "3": [
+        1,
+        2
+      ],
+      "4": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "5": [
+        1,
+        2,
+        3
+      ]
+    },
+    "p-trace": {
+      "0": [
+        0
+      ],
+      "1": [
+        1
+      ],
+      "2": [
+        2
+      ],
+      "3": [
+        3
+      ],
+      "4": [
+        0
+      ],
+      "5": [
+        1
+      ]
+    },
+    "u0-trace": {
+      "0": [
+        0
+      ]
+    }
+  },
+  "empty_job_cpu_ns": {
+    "max": 9104,
+    "mean": 6351,
+    "min": 5400
+  },
+  "empty_runs": 10,
+  "execution_backend": "laysim-gr740",
+  "expected_failed_overrun_runs": 1,
+  "independent_u_runs": 60,
+  "normal_timing_and_u_jobs": 720,
+  "provisional_label": {
+    "final_ties": [
+      0
+    ],
+    "label": 0,
+    "label_rule_id": "median-tat/median-tet/min-label-v1",
+    "medians": {
+      "0": [
+        33565982.0,
+        25904392.0
+      ],
+      "1": [
+        38387010.0,
+        26587462.0
+      ],
+      "2": [
+        37799470.0,
+        26318620.0
+      ]
+    },
+    "tat_ties": [
+      0
+    ]
+  },
+  "recorded_jobs": 819,
+  "scope": "one six-task taskset; public measurement validation, not training",
+  "successful_runs": 104,
+  "timing_runs": 30,
+  "total_runs": 105
+}
