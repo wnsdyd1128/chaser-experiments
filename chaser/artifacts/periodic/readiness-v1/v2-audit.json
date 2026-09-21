@@ -1,0 +1,1676 @@
+{
+  "all_candidates_runs_one_policy": 23400,
+  "avoidable_runs_one_policy": 6870,
+  "budget_excludes": [
+    "theta mapping search",
+    "other policies/alpha",
+    "builds",
+    "analysis",
+    "diagnostics"
+  ],
+  "candidate_workloads": 180,
+  "coverage": [
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.490719959765625,
+        0.7010285139508928
+      ],
+      "profile": "l1-half",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 2
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.490719959765625,
+        1.4020570279017859
+      ],
+      "profile": "l1-half",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4990372472192796,
+        1.4721598792968746
+      ],
+      "profile": "l1-half",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49693160482594934,
+        1.4539850659722224
+      ],
+      "profile": "l1-half",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.488749196875,
+        0.5236598537946429
+      ],
+      "profile": "l1-skew",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 2
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.488749196875,
+        1.0473197075892857
+      ],
+      "profile": "l1-skew",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49985713316761365,
+        1.466247590625
+      ],
+      "profile": "l1-skew",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4970330815677966,
+        1.4662475906249999
+      ],
+      "profile": "l1-skew",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4978769407894737,
+        0.7276662980769231
+      ],
+      "profile": "layout-half",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 2
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49787694078947364,
+        1.4553325961538461
+      ],
+      "profile": "layout-half",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49787694078947353,
+        1.493630822368421
+      ],
+      "profile": "layout-half",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49787694078947364,
+        1.4553325961538464
+      ],
+      "profile": "layout-half",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.26885098693094134,
+        0.26885098693094134
+      ],
+      "profile": "llc-one",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.29804747419945987,
+        0.29804747419945987
+      ],
+      "profile": "llc-one",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.3272439614679784,
+        0.3272439614679784
+      ],
+      "profile": "llc-one",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.35644044873649694,
+        0.35644044873649694
+      ],
+      "profile": "llc-one",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.38137911494502313,
+        0.38137911494502313
+      ],
+      "profile": "llc-two",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.403276480396412,
+        0.403276480396412
+      ],
+      "profile": "llc-two",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4251738458478009,
+        0.4251738458478009
+      ],
+      "profile": "llc-two",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.44707121129918975,
+        0.44707121129918975
+      ],
+      "profile": "llc-two",
+      "recipe_id": "block-phase",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4879984300595238,
+        0.6831978020833334
+      ],
+      "profile": "l1-half",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 2
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4999008307926829,
+        1.3663956041666667
+      ],
+      "profile": "l1-half",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4958693724798387,
+        1.4639952901785716
+      ],
+      "profile": "l1-half",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49990083079268294,
+        1.4639952901785716
+      ],
+      "profile": "l1-half",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.48560829351806634,
+        0.5179821797526042
+      ],
+      "profile": "l1-skew",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 2
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.48560829351806634,
+        1.0359643595052084
+      ],
+      "profile": "l1-skew",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49594038486951464,
+        1.4568248805541992
+      ],
+      "profile": "l1-skew",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4933163616691469,
+        1.479949085007441
+      ],
+      "profile": "l1-skew",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49891418441611846,
+        0.72918226953125
+      ],
+      "profile": "layout-half",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 2
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4989141844161184,
+        1.4583645390625
+      ],
+      "profile": "layout-half",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49891418441611834,
+        1.4967425532483554
+      ],
+      "profile": "layout-half",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49891418441611846,
+        1.4583645390625002
+      ],
+      "profile": "layout-half",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.2627412958923969,
+        0.2627412958923969
+      ],
+      "profile": "llc-one",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.2822863876530284,
+        0.2822863876530284
+      ],
+      "profile": "llc-one",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.30183147941365984,
+        0.30183147941365984
+      ],
+      "profile": "llc-one",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.3213765711742913,
+        0.3213765711742913
+      ],
+      "profile": "llc-one",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4401864667102201,
+        0.4401864667102201
+      ],
+      "profile": "llc-two",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.45115415756564664,
+        0.45115415756564664
+      ],
+      "profile": "llc-two",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4621218484210732,
+        0.4621218484210732
+      ],
+      "profile": "llc-two",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4730895392764997,
+        0.4730895392764997
+      ],
+      "profile": "llc-two",
+      "recipe_id": "multi-array-reuse",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.48406863500976566,
+        0.774509816015625
+      ],
+      "profile": "l1-half",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 2
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49436796766954794,
+        1.4522059050292968
+      ],
+      "profile": "l1-half",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49789916743861606,
+        1.4522059050292966
+      ],
+      "profile": "l1-half",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49968375226814504,
+        1.4990512568044358
+      ],
+      "profile": "l1-half",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.48530036181640623,
+        0.5823604341796875
+      ],
+      "profile": "l1-skew",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 2
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49916608643973215,
+        1.164720868359375
+      ],
+      "profile": "l1-skew",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4944569724167158,
+        1.4559010854492187
+      ],
+      "profile": "l1-skew",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.49916608643973215,
+        1.4559010854492187
+      ],
+      "profile": "l1-skew",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.478895382421875,
+        0.7367621268028846
+      ],
+      "profile": "layout-half",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 2
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.491174751201923,
+        1.473524253605769
+      ],
+      "profile": "layout-half",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4954090162984913,
+        1.4366861472656252
+      ],
+      "profile": "layout-half",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.4975536440746753,
+        1.4735242536057689
+      ],
+      "profile": "layout-half",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 3
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.25653475460163505,
+        0.25653475460163505
+      ],
+      "profile": "llc-one",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.2664190762202496,
+        0.2664190762202496
+      ],
+      "profile": "llc-one",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.2763033978388641,
+        0.2763033978388641
+      ],
+      "profile": "llc-one",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.2861877194574786,
+        0.2861877194574786
+      ],
+      "profile": "llc-one",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.43994383352481614,
+        0.43994383352481614
+      ],
+      "profile": "llc-two",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 4,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.447357074738777,
+        0.447357074738777
+      ],
+      "profile": "llc-two",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 8,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.45477031595273787,
+        0.45477031595273787
+      ],
+      "profile": "llc-two",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 12,
+      "unique_inputs": 1
+    },
+    {
+      "candidate_workloads": 3,
+      "estimated_total_u_range": [
+        0.46218355716669873,
+        0.46218355716669873
+      ],
+      "profile": "llc-two",
+      "recipe_id": "window-coefficient",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "task_count": 16,
+      "unique_inputs": 1
+    }
+  ],
+  "dataset_ready": false,
+  "duplicate_groups": [
+    {
+      "estimated_total_u": [
+        0.46218355716669873,
+        0.46218355716669873,
+        0.46218355716669873
+      ],
+      "input_signature": "00bb846af9a1db673545d7604cb779cc8971ce8a95e33b8382fca3ecfb64b526",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0057",
+        "candidate-v2-0058",
+        "candidate-v2-0059"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.45477031595273787,
+        0.45477031595273787,
+        0.45477031595273787
+      ],
+      "input_signature": "1450bfd5fea53aa699f3a1ddb9d44034f5bc3ab46589da87895c2e785466d053",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0042",
+        "candidate-v2-0043",
+        "candidate-v2-0044"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.4621218484210732,
+        0.4621218484210732,
+        0.4621218484210732
+      ],
+      "input_signature": "1c34fa41b6d0344d3f0ce186dad69158867f1db29dafb93723b3ebe46cb5a9da",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0102",
+        "candidate-v2-0103",
+        "candidate-v2-0104"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.4730895392764997,
+        0.4730895392764997,
+        0.4730895392764997
+      ],
+      "input_signature": "2607c426e4ee4ad02a73019e43c815ff2652a004e0d25e79b549283c5088f93e",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0117",
+        "candidate-v2-0118",
+        "candidate-v2-0119"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.29804747419945987,
+        0.29804747419945987,
+        0.29804747419945987
+      ],
+      "input_signature": "37844fc3587f1b18cd4b2ea76df68848e5a5bb4acb3edb446b6a65b52ebc4df6",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0144",
+        "candidate-v2-0145",
+        "candidate-v2-0146"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.45115415756564664,
+        0.45115415756564664,
+        0.45115415756564664
+      ],
+      "input_signature": "3d84c67b23aa6d772862d2c936f65112c2ac978eed97ee12219d197456481455",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0087",
+        "candidate-v2-0088",
+        "candidate-v2-0089"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.2627412958923969,
+        0.2627412958923969,
+        0.2627412958923969
+      ],
+      "input_signature": "4fa8feffd4aa7ff4ac1b3f7d3b588ade15e465c25045565ca3809b71d2f06a97",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0069",
+        "candidate-v2-0070",
+        "candidate-v2-0071"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.7010285139508928,
+        0.7010285139508928
+      ],
+      "input_signature": "6bf957449147be66216b87a9f038f2e61e7137607e1b2f2e7b18cf1faafd3508",
+      "target_total_u": [
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0124",
+        "candidate-v2-0125"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.4401864667102201,
+        0.4401864667102201,
+        0.4401864667102201
+      ],
+      "input_signature": "6e8c620b3e2f935d55e134d45cf02cf03866e37935c7c8e804723468e10188f7",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0072",
+        "candidate-v2-0073",
+        "candidate-v2-0074"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.30183147941365984,
+        0.30183147941365984,
+        0.30183147941365984
+      ],
+      "input_signature": "7132957dadae77aaa87b880ff921860d629165124ec49770313188aa2c1927b8",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0099",
+        "candidate-v2-0100",
+        "candidate-v2-0101"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.7367621268028846,
+        0.7367621268028846
+      ],
+      "input_signature": "73ff5a16d17b84ef0ca9b51f3fdb03aef8afb1726f18034083475ba44ca7b241",
+      "target_total_u": [
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0001",
+        "candidate-v2-0002"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.5236598537946429,
+        0.5236598537946429
+      ],
+      "input_signature": "76cbc1b153ad9f717445fbb77ce138cd63bf7d5f3f08cb81b2a0cdecf88fbb46",
+      "target_total_u": [
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0127",
+        "candidate-v2-0128"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.38137911494502313,
+        0.38137911494502313,
+        0.38137911494502313
+      ],
+      "input_signature": "7c34be75ee4d75d128d7858e038e91c7e1b92c294e0335ae6913f72e821e4ca4",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0132",
+        "candidate-v2-0133",
+        "candidate-v2-0134"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.3213765711742913,
+        0.3213765711742913,
+        0.3213765711742913
+      ],
+      "input_signature": "7d1476472379095a46d2d034251d6a01eb34b621ccd7876aff3ef60578d21e18",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0114",
+        "candidate-v2-0115",
+        "candidate-v2-0116"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.2664190762202496,
+        0.2664190762202496,
+        0.2664190762202496
+      ],
+      "input_signature": "8044617b783a2d9bb0a08e22406f267c6aec3712d9ebf78ba47938bca59d2715",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0024",
+        "candidate-v2-0025",
+        "candidate-v2-0026"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.5823604341796875,
+        0.5823604341796875
+      ],
+      "input_signature": "8371a046e55154985c34409bb5c46a7a5c871a5c6df5e2a569f5290c24982ad7",
+      "target_total_u": [
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0007",
+        "candidate-v2-0008"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.7276662980769231,
+        0.7276662980769231
+      ],
+      "input_signature": "857db58cb727a0b6f135d121fbc43a59724b3cef42aa4bcc6ee40a2ca474b2af",
+      "target_total_u": [
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0121",
+        "candidate-v2-0122"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.26885098693094134,
+        0.26885098693094134,
+        0.26885098693094134
+      ],
+      "input_signature": "89ef2ef75f4f24606ed74671fa2490572bb349c5fd0d146da93c6e19757db104",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0129",
+        "candidate-v2-0130",
+        "candidate-v2-0131"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.25653475460163505,
+        0.25653475460163505,
+        0.25653475460163505
+      ],
+      "input_signature": "8b149d4d2254be523c5cd678b032c40e59c373bcffdddadde595d6e0df2b162d",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0009",
+        "candidate-v2-0010",
+        "candidate-v2-0011"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.72918226953125,
+        0.72918226953125
+      ],
+      "input_signature": "955910ec14acb4e98ba381b97845f569a0f907b25bc767bb103317613dbb2a65",
+      "target_total_u": [
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0061",
+        "candidate-v2-0062"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.4251738458478009,
+        0.4251738458478009,
+        0.4251738458478009
+      ],
+      "input_signature": "96ff4ae2cdd3d70178657c291284d2b97dea89b83bbbfff6575d72b79638d730",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0162",
+        "candidate-v2-0163",
+        "candidate-v2-0164"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.5179821797526042,
+        0.5179821797526042
+      ],
+      "input_signature": "9a37eff6638e4e22798b0431547baeb60c6100e88e6f2c10d8f01f42904f37fd",
+      "target_total_u": [
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0067",
+        "candidate-v2-0068"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.3272439614679784,
+        0.3272439614679784,
+        0.3272439614679784
+      ],
+      "input_signature": "ac22b9dffdc6e9da7eb41e0d951b6b15e32a0cec2ba881b2418d3a4342620b1c",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0159",
+        "candidate-v2-0160",
+        "candidate-v2-0161"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.2822863876530284,
+        0.2822863876530284,
+        0.2822863876530284
+      ],
+      "input_signature": "bc321b0d4d0b0a64c58796b0d9bd21f32e4b96d5aee72e97dd3f660249e28e62",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0084",
+        "candidate-v2-0085",
+        "candidate-v2-0086"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.44707121129918975,
+        0.44707121129918975,
+        0.44707121129918975
+      ],
+      "input_signature": "be84bf648dd70025c8da63c3b4bb89c10c58c58fb7cc9d74defca8740e01d51c",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0177",
+        "candidate-v2-0178",
+        "candidate-v2-0179"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.6831978020833334,
+        0.6831978020833334
+      ],
+      "input_signature": "cf0729d820293cd13e2c37d550f7dd902f03179c627e53f821148d4eb9e20941",
+      "target_total_u": [
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0064",
+        "candidate-v2-0065"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.2861877194574786,
+        0.2861877194574786,
+        0.2861877194574786
+      ],
+      "input_signature": "d29d34527c88a26d98c40d2dabf405f878ffeee4d53bde030f95f3d622cf7df4",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0054",
+        "candidate-v2-0055",
+        "candidate-v2-0056"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.35644044873649694,
+        0.35644044873649694,
+        0.35644044873649694
+      ],
+      "input_signature": "dcb9aa3a8327320fdb1cc25a314a5d727855cae1c005b6ec57930953bfe4d7e0",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0174",
+        "candidate-v2-0175",
+        "candidate-v2-0176"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.43994383352481614,
+        0.43994383352481614,
+        0.43994383352481614
+      ],
+      "input_signature": "e222b16f8a0dda725df9685db3e5943d4f405bdccc2a72a7ed95a52c996835ca",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0012",
+        "candidate-v2-0013",
+        "candidate-v2-0014"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.2763033978388641,
+        0.2763033978388641,
+        0.2763033978388641
+      ],
+      "input_signature": "e55dba6cf71b5c8849a8905e81c095935001cd2148160c1e55a97f1e32a206bb",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0039",
+        "candidate-v2-0040",
+        "candidate-v2-0041"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.774509816015625,
+        0.774509816015625
+      ],
+      "input_signature": "f72c2b814ab96696329e51950a967381fff4cc4997d34b8dec4d2b8047bf518d",
+      "target_total_u": [
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0004",
+        "candidate-v2-0005"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.447357074738777,
+        0.447357074738777,
+        0.447357074738777
+      ],
+      "input_signature": "f83585c18bf5919599cc83d2f31cd3471fe1db84654b6d8d00ee538ceb13d4fe",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0027",
+        "candidate-v2-0028",
+        "candidate-v2-0029"
+      ]
+    },
+    {
+      "estimated_total_u": [
+        0.403276480396412,
+        0.403276480396412,
+        0.403276480396412
+      ],
+      "input_signature": "fcf7d749d3c772c2a8d8eab1257834940d3feb27e6f99c464e6110acaca6dab5",
+      "target_total_u": [
+        0.5,
+        1.0,
+        1.5
+      ],
+      "workload_ids": [
+        "candidate-v2-0147",
+        "candidate-v2-0148",
+        "candidate-v2-0149"
+      ]
+    }
+  ],
+  "implementation_hashes": {
+    "chaser/dataset.py": "cf0ba3e2bc82e696d9a17840aee19f05bdee15c471a8f102fa7b68b699e34d42",
+    "chaser/periodic.py": "f5315a8eabbbb8228b00407fa52dae4924a95cce4e34ebcc03e976fdac9be405",
+    "chaser/periodic_patterns.py": "1b89e41ee23476de72f724a545029bfd9c5cd59553e778f4c78fcab5b93f45ea",
+    "chaser/periodic_recipes.py": "64c690cb24ec4c769cd634558e1755dffd7362db3ec582682c77e590eac51d42",
+    "chaser/periodic_registry.py": "9b3de12649853bf525da0d2e24ea6e5262aeb40d8e3e25fdbdfe828216c7b25d",
+    "chaser/periodic_structures.py": "ce0cda3db1e0ff65ca0a0348d0fcea176199f9d46553f7e63f150d870fbe4eb7",
+    "tools/rtems_periodic_pool_audit.py": "1f3dd6314849fa11d010827e2b2b8eea6bebbaa0147f86ec62984b9f4d763333",
+    "tools/rtems_smoke.py": "99daf598d92ad32c263ed31d909089af4a0219ba1135edaeae45e224fafef019"
+  },
+  "primary_candidate_workloads": 180,
+  "primary_families": 3,
+  "proposed_split_family_counts": {
+    "test": 1,
+    "train": 1,
+    "validation": 1
+  },
+  "redundant_candidates": 57,
+  "role_core_period_counts": {
+    "matrix-reuse": [
+      {
+        "core": 1,
+        "period_ratio": 2,
+        "tasks": 120
+      },
+      {
+        "core": 3,
+        "period_ratio": 2,
+        "tasks": 150
+      }
+    ],
+    "paired-pass": [
+      {
+        "core": 0,
+        "period_ratio": 1,
+        "tasks": 150
+      },
+      {
+        "core": 1,
+        "period_ratio": 2,
+        "tasks": 30
+      },
+      {
+        "core": 2,
+        "period_ratio": 1,
+        "tasks": 90
+      },
+      {
+        "core": 2,
+        "period_ratio": 4,
+        "tasks": 60
+      }
+    ],
+    "row-column": [
+      {
+        "core": 0,
+        "period_ratio": 1,
+        "tasks": 150
+      },
+      {
+        "core": 1,
+        "period_ratio": 2,
+        "tasks": 30
+      },
+      {
+        "core": 2,
+        "period_ratio": 1,
+        "tasks": 90
+      },
+      {
+        "core": 2,
+        "period_ratio": 4,
+        "tasks": 60
+      }
+    ],
+    "row-column-mirrored": [
+      {
+        "core": 1,
+        "period_ratio": 2,
+        "tasks": 120
+      },
+      {
+        "core": 3,
+        "period_ratio": 2,
+        "tasks": 150
+      }
+    ],
+    "window-bank": [
+      {
+        "core": 1,
+        "period_ratio": 2,
+        "tasks": 120
+      },
+      {
+        "core": 3,
+        "period_ratio": 2,
+        "tasks": 150
+      }
+    ],
+    "window-coeff": [
+      {
+        "core": 0,
+        "period_ratio": 1,
+        "tasks": 150
+      },
+      {
+        "core": 1,
+        "period_ratio": 2,
+        "tasks": 30
+      },
+      {
+        "core": 2,
+        "period_ratio": 1,
+        "tasks": 90
+      },
+      {
+        "core": 2,
+        "period_ratio": 4,
+        "tasks": 60
+      }
+    ]
+  },
+  "runtime_runs_collected": 0,
+  "schema_version": 1,
+  "scope": "static candidate audit; no membership changes",
+  "source_manifest_hash": "01c3f5a6eb81ec0dcca50c8276f165605155a3a0691b1f9f9c8fb128f8fafe4d",
+  "source_pool_hash": "49dd4dcb5d8f441ae8a0e3cbd92ecadfcc8093729e7ef95d8a4c3118ad121628",
+  "split_frozen": false,
+  "unique_inputs": 123,
+  "unique_inputs_independent_u_runs": 12840,
+  "unique_inputs_runs_one_policy": 16530,
+  "unique_inputs_timing_runs_one_policy": 3690
+}

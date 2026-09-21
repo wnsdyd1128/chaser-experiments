@@ -56,6 +56,22 @@ The preserved [candidates-v2 artifact](../../artifacts/periodic/candidates-v2/RE
 contains 180 tasksets, three conservative recipe families and a provisional split.
 PolyBench remains reserved for external evaluation. Omitting `--version` retains v1 generation.
 
+Audit the prepared pool before choosing final membership:
+
+```sh
+python3 -m tools.rtems_periodic_pool_audit --pool .cache/periodic-candidates-v2 \
+  --output .cache/periodic-candidates-v2-audit.json
+```
+
+The audit verifies the pool manifest and reports duplicate generator inputs,
+estimated utilization by coverage cell, role/core/period correlations and run
+budgets. It preserves all candidates and refuses to overwrite the report.
+V2 has 123 distinct input configurations among 180 named candidates; its LLC
+cells repeat identical inputs across all three target-U tags. See the
+[readiness audit](../../artifacts/periodic/readiness-v1/README.md) before interpreting
+candidate counts or target U as achieved coverage. No measured evidence is reused
+between different ELFs, and the audit does not freeze a split.
+
 Omitting `pattern` retains the original cyclic source and plan fields. The three
 supported values specify byte-element access order, not an application family:
 
