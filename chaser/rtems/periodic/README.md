@@ -52,6 +52,8 @@ Generate the mixed v2 input pool (without measurements or labels) in a fresh dir
 python3 -m tools.rtems_periodic_pool --version 2 --output .cache/periodic-candidates-v2
 ```
 
+The preserved [candidates-v2 artifact](../../artifacts/periodic/candidates-v2/README.md)
+contains 180 tasksets, three conservative recipe families and a provisional split.
 PolyBench remains reserved for external evaluation. Omitting `--version` retains v1 generation.
 
 Omitting `pattern` retains the original cyclic source and plan fields. The three
