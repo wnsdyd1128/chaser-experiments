@@ -10,6 +10,7 @@ from pathlib import Path
 from chaser.cls import DEFAULT_ALPHAS
 from chaser.features import FEATURE_NAMES, build_features
 from chaser.labeling import LABEL_RULE_ID, Measurement, label_measurements
+from chaser.splits import LEGACY_POLICY, TASKSET_POLICY, taskset_split, validate_taskset_split
 
 FEATURE_VERSION = 'caas-11/population-std/task-id-join-v1'
 
@@ -20,6 +21,7 @@ class Workload:
     family_id: str
     utilization: Mapping[str, float | None]
     utilization_source: str
+    input_signature: str | None = None
 
 
 def _json(value: object) -> str:
@@ -37,23 +39,39 @@ def _membership(workloads: Iterable[Workload]) -> dict[str, str]:
     return dict(sorted(result.items()))
 
 
-def _validate_split(split: dict, membership: dict[str, str]) -> None:
+def _validate_split(split: dict, membership: dict[str, str], signatures: dict) -> None:
+    if split.get('schema_version') == 2:
+        validate_taskset_split(split, membership, signatures)
+        return
     if (split['schema_version'] != 1 or split['workloads'] != membership
             or set(split['families']) != set(membership.values())
             or set(split['families'].values()) != {'train', 'validation', 'test'}):
         raise ValueError('Frozen split does not match workload families')
 
 
-def freeze_split(path: Path, workloads: Iterable[Workload], *, seed: int) -> dict:
-    """Freeze approximately 70/20/10 by family; existing membership wins over seed.
+def freeze_split(path: Path, workloads: Iterable[Workload], *, seed: int,
+                 policy: str = TASKSET_POLICY) -> dict:
+    """Freeze 60/20/20 within families; existing valid membership wins over seed.
 
-    Family IDs are supplied by the experiment designer, never inferred from
-    filenames. Three or more families are needed for three nonempty splits.
+    Workload input signatures bind duplicates and policy variants to one split.
+    Legacy family holdout is explicit and retained for old artifact reproduction.
+    Reusing a file under a different policy is rejected, never migrated in place.
     """
+    workloads = list(workloads)
     membership = _membership(workloads)
+    signatures = {w.workload_id: w.input_signature for w in workloads}
+    if policy not in (TASKSET_POLICY, LEGACY_POLICY):
+        raise ValueError('Unknown split policy')
     if path.exists():
         split = json.loads(path.read_text())
-        _validate_split(split, membership)
+        if split.get('schema_version') != (2 if policy == TASKSET_POLICY else 1):
+            raise ValueError('Frozen split policy mismatch')
+        _validate_split(split, membership, signatures)
+        return split
+    if policy == TASKSET_POLICY:
+        split = taskset_split(membership, signatures, seed=seed)
+        with path.open('x') as stream:
+            stream.write(_json(split) + '\n')
         return split
     families = sorted(set(membership.values()),
                       key=lambda f: (sha256(_json([seed, f]).encode()).hexdigest(), f))
@@ -83,7 +101,7 @@ def build_dataset(cases: Mapping[str, dict], workloads: Iterable[Workload],
     """
     workloads = sorted(workloads, key=lambda w: w.workload_id)
     membership = _membership(workloads)
-    _validate_split(split, membership)
+    _validate_split(split, membership, {w.workload_id: w.input_signature for w in workloads})
     if type(expected_runs) is not int or expected_runs < 1:
         raise ValueError('Positive expected_runs is required')
     measurements = sorted(measurements, key=lambda r: (r.workload_id, r.architecture, r.run_id))
@@ -147,7 +165,9 @@ def build_dataset(cases: Mapping[str, dict], workloads: Iterable[Workload],
             samples.append({'workload_id': w.workload_id, 'representation_id': kind,
                             'alpha': alpha, 'features': values, 'label': label.label,
                             'label_rule_id': LABEL_RULE_ID, 'family_id': w.family_id,
-                            'split_group': split['families'][w.family_id],
+                            'split_group': (split['assignments'][w.workload_id]
+                                            if split['schema_version'] == 2
+                                            else split['families'][w.family_id]),
                             'label_evidence': asdict(label)})
     return {'raw_measurements': [asdict(r) for r in measurements],
             'task_characterization': characterizations, 'rf_samples': samples,

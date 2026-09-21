@@ -12,11 +12,15 @@ hash; seed and rounding values remain to be specified before freezing. Train is
 for fitting, validation for calibration/model selection, and test for final evaluation.
 Do not redraw membership based on performance or replace excluded test samples.
 
-This is the agreed design, **not an implemented or frozen split**. The current
-family-level splitter and archived V3 proposal (3/1/1 families, 125/41/41 tasksets)
-use the earlier policy. Updating the splitter and validating a new manifest are
-next steps; archived artifacts remain unchanged. Historical family-held-out
-proposals below do not define the main-experiment split.
+Schema 2 assigns each workload by its policy-independent input signature, using
+ascending SHA-256 of `[policy_id, seed, family_id, input_signature]`. Names,
+eligibility flags, policy and task-to-core placement do not create new tasksets;
+ordered work, shape, sweep, period and horizon remain part of the identity.
+`freeze_split()` and `tools.build_dataset` default to this policy. Dataset workload
+rows must include `input_signature` from the frozen population; every policy uses
+the same workload ID and signature. The explicit `family-70-20-10-v1` option is
+for legacy reproduction. Existing files are validated and reused without reseeding;
+changed membership, input identities or assignments are rejected.
 
 
 This harness builds RF dataset measurements and supports later allocation/system

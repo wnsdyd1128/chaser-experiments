@@ -27,19 +27,19 @@ def test_split_is_frozen_and_variants_share_family(tmp_path):
     _, workloads, _, _ = inputs()
     workloads.append(replace(workloads[0], workload_id='period-variant'))
     path = tmp_path / 'split.json'
-    first = freeze_split(path, workloads, seed=42)
+    first = freeze_split(path, workloads, seed=42, policy='family-70-20-10-v1')
     before = path.read_bytes()
-    assert freeze_split(path, reversed(workloads), seed=99) == first
+    assert freeze_split(path, reversed(workloads), seed=99, policy='family-70-20-10-v1') == first
     assert path.read_bytes() == before
     assert [list(first['families'].values()).count(s) for s in
             ('train', 'validation', 'test')] == [7, 2, 1]
     with pytest.raises(ValueError):
-        freeze_split(path, workloads[:-1], seed=42)
+        freeze_split(path, workloads[:-1], seed=42, policy='family-70-20-10-v1')
 
 
 def test_bridge_common_population_no_label_leakage_and_rf_connection(tmp_path):
     cases, workloads, rows, provenance = inputs()
-    split = freeze_split(tmp_path / 'split.json', workloads, seed=42)
+    split = freeze_split(tmp_path / 'split.json', workloads, seed=42, policy='family-70-20-10-v1')
     data = build_dataset(cases, workloads, rows, provenance, split, expected_runs=1)
     assert len(data['rf_samples']) == 80  # CA three controls + five CLS alphas
     train = [s for s in data['rf_samples'] if s['representation_id'] == 'caas-ca'
@@ -59,7 +59,7 @@ def test_bridge_common_population_no_label_leakage_and_rf_connection(tmp_path):
 def test_incomplete_locality_or_measurement_excludes_every_representation(tmp_path):
     cases, workloads, rows, provenance = inputs()
     cases['spread']['clp'] = None
-    split = freeze_split(tmp_path / 'split.json', workloads, seed=1)
+    split = freeze_split(tmp_path / 'split.json', workloads, seed=1, policy='family-70-20-10-v1')
     data = build_dataset(cases, workloads, rows, provenance, split, expected_runs=1)
     assert not data['rf_samples']
     assert len(data['metadata']['excluded']) == 10
@@ -71,7 +71,7 @@ def test_incomplete_locality_or_measurement_excludes_every_representation(tmp_pa
 
 def test_missing_u_and_provenance_are_errors(tmp_path):
     cases, workloads, rows, provenance = inputs()
-    split = freeze_split(tmp_path / 'split.json', workloads, seed=1)
+    split = freeze_split(tmp_path / 'split.json', workloads, seed=1, policy='family-70-20-10-v1')
     workloads[0] = replace(workloads[0], utilization={'spread': None})
     with pytest.raises(ValueError, match='Utilization'):
         build_dataset(cases, workloads, rows, provenance, split, expected_runs=1)
@@ -83,7 +83,7 @@ def test_missing_u_and_provenance_are_errors(tmp_path):
 
 def test_topology_fixed_across_workloads_but_mapping_may_vary(tmp_path):
     cases, workloads, rows, provenance = inputs()
-    split = freeze_split(tmp_path / 'split.json', workloads, seed=1)
+    split = freeze_split(tmp_path / 'split.json', workloads, seed=1, policy='family-70-20-10-v1')
     rows[-1] = replace(rows[-1], mapping_hash='other-workload-mapping')
     assert build_dataset(cases, workloads, rows, provenance, split, expected_runs=1)['rf_samples']
     rows[-1] = replace(rows[-1], topology_id='other-core-grouping')
@@ -94,7 +94,7 @@ def test_topology_fixed_across_workloads_but_mapping_may_vary(tmp_path):
 def test_label_changes_do_not_change_features_and_task_join_is_order_independent(tmp_path):
     cases, workloads, rows, provenance = inputs()
     workloads = [replace(w, utilization={'spread': 0.1, 'conflict': 0.7}) for w in workloads]
-    split = freeze_split(tmp_path / 'split.json', workloads, seed=1)
+    split = freeze_split(tmp_path / 'split.json', workloads, seed=1, policy='family-70-20-10-v1')
     first = build_dataset(cases, workloads, rows, provenance, split, expected_runs=1)
     workloads = [replace(w, utilization={'conflict': 0.7, 'spread': 0.1}) for w in workloads]
     rows = [replace(r, tat=1 if r.architecture == 2 else 50, tet=100) for r in rows]
@@ -107,7 +107,7 @@ def test_label_changes_do_not_change_features_and_task_join_is_order_independent
 
 def test_missing_one_alpha_excludes_common_population(tmp_path):
     cases, workloads, rows, provenance = inputs()
-    split = freeze_split(tmp_path / 'split.json', workloads, seed=1)
+    split = freeze_split(tmp_path / 'split.json', workloads, seed=1, policy='family-70-20-10-v1')
     del cases['spread']['cls']['0.7']
     data = build_dataset(cases, workloads, rows, provenance, split, expected_runs=1)
     assert not data['rf_samples']
@@ -124,7 +124,7 @@ def test_cli_exports_deterministic_tables_and_preserves_existing_dataset(tmp_pat
     source = tmp_path / 'input.json'
     source.write_text(json.dumps(payload))
     command = [sys.executable, '-m', 'tools.build_dataset', str(source),
-               '--split', str(tmp_path / 'split.json'), '--seed', '42', '--expected-runs', '1']
+               '--split', str(tmp_path / 'split.json'), '--seed', '42', '--expected-runs', '1', '--split-policy', 'family-70-20-10-v1']
     for name in ('first', 'second'):
         subprocess.run(command + ['--output', str(tmp_path / name)], check=True)
     for file in (tmp_path / 'first').iterdir():

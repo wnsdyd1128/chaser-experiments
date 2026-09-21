@@ -42,7 +42,7 @@ def audit_pool(pool: dict) -> dict:
         with TemporaryDirectory(prefix='chaser-audit-split-') as tmp:
             split = freeze_split(Path(tmp) / 'proposal.json', [
                 Workload(r['workload_id'], r['family_id'], {}, 'pending') for r in primary],
-                seed=pool['design']['split_seed'])
+                seed=pool['design']['split_seed'], policy='family-70-20-10-v1')
         split_counts = dict(Counter(split['families'].values()))
     groups, cells, roles = defaultdict(list), defaultdict(list), defaultdict(Counter)
     for row in rows:

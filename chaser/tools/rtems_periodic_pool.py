@@ -125,7 +125,7 @@ experiment freeze. No labels, calibration, build or runtime results are invented
     output.mkdir(parents=True, exist_ok=False)
     split = freeze_split(output / 'split-proposal.json', [
         Workload(r['workload_id'], r['family_id'], {}, 'pending') for r in candidates],
-        seed=pool['design']['split_seed'])
+        seed=pool['design']['split_seed'], policy='family-70-20-10-v1')
     report = dict(candidate_workloads=len(candidates),
         primary_families=registry['primary_family_count'],
         development_workloads=len(history),
@@ -162,7 +162,7 @@ experiment freeze. No labels, calibration, build or runtime results are invented
                'chaser/periodic.py', 'chaser/periodic_patterns.py',
                'chaser/periodic_structures.py', 'chaser/periodic_recipes.py',
                'chaser/periodic_staged_recipes.py',
-               'chaser/periodic_registry.py', 'chaser/dataset.py',
+               'chaser/periodic_registry.py', 'chaser/dataset.py', 'chaser/splits.py',
                'tools/rtems_smoke.py']
     if version >= 2:
         sources.extend(['tools/rtems_periodic_pool_v2.py', 'rtems/periodic/RECIPES.md',

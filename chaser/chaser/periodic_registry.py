@@ -20,6 +20,21 @@ LINEAGES.update({'forward-reverse': 'directional-scan', 'tile-reverse': 'directi
 LINEAGES.update(RECIPES)
 
 
+def taskset_signature(config: dict) -> str:
+    """Identify the workload independently of names, policy and task placement.
+
+    Preserve ordered task work, shape, sweep, period and horizon. Reuse this
+    signature for all measured policy variants of the frozen taskset; execution
+    equivalence and measurement reuse still require their own ELF/mapping checks.
+    """
+    ignored = {'workload_id', 'family_id', 'eligible_for_training', 'test_eligible',
+               'policy_id', 'tasks'}
+    payload = {k: v for k, v in config.items() if k not in ignored}
+    payload['tasks'] = [{k: v for k, v in task.items() if k not in ('task_id', 'core')}
+                        for task in config['tasks']]
+    return digest(payload)
+
+
 def build_registry(records: list[dict]) -> dict:
     """Return deterministic components and global identities, without a split.
 

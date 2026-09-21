@@ -6,6 +6,7 @@ from pathlib import Path
 
 from chaser.dataset import Workload, build_dataset, freeze_split, write_dataset
 from chaser.labeling import Measurement
+from chaser.splits import LEGACY_POLICY, TASKSET_POLICY
 
 
 def main() -> None:
@@ -13,6 +14,8 @@ def main() -> None:
     parser.add_argument('input', type=Path, help='JSON: cases, workloads, measurements, provenance')
     parser.add_argument('--split', type=Path, required=True)
     parser.add_argument('--seed', type=int, required=True)
+    parser.add_argument('--split-policy', choices=(TASKSET_POLICY, LEGACY_POLICY),
+                        default=TASKSET_POLICY)
     parser.add_argument('--expected-runs', type=int, required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
@@ -22,7 +25,7 @@ def main() -> None:
         data = json.loads(args.input.read_text())
         workloads = [Workload(**row) for row in data['workloads']]
         measurements = [Measurement(**row) for row in data['measurements']]
-        split = freeze_split(args.split, workloads, seed=args.seed)
+        split = freeze_split(args.split, workloads, seed=args.seed, policy=args.split_policy)
         dataset = build_dataset(data['cases'], workloads, measurements, data['provenance'],
                                 split, expected_runs=args.expected_runs)
         write_dataset(args.output, dataset)
