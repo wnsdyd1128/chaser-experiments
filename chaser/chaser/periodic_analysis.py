@@ -8,6 +8,7 @@ import time
 
 from chaser.ca import ca_csrd, ca_from_histogram
 from chaser.cls import cls, DEFAULT_ALPHAS
+from chaser.event_storage import compress_events as archive_events
 from chaser.periodic_build import YARDA, check_layout, read_symbols
 from chaser.periodic_patterns import access_offsets, job_access_count, loop_iterations
 from chaser.s1_artifacts import read_analysis
@@ -25,7 +26,7 @@ def check_stream(task: dict, events: list[dict], address: int) -> None:
             raise ValueError('Wrapper access order/address/kind differs from workload')
 
 
-def analyze(prepared: Path, *, timeout: float = 120) -> dict:
+def analyze(prepared: Path, *, timeout: float = 120, compress_events: bool = False) -> dict:
     """Preserve compiler/APE/ELF provenance and reject incomplete helper expansion.
 
     Selection keeps the emitted root and its emitted inline helper unchanged;
@@ -63,7 +64,7 @@ def analyze(prepared: Path, *, timeout: float = 120) -> dict:
              '-passes=function(mem2reg),loop-simplify,loop-annotated-trace',
              'workload.ll', '-o', '/dev/null'], output / 'opt.log')
     raw = json.loads((output / 'workload_ape.json').read_text())
-    cases, provenance = {}, {}
+    cases, provenance, event_storage = {}, {}, {}
     for task in plan['tasks']:
         task_id, root = task['task_id'], 'task_job_' + task['task_id']
         functions = [f for f in raw['functions']
@@ -120,6 +121,10 @@ def analyze(prepared: Path, *, timeout: float = 120) -> dict:
                 cache_config_hash=expected['cache_config_sha256'], model_hash=None,
                 elf_hash=expected['elf_sha256'], elf_hashes={}))
             entry['elf_hashes'][name] = expected['elf_sha256']
+            if compress_events:
+                event_path = directory / 'events.json'
+                event_storage[str(event_path.relative_to(output)) + '.xz'] = archive_events(event_path)
+                event_path.unlink()
     check_inputs(prepared, manifest)
     if any(file_hash(Path(p)) != h for p, h in tools.items()):
         raise ValueError('Analyzer changed during analysis')
@@ -128,6 +133,6 @@ def analyze(prepared: Path, *, timeout: float = 120) -> dict:
                   scope='cold-task-local-job-not-periodic-interference',
                   commands_hash=file_hash(output / 'commands.json'))
     write_json(output / 'locality.json', report)
-    write_json(output / 'manifest.json', dict(
+    write_json(output / 'manifest.json', dict(event_storage=event_storage,
         files={str(p.relative_to(output)): file_hash(p) for p in output.rglob('*') if p.is_file()}))
     return report

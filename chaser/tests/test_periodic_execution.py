@@ -1,5 +1,6 @@
 """Real waf/APE integration plus bounded fake-process failure checks."""
 
+import lzma
 import json
 from pathlib import Path
 import subprocess
@@ -72,13 +73,17 @@ def test_cpp_expands_all_sweeps_and_matches_all_final_elfs(prepared):
 
 
 @pytest.mark.parametrize('cold_repeats', [1, 2])
-def test_region_patterns_match_literal_streams_in_all_final_elfs(tmp_path, cold_repeats):
+@pytest.mark.parametrize('compress_events', [False, True])
+def test_region_patterns_match_literal_streams_in_all_final_elfs(tmp_path, cold_repeats,
+                                                              compress_events):
     snapshot = tmp_path / 'patterns'
     config = pattern_configuration()
     for task in config['tasks']:
         task['cold_repeats'] = cold_repeats
     prepare(config, snapshot)
-    result = analyze(snapshot)
+    result = analyze(snapshot, compress_events=compress_events)
+    check_inputs(snapshot / 'analysis', json.loads(
+        (snapshot / 'analysis/manifest.json').read_text()))
     cold = [64, 96, 128] * cold_repeats
     offsets = {'hot': [0, 32, 0, 32, *cold] * 2,
                'phase': [0, 32] * 4 + cold * 2}
@@ -87,7 +92,13 @@ def test_region_patterns_match_literal_streams_in_all_final_elfs(tmp_path, cold_
         assert set(result['provenance'][name]['elf_hashes']) == {'g', 'c', 'p'}
         for architecture in ('g', 'c', 'p'):
             address, _ = read_symbols(snapshot / f'build/{architecture}.exe')['data_' + name]
-            events = json.loads((snapshot / f'analysis/{architecture}/{name}/events.json').read_text())
+            event_path = snapshot / f'analysis/{architecture}/{name}/events.json'
+            if compress_events:
+                assert not event_path.exists()
+                with lzma.open(event_path.with_suffix('.json.xz'), 'rt') as stream:
+                    events = json.load(stream)
+            else:
+                events = json.loads(event_path.read_text())
             assert [e['linked_address'] - address for e in events['events']] == expected
 
 
