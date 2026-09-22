@@ -1,0 +1,110 @@
+{
+  "eligible_for_training": false,
+  "family_id": "family-a6f2a4e341f4e301",
+  "horizon_ticks": 200,
+  "policy_id": "validation-supplement-v2-explicit-core-order-not-calibrated",
+  "tasks": [
+    {
+      "core": 0,
+      "distinct": 448,
+      "pattern": "row-column",
+      "period_ticks": 50,
+      "stride": 32,
+      "sweeps": 12,
+      "task_id": "vs2w0001_t00",
+      "width": 8
+    },
+    {
+      "core": 1,
+      "distinct": 576,
+      "pattern": "row-column-mirrored",
+      "period_ticks": 100,
+      "stride": 32,
+      "sweeps": 9,
+      "task_id": "vs2w0001_t01",
+      "width": 8
+    },
+    {
+      "core": 2,
+      "distinct": 448,
+      "pattern": "row-column",
+      "period_ticks": 50,
+      "stride": 32,
+      "sweeps": 12,
+      "task_id": "vs2w0001_t02",
+      "width": 8
+    },
+    {
+      "core": 3,
+      "distinct": 576,
+      "pattern": "row-column-mirrored",
+      "period_ticks": 100,
+      "stride": 32,
+      "sweeps": 9,
+      "task_id": "vs2w0001_t03",
+      "width": 8
+    },
+    {
+      "core": 0,
+      "distinct": 448,
+      "pattern": "row-column",
+      "period_ticks": 50,
+      "stride": 32,
+      "sweeps": 12,
+      "task_id": "vs2w0001_t04",
+      "width": 8
+    },
+    {
+      "core": 1,
+      "distinct": 576,
+      "pattern": "row-column-mirrored",
+      "period_ticks": 100,
+      "stride": 32,
+      "sweeps": 9,
+      "task_id": "vs2w0001_t05",
+      "width": 8
+    },
+    {
+      "core": 2,
+      "distinct": 448,
+      "pattern": "row-column",
+      "period_ticks": 50,
+      "stride": 32,
+      "sweeps": 12,
+      "task_id": "vs2w0001_t06",
+      "width": 8
+    },
+    {
+      "core": 3,
+      "distinct": 576,
+      "pattern": "row-column-mirrored",
+      "period_ticks": 100,
+      "stride": 32,
+      "sweeps": 9,
+      "task_id": "vs2w0001_t07",
+      "width": 8
+    },
+    {
+      "core": 0,
+      "distinct": 448,
+      "pattern": "row-column",
+      "period_ticks": 50,
+      "stride": 32,
+      "sweeps": 12,
+      "task_id": "vs2w0001_t08",
+      "width": 8
+    },
+    {
+      "core": 1,
+      "distinct": 576,
+      "pattern": "row-column-mirrored",
+      "period_ticks": 100,
+      "stride": 32,
+      "sweeps": 9,
+      "task_id": "vs2w0001_t09",
+      "width": 8
+    }
+  ],
+  "test_eligible": false,
+  "workload_id": "validation-supplement-v2-0001"
+}

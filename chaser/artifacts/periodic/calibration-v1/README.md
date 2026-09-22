@@ -1,5 +1,18 @@
 # Validation calibration v1: preparation complete, timing blocked
 
+Latest family correction: [V2 active membership](../validation-supplement-v2/active-population.json) supersedes V1. The window-coefficient supplement is replaced by one newly generated block-phase input; original family counts are restored. There are 212 archived / 207 active inputs. The new input awaits ELF/U/GCP validation; earlier successful supplement measurements do not cover it.
+
+## Latest membership decision: exclude failed tasksets
+
+The user explicitly requires excluding candidate-v3-0112, candidate-v3-0135,
+candidate-v3-0136 and candidate-v3-0207 in their entirety from the active dataset,
+including their successful mappings. All original inputs and raw evidence remain
+archived. The four successful supplement tasksets replace them in validation.
+The [active membership](../validation-supplement-v1/active-population.json) contains
+207 tasksets (126/41/40), drawn from 211 archived inputs. Calibration loader
+integration and theta/policy freezing remain pending; the historical census below
+is unchanged. This supersedes the earlier undecided taskset-exclusion policy.
+
 ## Latest: full error survey completed
 
 At the user's request, the remaining 171 mappings were measured without changing
@@ -110,3 +123,51 @@ simulator identity, incomplete/failed evidence preservation and policy freezing.
 
 See [verification record](../../../.cache/calibration-v1/implementation-verification.json).
 `finalize` was not invoked; Git staging/commit operations were not performed.
+
+
+## 2026-09-22 completed G/C/P error census and follow-up decision
+
+The earlier 26-batch stop above is historical. The P census subsequently completed
+197 batches: 1,960 successful runs and 10 failures. G/C measurements then added
+3,940 runs using the same prepared snapshots, without changing the harness/parser.
+The combined census completed at 2026-09-22T17:45:42Z:
+
+| Architecture | Successful | Failed | Total |
+|---|---:|---:|---:|
+| G | 1,970 | 0 | 1,970 |
+| C (EDF SMP {1,3}) | 1,940 | 30 | 1,970 |
+| P (preserved measurements) | 1,960 | 10 | 1,970 |
+
+C failures are one mapping each of candidate-v3-0135, candidate-v3-0136 and
+candidate-v3-0207; P failures remain candidate-v3-0112. All ten repetitions of each
+failed combination report arm_phase and release_mismatch. These are four tasksets,
+not forty distinct inputs. Other C topologies were not measured.
+
+[Combined summary](../../../.cache/calibration-v1/gcp-survey-v1/summary.json) records
+raw-evidence revalidation and unchanged historical evidence; exit.json records exit 0.
+This means the census completed, not that all timing measurements passed.
+The collector, protocol, raw G/C runs and collection.log remain in that directory.
+Theta/policy remains unfrozen.
+
+The user authorized preserving all original inputs and evidence, adding four new
+tasksets separately with generation rules fixed before measurement, and reusing
+identical successful measurements. See the authoritative
+[supplement plan](../../../system-prompt-extraction/plan/VALIDATION-SUPPLEMENT-V1.md).
+This is the next experimental path; startup repair is a separate unresolved issue.
+The [supplement generation rules](../validation-supplement-v1/README.md) are now frozen:
+seed 20260922 selects four families, each with ten tasks and the existing L1-boundary
+profile. An in-memory preview verified unique input identities and twelve static
+G/C/P plans. The four runnable input configs and a separate validation extension
+have now been prepared; see the supplement record for ELF analysis and independent-U
+collection status. The existing calibration has not been rerun or frozen.
+Additional successes do not replace failed rows or automatically satisfy the existing
+freeze gate.
+
+The implementation verification paragraph above describes the initial attempt.
+The later finalize at 2026-09-22T14:01:33Z passed with 609 tests and no skips using
+CHASER_COLD_PREFIX=/tmp/chaser-cg-cold-install. That result predates this documentation
+update. The census wrapper also passed two targeted checks against preserved successful
+and failed P evidence; no full verifier or finalize was rerun for that census documentation.
+The subsequent supplement-rule work passed static replay and the full verifier:
+609 tests, no skips, 79.62 seconds. See its [verification record](../validation-supplement-v1/verification.json).
+Finalize was not invoked for the supplement-rule work.

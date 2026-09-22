@@ -1,0 +1,53 @@
+{
+  "active_population": "../validation-supplement-v2/active-population.json",
+  "active_total": 207,
+  "active_v1_inputs": 3,
+  "historical_preparation": "history/input-preparation-original.json",
+  "replacement": {
+    "configuration": "../validation-supplement-v2/configuration.json",
+    "configuration_hash": "31bea3232e7bbea4e91c1fa5df65a94a8223dd6a4f027bdb1ef0f7c6a9f1353e",
+    "execution_input_signature": "b17e5bc11e19edf4aaa646021ef1107a9d1fe7bc3946bc1de9efa99dcafb4ea5",
+    "family_id": "family-a6f2a4e341f4e301",
+    "input_signature": "d5ce85fe5923bb1bc5c97e973dd718c36f2c4429b71edd303937d4dee3aee20e",
+    "recipe_id": "block-phase",
+    "runtime_status": "pending",
+    "split_group": "validation",
+    "workload_id": "validation-supplement-v2-0001"
+  },
+  "scope": "current usage; original preparation and measurement evidence preserved separately",
+  "split_counts": {
+    "test": 40,
+    "train": 126,
+    "validation": 41
+  },
+  "status": "current_usage_corrected",
+  "workloads": [
+    {
+      "configuration_hash": "c5c3d660e60576bddf5be04f7f258b86e2e404a3b9b2a5805eb786daefba9732",
+      "execution_input_signature": "1fd994374aadad272e2708a7b35203ad33bc68453a094e99a526c4e2f5c7dd3a",
+      "family_id": "family-a6f2a4e341f4e301",
+      "input_signature": "6a9ba9c1f9b2208ef5302dddfec52548cfd01e9fe23d5340469f8b88aec7d51e",
+      "recipe_id": "block-phase",
+      "split_group": "validation",
+      "workload_id": "validation-supplement-v1-0002"
+    },
+    {
+      "configuration_hash": "9a064a75d9879151549ae27ab5ee60cd5e13e8a00510e5d727368027ddb120a6",
+      "execution_input_signature": "b331e8722ea881a982eed78b8e2f72b00a60eeb4ab95fe14f594fab52b81758f",
+      "family_id": "family-5b094dd8a8f196c6",
+      "input_signature": "e1a4967313cc5c9bc47977bf762378b835ae7289ba53761ce253bb8f2f7da953",
+      "recipe_id": "multi-array-reuse",
+      "split_group": "validation",
+      "workload_id": "validation-supplement-v1-0003"
+    },
+    {
+      "configuration_hash": "cbb97675366403739c1a4accab5cf17fa759fa9a0c79d95934d19f1a6827ce31",
+      "execution_input_signature": "dc1005dd130712908921e9cc09af1c8831f9d6be1376bdd559ccc72fe1fb660c",
+      "family_id": "family-4d9f56f9b3eafcb7",
+      "input_signature": "26780d11e620c61acd6b3a87658b1d595fbd0e2727097a93935131720f264675",
+      "recipe_id": "staged-butterfly",
+      "split_group": "validation",
+      "workload_id": "validation-supplement-v1-0004"
+    }
+  ]
+}

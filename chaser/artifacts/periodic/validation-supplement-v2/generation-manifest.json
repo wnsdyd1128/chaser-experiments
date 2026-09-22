@@ -1,0 +1,137 @@
+{
+  "configuration_hash": "31bea3232e7bbea4e91c1fa5df65a94a8223dd6a4f027bdb1ef0f7c6a9f1353e",
+  "design": {
+    "U_max": 2.0,
+    "cpu_estimate_margin": 2.0,
+    "cpu_estimate_ns_per_load": 153.96585083007812,
+    "cpu_estimate_rule": "2 * maximum development mean CPU ns/load * job loads",
+    "deduplication_rule": "first exact generator input excluding names and eligibility metadata",
+    "evidence_summary_hash": "5353d5b3f63c1d3b1f8b2a250ddd2ae77774ac8658a6a75fccb118a01b591f04",
+    "excluded_pattern_sources": [
+      "PolyBench"
+    ],
+    "expected_runs": 10,
+    "generated_candidate_workloads": 300,
+    "horizon_base_periods": 4,
+    "lineage_limit": "five conservative groups; validation/test still one family each",
+    "max_jobs": 64,
+    "memory_rule": "complete blocks; below/above L1, one/two arrays above LLC",
+    "pattern_sources": [
+      "TACLeBench"
+    ],
+    "pending": [
+      "estimate transfer validation and numeric bound freeze",
+      "final ELF independent U and common G/C/P eligibility",
+      "initial/expansion family budget and sufficiency thresholds",
+      "full-pool build/analysis/runtime cost and storage budget",
+      "final membership/split freeze before theta calibration",
+      "five families do not establish split sufficiency",
+      "LLC high-load coverage and role/core/period confounding remain"
+    ],
+    "period_ratios_by_profile": {
+      "l1-half": [
+        1,
+        2
+      ],
+      "l1-skew": [
+        1,
+        2,
+        4,
+        2
+      ],
+      "layout-half": [
+        1,
+        2
+      ],
+      "llc-one": [
+        1,
+        2
+      ],
+      "llc-two": [
+        1,
+        2,
+        4,
+        2
+      ]
+    },
+    "period_rule": "ceil(max(sum(C_i/r_i)/target_U, max(C_i/r_i/u_max))/tick_ns)",
+    "profiles": [
+      "l1-half"
+    ],
+    "recipe_contract": "rtems/periodic/RECIPES.md",
+    "role_mix_by_profile": {
+      "l1-half": [
+        1,
+        1
+      ],
+      "l1-skew": [
+        3,
+        1
+      ],
+      "layout-half": [
+        1,
+        1
+      ],
+      "llc-one": [
+        1,
+        1
+      ],
+      "llc-two": [
+        1,
+        1
+      ]
+    },
+    "source_manifest_hash": "c46ae90a22b6f56e16598d947d38dea9ab9570b3d024500dbeccf43047636858",
+    "source_revision": "c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08",
+    "split_seed": 20260921,
+    "staged_recipe_contract": "rtems/periodic/STAGED-RECIPES.md",
+    "staged_source_manifest_hash": "fdd26adaefe9f489df467218a1497247402f2c256f2348730f962fe5732d0c42",
+    "status": "provisional",
+    "sufficiency_status": "not_assessed",
+    "sweeps_rule": "max(2, ceil(10240 / loads per sweep))",
+    "target_total_u": [
+      0.5
+    ],
+    "task_counts": [
+      10
+    ],
+    "u_max": 0.25,
+    "version": "periodic-candidates-v3",
+    "widths": [
+      8
+    ]
+  },
+  "duplicate_count": 0,
+  "expected_gcp_runs": 30,
+  "expected_u_runs": 100,
+  "generator": "tools.rtems_periodic_pool_v2.recipe_candidates",
+  "id_rule": "workload validation-supplement-v2-0001; tasks vs2w0001_t00..t09",
+  "input_signature": "d5ce85fe5923bb1bc5c97e973dd718c36f2c4429b71edd303937d4dee3aee20e",
+  "plan_hashes": {
+    "0": "f0dbc8c5240ec2f178d16148067e5cff734b91762a16c917e1d45a8414354b6a",
+    "1": "b1da1852306b35e0a0c36994e5f6c74546bc5be31f36af25ce6a8325a56d4a1a",
+    "2": "b1f21a996b25415c3f6bc9589e1f8b8a95833793592633055021e1a517caa4f9"
+  },
+  "replaces_active_workload": "validation-supplement-v1-0001",
+  "rule": "ten tasks, l1-half, target U 0.5; preserve V3 sweeps/period formula; no candidate replacement on failure",
+  "runtime_runs": 0,
+  "schema_version": 1,
+  "seed": null,
+  "selection": "fixed block-phase cell; no random selection or outcome-based retries",
+  "source_hashes": {
+    "artifacts/periodic/candidates-v3/input-pool.tar.gz": "b71e53ae6bdab132e6d92d2a2500cf85e36ec5a7749fd22ef7c2e7585367623a",
+    "artifacts/periodic/input-freeze-v1/population.json": "8e18d2fa7754cfbbcf91ac73da5fa3910a5393f46b1cbfc171116d426cd86fa8",
+    "artifacts/periodic/validation-supplement-v1/history/active-population-before-family-correction.json": "446ac0edfa21f6324a157c4c6b349cffea5c1a1056a8ce5993c58a21237e7874",
+    "artifacts/periodic/validation-supplement-v2/rebuild.py": "34004e0377203487a2c13276b51180b3b3342b22b3a4d245d76801801a9d2b7c",
+    "chaser/periodic.py": "f5315a8eabbbb8228b00407fa52dae4924a95cce4e34ebcc03e976fdac9be405",
+    "chaser/periodic_patterns.py": "1b89e41ee23476de72f724a545029bfd9c5cd59553e778f4c78fcab5b93f45ea",
+    "chaser/periodic_recipes.py": "22bbd686394dcf89663af140a7a74d945bf447e1db929832c1468f58f560139a",
+    "chaser/periodic_registry.py": "21e1644b770b8c2c95768ffa56ada0699549cd6f0bc7c719affb9ffd5e005e68",
+    "chaser/periodic_staged_recipes.py": "11b69d240071421a5d6172f3de7ce62b64de6f3c8545fb6418158e81115f795a",
+    "chaser/periodic_structures.py": "ce0cda3db1e0ff65ca0a0348d0fcea176199f9d46553f7e63f150d870fbe4eb7",
+    "tools/rtems_periodic_pool_audit.py": "1dc47bd8708325f577a21bc9e2cdc20742410390862811084ce44bece6a95ea0",
+    "tools/rtems_periodic_pool_v2.py": "150bb602031bb8d2105cf73f5ff8e34601d12fe5bcbb2f8333bc6558b03bc369"
+  },
+  "static_plans_checked": 3,
+  "version": "validation-supplement-v2"
+}
