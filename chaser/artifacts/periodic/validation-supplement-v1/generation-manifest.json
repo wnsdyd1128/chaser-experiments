@@ -1,0 +1,417 @@
+{
+  "base_design_hash": "698dfdd504dc424afbdcb6fa821243b0952865278b2a3bb0e66522d30e90a4a9",
+  "canonical_json": "json.dumps(value, sort_keys=True, separators=(comma,colon), allow_nan=False), UTF-8",
+  "count": 4,
+  "created_date": "2026-09-22",
+  "design_overrides": {
+    "profiles": [
+      "l1-half"
+    ],
+    "target_total_u": [
+      1.0
+    ],
+    "task_counts": [
+      10
+    ]
+  },
+  "duplicate_rule": {
+    "compare_against": "all 207 originals across train/validation/test, 93 duplicate aliases, 11 development inputs, and other additions",
+    "function": "chaser.periodic_registry.taskset_signature",
+    "ignores": [
+      "workload_id",
+      "family_id",
+      "policy_id",
+      "eligible_for_training",
+      "test_eligible",
+      "task_id",
+      "core"
+    ],
+    "lineage": "same recipe family is retained, not treated as a new independent family; changed task count is a new taskset under the existing contract",
+    "on_collision": "stop; preserve the failed preview; no automatic skip, reseed or replacement",
+    "preserves": "ordered task work, pattern, width, distinct, stride, sweeps, period and horizon"
+  },
+  "environment": {
+    "float_model": "Python binary64 inherited generator arithmetic; expected hashes detect drift",
+    "python": "3.10.12"
+  },
+  "family_ranking": [
+    {
+      "family_id": "family-659aa1d43f3f1c3b",
+      "recipe_id": "window-coefficient",
+      "selection_hash": "385eded32e758d170796e391df23166707c47fa31a0fda86f589bcd05e6b42e3"
+    },
+    {
+      "family_id": "family-a6f2a4e341f4e301",
+      "recipe_id": "block-phase",
+      "selection_hash": "69213882bf82ec37d072aa91750aa7472f7692a361f60e29561c5104efebc204"
+    },
+    {
+      "family_id": "family-5b094dd8a8f196c6",
+      "recipe_id": "multi-array-reuse",
+      "selection_hash": "8ecc87d4a31e5c3a4b8aaab6538da3a6ccd54e333fad715973de044a94095652"
+    },
+    {
+      "family_id": "family-4d9f56f9b3eafcb7",
+      "recipe_id": "staged-butterfly",
+      "selection_hash": "b8a8a704ab6594822db090484c3130a95b0478dca4ed570fd0c43f456493644b"
+    },
+    {
+      "family_id": "family-9e4c7979ebce11ef",
+      "recipe_id": "triangular-solve",
+      "selection_hash": "cf4e2fa612e28bc1a4f402c0a426e1b36755f81c64a034dfbe816f1cc8a953a3"
+    }
+  ],
+  "id_rules": {
+    "family": "existing structural-components-v1 family_id from joint registry audit",
+    "task": "vs1w{rank:04d}_t{i:02d}, i=0..9",
+    "workload": "validation-supplement-v1-{rank:04d}, rank=1..4"
+  },
+  "initial_policy_id": "validation-supplement-v1-explicit-core-order-not-calibrated",
+  "limitations": [
+    "one fixed L1 profile and one task count; not a representative resample or LLC coverage repair",
+    "four additions cannot cover five families; omitted family stays in all original splits",
+    "role/core/period coupling inherited from generator",
+    "no claim of statistical independence, data sufficiency, startup repair or theta/policy freeze"
+  ],
+  "measurement_contract": {
+    "U_max": 2.0,
+    "budget_excludes": [
+      "theta/mapping search",
+      "additional policies and alpha",
+      "build/analysis",
+      "diagnostics"
+    ],
+    "cls_alpha": 0.5,
+    "clustered_topology": "c-edfsmp-1-3-v1",
+    "expected_runs": 10,
+    "freeze_gate": "unresolved common-valid-set and exclusion protocol must agree with contract and implementation; four successes are not sufficient",
+    "gcp_timeout_seconds": 1800,
+    "gcp_workers": 16,
+    "gcp_workers_max": 32,
+    "non_omega": [
+      1,
+      2,
+      3
+    ],
+    "omega": [
+      0
+    ],
+    "on_failure": "preserve all inputs and successful/failed raw evidence; never replace until four successes",
+    "reuse": "only after exact workload, mapping, topology, ELF, source/tool/layout/stream and protocol equivalence is verified",
+    "u_max": 0.25,
+    "u_timeout_seconds": 600
+  },
+  "parameter_rules": {
+    "base_period_ticks": "ceil(max(sum(cost_i / ratio_i) / 1.0, max(cost_i / ratio_i / 0.25)) / 1000000)",
+    "blocks_even": "max(1, floor(480 / block_size(pattern, 8)))",
+    "blocks_odd": "ceil(544 / block_size(pattern, 8))",
+    "cost": "job_access_count(task) * cpu_estimate_ns_per_load * cpu_estimate_margin",
+    "cpu_estimate_margin": 2.0,
+    "cpu_estimate_ns_per_load": 153.96585083007812,
+    "distinct": "blocks * block_size(pattern, 8)",
+    "horizon_ticks": "4 * base_period_ticks",
+    "initial_core": "i % 4; provisional, later calibrated mappings require separate snapshots",
+    "period_ratios": [
+      1,
+      2
+    ],
+    "role_order": "RECIPES insertion order within each family; task i uses role i % 2",
+    "roles_per_taskset": [
+      5,
+      5
+    ],
+    "stride_bytes": 32,
+    "sweeps": "max(2, ceil(10240 / job_access_count(task with sweeps=1)))",
+    "task_period_ticks": "base_period_ticks * ratio_i",
+    "width": 8
+  },
+  "planned_inputs": [
+    {
+      "configuration_hash": "a4f2ba62f55da68d32e1d2dc29219e976b5952ecae05d831fc4196d82e3b045c",
+      "estimated_total_u": 0.9681372700195312,
+      "execution_input_signature": "90012a25f2364483e21075ea9b215144b1524b8c30255e2cd6765484cf452d86",
+      "family_id": "family-659aa1d43f3f1c3b",
+      "horizon_ticks": 120,
+      "input_signature": "3a0d1e56621b4dd77285b151b96f9496afad8492f79daa9803f1c44dbc0f5f7b",
+      "logical_jobs": 30,
+      "padded_data_bytes": 184320,
+      "plan_hashes": {
+        "0": "b15a0c8773d22f77a51c4e6b9e46f407bc13bf897c85a20a59de46b198637723",
+        "1": "03e1e6d49b1ced37f3d937dd2b15adbfc5ef6716bc4b61d23374781b452b8700",
+        "2": "2b081e7ca517e61efd0d2f11e5682a44f40c4a63ee55f78083bce8c998db7e2b"
+      },
+      "recipe_id": "window-coefficient",
+      "record_slots": 40,
+      "role_templates": [
+        {
+          "distinct": 480,
+          "pattern": "window-coeff",
+          "period_ticks": 30,
+          "stride": 32,
+          "sweeps": 4,
+          "width": 8
+        },
+        {
+          "distinct": 544,
+          "pattern": "window-bank",
+          "period_ticks": 60,
+          "stride": 32,
+          "sweeps": 3,
+          "width": 8
+        }
+      ],
+      "split_group": "validation",
+      "task_count": 10,
+      "task_ids": [
+        "vs1w0001_t00",
+        "vs1w0001_t01",
+        "vs1w0001_t02",
+        "vs1w0001_t03",
+        "vs1w0001_t04",
+        "vs1w0001_t05",
+        "vs1w0001_t06",
+        "vs1w0001_t07",
+        "vs1w0001_t08",
+        "vs1w0001_t09"
+      ],
+      "workload_id": "validation-supplement-v1-0001"
+    },
+    {
+      "configuration_hash": "c5c3d660e60576bddf5be04f7f258b86e2e404a3b9b2a5805eb786daefba9732",
+      "estimated_total_u": 0.98143991953125,
+      "execution_input_signature": "1fd994374aadad272e2708a7b35203ad33bc68453a094e99a526c4e2f5c7dd3a",
+      "family_id": "family-a6f2a4e341f4e301",
+      "horizon_ticks": 100,
+      "input_signature": "6a9ba9c1f9b2208ef5302dddfec52548cfd01e9fe23d5340469f8b88aec7d51e",
+      "logical_jobs": 30,
+      "padded_data_bytes": 184320,
+      "plan_hashes": {
+        "0": "211bf83827e51f6023a6264406b191082eb632a9f7e810ef1f910ba8688393e3",
+        "1": "e0193656ac867f2c0b764e900669811905b02980570c5f71e450185722224f03",
+        "2": "5b309b4f09f67c98645525792b21f4f5f30a57f39c8fe0660ae0d1ef6744cad7"
+      },
+      "recipe_id": "block-phase",
+      "record_slots": 40,
+      "role_templates": [
+        {
+          "distinct": 448,
+          "pattern": "row-column",
+          "period_ticks": 25,
+          "stride": 32,
+          "sweeps": 12,
+          "width": 8
+        },
+        {
+          "distinct": 576,
+          "pattern": "row-column-mirrored",
+          "period_ticks": 50,
+          "stride": 32,
+          "sweeps": 9,
+          "width": 8
+        }
+      ],
+      "split_group": "validation",
+      "task_count": 10,
+      "task_ids": [
+        "vs1w0002_t00",
+        "vs1w0002_t01",
+        "vs1w0002_t02",
+        "vs1w0002_t03",
+        "vs1w0002_t04",
+        "vs1w0002_t05",
+        "vs1w0002_t06",
+        "vs1w0002_t07",
+        "vs1w0002_t08",
+        "vs1w0002_t09"
+      ],
+      "workload_id": "validation-supplement-v1-0002"
+    },
+    {
+      "configuration_hash": "9a064a75d9879151549ae27ab5ee60cd5e13e8a00510e5d727368027ddb120a6",
+      "estimated_total_u": 0.9853814453124999,
+      "execution_input_signature": "b331e8722ea881a982eed78b8e2f72b00a60eeb4ab95fe14f594fab52b81758f",
+      "family_id": "family-5b094dd8a8f196c6",
+      "horizon_ticks": 104,
+      "input_signature": "e1a4967313cc5c9bc47977bf762378b835ae7289ba53761ce253bb8f2f7da953",
+      "logical_jobs": 30,
+      "padded_data_bytes": 184320,
+      "plan_hashes": {
+        "0": "85c777a3689e7a904052662bed8683311798aa884e3da590e828fa77730640c5",
+        "1": "6464a8e06a87d7dd6394d3a009b653186ae655aece9ad135b61465578488db1f",
+        "2": "47845b69755d332564ffdeb86196e4e9c587db4a6aa2f763bba2b82b935e9447"
+      },
+      "recipe_id": "multi-array-reuse",
+      "record_slots": 40,
+      "role_templates": [
+        {
+          "distinct": 480,
+          "pattern": "paired-pass",
+          "period_ticks": 26,
+          "stride": 32,
+          "sweeps": 8,
+          "width": 8
+        },
+        {
+          "distinct": 640,
+          "pattern": "matrix-reuse",
+          "period_ticks": 52,
+          "stride": 32,
+          "sweeps": 2,
+          "width": 8
+        }
+      ],
+      "split_group": "validation",
+      "task_count": 10,
+      "task_ids": [
+        "vs1w0003_t00",
+        "vs1w0003_t01",
+        "vs1w0003_t02",
+        "vs1w0003_t03",
+        "vs1w0003_t04",
+        "vs1w0003_t05",
+        "vs1w0003_t06",
+        "vs1w0003_t07",
+        "vs1w0003_t08",
+        "vs1w0003_t09"
+      ],
+      "workload_id": "validation-supplement-v1-0003"
+    },
+    {
+      "configuration_hash": "cbb97675366403739c1a4accab5cf17fa759fa9a0c79d95934d19f1a6827ce31",
+      "estimated_total_u": 0.9938187739379881,
+      "execution_input_signature": "dc1005dd130712908921e9cc09af1c8831f9d6be1376bdd559ccc72fe1fb660c",
+      "family_id": "family-4d9f56f9b3eafcb7",
+      "horizon_ticks": 100,
+      "input_signature": "26780d11e620c61acd6b3a87658b1d595fbd0e2727097a93935131720f264675",
+      "logical_jobs": 30,
+      "padded_data_bytes": 184320,
+      "plan_hashes": {
+        "0": "5489a85004c963745e0ee87cfadc59aa0fbc2288e4901f396db0fb58b5f5a894",
+        "1": "8f255f19135d0dcd880b8c3da77637183f5ad816a77827da470283dfe1221b6c",
+        "2": "aab2c9556be3fad7f6413a23389171dac47df9b9b90d8909a40f9870605eb800"
+      },
+      "recipe_id": "staged-butterfly",
+      "record_slots": 40,
+      "role_templates": [
+        {
+          "distinct": 480,
+          "pattern": "butterfly-twiddle",
+          "period_ticks": 25,
+          "stride": 32,
+          "sweeps": 11,
+          "width": 8
+        },
+        {
+          "distinct": 570,
+          "pattern": "butterfly-scale",
+          "period_ticks": 50,
+          "stride": 32,
+          "sweeps": 5,
+          "width": 8
+        }
+      ],
+      "split_group": "validation",
+      "task_count": 10,
+      "task_ids": [
+        "vs1w0004_t00",
+        "vs1w0004_t01",
+        "vs1w0004_t02",
+        "vs1w0004_t03",
+        "vs1w0004_t04",
+        "vs1w0004_t05",
+        "vs1w0004_t06",
+        "vs1w0004_t07",
+        "vs1w0004_t08",
+        "vs1w0004_t09"
+      ],
+      "workload_id": "validation-supplement-v1-0004"
+    }
+  ],
+  "population_path": "artifacts/periodic/input-freeze-v1/population.json",
+  "rationale": [
+    "10 tasks differs from every original 4/8/12/16-task input within the supported 1..16 range",
+    "hold profile, width, task count and target U fixed across selected families",
+    "use the existing L1 boundary profile without extending generator patterns or resource limits",
+    "choose four families by seed before new measurements; do not match failed workload identities"
+  ],
+  "schema_version": 1,
+  "scope": "rules and in-memory static preview only; no prepared input files, builds, U, features or G/C/P runs",
+  "seed": 20260922,
+  "seed_scope": "family ranking only; no random sampling or retries",
+  "selection_rule": "ascending sha256(canonical JSON [version, seed, family_id]); tie by family_id; first four of five families, one input each",
+  "source_archive": "artifacts/periodic/candidates-v3/input-pool.tar.gz",
+  "source_hashes": {
+    "artifacts/periodic/candidates-v3/input-pool.tar.gz": "b71e53ae6bdab132e6d92d2a2500cf85e36ec5a7749fd22ef7c2e7585367623a",
+    "artifacts/periodic/candidates-v3/manifest.json": "0b61400668518820e5f5bbe8c7be92736ac7a50605a65b9c9e4b13dbe3ee695e",
+    "artifacts/periodic/input-freeze-v1/manifest.json": "621402702d836fe1dc15609ade4934d5bf21ee3d0d462e74a05675a00e82a467",
+    "artifacts/periodic/input-freeze-v1/population.json": "8e18d2fa7754cfbbcf91ac73da5fa3910a5393f46b1cbfc171116d426cd86fa8",
+    "artifacts/periodic/input-freeze-v1/split.json": "5c4abe3e2e33506c9bb06b14fd5606362544ac6361f9c5a129df12259b006edc",
+    "artifacts/periodic/validation-supplement-v1/revalidate.py": "024dec756f92b115b5f21721d7d8866b5f3d8245dfaefb65150825c139a75ba4",
+    "chaser/periodic.py": "f5315a8eabbbb8228b00407fa52dae4924a95cce4e34ebcc03e976fdac9be405",
+    "chaser/periodic_patterns.py": "1b89e41ee23476de72f724a545029bfd9c5cd59553e778f4c78fcab5b93f45ea",
+    "chaser/periodic_recipes.py": "22bbd686394dcf89663af140a7a74d945bf447e1db929832c1468f58f560139a",
+    "chaser/periodic_registry.py": "21e1644b770b8c2c95768ffa56ada0699549cd6f0bc7c719affb9ffd5e005e68",
+    "chaser/periodic_staged_recipes.py": "11b69d240071421a5d6172f3de7ce62b64de6f3c8545fb6418158e81115f795a",
+    "chaser/periodic_structures.py": "ce0cda3db1e0ff65ca0a0348d0fcea176199f9d46553f7e63f150d870fbe4eb7",
+    "rtems/periodic/RECIPES.md": "28f041e8e255f4b9e8b19ce056203456e4b5a5670ac59b7377cfb7119cff9bef",
+    "rtems/periodic/STAGED-RECIPES.md": "2457bba43b26031175b7f8cae315a7256e3f70c0c0f6ac26997be310a6cd17e7",
+    "rtems/periodic/recipe-sources.json": "c46ae90a22b6f56e16598d947d38dea9ab9570b3d024500dbeccf43047636858",
+    "rtems/periodic/staged-recipe-sources.json": "fdd26adaefe9f489df467218a1497247402f2c256f2348730f962fe5732d0c42",
+    "tools/rtems_periodic_pool.py": "fad76a8a70b81a3b2d1d68f9549781c2f3599bc86f13b77eb0507f4dcff7b2cc",
+    "tools/rtems_periodic_pool_audit.py": "1dc47bd8708325f577a21bc9e2cdc20742410390862811084ce44bece6a95ea0",
+    "tools/rtems_periodic_pool_v2.py": "150bb602031bb8d2105cf73f5ff8e34601d12fe5bcbb2f8333bc6558b03bc369",
+    "tools/rtems_periodic_pool_v3.py": "632c1b3fbaa177fd812d4aef0bf6c753b480d719182ae5a0df3c7b0a55438c10",
+    "tools/rtems_smoke.py": "99daf598d92ad32c263ed31d909089af4a0219ba1135edaeae45e224fafef019"
+  },
+  "source_revision": "c6a0d73e47bbd2bc86e34637156fb26dd4d5cf08",
+  "split_contract": {
+    "is_original_random_split": false,
+    "new_split": "validation",
+    "original_assignments_immutable": true,
+    "original_seed": 20260921,
+    "parent_input_version": "periodic-input-freeze-v1",
+    "policy": "validation-only-supplement-v1",
+    "runnable_extended_split_prepared": false,
+    "same_taskset_variants": "all repetitions, G/C/P, mappings, representations and policies remain validation"
+  },
+  "split_path": "artifacts/periodic/input-freeze-v1/split.json",
+  "static_gate": {
+    "required": [
+      "all source hashes match",
+      "joint registry retains original family IDs and excludes development lineages",
+      "exactly four unique workload IDs, input signatures and disjoint task IDs",
+      "make_plan passes for all G/C/P architectures",
+      "jobs and allocated record slots each <= 64",
+      "make_plan data bounds, including 16 MiB padded allocation, hold",
+      "estimated task U <= 0.25 and total U <= 2.0"
+    ],
+    "runtime_eligibility": "pending final ELF/layout/stream analysis and independent measured U; static PASS is not runtime PASS"
+  },
+  "status": "generation_rules_frozen_premeasurement",
+  "validation": {
+    "collision_count": 0,
+    "independent_u_runs": 400,
+    "new_unique_tasksets": 4,
+    "original_development_inputs": 11,
+    "original_duplicate_aliases": 93,
+    "original_family_ids_unchanged": true,
+    "original_membership_hash": "92574a43fe183e6b3652d894bc97758a9c90b200d638225437fd20d543c1a50f",
+    "original_split_counts": {
+      "test": 40,
+      "train": 126,
+      "validation": 41
+    },
+    "original_tasksets": 207,
+    "projected_assignments_hash": "418c49e36f81be9b9fa480d930411a90dfaa1ce3d08259e8583823f9a34eb8a8",
+    "projected_split_counts": {
+      "test": 40,
+      "train": 126,
+      "validation": 45
+    },
+    "runnable_inputs_prepared": false,
+    "runtime_runs_collected": 0,
+    "static_plans_checked": 12,
+    "timing_runs_one_policy": 120
+  },
+  "version": "validation-supplement-v1"
+}

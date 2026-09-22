@@ -1,0 +1,27 @@
+{
+  "finalize_invoked": false,
+  "focused_tests": {
+    "command": "PYTHONPATH=. python3 -m pytest -q artifacts/periodic/validation-supplement-v1/test_execution.py",
+    "passed": 6
+  },
+  "input_archive_roundtrip": "all bytes matched",
+  "log_sha256": "68abf20cb22e4be08d2a9b53311cab77b771ca3753e78d397764577a452bd445",
+  "measurements_complete": false,
+  "pid": 1282987,
+  "repository_tests": {
+    "command": "CHASER_COLD_PREFIX=/tmp/chaser-cg-cold-install sh scripts/verify",
+    "duration_seconds": 77.71,
+    "exit_code": 0,
+    "passed": 609,
+    "skipped": 0
+  },
+  "runtime_exit": ".cache/validation-supplement-v1-characterization/exit.json",
+  "runtime_summary": ".cache/validation-supplement-v1-characterization/summary.json",
+  "source_hashes": {
+    "collect_supplement.py": "eb55f6c0da822746481704a0cd1c93d0ffc8bdb174c0c5752370a00ce5e38d3c",
+    "revalidate.py": "024dec756f92b115b5f21721d7d8866b5f3d8245dfaefb65150825c139a75ba4",
+    "supplement_inputs.py": "ffb2e1d496a842b70e3586a6f889ad4fbd4514cd151a1814ff184958df9afbc5",
+    "test_execution.py": "4c70a121177a1816f7848476d7a097f66ec33c2f17f0668d92a409071d7567f9"
+  },
+  "status": "verification_passed_collection_launched"
+}

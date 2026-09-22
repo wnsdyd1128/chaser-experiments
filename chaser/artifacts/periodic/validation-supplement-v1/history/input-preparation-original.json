@@ -1,0 +1,20 @@
+{
+  "archive": "prepared-inputs.tar.gz",
+  "archive_sha256": "3ad93b2bc74df16bad372a3f4cad406cecaaabd2241e8105f054d25c5a8c918e",
+  "config_identities_match_preregistration": true,
+  "extension_format": "validation-only-supplement-v1; not a replacement schema2 random split",
+  "generation_manifest_sha256": "5d6e602b87cbfd2cac075820242c3d7dd0c3a0801957473e35ae28b9cff22df1",
+  "independent_u_runs_planned": 400,
+  "input_directory": ".cache/validation-supplement-v1-inputs",
+  "input_manifest_sha256": "7c38f117edf043aa616df2a1e0e70cc6c750e7260f71edaf1b966100cf0a289f",
+  "original_assignments_unchanged": true,
+  "planned_inputs": 4,
+  "registered_total": 211,
+  "runtime_status": "not_started",
+  "split_counts": {
+    "test": 40,
+    "train": 126,
+    "validation": 45
+  },
+  "status": "inputs_prepared"
+}

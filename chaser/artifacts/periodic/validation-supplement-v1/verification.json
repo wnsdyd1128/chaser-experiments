@@ -1,0 +1,21 @@
+{
+  "finalize_invoked": false,
+  "full_verification": {
+    "command": "CHASER_COLD_PREFIX=/tmp/chaser-cg-cold-install sh scripts/verify",
+    "exit_code": 0,
+    "log": "verification.log",
+    "log_sha256": "287014540fb4735e7c0fa9dbe509e4782570c8e1b76a242a958377fb5a9cdd62",
+    "passed": 609,
+    "pytest_duration_seconds": 79.62,
+    "skipped": 0
+  },
+  "manifest_sha256": "5d6e602b87cbfd2cac075820242c3d7dd0c3a0801957473e35ae28b9cff22df1",
+  "original_candidate_and_frozen_artifact_hashes": "all matched existing manifests",
+  "original_taskset_duplicate_rejected": true,
+  "replay_command": "PYTHONPATH=. python3 artifacts/periodic/validation-supplement-v1/revalidate.py",
+  "scope": "generation rules and static replay, not runtime supplement eligibility",
+  "source_drift_rejected": true,
+  "source_pool_matches_frozen_population": true,
+  "status": "pass",
+  "supplement_runtime_runs": 0
+}
