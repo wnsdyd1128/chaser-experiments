@@ -16,6 +16,8 @@ def test_compression_preserves_exact_bytes_and_records_original_identity(tmp_pat
     assert path.read_bytes() == data
     assert record['original_sha256'] == sha256(data).hexdigest()
     assert record['original_bytes'] == len(data)
+    assert record['preset'] == '6'
+    assert path.with_suffix('.json.xz').read_bytes() == lzma.compress(data, preset=6)
 
 
 def test_existing_compressed_evidence_is_not_overwritten(tmp_path):

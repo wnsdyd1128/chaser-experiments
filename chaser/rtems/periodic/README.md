@@ -59,6 +59,8 @@ accuracy. The measurement backend is the installed `laysim-gr740`, not silicon.
 
 Pre-label frozen-input collection is available through
 `python3 -m tools.rtems_periodic_characterize prepare|run`.
+Previously completed preset 9 extreme archives remain valid and are reused;
+each analysis manifest records the actual preset and original byte identity.
 See [characterization v1](../../artifacts/periodic/characterization-v1/README.md)
 for progress, lossless event compression, commands, and remaining collection work.
 
