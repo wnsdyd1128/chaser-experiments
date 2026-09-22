@@ -59,10 +59,22 @@ accuracy. The measurement backend is the installed `laysim-gr740`, not silicon.
 
 Pre-label frozen-input collection is available through
 `python3 -m tools.rtems_periodic_characterize prepare|run`.
+`prepare --workers N` builds, analyzes, and compresses up to N tasksets concurrently
+in separate snapshot directories (1--8, default 8). Each worker retains the same
+full-event XZ preset 6 compression and verification; peak JSON and compressor
+memory scales with N. Progress records completed tasksets in completion order.
+`run --workers N` still processes one taskset at a time with up to N independent
+simulators, so it does not multiply the simulator concurrency across tasksets.
+Use `prepare --workers 8 --prepare-workers 16` to increase preparation concurrency
+without changing the simulator worker count in `protocol.json`. The optional
+`--prepare-workers` override accepts 1--16 and applies only to `prepare`.
 Previously completed preset 9 extreme archives remain valid and are reused;
 each analysis manifest records the actual preset and original byte identity.
+Complete snapshots are revalidated and reused; incomplete snapshots are preserved
+and reported as failures. Stop an existing collector before resuming the same output.
 See [characterization v1](../../artifacts/periodic/characterization-v1/README.md)
-for progress, lossless event compression, commands, and remaining collection work.
+for the original serial collection record, lossless event compression, commands,
+and remaining collection work.
 
 ## Terminology
 

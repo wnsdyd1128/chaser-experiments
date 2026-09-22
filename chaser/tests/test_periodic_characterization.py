@@ -3,6 +3,38 @@ import pytest
 from tools.rtems_periodic_characterize import feature_record
 
 
+def test_prepare_workers_can_increase_without_changing_simulator_protocol(tmp_path, monkeypatch):
+    import json
+    import tools.rtems_periodic_characterize as collector
+    from tools.rtems_smoke import write_json
+
+    frozen, output = tmp_path / 'frozen', tmp_path / 'output'
+    frozen.mkdir()
+    write_json(frozen / 'population.json', dict(workloads=[]))
+    write_json(frozen / 'split.json', {})
+    monkeypatch.setattr(collector, 'verify', lambda _: None)
+    collector.collect(frozen, output, phase='prepare', workers=8, timeout=120)
+    original = (output / 'protocol.json').read_bytes()
+    limits = []
+    executor = collector.ThreadPoolExecutor
+
+    def pool(*, max_workers):
+        limits.append(max_workers)
+        return executor(max_workers=max_workers)
+
+    monkeypatch.setattr(collector, 'ThreadPoolExecutor', pool)
+    collector.collect(frozen, output, phase='prepare', workers=8, timeout=120,
+                      prepare_workers=16)
+    assert limits == [16]
+    assert (output / 'protocol.json').read_bytes() == original
+    assert json.loads(original)['workers'] == 8
+    with pytest.raises(ValueError):
+        collector.collect(frozen, output, phase='run', workers=16, timeout=120)
+    with pytest.raises(ValueError):
+        collector.collect(frozen, output, phase='prepare', workers=8, timeout=120,
+                          prepare_workers=17)
+
+
 def inputs():
     member = dict(workload_id='w', input_signature='sig', split_group='test', family_id='f')
     locality = {'cases': {'b': dict(ca_caas_element=0.2, ca_global_line=0.3,
@@ -57,7 +89,8 @@ def test_undefined_locality_is_preserved_without_inventing_features():
     assert row['split_group'] == 'test'
 
 
-def test_prepare_resumes_complete_snapshot_and_preserves_incomplete_one(tmp_path, monkeypatch):
+@pytest.mark.parametrize('workers', [1, 3])
+def test_prepare_resumes_complete_snapshot_and_preserves_incomplete_one(tmp_path, monkeypatch, workers):
     import json
     import tools.rtems_periodic_characterize as collector
     from chaser.periodic import digest
@@ -99,10 +132,73 @@ def test_prepare_resumes_complete_snapshot_and_preserves_incomplete_one(tmp_path
     monkeypatch.setattr(collector, 'analyze', analysis)
     monkeypatch.setattr(collector, 'checked_locality', checked)
     with pytest.raises(SystemExit):
-        collector.collect(frozen, output, phase='prepare', workers=1, timeout=120)
+        collector.collect(frozen, output, phase='prepare', workers=workers, timeout=120)
     assert built == ['new']
     assert analyzed == ['new']
     report = json.loads((output / 'prepare-progress.json').read_text())
-    assert [r['status'] for r in report['workloads']] == ['ok', 'failed', 'ok']
+    assert {r['workload_id']: r['status'] for r in report['workloads']} == {
+        'complete': 'ok', 'incomplete': 'failed', 'new': 'ok'}
     assert all(r['split_group'] == 'test' for r in report['workloads'])
     assert report['processed_workloads'] == 3
+
+
+def test_prepare_runs_concurrently_with_worker_limit_and_keeps_failures(tmp_path, monkeypatch):
+    import json
+    import threading
+    import tools.rtems_periodic_characterize as collector
+    from chaser.periodic import digest
+    from tools.rtems_smoke import write_json
+
+    frozen, output = tmp_path / 'frozen', tmp_path / 'output'
+    (frozen / 'source/configs').mkdir(parents=True)
+    members = []
+    for name in ('a', 'b', 'c', 'd'):
+        config = dict(workload_id=name)
+        write_json(frozen / 'source/configs' / (name + '.json'), config)
+        members.append(dict(workload_id=name, configuration_hash=digest(config),
+                            split_group='validation'))
+    write_json(frozen / 'population.json', dict(workloads=members))
+    write_json(frozen / 'split.json', {})
+    barrier, lock = threading.Barrier(2, timeout=5), threading.Lock()
+    active, peak = 0, 0
+
+    def build(config, path):
+        path.mkdir(parents=True)
+        write_json(path / 'configuration.json', config)
+        write_json(path / 'manifest.json', dict(files={}))
+
+    def analysis(path, **kwargs):
+        nonlocal active, peak
+        assert kwargs['compress_events'] is True
+        with lock:
+            active += 1
+            peak = max(peak, active)
+        try:
+            barrier.wait()
+            with lock:
+                active -= 1
+            barrier.wait()
+            if path.name == 'b':
+                raise ValueError('analysis failure')
+            (path / 'analysis').mkdir()
+            write_json(path / 'analysis/locality.json', {'workload_id': path.name})
+        except threading.BrokenBarrierError:
+            pytest.fail('Preparation did not execute concurrently')
+
+    monkeypatch.setattr(collector, 'verify', lambda _: None)
+    monkeypatch.setattr(collector, 'prepare', build)
+    monkeypatch.setattr(collector, 'analyze', analysis)
+    monkeypatch.setattr(collector, 'checked_locality',
+                        lambda p: json.loads((p / 'analysis/locality.json').read_text()))
+    with pytest.raises(SystemExit) as error:
+        collector.collect(frozen, output, phase='prepare', workers=2, timeout=120)
+    assert error.value.code == 1
+    assert peak == 2
+    report = json.loads((output / 'prepare-progress.json').read_text())
+    assert report['processed_workloads'] == 4
+    assert report['successful_workloads'] == 3
+    rows = {r['workload_id']: r for r in report['workloads']}
+    assert rows['b']['error'] == 'ValueError: analysis failure'
+    assert all(r['split_group'] == 'validation' for r in rows.values())
+    assert all(rows[n]['status'] == 'ok' for n in ('a', 'c', 'd'))
+

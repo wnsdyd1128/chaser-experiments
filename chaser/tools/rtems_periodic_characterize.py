@@ -1,7 +1,7 @@
 """Collect frozen-input ELF locality and independent U before policy calibration."""
 
 import argparse
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 from math import fsum
 from pathlib import Path
@@ -53,15 +53,23 @@ def checked_locality(snapshot: Path) -> dict:
     return locality
 
 
-def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: float) -> None:
+def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: float,
+            prepare_workers: int | None = None) -> None:
     """Resume verified complete batches; preserve interrupted or failed evidence.
 
-    Preparation is serial to bound full-event JSON memory. U uses fresh simulator
-    processes concurrently, but each process executes one task on core zero.
+    Preparation uses ``prepare_workers`` (defaults to ``workers``), each in its own
+    snapshot; full-event JSON and compressor memory scale with that limit.
+    U runs one taskset at a time with at most ``workers`` simulator processes,
+    each executing one task on core zero.
     Existing incomplete batches are reported as failures and never overwritten.
     """
     if not 1 <= workers <= 8 or not 0 < timeout < float('inf'):
         raise ValueError('Use 1--8 workers and a positive finite timeout')
+    preparation_limit = workers if prepare_workers is None else prepare_workers
+    if not 1 <= preparation_limit <= 16:
+        raise ValueError('Use 1--16 prepare workers')
+    if phase != 'prepare' and prepare_workers is not None:
+        raise ValueError('prepare_workers applies only to prepare')
     verify(frozen)
     population = json.loads((frozen / 'population.json').read_text())
     output.mkdir(parents=True, exist_ok=True)
@@ -93,8 +101,7 @@ def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: fl
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(root / name, destination)
             write_json(identity, hashes)
-    reports = []
-    for member in population['workloads']:
+    def collect_member(member: dict) -> dict:
         name = member['workload_id']
         snapshot = output / 'prepared' / name
         configuration = frozen / 'source/configs' / (name + '.json')
@@ -154,13 +161,30 @@ def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: fl
         except Exception as error:
             report['error'] = f'{type(error).__name__}: {error}'
         report['wall_seconds'] = time.monotonic() - started
-        reports.append(report)
+        return report
+
+    reports = []
+
+    def write_progress() -> None:
         write_json(output / (phase + '-progress.json'), dict(
             planned_workloads=len(population['workloads']), processed_workloads=len(reports),
             successful_workloads=sum(r['status'] == 'ok' for r in reports), workloads=reports,
             dataset_ready=False))
-        print(f'{phase} {name}: {report["status"]} ({report["wall_seconds"]:.1f}s)'
+
+    def record(report: dict) -> None:
+        reports.append(report)
+        write_progress()
+        print(f'{phase} {report["workload_id"]}: {report["status"]} ({report["wall_seconds"]:.1f}s)'
               + (f' {report["error"]}' if 'error' in report else ''), flush=True)
+
+    if phase == 'prepare':
+        with ThreadPoolExecutor(max_workers=preparation_limit) as executor:
+            futures = [executor.submit(collect_member, m) for m in population['workloads']]
+            for future in as_completed(futures):
+                record(future.result())
+    else:
+        for member in population['workloads']:
+            record(collect_member(member))
     if any(r['status'] != 'ok' for r in reports):
         raise SystemExit(1)
 
@@ -170,11 +194,14 @@ def main() -> None:
     parser.add_argument('phase', choices=('prepare', 'run'))
     parser.add_argument('frozen', type=Path)
     parser.add_argument('--output', required=True, type=Path)
-    parser.add_argument('--workers', type=int, default=8)
+    parser.add_argument('--workers', type=int, default=8,
+                        help='1--8 concurrent tasksets for prepare, simulators for run')
+    parser.add_argument('--prepare-workers', type=int,
+                        help='Override prepare concurrency only (1--16); keeps simulator protocol unchanged')
     parser.add_argument('--timeout', type=float, default=120)
     args = parser.parse_args()
     collect(args.frozen.resolve(), args.output.resolve(), phase=args.phase,
-            workers=args.workers, timeout=args.timeout)
+            workers=args.workers, timeout=args.timeout, prepare_workers=args.prepare_workers)
 
 
 if __name__ == '__main__':
