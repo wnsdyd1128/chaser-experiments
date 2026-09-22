@@ -117,6 +117,55 @@ Resuming a legacy protocol removes only its false readiness flag after checking
 all measurement parameters. Immutable frozen-input and historical artifacts retain
 their original schema.
 
+## Validation theta calibration
+
+`tools.rtems_periodic_calibrate` connects the frozen validation population to
+measured P mappings. It revalidates original independent-U logs and locality,
+loads no train/test feature payloads, and retains the original U ELF identity.
+The legacy threshold API receives only validation rows; its subset split hash
+is distinct from the complete frozen split hash recorded in `plan.json`.
+
+Run each phase with the same arguments, replacing `plan` with `prepare`, `run`,
+and finally `freeze` after the preceding phase succeeds:
+
+```sh
+python3 -m tools.rtems_periodic_calibrate plan \
+  .cache/characterization-v1-inputs/frozen \
+  --characterized .cache/characterization-v1 \
+  --output .cache/calibration-v1 \
+  --workers 16 --prepare-workers 8 --timeout 1800
+```
+
+The plan enumerates CAAS-CA, CA-CSRD and CLS(alpha=0.5) thresholds without fake
+timing scores. It minimizes allocation failures first and compares the common
+successful validation workloads. Identical workload/core mappings across
+representations share one explicitly identified snapshot and ten P timing runs.
+Preparation currently builds and analyzes all three G/C/P ELFs per mapping;
+calibration measures only P. New linked streams, locality, task sources/layout,
+harness and build tools must match the original characterization conditions.
+The simulator and build/analyzer identities are pinned for the whole search.
+
+Preparation defaults to 8 workers (maximum 16), with the existing bounded event
+compression queue. Timing defaults to 16 simulators (maximum 32), ten fresh
+processes per batch, and 1800 seconds per process. One SIGINT drains admitted
+work. An observed failure stops new admissions; partial/failed snapshots and
+batches are preserved and prevent policy freezing. Complete evidence can be
+revalidated on resume with the same plan and implementation.
+
+`freeze` rechecks every raw batch before selecting each representation's theta
+by mean of workload median TAT, with smallest theta as the final tie-break.
+`frozen-policies.json` records thresholds, core groups, the fixed C-domain
+transform, allocator identity and measurement provenance. It does not produce
+final policy ELF snapshots, G/C/P labels, RF models or training eligibility.
+Those require the later policy-specific preparation and measurement stages.
+
+The first actual [validation calibration attempt](../../artifacts/periodic/calibration-v1/README.md)
+prepared all 197 mappings, then stopped on a repeatable startup release-phase
+failure. Its 260 timing runs are preserved; no measured theta/policy was frozen.
+The subsequent error survey completed all 1,970 planned runs without retrying
+that failure: 1,960 succeeded and the original ten failed. No additional failing
+mapping was found; current evidence is linked from the calibration attempt record.
+
 ## G/C/P-only collection after policy freezing
 
 `tools.rtems_periodic_gcp` accepts prepared snapshot directories for one allocation
