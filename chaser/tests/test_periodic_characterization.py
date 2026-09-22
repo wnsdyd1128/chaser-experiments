@@ -53,7 +53,8 @@ def test_feature_record_keeps_membership_and_has_no_label():
     assert row['within_u_bounds'] is True
     assert row['features']['caas-ca'][-1] == pytest.approx(0.35)
     assert 'label' not in row
-    assert row['dataset_ready'] is False
+    assert row['dataset_stage'] == 'characterized'
+    assert 'dataset_ready' not in row
 
 
 def test_out_of_bounds_keeps_features_and_exclusion_reason():
@@ -140,6 +141,8 @@ def test_prepare_resumes_complete_snapshot_and_preserves_incomplete_one(tmp_path
         'complete': 'ok', 'incomplete': 'failed', 'new': 'ok'}
     assert all(r['split_group'] == 'test' for r in report['workloads'])
     assert report['processed_workloads'] == 3
+    assert report['dataset_stage'] == 'prepare_failed'
+    assert 'dataset_ready' not in report
 
 
 def test_prepare_runs_concurrently_with_worker_limit_and_keeps_failures(tmp_path, monkeypatch):
@@ -203,3 +206,46 @@ def test_prepare_runs_concurrently_with_worker_limit_and_keeps_failures(tmp_path
     assert all(r['split_group'] == 'validation' for r in rows.values())
     assert all(rows[n]['status'] == 'ok' for n in ('a', 'c', 'd'))
 
+
+@pytest.mark.parametrize('phase, statuses, total, expected', [
+    ('prepare', [], 2, 'preparing'),
+    ('prepare', ['ok'], 2, 'preparing'),
+    ('prepare', ['ok', 'ok'], 2, 'prepared'),
+    ('prepare', ['ok', 'failed'], 2, 'prepare_failed'),
+    ('run', [], 2, 'characterizing'),
+    ('run', ['failed'], 2, 'characterizing'),
+    ('run', ['ok', 'ok'], 2, 'characterized'),
+    ('run', ['ok', 'failed'], 2, 'characterization_failed'),
+])
+def test_dataset_stage_distinguishes_progress_success_and_failure(phase, statuses, total, expected):
+    from tools.rtems_periodic_characterize import _dataset_stage
+    assert _dataset_stage(phase, [dict(status=s) for s in statuses], total) == expected
+
+
+@pytest.mark.parametrize('legacy_ready, change_timeout', [(False, False), (True, False), (False, True)])
+def test_legacy_protocol_migration_keeps_measurement_contract(tmp_path, monkeypatch,
+                                                          legacy_ready, change_timeout):
+    import json
+    import tools.rtems_periodic_characterize as collector
+    from tools.rtems_smoke import write_json
+    frozen, output = tmp_path / 'frozen', tmp_path / 'output'
+    frozen.mkdir()
+    write_json(frozen / 'population.json', dict(workloads=[]))
+    write_json(frozen / 'split.json', {})
+    monkeypatch.setattr(collector, 'verify', lambda _: None)
+    collector.collect(frozen, output, phase='prepare', workers=8, timeout=120)
+    path = output / 'protocol.json'
+    original = json.loads(path.read_text())
+    legacy = dict(original, dataset_ready=legacy_ready)
+    if change_timeout:
+        legacy['timeout_seconds'] = 121
+    write_json(path, legacy)
+    if legacy_ready or change_timeout:
+        with pytest.raises(ValueError, match='protocol changed'):
+            collector.collect(frozen, output, phase='prepare', workers=8, timeout=120)
+        assert json.loads(path.read_text()) == legacy
+    else:
+        collector.collect(frozen, output, phase='prepare', workers=8, timeout=120)
+        assert json.loads(path.read_text()) == original
+        assert 'dataset_ready' not in original
+        assert json.loads((output / 'prepare-progress.json').read_text())['dataset_stage'] == 'prepared'

@@ -90,6 +90,26 @@ See [characterization v1](../../artifacts/periodic/characterization-v1/README.md
 for the original serial collection record, lossless event compression, commands,
 and remaining collection work.
 
+Collector progress and feature records use `dataset_stage` instead of the former
+`dataset_ready: false` flag. `phase` remains the command (`prepare` or `run`).
+
+| `dataset_stage` | Meaning |
+|---|---|
+| `preparing` | ELF analysis/compression collection is in progress |
+| `prepared` | All planned ELF analysis/compression results passed verification |
+| `prepare_failed` | Preparation finished with one or more failed inputs |
+| `characterizing` | Independent U and feature collection is in progress |
+| `characterized` | Independent U and feature processing completed successfully |
+| `characterization_failed` | Characterization finished with failed inputs |
+
+Each workload record carries its own completed/failed stage; the top-level stage
+describes the whole collection. `characterized` does not assert utilization bounds,
+defined features, policy calibration, labels, or training eligibility; those checks
+remain separate. `protocol.json` contains fixed measurement settings, not progress.
+Resuming a legacy protocol removes only its false readiness flag after checking
+all measurement parameters. Immutable frozen-input and historical artifacts retain
+their original schema.
+
 ## Terminology
 
 | Term | Korean term | Meaning |

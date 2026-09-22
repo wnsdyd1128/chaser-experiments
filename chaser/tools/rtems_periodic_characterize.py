@@ -40,7 +40,17 @@ def feature_record(member: dict, locality: dict, utilization: dict) -> dict:
     return dict(member, characterization_id=utilization['characterization_id'],
                 utilization=values, features=features, undefined_features=undefined,
                 cls_alpha=0.5, within_u_bounds=not reasons, exclusion_reasons=reasons,
-                dataset_ready=False)
+                dataset_stage='characterized')
+
+
+def _dataset_stage(phase: str, reports: list[dict], total: int) -> str:
+    ongoing, complete, failed = {
+        'prepare': ('preparing', 'prepared', 'prepare_failed'),
+        'run': ('characterizing', 'characterized', 'characterization_failed'),
+    }[phase]
+    if len(reports) < total:
+        return ongoing
+    return complete if all(r['status'] == 'ok' for r in reports) else failed
 
 
 def checked_locality(snapshot: Path) -> dict:
@@ -76,12 +86,18 @@ def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: fl
     output.mkdir(parents=True, exist_ok=True)
     protocol = dict(population_hash=file_hash(frozen / 'population.json'),
                     split_hash=file_hash(frozen / 'split.json'), expected_runs=10,
-                    workers=workers, timeout_seconds=timeout, u_max=0.25, U_max=2.0,
-                    dataset_ready=False)
+                    workers=workers, timeout_seconds=timeout, u_max=0.25, U_max=2.0)
     protocol_path = output / 'protocol.json'
     if protocol_path.exists():
-        if json.loads(protocol_path.read_text()) != protocol:
+        previous = json.loads(protocol_path.read_text())
+        # Readiness was an invariant false flag, not a measurement parameter.
+        migrated = dict(previous)
+        if migrated.get('dataset_ready') is False:
+            del migrated['dataset_ready']
+        if migrated != protocol:
             raise ValueError('Collection protocol changed')
+        if previous != protocol:
+            write_json(protocol_path, protocol)
     else:
         write_json(protocol_path, protocol)
     if phase == 'run':
@@ -162,6 +178,7 @@ def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: fl
         except Exception as error:
             report['error'] = f'{type(error).__name__}: {error}'
         report['wall_seconds'] = time.monotonic() - started
+        report['dataset_stage'] = _dataset_stage(phase, [report], 1)
         return report
 
     reports = []
@@ -170,7 +187,7 @@ def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: fl
         write_json(output / (phase + '-progress.json'), dict(
             planned_workloads=len(population['workloads']), processed_workloads=len(reports),
             successful_workloads=sum(r['status'] == 'ok' for r in reports), workloads=reports,
-            dataset_ready=False))
+            dataset_stage=_dataset_stage(phase, reports, len(population['workloads']))))
 
     def record(report: dict) -> None:
         reports.append(report)
@@ -178,6 +195,7 @@ def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: fl
         print(f'{phase} {report["workload_id"]}: {report["status"]} ({report["wall_seconds"]:.1f}s)'
               + (f' {report["error"]}' if 'error' in report else ''), flush=True)
 
+    write_progress()
     if phase == 'prepare':
         with EventCompressionQueue() as compression_queue, \
                 ThreadPoolExecutor(max_workers=preparation_limit) as executor:
