@@ -63,8 +63,15 @@ Pre-label frozen-input collection is available through
 in separate snapshot directories (1--8, default 8). Each worker retains the same
 full-event XZ preset 6 compression and verification; peak JSON and compressor
 memory scales with N. Progress records completed tasksets in completion order.
-`run --workers N` still processes one taskset at a time with up to N independent
-simulators, so it does not multiply the simulator concurrency across tasksets.
+`run --workers N` shares a single pool of at most N independent simulators across
+up to N in-flight tasksets. A free slot can execute another taskset's batch while
+slower batches finish; simulator concurrency stays bounded globally (1--8, default 8).
+Progress records tasksets in completion order. A single SIGINT to the collector
+PID stops admitting tasksets and waits for submitted batches to finish; do not
+signal the simulator process group or interrupt the drain a second time.
+Complete batches are revalidated on resume, including batches whose taskset
+summary was not published before the interrupt. Existing incomplete batches
+remain failures and are never overwritten.
 Use `prepare --workers 8 --prepare-workers 16` to increase preparation concurrency
 without changing the simulator worker count in `protocol.json`. The optional
 `--prepare-workers` override accepts 1--16 and applies only to `prepare`.

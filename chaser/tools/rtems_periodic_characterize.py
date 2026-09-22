@@ -1,7 +1,8 @@
 """Collect frozen-input ELF locality and independent U before policy calibration."""
 
 import argparse
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, as_completed, wait
+from itertools import islice
 import json
 from math import fsum
 from pathlib import Path
@@ -70,8 +71,8 @@ def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: fl
 
     Preparation uses ``prepare_workers`` (defaults to ``workers``), each in its own
     snapshot; full-event JSON and compressor memory scale with that limit.
-    U runs one taskset at a time with at most ``workers`` simulator processes,
-    each executing one task on core zero.
+    U shares at most ``workers`` simulator processes across up to ``workers``
+    in-flight tasksets, each process executing one task on core zero.
     Existing incomplete batches are reported as failures and never overwritten.
     """
     if not 1 <= workers <= 8 or not 0 < timeout < float('inf'):
@@ -159,10 +160,10 @@ def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: fl
                         raise ValueError('Expected ten independent runs')
                     return rows
 
-                with ThreadPoolExecutor(max_workers=workers) as executor:
-                    futures = [executor.submit(batch, i) for i in range(len(plan['tasks']))]
-                    # All submitted batches finish even if another task fails.
-                    batches = [future.result() for future in futures]
+                futures = [simulators.submit(batch, i) for i in range(len(plan['tasks']))]
+                # Drain sibling evidence on failure; retain task order for the U join.
+                wait(futures)
+                batches = [future.result() for future in futures]
                 utilization = characterize(plan, batches)
                 directory = output / 'runs' / name
                 write_json(directory / 'utilization.json', utilization)
@@ -208,8 +209,18 @@ def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: fl
             for future in as_completed(futures):
                 record(future.result())
     else:
-        for member in population['workloads']:
-            record(collect_member(member))
+        # Coordinators drain before the shared simulator pool shuts down. Bound
+        # submissions too, so an interrupt drains only the in-flight tasksets.
+        with ThreadPoolExecutor(max_workers=workers) as simulators, \
+                ThreadPoolExecutor(max_workers=workers) as coordinators:
+            members = iter(population['workloads'])
+            pending = {coordinators.submit(collect_member, m) for m in islice(members, workers)}
+            while pending:
+                completed, pending = wait(pending, return_when=FIRST_COMPLETED)
+                for future in completed:
+                    record(future.result())
+                pending.update(coordinators.submit(collect_member, m)
+                               for m in islice(members, len(completed)))
     if any(r['status'] != 'ok' for r in reports):
         raise SystemExit(1)
 
