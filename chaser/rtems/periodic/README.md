@@ -117,6 +117,42 @@ Resuming a legacy protocol removes only its false readiness flag after checking
 all measurement parameters. Immutable frozen-input and historical artifacts retain
 their original schema.
 
+## G/C/P-only collection after policy freezing
+
+`tools.rtems_periodic_gcp` accepts prepared snapshot directories for one allocation
+policy and collects only normal G/C/P timing. It does not collect independent U,
+build or calibrate policies, change split membership, or produce final labels.
+For the final experiment, supply snapshots prepared under the frozen policy after
+validation calibration; the current characterization snapshots alone do not prove
+that policy freezing is complete. Independent U stays in its existing collection.
+
+The following is a future execution example, not a preparation command:
+
+```sh
+python3 -m tools.rtems_periodic_gcp /path/to/frozen-policy/prepared/* \
+  --output /path/to/new-policy-gcp-runs --workers 32 --timeout 1800
+```
+
+Use a different output directory for each policy. Defaults are 16 simulator
+workers and 1800 seconds (30 minutes) per execution; `--workers` accepts 1--32.
+Each G/C/P batch runs ten fresh processes sequentially; one shared pool admits
+at most the requested number of batches across all tasksets and
+architectures. A population of 207 tasksets therefore needs 6,210 executions per
+policy. Neither batch scheduling nor worker count changes simulated target cores.
+
+`protocol.json` pins the snapshot paths/manifests, policy ID, worker count,
+timeout, collector hash and normal timing flags. Resume with the same inputs and
+settings. Complete batches are revalidated against their raw logs and reused;
+failed or incomplete batches are preserved and reported without replacement.
+A single SIGINT to the collector PID drains admitted batches and stops new
+admissions. `run-progress.json` reports completed batches; logs print one line
+per batch. The logged batch duration includes all ten repetitions and validation,
+so it can exceed the per-execution timeout. Characterization taskset durations
+also include queue waiting and multiple task batches; they are not individual
+simulator durations. `gcp_collected` means collection passed, not final label eligibility.
+After collection, apply the measurement contract's common G/C/P eligibility
+checks and label rule separately, retaining the frozen taskset membership.
+
 ## Terminology
 
 | Term | Korean term | Meaning |
