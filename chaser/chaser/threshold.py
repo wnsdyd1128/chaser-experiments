@@ -1,7 +1,7 @@
 """Validation-only threshold calibration over the existing offline allocator."""
 
 from collections.abc import Callable, Iterable, Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from hashlib import sha256
 import json
 from math import isfinite, nextafter
@@ -82,31 +82,25 @@ def _digest(value: object) -> str:
                              separators=(',', ':')).encode()).hexdigest()
 
 
-def calibrate(cases: Mapping[str, LocalityRecord],
-              workloads: Iterable[CalibrationWorkload], cores: CoreGroups, *,
-              kind: Representation,
-              tat: Callable[[str, Mapping[str, int]], float | None],
-              seed: int, analyzer_version: str, feature_version: str,
-              measurement_source: Literal['measured', 'synthetic'],
-              alpha: float | None = None) -> CalibrationResult:
-    """Minimize failed workloads, then common-success mean TAT, then θ.
+@dataclass(frozen=True)
+class CalibrationPlan:
+    """Exact validation mappings to measure, without fabricated timing scores."""
 
-    Family membership must be disjoint across splits. Only validation payloads
-    produce candidates, placements or TAT requests. Among minimum-failure
-    candidates, compare the intersection of successful workload IDs. An empty
-    intersection or missing/nonpositive/nonfinite TAT prevents calibration.
+    candidates: tuple[CandidateResult, ...]
+    common_workloads: tuple[str, ...]
+    mappings: tuple[tuple[str, dict[str, int]], ...]
+    split_hash: str
+    validation_hash: str
 
-    The callback supplies one TAT summary in a consistent unit per workload and
-    exact mapping (e.g. median of repeated measurements). It is called once per
-    distinct compared mapping, never for partial placements. Measurement and
-    frozen family split construction remain the caller's responsibility.
-    Reuse the returned θ unchanged for test allocation; call separately for each
-    representation/CLS alpha, using the same validation workload population.
+
+def plan_calibration(cases: Mapping[str, LocalityRecord],
+                     workloads: Iterable[CalibrationWorkload], cores: CoreGroups, *,
+                     kind: Representation, alpha: float | None = None) -> CalibrationPlan:
+    """Enumerate minimum-failure candidates and deduplicate comparable mappings.
+
+    Uses the same validation-only population and ordering as ``calibrate``.
+    No timing callback is invoked and no threshold winner is selected.
     """
-    if measurement_source not in ('measured', 'synthetic'):
-        raise ValueError('Specify measured or synthetic TAT provenance')
-    if not analyzer_version or not feature_version:
-        raise ValueError('Analyzer and feature versions are required')
     if kind == 'cls':
         if alpha is None or not isfinite(alpha) or alpha < 0:
             raise ValueError('CLS requires a finite nonnegative alpha')
@@ -148,13 +142,57 @@ def calibrate(cases: Mapping[str, LocalityRecord],
     if not common:
         raise ValueError('No common successful validation workloads among finalists')
 
+    mappings = {}
+    for i in finalists:
+        for name in common:
+            mapping = placements[i][name].mapping
+            mappings.setdefault((name, tuple(sorted(mapping.items()))), (name, dict(mapping)))
+    return CalibrationPlan(
+        candidates=tuple(CandidateResult(theta, failures[i], placements[i], None)
+                         for i, theta in enumerate(thresholds)),
+        common_workloads=common, mappings=tuple(mappings.values()),
+        split_hash=_digest([(row.workload_id, row.family_id, row.split) for row in rows]),
+        validation_hash=_digest({'scalars': scalars, 'workloads': {
+            row.workload_id: dict(row.utilization) for row in validation}}),
+    )
+
+
+def calibrate(cases: Mapping[str, LocalityRecord],
+              workloads: Iterable[CalibrationWorkload], cores: CoreGroups, *,
+              kind: Representation,
+              tat: Callable[[str, Mapping[str, int]], float | None],
+              seed: int, analyzer_version: str, feature_version: str,
+              measurement_source: Literal['measured', 'synthetic'],
+              alpha: float | None = None) -> CalibrationResult:
+    """Minimize failed workloads, then common-success mean TAT, then θ.
+
+    Family membership must be disjoint across splits. Only validation payloads
+    produce candidates, placements or TAT requests. Among minimum-failure
+    candidates, compare the intersection of successful workload IDs. An empty
+    intersection or missing/nonpositive/nonfinite TAT prevents calibration.
+
+    The callback supplies one TAT summary in a consistent unit per workload and
+    exact mapping (e.g. median of repeated measurements). It is called once per
+    distinct compared mapping, never for partial placements. Measurement and
+    frozen family split construction remain the caller's responsibility.
+    Reuse the returned θ unchanged for test allocation; call separately for each
+    representation/CLS alpha, using the same validation workload population.
+    """
+    if measurement_source not in ('measured', 'synthetic'):
+        raise ValueError('Specify measured or synthetic TAT provenance')
+    if not analyzer_version or not feature_version:
+        raise ValueError('Analyzer and feature versions are required')
+    plan = plan_calibration(cases, workloads, cores, kind=kind, alpha=alpha)
+    minimum = min(len(c.failed_workloads) for c in plan.candidates)
+    finalists = [i for i, c in enumerate(plan.candidates) if len(c.failed_workloads) == minimum]
+    common = plan.common_workloads
     measurements: list[MappingMeasurement] = []
     cache: dict[tuple[str, tuple[tuple[str, int], ...]], float] = {}
     scores: dict[int, float] = {}
     for i in finalists:
         values: list[float] = []
         for workload_id in common:
-            mapping = placements[i][workload_id].mapping
+            mapping = plan.candidates[i].placements[workload_id].mapping
             key = (workload_id, tuple(sorted(mapping.items())))
             if key not in cache:
                 value = tat(workload_id, dict(mapping))
@@ -164,18 +202,16 @@ def calibrate(cases: Mapping[str, LocalityRecord],
                 measurements.append(MappingMeasurement(workload_id, dict(mapping), value))
             values.append(cache[key])
         scores[i] = mean(values)
-    winner = min(finalists, key=lambda i: (scores[i], thresholds[i]))
-    candidates = tuple(CandidateResult(theta, failures[i], placements[i], scores.get(i))
-                       for i, theta in enumerate(thresholds))
+    winner = min(finalists, key=lambda i: (scores[i], plan.candidates[i].threshold))
+    candidates = tuple(replace(candidate, mean_tat=scores.get(i))
+                       for i, candidate in enumerate(plan.candidates))
     return CalibrationResult(
         schema_version=1, protocol='failed-workloads/common-mean-tat/min-theta-v1',
-        kind=kind, alpha=alpha, threshold=thresholds[winner], candidates=candidates,
+        kind=kind, alpha=alpha, threshold=plan.candidates[winner].threshold, candidates=candidates,
         common_workloads=common, measurements=tuple(measurements),
         cores=CoreGroups(tuple(sorted(cores.isolated)), tuple(sorted(cores.non_isolated))),
         seed=seed,
-        split_hash=_digest([(row.workload_id, row.family_id, row.split) for row in rows]),
-        validation_hash=_digest({'scalars': scalars, 'workloads': {
-            row.workload_id: dict(row.utilization) for row in validation}}),
+        split_hash=plan.split_hash, validation_hash=plan.validation_hash,
         analyzer_version=analyzer_version, feature_version=feature_version,
         measurement_source=measurement_source,
     )

@@ -8,7 +8,8 @@ from pathlib import Path
 import pytest
 
 from chaser.allocator import CoreGroups, allocate
-from chaser.threshold import CalibrationWorkload, calibrate, threshold_candidates
+from chaser.threshold import (CalibrationWorkload, calibrate, plan_calibration,
+                              threshold_candidates)
 
 
 CORES = CoreGroups((0,), (1,))
@@ -95,6 +96,24 @@ def test_duplicate_workload_mapping_is_measured_once():
 
     run([sample('one', {'a': 0.1}), sample('two', {'b': 0.1})], tat)
     assert len(calls) == len(set(calls)) == 4
+
+
+def test_measurement_plan_has_no_synthetic_scores_and_matches_calibration():
+    rows = [sample('one', {'a': 0.1}), sample('two', {'b': 0.1})]
+    plan = plan_calibration(CASES, rows, CORES, kind='caas-ca')
+    calls = []
+    result = run(rows, lambda name, mapping: calls.append((name, mapping)) or 10.0)
+    assert list(plan.mappings) == calls
+    assert plan.common_workloads == result.common_workloads
+    assert [c.threshold for c in plan.candidates] == [c.threshold for c in result.candidates]
+    assert all(c.mean_tat is None for c in plan.candidates)
+    assert plan.split_hash == result.split_hash
+    assert plan.validation_hash == result.validation_hash
+
+
+def test_measurement_plan_omits_infeasible_and_nonfinalist_mappings():
+    plan = plan_calibration(CASES, [sample()], CORES, kind='caas-ca')
+    assert plan.mappings == (('v', {'a': 0, 'b': 1}),)
 
 
 def test_calibration_ignores_train_test_payload_and_is_order_independent():
