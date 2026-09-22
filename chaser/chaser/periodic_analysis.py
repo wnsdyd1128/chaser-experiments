@@ -1,6 +1,7 @@
 """Analyze fixed job wrappers against every final executable and check streams."""
 
 import json
+from contextlib import ExitStack
 from pathlib import Path
 import re
 import subprocess
@@ -9,6 +10,7 @@ import time
 from chaser.ca import ca_csrd, ca_from_histogram
 from chaser.cls import cls, DEFAULT_ALPHAS
 from chaser.event_storage import compress_events as archive_events
+from chaser.event_compression import EventCompressionQueue
 from chaser.periodic_build import YARDA, check_layout, read_symbols
 from chaser.periodic_patterns import access_offsets, job_access_count, loop_iterations
 from chaser.s1_artifacts import read_analysis
@@ -26,13 +28,23 @@ def check_stream(task: dict, events: list[dict], address: int) -> None:
             raise ValueError('Wrapper access order/address/kind differs from workload')
 
 
-def analyze(prepared: Path, *, timeout: float = 120, compress_events: bool = False) -> dict:
+def analyze(prepared: Path, *, timeout: float = 120, compress_events: bool = False,
+            compression_queue: EventCompressionQueue | None = None) -> dict:
     """Preserve compiler/APE/ELF provenance and reject incomplete helper expansion.
 
     Selection keeps the emitted root and its emitted inline helper unchanged;
     loop bodies/bounds are never edited. Stream addresses and count/order are
     checked against the literal generated workload, not a cold-count product.
+    A shared compression queue reserves capacity before export and is drained for
+    this snapshot before publishing its manifest. The caller owns queue shutdown.
     """
+    if compression_queue is not None and not compress_events:
+        raise ValueError('A compression queue requires compress_events=True')
+    with ExitStack() as reservations:
+        return _analyze(prepared, timeout, compress_events, compression_queue, reservations)
+
+
+def _analyze(prepared, timeout, compress_events, compression_queue, reservations):
     prepared = prepared.resolve()
     manifest = json.loads((prepared / 'manifest.json').read_text())
     check_inputs(prepared, manifest)
@@ -44,6 +56,8 @@ def analyze(prepared: Path, *, timeout: float = 120, compress_events: bool = Fal
     commands = []
 
     def execute(argv: list[str], log: Path, cwd: Path = output):
+        if compression_queue is not None and '--export-events' in argv:
+            argv = compression_queue.export_command(argv)
         started = time.monotonic()
         row = dict(argv=argv, cwd=str(cwd))
         commands.append(row)
@@ -76,6 +90,8 @@ def analyze(prepared: Path, *, timeout: float = 120, compress_events: bool = Fal
         accesses = job_access_count(task)
         limit = loop_iterations(task) + 10
         for name in ('g', 'c', 'p'):
+            reservation = (reservations.enter_context(compression_queue.reserve())
+                           if compression_queue is not None else None)
             directory = output / name / task_id
             directory.mkdir(parents=True)
             elf = prepared / f'build/{name}.exe'
@@ -123,8 +139,15 @@ def analyze(prepared: Path, *, timeout: float = 120, compress_events: bool = Fal
             entry['elf_hashes'][name] = expected['elf_sha256']
             if compress_events:
                 event_path = directory / 'events.json'
-                event_storage[str(event_path.relative_to(output)) + '.xz'] = archive_events(event_path)
-                event_path.unlink()
+                key = str(event_path.relative_to(output)) + '.xz'
+                if reservation is not None:
+                    event_storage[key] = reservation.submit(event_path)
+                else:
+                    event_storage[key] = archive_events(event_path)
+                    event_path.unlink()
+            del events
+    if compression_queue is not None:
+        event_storage = {key: future.result() for key, future in event_storage.items()}
     check_inputs(prepared, manifest)
     if any(file_hash(Path(p)) != h for p, h in tools.items()):
         raise ValueError('Analyzer changed during analysis')

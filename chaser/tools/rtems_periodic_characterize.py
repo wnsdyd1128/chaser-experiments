@@ -9,6 +9,7 @@ import shutil
 import time
 
 from chaser.features import build_features
+from chaser.event_compression import EventCompressionQueue
 from chaser.periodic import digest
 from chaser.periodic_analysis import analyze
 from chaser.periodic_build import prepare
@@ -118,7 +119,7 @@ def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: fl
                     raise ValueError('Prepared configuration differs from frozen input')
                 check_inputs(snapshot, json.loads((snapshot / 'manifest.json').read_text()))
                 if not (snapshot / 'analysis').exists():
-                    analyze(snapshot, compress_events=True)
+                    analyze(snapshot, compress_events=True, compression_queue=compression_queue)
                 checked_locality(snapshot)
             else:
                 if json.loads((snapshot / 'configuration.json').read_text()) != config:
@@ -178,7 +179,13 @@ def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: fl
               + (f' {report["error"]}' if 'error' in report else ''), flush=True)
 
     if phase == 'prepare':
-        with ThreadPoolExecutor(max_workers=preparation_limit) as executor:
+        with EventCompressionQueue() as compression_queue, \
+                ThreadPoolExecutor(max_workers=preparation_limit) as executor:
+            write_json(output / 'prepare-compression.json', dict(
+                workers=4, max_raw_files=compression_queue.max_files,
+                max_file_bytes=compression_queue.max_file_bytes,
+                max_raw_bytes=compression_queue.max_files * compression_queue.max_file_bytes,
+                preset='6', includes=['generating', 'queued', 'compressing']))
             futures = [executor.submit(collect_member, m) for m in population['workloads']]
             for future in as_completed(futures):
                 record(future.result())

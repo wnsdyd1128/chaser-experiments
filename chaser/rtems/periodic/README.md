@@ -70,6 +70,20 @@ without changing the simulator worker count in `protocol.json`. The optional
 `--prepare-workers` override accepts 1--16 and applies only to `prepare`.
 Previously completed preset 9 extreme archives remain valid and are reused;
 each analysis manifest records the actual preset and original byte identity.
+Preparation shares a separate four-worker compression queue. Producers reserve
+one of 16 raw-file slots **before** running the event exporter; slots include
+generating, queued, and compressing files. Linux `prlimit` enforces a 1 GiB limit
+on each exporter output file and disables core dumps. Thus newly generated raw
+event JSON is bounded by 16 GiB across the collector. When full, producers wait.
+`prepare-compression.json` records these limits. Compressed outputs, other build
+artifacts, and previously preserved interrupted directories are additional disk
+usage; this is not a cap on the entire output tree.
+Compression removes raw JSON only after successful restoration verification.
+Any export/validation/compression failure stops new queue admissions and preserves
+the failing evidence; already submitted compression jobs finish. A taskset is
+complete only after all its compression futures succeed and its manifest is
+written. A file exceeding 1 GiB is a reported failure, never truncated evidence
+accepted as a successful analysis.
 Complete snapshots are revalidated and reused; incomplete snapshots are preserved
 and reported as failures. Stop an existing collector before resuming the same output.
 See [characterization v1](../../artifacts/periodic/characterization-v1/README.md)

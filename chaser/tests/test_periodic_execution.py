@@ -8,6 +8,7 @@ import pytest
 
 from chaser.periodic import aggregate, make_plan
 from chaser.periodic_analysis import analyze
+from chaser.event_compression import EventCompressionQueue
 from chaser.periodic_build import SDK, check_layout, prepare, read_symbols
 from chaser.periodic_dataset import load_batch
 from tools.rtems_periodic import run
@@ -73,7 +74,7 @@ def test_cpp_expands_all_sweeps_and_matches_all_final_elfs(prepared):
 
 
 @pytest.mark.parametrize('cold_repeats', [1, 2])
-@pytest.mark.parametrize('compress_events', [False, True])
+@pytest.mark.parametrize('compress_events', [False, True, 'queued'])
 def test_region_patterns_match_literal_streams_in_all_final_elfs(tmp_path, cold_repeats,
                                                               compress_events):
     snapshot = tmp_path / 'patterns'
@@ -81,7 +82,12 @@ def test_region_patterns_match_literal_streams_in_all_final_elfs(tmp_path, cold_
     for task in config['tasks']:
         task['cold_repeats'] = cold_repeats
     prepare(config, snapshot)
-    result = analyze(snapshot, compress_events=compress_events)
+    if compress_events == 'queued':
+        with EventCompressionQueue(workers=2, max_files=2) as queue:
+            result = analyze(snapshot, compress_events=True, compression_queue=queue)
+            assert not list((snapshot / 'analysis').rglob('events.json'))
+    else:
+        result = analyze(snapshot, compress_events=compress_events)
     check_inputs(snapshot / 'analysis', json.loads(
         (snapshot / 'analysis/manifest.json').read_text()))
     cold = [64, 96, 128] * cold_repeats
@@ -100,6 +106,23 @@ def test_region_patterns_match_literal_streams_in_all_final_elfs(tmp_path, cold_
             else:
                 events = json.loads(event_path.read_text())
             assert [e['linked_address'] - address for e in events['events']] == expected
+
+
+def test_failed_queued_compression_does_not_publish_analysis_manifest(tmp_path, monkeypatch):
+    import chaser.event_compression as storage
+    snapshot = tmp_path / 'failed-compression'
+    prepare(pattern_configuration(), snapshot)
+
+    def fail(path):
+        raise ValueError('restore mismatch')
+
+    monkeypatch.setattr(storage, 'compress_events', fail)
+    with EventCompressionQueue(workers=1, max_files=1) as queue:
+        with pytest.raises((RuntimeError, ValueError), match='restore mismatch'):
+            analyze(snapshot, compress_events=True, compression_queue=queue)
+    assert list((snapshot / 'analysis').rglob('events.json'))
+    assert not (snapshot / 'analysis/manifest.json').exists()
+    assert not (snapshot / 'analysis/locality.json').exists()
 
 
 def simulator(tmp_path, body):

@@ -170,6 +170,7 @@ def test_prepare_runs_concurrently_with_worker_limit_and_keeps_failures(tmp_path
     def analysis(path, **kwargs):
         nonlocal active, peak
         assert kwargs['compress_events'] is True
+        assert kwargs['compression_queue'].max_files == 16
         with lock:
             active += 1
             peak = max(peak, active)
