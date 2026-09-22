@@ -65,7 +65,7 @@ full-event XZ preset 6 compression and verification; peak JSON and compressor
 memory scales with N. Progress records completed tasksets in completion order.
 `run --workers N` shares a single pool of at most N independent simulators across
 up to N in-flight tasksets. A free slot can execute another taskset's batch while
-slower batches finish; simulator concurrency stays bounded globally (1--8, default 8).
+slower batches finish; simulator concurrency stays bounded globally (1--16, default 8).
 Progress records tasksets in completion order. A single SIGINT to the collector
 PID stops admitting tasksets and waits for submitted batches to finish; do not
 signal the simulator process group or interrupt the drain a second time.

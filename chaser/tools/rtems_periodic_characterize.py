@@ -75,8 +75,9 @@ def collect(frozen: Path, output: Path, *, phase: str, workers: int, timeout: fl
     in-flight tasksets, each process executing one task on core zero.
     Existing incomplete batches are reported as failures and never overwritten.
     """
-    if not 1 <= workers <= 8 or not 0 < timeout < float('inf'):
-        raise ValueError('Use 1--8 workers and a positive finite timeout')
+    worker_limit = 8 if phase == 'prepare' else 16
+    if not 1 <= workers <= worker_limit or not 0 < timeout < float('inf'):
+        raise ValueError(f'Use 1--{worker_limit} workers and a positive finite timeout')
     preparation_limit = workers if prepare_workers is None else prepare_workers
     if not 1 <= preparation_limit <= 16:
         raise ValueError('Use 1--16 prepare workers')
@@ -231,7 +232,7 @@ def main() -> None:
     parser.add_argument('frozen', type=Path)
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--workers', type=int, default=8,
-                        help='1--8 concurrent tasksets for prepare, simulators for run')
+                        help='1--8 concurrent tasksets for prepare, 1--16 simulators for run')
     parser.add_argument('--prepare-workers', type=int,
                         help='Override prepare concurrency only (1--16); keeps simulator protocol unchanged')
     parser.add_argument('--timeout', type=float, default=120)

@@ -29,7 +29,7 @@ def test_prepare_workers_can_increase_without_changing_simulator_protocol(tmp_pa
     assert (output / 'protocol.json').read_bytes() == original
     assert json.loads(original)['workers'] == 8
     with pytest.raises(ValueError):
-        collector.collect(frozen, output, phase='run', workers=16, timeout=120)
+        collector.collect(frozen, output, phase='run', workers=17, timeout=120)
     with pytest.raises(ValueError):
         collector.collect(frozen, output, phase='prepare', workers=8, timeout=120,
                           prepare_workers=17)

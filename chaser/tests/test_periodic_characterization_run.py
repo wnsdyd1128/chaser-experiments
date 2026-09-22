@@ -142,3 +142,17 @@ def test_interrupt_drains_only_admitted_tasksets(collection, monkeypatch):
     assert sorted(started) == [('a', 1), ('a', 2), ('b', 1), ('b', 2)]
     assert len(list((output / 'runs').glob('*/u*/rows.json'))) == 4
 
+
+def test_run_accepts_sixteen_workers_and_rejects_seventeen(collection, monkeypatch):
+    frozen, output = collection({'a': 16})
+    barrier = threading.Barrier(16, timeout=5)
+
+    def run(snapshot, directory, **kwargs):
+        barrier.wait()
+        save_batch(directory, kwargs['mode'])
+
+    monkeypatch.setattr(collector, 'run', run)
+    collector.collect(frozen, output, phase='run', workers=16, timeout=120)
+    assert json.loads((output / 'protocol.json').read_text())['workers'] == 16
+    with pytest.raises(ValueError, match='workers'):
+        collector.collect(frozen, output, phase='run', workers=17, timeout=120)
