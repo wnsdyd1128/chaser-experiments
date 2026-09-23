@@ -1,0 +1,33 @@
+{
+  "additional_batches": 14,
+  "additional_by_workload": {
+    "validation-supplement-v1-0002": 3,
+    "validation-supplement-v1-0003": 4,
+    "validation-supplement-v1-0004": 4,
+    "validation-supplement-v2-0001": 3
+  },
+  "additional_runs": 140,
+  "additional_serial_timeout_budget_seconds": 252000,
+  "limitations": "Timeout budget is not a wall-time forecast. Supplement basic P identity differs; all pending mappings require fresh snapshots and ten fresh P runs. G/C final labels and alpha sensitivity are outside this budget.",
+  "new_snapshot_elf_count": 42,
+  "per_process_timeout_seconds": 1800,
+  "plan_hash": "343e48908532edaf617f9995744ecdbf8e1f31be318139d88a4fd00c4520f051",
+  "planned_batches": 189,
+  "planned_runs": 1890,
+  "prepare_workers": 8,
+  "representation_mappings": {
+    "ca-csrd": 142,
+    "caas-ca": 137,
+    "cls": 161
+  },
+  "reusable_batches": 175,
+  "reusable_runs": 1750,
+  "theta_candidates": {
+    "ca-csrd": 32,
+    "caas-ca": 30,
+    "cls": 41
+  },
+  "timing_workers": 16,
+  "validation_tasks": 448,
+  "validation_workloads": 41
+}
