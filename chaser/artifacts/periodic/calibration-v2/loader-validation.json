@@ -1,0 +1,338 @@
+{
+  "active_dataset": {
+    "active_tasksets": 207,
+    "assignments_hash": "ba2ef506aacdad34e46cb3898e2b9da901103079369c59fa7d118890a5b42231",
+    "membership_hash": "184513cfca979c7ed0db1fbbf90ecbe8ed3fe3f643632c3caa13d605248f1c40",
+    "population": "/workspace/experiments/chaser/artifacts/periodic/validation-supplement-v2/active-population.json",
+    "population_hash": "971352bde92ac3cf829afa6d75baccf1a6424dde90bd806843c5978121315f23",
+    "source": "/workspace/experiments/chaser/artifacts/periodic/calibration-v2/input-sources.json",
+    "source_hash": "9122854a199aa71a18fe042670ac1f3730aef0ea464e9570521f384378ea4bad",
+    "split_counts": {
+      "test": 40,
+      "train": 126,
+      "validation": 41
+    }
+  },
+  "completed_utc": "2026-09-23T01:54:24.525461+00:00",
+  "final_labels_ready": false,
+  "implementation_hashes": {
+    "chaser/periodic_calibration.py": "caf22b7fc891e65f54992af488d2f1d95e3de757b0ee01ffe99d19332779f555",
+    "chaser/periodic_membership.py": "90f59835a6f72979c854e0f25122bcd75bd8a97720c03dbb204ddd17639bc709",
+    "tools/rtems_periodic_calibrate.py": "71ab9bcc1dc3220f79a55d94980cd8f03d170078d506407a6133c38b76d9425e"
+  },
+  "independent_u_runs_revalidated": 4480,
+  "inputs": {
+    "candidate-v3-0000": {
+      "analysis_manifest_hash": "7ba5a3189ba77b5d383613a2d084d42e45cc8b9bdbea4c5ec5605f01bedba1d8",
+      "characterization_id": "bd902d35d1a6203770445cf1d76885a4a92a1fa32cac98157d2af28cf7891d51",
+      "manifest_hash": "49395a72a67090fe51c1d79de73666add6fb7fd8b187f3495746bae17d34c0f1",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0000",
+      "u_elf_hash": "40c69e723097665aabbaf327c582b49991afac90ad8232c2f707bdaf17299458"
+    },
+    "candidate-v3-0003": {
+      "analysis_manifest_hash": "dcbbfff08885baa46bc3072a5cf5a0359b482a18d34270d90dec11c3356afd7a",
+      "characterization_id": "8b1896e78a4577a7c2221fe1c68594a0d9a983c28b039f24bb79b466816f5fb5",
+      "manifest_hash": "a2e92500435b7e18180b37c96e910190853f24991a50b14f7432b8164f87f039",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0003",
+      "u_elf_hash": "5bb665ae7c7398a9b42dbc3ed4c713d735e23d74c91dc1e5453c2739bfbb70b4"
+    },
+    "candidate-v3-0009": {
+      "analysis_manifest_hash": "8520cbd66878929b26723bdd90e0e6340233f42ada0fe1a051525208600d4592",
+      "characterization_id": "4e4c22e3b2b1826159f87404968325939a107102ff96d686655b614b3f41e761",
+      "manifest_hash": "1bff9702bf59ad5e2a030cc0da139c30fdd3ca9ae04b2582492d8b6908869d36",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0009",
+      "u_elf_hash": "083503b47994528295b229d13f3fc1d12b0fa1c8d764f79021aee8ec8f249887"
+    },
+    "candidate-v3-0019": {
+      "analysis_manifest_hash": "91c3f3c8421d779ba938c72d0d9cecd7c6276363f54a7c90299cc33181f35417",
+      "characterization_id": "b9a6716c29941d04ae578ed352b9802ae95a77fa4e12818e972be4cf08b91096",
+      "manifest_hash": "30aef85b52d1e815d7008de91c6bb68c415b9d4dcd9715193c6dba23c920092f",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0019",
+      "u_elf_hash": "a844fabc885c6dcc52a6c39e30830370ebe269c2713328dbad7532124682e2b4"
+    },
+    "candidate-v3-0036": {
+      "analysis_manifest_hash": "77f31602e842365ae82efd3bfb310f377250f513376d22481c9e20f369fd1993",
+      "characterization_id": "544cb276ad9246d19e154c1080ef9c9ac30e124705555f93b1f481c1afb95581",
+      "manifest_hash": "13c4a3c7988b173bc5b756cb158b939e5507b6c23d8a9035c6d3b2a3c3ef7ee1",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0036",
+      "u_elf_hash": "a5a230cbbd34d8fbdc5fca06e4f3e84dd39ef8b3b6f48c71e0dc0fc61dc88c43"
+    },
+    "candidate-v3-0046": {
+      "analysis_manifest_hash": "319f3f2cb5b8aa4c1012d02e9c4d9aa8845dba5245c9432ab129df983b3f0999",
+      "characterization_id": "8d922415bbff46cd2b6041615c5065a9a745375f105534d42166d04656a9e1dd",
+      "manifest_hash": "f71f414805f1e869afb332316d345398678818b2744c50e49db185afb7e7b64d",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0046",
+      "u_elf_hash": "f3e825fe3a296ffc8d90f86ad8e2cb81e1fcccffc257b6b5f9edb56127f5b246"
+    },
+    "candidate-v3-0049": {
+      "analysis_manifest_hash": "250b882be9c162e8c8717fa2ac039b0f305f76535086da07c5bf7ff6a8dfea6b",
+      "characterization_id": "c2120ff836f74748ed728de7e937e4265a895bbcb309e4844ddc31733f408ceb",
+      "manifest_hash": "859612c9e85d1160daed17956d7a8d723d030c8ad60227c9153f3fbf1e13a524",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0049",
+      "u_elf_hash": "70b71c0702d3007b3a278ba7a7e0903b97998c7f96419502ef7bc77797b6c513"
+    },
+    "candidate-v3-0057": {
+      "analysis_manifest_hash": "1ba6c6c8b08e2753254fd5237cbf032903de27b1bb5db5265471152ee27a77df",
+      "characterization_id": "eff049d6f2a98b578604263b541affc384d989e5162b511a7991bcda94e02aad",
+      "manifest_hash": "97d6e28ddde045348e1d3c2bb62e47f25db873595d9418c5efd029213fc2a800",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0057",
+      "u_elf_hash": "b0ba9ac8f47b563a7a103272c2a61f1c7c36155a50563a11b7ec263eed6d7b69"
+    },
+    "candidate-v3-0069": {
+      "analysis_manifest_hash": "36a6eb9b00af40cb6a978e0cd2c54761b7844b49f7bdafdd7d2b63a6821fd42f",
+      "characterization_id": "5416b2d819b3c3c35c12a4fc880d426a0c83508a9d643405e45c96652aaed118",
+      "manifest_hash": "b246b19d9605e0fbfce30622f4a66150afa821ea026e96bd2423f8cb9d1ef236",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0069",
+      "u_elf_hash": "061ed50b7219c48a713d9e1d4a82f900464dffe843a0aea07882d3451954c57c"
+    },
+    "candidate-v3-0076": {
+      "analysis_manifest_hash": "36086c3c825acbf986cea5bb249e3f4c5eed11c5a8d0f1076d24ae7f43805b21",
+      "characterization_id": "78c6870187556911d1c5e40a31eaf82891a68eefd2b6cf8450b5efdcc3898af1",
+      "manifest_hash": "51605518a03b0df9af47b827c670dd7140be1e4f07310587eb260dfdbb24f7e2",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0076",
+      "u_elf_hash": "23632877d5b1af67e329209a037589c4c10cea1922df60b57cdfe0a34ca22c07"
+    },
+    "candidate-v3-0080": {
+      "analysis_manifest_hash": "604256377bc2fe35b43bf49211ac96a8e406f5475705e992d2d8331927a08499",
+      "characterization_id": "29b43750111c58074c7790f6331437c7664a1f319d496d0a4c7fdb07f2be01cc",
+      "manifest_hash": "831691d4c7546343e2dc861ca44b8ae68398f6b1aa294cdc9b0818b98862ab05",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0080",
+      "u_elf_hash": "613edbb4fcda04c3acf2c72599e4693ca3fb62e08115c19886038c7baaae6e8a"
+    },
+    "candidate-v3-0087": {
+      "analysis_manifest_hash": "aae30230d0be4a0349a601ced66cbdef8d2665382b857151ff492578e547c60b",
+      "characterization_id": "dbf7e616e3c0e90504f93904de93f0a8505a577d291d80976e132fae801bab62",
+      "manifest_hash": "0e315d91015c641ad3963c688b3004bad1f42218349dccc57c3fbb1ee261b063",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0087",
+      "u_elf_hash": "8832a7f854bc0dd639d90a55df04ae7b977a4875e545f1cf1e3b3cc36c6553e0"
+    },
+    "candidate-v3-0091": {
+      "analysis_manifest_hash": "7c0b799f5ce47b6e7201a0a1f0dabce71b834d3c0f5fe9de37f025b8b9e7f6e9",
+      "characterization_id": "19a60298f1160c04a71fcc110319388be4a7712f35bd6f8f6e78025fd5a46cd2",
+      "manifest_hash": "2998ab1af277902a8e66e611925bec6d9239759055d98cf191b84a63c68b9ce2",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0091",
+      "u_elf_hash": "53d15254c881c0a404422409192193379ce46045274a8c1e57fa043603bf3ecb"
+    },
+    "candidate-v3-0110": {
+      "analysis_manifest_hash": "be969ef0a892198d1637671cbc66ece3d59c44978fcc8664562fa0275c50be04",
+      "characterization_id": "4b1fa5f8de10e2ba5a46b86227c030e36e3b18677bdfb344af540d70c41eccb9",
+      "manifest_hash": "d8fdd9daea12fe596184ab664b3ef9c4e0fa5243f57391a63844f1b772989c9e",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0110",
+      "u_elf_hash": "885b21ec05f7bcf9e6055072245e2e1b110def7bdcea2badc0b000249996de59"
+    },
+    "candidate-v3-0114": {
+      "analysis_manifest_hash": "8050581afbbeb26f734cf93ea69826c88be1c02a366dfce4a399498bf7ccbe99",
+      "characterization_id": "9fc97f00930d652ce91598cbf608c42bb589b4f1b5be7c008d97aa8f03963006",
+      "manifest_hash": "e8754f60171bbf1ba63812f84ce7f124f4fee378f226b2119d0da2dfafdaed45",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0114",
+      "u_elf_hash": "03231248749e05621be2525c913158dab0e986e03d5e5cf8a53a1fdd61d15287"
+    },
+    "candidate-v3-0147": {
+      "analysis_manifest_hash": "9a081314841bfb49e82e4886080a7c6046c76b69f8d8a865d9a2896badf962d7",
+      "characterization_id": "55c02ebafc11092393a03afb36ffbb8c1fce4dff91091e1e37aef750997de076",
+      "manifest_hash": "322f9d63668e8c69bfe2fa46dbb2c01f2c00d847a0d8d77fc2a8d4c4ae997c20",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0147",
+      "u_elf_hash": "211bda54a9b1ee543e4c454b1d9b44f194da320a60e63462c96c1db21f520369"
+    },
+    "candidate-v3-0152": {
+      "analysis_manifest_hash": "433e6fa2f31f62dff891c4b51b2a771baba367bc4badd137e7d86897f86c3360",
+      "characterization_id": "58128cc8bf63a0626be1c2ff49aadb9aae0c27f838728cd261eab0fd3ebf81ce",
+      "manifest_hash": "b223e8ff3ff75508040fdf528573f245bdb5005e37e2a274e9f7962e54208821",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0152",
+      "u_elf_hash": "d4de5f9339b5887366641112196a879860fd8053492b4197a3398ac3007cefbf"
+    },
+    "candidate-v3-0162": {
+      "analysis_manifest_hash": "7f7f40acf85569b7000173891ba220f2a3ac0b18eb716145ae5506ce25bff6e6",
+      "characterization_id": "18fa5ff6ebbcca3345aaede0ceec89deeaf15b7fb2c436e6b66a3c43c63e0736",
+      "manifest_hash": "3da366a9bf1c7d0f6d0d094eebd55fc2e20ecebda1559589bf4e483b5ee4ab41",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0162",
+      "u_elf_hash": "670b02505ef9107018768675e8c98f00970e2fa9172a5666245ee2a9180b0770"
+    },
+    "candidate-v3-0165": {
+      "analysis_manifest_hash": "2c1e627094b00167b0295871049f645fd8dd8846f911f3c00a1185b8eb919b44",
+      "characterization_id": "34ebb031eb6c385fb60ebbd836225b06ab040c6880e7c4a984f19060d21341f5",
+      "manifest_hash": "71c057dc77d7fe8a4e4096298317de164cbd7497a6ff6611ccc3af2d443ed7f7",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0165",
+      "u_elf_hash": "5f1f6cdeddb42cc3cc352c91db4c32228c07ae1a72d4a26c8e179550e40ef28c"
+    },
+    "candidate-v3-0168": {
+      "analysis_manifest_hash": "06b3c32d782ac6ae7a7573beb8e39390c06c7933b2a631160f9a4ccc1ecd360f",
+      "characterization_id": "285d7ff95715c4dacef82dc1fbf1c534e7b0620c69cf74a0e7e278583fa32d1a",
+      "manifest_hash": "487032904cf48dec00eb5cbfa5fd0a432814bb22827d30f34e958dbe9c91e3b4",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0168",
+      "u_elf_hash": "4afee82f2408a3bbda191976f4936b67b82eadc75fe594433ccc7bb8023530c9"
+    },
+    "candidate-v3-0177": {
+      "analysis_manifest_hash": "0d5333fdb352afefc19a44222b1d4d259649b56f32a43eb30c0919da7e8790cf",
+      "characterization_id": "ccf51560a336ceda521349148baa491fc5858f2d8bab615c6a7bf4b5078dc678",
+      "manifest_hash": "450b6ffff1f00365c509df2728e2f543ff7d5b422ce41d7ec731ec6e7f0d162b",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0177",
+      "u_elf_hash": "ed6f2690c902e46f34101b2ab6121933f8c9c7108a5e13f63cad072c84164c4c"
+    },
+    "candidate-v3-0180": {
+      "analysis_manifest_hash": "003206d7940768800ecc3734eab44495dc3b9bc3119e11dcf9d2e073db32adf3",
+      "characterization_id": "81fce634313ad925ce40936d22fed50206cc44639b995a084d428947015ca77c",
+      "manifest_hash": "6951bec5111cbf8b23814f3aaee2829bc1af5f4c7777aa0b45c6643fab4b8347",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0180",
+      "u_elf_hash": "5c6623f409df8254976bedbfeb5e66026631f4e9e78099e5649698ab0d427455"
+    },
+    "candidate-v3-0199": {
+      "analysis_manifest_hash": "7b775b34dab07a0565679d2c41669001fccb8e2f435a0e88af69f4f1c73c6828",
+      "characterization_id": "ff97bc758a01eb9969bb563c1e1bfc80c004238f5418a7964cccfbd4b47b536d",
+      "manifest_hash": "72d44e5d6f999767fa9541c739183efe16e5d2968aba4b54b3dc0132ed1706e7",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0199",
+      "u_elf_hash": "39dfaa1e08ef1180c2b4379912b1921fa2df80f2c2fa18e48c49c418b9957ecc"
+    },
+    "candidate-v3-0204": {
+      "analysis_manifest_hash": "86f5ffb9c894fa7e804a4f1754f96f7407f76aa0e8f95a5bbe4e2db86b9e1ce6",
+      "characterization_id": "13e4d0e6bd19b606c9b1d023492ae5cead8a0c0ef55303fcb1ac750e55350b79",
+      "manifest_hash": "f122ae537851f2c2c3a82d4c14653274e81cedc1102225f2297ef34e1992128a",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0204",
+      "u_elf_hash": "a5f3ccf0095f17d7838725a00794a3300cb2fa19b4218c5209eb8bdb1d885dc5"
+    },
+    "candidate-v3-0211": {
+      "analysis_manifest_hash": "2943c8f277530d7a2bc282a60aa4c361a487664f2dfea27beed0dd969bec6759",
+      "characterization_id": "f0b2ca79fa56395ea0eba51fe4f5c224a42f7199ef7b85d70e5e046fe44f59b0",
+      "manifest_hash": "8fab57a1ac1a4ff52782ee322ac4d7df3fd40362fadb6f666b1074af303ce993",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0211",
+      "u_elf_hash": "a5f997c76de993f62b86556451df65f38dad42484bf6829d6b0a70765aa0f36b"
+    },
+    "candidate-v3-0213": {
+      "analysis_manifest_hash": "95d61fe36b7201c7566e050a6b54b39aafab067f4135dd840377b5819cdf731d",
+      "characterization_id": "3a895e31a0bedc584493f9886827f5adad4b9a80872d05d4673612ca926caade",
+      "manifest_hash": "8afe215172b1490fd23825284c9490b92ebb0c865889a01f00eeb5c94a403385",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0213",
+      "u_elf_hash": "655aa58d41c9504eea7341a8021fc211265cd87dc315c43f8497d4a8269e81e2"
+    },
+    "candidate-v3-0227": {
+      "analysis_manifest_hash": "e5d0fb8ca5d4b7f0636adc5c964178c30c503299e7740525c7e2b7b5861fcf94",
+      "characterization_id": "0a843b31a9e567aebd4ea3d568bfccc5e9bff8677d0ea34d06f43cb52f6b5a53",
+      "manifest_hash": "750bf4fbb3c4c7d1dcc70d2b3e1e75a984e13214fe74c5d9b61257b6daf4fb00",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0227",
+      "u_elf_hash": "22904c7fa10598747d05f3e4402b1bd70e8b382a032d1984202d569febf50bfa"
+    },
+    "candidate-v3-0230": {
+      "analysis_manifest_hash": "c28da5f23b7eceea26027d46b49df843da3ad6aa38217d8f42824d8c8ecf0ff8",
+      "characterization_id": "10410e7c7fe192ae2e760271c4cbcbef80bd3ac8d5cc4edf3c6e32fe456bf197",
+      "manifest_hash": "4b779e9b802f5d1022868b58c8a30d5e4af13a58567fc655edd41dfa9cf49126",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0230",
+      "u_elf_hash": "c46671c5792c881622f55ee5c20c23ac816d0e4e45d6cd4fb80b03c6b8e308cf"
+    },
+    "candidate-v3-0237": {
+      "analysis_manifest_hash": "d6ae4cee44845ecdaf3d6630550f5c1b34457f5893945d56e8a8bd36d6efffd4",
+      "characterization_id": "fdb8fc0d2e53ac6276b9c66b8f616b4e4b15bbfc26cffa211fafc645e93f6e02",
+      "manifest_hash": "6d5f0cb2345e20dc146a7e175e64b0a0d95cbad638eb249706bba7f0bfd56fb4",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0237",
+      "u_elf_hash": "71d7251b35e2ac9ff4e6f557650cbee05626032d938f0facfd50ac341842b107"
+    },
+    "candidate-v3-0244": {
+      "analysis_manifest_hash": "53b0efd5f3b630bde7b0611b20196406d25b0eb0feff00f186952c4d2347cd1a",
+      "characterization_id": "0977d0e80be6261cecb5e09c14e73b383b6b23d6e885ea2e905accabeccf6799",
+      "manifest_hash": "8d001d3e8cbb9bc53caac008116ab413fba5af7abc1b2e9fa32d3f30bd1b6e54",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0244",
+      "u_elf_hash": "cd117f17179f7594fa31e706188544e4c97759597be603684f9221a35b371852"
+    },
+    "candidate-v3-0247": {
+      "analysis_manifest_hash": "ccf33b34a21ee9741f8689cf353546d060ad9cb202ece87d353b5f8a7dd377c4",
+      "characterization_id": "c4d071cb7015e45720b0fcba21603e6aad2e78fb5f281642122e2dfa87ea6789",
+      "manifest_hash": "14a499a27c2a45dadc6740d8da981149e80b3eb2c06a41cf2fa175f6505e8aec",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0247",
+      "u_elf_hash": "a06d9c5d70b18259bcc504702f16cecda21774a707d13efc40b428324a6ee3e5"
+    },
+    "candidate-v3-0249": {
+      "analysis_manifest_hash": "b36d050863764655dbb4e89e8e803bcd59714d349d6fe3052b1abddee7fa11f0",
+      "characterization_id": "eafc4139156c06f3ef15f330210c0e0edcf5476048aaef41989dd4fa14f46d64",
+      "manifest_hash": "a48383c117152335fccdc17738b85189708c4546a1950159b6874fdadda20e2d",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0249",
+      "u_elf_hash": "5266d1cb3d123116eb720444c3cbe50216c2be2e1f23c3ecdb51986ad59f18c3"
+    },
+    "candidate-v3-0262": {
+      "analysis_manifest_hash": "f56d6344619214ad63938db31109a19ae12edeb88455dc091d8faa915e91663b",
+      "characterization_id": "cc149f1b0266779385b8b8b59e1788964d5aea885d8f80e2f864df1181ec95d9",
+      "manifest_hash": "4e284594e5992f5f9e4d84b9d924329ce167b7800a3f5d8b844a41690ead50b1",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0262",
+      "u_elf_hash": "a40d42b963c880fe276e89a388c603307fb60ebc63b6eb3a1746aec2cbb24dd7"
+    },
+    "candidate-v3-0285": {
+      "analysis_manifest_hash": "ae38a9b7b9f014deada4416f3767c6e46d64abf010f5bd759f0414b5a6ea0f32",
+      "characterization_id": "7c92fd60a1d5da874a1012e1e7ef4553a1fd9f046ba524e3e8680297d0cf5f63",
+      "manifest_hash": "89dc56728e6cd82171961bd558b3da07cd4b602c6eab2256e31dece4293ccafb",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0285",
+      "u_elf_hash": "c1fe2e4656a2589d868b4c04942443908d8b81554f75a0cdbb4687afe02743e0"
+    },
+    "candidate-v3-0286": {
+      "analysis_manifest_hash": "83ec3668e6841bdab73494e9b53a5c6f7b29008041759ad785981069cd72c76d",
+      "characterization_id": "fc768a887a1e67c729f90ac0f6e4b0abbf7d099dd20d0350b32b8188540354a6",
+      "manifest_hash": "f26b1fe84fe1eee0bfc7dc1a3fa274f6577067c9ece3e4c8eaeadf8fd578d514",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0286",
+      "u_elf_hash": "1d0f72b1eb4cdc814083188ec568f5a2c878ed628abea708cd3cc2aa1fd9af1d"
+    },
+    "candidate-v3-0287": {
+      "analysis_manifest_hash": "f0c06e4a175a5f4bc9013df85dc89d78555e3c02f438cc758de88a5f30bba66f",
+      "characterization_id": "215e0bb12b1d754102ac3b6ce15f6c0620de054d627ed9fa9584ce2296c043c7",
+      "manifest_hash": "db7347812fe2a309d27328d6d67b5bf27813669757add0b2a6a2b7efe294f323",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0287",
+      "u_elf_hash": "79af1fd7c737cf68dfd1c2c6229bfb16316e6482e993f0f6387b66d16d81d048"
+    },
+    "candidate-v3-0293": {
+      "analysis_manifest_hash": "b5f14485a6f3592c4dfe968712e16e1796403179644737b3c24f446cd1828f75",
+      "characterization_id": "bbe4d3e9d6bfec8fc94be6bea3f4861989aa35ae0c23611e384a388132ceee7a",
+      "manifest_hash": "ea03c30a7d9a59c9f2e6f5a8dfed356c424d4b87dba2a3b4917884c4237fcc18",
+      "u_directory": "/workspace/experiments/chaser/.cache/characterization-v1/runs/candidate-v3-0293",
+      "u_elf_hash": "2a2be2f32ef1b99ebe616d0e851da712d5ad34934b941c30b0339fb51120695b"
+    },
+    "validation-supplement-v1-0002": {
+      "analysis_manifest_hash": "479c257eebf89359f7f4deb478bbc5c04af3d5fb3e94b30242e5d43a1083c36b",
+      "characterization_id": "045c524a414af3fd93d9625722ea5b8bf29bff75b4ba148f2422baa14fb47843",
+      "manifest_hash": "183221bc93ab481df9dab875840c4abdd6a7f02beaf8cad674f2c41ddfc7608e",
+      "u_directory": "/workspace/experiments/chaser/.cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0002",
+      "u_elf_hash": "19a5bce7bef21cf5017299afe5b45a20bbad1d869b261ff9e9075a5bd301c7a2"
+    },
+    "validation-supplement-v1-0003": {
+      "analysis_manifest_hash": "e0cf1104c7aa3c77b4060060e220a3023f89f5cbfc9ca784f7717eb5477f6edb",
+      "characterization_id": "dc8c33d13fecb0b8715d6bde42465013805beef48f6d2237815ac233413b1b82",
+      "manifest_hash": "64b299372bb0302c6f2d0d37bc152042e2923aaaf896264c5914e90dfc209dfa",
+      "u_directory": "/workspace/experiments/chaser/.cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0003",
+      "u_elf_hash": "f854969ff5840894819cff73f31ef42f4948779f356df7c81b1d22f3375d8f88"
+    },
+    "validation-supplement-v1-0004": {
+      "analysis_manifest_hash": "2f11922e69c76ad729a2d523a5441e0252c471608081a5d2a20c017414892495",
+      "characterization_id": "44d95b7be8cbaaf3994f348446be4ce4ddf081925e7c608f7ec6f234c211b15e",
+      "manifest_hash": "af0b1dfd0380485d8779252458b826244f469075485d224a1b006ff277ec0625",
+      "u_directory": "/workspace/experiments/chaser/.cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0004",
+      "u_elf_hash": "d1683c9285ae3868c2720fc9d264024491fc656da3060253279a9361e7ebc9a2"
+    },
+    "validation-supplement-v2-0001": {
+      "analysis_manifest_hash": "ed44a1ebf8de340475e8052da8809ba48e715da94508846657d6102455950b64",
+      "characterization_id": "3baa213f43ef557de6376be879616fbdabb83619224335a534089d2f0012cda0",
+      "manifest_hash": "2a34566d91a0a719dbd5caec7bb5881324c6c1ebc277c8b1a470b9bc02b7a686",
+      "u_directory": "/workspace/experiments/chaser/.cache/validation-supplement-v2-validation/u",
+      "u_elf_hash": "c54997e333aaac219255c6dfc4c448602ffb608f82e7f88abe8a2c680e76274a"
+    }
+  },
+  "original_validation_workloads": 37,
+  "scope": "loader integration only; no new measurements or threshold search",
+  "status": "pass",
+  "supplement_validation_workloads": 4,
+  "theta_policy_frozen": false,
+  "tool_identity": {
+    "files": {
+      "/opt/laysim-gr740/laysim-gr740-cli": "191c6a94b579d2853017117e4351a2a2f5b65a24b1d6961e6de99d65fe532f3d",
+      "/opt/rtems/6/bin/sparc-rtems6-gcc": "a1e9cd84001683db0bd5c0d09017cca15b5ba2e2b876110f8cf6ed1453df4f1c",
+      "/opt/rtems/6/bin/sparc-rtems6-nm": "89ac3c835d6c1b444db71113389bb731c4b3028b4960c3586768da0270cf18ca",
+      "/opt/rtems/6/lib/pkgconfig/sparc-rtems6-gr740.pc": "ad33008eee50c66cd7f4b80366f2b040fb24f2cab925ea06af7bbd76465d5fc2",
+      "/opt/rtems/6/sparc-rtems6/gr740/lib/librtemsbsp.a": "032dc73aa1a016c7c239e75fefb8a0b0372ac5d79bb90ea01fffc26e52606bbe",
+      "/opt/rtems/6/sparc-rtems6/gr740/lib/librtemscpu.a": "525bf4fffaf9dcb97309a9872d5d58e85a7949d6f7cac56fc71e7c8d3b8be483",
+      "/opt/rtems/6/sparc-rtems6/gr740/lib/linkcmds": "f618decdb0e519c1a07d0632407e88a243f829742953948a969ba78cce1092d9",
+      "/opt/rtems/6/sparc-rtems6/gr740/lib/linkcmds.base": "dccc86a301aaae920d568722d0ed547024cd25c2aa23945cbcf41f8b69384ea1",
+      "/opt/src/rtems/waf": "7803d63e698ada49a74ab6979a0fd708a5f9a3456206cba3a3e07387fdcf946d",
+      "/usr/lib/llvm-14/bin/clang": "31925065812631303cf9af9a30b2f56427d2102667a87a9fb4ba03a306104589",
+      "/usr/lib/llvm-14/bin/opt": "2d30c96b490b9fa1f309c4b800c3f22ec88501a8b23e51132d30652963d85546",
+      "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp": "35c8a68a2487995200a8c03b26bc5b6469fe0f85a07201cd7d4d2a16b3f32b26",
+      "/workspace/experiments/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so": "d804273552901f4e0b0e8f1dfaabbaf26c52a999ccffd1f6bed5f7cccf10f071"
+    },
+    "simulator_hash": "191c6a94b579d2853017117e4351a2a2f5b65a24b1d6961e6de99d65fe532f3d"
+  },
+  "validation_tasks": 448,
+  "validation_workloads": 41
+}

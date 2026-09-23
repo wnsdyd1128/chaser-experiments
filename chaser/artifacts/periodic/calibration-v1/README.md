@@ -1,17 +1,40 @@
-# Validation calibration v1: preparation complete, timing blocked
+# Validation calibration v1: historical evidence; active loader connected in v2
 
-Latest family correction: [V2 active membership](../validation-supplement-v2/active-population.json) supersedes V1. The window-coefficient supplement is replaced by one newly generated block-phase input; original family counts are restored. There are 212 archived / 207 active inputs. The new input awaits ELF/U/GCP validation; earlier successful supplement measurements do not cover it.
+## Current status (2026-09-23)
 
-## Latest membership decision: exclude failed tasksets
+The authoritative [V2 active membership](../validation-supplement-v2/active-population.json)
+contains **207 active tasksets (train/validation/test = 126/41/40)** out of
+**212 archived inputs**. The original family counts and train/test membership are
+preserved. Original failed tasksets candidate-v3-0112, candidate-v3-0135,
+candidate-v3-0136 and candidate-v3-0207 are excluded in their entirety, including
+successful mappings. V1-0001 (window-coefficient) is also excluded for family
+balance, not measurement failure. All original inputs and evidence remain archived.
+Validation now consists of 37 retained originals plus V1-0002/0003/0004 and V2-0001.
 
-The user explicitly requires excluding candidate-v3-0112, candidate-v3-0135,
-candidate-v3-0136 and candidate-v3-0207 in their entirety from the active dataset,
-including their successful mappings. All original inputs and raw evidence remain
-archived. The four successful supplement tasksets replace them in validation.
-The [active membership](../validation-supplement-v1/active-population.json) contains
-207 tasksets (126/41/40), drawn from 211 archived inputs. Calibration loader
-integration and theta/policy freezing remain pending; the historical census below
-is unchanged. This supersedes the earlier undecided taskset-exclusion policy.
+V2 validation **completed and passed at 2026-09-22 20:31:30 UTC**: independent U
+100/100 and G/C/P 10/10 each, with raw revalidation, no raw errors or undefined
+features, U within bounds and unchanged U evidence. See the
+[completion record](../validation-supplement-v2/README.md),
+[summary](../validation-supplement-v2/validation-evidence/summary.json),
+[exit result](../validation-supplement-v2/validation-evidence/exit.json) and
+[collection-time source hashes](../validation-supplement-v2/validation-evidence/source-hashes.json).
+These three JSON files are byte-for-byte copies of the completed run's cache records;
+raw logs and detailed build/U/feature evidence still require separate cache preservation.
+Generation-time pending fields in the V2 manifest and membership are retained as
+provenance; they do not describe the completed run's current status.
+
+**The current membership and existing U/features are now connected through the
+[v2 loader binding](../calibration-v2/README.md). Theta/policy remains unfrozen.**
+Loader validation passed for 41 validation workloads, 448 tasks and 4,480 independent-U
+runs. Next: recompute validation threshold candidates and mappings, establish execution-equivalent measurement reuse
+and the additional budget, then measure required mappings before freezing theta/policy.
+Final labels and RF evaluation follow that freeze. Supplement validation covers the
+measured basic mappings, not all future calibration mappings.
+
+The census, budgets and stopped-attempt records below are historical. Their original
+197 mappings and threshold counts must not be treated as the recalculated budget for
+the current membership. Startup repair remains a separate unresolved issue; the
+current experimental path uses the validated supplements without relaxing the parser.
 
 ## Latest: full error survey completed
 
@@ -107,7 +130,7 @@ Those two runs are excluded from U, calibration and architecture labels.
 
 The production harness and parser were not changed. Do not replace the failed
 runs, relax the arm/release checks, shift t0 after the fact, or select theta from
-this incomplete comparison. The next step is to establish and correct startup
+this incomplete comparison. The recovery path proposed at that time was to establish and correct startup
 synchronization, then establish whether original U remains equivalent under the
 corrected harness. New harness snapshots and calibration provenance are required;
 the current source/tool guards must not simply be removed to permit reuse.

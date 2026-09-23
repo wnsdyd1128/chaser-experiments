@@ -39,7 +39,8 @@ def measured_tat(snapshot: Path, directory: Path, timeout: float, simulator_hash
 
 
 def collect(frozen: Path, characterized: Path, output: Path, *, phase: str,
-            workers: int = 16, prepare_workers: int = 8, timeout: float = 1800) -> dict:
+            workers: int = 16, prepare_workers: int = 8, timeout: float = 1800,
+            input_sources: Path | None = None) -> dict:
     """Preserve failed/partial evidence; freeze only after every planned batch passes.
 
     A single SIGINT drains admitted work. Any failed batch prevents new admissions
@@ -49,7 +50,8 @@ def collect(frozen: Path, characterized: Path, output: Path, *, phase: str,
     if phase not in ('plan', 'prepare', 'run', 'freeze'):
         raise ValueError('Unknown calibration phase')
     plan, cases, rows = make_calibration_plan(frozen, characterized, workers=workers,
-                                            prepare_workers=prepare_workers, timeout=timeout)
+                                            prepare_workers=prepare_workers, timeout=timeout,
+                                            input_sources=input_sources)
     plan = json.loads(json.dumps(plan))
     output = output.resolve()
     if output.exists():
@@ -112,6 +114,8 @@ def collect(frozen: Path, characterized: Path, output: Path, *, phase: str,
                           calibration_result_hash=digest(asdict(result)),
                           measurement_evidence_hash=digest(evidence),
                           frozen_split_hash=plan['frozen_split_hash'])
+            if 'active_dataset' in plan:
+                policy['active_dataset'] = plan['active_dataset']
             policies[kind] = dict(policy, policy_id='calibrated-' + digest(policy))
         frozen_result = dict(dataset_stage='theta_policy_frozen', results=results,
                              policies=policies, evidence=evidence,
@@ -193,12 +197,15 @@ def main() -> None:
     parser.add_argument('frozen', type=Path)
     parser.add_argument('--characterized', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--input-sources', type=Path,
+                        help='Binding for active membership and supplement U evidence')
     parser.add_argument('--workers', type=int, default=16)
     parser.add_argument('--prepare-workers', type=int, default=8)
     parser.add_argument('--timeout', type=float, default=1800)
     args = parser.parse_args()
     collect(args.frozen, args.characterized, args.output, phase=args.phase,
-            workers=args.workers, prepare_workers=args.prepare_workers, timeout=args.timeout)
+            workers=args.workers, prepare_workers=args.prepare_workers, timeout=args.timeout,
+            input_sources=args.input_sources)
 
 
 if __name__ == '__main__':

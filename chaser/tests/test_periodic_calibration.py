@@ -179,11 +179,14 @@ def test_failed_batch_preserves_evidence_and_prevents_freeze(validation, tmp_pat
         runner.collect(frozen, characterized, output, phase='run', workers=1)
 
 
-def test_complete_evidence_freezes_measured_policies_and_is_repeatable(validation, tmp_path, monkeypatch):
+@pytest.mark.parametrize('active', [False, True])
+def test_complete_evidence_freezes_measured_policies_and_is_repeatable(
+        validation, active_validation, tmp_path, monkeypatch, active):
     frozen, characterized, _, _, _ = validation
     write_json(frozen / 'split.json', dict(seed=42))
+    options = {'input_sources': active_validation[2]} if active else {}
     output = tmp_path / 'calibration'
-    runner.collect(frozen, characterized, output, phase='plan')
+    runner.collect(frozen, characterized, output, phase='plan', **options)
     monkeypatch.setattr(runner, 'check_mapping_snapshot', lambda *_: None)
     plan = json.loads((output / 'plan.json').read_text())
     for identity in plan['mappings']:
@@ -195,10 +198,133 @@ def test_complete_evidence_freezes_measured_policies_and_is_repeatable(validatio
                 path.write_text('{}')
     monkeypatch.setattr(runner, 'measured_tat', lambda snapshot, *_: (
         10 if plan['mappings'][snapshot.name]['mapping']['a'] == 0 else 20))
-    result = runner.collect(frozen, characterized, output, phase='freeze')
+    result = runner.collect(frozen, characterized, output, phase='freeze', **options)
     assert result['dataset_stage'] == 'theta_policy_frozen'
+    if active:
+        assert all(p['active_dataset'] == plan['active_dataset'] for p in result['policies'].values())
     assert all(r['measurement_source'] == 'measured' for r in result['results'].values())
     assert all(r['threshold'] > 0.2 for r in result['results'].values())
     before = (output / 'frozen-policies.json').read_bytes()
-    runner.collect(frozen, characterized, output, phase='freeze')
+    runner.collect(frozen, characterized, output, phase='freeze', **options)
     assert (output / 'frozen-policies.json').read_bytes() == before
+
+
+@pytest.fixture
+def active_validation(validation, tmp_path):
+    frozen, characterized, snapshot, directory, _ = validation
+    original = planning.read_json(frozen / 'population.json')['workloads']
+    # Keep original validation evidence on disk, but admit only its replacement.
+    replacement = dict(original[0], workload_id='replacement')
+    active = [replacement, *original[1:]]
+    population = dict(workloads=active, assignments={m['workload_id']: m['split_group'] for m in active},
+        membership_hash=digest(active), active_tasksets=3,
+        active_split_counts=dict(train=1, validation=1, test=1),
+        added_workload_ids=['replacement'], excluded=[dict(workload_id='v')])
+    population_path = tmp_path / 'active.json'
+    write_json(population_path, population)
+    write_json(frozen / 'split.json', dict(seed=42))
+    binding = dict(schema_version=1, files={}, active_population=str(population_path),
+        active_population_hash=planning.file_hash(population_path),
+        original_population_hash=planning.file_hash(frozen / 'population.json'),
+        original_split_hash=planning.file_hash(frozen / 'split.json'),
+        supplements={'replacement': dict(snapshot=str(snapshot), records=str(directory),
+                                        u_batches=str(directory))})
+    path = tmp_path / 'input-sources.json'
+    write_json(path, binding)
+    return frozen, characterized, path, population_path
+
+
+def test_active_loader_excludes_original_and_keeps_original_u_identity(active_validation, monkeypatch):
+    frozen, characterized, binding, _ = active_validation
+    seen = []
+    monkeypatch.setattr(planning, 'load_batch', lambda snapshot, directory: seen.append(directory) or [])
+    _, rows, inputs = planning.load_validation(frozen, characterized, input_sources=binding)
+    assert [r.workload_id for r in rows] == ['replacement']
+    assert inputs['replacement']['utilization']['elf_hash'] == 'U-elf'
+    assert seen == [Path(inputs['replacement']['u_directory']) / 'u0']
+
+
+@pytest.mark.parametrize('change', ['train', 'excluded', 'duplicate', 'family', 'hash'])
+def test_active_membership_drift_is_rejected_before_loading_evidence(active_validation, monkeypatch, change):
+    frozen, characterized, binding, population_path = active_validation
+    data = planning.read_json(population_path)
+    if change == 'train':
+        data['workloads'][1]['split_group'] = 'test'
+        data['workloads'][2]['split_group'] = 'train'
+    elif change == 'excluded':
+        data['excluded'].append(dict(workload_id='replacement'))
+    elif change == 'duplicate':
+        data['workloads'].append(data['workloads'][0])
+    elif change == 'family':
+        data['workloads'][0]['family_id'] = 'other'
+    else:
+        data['membership_hash'] = 'changed'
+    if change != 'hash':
+        data['membership_hash'] = digest(data['workloads'])
+        data['assignments'] = {m['workload_id']: m['split_group'] for m in data['workloads']}
+    write_json(population_path, data)
+    # Repin the file to exercise semantic validation, not merely the file hash.
+    b = planning.read_json(binding)
+    b['active_population_hash'] = planning.file_hash(population_path)
+    write_json(binding, b)
+    monkeypatch.setattr(planning, 'checked_locality', lambda _: pytest.fail('Payload loaded before membership check'))
+    with pytest.raises(ValueError, match='[Aa]ctive|[Mm]embership|[Ss]plit|[Ff]amily|[Ee]xcluded'):
+        planning.load_validation(frozen, characterized, input_sources=binding)
+
+
+def test_active_plan_records_both_original_and_active_split_identity(active_validation):
+    frozen, characterized, binding, population_path = active_validation
+    plan, _, _ = planning.make_calibration_plan(frozen, characterized, input_sources=binding)
+    assert set(plan['inputs']) == {'replacement'}
+    assert plan['active_dataset']['population_hash'] == planning.file_hash(population_path)
+    assert plan['active_dataset']['assignments_hash'] == digest(planning.read_json(population_path)['assignments'])
+    assert plan['frozen_split_hash'] == planning.file_hash(frozen / 'split.json')
+
+
+def test_active_raw_failure_is_not_hidden_by_successful_stored_features(active_validation, monkeypatch):
+    frozen, characterized, binding, _ = active_validation
+    def bad_raw(*_):
+        raise ValueError('Raw measurement log changed')
+    monkeypatch.setattr(planning, 'load_batch', bad_raw)
+    with pytest.raises(ValueError, match='Raw measurement log changed'):
+        planning.load_validation(frozen, characterized, input_sources=binding)
+
+
+def test_active_binding_rejects_modified_evidence_file(active_validation):
+    frozen, characterized, binding, _ = active_validation
+    data = planning.read_json(binding)
+    features = Path(data['supplements']['replacement']['records']) / 'features.json'
+    data['files'] = {str(features): planning.file_hash(features)}
+    write_json(binding, data)
+    write_json(features, {})
+    with pytest.raises(ValueError):
+        planning.load_validation(frozen, characterized, input_sources=binding)
+
+
+def test_runner_uses_active_membership_and_rejects_changed_binding(active_validation, tmp_path):
+    frozen, characterized, binding, _ = active_validation
+    output = tmp_path / 'active-calibration'
+    runner.collect(frozen, characterized, output, phase='plan', input_sources=binding)
+    plan = planning.read_json(output / 'plan.json')
+    assert set(plan['inputs']) == {'replacement'}
+    assert plan['active_dataset']['source_hash'] == planning.file_hash(binding)
+    # Semantically identical JSON still changes the pinned binding identity.
+    binding.write_text(binding.read_text() + '\n')
+    with pytest.raises(ValueError, match='plan or implementation changed'):
+        runner.collect(frozen, characterized, output, phase='plan', input_sources=binding)
+
+
+def test_tool_identity_checks_explicit_u_directory(tmp_path, monkeypatch):
+    snapshot = tmp_path / 'prepared/replacement'
+    snapshot.mkdir(parents=True)
+    write_json(snapshot / 'manifest.json', dict(tools={}))
+    u_directory = tmp_path / 'v2-u'
+    (u_directory / 'u0').mkdir(parents=True)
+    write_json(u_directory / 'u0/protocol.json', dict(simulator_hash='sim'))
+    origin = dict(snapshot=str(snapshot), u_directory=str(u_directory), analyzer_tools={},
+                  configuration=dict(tasks=[{}]))
+    monkeypatch.setattr(planning, 'file_hash', lambda _: 'sim')
+    assert planning.tool_identity({'replacement': origin})['simulator_hash'] == 'sim'
+    write_json(u_directory / 'u0/protocol.json', dict(simulator_hash='different'))
+    with pytest.raises(ValueError, match='Simulator differs'):
+        planning.tool_identity({'replacement': origin})

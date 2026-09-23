@@ -1,0 +1,47 @@
+{
+  "active_population": "artifacts/periodic/validation-supplement-v2/active-population.json",
+  "active_population_hash": "971352bde92ac3cf829afa6d75baccf1a6424dde90bd806843c5978121315f23",
+  "files": {
+    ".cache/validation-supplement-v1-characterization/prepared/validation-supplement-v1-0002/analysis/manifest.json": "479c257eebf89359f7f4deb478bbc5c04af3d5fb3e94b30242e5d43a1083c36b",
+    ".cache/validation-supplement-v1-characterization/prepared/validation-supplement-v1-0002/manifest.json": "183221bc93ab481df9dab875840c4abdd6a7f02beaf8cad674f2c41ddfc7608e",
+    ".cache/validation-supplement-v1-characterization/prepared/validation-supplement-v1-0003/analysis/manifest.json": "e0cf1104c7aa3c77b4060060e220a3023f89f5cbfc9ca784f7717eb5477f6edb",
+    ".cache/validation-supplement-v1-characterization/prepared/validation-supplement-v1-0003/manifest.json": "64b299372bb0302c6f2d0d37bc152042e2923aaaf896264c5914e90dfc209dfa",
+    ".cache/validation-supplement-v1-characterization/prepared/validation-supplement-v1-0004/analysis/manifest.json": "2f11922e69c76ad729a2d523a5441e0252c471608081a5d2a20c017414892495",
+    ".cache/validation-supplement-v1-characterization/prepared/validation-supplement-v1-0004/manifest.json": "af0b1dfd0380485d8779252458b826244f469075485d224a1b006ff277ec0625",
+    ".cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0002/features.json": "a6529d3fcb5ed31beddfcb35d39240ac5523c07ac5a5f059bc312d88f6c803a3",
+    ".cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0002/utilization.json": "f4ff7ac0eebe3fc7e4ca3ff0641941db337edceb079a4ec6e8d96ea90d538927",
+    ".cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0003/features.json": "2e98ed5dd8d17d41ee2b300a1c64337120ba2f7e519ddd3a094de477d8c5d072",
+    ".cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0003/utilization.json": "97671e3d16c11c0b47cd6587ec627a29da559b4b8fd975a222809e739053386a",
+    ".cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0004/features.json": "5f98af67a909b978a4157b25682c77fba8e7acf9ae94ee2a419af0af9e1902dc",
+    ".cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0004/utilization.json": "465994417c65bb6b304040f31852b16e41199094324c32246448bc25e447e826",
+    ".cache/validation-supplement-v2-validation/features.json": "8990aa9deb5d0ba70cc7d33acca758a4e4d3b919bcba0b1101c8c954f9056826",
+    ".cache/validation-supplement-v2-validation/prepared/validation-supplement-v2-0001/analysis/manifest.json": "ed44a1ebf8de340475e8052da8809ba48e715da94508846657d6102455950b64",
+    ".cache/validation-supplement-v2-validation/prepared/validation-supplement-v2-0001/manifest.json": "2a34566d91a0a719dbd5caec7bb5881324c6c1ebc277c8b1a470b9bc02b7a686",
+    ".cache/validation-supplement-v2-validation/utilization.json": "1d70cecc4944e7a5f041f5111531b7726971f71e55c9040996724479feecc178"
+  },
+  "original_population_hash": "8e18d2fa7754cfbbcf91ac73da5fa3910a5393f46b1cbfc171116d426cd86fa8",
+  "original_split_hash": "5c4abe3e2e33506c9bb06b14fd5606362544ac6361f9c5a129df12259b006edc",
+  "schema_version": 1,
+  "supplements": {
+    "validation-supplement-v1-0002": {
+      "records": ".cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0002",
+      "snapshot": ".cache/validation-supplement-v1-characterization/prepared/validation-supplement-v1-0002",
+      "u_batches": ".cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0002"
+    },
+    "validation-supplement-v1-0003": {
+      "records": ".cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0003",
+      "snapshot": ".cache/validation-supplement-v1-characterization/prepared/validation-supplement-v1-0003",
+      "u_batches": ".cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0003"
+    },
+    "validation-supplement-v1-0004": {
+      "records": ".cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0004",
+      "snapshot": ".cache/validation-supplement-v1-characterization/prepared/validation-supplement-v1-0004",
+      "u_batches": ".cache/validation-supplement-v1-characterization/runs/validation-supplement-v1-0004"
+    },
+    "validation-supplement-v2-0001": {
+      "records": ".cache/validation-supplement-v2-validation",
+      "snapshot": ".cache/validation-supplement-v2-validation/prepared/validation-supplement-v2-0001",
+      "u_batches": ".cache/validation-supplement-v2-validation/u"
+    }
+  }
+}

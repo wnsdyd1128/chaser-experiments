@@ -50,7 +50,7 @@ PYTHONPATH=. python3 artifacts/periodic/validation-supplement-v2/rebuild.py
 Production generator·harness·parser는 변경하지 않았고 finalize는 호출하지 않았다.
 
 이 새 입력의 ELF 준비·분석 → 독립 U → 현재 mapping G/C/P 검증은 완료했다.
-그 후 최신207개 소속으로 θ 후보/mapping을 재계산한다. 보정 loader 연결은 아직이며,
+최신207개 소속은 [보정 v2 loader](../calibration-v2/README.md)에 연결했다. 다음은 θ 후보/mapping 재계산이다.
 V1 소속이나212개 보존 목록을 그대로 보정 입력으로 사용하지 않는다.
 
 ## 3단계 실행 기록 (2026-09-22, 완료)
@@ -102,6 +102,10 @@ Source hash는 수집 당시 입력·코드의 identity를 기록하며 문서 �
 Raw logs, ELF/linked-stream 분석 산출물, U/feature 상세 자료는 기존 ignored cache에
 그대로 남는다. 이 세 JSON의 버전 관리만으로 전체 측정 증거를 백업하는 것은 아니며,
 이관 시 cache를 별도로 보존해야 한다. 기존 수집기나 출력 디렉터리를 재실행·덮어쓰지 않는다.
+
+기본 mapping의 검증 PASS는 새 θ 후보의 모든 mapping 검증이나 calibration 완료를 뜻하지
+않는다. 최신207개 소속 연결은 완료했으며, 다음은 θ 후보/mapping 재계산 → 실행 동등성에 따른 기존 측정 재사용
+판별 및 추가 예산 산출 → 필요한 측정 → θ/policy 동결 순서로 진행한다.
 
 이번 문서화 검증: 증거 JSON 3개 원본 바이트 일치, 수집 당시 source hash 전체 일치,
 V2 입력 재현 및 두 README의 로컬 링크 검사 PASS. `sh scripts/verify`는 빌드 성공,
