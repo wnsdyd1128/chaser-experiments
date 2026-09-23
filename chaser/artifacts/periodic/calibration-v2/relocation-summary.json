@@ -1,0 +1,80 @@
+{
+  "active_tasksets": 207,
+  "compatibility_links": 16655,
+  "completed_utc": "2026-09-23T04:52:21.597392+00:00",
+  "dataset": "datasets/periodic-v2",
+  "dataset_symlinks": 0,
+  "directory_identities_unchanged": true,
+  "evidence": {
+    "datasets/periodic-v2/dataset.json": "5a64a326f8d2d9408c01601ef5c802809351b1137a39b527ce001453eef4082a",
+    "datasets/periodic-v2/provenance/excluded-hashes.json": "8fdb605805e700f7760078521af01999c76263dd22eee2de9778054268e5f118",
+    "datasets/periodic-v2/provenance/migration-verification.json": "fcb5e975b3a573be10496c0eba7ef402d91d073fe8335ca70b78a6fd9d300eb2",
+    "datasets/periodic-v2/provenance/payload-validation.json": "d913cc04dcc46f7648a41af5fcba1f8317161a080399691c3459ae26951660f5",
+    "datasets/periodic-v2/provenance/verify_payload.py": "b11d15e8c7fb17fe1a5166be928173bdcd7d0c7627ce140a147b0bbab22be31a"
+  },
+  "existing_calibration_reuse_links": 350,
+  "files": 215631,
+  "final_labels_ready": false,
+  "finalize_invoked": false,
+  "freeze_replay": {
+    "exit_code": 0,
+    "frozen_policies_hash": "a9413e3e4050aa5d97f94b3318aa7e4d170610e9d1349d65319b22a5c6665f28",
+    "plan_unchanged": true,
+    "policy_byte_identical": true,
+    "scope": "Existing CLI, original compatibility paths, validation U4480 and P1890 raw revalidation"
+  },
+  "inventory_hash": "c302bda5fb7451381d7c71d2af38d7459396f4a769b2b90121509b9758000956",
+  "limitations": [
+    "Current CLI still uses original workspace paths via preserved compatibility anchors.",
+    "Frozen source provenance contains excluded configs; active membership remains207.",
+    "Historical excluded/interrupted evidence remains in .cache; dataset is not the entire cache archive.",
+    "Payload and provenance are ignored by Git; copying repository metadata does not back up measurements."
+  ],
+  "migration_plan_hash": "54dc373f6d867c6ab7f34b9fe3587a0cd805f3050e38873464f724cbe42902d0",
+  "migration_script": "artifacts/periodic/calibration-v2/relocate_dataset.py",
+  "migration_script_hash": "6b33ac52eafde40d7fed09849a80059dbf145e2960c186c9f4a65b7c10332771",
+  "payload_bytes": 7445536325,
+  "protected_hashes": {
+    ".cache/calibration-v2/frozen-policies.json": "a9413e3e4050aa5d97f94b3318aa7e4d170610e9d1349d65319b22a5c6665f28",
+    ".cache/calibration-v2/plan.json": "343e48908532edaf617f9995744ecdbf8e1f31be318139d88a4fd00c4520f051",
+    "artifacts/periodic/calibration-v2/frozen-policies.json": "a9413e3e4050aa5d97f94b3318aa7e4d170610e9d1349d65319b22a5c6665f28",
+    "artifacts/periodic/calibration-v2/input-sources.json": "9122854a199aa71a18fe042670ac1f3730aef0ea464e9570521f384378ea4bad",
+    "artifacts/periodic/validation-supplement-v2/active-population.json": "971352bde92ac3cf829afa6d75baccf1a6424dde90bd806843c5978121315f23"
+  },
+  "split_counts": {
+    "test": 40,
+    "train": 126,
+    "validation": 41
+  },
+  "status": "pass",
+  "tests": {
+    "command": "CHASER_COLD_PREFIX=/tmp/chaser-cg-cold-install sh scripts/verify",
+    "exit_code": 0,
+    "log_hash": "e76cd314a496c135ab622d6b5852e3f6983fe6bf2a9f3ea23535415b55a1c6b1",
+    "passed": 625,
+    "pytest_seconds": 77.9,
+    "relocation_tests": 4,
+    "skipped": 0
+  },
+  "validation": {
+    "active_workloads": 207,
+    "excluded_evidence_files_unchanged": 12611,
+    "independent_u_runs": 21680,
+    "split_counts": {
+      "test": 40,
+      "train": 126,
+      "validation": 41
+    },
+    "status": "pass",
+    "tasks": 2168,
+    "timing_batches": 551,
+    "timing_by_architecture": {
+      "0": 179,
+      "1": 179,
+      "2": 193
+    },
+    "timing_runs": 5510,
+    "verification_script_hash": "b11d15e8c7fb17fe1a5166be928173bdcd7d0c7627ce140a147b0bbab22be31a",
+    "verified_utc": "2026-09-23T04:51:10.882013+00:00"
+  }
+}

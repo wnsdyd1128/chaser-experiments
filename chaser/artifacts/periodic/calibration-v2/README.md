@@ -82,6 +82,38 @@ active identity를 후속 보정 계획과 동결 policy에 포함한다. `--inp
 역사적 원본 데이터셋 경로이므로 현재 데이터셋 보정에는 반드시 아래 연결 파일을 지정한다.
 기존 calibration-v1 출력은 재사용하거나 덮어쓰지 않는다.
 
+## 데이터셋 저장 위치 분리 완료 (2026-09-23)
+
+사용207개 입력·characterization과 validation 보정 증거를
+[`datasets/periodic-v2/`](../../../datasets/periodic-v2/README.md)로 이동했다.
+현재 구조와 데이터 경로는 그 디렉터리의 README와
+[dataset.json](../../../datasets/periodic-v2/dataset.json)을 기준으로 읽는다.
+
+- `inputs/`: 사용207개 설정, train/validation/test=126/41/40.
+- `characterization/<workload_id>/`: 실제 ELF·분석·feature·독립 U 및 보충 입력4개의 기본 G/C/P.
+- `calibration/`: mapping189개, 기존175개 G/C/P와 신규14개 P, θ/policy·측정·감사 기록.
+- `provenance/`: 원본 frozen 계보, 보충 생성·수집 기록, 이전 목록·hash 및 새 위치 연결표.
+
+이동·복사 대상으로 고정한 payload는 **215,631개 파일·7,445,536,325 bytes(약7.45GB)**다.
+데이터셋 내부에는 symlink가 없으며, 제외된 원본4개와 V1-0001의 실행·측정 증거는 기존에
+보존한다. 전체 원본 frozen manifest 검증을 위해 제외 입력의 config도 provenance에 포함하지만
+사용 population에는 포함하지 않는다. 최종 G/C/P label·RF dataset 생성은 아직이다.
+
+기존 `.cache` 루트·snapshot·U 디렉터리는 실제 디렉터리로 유지하고, 자식16,655개를 새 위치로
+향하는 상대 symlink로 연결했다. 기존350개 calibration 재사용 링크도 그대로 동작한다.
+`Path.resolve()`에 포함되는 디렉터리 identity를 유지하므로 기존 보정 CLI는 아래 명령을
+계속 사용한다. 이 문서의 `.cache` 경로는 현재 같은 파일을 읽는 호환 경로다.
+
+기존 artifacts의 소속·입력 연결 파일과 모든 측정·policy 바이트 및 hash는 보존했다.
+새 위치 정보는 별도로 기록했으며 역사적 절대경로를 일괄 치환하지 않았다.
+다른 workspace로 이 디렉터리를 복사하면 payload는 함께 보관할 수 있지만, 기존 CLI 실행에는
+역사적 경로 연결 및 toolchain/simulator 환경이 추가로 필요하다.
+
+[이동 스크립트](relocate_dataset.py)는 plan→move→verify 순으로 실행했다. 이동 전후 파일 hash와
+기존 경로의 동일성을 검증하며, rename과 링크 생성 사이에 중단돼도 이동된 바이트를 확인하고
+연결을 복구한다. 검증 결과는 [relocation-summary.json](relocation-summary.json)에 보존한다.
+대용량 payload는 Git에서 제외하며 새 README와 `dataset.json`만 관리한다.
+
 ## 연결 검증 결과
 
 [loader-validation.json](loader-validation.json)은 실제 기존 cache에 대한 검증 기록이다.
@@ -102,7 +134,7 @@ python3 -m tools.rtems_periodic_calibrate plan \
 ```
 
 후속 prepare/run/freeze에도 같은 `--input-sources`를 전달한다. 입력·구현·연결 파일이
-기존 계획과 다르면 resume는 거부한다. Raw와 상세 분석 산출물은 ignored cache이므로
+기존 계획과 다르면 resume는 거부한다. Raw와 상세 분석 산출물은 Git에서 제외한 dataset payload이므로
 이 연결 파일과 검증 기록만으로 재현에 필요한 전체 증거가 백업되지는 않는다.
 
 재사용 감사는 `PYTHONPATH=. python3 artifacts/periodic/calibration-v2/audit_reuse.py`로

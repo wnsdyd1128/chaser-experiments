@@ -2,6 +2,9 @@ __pycache__/
 .pytest_cache/
 rtems/baseline/build/
 .cache/
+/datasets/periodic-v2/*
+!/datasets/periodic-v2/README.md
+!/datasets/periodic-v2/dataset.json
 *.gz
 !/artifacts/s1/**/*.gz
 !/artifacts/periodic/**/*.gz
