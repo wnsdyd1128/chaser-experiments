@@ -7,7 +7,7 @@ Window-coefficient 제외 사유는 **family 구성 수정**이며 측정 실패
 
 최신 사용 소속 정본은 [active-population.json](active-population.json)이다.
 보존 입력212개 중 원본 실패4개 및 window-coefficient 추가분1개를 제외하여
-**사용207개, train/validation/test=126/41/40**을 유지한다. 새 입력1개는 측정 대기다.
+**사용207개, train/validation/test=126/41/40**을 유지한다. 새 입력1개의 ELF/U/G/C/P 검증은 완료·PASS다.
 나머지 성공 추가분 V1-0002/0003/0004의 identity와 측정 증거는 그대로 유지한다.
 
 | Family | 실패 원본 제외 | 최종 대체분 | Validation 전체 |
@@ -33,9 +33,9 @@ Period는 기존 개발 비용 추정식을 사용해50/100 ticks, horizon200 ti
 
 원본207개·중복 alias93개·개발11개·V1 추가4개와 taskset_signature 충돌이 없다.
 이름·core·policy만 바꾼 복제본이 아니며 실제 period/horizon이 다르다.
-G/C/P 정적 plan3개와 family 계보 검증이 통과했다. ELF build·linked stream·독립 U·
-G/C/P 측정은 **아직 수행하지 않았다**. 기존 window 또는 block-phase의 측정값을
-새 입력에 복사하지 않는다. 필요한 기본 측정은 독립 U100회와 G/C/P30회다.
+G/C/P 정적 plan3개와 family 계보 검증이 통과했다. 이후 ELF build·linked stream·독립 U·
+G/C/P 측정도 완료했다(아래 완료 결과 참조). 기존 window 또는 block-phase의 측정값을
+새 입력에 복사하지 않는다. 수행한 기본 측정은 독립 U100회와 G/C/P30회다.
 실패하면 기록을 보존하고 자동으로 후보를 교체하지 않는다.
 
 ## 재현 및 검증
@@ -49,11 +49,11 @@ PYTHONPATH=. python3 artifacts/periodic/validation-supplement-v2/rebuild.py
 재현 검사 PASS, 관련 `test_periodic_pool_v2.py`·`test_periodic_freeze.py` **8 passed**.
 Production generator·harness·parser는 변경하지 않았고 finalize는 호출하지 않았다.
 
-다음은 이 새 입력만 ELF 준비·분석 → 독립 U → 현재 mapping G/C/P 검증하는 것이다.
+이 새 입력의 ELF 준비·분석 → 독립 U → 현재 mapping G/C/P 검증은 완료했다.
 그 후 최신207개 소속으로 θ 후보/mapping을 재계산한다. 보정 loader 연결은 아직이며,
 V1 소속이나212개 보존 목록을 그대로 보정 입력으로 사용하지 않는다.
 
-## 3단계 실행 (2026-09-22)
+## 3단계 실행 기록 (2026-09-22, 완료)
 
 사용자는 문서화·handoff와 함께 ELF → U100회 → G/C/P30회까지 실행하도록 지시했다.
 `collect.py`가 위 순서를 자동 실행한다. 입력 재현·hash 확인 후 G/C/P ELF와 전체 linked
@@ -61,12 +61,12 @@ stream을 분석하고, 독립 U100회의 raw를 재검증해 feature를 생성�
 feature gate가 통과해야 일반 G/C/P30회를 시작한다. G/C/P 실패도 raw를 재파싱하며,
 끝에서 U를 다시 계산해 기존 증거 불변을 확인한다. θ 보정·label 생성은 수행하지 않는다.
 
-20:26:16 UTC에 PID **1302613**으로 백그라운드 실행을 시작했다. 시작 확인 시
-`phase=prepare`이며 완료가 아니다. 반복 polling/완료 대기 없이 대화로 돌아온다.
+20:26:16 UTC에 PID **1302613**으로 백그라운드 실행을 시작했다. 당시 시작 확인은
+`phase=prepare`였으며, 최종적으로 20:31:30 UTC에 exit0으로 완료했다.
 독립 U workers16·timeout600초, G/C/P workers16·timeout1800초다.
 
 ```sh
-tail -f .cache/validation-supplement-v2-validation/collection.log
+cat .cache/validation-supplement-v2-validation/summary.json
 ```
 
 동일 경로의 `progress.json`, `gcp/run-progress.json`은 단계·G/C/P 진행 상태이며,
@@ -74,4 +74,35 @@ tail -f .cache/validation-supplement-v2-validation/collection.log
 실패 시 후속 gate를 통과시키거나 자동 재시도하지 않는다. 같은 launcher를 다시 실행하지 않는다.
 관련 기존 수집기 검사 `python3 -m pytest -q tests/test_periodic_gcp.py
  tests/test_periodic_characterization.py`는 **40 passed in 0.59s**이고 V2 입력 재현 및
-wrapper 구문 검사도 통과했다. 이번 전체 verifier와 finalize는 실행하지 않았다.
+wrapper 구문 검사도 통과했다. 수집 실행 당시 전체 verifier와 finalize는 실행하지 않았다.
+
+## 완료 결과 및 증거 보존 (2026-09-23 문서화)
+
+2026-09-22 20:31:30 UTC에 검증을 완료했다. 수집기를 재실행하지 않고 기존 실행 결과를
+대조하여 기록했다. [summary.json](validation-evidence/summary.json)의 status는 `pass`,
+[exit.json](validation-evidence/exit.json)의 exit_code는 `0`이다.
+
+| 검증 | 결과 |
+|---|---|
+| ELF 준비·linked stream 분석 | G/C/P 3개 검증 후 U 단계 진입 |
+| 독립 U | 100/100회 성공 |
+| G / C / P | 각각 10/10회 성공, raw_errors 모두 빈 배열 |
+| Raw 재검증 | raw_revalidated=true |
+| U·feature gate | within_u_bounds=true, undefined_features={} |
+| G/C/P 이후 U 증거 불변 | u_evidence_unchanged=true |
+| θ/policy 동결 | false — 보정과 최종 label 생성은 후속 |
+
+`validation-evidence/`의 summary·exit·[source-hashes.json](validation-evidence/source-hashes.json)은
+`.cache/validation-supplement-v2-validation/`에서 바이트 그대로 복사한 비-raw 실행 증거다.
+Source hash는 수집 당시 입력·코드의 identity를 기록하며 문서 수정 후 재생성하지 않았다.
+생성 당시 `generation-manifest.json`과 `active-population.json`의 pending 표기는 당시의
+검증 상태로 보존한다. 최신 사용 소속은 계속 active-population이며, 실행 완료 상태는
+위 summary·exit를 참조한다. 이 문서 변경은 측정 identity를 바꾸지 않는다.
+
+Raw logs, ELF/linked-stream 분석 산출물, U/feature 상세 자료는 기존 ignored cache에
+그대로 남는다. 이 세 JSON의 버전 관리만으로 전체 측정 증거를 백업하는 것은 아니며,
+이관 시 cache를 별도로 보존해야 한다. 기존 수집기나 출력 디렉터리를 재실행·덮어쓰지 않는다.
+
+이번 문서화 검증: 증거 JSON 3개 원본 바이트 일치, 수집 당시 source hash 전체 일치,
+V2 입력 재현 및 두 README의 로컬 링크 검사 PASS. `sh scripts/verify`는 빌드 성공,
+**608 passed, 1 skipped**(선택적 cold-Cachegrind 검사)로 종료했다. Finalize는 호출하지 않았다.
