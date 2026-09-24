@@ -17,8 +17,8 @@ Do not redraw membership based on performance or replace excluded test samples.
 The [input-freeze-v1 artifact](../../artifacts/periodic/input-freeze-v1/README.md)
 freezes the 207 unique V3 tasksets: **train 126 / validation 41 / test 40**, with all
 five families in every split. It retains the 93 excluded duplicates and the 11
-excluded development probes. V1–V3 archives and their family-held-out proposals
-remain historical evidence. `rtems_periodic_pool --version 1/2/3` still reproduces
+excluded development probes. V1/V2 archives were removed; V3 remains.
+`rtems_periodic_pool --version 1/2/3` still reproduces
 those proposals; use `tools.rtems_periodic_freeze` for the main-experiment freeze.
 
 Schema 2 assigns each workload by its policy-independent input signature, using
@@ -93,9 +93,8 @@ written. A file exceeding 1 GiB is a reported failure, never truncated evidence
 accepted as a successful analysis.
 Complete snapshots are revalidated and reused; incomplete snapshots are preserved
 and reported as failures. Stop an existing collector before resuming the same output.
-See [characterization v1](../../artifacts/periodic/characterization-v1/README.md)
-for the original serial collection record, lossless event compression, commands,
-and remaining collection work.
+The characterization report directory was removed. Original U/locality evidence remains in
+[datasets/periodic-v2](../../datasets/periodic-v2/README.md); its collection is complete.
 
 Collector progress and feature records use `dataset_stage` instead of the former
 `dataset_ready: false` flag. `phase` remains the command (`prepare` or `run`).
@@ -159,12 +158,10 @@ transform, allocator identity and measurement provenance. It does not produce
 final policy ELF snapshots, G/C/P labels, RF models or training eligibility.
 Those require the later policy-specific preparation and measurement stages.
 
-The first actual [validation calibration attempt](../../artifacts/periodic/calibration-v1/README.md)
-prepared all 197 mappings, then stopped on a repeatable startup release-phase
-failure. Its 260 timing runs are preserved; no measured theta/policy was frozen.
-The subsequent error survey completed all 1,970 planned runs without retrying
-that failure: 1,960 succeeded and the original ten failed. No additional failing
-mapping was found; current evidence is linked from the calibration attempt record.
+The initial calibration-v1 report was removed. The later
+[calibration-v2](../../artifacts/periodic/calibration-v2/README.md) completed validation41,
+189 P batches and three frozen policies. Historical failure evidence is separate from the
+completed final policy measurement and common-eligibility export.
 
 ## G/C/P-only collection after policy freezing
 
@@ -268,7 +265,7 @@ Generate the mixed v2 input pool (without measurements or labels) in a fresh dir
 python3 -m tools.rtems_periodic_pool --version 2 --output .cache/periodic-candidates-v2
 ```
 
-The preserved [candidates-v2 artifact](../../artifacts/periodic/candidates-v2/README.md)
+The preserved candidates-v2 artifact (`artifacts/periodic/candidates-v2/README.md`; 정리 과정에서 삭제된 과거 자료)
 contains 180 tasksets, three conservative recipe families and a provisional split.
 PolyBench remains reserved for external evaluation. Omitting `--version` retains v1 generation.
 
@@ -284,7 +281,7 @@ estimated utilization by coverage cell, role/core/period correlations and run
 budgets. It preserves all candidates and refuses to overwrite the report.
 V2 has 123 distinct input configurations among 180 named candidates; its LLC
 cells repeat identical inputs across all three target-U tags. See the
-[readiness audit](../../artifacts/periodic/readiness-v1/README.md) before interpreting
+readiness audit (`artifacts/periodic/readiness-v1/README.md`; 정리 과정에서 삭제된 과거 자료) before interpreting
 candidate counts or target U as achieved coverage. No measured evidence is reused
 between different ELFs, and the audit does not freeze a split.
 
@@ -322,7 +319,7 @@ each task touches 1088 lines (34 KiB) and executes 10240 loads per job. Use the
 same prepare/analyze/run commands with fresh output paths. This example is not a
 frozen training dataset or evidence of sufficient independent families. Pattern
 names and parameter changes do not establish family independence.
-The [pattern validation evidence](../../artifacts/periodic/patterns-v1/README.md)
+The pattern validation evidence (`artifacts/periodic/patterns-v1/README.md`; 정리 과정에서 삭제된 과거 자료)
 preserves 50 timing/U runs, three diagnostics and ten empty runs from this example.
 
 ### Development probes and resource boundaries
@@ -360,7 +357,7 @@ high-water mark, not the simultaneous memory sum. The 4096-job logical limit is
 also distinct from C's `TASK_COUNT * MAX_JOBS` static record reservation and from
 the cost of printing all records. Boundary inputs receive build/runtime checks;
 the eleven primary probes receive full G/C/P linked-stream analysis.
-See the [feasibility evidence](../../artifacts/periodic/feasibility-v1/README.md)
+See the feasibility evidence (`artifacts/periodic/feasibility-v1/README.md`; 정리 과정에서 삭제된 과거 자료)
 for measured costs, runtime failures, and the additional operating-budget probes.
 
 ## Scheduler and release evidence
@@ -421,7 +418,7 @@ deadlines must match nominal ticks exactly, and the private epoch must agree wit
 the public status bounds. Diagnostic timing never enters U or label datasets.
 Historical v1 plans/logs remain readable using their original private-probe rules;
 the archived `pilot-v1` evidence is unchanged.
-The [v2 validation evidence](../../artifacts/periodic/public-api-v2/README.md)
+The v2 validation evidence (`artifacts/periodic/public-api-v2/README.md`; 정리 과정에서 삭제된 과거 자료)
 preserves 90 timing/U runs, four diagnostics, ten empty runs, and one expected
 final-job failure, along with superseded attempts and v1 revalidation.
 
@@ -555,4 +552,4 @@ analysis, theta search, other policies/alpha and diagnostics are additional cost
 Final bounds, initial/expansion budgets, sufficiency thresholds and full-pool costs
 remain to be resolved before final membership/split freeze. No final labels or RF
 samples are generated by this command. See the preserved
-[candidate input artifact](../../artifacts/periodic/candidates-v1/README.md).
+candidate input artifact (`artifacts/periodic/candidates-v1/README.md`; 정리 과정에서 삭제된 과거 자료).
