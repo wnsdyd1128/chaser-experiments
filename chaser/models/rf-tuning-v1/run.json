@@ -1,0 +1,295 @@
+{
+  "analysis_set_id": "periodic-final-v1-common-198",
+  "clp_file_hashes": {
+    "ca-csrd/rf_samples.jsonl": "1818e4cc90486da9d0a857052b952d980d364eef7df8bb43cd44b798b7fd9685",
+    "caas-ca/rf_samples.jsonl": "c39eecc8055e5d504ce9ce3bfceb6d79cf504864a5d6052033d7706f37be8540",
+    "cls/rf_samples.jsonl": "87f2bb86b0c40dab789662a122dfbb2c1225412d21e6d64fc688302ccd7d906c"
+  },
+  "completed_cells": 9,
+  "completed_fits": 1620,
+  "finished_at": "2026-09-24T16:31:18.417101+00:00",
+  "fit_count_expected": 1620,
+  "grid": [
+    {
+      "candidate_id": 0,
+      "class_weight": null,
+      "max_depth": null,
+      "max_features": "sqrt",
+      "min_samples_leaf": 1
+    },
+    {
+      "candidate_id": 1,
+      "class_weight": null,
+      "max_depth": 4,
+      "max_features": "sqrt",
+      "min_samples_leaf": 1
+    },
+    {
+      "candidate_id": 2,
+      "class_weight": "balanced",
+      "max_depth": 4,
+      "max_features": "sqrt",
+      "min_samples_leaf": 1
+    },
+    {
+      "candidate_id": 3,
+      "class_weight": null,
+      "max_depth": 4,
+      "max_features": 0.5,
+      "min_samples_leaf": 1
+    },
+    {
+      "candidate_id": 4,
+      "class_weight": "balanced",
+      "max_depth": 4,
+      "max_features": 0.5,
+      "min_samples_leaf": 1
+    },
+    {
+      "candidate_id": 5,
+      "class_weight": null,
+      "max_depth": 4,
+      "max_features": "sqrt",
+      "min_samples_leaf": 2
+    },
+    {
+      "candidate_id": 6,
+      "class_weight": "balanced",
+      "max_depth": 4,
+      "max_features": "sqrt",
+      "min_samples_leaf": 2
+    },
+    {
+      "candidate_id": 7,
+      "class_weight": null,
+      "max_depth": 4,
+      "max_features": 0.5,
+      "min_samples_leaf": 2
+    },
+    {
+      "candidate_id": 8,
+      "class_weight": "balanced",
+      "max_depth": 4,
+      "max_features": 0.5,
+      "min_samples_leaf": 2
+    },
+    {
+      "candidate_id": 9,
+      "class_weight": null,
+      "max_depth": 4,
+      "max_features": "sqrt",
+      "min_samples_leaf": 4
+    },
+    {
+      "candidate_id": 10,
+      "class_weight": "balanced",
+      "max_depth": 4,
+      "max_features": "sqrt",
+      "min_samples_leaf": 4
+    },
+    {
+      "candidate_id": 11,
+      "class_weight": null,
+      "max_depth": 4,
+      "max_features": 0.5,
+      "min_samples_leaf": 4
+    },
+    {
+      "candidate_id": 12,
+      "class_weight": "balanced",
+      "max_depth": 4,
+      "max_features": 0.5,
+      "min_samples_leaf": 4
+    },
+    {
+      "candidate_id": 13,
+      "class_weight": null,
+      "max_depth": 8,
+      "max_features": "sqrt",
+      "min_samples_leaf": 1
+    },
+    {
+      "candidate_id": 14,
+      "class_weight": "balanced",
+      "max_depth": 8,
+      "max_features": "sqrt",
+      "min_samples_leaf": 1
+    },
+    {
+      "candidate_id": 15,
+      "class_weight": null,
+      "max_depth": 8,
+      "max_features": 0.5,
+      "min_samples_leaf": 1
+    },
+    {
+      "candidate_id": 16,
+      "class_weight": "balanced",
+      "max_depth": 8,
+      "max_features": 0.5,
+      "min_samples_leaf": 1
+    },
+    {
+      "candidate_id": 17,
+      "class_weight": null,
+      "max_depth": 8,
+      "max_features": "sqrt",
+      "min_samples_leaf": 2
+    },
+    {
+      "candidate_id": 18,
+      "class_weight": "balanced",
+      "max_depth": 8,
+      "max_features": "sqrt",
+      "min_samples_leaf": 2
+    },
+    {
+      "candidate_id": 19,
+      "class_weight": null,
+      "max_depth": 8,
+      "max_features": 0.5,
+      "min_samples_leaf": 2
+    },
+    {
+      "candidate_id": 20,
+      "class_weight": "balanced",
+      "max_depth": 8,
+      "max_features": 0.5,
+      "min_samples_leaf": 2
+    },
+    {
+      "candidate_id": 21,
+      "class_weight": null,
+      "max_depth": 8,
+      "max_features": "sqrt",
+      "min_samples_leaf": 4
+    },
+    {
+      "candidate_id": 22,
+      "class_weight": "balanced",
+      "max_depth": 8,
+      "max_features": "sqrt",
+      "min_samples_leaf": 4
+    },
+    {
+      "candidate_id": 23,
+      "class_weight": null,
+      "max_depth": 8,
+      "max_features": 0.5,
+      "min_samples_leaf": 4
+    },
+    {
+      "candidate_id": 24,
+      "class_weight": "balanced",
+      "max_depth": 8,
+      "max_features": 0.5,
+      "min_samples_leaf": 4
+    },
+    {
+      "candidate_id": 25,
+      "class_weight": "balanced",
+      "max_depth": null,
+      "max_features": "sqrt",
+      "min_samples_leaf": 1
+    },
+    {
+      "candidate_id": 26,
+      "class_weight": null,
+      "max_depth": null,
+      "max_features": 0.5,
+      "min_samples_leaf": 1
+    },
+    {
+      "candidate_id": 27,
+      "class_weight": "balanced",
+      "max_depth": null,
+      "max_features": 0.5,
+      "min_samples_leaf": 1
+    },
+    {
+      "candidate_id": 28,
+      "class_weight": null,
+      "max_depth": null,
+      "max_features": "sqrt",
+      "min_samples_leaf": 2
+    },
+    {
+      "candidate_id": 29,
+      "class_weight": "balanced",
+      "max_depth": null,
+      "max_features": "sqrt",
+      "min_samples_leaf": 2
+    },
+    {
+      "candidate_id": 30,
+      "class_weight": null,
+      "max_depth": null,
+      "max_features": 0.5,
+      "min_samples_leaf": 2
+    },
+    {
+      "candidate_id": 31,
+      "class_weight": "balanced",
+      "max_depth": null,
+      "max_features": 0.5,
+      "min_samples_leaf": 2
+    },
+    {
+      "candidate_id": 32,
+      "class_weight": null,
+      "max_depth": null,
+      "max_features": "sqrt",
+      "min_samples_leaf": 4
+    },
+    {
+      "candidate_id": 33,
+      "class_weight": "balanced",
+      "max_depth": null,
+      "max_features": "sqrt",
+      "min_samples_leaf": 4
+    },
+    {
+      "candidate_id": 34,
+      "class_weight": null,
+      "max_depth": null,
+      "max_features": 0.5,
+      "min_samples_leaf": 4
+    },
+    {
+      "candidate_id": 35,
+      "class_weight": "balanced",
+      "max_depth": null,
+      "max_features": 0.5,
+      "min_samples_leaf": 4
+    }
+  ],
+  "numpy_version": "2.2.6",
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "selection": "minimum mean validation TAT regret over five seeds; tie: maximum mean macro-F1, then candidate ID",
+  "sklearn_version": "1.7.2",
+  "source": "/workspace/experiments/chaser/datasets/periodic-final-v1",
+  "source_hashes": {
+    "ca-csrd/rf_samples.jsonl": "9a875619ec4e5e4190b91d3138ef84b389b6beb11228c1fb721cd96aff756a12",
+    "ca-csrd/task_characterization.jsonl": "61028c1fc7be3706ba74f4599eaa7da307bffe07850dd132e85f6238eb512ce5",
+    "caas-ca/rf_samples.jsonl": "2d076913f8f04cee8588772cd139c902937cbf3e67853fcac622f31bdd14ba39",
+    "caas-ca/task_characterization.jsonl": "61028c1fc7be3706ba74f4599eaa7da307bffe07850dd132e85f6238eb512ce5",
+    "cls/rf_samples.jsonl": "5652fc829d064af71585eddedd266d5d89140b4428d70d31395e8058dcae2c1f",
+    "cls/task_characterization.jsonl": "61028c1fc7be3706ba74f4599eaa7da307bffe07850dd132e85f6238eb512ce5",
+    "eligibility.json": "2e0ea9f5af91646051b6a10cb82ea2f528a3b199939ed3b867375877ebd44629",
+    "split.json": "a454a447c1ef783dbb1755854d646c9025d40e0084a33ef763ff01d015cf052c"
+  },
+  "split_counts": {
+    "test": 37,
+    "train": 120,
+    "validation": 41
+  },
+  "started_at": "2026-09-24T16:30:46.017689+00:00",
+  "status": "complete",
+  "workers": 8
+}

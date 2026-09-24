@@ -1,0 +1,140 @@
+{
+  "analysis_set_id": "periodic-final-v1-common-198",
+  "cells": [
+    {
+      "baseline_validation_tat_regret": 0.0014571606470946505,
+      "best_candidate_id": 27,
+      "best_params": {
+        "class_weight": "balanced",
+        "max_depth": null,
+        "max_features": 0.5,
+        "min_samples_leaf": 1
+      },
+      "best_validation_tat_regret": 0.0011385965748675903,
+      "candidate_count": 36,
+      "fit_count": 180,
+      "policy": "ca-csrd",
+      "representation": "ca-csrd"
+    },
+    {
+      "baseline_validation_tat_regret": 0.001531464290444346,
+      "best_candidate_id": 4,
+      "best_params": {
+        "class_weight": "balanced",
+        "max_depth": 4,
+        "max_features": 0.5,
+        "min_samples_leaf": 1
+      },
+      "best_validation_tat_regret": 0.0013551506569768317,
+      "candidate_count": 36,
+      "fit_count": 180,
+      "policy": "ca-csrd",
+      "representation": "caas-ca"
+    },
+    {
+      "baseline_validation_tat_regret": 0.0009574880324114938,
+      "best_candidate_id": 13,
+      "best_params": {
+        "class_weight": null,
+        "max_depth": 8,
+        "max_features": "sqrt",
+        "min_samples_leaf": 1
+      },
+      "best_validation_tat_regret": 0.0009364638927215056,
+      "candidate_count": 36,
+      "fit_count": 180,
+      "policy": "ca-csrd",
+      "representation": "clp"
+    },
+    {
+      "baseline_validation_tat_regret": 0.00011580695365355788,
+      "best_candidate_id": 15,
+      "best_params": {
+        "class_weight": null,
+        "max_depth": 8,
+        "max_features": 0.5,
+        "min_samples_leaf": 1
+      },
+      "best_validation_tat_regret": 9.337442271346343e-05,
+      "candidate_count": 36,
+      "fit_count": 180,
+      "policy": "caas-ca",
+      "representation": "ca-csrd"
+    },
+    {
+      "baseline_validation_tat_regret": 9.493331745797462e-05,
+      "best_candidate_id": 0,
+      "best_params": {
+        "class_weight": null,
+        "max_depth": null,
+        "max_features": "sqrt",
+        "min_samples_leaf": 1
+      },
+      "best_validation_tat_regret": 9.493331745797462e-05,
+      "candidate_count": 36,
+      "fit_count": 180,
+      "policy": "caas-ca",
+      "representation": "caas-ca"
+    },
+    {
+      "baseline_validation_tat_regret": 0.00013698159683795115,
+      "best_candidate_id": 1,
+      "best_params": {
+        "class_weight": null,
+        "max_depth": 4,
+        "max_features": "sqrt",
+        "min_samples_leaf": 1
+      },
+      "best_validation_tat_regret": 9.493331745797462e-05,
+      "candidate_count": 36,
+      "fit_count": 180,
+      "policy": "caas-ca",
+      "representation": "clp"
+    },
+    {
+      "baseline_validation_tat_regret": 0.001509804046463007,
+      "best_candidate_id": 16,
+      "best_params": {
+        "class_weight": "balanced",
+        "max_depth": 8,
+        "max_features": 0.5,
+        "min_samples_leaf": 1
+      },
+      "best_validation_tat_regret": 0.001361513791838314,
+      "candidate_count": 36,
+      "fit_count": 180,
+      "policy": "cls",
+      "representation": "ca-csrd"
+    },
+    {
+      "baseline_validation_tat_regret": 0.0016355007715176794,
+      "best_candidate_id": 16,
+      "best_params": {
+        "class_weight": "balanced",
+        "max_depth": 8,
+        "max_features": 0.5,
+        "min_samples_leaf": 1
+      },
+      "best_validation_tat_regret": 0.001475917507566941,
+      "candidate_count": 36,
+      "fit_count": 180,
+      "policy": "cls",
+      "representation": "caas-ca"
+    },
+    {
+      "baseline_validation_tat_regret": 0.0009154397530315172,
+      "best_candidate_id": 0,
+      "best_params": {
+        "class_weight": null,
+        "max_depth": null,
+        "max_features": "sqrt",
+        "min_samples_leaf": 1
+      },
+      "best_validation_tat_regret": 0.0009154397530315172,
+      "candidate_count": 36,
+      "fit_count": 180,
+      "policy": "cls",
+      "representation": "clp"
+    }
+  ]
+}

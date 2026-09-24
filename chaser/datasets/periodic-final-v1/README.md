@@ -22,10 +22,15 @@
 학습 집합으로 사용하지 않는다. `rf_samples.jsonl`의 공통 적격 집합을 따른다.
 
 기존 `rf_samples.jsonl`의 RF 표현은 CAAS-CA/CA-CSRD/CLS의 scalar 11-feature다.
-제안 입력인 CLP21은 아래 별도 `clp-v1/` export에 있다. RF 학습은 아직이다.
+제안 입력인 CLP21은 아래 별도 `clp-v1/` export에 있다.
+이후 로컬 RF 학습·튜닝 결과는 [실행 기록](../../.cache/rf-tuning-v1/results/run.json)에 있으며,
+선택한 모델 파일은 [models/rf-tuning-v1](../../models/rf-tuning-v1/README.md)에 보존했다.
+추가 C 표본·FHC 비교는 [로컬 후속 계획](../../system-prompt-extraction/plan/RF-C-FHC-FOLLOWUP.md)을 따른다
+(`system-prompt-extraction/`은 Git 제외 경로).
 디렉터리명 `cls/`는 배치 정책이며 기존 scalar sample을 CLP로 개명하지 않는다.
 `models/caas-legacy/`의 두 `.pkl`은 기존 CAAS에서 제안한 모델 파일이다.
-이곳의 `rf_trained=false`는 현재 공통 적격 taskset 198개의 새 RF 학습이 아직이라는 뜻이다.
+이곳의 `rf_trained=false`는 export 당시의 생성 summary 값으로 유지한다.
+현재 학습 완료 여부는 별도 RF 실행 기록을 확인한다.
 별도 대체 수집은5개 확보·4개 미확보이고 export되지 않았으므로 이 dataset에 보충분은 없다.
 
 ## S2/S5 주 분석 대상 확정 (2026-09-24)
