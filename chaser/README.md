@@ -680,6 +680,9 @@ python3 -m tools.run_s1_cachegrind --input rtems/s1/build/host-trace-v2 \
 [Cold Cachegrind 결과](artifacts/s1/cachegrind-cold-v1/README.md)는 CSRD와 25/25 count가 일치했다.
 함수 첫 명령 직전에 I1·D1·LL residency만 reset하며, 이후 전체 traffic과 stock cache 판정은 유지한다.
 
+PolyBench 계열 고정 크기 kernel 4개의 별도 host 비교와 correlation 제외 근거는
+[S1 외부 Cachegrind 확인](artifacts/s1/polybench-cold-v1/README.md)에 보존했다.
+
 ## Periodic RF dataset measurement
 
 The [periodic dataset README](datasets/periodic-v2/README.md) is the entry point for
