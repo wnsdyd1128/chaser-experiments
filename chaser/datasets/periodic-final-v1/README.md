@@ -24,6 +24,8 @@
 기존 `rf_samples.jsonl`의 RF 표현은 CAAS-CA/CA-CSRD/CLS의 scalar 11-feature다.
 제안 입력인 CLP21은 아래 별도 `clp-v1/` export에 있다. RF 학습은 아직이다.
 디렉터리명 `cls/`는 배치 정책이며 기존 scalar sample을 CLP로 개명하지 않는다.
+`models/caas-legacy/`의 두 `.pkl`은 기존 CAAS에서 제안한 모델 파일이다.
+이곳의 `rf_trained=false`는 현재 공통 적격 taskset 198개의 새 RF 학습이 아직이라는 뜻이다.
 별도 대체 수집은5개 확보·4개 미확보이고 export되지 않았으므로 이 dataset에 보충분은 없다.
 
 ## S2/S5 주 분석 대상 확정 (2026-09-24)
