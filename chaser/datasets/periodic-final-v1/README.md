@@ -25,6 +25,21 @@
 CLP21 export와 RF 학습은 아직이다. 디렉터리명 `cls/`는 배치 정책이며 CLP feature 생성 완료를 뜻하지 않는다.
 별도 대체 수집은5개 확보·4개 미확보이고 export되지 않았으므로 이 dataset에 보충분은 없다.
 
+## S2/S5 주 분석 대상 확정 (2026-09-24)
+
+S2/S5의 주 분석에는 이 export의 **공통 적격 198개**만 사용한다. 기존 label과
+`split.json`의 소속을 그대로 유지하며, 세 배치 정책의 각 RF 입력은 동일한 198개에서
+학습·평가한다. 정책별 label은 해당 정책의 G/C/P 측정값을 따른다.
+실패 9개(train 6, test 3)는 모두 제외한다. 별도 대체 수집의 성공 5개도 현재 export에
+없으므로 주 분석 집합에 추가하지 않는다.
+
+현재 공통 적격 집합·split·label 및 task별 CLP/U 원본의 SHA-256은
+[공통 적격 집합 고정 파일](analysis-set-lock.json)에 고정했다. 새 feature exporter가 입력 해시를
+확인한 뒤 별도 버전을 생성한다.
+
+세 정책 각각에서 sample의 workload·split·label을 `eligibility.json` 및 `split.json`과
+대조해 불일치 0건을 확인했다. 현재 scalar sample 파일은 변경하지 않았다.
+
 ## 원본 근거와 보존 범위
 
 기초 입력·독립 U·캐시 분석은 [periodic-v2](../periodic-v2/README.md)에 있다.
