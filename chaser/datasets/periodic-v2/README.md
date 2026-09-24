@@ -122,6 +122,36 @@ Calibration의 key는 workload ID와 정확한 core 배치로 결정한 mapping 
 snapshot이 있다. `prepared/`에는 `configuration.json`, `build/{g,c,p}.exe`,
 `{g,c,p}/plan.json`, `analysis/`, `manifest.json` 등이 있다.
 
+## 입력 JSON에서 workload C 코드 재현
+
+`inputs/<workload_id>.json`의 task 설정을 [make_plan](../../chaser/periodic.py)으로
+검증·확장한 뒤 [workload_source](../../chaser/periodic_build.py)로 `workload.c`를 만든다.
+다음 예시는 workspace root에서 `candidate-v3-0000`의 C 코드를 `/tmp`에 생성하고,
+보존된 snapshot과 바이트 단위로 비교한다. 기존 dataset 파일은 수정하지 않는다.
+
+```sh
+python3 - <<'PY'
+import json
+from pathlib import Path
+
+from chaser.periodic import make_plan
+from chaser.periodic_build import workload_source
+
+configuration = json.loads(Path(
+    'datasets/periodic-v2/inputs/candidate-v3-0000.json'
+).read_text())
+tasks = make_plan(configuration, 0)['tasks']
+Path('/tmp/candidate-v3-0000-recovered-workload.c').write_text(workload_source(tasks))
+PY
+cmp /tmp/candidate-v3-0000-recovered-workload.c \
+  datasets/periodic-v2/characterization/candidate-v3-0000/prepared/source/workload.c
+```
+
+`cmp`의 종료 코드가 0이면 동일하다. 이 입력은 현재 생성기로 보존된 C 코드와
+바이트가 일치한다. `source/init.c`·`probe.c`는 입력 JSON에서 생성하지 않고
+`rtems/periodic/`의 실행 코드에서 복사한다. 위 명령은 C 코드만 재현하며
+ELF·분석·측정을 다시 실행하지 않는다.
+
 ## 기존 경로와 호환성
 
 실제 파일과 하위 디렉터리는 `.cache/`에서 이곳으로 이동했다. 기존 `.cache`의 루트·
