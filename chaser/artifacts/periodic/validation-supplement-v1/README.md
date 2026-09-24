@@ -1,6 +1,6 @@
 # Validation 추가 4개 — 측정 전 생성 규칙 v1
 
-최신 사용 소속은 [V2](../validation-supplement-v2/README.md) 및 [V2 manifest](../validation-supplement-v2/active-population.json)다. 사용자 요청으로 V1-0001(window-coefficient)을 제외하고 V2-0001(block-phase)을 새로 생성했다. 보존212개·사용207개이며 원래 family별 개수를 복원했다. 새 입력의 측정은 대기 중이다. 아래 V1 소속과 검증 결과는 역사적 기록이다.
+최신 사용 소속은 [V2](../validation-supplement-v2/README.md) 및 [V2 manifest](../validation-supplement-v2/active-population.json)다. 사용자 요청으로 V1-0001(window-coefficient)을 제외하고 V2-0001(block-phase)을 새로 생성했다. 보존212개·사용207개이며 원래 family별 개수를 복원했다. V2 새 입력의 ELF/U/G/C/P 검증과 θ/policy 동결은 완료됐다. 최종198개 학습 export와 후속9개 대체 현황은 [현재 dataset 안내](../../../datasets/periodic-v2/README.md)를 따른다. 아래 V1 소속과 검증 결과는 역사적 기록이다.
 
 ## 현재 V1 사용 입력
 

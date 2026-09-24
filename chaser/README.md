@@ -682,19 +682,19 @@ python3 -m tools.run_s1_cachegrind --input rtems/s1/build/host-trace-v2 \
 
 ## Periodic RF dataset measurement
 
-The [waf periodic harness](rtems/periodic/README.md) executes finite periodic
-tasksets under actual EDF SMP G/C/P domains, measures job CPU time and nominal
-release-to-completion response time, and collects independent task utilization.
-It checks final-ELF workload layout and YARDA wrapper analysis before constructing
-provisional feature/label rows. Diagnostic traces and empty-job measurements are
-separate from timing datasets. See its README for reproducible build/run commands,
-failure handling and the ten-taskset pilot protocol. Final RF training still
-requires frozen families and validation-calibrated allocation policies.
-The [first periodic pilot](artifacts/periodic/pilot-v1/README.md) preserves 790
-successful runs, raw job records and provisional feature/label rows.
+The [periodic dataset README](datasets/periodic-v2/README.md) is the entry point for
+current inputs, measurement results, exclusions and RF export status (2026-09-24).
+The [RTEMS harness](rtems/periodic/README.md) implements periodic G/C/P timing and independent U.
 
-The [public-API measurement v2 validation](artifacts/periodic/public-api-v2/README.md)
-separates ordinary timing/U from private period/EDF diagnostics on the same ELF.
-It preserves 90 successful timing/U runs, four diagnostics, ten empty runs and
-one expected final-job overrun failure. Historical v1 pilot evidence is unchanged;
-workload/family diversity and final training remain subsequent work.
+- `datasets/periodic-v2/`: 207 fixed tasksets, independent U, locality analysis and validation calibration.
+- `datasets/periodic-final-v1/`: final labels and legacy scalar RF samples for the same 198 eligible
+  tasksets under each of CAAS-CA, CA-CSRD and CLS; train/validation/test = 120/41/37.
+- `.cache/final-replacement-v1/run/`: five of nine replacement slots accepted; four unresolved.
+  Status is `partial`, export is `not_exported`; replacements are not included in the 198 samples.
+
+Nine tasksets with arm_phase/release_mismatch failures are excluded across all three policies.
+The agreed RF study is allocation CAAS-CA/CA-CSRD/CLS × input CAAS-CA+U/CA-CSRD+U/CLP+U.
+CLP 21-feature export and RF training remain pending; current samples use the older scalar schema.
+Preliminary artifacts and cleanup reports were deleted. Final collection/export CLI modules were also
+removed from the working tree; retained results do not imply that those commands are currently runnable.
+See the dataset README for surviving paths and the resumption boundary.

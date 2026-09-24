@@ -1,5 +1,10 @@
 # Validation 대체분 v2 — family 구성 복원
 
+2026-09-24 상태: 이 문서는 이전 validation 대체4개 중 V2-0001의 완료 기록이다.
+이 단계의 사용207개와 이후 최종 측정에서 공통 적격인198개를 구분한다.
+후속 실패9개 대체는5개만 확보됐고 학습 export에 반영되지 않았다.
+[최종 dataset 현황](../../../datasets/periodic-v2/README.md)을 따른다.
+
 사용자 요청에 따라 성공했던 `validation-supplement-v1-0001`(window-coefficient)을
 사용 대상에서 제외하고 새 `validation-supplement-v2-0001`(block-phase)을 생성했다.
 V1 입력·U400회·G/C/P120회·manifest는 역사적 증거로 그대로 보존한다.

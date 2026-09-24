@@ -1,5 +1,18 @@
 # Periodic G/C/P measurement harness
 
+## Current collection status (2026-09-24)
+
+The [dataset README](../../datasets/periodic-v2/README.md) gives the current file layout and status.
+Input/U/locality collection and three-policy calibration are complete. Final G/C/P measurement
+attempted 18,630 runs; 18,400 succeeded and 230 failed. Nine tasksets are excluded across all policies.
+The final legacy scalar export contains 198 eligible tasksets (train/validation/test=120/41/37).
+Five of nine replacement slots are accepted, four remain unresolved; replacement export did not run.
+CLP 21-feature export and RF training are pending. Final collection/export CLI modules and replacement
+generation artifacts were deleted; stored results and code snapshots do not make those commands runnable.
+The generic harness commands below describe the surviving measurement interface, not instructions to
+repeat completed collection. Removed pilot/validation artifacts cannot be replayed from this checkout.
+
+
 ## Main-experiment split policy
 
 The agreed split is **train/test/validation = 60%/20%/20% within each of the
@@ -12,7 +25,9 @@ ties resolved train, validation, test. Families need at least three unique input
 if rounding leaves a split empty, transfer one from the largest group (same tie
 order). Record per-family counts and the membership hash. Train is
 for fitting, validation for calibration/model selection, and test for final evaluation.
-Do not redraw membership based on performance or replace excluded test samples.
+Do not redraw membership based on performance. Keep exclusions in their original split; a separately
+identified replacement cohort requires explicit membership and validation. The later nine-slot replacement
+attempt is partial and has not changed the current 198-taskset export.
 
 The [input-freeze-v1 artifact](../../artifacts/periodic/input-freeze-v1/README.md)
 freezes the 207 unique V3 tasksets: **train 126 / validation 41 / test 40**, with all
@@ -34,10 +49,10 @@ changed membership, input identities or assignments are rejected.
 ## Measurement and learning order
 
 1. Freeze input configurations and split membership — completed in input-freeze-v1.
-2. Validate final ELF analysis/layout and collect independent U and static features.
-3. Measure validation mappings, then freeze theta and allocation policy.
-4. Measure G/C/P under each frozen policy and finalize eligible architecture labels.
-5. Fit RF/scaler on train, select models on validation, and evaluate on test.
+2. Validate final ELF analysis/layout and collect independent U and static features — completed.
+3. Measure validation mappings, then freeze theta and allocation policy — completed for three policies.
+4. Measure G/C/P under each frozen policy and finalize eligible architecture labels — completed for 198 common tasksets.
+5. Export CLP features, fit RF/scaler on train, select models on validation, and evaluate on test — pending.
 
 Independent U precedes calibration because the allocator consumes U. Theta
 calibration does not require RF or architecture labels. Changing theta can change
@@ -47,9 +62,9 @@ does not supply labels for a later changed allocator. This is not the default or
 
 The input freeze preserves V3 sweep/period/horizon and predeclares measured bounds
 `u_max=0.25`, `U_max=2.0`. Estimated U does not prove these bounds or deadline
-feasibility. Retain failures and exclusions in their original split without
-replacement. Runtime eligibility, dataset sufficiency and wall-time/storage budget
-remain pending; the input freeze does not declare a training-ready dataset.
+feasibility. Retain failure evidence and original split assignments. The input freeze itself is not
+eligibility evidence; the separate final export now records 198 common eligible tasksets. Statistical
+sufficiency and the unfinished replacement cohort remain distinct from passing collection gates.
 
 
 This harness builds RF dataset measurements and supports later allocation/system
@@ -172,7 +187,7 @@ For the final experiment, supply snapshots prepared under the frozen policy afte
 validation calibration; the current characterization snapshots alone do not prove
 that policy freezing is complete. Independent U stays in its existing collection.
 
-The following is a future execution example, not a preparation command:
+The following is a generic new-run example, not a command to resume the completed final pipeline:
 
 ```sh
 python3 -m tools.rtems_periodic_gcp /path/to/frozen-policy/prepared/* \

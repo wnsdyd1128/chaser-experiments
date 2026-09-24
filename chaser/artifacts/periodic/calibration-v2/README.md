@@ -51,6 +51,12 @@ P 보정 범위이며, 동결 policy별 최종 G/C/P label과 α sweep을 포함
 기존 G/C/P 측정과의 재사용 대응표·추가 예산을 산출하는 것이다. 그 후 최종 label을
 확보하여 RF/S2~S5 평가를 진행한다. Test 결과를 이용한 θ 재조정은 하지 않는다.
 
+2026-09-24 후속 상태: 최종 세 정책의 배치·G/C/P 측정과 label export가 완료됐다.
+[최종 summary](../../../datasets/periodic-final-v1/summary.json)의 공통 적격198개를 사용한다.
+대체9개 중5개 확보·4개 미확보이며 보충 export는 없다. CLP export·RF 학습은 미완료다.
+[현재 dataset 안내](../../../datasets/periodic-v2/README.md)를 따른다.
+최종 mapping 보고서 디렉터리는 삭제됐고 [계획 원본](../../../.cache/final-mapping-v1/plan.json)은 남아 있다.
+
 이번 검증: `python3 -m pytest -q tests/test_periodic_calibration.py` **30 passed**;
 `CHASER_COLD_PREFIX=/tmp/chaser-cg-cold-install sh scripts/verify` **621 passed**, skip 없음,
 75.81초. Finalize는 명시 요청되지 않아 실행하지 않았다. Git 상태 변경도 수행하지 않았다.
@@ -97,7 +103,7 @@ active identity를 후속 보정 계획과 동결 policy에 포함한다. `--inp
 이동·복사 대상으로 고정한 payload는 **215,631개 파일·7,445,536,325 bytes(약7.45GB)**다.
 데이터셋 내부에는 symlink가 없으며, 제외된 원본4개와 V1-0001의 실행·측정 증거는 기존에
 보존한다. 전체 원본 frozen manifest 검증을 위해 제외 입력의 config도 provenance에 포함하지만
-사용 population에는 포함하지 않는다. 최종 G/C/P label·RF dataset 생성은 아직이다.
+사용 population에는 포함하지 않는다. 이동 당시에는 최종 label이 없었으며, 현재는 별도 `datasets/periodic-final-v1/`에 198개가 export됐다.
 
 기존 `.cache` 루트·snapshot·U 디렉터리는 실제 디렉터리로 유지하고, 자식16,655개를 새 위치로
 향하는 상대 symlink로 연결했다. 기존350개 calibration 재사용 링크도 그대로 동작한다.
