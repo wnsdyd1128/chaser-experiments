@@ -21,8 +21,9 @@
 `task_characterization.jsonl`과 provenance는 원본207개의 분석 기록도 담으므로 이를 그대로
 학습 집합으로 사용하지 않는다. `rf_samples.jsonl`의 공통 적격 집합을 따른다.
 
-현재 RF 표현은 CAAS-CA/CA-CSRD/CLS의 scalar 11-feature다. 합의한3×3의 제안 입력인
-CLP21 export와 RF 학습은 아직이다. 디렉터리명 `cls/`는 배치 정책이며 CLP feature 생성 완료를 뜻하지 않는다.
+기존 `rf_samples.jsonl`의 RF 표현은 CAAS-CA/CA-CSRD/CLS의 scalar 11-feature다.
+제안 입력인 CLP21은 아래 별도 `clp-v1/` export에 있다. RF 학습은 아직이다.
+디렉터리명 `cls/`는 배치 정책이며 기존 scalar sample을 CLP로 개명하지 않는다.
 별도 대체 수집은5개 확보·4개 미확보이고 export되지 않았으므로 이 dataset에 보충분은 없다.
 
 ## S2/S5 주 분석 대상 확정 (2026-09-24)
@@ -40,6 +41,29 @@ S2/S5의 주 분석에는 이 export의 **공통 적격 198개**만 사용한다
 세 정책 각각에서 sample의 workload·split·label을 `eligibility.json` 및 `split.json`과
 대조해 불일치 0건을 확인했다. 현재 scalar sample 파일은 변경하지 않았다.
 
+## CLP+U 21차원 export
+
+`clp-v1/{caas-ca,ca-csrd,cls}/rf_samples.jsonl`은 배치 정책별 **198행**이다.
+각 행의 `representation_id=clp`, `alpha=null`, `features` 21개이며 기존 정책별
+architecture label·split·U를 유지한다. [clp-v1/summary.json](clp-v1/summary.json)에 feature 이름·버전,
+`analysis_set_id`, 입력·출력 hash와 `rf_trained=false`를 기록했다.
+
+CLP 세 성분(L1 hit, LLC hit, all-cache miss)에 각각 mean/std/min/max/median을 적용한
+15개 뒤에 기존 U 통계 6개를 붙인다. 모든 task에 같은 가중치를 적용하고 population std를
+사용한다. CLS·α·측정 TET/TAT·배치 vector는 입력에 넣지 않는다. RF는
+`chaser.rf.fit_rf_vectors`에서 이 21차원 행을 기존 scaler와 classifier로 소비할 수 있다.
+
+동일한 파일을 새 경로에 재생성하려면 workspace root에서 실행한다. 출력 경로가 이미 있으면
+덮어쓰지 않는다.
+
+```sh
+python3 -m tools.export_final_clp --output /tmp/chaser-clp-replay
+```
+
+원본 task profile과 독립 U를 NumPy로 다시 집계해 정책별 198행 전부를 대조했고,
+feature·label·split 불일치 0건이었다. 기존 최종 export의 hash 17개도 모두 유지됐다.
+새 export를 다시 생성한 4개 파일도 byte 단위로 일치했다.
+
 ## 원본 근거와 보존 범위
 
 기초 입력·독립 U·캐시 분석은 [periodic-v2](../periodic-v2/README.md)에 있다.
@@ -48,5 +72,5 @@ S2/S5의 주 분석에는 이 export의 **공통 적격 198개**만 사용한다
 Metadata의 `source_execution`, provenance의 snapshot 경로 및 hash는 원래 측정 근거를 가리키므로 그대로 유지했다.
 따라서 학습 sample은 이곳에서 읽을 수 있지만 전체 측정 재검증에는 해당 원본 경로도 필요하다.
 
-대용량 payload는 기존 `.cache`에서와 마찬가지로 Git 제외이며 README만 Git 관리 대상이다.
+대용량 payload와 생성된 `clp-v1/`은 Git 제외이며 README·`analysis-set-lock.json`만 Git 관리 대상이다.
 Git commit만으로 dataset payload가 백업되지는 않는다.

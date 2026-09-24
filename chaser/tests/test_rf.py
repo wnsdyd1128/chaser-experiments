@@ -5,7 +5,7 @@ import numpy as np
 import pytest
 
 from chaser.features import build_features
-from chaser.rf import fit_rf
+from chaser.rf import fit_rf, fit_rf_vectors
 
 
 @pytest.fixture
@@ -69,3 +69,24 @@ def test_undefined_scalar_is_rejected_in_training_and_prediction(cases):
         fit_rf(cases, workloads, [0], 'ca-csrd', seed=42)
     with pytest.raises(ValueError):
         model.predict(cases, workloads)
+
+
+def test_clp_21_features_reach_the_same_rf_and_scaler(cases):
+    workloads = [{'packed': 0.1}, {'spread': 0.5}, {'conflict': 0.9}]
+    model = fit_rf(cases, workloads, [0, 1, 2], 'clp', seed=42)
+    expected = [build_features([{**cases[t], 'utilization': u}], 'clp')
+                for workload in workloads for t, u in workload.items()]
+    assert model.pipeline['rf'].n_features_in_ == 21
+    np.testing.assert_allclose(model.pipeline['scale'].data_min_, np.min(expected, axis=0))
+    np.testing.assert_array_equal(model.predict(cases, workloads),
+                                  model.pipeline.predict(expected))
+    exported = fit_rf_vectors(expected, [0, 1, 2], 'clp', seed=42)
+    np.testing.assert_array_equal(exported.predict_vectors(expected),
+                                  model.predict(cases, workloads))
+
+
+def test_rf_rejects_exported_vectors_with_wrong_dimension_or_nonfinite_values():
+    with pytest.raises(ValueError):
+        fit_rf_vectors([[0.0] * 11], [0], 'clp', seed=42)
+    with pytest.raises(ValueError):
+        fit_rf_vectors([[float('nan')] * 21], [0], 'clp', seed=42)

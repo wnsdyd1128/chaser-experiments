@@ -2,6 +2,7 @@
 
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
+from math import isfinite
 from typing import TypeAlias
 
 import numpy as np
@@ -10,12 +11,22 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 
-from chaser.features import LocalityRecord, Representation, build_features
+from chaser.features import (CLP_FEATURE_NAMES, FEATURE_NAMES, LocalityRecord,
+                             Representation, build_features)
 
 
 Cases: TypeAlias = Mapping[str, LocalityRecord]
 Workload: TypeAlias = Mapping[str, float | None]
 LABEL_NAMES: dict[int, str] = {0: 'Global', 1: 'Clustered', 2: 'Partitioned'}
+
+
+def _vectors(features: Iterable[Iterable[float]], kind: Representation) -> list[list[float]]:
+    rows = [list(row) for row in features]
+    dimension = len(CLP_FEATURE_NAMES if kind == 'clp' else FEATURE_NAMES)
+    if not rows or any(len(row) != dimension or not all(isfinite(v) for v in row)
+                       for row in rows):
+        raise ValueError(f'Supply nonempty finite {dimension}-feature vectors')
+    return rows
 
 
 def _feature_matrix(cases: Cases, workloads: Iterable[Workload],
@@ -45,7 +56,11 @@ class ArchitectureRF:
     def predict(self, cases: Cases, workloads: Iterable[Workload]) -> NDArray[np.int64]:
         """Return 0/1/2 labels for task-ID-to-utilization workload mappings."""
         rows = _feature_matrix(cases, workloads, self.kind, self.alpha)
-        return self.pipeline.predict(rows)
+        return self.predict_vectors(rows)
+
+    def predict_vectors(self, features: Iterable[Iterable[float]]) -> NDArray[np.int64]:
+        """Predict from exported vectors using the fitted training scaler."""
+        return self.pipeline.predict(_vectors(features, self.kind))
 
 
 def fit_rf(cases: Cases, workloads: Iterable[Workload], labels: Iterable[int],
@@ -60,6 +75,16 @@ def fit_rf(cases: Cases, workloads: Iterable[Workload], labels: Iterable[int],
     CHASER plan and is fitted only here, then reused by ArchitectureRF.predict.
     """
     rows = _feature_matrix(cases, workloads, kind, alpha)
+    return fit_rf_vectors(rows, labels, kind, seed=seed, alpha=alpha)
+
+
+def fit_rf_vectors(features: Iterable[Iterable[float]], labels: Iterable[int],
+                   kind: Representation, *, seed: int,
+                   alpha: float | None = None) -> ArchitectureRF:
+    """Fit the CAAS RF on exported vectors; caller preserves measured labels and split."""
+    if kind == 'clp' and alpha is not None:
+        raise ValueError('CLP features do not use alpha')
+    rows = _vectors(features, kind)
     labels = list(labels)
     if len(labels) != len(rows) or any(label not in LABEL_NAMES for label in labels):
         raise ValueError('Supply one architecture label (0, 1, 2) per workload')

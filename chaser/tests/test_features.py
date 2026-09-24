@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from chaser.features import FEATURE_NAMES, build_features, locality_scalar
+from chaser.features import FEATURE_NAMES, CLP_FEATURE_NAMES, build_features, locality_scalar
 
 
 def task(ca, utilization):
@@ -37,6 +37,35 @@ def test_single_task_and_even_median():
     assert build_features([task(0.5, 0.2)], 'caas-ca') == [
         0.5, 0, 0.5, 0.5, 0.5, 0.2, 0, 0.2, 0.2, 0.2, 0.2]
     assert build_features([task(0, 0), task(1, 1)], 'caas-ca')[4] == 0.5
+
+
+def test_clp_components_are_aggregated_separately_with_the_same_u_features():
+    rows = [
+        {**task(0.4, 0.1), 'clp': [1.0, 0.0, 0.0]},
+        {**task(0.4, 0.2), 'clp': [0.0, 1.0, 0.0]},
+        {**task(0.4, 0.6), 'clp': [0.0, 0.0, 1.0]},
+    ]
+    result = build_features(rows, 'clp')
+    component = [1 / 3, math.sqrt(2) / 3, 0, 1, 0]
+    assert len(CLP_FEATURE_NAMES) == len(result) == 21
+    assert result == pytest.approx(component * 3 + build_features(rows, 'caas-ca')[5:])
+    assert build_features(list(reversed(rows)), 'clp') == pytest.approx(result)
+
+
+@pytest.mark.parametrize('profile', [None, [], [1, 0], [1, 0, 0, 0],
+                                      [0.5, 0.5, 0.1], [-0.1, 1.1, 0],
+                                      [float('nan'), 0, 1]])
+def test_clp_rejects_missing_or_invalid_task_profile(profile):
+    with pytest.raises(ValueError):
+        build_features([{**task(0.4, 0.2), 'clp': profile}], 'clp')
+
+
+def test_clp_rejects_alpha_and_missing_utilization():
+    row = {**task(0.4, 0.2), 'clp': [0.5, 0.25, 0.25]}
+    with pytest.raises(ValueError):
+        build_features([row], 'clp', alpha=0.5)
+    with pytest.raises(ValueError):
+        build_features([{**row, 'utilization': None}], 'clp')
 
 
 @pytest.mark.parametrize('rows', [[], [task(None, 0.2)], [task(0.5, None)],
