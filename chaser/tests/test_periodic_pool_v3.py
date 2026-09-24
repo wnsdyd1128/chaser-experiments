@@ -1,9 +1,9 @@
 """Expanded source families preserve excluded duplicates and old pool behavior."""
 
 import json
-import tarfile
 
-from tools.rtems_periodic_pool import ROOT, initialize
+from chaser.periodic import digest
+from tools.rtems_periodic_pool import initialize
 from tools.rtems_periodic_pool_audit import input_signature
 
 
@@ -26,15 +26,15 @@ def test_v3_contains_five_source_families_without_duplicate_inputs():
     assert all(t['width'] == 8 for r in rows for t in r['configuration']['tasks'])
 
 
-def test_v2_inputs_still_match_preserved_archive():
+def test_v2_inputs_still_match_frozen_archive_fingerprints():
     from tools.rtems_periodic_pool_v2 import candidate_pool
 
-    with tarfile.open(ROOT / 'artifacts/periodic/candidates-v2/input-pool.tar.gz') as archive:
-        archived = json.load(archive.extractfile('pool/pool.json'))
+    # Captured from the committed V2 archive before retiring its runtime dependency.
+    # Check every ordered configuration signature, not just a few sample inputs.
     generated = candidate_pool()
-    assert generated['design'] == archived['design']
-    assert [input_signature(r['configuration']) for r in generated['candidates']] == [
-        input_signature(r['configuration']) for r in archived['candidates']]
+    assert digest(generated['design']) == '6cb0438591298cfbb6f3e7a7b27f368c30456c4bd1bac1592e837d13f14ca7fb'
+    assert digest([input_signature(r['configuration']) for r in generated['candidates']]) == (
+        '4fddeb3aa2e4df669b21d4c0cb9bbd7710b63a92ffb4ed347d8fca5650605331')
 
 
 def test_v3_initialization_preserves_provenance_and_pending_split(tmp_path):

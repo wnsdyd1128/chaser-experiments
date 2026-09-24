@@ -20,7 +20,10 @@ from tools.rtems_smoke import check_inputs, file_hash, write_json
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EVIDENCE = ROOT / 'artifacts/periodic/feasibility-v1'
+# Frozen development estimate retained after removing the feasibility archive.
+# This reproduces candidate inputs; it does not substitute for measured task U.
+CPU_ESTIMATE_NS_PER_LOAD = 153.96585083007812
+EVIDENCE_SUMMARY_HASH = '5353d5b3f63c1d3b1f8b2a250ddd2ae77774ac8658a6a75fccb118a01b591f04'
 
 
 def candidate_pool() -> dict:
@@ -30,15 +33,7 @@ CPU estimates use twice the largest observed development ns/load. This is a
 budget heuristic, not measured U, WCET, or a validated transfer model. Final
 independent U must be measured from each final P ELF before main eligibility.
 """
-    check_inputs(EVIDENCE, json.loads((EVIDENCE / 'manifest.json').read_text()))
-    summary = json.loads((EVIDENCE / 'summary.json').read_text())
-    costs = []
-    for row in summary['workloads']:
-        if row.get('characterization'):
-            for task in row['tasks']:
-                cpu = row['characterization']['tasks'][task['task_id']]['mean_cpu_ns']
-                costs.append(cpu / task['loads_per_job'])
-    ns_per_load = max(costs)
+    ns_per_load = CPU_ESTIMATE_NS_PER_LOAD
     design = dict(version='periodic-candidates-v1', status='provisional',
         task_counts=[4, 8, 12, 16], profiles=['layout', 'l1', 'llc'],
         target_total_u=[0.5, 1.5], u_max=0.25, U_max=2.0,
@@ -48,7 +43,7 @@ independent U must be measured from each final P ELF before main eligibility.
         sweeps_rule='max(2, ceil(10240 / loads per sweep))',
         period_rule='ceil(max(sum(C_i/r_i)/target_U, max(C_i/r_i/u_max))/tick_ns)',
         expected_runs=10, split_seed=20260921,
-        evidence_summary_hash=file_hash(EVIDENCE / 'summary.json'),
+        evidence_summary_hash=EVIDENCE_SUMMARY_HASH,
         sufficiency_status='not_assessed',
         pending=['estimate transfer validation and numeric bound freeze',
                  'final ELF independent U and common G/C/P eligibility',
