@@ -80,7 +80,8 @@ def fit_rf(cases: Cases, workloads: Iterable[Workload], labels: Iterable[int],
 
 def fit_rf_vectors(features: Iterable[Iterable[float]], labels: Iterable[int],
                    kind: Representation, *, seed: int,
-                   alpha: float | None = None) -> ArchitectureRF:
+                   alpha: float | None = None,
+                   rf_params: Mapping[str, object] | None = None) -> ArchitectureRF:
     """Fit the CAAS RF on exported vectors; caller preserves measured labels and split."""
     if kind == 'clp' and alpha is not None:
         raise ValueError('CLP features do not use alpha')
@@ -88,10 +89,15 @@ def fit_rf_vectors(features: Iterable[Iterable[float]], labels: Iterable[int],
     labels = list(labels)
     if len(labels) != len(rows) or any(label not in LABEL_NAMES for label in labels):
         raise ValueError('Supply one architecture label (0, 1, 2) per workload')
+    parameters = {'n_estimators': 100, 'max_depth': None,
+                  'random_state': seed, 'n_jobs': 1}
+    if rf_params:
+        if set(rf_params) & {'n_estimators', 'random_state', 'n_jobs'}:
+            raise ValueError('Tree count, seed and model workers are fixed')
+        parameters.update(rf_params)
     pipeline = Pipeline([
         ('scale', MinMaxScaler()),
-        ('rf', RandomForestClassifier(n_estimators=100, max_depth=None,
-                                      random_state=seed)),
+        ('rf', RandomForestClassifier(**parameters)),
     ])
     pipeline.fit(rows, labels)
     return ArchitectureRF(kind, alpha, pipeline)
