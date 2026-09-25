@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from chaser.ca import ca_caas, ca_csrd, ca_from_histogram
+from chaser.locality.ca import ca_caas, ca_csrd, ca_from_histogram
 
 ROOT = Path(__file__).resolve().parents[1]
 

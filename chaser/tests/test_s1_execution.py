@@ -5,7 +5,7 @@ import json
 
 import pytest
 
-from chaser import s1_execution
+from chaser.s1 import execution as s1_execution
 
 
 @pytest.fixture(scope='module')
@@ -90,7 +90,7 @@ def test_bad_execution_evidence_is_preserved_as_failure(tmp_path, monkeypatch, f
 
 
 def test_frozen_execution_evidence_is_complete_and_hash_consistent():
-    from chaser.s1_workloads import cases
+    from chaser.s1.workloads import cases
 
     evidence = s1_execution.ROOT / 'artifacts/s1/host-trace-v1'
     manifest = json.loads((evidence / 'manifest.json').read_text())

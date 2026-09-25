@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from chaser.features import FEATURE_NAMES, CLP_FEATURE_NAMES, build_features, locality_scalar
+from chaser.locality.features import FEATURE_NAMES, CLP_FEATURE_NAMES, build_features, locality_scalar
 
 
 def task(ca, utilization):

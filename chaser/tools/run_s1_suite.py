@@ -7,8 +7,8 @@ import resource
 import subprocess
 from time import perf_counter
 
-from chaser.s1_suite import run_suite
-from chaser.s1_workloads import cases
+from chaser.s1.suite import run_suite
+from chaser.s1.workloads import cases
 
 
 def main():

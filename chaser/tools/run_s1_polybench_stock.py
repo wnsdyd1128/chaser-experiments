@@ -10,7 +10,7 @@ import shutil
 import subprocess
 import tempfile
 
-from chaser.s1_polybench import read_cachegrind_counts
+from chaser.s1.polybench import read_cachegrind_counts
 
 
 def digest(path):

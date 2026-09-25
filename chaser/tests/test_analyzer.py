@@ -4,7 +4,7 @@ import subprocess
 
 import pytest
 
-from chaser.analyzer import analyze_task
+from chaser.locality.analyzer import analyze_task
 
 ROOT = Path(__file__).resolve().parents[1]
 

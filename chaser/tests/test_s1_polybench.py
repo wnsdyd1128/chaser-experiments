@@ -2,13 +2,13 @@
 
 import pytest
 
-from chaser.s1_polybench import read_cachegrind_counts, selected_array_accesses
+from chaser.s1.polybench import read_cachegrind_counts, selected_array_accesses
 
 
 def test_versioned_polybench_sources_match_frozen_hashes():
     from pathlib import Path
 
-    from chaser.s1_execution import file_hash
+    from chaser.s1.execution import file_hash
     from tools.run_s1_polybench import SOURCE_HASHES
 
     sources = Path(__file__).resolve().parents[1] / 'artifacts/s1/polybench-cold-v1/sources'
@@ -72,7 +72,7 @@ def test_frozen_external_comparison_reaggregates_raw_trace_and_cachegrind():
     import json
     from pathlib import Path
 
-    from chaser.s1_trace import compare_accesses
+    from chaser.s1.trace import compare_accesses
 
     evidence = Path(__file__).resolve().parents[1] / 'artifacts/s1/polybench-cold-v1'
     if not (evidence / 'manifest.json').is_file():

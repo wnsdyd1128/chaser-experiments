@@ -1,7 +1,7 @@
 import pytest
 
-from chaser.cache_reference import CacheLevel, FirstHits, simulate
-from chaser.estimators import global_rd, csrd_counts, compare
+from chaser.locality.cache_reference import CacheLevel, FirstHits, simulate
+from chaser.locality.estimators import global_rd, csrd_counts, compare
 
 
 def test_cold_empty_and_lru_refresh():

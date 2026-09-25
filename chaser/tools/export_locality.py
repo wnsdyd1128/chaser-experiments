@@ -4,8 +4,8 @@ import hashlib
 import json
 from pathlib import Path
 
-from chaser.ca import ca_caas, ca_csrd
-from chaser.cls import DEFAULT_ALPHAS, cls
+from chaser.locality.ca import ca_caas, ca_csrd
+from chaser.locality.cls import DEFAULT_ALPHAS, cls
 
 ROOT = Path(__file__).resolve().parents[1]
 

@@ -4,8 +4,8 @@ import argparse
 from pathlib import Path
 import subprocess
 
-from chaser.s1_execution import run_execution_suite
-from chaser.s1_workloads import cases
+from chaser.s1.execution import run_execution_suite
+from chaser.s1.workloads import cases
 
 
 def main():

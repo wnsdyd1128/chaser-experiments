@@ -9,10 +9,10 @@ from pathlib import Path
 import shutil
 import subprocess
 
-from chaser.cache_reference import FirstHits
-from chaser.estimators import compare
-from chaser.s1_capture import capture
-from chaser.s1_execution import file_hash
+from chaser.locality.cache_reference import FirstHits
+from chaser.locality.estimators import compare
+from chaser.s1.capture import capture
+from chaser.s1.execution import file_hash
 
 EVENTS = 'Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw'.split()
 
@@ -142,7 +142,7 @@ def run_cachegrind(*, input_dir: Path, output_dir: Path, timeout=120, cold_prefi
             raw = directory / 'cachegrind.out'
             cold_options = []
             if cold_prefix is not None:
-                from chaser.s1_execution import _symbols
+                from chaser.s1.execution import _symbols
                 nm = subprocess.check_output(['nm', '-S', '--defined-only', str(elf)], text=True, timeout=timeout)
                 (directory / 'symbols.txt').write_text(nm)
                 entry = _symbols(nm)['chaser_s1'][0]

@@ -2,7 +2,7 @@
 import argparse
 from pathlib import Path
 import subprocess
-from chaser.s1_cachegrind import run_cachegrind
+from chaser.s1.cachegrind import run_cachegrind
 
 
 def main():

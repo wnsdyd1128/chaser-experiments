@@ -1,6 +1,6 @@
 """Cold comparisons require runtime proof of exactly one reset at the ELF entry."""
 import pytest
-from chaser.s1_cachegrind import check_cold_reset
+from chaser.s1.cachegrind import check_cold_reset
 
 
 def test_reset_evidence_requires_matching_entry_and_single_runtime_reset():
@@ -16,7 +16,7 @@ def test_patched_cachegrind_resets_instruction_and_data_state_on_each_entry(tmp_
     import os
     from pathlib import Path
     import subprocess
-    from chaser.s1_cachegrind import read_counts
+    from chaser.s1.cachegrind import read_counts
     prefix = os.environ.get('CHASER_COLD_PREFIX')
     if not prefix:
         pytest.skip('Build the optional patched Cachegrind and set CHASER_COLD_PREFIX for live reset test')
@@ -51,8 +51,8 @@ def test_frozen_cold_cachegrind_counts_reset_proof_and_disabled_control():
     import gzip
     import json
     from pathlib import Path
-    from chaser.s1_cachegrind import read_counts
-    from chaser.s1_execution import ROOT, file_hash
+    from chaser.s1.cachegrind import read_counts
+    from chaser.s1.execution import ROOT, file_hash
     evidence = ROOT / 'artifacts/s1/cachegrind-cold-v1'
     manifest = json.loads((evidence / 'manifest.json').read_text())
     for name, digest in manifest['sha256'].items():

@@ -41,7 +41,7 @@ make install
 python3 - <<'PY'
 import json, subprocess
 from pathlib import Path
-from chaser.s1_execution import file_hash
+from chaser.s1.execution import file_hash
 source = Path('/tmp/chaser-cg-cold-build/valgrind-3.18.1')
 prefix = Path('/tmp/chaser-cg-cold-install')
 metadata = {

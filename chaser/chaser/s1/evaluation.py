@@ -9,9 +9,9 @@ import shutil
 import subprocess
 from time import perf_counter
 
-from chaser.cache_reference import CacheLevel, FirstHits, simulate
-from chaser.estimators import global_rd, compare
-from chaser.s1_artifacts import read_analysis
+from chaser.locality.cache_reference import CacheLevel, FirstHits, simulate
+from chaser.locality.estimators import global_rd, compare
+from chaser.locality.artifacts import read_analysis
 
 
 def _hash(path: Path) -> str:
@@ -161,8 +161,9 @@ def evaluate_task(task_id: str, *, ape: Path, elf: Path, cache: Path, source: Pa
                   'cache_hierarchy': actual_result['cache_hierarchy'], 'input_sha256': hashes,
                   'tool_version': actual_result['tool_version'],
                   'implementation_sha256': {
-                      name: _hash(Path(__file__).with_name(name)) for name in
-                      ('s1.py', 's1_artifacts.py', 'estimators.py', 'cache_reference.py')},
+                      name: _hash(Path(__file__).resolve().parents[1] / name) for name in
+                      ('s1/evaluation.py', 'locality/artifacts.py',
+                       'locality/estimators.py', 'locality/cache_reference.py')},
                   'analysis_ids': [actual_result['analysis_id'], global_result['analysis_id']]}
         _write(output_dir / 'comparison.json', report)
         return report

@@ -1,7 +1,7 @@
 """Count Cachegrind demand misses for trace-validated global-array kernels."""
 
-from chaser.cache_reference import FirstHits
-from chaser.s1_trace import parse_lackey
+from chaser.locality.cache_reference import FirstHits
+from chaser.s1.trace import parse_lackey
 
 
 EVENTS = 'Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw'.split()

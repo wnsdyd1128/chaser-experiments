@@ -5,7 +5,7 @@ import subprocess
 
 import pytest
 
-from chaser.s1 import evaluate_task
+from chaser.s1.evaluation import evaluate_task
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -86,8 +86,8 @@ def test_bad_artifacts_are_preserved_as_failure(tmp_path, monkeypatch, damage):
 
 def test_reference_disagreement_is_a_reported_result(tmp_path, monkeypatch):
     args = arguments(tmp_path)
-    from chaser.cache_reference import FirstHits
-    monkeypatch.setattr('chaser.s1.simulate', lambda *args: FirstHits(0, 0, 48))
+    from chaser.locality.cache_reference import FirstHits
+    monkeypatch.setattr('chaser.s1.evaluation.simulate', lambda *args: FirstHits(0, 0, 48))
     result = evaluate_task(**args)
     assert result['status'] == 'mismatch'
     assert result['csrd']['error']['max_absolute_error'] == pytest.approx(47 / 48)

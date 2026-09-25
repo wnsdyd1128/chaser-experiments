@@ -1,6 +1,6 @@
 """Cachegrind selection must preserve raw totals and reject population mismatches."""
 import pytest
-from chaser.s1_cachegrind import read_counts
+from chaser.s1.cachegrind import read_counts
 
 HEADER = 'events: Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw\n'
 TRACE = HEADER + 'fl=/tmp/workload.c\nfn=chaser_s1\n26 10 1 1 15 15 0 0 0 0\n27 1 0 0 1 0 0 0 0 0\nfn=s1_prepare\n14 20 0 0 0 0 0 10 10 10\nsummary: 31 1 1 16 15 0 10 10 10\n'
@@ -29,8 +29,8 @@ def test_same_function_name_in_another_file_not_selected():
 
 
 def test_real_cachegrind_uses_execution_counts_and_reports_warm_difference(tmp_path):
-    from chaser.s1_execution import run_execution_suite
-    from chaser.s1_cachegrind import run_cachegrind
+    from chaser.s1.execution import run_execution_suite
+    from chaser.s1.cachegrind import run_cachegrind
     source = tmp_path / 'host'
     output = tmp_path / 'cg'
     assert run_execution_suite(output_dir=source, case_ids=['packed_8', 'conflict_5'])['status'] == 'ok'
@@ -56,7 +56,7 @@ def test_frozen_cachegrind_results_reproduce_from_external_tool_output():
     import gzip
     import json
     from pathlib import Path
-    from chaser.s1_execution import ROOT, file_hash
+    from chaser.s1.execution import ROOT, file_hash
     evidence = ROOT / 'artifacts/s1/cachegrind-v1'
     manifest = json.loads((evidence / 'manifest.json').read_text())
     for name, digest in manifest['sha256'].items():

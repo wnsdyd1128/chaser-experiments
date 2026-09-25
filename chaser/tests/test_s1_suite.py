@@ -5,8 +5,8 @@ import subprocess
 
 import pytest
 
-from chaser.s1_workloads import cases, source_text
-from chaser.s1_suite import run_suite, summarize
+from chaser.s1.workloads import cases, source_text
+from chaser.s1.suite import run_suite, summarize
 
 def test_catalog_pairs_and_capacity_boundaries():
     catalog = {case['id']: case for case in cases()}

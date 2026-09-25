@@ -6,7 +6,7 @@ from hashlib import sha256
 import json
 from pathlib import Path
 
-from chaser.s1_polybench import read_cachegrind_counts
+from chaser.s1.polybench import read_cachegrind_counts
 
 
 def main():

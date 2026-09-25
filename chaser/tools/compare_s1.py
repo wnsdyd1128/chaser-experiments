@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 import subprocess
 
-from chaser.s1 import evaluate_task
+from chaser.s1.evaluation import evaluate_task
 
 
 def main() -> None:

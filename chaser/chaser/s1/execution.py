@@ -10,14 +10,14 @@ import subprocess
 from time import perf_counter
 import zlib
 
-from chaser.cache_reference import CacheLevel, FirstHits, simulate
-from chaser.estimators import compare
-from chaser.s1 import evaluate_task
-from chaser.s1_capture import capture
-from chaser.s1_trace import cache_lines, compare_accesses, parse_lackey
-from chaser.s1_workloads import access_count, cases, source_text
+from chaser.locality.cache_reference import CacheLevel, FirstHits, simulate
+from chaser.locality.estimators import compare
+from chaser.s1.evaluation import evaluate_task
+from chaser.s1.capture import capture
+from chaser.s1.trace import cache_lines, compare_accesses, parse_lackey
+from chaser.s1.workloads import access_count, cases, source_text
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 HARNESS = '''#include <stdint.h>
 #include <stdio.h>
 void s1_prepare(void);
@@ -93,8 +93,8 @@ def run_execution_suite(*, output_dir: Path, case_ids=None, sweeps=3,
                   max_decoded_trace_bytes=max_trace_bytes, cases=[catalog[c] for c in selected],
                   toolchain=toolchain, sha256={str(p): file_hash(p) for p in
                       (executable, plugin, cache, harness, Path(__file__),
-                       ROOT / 'chaser/s1_trace.py', ROOT / 'chaser/s1_capture.py',
-                       ROOT / 'chaser/s1_workloads.py')})
+                       ROOT / 'chaser/s1/trace.py', ROOT / 'chaser/s1/capture.py',
+                       ROOT / 'chaser/s1/workloads.py')})
     _write(output_dir / 'inputs.json', inputs)
     report = dict(schema_version=1, status='running', rows=[],
                   validation_scope='host-x86_64-execution-function-and-array-filtered',

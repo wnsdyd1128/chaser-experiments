@@ -9,11 +9,11 @@ import shutil
 import subprocess
 from time import perf_counter
 
-from chaser.ca import ca_from_histogram, ca_csrd
-from chaser.s1 import evaluate_task
-from chaser.s1_workloads import access_count, cases, source_text
+from chaser.locality.ca import ca_from_histogram, ca_csrd
+from chaser.s1.evaluation import evaluate_task
+from chaser.s1.workloads import access_count, cases, source_text
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def _write(path, value):
@@ -123,7 +123,7 @@ def run_suite(*, output_dir: Path, case_ids: list[str] | None = None, sweeps: in
                   'command_timeout_seconds': timeout, 'cases': [catalog[c] for c in selected],
                   'sha256': {str(p): _hash(p) for p in
                              [executable, plugin, *support.iterdir(), Path(__file__),
-                              Path(__file__).with_name('s1_workloads.py')]}}
+                              Path(__file__).with_name('workloads.py')]}}
     provenance['toolchain'] = {}
     for name in ('/opt/rtems/6/bin/sparc-rtems6-gcc', 'clang-14', 'opt-14', 'make'):
         version = subprocess.run([name, '--version'], capture_output=True, text=True,

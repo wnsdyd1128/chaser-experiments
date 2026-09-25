@@ -8,12 +8,12 @@ from pathlib import Path
 import re
 import subprocess
 
-from chaser.s1 import evaluate_task
-from chaser.s1_cachegrind import check_cold_reset
-from chaser.s1_capture import capture
-from chaser.s1_execution import file_hash
-from chaser.s1_polybench import read_cachegrind_counts, selected_array_accesses
-from chaser.s1_trace import compare_accesses
+from chaser.s1.evaluation import evaluate_task
+from chaser.s1.cachegrind import check_cold_reset
+from chaser.s1.capture import capture
+from chaser.s1.execution import file_hash
+from chaser.s1.polybench import read_cachegrind_counts, selected_array_accesses
+from chaser.s1.trace import compare_accesses
 
 
 ROOT = Path(__file__).resolve().parents[1]

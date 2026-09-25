@@ -4,8 +4,8 @@ import io
 
 import pytest
 
-from chaser.s1_trace import parse_lackey, compare_accesses, cache_lines
-from chaser.cache_reference import CacheLevel, simulate
+from chaser.s1.trace import parse_lackey, compare_accesses, cache_lines
+from chaser.locality.cache_reference import CacheLevel, simulate
 
 
 def parse(text, **kwargs):

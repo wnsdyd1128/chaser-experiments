@@ -6,7 +6,7 @@ import sys
 
 import pytest
 
-from chaser.s1_capture import capture
+from chaser.s1.capture import capture
 
 
 def test_capture_preserves_stderr_gzip_and_stdout(tmp_path):

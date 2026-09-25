@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-from chaser.cls import DEFAULT_ALPHAS
+from chaser.locality.cls import DEFAULT_ALPHAS
 from tools.export_locality import ROOT, summary
 
 
