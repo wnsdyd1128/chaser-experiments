@@ -1,0 +1,1 @@
+"""RTEMS periodic measurement scenario."""

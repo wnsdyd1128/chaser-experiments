@@ -1,4 +1,7 @@
-# Active dataset calibration v2 — theta/policy frozen
+# Historical dataset calibration v2 — theta/policy frozen
+
+이 문서는 이전 실험의 결과 기록이다. 당시 사용한 보정·이동·재사용 감사 코드는
+현재 실험 계약으로 전환하면서 삭제했으며, 아래 수치는 새 실험의 보정 결과가 아니다.
 
 ## 보정 완료 (2026-09-23)
 
@@ -55,7 +58,7 @@ P 보정 범위이며, 동결 policy별 최종 G/C/P label과 α sweep을 포함
 [최종 summary](../../../datasets/periodic-final-v1/summary.json)의 공통 적격198개를 사용한다.
 대체9개 중5개 확보·4개 미확보이며 보충 export는 없다. CLP export·RF 학습은 미완료다.
 [현재 dataset 안내](../../../datasets/periodic-v2/README.md)를 따른다.
-최종 mapping 보고서 디렉터리는 삭제됐고 [계획 원본](../../../.cache/final-mapping-v1/plan.json)은 남아 있다.
+최종 mapping 보고서와 `.cache/final-mapping-v1/plan.json` 원본은 이후 캐시 정리 과정에서 삭제됐다.
 
 이번 검증: `python3 -m pytest -q tests/test_periodic_calibration.py` **30 passed**;
 `CHASER_COLD_PREFIX=/tmp/chaser-cg-cold-install sh scripts/verify` **621 passed**, skip 없음,
@@ -115,7 +118,7 @@ active identity를 후속 보정 계획과 동결 policy에 포함한다. `--inp
 다른 workspace로 이 디렉터리를 복사하면 payload는 함께 보관할 수 있지만, 기존 CLI 실행에는
 역사적 경로 연결 및 toolchain/simulator 환경이 추가로 필요하다.
 
-[이동 스크립트](relocate_dataset.py)는 plan→move→verify 순으로 실행했다. 이동 전후 파일 hash와
+당시 이동 스크립트는 plan→move→verify 순으로 실행했다. 이동 전후 파일 hash와
 기존 경로의 동일성을 검증하며, rename과 링크 생성 사이에 중단돼도 이동된 바이트를 확인하고
 연결을 복구한다. 검증 결과는 [relocation-summary.json](relocation-summary.json)에 보존한다.
 대용량 payload는 Git에서 제외하며 새 README와 `dataset.json`만 관리한다.
@@ -127,25 +130,10 @@ Validation **41개·448 tasks·독립 U raw 4,480회** 재검증 및 tool identi
 기존 U characterization ID와 U ELF hash를 입력별로 보존했다. Train/test의 feature/raw는
 보정 입력으로 로드하지 않았다. 이 기록은 새 timing 수집이나 θ 선택 결과가 아니다.
 
-## 계획 생성 명령 및 후속 실행
+## 당시 계획 및 감사
 
-다음 명령으로 현재 계획을 생성했다. 같은 입력의 재호출은 고정된 계획과의 일치를 검사한다.
-
-```sh
-python3 -m tools.rtems_periodic_calibrate plan \
-  .cache/characterization-v1-inputs/frozen \
-  --characterized .cache/characterization-v1 \
-  --input-sources artifacts/periodic/calibration-v2/input-sources.json \
-  --output .cache/calibration-v2
-```
-
-후속 prepare/run/freeze에도 같은 `--input-sources`를 전달한다. 입력·구현·연결 파일이
-기존 계획과 다르면 resume는 거부한다. Raw와 상세 분석 산출물은 Git에서 제외한 dataset payload이므로
-이 연결 파일과 검증 기록만으로 재현에 필요한 전체 증거가 백업되지는 않는다.
-
-재사용 감사는 `PYTHONPATH=. python3 artifacts/periodic/calibration-v2/audit_reuse.py`로
-수행했다. 감사는 측정·연결·θ 선택을 하지 않는다. 재실행은 cache의 감사 시각과 hash를
-갱신하므로 이미 연결한 실행의 감사 기록을 덮어쓰지 않는다.
+당시 계획은 `input-sources.json`의 연결 자료를 사용해 생성했다. 관련 CLI와 감사 스크립트는
+삭제했다. 보존한 연결 파일과 검증 기록만으로 raw 측정을 다시 수행할 수는 없다.
 
 ## Loader 연결 당시 구현 검증
 

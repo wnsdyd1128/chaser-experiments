@@ -7,8 +7,8 @@ import json
 
 import pytest
 
-from chaser.dataset import Workload, build_dataset, freeze_split
-from chaser.periodic import digest
+from chaser.dataset.builder import Workload, build_dataset, freeze_split
+from chaser.periodic.measurement import digest
 
 
 def population(counts=(41, 41, 41, 43, 41)):
@@ -154,10 +154,12 @@ def test_legacy_split_cannot_be_silently_reused_as_new_policy(tmp_path):
 
 
 def test_taskset_identity_ignores_names_and_policy_but_preserves_work(tmp_path):
-    from chaser.periodic_registry import taskset_signature
-    from tools.rtems_periodic_pool_v3 import candidate_pool
+    from chaser.dataset.splits import taskset_signature
 
-    config = candidate_pool()['candidates'][0]['configuration']
+    config = dict(workload_id='original', family_id='family', policy_id='policy',
+                  horizon_ticks=40, eligible_for_training=False, test_eligible=False,
+                  tasks=[dict(task_id='t0', core=0, pattern='cyclic', distinct=64,
+                              stride=32, sweeps=2, period_ticks=20)])
     changed = deepcopy(config)
     changed.update(workload_id='copy', family_id='copy', policy_id='other-policy',
                    eligible_for_training=True, test_eligible=True)

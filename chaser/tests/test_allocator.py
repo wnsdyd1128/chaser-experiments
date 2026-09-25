@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from chaser.allocator import CoreGroups, allocate
+from chaser.policy.allocator import CoreGroups, allocate
 
 
 def records(**scalars):
@@ -25,7 +25,7 @@ def test_exported_representation_changes_group_without_changing_utilization():
 
 @pytest.mark.parametrize('scalar, cores', [
     (0.1, CoreGroups((2, 0), (1,))),
-    (0.5, CoreGroups((1,), (2, 0))),
+    (0.9, CoreGroups((1,), (2, 0))),
 ])
 def test_descending_utilization_worst_fit_and_stable_ties(scalar, cores):
     cases = records(a=scalar, b=scalar, c=scalar, d=scalar)

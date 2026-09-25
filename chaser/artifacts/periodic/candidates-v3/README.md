@@ -62,18 +62,9 @@ V3의 ID는 새 namespace이고 V1 control panel은 합치지 않았다. 이전 
 | recipe-correctness.tar.gz | 작은 fixture 8개, reference, G/C/P ELF·APE·분석·manifest |
 | summary.json | 후보·split·부하·자원·예산 |
 | audit.json | 고유 입력·cell별 추정U·역할/core/period 결합 감사 |
-| build-evidence.py | 새 경로에 후보와 correctness 증거를 다시 만드는 방법 |
-| revalidate.py / revalidation.json | archive 추출 후 621 plans·중복 관계·24 streams 재검사 |
+| revalidation.json | 과거 621 plans·중복 관계·24 streams 재검사 결과 |
 | verification.txt | 전체 repository 검증 로그 |
 | manifest.json | 위 파일 hash |
 
-```sh
-python3 -m tools.rtems_periodic_pool --version 3 --output .cache/periodic-v3-new
-PYTHONPATH=. python3 artifacts/periodic/candidates-v3/build-evidence.py \
-  --output .cache/periodic-v3-evidence-new
-PYTHONPATH=. python3 artifacts/periodic/candidates-v3/revalidate.py \
-  --output /tmp/chaser-v3-replay-new
-```
-
-출력은 존재하지 않는 새 경로를 사용한다. Revalidation은 원본 hash와 현재 구현의
-동작을 함께 검사하며 실패하면 archive를 덮어쓰지 않고 원인을 확인한다.
+구 후보 생성·재검증 스크립트는 정리했다. 이 디렉터리는 보존된 입력과 과거 검증
+결과의 기록이며, 현재 저장소에서 구 후보를 다시 생성하는 실행 경로는 아니다.

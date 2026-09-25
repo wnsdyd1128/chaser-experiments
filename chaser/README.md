@@ -5,6 +5,11 @@ The same `workload.c` is compiled into three separate SPARC RTEMS 6 / GR740 exec
 into LLVM IR for APE extraction. All RD analysis uses **yarda_cpp**.
 Python selects APE records, computes scalar/features, and runs tests; it does not compute RD/CSRD.
 
+Python code is grouped by responsibility under `chaser/`: `locality/` holds cache
+analysis and representations, `dataset/` holds membership and labels, `policy/`
+holds allocation and RF, `periodic/` holds RTEMS periodic measurement, and `s1/`
+holds the S1 evaluation scenario. The top level contains only package metadata.
+
 ## Cases
 
 Each job increments eight volatile bytes over 65,537 sweeps. The nonzero final
@@ -117,7 +122,7 @@ historical exp2 snapshot or an exact physical-address model of the linked ELF.
 
 ## L1 CSRD and CLP (stage 2)
 
-D1 is settled: `CA_CSRD` uses only the L1 CSRD histogram. `chaser/ca.py`
+D1 is settled: `CA_CSRD` uses only the L1 CSRD histogram. `chaser/locality/ca.py`
 shares the CAAS formula between Global RD and L1 CSRD, excludes cold accesses,
 and returns `None` if there is no reuse. LLC is not folded into this scalar.
 
@@ -162,11 +167,11 @@ no exp2 reproduction is claimed. The frozen rtems-v1 bytes and manifest are unch
 Its nine previously ignored build files are now eligible for Git tracking through
 narrow ignore exceptions; include them with the change when committing.
 
-`chaser.features.locality_scalar(kind, record, alpha=...)` selects `caas-ca`,
+`chaser.locality.features.locality_scalar(kind, record, alpha=...)` selects `caas-ca`,
 `ca-line`, `ca-csrd`, or precomputed `cls`. Records use the field names from
 `exports/locality.json`: `ca_caas_element`, `ca_global_line`, `ca_csrd_l1`.
 CLS records additionally carry a string-keyed map such as `cls: {"0.5": 0.75}`.
-`chaser.cls` computes `CLS = p_L1 + (K_L1 / K_LLC)^alpha * p_LLC`
+`chaser.locality.cls` computes `CLS = p_L1 + (K_L1 / K_LLC)^alpha * p_LLC`
 from unconditional first-hit ratios and cache capacities in bytes. Empty profiles
 produce `None`; missing alpha results are rejected by the selector.
 
@@ -206,7 +211,7 @@ inputs for provenance checks. No new simulator measurements were taken.
 
 ## RF consumption of selected features
 
-`chaser.rf.fit_rf(cases, workloads, labels, kind, seed=...)` joins locality
+`chaser.policy.rf.fit_rf(cases, workloads, labels, kind, seed=...)` joins locality
 records and utilization by task ID, builds the existing 11 features, and trains
 a fresh sklearn RandomForestClassifier. It uses the same implementation and
 parameters as the CAAS wrapper: 100 trees, unlimited depth, and an explicit seed.
@@ -228,7 +233,7 @@ Runnable wiring example, with **synthetic labels and utilization only**:
 ```python
 import json
 from pathlib import Path
-from chaser.rf import LABEL_NAMES, fit_rf
+from chaser.policy.rf import LABEL_NAMES, fit_rf
 
 cases = json.loads(Path('exports/locality.json').read_text())['cases']
 workloads = [{'packed': 0.1}, {'spread': 0.5}, {'conflict': 0.9}]
@@ -245,12 +250,12 @@ consumer connection; S2 evaluation remains separate work.
 
 ## Offline allocator connection (stage 2)
 
-`chaser.allocator.allocate` consumes the same locality cases and task-ID-to-U
+`chaser.policy.allocator.allocate` consumes the same locality cases and task-ID-to-U
 mapping as the RF interface. It returns `Placement(mapping, residual, infeasible)`.
 Types and annotations target Python 3.10.
 
 ```python
-from chaser.allocator import CoreGroups, allocate
+from chaser.policy.allocator import CoreGroups, allocate
 
 # Explicit example configuration, not a calibrated experimental default.
 cores = CoreGroups(isolated=(0,), non_isolated=(1, 2, 3))
@@ -259,12 +264,11 @@ placement = allocate(cases, {'spread': 0.6, 'conflict': 0.3}, cores,
 ```
 
 The policy follows Algorithm 1 as transcribed in the project plan: descending U,
-scalar below threshold → least-loaded isolated Ω core; scalar at or above threshold
+scalar at or below threshold → least-loaded isolated Ω core; scalar above threshold
 → worst-fit non-isolated NΩ core. The same policy consumes `caas-ca` or `ca-csrd`;
 `ca-line` and explicitly selected precomputed CLS are also accepted by the selector.
 The split and finite threshold are required inputs. No experimental split or
-threshold is selected implicitly; finite thresholds outside [0, 1] can represent
-all-low/all-high calibration endpoints.
+threshold is selected implicitly; calibration candidates stay in [0, 1].
 
 The paper's partial policy is completed with explicit rules: capacity 1 per core
 in both branches, no spill between groups, and failed tasks recorded while remaining
@@ -281,59 +285,13 @@ labels, measured threshold calibration and S2/S3 performance evaluation remain l
 
 ## Offline threshold calibration (stage 4)
 
-`chaser.threshold.calibrate` connects threshold search to the existing allocator.
-Supply `CalibrationWorkload(workload_id, family_id, split, utilization)` rows,
-explicit core groups, representation, seed, analyzer/feature versions, and a
-`tat(workload_id, mapping)` callback. The callback supplies TAT for that exact
-mapping in a consistent unit, for example the median of repeated measurements.
-Set `measurement_source='measured'` for measured inputs or `'synthetic'` for fixtures.
-Missing, nonpositive or nonfinite TAT aborts selection.
+`chaser.periodic.calibration` plans P-only mapping measurements from the calibration split and selects thresholds after every requested mapping has an outcome. The candidate set is exactly 0, 1, and the observed scalar values; allocation uses `scalar <= threshold`. CAAS-CA, CA-CSRD, and five CLS alpha values use the same calibration workloads. Infrastructure errors stop selection. Among candidates, selection minimizes allocation and execution failures, then mean P median-TAT on their common successful workloads, then the smaller threshold. An empty common-success set remains unresolved. `classify_p_batch()` validates immutable raw batches before returning an outcome.
 
-Only validation payloads contribute scalars, mappings and TAT requests. Duplicate
-workload IDs and families crossing train/validation/test splits are rejected.
-The caller supplies the frozen family membership and the same complete-case
-validation population for all representations; the function does not construct
-the split or infer benchmark families.
-
-The fixed selection protocol is:
-
-1. Search midpoints between distinct validation scalars, plus all-high/all-low
-   endpoints. With strict `scalar < threshold`, the minimum scalar is all-high
-   and the next representable float above the maximum is all-low. Adjacent floats
-   without a representable midpoint use the upper scalar.
-2. Minimize the number of workloads with any allocation failure.
-3. Among those candidates, minimize mean TAT over their common successful workload
-   intersection. An empty intersection is an error; differing success populations
-   are not directly compared. Other candidates have no TAT score.
-4. Break TAT ties by the smallest threshold. Reuse each workload/mapping's TAT
-   within the call so duplicate mappings are requested only once.
-
-Call separately for `caas-ca`, `ca-csrd` and `cls`, and again for each CLS alpha.
-The seed records the experiment protocol; the search itself is exhaustive.
-The result records the selected threshold, all candidates and placements,
-failures, common workload IDs, consumed TAT values, core groups, versions, source,
-seed, split hash and validation-input hash. Persist the result before test use:
-
-```python
-from dataclasses import asdict
-
-# result = calibrate(...), using validation measurements supplied by the caller.
-Path('threshold.json').write_text(
-    json.dumps(asdict(result), indent=2, sort_keys=True, allow_nan=False) + '\n')
-test_placement = allocate(cases, test_workload, result.cores, kind=result.kind,
-                          alpha=result.alpha, threshold=result.threshold)
-```
-
-Keep this threshold fixed for test workloads. The API cannot verify the origin
-of callback measurements; the measurement pipeline must ensure they match the
-workload, mapping, binary and execution configuration. This stage implements
-calibration logic and synthetic regression tests, including real locality-export
-integration. No experimental threshold has been selected; measured TAT, frozen
-research splits and S3/S4 calibration experiments remain pending.
+No experimental threshold has been selected under the current measurement contract. The end-to-end P collection and freeze CLI remains to be implemented; see the [rebuild plan](system-prompt-extraction/plan/DATASET-REBUILD-PLAN.md).
 
 ## PLAN 5: analyzer and dataset bridge
 
-`chaser.analyzer.analyze_task` accepts a prepared single-function APE, matching
+`chaser.locality.analyzer.analyze_task` accepts a prepared single-function APE, matching
 ELF, cache YAML, source file, C++ analyzer executable, a new output directory,
 and explicit analysis limits. It runs **three** C++ paths: element Global RD,
 cache-line Global RD (control), and hierarchy CSRD. Global CA uses the program
@@ -347,7 +305,7 @@ remain the caller's responsibility.
 
 ```python
 from pathlib import Path
-from chaser.analyzer import analyze_task
+from chaser.locality.analyzer import analyze_task
 
 record = analyze_task(
     'chaser_packed', ape=Path('rtems/baseline/build/packed.ape.json'),
@@ -580,7 +538,7 @@ cases. Exit codes are 0 for all selected cases passing, 1 for any failed case or
 CSRD/reference mismatch, and 2 for invalid input/setup. Global RD prediction error
 is an experimental result and does not fail the suite.
 
-`chaser.s1_workloads` generates a self-contained C source per case. The snapshotted
+`chaser.s1.workloads` generates a self-contained C source per case. The snapshotted
 `rtems/s1/Makefile` builds that exact source into LLVM/APE and a SPARC RTEMS ELF;
 APE bounds are never edited after extraction. The analyzed function returns an
 accumulator and accesses one aligned volatile byte array using loads only.

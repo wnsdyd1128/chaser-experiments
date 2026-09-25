@@ -4,14 +4,15 @@ from copy import deepcopy
 
 import pytest
 
-from chaser.periodic import make_plan
-from chaser.periodic_analysis import check_stream
-from chaser.periodic_patterns import access_offsets, loop_iterations
+from chaser.periodic.measurement import make_plan
+from chaser.periodic.analysis import check_stream
+from chaser.periodic.patterns import access_offsets, loop_iterations
 
 
 def pattern_configuration():
     return dict(workload_id='patterns', family_id='development-patterns',
                 policy_id='explicit-development-v1', horizon_ticks=40,
+                warmup_ticks=20, u_repeats=5,
                 tasks=[dict(task_id=name, pattern=pattern, distinct=5, stride=32,
                             hot_distinct=2, hot_repeats=2, cold_repeats=1,
                             sweeps=2, period_ticks=20, core=i)

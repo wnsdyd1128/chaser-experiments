@@ -3,6 +3,8 @@
   "family_id": "development-region-patterns",
   "policy_id": "development-explicit-core-order-v1",
   "horizon_ticks": 40,
+  "warmup_ticks": 20,
+  "u_repeats": 5,
   "eligible_for_training": false,
   "tasks": [
     {

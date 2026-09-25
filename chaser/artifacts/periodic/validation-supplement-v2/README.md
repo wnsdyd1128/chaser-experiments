@@ -45,14 +45,8 @@ G/C/P 측정도 완료했다(아래 완료 결과 참조). 기존 window 또는 
 
 ## 재현 및 검증
 
-```sh
-PYTHONPATH=. python3 artifacts/periodic/validation-supplement-v2/rebuild.py
-```
-
-재현 검사는 저장 config·manifest·소속과 재생성 결과를 비교한다. 별도 경로로 생성하려면
-`--output <존재하지 않는 경로>`를 지정한다. 기존 출력은 덮어쓰지 않는다.
-재현 검사 PASS, 관련 `test_periodic_pool_v2.py`·`test_periodic_freeze.py` **8 passed**.
-Production generator·harness·parser는 변경하지 않았고 finalize는 호출하지 않았다.
+과거 재생성 검사 기록과 입력 metadata는 보존했다. 구 후보 생성·동결 코드는 정리되어
+현재 저장소에서 이 보충 입력을 다시 생성하지 않는다.
 
 이 새 입력의 ELF 준비·분석 → 독립 U → 현재 mapping G/C/P 검증은 완료했다.
 최신207개 소속은 [보정 v2 loader](../calibration-v2/README.md)에 연결했다. 다음은 θ 후보/mapping 재계산이다.

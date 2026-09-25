@@ -4,8 +4,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from chaser.features import build_features
-from chaser.rf import fit_rf, fit_rf_vectors
+from chaser.locality.features import build_features
+from chaser.policy.rf import fit_rf, fit_rf_vectors
 
 
 @pytest.fixture

@@ -4,8 +4,8 @@ from pathlib import Path
 import joblib
 import pytest
 
-import chaser.rf_experiment as experiment
-from chaser.rf import fit_rf_vectors
+import chaser.policy.rf_experiment as experiment
+from chaser.policy.rf import fit_rf_vectors
 
 
 def sample_rows():

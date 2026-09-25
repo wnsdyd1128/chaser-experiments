@@ -3,7 +3,7 @@
 import argparse
 from pathlib import Path
 
-from chaser.final_clp import export_final_clp
+from chaser.dataset.final_clp import export_final_clp
 
 
 def main() -> None:

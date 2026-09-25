@@ -12,8 +12,8 @@ import traceback
 import numpy
 import sklearn
 
-from chaser.final_clp import POLICIES
-from chaser.rf_experiment import GRID, REPRESENTATIONS, SEEDS, load_samples, train_cell
+from chaser.dataset.final_clp import POLICIES
+from chaser.policy.rf_experiment import GRID, REPRESENTATIONS, SEEDS, load_samples, train_cell
 
 
 def _write_json(path: Path, data: dict) -> None:

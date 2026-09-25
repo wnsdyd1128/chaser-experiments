@@ -81,22 +81,8 @@ allocator의 label·RF까지 대신하지 않는다. [운영 문서](../../../rt
 | split.json / population.json / summary.json | 검토용 동결 metadata; archive 내용과 바이트 일치 검사 |
 | source-revalidation.json | 보존 V3 archive·작은 fixture 재검증 결과 |
 | verification.txt | 전체 빌드·테스트 로그 |
-| revalidate.py / revalidation.json | 새 경로에서 동결 산출물 재검증 |
+| revalidation.json | 과거 동결 산출물 재검증 결과 |
 | manifest.json | 위 산출물 hash |
 
-새 경로에서 재검증:
-
-```sh
-PYTHONPATH=. python3 artifacts/periodic/input-freeze-v1/revalidate.py \
-  --output /tmp/chaser-input-freeze-replay-new
-```
-
-동일 동결을 재생성할 때도 기존 출력은 덮어쓰지 않는다:
-
-```sh
-PYTHONPATH=. python3 artifacts/periodic/candidates-v3/revalidate.py \
-  --output /tmp/chaser-v3-source-new
-python3 -m tools.rtems_periodic_freeze freeze \
-  --pool /tmp/chaser-v3-source-new/pool --output /tmp/chaser-frozen-new
-python3 -m tools.rtems_periodic_freeze verify /tmp/chaser-frozen-new
-```
+구 후보 생성·동결 스크립트는 정리했다. 보존된 입력 archive와 split metadata는
+데이터셋 근거로 남아 있으며, 현재 저장소에서 동일 동결을 다시 생성하지 않는다.

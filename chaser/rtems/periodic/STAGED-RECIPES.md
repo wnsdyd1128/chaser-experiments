@@ -86,7 +86,7 @@ T는 기존 overlap/hot-per-tile/matrix-reuse와 일부 재사용 특성을 공�
 그대로 쓰지 않는다. 역할·width·stride·period·혼합비·저장 배치는 같은 워크로드군 안 변형이다.
 이 판단은 통계적 독립성 증명이 아니며 완전한 base-task 재사용이 발견되면 병합한다.
 
-`tools.rtems_periodic_pool --version 3`은 기존 세 워크로드군과 F/T의 같은 5개 coverage cell을
+당시 V3 후보 생성기는 기존 세 워크로드군과 F/T의 같은 5개 coverage cell을
 열거한다. 총 300개 요청 중 정확히 같은 실행 입력을 첫 등장 하나만 남기고 나머지는
 `duplicate_candidates`에 원본 config·target U·`duplicate_of`·이유를 보존한다.
 V1/V2 archive와 기본 version1 동작은 유지한다. V2 후보도 기존 archive와 동치 검사한다.

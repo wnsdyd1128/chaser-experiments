@@ -4,7 +4,7 @@ from hashlib import sha256
 
 import pytest
 
-from chaser.event_storage import compress_events
+from chaser.periodic.event_storage import compress_events
 
 
 def test_compression_preserves_exact_bytes_and_records_original_identity(tmp_path):
@@ -32,7 +32,7 @@ def test_existing_compressed_evidence_is_not_overwritten(tmp_path):
 
 def test_failed_restoration_keeps_original_evidence(tmp_path, monkeypatch):
     from io import BytesIO
-    import chaser.event_storage as storage
+    import chaser.periodic.event_storage as storage
 
     path = tmp_path / 'events.json'
     path.write_bytes(b'original evidence')

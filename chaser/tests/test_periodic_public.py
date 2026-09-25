@@ -2,29 +2,23 @@
 
 import pytest
 
-from chaser.periodic import aggregate, make_plan
-from test_periodic import configuration, evidence
+from chaser.periodic.measurement import CONTRACT, aggregate
+from test_periodic import evidence
 
 
 def public_evidence(*, trace=False):
-    _, records = evidence()
-    plan = make_plan(configuration(), 2)
-    records[0].update(contract_id='chaser-periodic-measurement-v2',
-                      plan_hash=plan['plan_hash'], trace=int(trace))
-    for row in records:
-        if row['kind'] == 'task':
-            row.update(arm_before_tick=100, arm_after_tick=100, thread=101 + row['task'])
-        if row['kind'] != 'job':
-            continue
-        row.update(status_before_end_ns=row['start_ns'] + 500,
-                   status_after_start_ns=row['completion_ns'] - 500,
-                   wall_before_ns=row['start_ns'] + 250 - row['epoch_before_ns'],
-                   wall_after_ns=row['completion_ns'] - 250 - row['epoch_after_ns'])
-        if not trace:
-            for key in ('epoch_before_ns', 'epoch_after_ns', 'timer_before',
-                        'timer_after', 'edf_before', 'edf_after'):
-                del row[key]
+    plan, records = evidence()
+    records[0]['trace'] = int(trace)
     if trace:
+        for row in records:
+            if row['kind'] != 'job':
+                continue
+            task = plan['tasks'][row['task']]
+            deadline = 100 + (row['job'] + 1) * task['period_ticks']
+            row.update(epoch_before_ns=row['release_ns'] + 100,
+                       epoch_after_ns=row['release_ns'] + 100,
+                       timer_before=deadline, timer_after=deadline,
+                       edf_before=deadline, edf_after=deadline)
         records.extend([dict(kind='switch', thread=101, core=0, ns=1),
                         dict(kind='switch', thread=102, core=2, ns=2)])
     return plan, records
@@ -32,11 +26,11 @@ def public_evidence(*, trace=False):
 
 def test_public_timing_needs_no_private_fields_and_reports_elapsed_separately():
     plan, records = public_evidence()
-    assert plan['contract_id'] == 'chaser-periodic-measurement-v2'
+    assert plan['contract_id'] == CONTRACT
     result = aggregate(records, plan)
     assert result['execution_status'] == 'ok'
-    assert result['tet_ns'] == 42_000
-    assert result['tat_ns'] == 72_000
+    assert result['tet_ns'] == 21_000
+    assert result['tat_ns'] == 20_000
     assert result['mean_elapsed_ns'] == result['max_elapsed_ns'] == 10_000
     assert result['ready_ns'] is None
 

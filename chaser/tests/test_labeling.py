@@ -2,7 +2,7 @@ from dataclasses import replace
 
 import pytest
 
-from chaser.labeling import Measurement, label_measurements
+from chaser.dataset.labeling import Measurement, label_measurements
 
 
 def measurements():

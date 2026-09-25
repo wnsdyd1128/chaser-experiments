@@ -11,7 +11,7 @@ import subprocess
 import sys
 import time
 
-from chaser.rtems_smoke import TASKS, make_plan, parse_log
+from chaser.periodic.smoke import TASKS, make_plan, parse_log
 
 ROOT = Path(__file__).resolve().parents[1]
 SIMULATOR = Path('/opt/laysim-gr740/laysim-gr740-cli')

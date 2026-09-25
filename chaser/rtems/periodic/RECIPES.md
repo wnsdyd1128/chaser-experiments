@@ -160,4 +160,4 @@ V2는 W/M/B 각각 60개, 총 180개 입력 후보다. 각 set은 같은 그룹�
 
 작은 수작업 literal trace, block 이동·반복, 전체 footprint 방문, 허용/거부 shape,
 G/C/P 최종 ELF의 linked stream을 검사한다. 정확성 fixture는 후보 membership에서 제외하고
-timing/label 선택에 사용하지 않는다. 참고 구현: `chaser/periodic_recipes.py`.
+timing/label 선택에 사용하지 않는다. 참고 구현: `chaser/periodic/recipes.py`.

@@ -6,11 +6,11 @@ from pathlib import Path
 import subprocess
 import pytest
 
-from chaser.periodic import aggregate, make_plan
-from chaser.periodic_analysis import analyze
-from chaser.event_compression import EventCompressionQueue
-from chaser.periodic_build import SDK, check_layout, prepare, read_symbols
-from chaser.periodic_dataset import load_batch
+from chaser.periodic.measurement import aggregate, make_plan
+from chaser.periodic.analysis import analyze
+from chaser.periodic.event_compression import EventCompressionQueue
+from chaser.periodic.build import SDK, check_layout, prepare, read_symbols
+from chaser.periodic.dataset import load_batch
 from tools.rtems_periodic import run
 from tools.rtems_smoke import check_inputs
 from test_periodic import configuration, evidence
@@ -109,7 +109,7 @@ def test_region_patterns_match_literal_streams_in_all_final_elfs(tmp_path, cold_
 
 
 def test_failed_queued_compression_does_not_publish_analysis_manifest(tmp_path, monkeypatch):
-    import chaser.event_compression as storage
+    import chaser.periodic.event_compression as storage
     snapshot = tmp_path / 'failed-compression'
     prepare(pattern_configuration(), snapshot)
 
@@ -141,10 +141,10 @@ def test_fresh_processes_reparse_the_same_raw_evidence(prepared, tmp_path):
     assert all(r['execution_status'] == 'ok' for r in rows)
     assert load_batch(prepared, directory) == rows
     protocol = json.loads((directory / 'protocol.json').read_text())
-    assert 'implementation/chaser/periodic_patterns.py' in protocol['implementation_hashes']
-    assert 'implementation/chaser/periodic_structures.py' in protocol['implementation_hashes']
-    assert 'implementation/chaser/periodic_recipes.py' in protocol['implementation_hashes']
-    assert 'implementation/chaser/periodic_staged_recipes.py' in protocol['implementation_hashes']
+    assert 'implementation/chaser/periodic/patterns.py' in protocol['implementation_hashes']
+    assert 'implementation/chaser/periodic/structures.py' in protocol['implementation_hashes']
+    assert 'implementation/chaser/periodic/recipes.py' in protocol['implementation_hashes']
+    assert 'implementation/chaser/periodic/staged_recipes.py' in protocol['implementation_hashes']
     assert (directory / '0.log').read_text().splitlines()[0] != (
         directory / '1.log').read_text().splitlines()[0]
     stored = directory / 'measurements.jsonl'
@@ -176,18 +176,12 @@ def test_failed_process_or_timeout_is_retained(prepared, tmp_path, body):
 
 
 def test_trace_detects_wrong_domain_between_valid_job_endpoints():
-    plan, records = evidence()
-    records[0]['trace'] = 1
-    records[1]['thread'], records[2]['thread'] = 101, 102
-    records.extend([dict(kind='switch', thread=101, core=0, ns=1),
-                    dict(kind='switch', thread=102, core=2, ns=2),
-                    dict(kind='switch', thread=101, core=3, ns=3)])
+    plan, records = public_evidence(trace=True)
+    records.append(dict(kind='switch', thread=101, core=3, ns=3))
     assert 'trace_domain' in aggregate(records, plan, trace=True)['errors']
 
 
 def test_trace_must_include_every_worker():
-    plan, records = evidence()
-    records[0]['trace'] = 1
-    records[1]['thread'], records[2]['thread'] = 101, 102
-    records.append(dict(kind='switch', thread=101, core=0, ns=1))
+    plan, records = public_evidence(trace=True)
+    records.pop()
     assert 'trace_completeness' in aggregate(records, plan, trace=True)['errors']

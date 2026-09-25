@@ -3,9 +3,9 @@ import json
 
 import pytest
 
-from chaser.dataset import Workload, build_dataset, freeze_split, write_dataset
-from chaser.labeling import Measurement
-from chaser.rf import fit_rf
+from chaser.dataset.builder import Workload, build_dataset, freeze_split, write_dataset
+from chaser.dataset.labeling import Measurement
+from chaser.policy.rf import fit_rf
 
 
 def inputs():

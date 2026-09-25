@@ -4,9 +4,9 @@ import argparse
 import json
 from pathlib import Path
 
-from chaser.dataset import Workload, build_dataset, freeze_split, write_dataset
-from chaser.labeling import Measurement
-from chaser.splits import LEGACY_POLICY, TASKSET_POLICY
+from chaser.dataset.builder import Workload, build_dataset, freeze_split, write_dataset
+from chaser.dataset.labeling import Measurement
+from chaser.dataset.splits import LEGACY_POLICY, TASKSET_POLICY
 
 
 def main() -> None:

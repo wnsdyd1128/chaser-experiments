@@ -6,10 +6,10 @@ import sys
 
 import pytest
 
-from chaser.cls import cls, level_weights
-from chaser.allocator import CoreGroups, allocate
-from chaser.features import build_features
-from chaser.rf import fit_rf
+from chaser.locality.cls import cls, level_weights
+from chaser.policy.allocator import CoreGroups, allocate
+from chaser.locality.features import build_features
+from chaser.policy.rf import fit_rf
 from tools.export_locality import summary
 
 ALPHAS = (0.0, 0.3, 0.5, 0.7, 1.0)

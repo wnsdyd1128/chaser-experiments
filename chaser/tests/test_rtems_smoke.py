@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from chaser.rtems_smoke import make_plan, parse_log
+from chaser.periodic.smoke import make_plan, parse_log
 from tools.rtems_smoke import check_inputs, prepare, run, write_editor_database
 
 ROOT = Path(__file__).resolve().parents[1]

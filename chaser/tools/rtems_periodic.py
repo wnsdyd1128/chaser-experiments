@@ -9,8 +9,8 @@ import subprocess
 import time
 import shutil
 
-from chaser.periodic import parse_log
-from chaser.periodic_build import prepare, read_symbols
+from chaser.periodic.measurement import parse_log
+from chaser.periodic.build import prepare, read_symbols
 from tools.rtems_smoke import SIMULATOR, check_inputs, file_hash, write_json
 
 
@@ -23,7 +23,7 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
     Mode zero executes the taskset; mode i+1 runs task i alone on core zero in
     the very same P ELF. Simulator boot writes select mode before execution;
     the executed ELF remains unchanged and is checked before and after runs.
-    Trace enables private period probes and the dispatch extension in v2.
+    Trace enables private period probes and the dispatch extension.
     These diagnostic runs must not enter the timing dataset.
     """
     if (type(runs) is not int or runs < 1 or not 0 < timeout < float('inf')
@@ -42,11 +42,11 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
     implementation = output / 'implementation'
     implementation.mkdir()
     root = Path(__file__).resolve().parents[1]
-    for relative in ('chaser/periodic.py', 'chaser/periodic_build.py',
-                     'chaser/periodic_patterns.py', 'chaser/periodic_structures.py',
-                     'chaser/periodic_recipes.py',
-                     'chaser/periodic_staged_recipes.py',
-                     'chaser/periodic_dataset.py', 'tools/rtems_periodic.py',
+    for relative in ('chaser/periodic/measurement.py', 'chaser/periodic/build.py',
+                     'chaser/periodic/patterns.py', 'chaser/periodic/structures.py',
+                     'chaser/periodic/recipes.py',
+                     'chaser/periodic/staged_recipes.py',
+                     'chaser/periodic/dataset.py', 'tools/rtems_periodic.py',
                      'tools/rtems_smoke.py'):
         destination = implementation / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -93,7 +93,8 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
                               log_hash=file_hash(log_path))
                 # Parse partial evidence even if the process failed or timed out.
                 record.update(parse_log(log_path.read_text(errors='replace'), plan,
-                                        mode=mode, trace=trace, empty=empty))
+                                        mode=mode, trace=trace, empty=empty,
+                                        salvage_partial=True))
                 if process.returncode:
                     record['execution_status'] = 'failed'
                     record['errors'].append('process_exit')
@@ -131,7 +132,7 @@ def main() -> None:
     if args.command == 'prepare':
         prepare(json.loads(args.configuration.read_text()), args.output)
     elif args.command == 'analyze':
-        from chaser.periodic_analysis import analyze
+        from chaser.periodic.analysis import analyze
         analyze(args.prepared)
     else:
         records = run(args.prepared, args.output, architecture=('g', 'c', 'p').index(args.architecture),

@@ -70,17 +70,9 @@ ELF 분석과 독립 U 수집의 현재 상태는 아래 실행 기록을 따른
 
 ## 검증·다음 단계
 
-[revalidate.py](revalidate.py)는 보존 archive와 source hash를 확인하고 동일 규칙으로
-예상 ID·입력 해시·계보·12개 G/C/P plan·예정 split 집계를 재생성한다. 원본 U·timing·label은
-읽지 않고 실행용 config나 측정 파일도 생성하지 않는다. Repository root에서 실행한다:
-
-```sh
-PYTHONPATH=. python3 artifacts/periodic/validation-supplement-v1/revalidate.py
-```
-
-결과는 [revalidation.json](revalidation.json)에 보존한다. Source hash가 달라지면 중단하며
-manifest를 다시 덮어써 통과시키지 않는다. 변경이 필요하면 이전 규칙을 보존한 새 버전으로
-기록한다. 원본 membership hash는
+과거 입력 재검증 결과는 [revalidation.json](revalidation.json)에 보존했다.
+구 후보군 관련 스크립트는 정리했으므로 이 archive를 현재 코드로 재생성하지 않는다.
+원본 membership hash는
 `92574a43fe183e6b3652d894bc97758a9c90b200d638225437fd20d543c1a50f`로 유지됐다.
 
 원본 후보·동결 archive 전체의 기존 manifest hash 일치와 생성 코드 변경·원본 중복 입력의
@@ -119,10 +111,9 @@ core0에 단독 실행한다. Raw 로그를 다시 파싱해 U·feature를 만�
 tail -f .cache/validation-supplement-v1-characterization/collection.log
 ```
 
-전용 [실행 검사](test_execution.py)는 입력 identity·변조·덮어쓰기 거부, 준비 실패 gate,
-실패 batch 재파싱과 재시도 금지, 두 번째 수집 호출 거부를 확인한다.
-`PYTHONPATH=. python3 -m pytest -q artifacts/periodic/validation-supplement-v1/test_execution.py`
-결과는 **6 passed**다. Production generator·harness·parser·freeze guard는 변경하지 않았다.
+당시 전용 실행 검사는 입력 identity·변조·덮어쓰기 거부, 준비 실패 gate,
+실패 batch 재파싱과 재시도 금지, 두 번째 수집 호출 거부를 확인해 **6 passed**였다.
+구 후보군 관련 테스트 파일은 이후 정리했다.
 이번 실행 스크립트 추가 후 전체 `scripts/verify`도 **609 passed, skip0 (77.71초)**다.
 [실행 검증 기록](execution-verification.json)과 [로그](execution-verification.log)를 보존한다.
 입력 archive의 모든 파일은 작업 입력과 바이트 일치 검사를 통과했다. Finalize는 실행하지 않았다.
@@ -138,12 +129,11 @@ C는 기존 core{0}/{1,2,3} EDF SMP다. 이 결과로 θ/policy가 동결되지�
 2026-09-22T20:01:09Z, PID **1293156**으로 백그라운드 수집을 시작했다.
 사전 검사에서 입력·ELF plan12개·linked 분석과 독립 U raw400회를 재검증했다.
 4 tasksets × G/C/P ×10회 = **120회**, workers16, 실행당 timeout1800초다.
-기존 `tools.rtems_periodic_gcp`를 사용하며 준비된 ELF나 harness/parser를 변경하지 않는다.
+당시에는 구 G/C/P collector를 사용했으며 준비된 ELF나 harness/parser를 변경하지 않았다.
 수집기 관련 테스트20개와 wrapper 구문 검사가 통과했다.
 
-[실행 기록](gcp-execution.json), [시작 기록](gcp-launch.json),
-[wrapper 보존본](gcp-runner.py)을 남겼다. 실제 작업 경로는
-`.cache/validation-supplement-v1-gcp/`다. 완료를 기다리거나 반복 polling하지 않는다.
+[실행 기록](gcp-execution.json)과 [시작 기록](gcp-launch.json)은 남겼다.
+당시 `.cache/validation-supplement-v1-gcp/` raw와 wrapper는 이후 정리했다.
 
 ```sh
 tail -f .cache/validation-supplement-v1-gcp/collection.log

@@ -4,11 +4,11 @@ import threading
 
 import pytest
 
-from chaser.event_compression import EventCompressionQueue
+from chaser.periodic.event_compression import EventCompressionQueue
 
 
 def test_reservation_waits_until_verified_compression_removes_raw(tmp_path, monkeypatch):
-    import chaser.event_compression as module
+    import chaser.periodic.event_compression as module
     entered, finish, waiting, acquired = (threading.Event() for _ in range(4))
     raw = tmp_path / 'events.json'
     raw.write_bytes(b'evidence')
@@ -42,7 +42,7 @@ def test_reservation_waits_until_verified_compression_removes_raw(tmp_path, monk
 
 
 def test_failed_compression_preserves_raw_and_wakes_blocked_producer(tmp_path, monkeypatch):
-    import chaser.event_compression as module
+    import chaser.periodic.event_compression as module
     entered, finish, waiting = (threading.Event() for _ in range(3))
     raw = tmp_path / 'events.json'
     raw.write_bytes(b'evidence')

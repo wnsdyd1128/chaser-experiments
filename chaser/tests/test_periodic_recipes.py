@@ -4,8 +4,8 @@ import json
 
 import pytest
 
-from chaser.periodic import make_plan
-from chaser.periodic_patterns import access_offsets, job_access_count
+from chaser.periodic.measurement import make_plan
+from chaser.periodic.patterns import access_offsets, job_access_count
 
 
 # Width two, one block; two independent array regions retain their offsets.
@@ -21,10 +21,11 @@ TRACES = {
 
 
 def configuration(pattern, *, width=2, blocks=2):
-    from chaser.periodic_recipes import block_size
+    from chaser.periodic.recipes import block_size
 
     return dict(workload_id='recipe-check', family_id='correctness-only',
-                policy_id='correctness-only', horizon_ticks=40, tasks=[
+                policy_id='correctness-only', horizon_ticks=40,
+                warmup_ticks=20, u_repeats=5, tasks=[
                     dict(task_id='target', pattern=pattern, width=width,
                          distinct=blocks * block_size(pattern, width), stride=32,
                          sweeps=2, core=0, period_ticks=20)])
@@ -75,8 +76,8 @@ def test_recipe_counts_and_complete_footprint_hold_at_larger_widths(pattern, wid
 
 
 def test_recipes_match_literal_streams_in_all_final_elfs(tmp_path):
-    from chaser.periodic_analysis import analyze
-    from chaser.periodic_build import prepare
+    from chaser.periodic.analysis import analyze
+    from chaser.periodic.build import prepare
 
     config = configuration('window-coeff')
     config['tasks'] = [dict(configuration(p)['tasks'][0], task_id=f't{i}', core=i % 4)

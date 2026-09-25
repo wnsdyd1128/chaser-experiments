@@ -1,1 +1,1 @@
-"""Cache-locality representations for CHASER."""
+"""CHASER analysis, datasets, policies, and experiment scenarios."""

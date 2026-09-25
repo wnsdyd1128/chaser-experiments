@@ -4,8 +4,8 @@ from hashlib import sha256
 
 import pytest
 
-from chaser.features import build_features
-from chaser.final_clp import build_clp_samples, export_final_clp
+from chaser.locality.features import build_features
+from chaser.dataset.final_clp import build_clp_samples, export_final_clp
 
 
 POLICIES = ('caas-ca', 'ca-csrd', 'cls')

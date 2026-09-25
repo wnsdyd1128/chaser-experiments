@@ -4,8 +4,8 @@ import json
 
 import pytest
 
-from chaser.periodic import make_plan
-from chaser.periodic_patterns import access_offsets, job_access_count
+from chaser.periodic.measurement import make_plan
+from chaser.periodic.patterns import access_offsets, job_access_count
 
 
 TRACES = {
@@ -17,10 +17,11 @@ TRACES = {
 
 
 def configuration(pattern, width=2, blocks=2):
-    from chaser.periodic_staged_recipes import block_size
+    from chaser.periodic.staged_recipes import block_size
 
     return dict(workload_id='staged-check', family_id='correctness-only',
-        policy_id='correctness-only', horizon_ticks=40, tasks=[dict(
+        policy_id='correctness-only', horizon_ticks=40,
+        warmup_ticks=20, u_repeats=5, tasks=[dict(
             task_id='target', pattern=pattern, width=width,
             distinct=blocks*block_size(pattern, width), stride=32, sweeps=2,
             core=0, period_ticks=20)])
@@ -66,25 +67,9 @@ def test_twiddle_pair_is_outside_butterfly_group_loop():
     assert list(access_offsets(task)) == [32*i for i in expected]*2
 
 
-def test_new_roles_are_two_families_and_development_exposure_propagates():
-    from chaser.periodic_registry import build_registry
-
-    records = []
-    for pattern in TRACES:
-        config = configuration(pattern)
-        config['workload_id'] = pattern
-        records.append(dict(configuration=config, recipe_id=pattern, role='candidate',
-                            development_exposed=False))
-    assert build_registry(records)['primary_family_count'] == 2
-    records[0]['development_exposed'] = True
-    registry = build_registry(records)
-    assert registry['primary_family_count'] == 1
-    assert sum(r['primary_candidate'] for r in registry['workloads']) == 2
-
-
 def test_staged_literal_streams_match_all_linked_elfs(tmp_path):
-    from chaser.periodic_analysis import analyze
-    from chaser.periodic_build import prepare
+    from chaser.periodic.analysis import analyze
+    from chaser.periodic.build import prepare
 
     config = configuration('butterfly-twiddle')
     config['tasks'] = [dict(configuration(p)['tasks'][0], task_id=f't{i}', core=i)
