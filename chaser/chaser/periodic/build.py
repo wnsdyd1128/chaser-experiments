@@ -88,6 +88,8 @@ def check_layout(symbols: dict, tasks: list[dict], alignment: int = 4096) -> lis
 
 def prepare(configuration: dict, output: Path) -> dict:
     """Build all three final ELFs from a new source/config/launcher snapshot."""
+    if configuration.get('workload_optimization', 'O0') not in ('O0', 'O2'):
+        raise ValueError('Workload optimization must be O0 or O2')
     plans = [make_plan(configuration, a) for a in range(3)]
     output = output.resolve()
     output.mkdir(parents=True, exist_ok=False)

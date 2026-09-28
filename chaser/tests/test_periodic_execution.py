@@ -42,6 +42,34 @@ def test_waf_builds_three_sparc_elfs_from_one_workload_object(prepared):
         prepare(configuration(), prepared)
 
 
+def test_workload_o2_only_changes_workload_compile_flags(prepared, tmp_path):
+    config = configuration()
+    config['workload_optimization'] = 'O2'
+    output = tmp_path / 'optimized'
+    prepare(config, output)
+    commands = json.loads((output / 'build/compile_commands.json').read_text())
+    assert len(commands) == 7
+    for row in commands:
+        flags = row['arguments']
+        if Path(row['file']).name == 'workload.c':
+            assert '-O2' in flags and '-O0' not in flags
+        else:
+            assert '-O0' in flags and '-O2' not in flags
+    assert (output / 'source/workload.c').read_bytes() == (
+        prepared / 'source/workload.c').read_bytes()
+    assert (output / 'layout.json').read_bytes() == (prepared / 'layout.json').read_bytes()
+    check_inputs(output, json.loads((output / 'manifest.json').read_text()))
+
+
+def test_unknown_workload_optimization_is_rejected_before_build(tmp_path):
+    config = configuration()
+    config['workload_optimization'] = 'O3'
+    output = tmp_path / 'invalid'
+    with pytest.raises(ValueError, match='Workload optimization'):
+        prepare(config, output)
+    assert not output.exists()
+
+
 def test_compact_alignment_changes_actual_linked_array_addresses(tmp_path):
     config = configuration()
     config['array_alignment_bytes'] = 32
