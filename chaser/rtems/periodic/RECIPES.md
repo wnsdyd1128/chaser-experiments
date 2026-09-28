@@ -1,5 +1,11 @@
 # TACLeBench 관찰에서 일반화한 읽기 원형 v2
 
+이 제목의 v2는 recipe 세대이며 JSON의 `schema_version: 2`와 별개다.
+아래 recipe는 schema를 생략한 legacy 입력의 private byte-array 경로다.
+명시적 배열의 `paired-read`와 실제 곱셈·store를 수행하는 `gemm-u32`는
+[다중 배열 가이드](EXPERIMENT-GUIDE.md#multi-array)를 따른다.
+기존 `paired-pass`/`matrix-reuse`의 의미와 입력 필드는 유지한다.
+
 현재 본실험은 5개 워크로드군 **각각의 고유 taskset**을 train/test/validation
 60%/20%/20%로 나누는 [분할 정책](README.md#main-experiment-split-policy)을 따른다.
 아래 워크로드군 단위 split 수치는 보존된 후보 생성 당시의 초안이다.

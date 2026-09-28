@@ -21,10 +21,41 @@ python3 -m tools.rtems_periodic run .cache/periodic-example \
 
 The example has a short horizon for a smoke run. A paper measurement must use the warm-up and measurement lengths, repeat counts, and frozen inputs in the active plan. The configuration specifies `warmup_ticks`, `u_repeats`, `horizon_ticks`, task periods, literal access patterns, and explicit core placement. The warm-up boundary must align with every task period. G, C, and P use the same workload source with different EDF SMP scheduler domains; analysis checks the linked ELF streams and array layout for each architecture.
 
+## Explicit arrays and integer GEMM
+
+Set `schema_version: 2` to define storage in top-level `arrays` and bind task roles
+through `tasks[].arrays`. Array `length` and binding `offset_elements` count elements;
+read-kernel `stride_bytes` counts bytes. Supported kernels are typed `cyclic`,
+`paired-read`, and `gemm-u32`. Each array has its own 32/4096-byte alignment, type,
+and constant initial value. Immutable inputs may be shared, while output arrays
+must be exclusive to one task. Unsupported fields, aliases, and bounds are rejected.
+The measurement contract remains v3; schema-less inputs keep the legacy recipes.
+
+| Configuration | Workload |
+|---|---|
+| [gemm-u32-smoke.json](../../configs/periodic-multi-array/gemm-u32-smoke.json) | One task, A × B → C, two sweeps per job |
+| [gemm-u32-shared-smoke.json](../../configs/periodic-multi-array/gemm-u32-shared-smoke.json) | Two tasks sharing A/B with separate C arrays |
+| [shared-reads-smoke.json](../../configs/periodic-multi-array/shared-reads-smoke.json) | Cyclic and paired-read tasks sharing an input |
+
+Use the same `prepare`, `analyze`, and `run` commands with one of these inputs and
+fresh output directories. The [walkthrough](EXPERIMENT-GUIDE.md#multi-array) includes
+G/C/P and independent P commands. GEMM overwrites C each sweep and hashes logical
+output once at the end of the job; its hash reads are included in timing and analysis.
+Arrays are initialized once before workers start, not between jobs.
+
+Analysis validates every object's linked address, access width, and load/store order.
+It records clang O0 analysis separately from workload O0/O2 compilation, and treats
+stores as demand residency accesses without modeling write traffic or delays.
+Sharing does not turn this cold task-local analysis into an interference/coherence model.
+See the [input contract](EXPERIMENT-GUIDE.md#multi-array) and
+[verification record](EXPERIMENT-GUIDE.md#multi-array-verification) for bounds and completed checks.
+Python callers pass `arrays=plan['arrays']` to `workload_source` and `check_layout`
+for v2; the existing positional arguments and legacy results remain supported.
+
 ## Accounting and validation
 
 Every job, including warm-up jobs, must pass completeness, checksum, release, status, deadline, and domain checks. Metrics use only measured jobs. TET sums per-job CPU-accounting differences. TAT sums, for each nominal-release cohort, the time from its first job start to its last job completion. `response_sum_ns` separately records the sum of job release-to-completion intervals. Independent U is the median of per-run mean CPU time over measured jobs, divided by task period. A failed or incomplete run cannot yield a successful architecture label.
 
-The runner writes `protocol.json`, `measurements.jsonl`, and one numbered `.log` per run. Use `tail -f <output>/0.log` while an execution is running. `chaser.periodic.dataset.load_batch` checks the stored hashes and reparses raw logs; `feature_record` joins the independently measured U with locality features. Diagnostic `--trace` and `--empty` runs stay outside timing labels.
+The runner writes `protocol.json`, `measurements.jsonl`, and one numbered `.log` per run. Use `tail -f <output>/0.log` while an execution is running. `chaser.periodic.dataset.load_batch` checks the stored hashes and reparses raw logs; `feature_record` joins the independently measured U with locality features. Diagnostic `--trace` and `--empty` runs stay outside timing labels. Schema v2 protocols also preserve the kernel contract, workload optimization, and new array/kernel module snapshots. Multi-array results remain diagnostic: locality reports set `dataset_eligible=false`, and `to_measurement` rejects their automatic conversion into RF labels pending separate qualification.
 
-Workload patterns are documented in [RECIPES.md](RECIPES.md) and [STAGED-RECIPES.md](STAGED-RECIPES.md).
+Legacy workload patterns are documented in [RECIPES.md](RECIPES.md) and [STAGED-RECIPES.md](STAGED-RECIPES.md). Their `matrix-reuse` pattern models reads; `gemm-u32` performs actual integer multiplication and stores.

@@ -641,10 +641,37 @@ python3 -m tools.run_s1_cachegrind --input rtems/s1/build/host-trace-v2 \
 PolyBench 계열 고정 크기 kernel 4개의 별도 host 비교와 correlation 제외 근거는
 [S1 외부 Cachegrind 확인](artifacts/s1/polybench-cold-v1/README.md)에 보존했다.
 
+## Periodic multi-array workloads
+
+The periodic harness supports explicit arrays with `schema_version: 2`:
+typed `cyclic` and `paired-read` kernels (`uint8_t`/`uint32_t`), and row-major
+`gemm-u32` with uint32 multiplication, accumulation, and output stores.
+Tasks may share immutable inputs; each output array belongs to one task.
+Inputs without a schema version retain the legacy private-byte-array recipes.
+The input schema is separate from the unchanged measurement contract
+`chaser-periodic-measurement-v3`.
+
+Start with the [GEMM smoke configuration](configs/periodic-multi-array/gemm-u32-smoke.json),
+[shared-input GEMM](configs/periodic-multi-array/gemm-u32-shared-smoke.json), or
+[shared cyclic/paired reads](configs/periodic-multi-array/shared-reads-smoke.json).
+The [multi-array experiment walkthrough](rtems/periodic/EXPERIMENT-GUIDE.md#multi-array)
+covers field units, bounds, preparation, analysis, G/C/P execution, and independent P runs.
+The walkthrough also specifies the checksum and access-count contracts; its
+[verification record](rtems/periodic/EXPERIMENT-GUIDE.md#multi-array-verification)
+lists the completed checks and local evidence paths.
+
+Verification on 2026-09-28: `scripts/verify` passed **566 tests**, with 3 optional
+environment tests skipped; the final multi-array SIM smoke set passed **20/20** runs.
+Analysis checks typed load/store order against linked ELF objects, including GEMM's
+output-hash reads inside the measured job. It remains a cold task-local model;
+store traffic, coherence, and periodic interference are not modeled.
+Schema v2 results are diagnostic and are blocked from automatic RF dataset labeling.
+Large performance sweeps, float32, shared writes, and physical HW validation remain subsequent work.
+
 ## Periodic RF dataset measurement
 
 The [periodic dataset README](datasets/periodic-v2/README.md) is the entry point for
-current inputs, measurement results, exclusions and RF export status (2026-09-24).
+archived inputs, measurement results, exclusions and RF export status (2026-09-24).
 The [RTEMS harness](rtems/periodic/README.md) implements periodic G/C/P timing and independent U.
 See the [experiment guide](rtems/periodic/EXPERIMENT-GUIDE.md) for creating, modifying,
 and reproducing RTEMS experiment environments. The

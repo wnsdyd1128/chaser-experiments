@@ -1,11 +1,14 @@
 # RTEMS 실험 생성·수정·재현 안내
 
-확인: 2026-09-27. 모든 명령은 `/workspace/experiments/chaser`에서 실행한다.
+갱신: 2026-09-28. 모든 명령과 상대경로는 현재 workspace root 기준이다.
+다중 배열 구현 worktree는 `/workspace/experiments-array-support/chaser`다.
 여기서는 소스·ELF 생성과 laysim 실행을 다룬다. 보드 실행은
 [HW 절차](HARDWARE-VALIDATION.md)를 따른다.
-공용 periodic harness를 기준으로 설명하며 paired-pass와 false-sharing은 적용 예시다.
-입력·output 경로는 실험별로 정할 수 있다. False-sharing 생성기는 현재 `.cache`의
-시나리오 전용 도구이므로 해당 예시에는 그 도구와 입력이 필요하다.
+공용 periodic harness의 legacy paired-pass와 schema v2 다중 배열을 설명한다.
+새 worktree에서는 버전 관리되는 [다중 배열 예제](#multi-array)로 시작할 수 있다.
+기존 paired-pass·false-sharing의 `.cache` 입력·전용 실행기·raw는 이전 실험의
+로컬 산출물로, 이 worktree에 포함되어 있지 않다. 해당 예시를 재현하려면 원본을
+별도로 확보하고 출처와 hash를 기록한다. 다른 worktree의 build/output은 공유하지 않는다.
 
 현재 연구는 **SIM 실험을 먼저 진행해 구성·결과를 확정한 뒤 HW에서 검증**한다
 (2026-09-27 사용자 지시). HW 가이드는 후속 검증용이며 다음 작업은 SIM 실험의
@@ -15,11 +18,14 @@
 
 | 종류 | 입력 | 생성·실행 도구 |
 |---|---|---|
-| 일반 private-array workload | `tasks` 배열이 있는 JSON | `python3 -m tools.rtems_periodic prepare/run` |
+| Legacy private-array workload | schema를 생략한 `tasks` JSON, `distinct`/`stride` | `python3 -m tools.rtems_periodic prepare/analyze/run` |
+| 명시적 다중 배열 workload | `schema_version: 2`, `arrays`, 역할별 task binding | 같은 공용 CLI; cyclic/paired-read/gemm-u32 |
 | False-sharing reader/writer | `pairs`, `layouts` 등이 있는 JSON | `.cache/configs/periodic-memory-gap/false-sharing/run.py` |
 
-`.cache/configs/periodic-memory-gap/`는 원본 입력·시나리오 실행기의 위치다.
-`.cache/periodic-memory-gap-v1/`는 생성된 환경·측정 결과의 위치다.
+`configs/periodic-multi-array/`는 버전 관리되는 다중 배열 입력이고,
+`.cache/periodic-multi-array/`는 새 worktree의 생성·분석·실행 결과 위치다.
+이전 실험의 `.cache/configs/periodic-memory-gap/`는 원본 입력·시나리오 실행기,
+`.cache/periodic-memory-gap-v1/`는 그 생성 환경·측정 결과 위치다.
 디렉터리 이름이 실험 조건을 결정하지는 않는다.
 
 ```text
@@ -35,6 +41,8 @@ configuration.json
 관련 구현: [CLI](../../tools/rtems_periodic.py),
 [생성·빌드](../../chaser/periodic/build.py),
 [계획·집계](../../chaser/periodic/measurement.py),
+[배열 검증](../../chaser/periodic/arrays.py),
+[커널 생성·reference stream](../../chaser/periodic/kernels/__init__.py),
 [빌드 옵션](wscript).
 
 필요 환경은 Python/project imports, `pkg-config`, `/opt/rtems/6`의 SPARC
@@ -45,7 +53,9 @@ toolchain·GR740 BSP, `/opt/src/rtems/waf`다. SIM 실행에는
 `prepare` 자체는 simulator/display가 필요 없다. 실행용 빌드는 기본 `-O0 -g`이고,
 설정의 `workload_optimization: "O2"`로 workload.c만 O2로 빌드할 수 있다.
 
-## 2. 예시: paired-pass 설정의 의미
+## 2. 입력 예시
+
+### 2.1. Legacy paired-pass 설정의 의미
 
 입력: `.cache/configs/periodic-memory-gap/paired-pass-12-sweeps4-balanced-full.json`.
 
@@ -62,12 +72,160 @@ toolchain·GR740 BSP, `/opt/src/rtems/waf`다. SIM 실행에는
 EDF scheduler다. `core`는 P의 고정 코어와 C의 domain 선택에 쓰이며
 G의 고정 pinning을 뜻하지 않는다.
 
+<a id="multi-array"></a>
+
+### 2.2. Schema v2: 명시적 배열과 GEMM
+
+다음 입력은 모두 같은 공용 생성기로 실행한다.
+
+| 예제 | 배열·task 구성 |
+|---|---|
+| [gemm-u32-smoke.json](../../configs/periodic-multi-array/gemm-u32-smoke.json) | 단일 task, A 2×3와 B 3×2를 곱해 C 2×2에 저장 |
+| [gemm-u32-shared-smoke.json](../../configs/periodic-multi-array/gemm-u32-shared-smoke.json) | 두 task가 A/B를 공유하고 각각 독점 C에 저장 |
+| [shared-reads-smoke.json](../../configs/periodic-multi-array/shared-reads-smoke.json) | cyclic과 paired-read가 입력 배열을 공유 |
+
+`schema_version: 2`는 **입력 형식**이다. 계측 계약은 계속
+`chaser-periodic-measurement-v3`이며 schema가 없는 입력은 legacy로 처리한다.
+schema 없이 `arrays`를 추가하거나 v2에 legacy `stride`·최상위
+`array_alignment_bytes`를 넣으면 오류다. 기존 recipe를 v2로 자동 변환하지 않는다.
+
+| 필드 | 단위·계약 |
+|---|---|
+| `arrays[].array_id` | 고유 C identifier; ELF symbol은 `data_<array_id>` |
+| `element_type`, `length` | `uint8_t` 또는 `uint32_t`, 양의 **원소 수** |
+| `alignment_bytes` | 배열별 32 또는 4096 B; 기본값 4096 |
+| `initial_value` | 자료형 범위의 정수 상수; 기본값 1 |
+| `tasks[].arrays` | 역할 → `{array_id, offset_elements}`; offset은 원소 수, 기본값 0 |
+| cyclic/paired-read의 `distinct`, `stride_bytes` | 각 역할에서 읽는 위치 수, 바이트 간격; stride는 자료형 크기의 배수 |
+| GEMM의 `m`, `n`, `k` | A m×k, B k×n, C m×n; 양의 정수 |
+| GEMM의 `lda`, `ldb`, `ldc` | 원소 단위 행 간격; 각각 k/n/n 이상 |
+| `sweeps` | 한 job 내부의 커널 반복 수; period에 따른 job 수와 별개 |
+
+역할은 cyclic의 `input`, paired-read의 `a`/`b`, GEMM의 `A`/`B`/`C`다.
+paired-read의 두 배열은 같은 자료형이어야 하며 a→b 순서로 한 위치씩 읽는다.
+GEMM은 uint32 배열만 받으며 `distinct`·`stride_bytes`·`width`를 받지 않는다.
+배열은 workers 시작 전에 한 번 초기화한다. job 사이에 재초기화나 cache flush는 없다.
+
+읽기 전용 입력은 여러 task가 공유할 수 있다. 쓰기 배열은 다른 task가 읽거나
+쓰도록 binding할 수 없으며, 같은 task의 서로 다른 역할도 동일 array ID를
+사용할 수 없다. 사용하지 않는 배열과 범위를 넘는 offset·행 간격은 거부한다.
+배열은 1–96개, 입력 순서대로 배치하며 정렬 padding 포함 16 MiB 이내여야 한다.
+v2의 job당 source access 상한은 10,000,000이며 load와 store를 모두 센다.
+task 수·horizon·warm-up·전체 job 수 제한은 legacy와 같다(§4.1).
+
+정수 필드는 bool·float·문자열을 받지 않는다. 읽기 커널은 `distinct` 1–131072,
+`stride_bytes` 1–4096을 허용하고, `sweeps`는 1–1,000,000이다.
+배열 순서를 바꾸면 배치·plan identity도 바뀌지만 JSON object key 순서는 영향이 없다.
+배치는 0x01000000에서 시작해 각 배열 정렬을 맞추며 끝 주소는 0x02000000 이하다.
+plan의 주소는 기대값이고 `layout.json`에는 실제 ELF와 일치한 주소만 기록한다.
+
+읽기 커널의 마지막 접근 끝은 다음 범위 안이어야 한다.
+`offset_elements*itemsize + (distinct-1)*stride_bytes + itemsize <= length*itemsize`.
+GEMM은 역할별로 `offset_A+(m-1)*lda+k <= length_A`,
+`offset_B+(k-1)*ldb+n <= length_B`, `offset_C+(m-1)*ldc+n <= length_C`를 검사한다.
+
+단일 GEMM 예제는 A=1, B=2이므로 C의 네 원소가 모두 6이다.
+각 sweep이 `C = A × B`를 덮어쓰며 연산은 modulo 2^32다.
+마지막 sweep 뒤 유효 C 원소를 한 번씩 읽어 word-wise FNV-1a hash를 반환한다.
+**이 hash 계산·재읽기는 job의 계측·분석에 포함**된다. 읽기 커널은 load 값의
+uint32 합을 반환한다. 예제의 job당 접근 수는 52 loads + 8 stores = 60이며,
+총 4 jobs 중 앞 2개가 warm-up이다. 이는 기능 smoke용 길이다.
+
+GEMM은 row-major, transpose 없이 i→j→k 순서로 계산하고 각 출력을 k 누적 후
+한 번 store한다. 입력·출력 배열은 volatile이며 최적화된 BLAS의 성능을 나타내지 않는다.
+checksum 계약은 `u32-word-fnv1a-output-v1`이다. `h=2166136261`에서 시작해
+논리적 C 원소를 row-major 순서로 읽으며 `h=((h XOR value)*16777619) mod 2^32`를
+적용한다. padding은 제외하며 byte 직렬화 FNV와 구분한다. 반환값 비교는 job 호출
+이후지만 hash 계산은 호출 내부다. host 테스트는 hash 외에 C의 모든 원소도 검사한다.
+
+GEMM의 job당 load 수는 `sweeps*2*m*n*k + m*n`, store 수는 `sweeps*m*n`이다.
+읽기 커널은 `sweeps*distinct*역할 수`만큼 load하고 store는 없다.
+
+### 2.3. 다중 배열 smoke 실행
+
+현재 workspace root에서 실행하고, 이미 존재하지 않는 output 이름을 선택한다.
+분석기 준비는 루트의 `sh scripts/verify`를 따른다. SIM에는 §1의 유효한 DISPLAY가 필요하다.
+
+```sh
+export multi_trial=.cache/periodic-multi-array/my-gemm-v1
+(
+set -eu
+python3 -m tools.rtems_periodic prepare \
+  configs/periodic-multi-array/gemm-u32-smoke.json \
+  --output "$multi_trial/prepared"
+python3 -m tools.rtems_periodic analyze "$multi_trial/prepared"
+for architecture in g c p; do
+  python3 -m tools.rtems_periodic run "$multi_trial/prepared" \
+    --architecture "$architecture" --runs 1 --timeout 60 \
+    --output "$multi_trial/$architecture"
+done
+# mode=1은 task index 0의 독립 P 실행이다.
+python3 -m tools.rtems_periodic run "$multi_trial/prepared" \
+  --architecture p --mode 1 --runs 1 --timeout 60 \
+  --output "$multi_trial/isolated-1"
+)
+```
+
+두 task 예제는 prepare의 config 경로와 output 이름을 바꿔 실행한다.
+각 task의 독립 U에는 `--mode 1`, `--mode 2`를 각각 새 output으로 실행하고
+`--runs`를 해당 입력의 `u_repeats`와 맞춘다. 세 예제의 현재 값은 1이다.
+긴 측정은 §3의 supervisor 방식으로 실행한다. 재검증은 §3·§7의 `load_batch()`
+예제에서 root를 `$multi_trial`로 지정한다.
+
+`prepared/layout.json`은 task마다가 아니라 고유 배열마다 실제 ELF 주소·크기를
+기록한다. plan task의 `allocation_bytes`, `unique_accessed_bytes`,
+`unique_cache_lines`는 각각 참조하는 전체 할당·고유 접근 원소 bytes·고유 32 B lines다.
+공유 입력이 있으므로 task별 allocation을 합해 taskset의 고유 할당으로 쓰면 안 된다.
+`protocol.json`은 schema/kernel contract/O0·O2와 새 배열·커널 모듈 snapshot hash를
+보존한다. `load_batch()`가 필수 hash 누락 및 config/plan/ELF/raw 변조를 거부한다.
+
+분석은 linked object별 크기·load/store 순서와 checksum용 접근을 검사한다.
+clang O0 분석 stream과 SPARC workload O0/O2 provenance는 구분된다.
+범위는 계속 **cold task-local job**이며 공유 입력의 coherence·task 간 간섭을
+측정하지 않는다. Store는 load와 같은 demand residency로 계산하며 write traffic·
+지연은 모델링하지 않는다. 결과의 `dataset_eligible=false`와 `to_measurement()`
+guard는 별도 적격성 설계 전 v2 진단 결과의 자동 RF label 편입을 막는다.
+
+<a id="multi-array-verification"></a>
+
+### 2.4. 다중 배열 검증 기록과 후속 범위
+
+2026-09-28 전체 `scripts/verify`는 **566 passed, 3 skipped**, 신규
+`tests/periodic/multi_array`는 **56 passed**, 최종 SIM smoke는 **20/20 성공**이다.
+skip은 기존 선택적 Cachegrind/PolyBench raw/CLP export 환경 테스트다.
+legacy cyclic/paired-pass/matrix-reuse × 정렬 32/4096 × O0/O2의 12조합에 대해
+G/C/P plan과 source를 fixture로 보존했고 기존 plan/raw 재집계와 ELF 배치를 검사했다.
+host C O0/O2에서는 비균일 비정방 GEMM, padding·offset, 여러 sweeps/jobs,
+uint32 overflow, 전체 출력·입력·padding 보존을 확인했다. 실제 APE와 G/C/P ELF의
+typed load/store·hash 접근 순서, 공유 입력, 혼합 정렬도 검증했다.
+
+아래 경로는 `.cache/periodic-multi-array/` 아래의 로컬 검증 산출물이다.
+버전 관리되는 예제 JSON과 구분하며 `.cache` 삭제 시 함께 사라진다.
+
+| 경로 | 증거 |
+|---|---|
+| `verification.log` | 전체 빌드·분석·pytest 검증 로그 |
+| `gemm-u32/smoke-002/summary.json` | O0 G/C/P·독립 P·empty/trace 및 O2 G/C/P, 9/9 성공 |
+| `shared-smoke-summary.json` | 공유 GEMM·공유 읽기의 G/C/P와 각 task 독립 P, 10/10 성공 |
+| `shared-gemm/smoke-001/`, `shared-reads/smoke-001/` | 위 공유 실험의 prepared·raw·protocol과 독립 U 결과 |
+| `gemm-u32-overflow/smoke-001/` | A=0xffffffff, B=0xfffffffe, O2의 SPARC P 실행·재검증 성공 |
+
+각 batch를 `load_batch()`로 재검증했으며 독립 P 결과는 해당 실험의
+`characterization.json`에 보존했다. 성공한 SIM은 `DISPLAY=165.246.44.80:90.0`을
+사용했다. 초기 기본 DISPLAY 연결 실패도 `gemm-u32/smoke-001/p/0.log`에 남겼다.
+외부 false-sharing 전용 runner는 이 worktree에 없어 호환성을 검증하지 않았다.
+
+성능 sweep, float32, 공유 쓰기와 HW 검증은 후속 범위다. 정책 비교에서는
+독립 P로 U를 확인한 뒤 주기를 정하고, G/C/P에 같은 작업량을 사용한다.
+최적화·배치·주기·sweeps를 한 번에 바꾸지 않으며 공유 입력과 private 대조군의
+고유 footprint 차이도 기록한다. 기능 smoke를 통계적 성능 결론으로 해석하지 않는다.
+
 ## 3. 공용 생성기로 빌드·실행
 
 ### 소스·ELF 생성
 
 ```sh
-cd /workspace/experiments/chaser
+# 현재 workspace root에서 실행한다. 이 legacy 예제의 원본 입력을 먼저 확보한다.
 export trial_root=.cache/periodic-memory-gap-v1/my-paired-pass-12-v1
 python3 -m tools.rtems_periodic prepare \
   .cache/configs/periodic-memory-gap/paired-pass-12-sweeps4-balanced-full.json \
@@ -168,7 +326,8 @@ python3 -m tools.rtems_periodic analyze "$trial_root/prepared"
 | task 수·주기·sweeps·작업집합·core 배치 | 원본 configuration JSON | `make_plan()` 검증, job 수·접근 수·domain |
 | 독립 실행 횟수·timeout·로그 경로 | 공용 CLI의 `--runs`, `--timeout`, `--output` | ELF 재빌드 없이 새 run output 사용 가능 |
 | 공유 라인 실험의 쌍 수·주기·작업량·반복 수 | false-sharing 원본 scenario JSON | 전용 prepare 재실행, 두 layout 확인 |
-| 새로운 접근 순서·load/store·산술/FPU 코드 | `chaser/periodic/patterns.py`, 패턴별 `recipes.py`/`structures.py`/`staged_recipes.py`, 또는 전용 생성기 | 접근 순서·횟수·checksum 및 분석 가정 |
+| v2 배열 크기·타입·offset·GEMM 차원 | 원본 JSON의 `arrays`와 task별 커널 필드 | 자료형·bounds·공유 소유권, 접근 수·출력 검증 |
+| 새로운 접근 순서·load/store·산술/FPU 코드 | v2는 `chaser/periodic/kernels/`와 `arrays.py`; legacy는 `patterns.py` 및 패턴별 모듈 | reference stream·횟수·checksum·plan/provenance 및 분석 가정 |
 | RTEMS task 생성·phase·계측 경계 | `rtems/periodic/init.c`, `probe.c/h` | source와 Python plan/parser의 계약 일치 |
 | G/C/P scheduler 구성 | `build.py::topology_header()`, `init.c::scheduler_index()`, `measurement.py::make_plan()` 및 topology ID | 실제 scheduler와 기대 domain 일치 |
 | workload 최적화 | 원본 JSON의 `workload_optimization` (`O0`/`O2`) | workload와 init/probe의 compile_commands, ELF 주소, checksum |
@@ -177,6 +336,8 @@ python3 -m tools.rtems_periodic analyze "$trial_root/prepared"
 | 실제 cache/clock/SDRAM 환경 | 보드/BSP 초기화 또는 simulator가 지원하는 설정 | 실제 적용값 기록, 시간 단위·비교 조건 검증 |
 
 ### 4.1. JSON: task 수·주기·sweeps·working set·배치
+
+이 절의 수정 예제는 legacy 입력이다. v2 배열·커널 필드는 [§2.2](#multi-array)를 따른다.
 
 ```sh
 mkdir -p .cache/configs/periodic-memory-gap/my-study
@@ -192,7 +353,7 @@ stride·sweeps·period·horizon·warm-up 등을 수정한다. 최상위
 기존 prepared의 C/header/JSON을 직접 고치면 manifest가 깨진다.
 원본 JSON 변경이 이미 빌드한 ELF에 자동 반영되지는 않는다.
 
-현재 입력 계약의 주요 제한:
+두 입력 형식에 공통인 task·job 제한과 legacy 패턴의 제약:
 
 - Task 수 1–32, core 0–3, task_id는 고유한 C identifier.
 - 모든 task period는 horizon과 warm-up 구간을 나누어떨어지게 해야 한다.
@@ -200,9 +361,9 @@ stride·sweeps·period·horizon·warm-up 등을 수정한다. 최상위
   혼합 주기는 공통 horizon에서 task별 job 수가 달라진다.
 - Warm-up 포함 전체 job 레코드는 최대 4096. 예를 들어 32×220 jobs는
   7040이므로 현재 공용 생성기의 제한을 넘는다.
-- Pattern마다 추가 제약이 있다. 예를 들어 paired-pass를 cyclic으로 바꾸면
+- Legacy pattern마다 추가 제약이 있다. 예를 들어 paired-pass를 cyclic으로 바꾸면
   cyclic에서 허용하지 않는 `width`도 제거한다.
-- `distinct`는 논리적 byte 위치 수다. Stride에 따라 고유 line 수·set 배치가
+- Legacy의 `distinct`는 논리적 byte 위치 수다. Stride에 따라 고유 line 수·set 배치가
   달라지므로 주소 범위와 캐시 working set을 구분한다.
 
 다음은 원본 12-task 예시를 주기 6→12 ms, sweeps 4→8로 바꾸되
@@ -296,15 +457,17 @@ G/C도 각 architecture와 output을 바꾼다. DISPLAY 설정은 §3을 따른�
 ### JSON 범위를 넘어서는 수정
 
 현재 공용 JSON에는 임의 C 함수 삽입, FPU 연산 비율, task별 phase,
-C의 2+2 topology, compiler 최적화 수준을 지정하는 옵션이 없다.
-임의 key를 추가한다고 반영되지 않는다. Validator가 모든 미사용 key를 거부하는
-것도 아니므로, 생성된 source·plan·실제 compile command에서 적용 여부를 확인한다.
+C의 2+2 topology를 지정하는 옵션이 없다. Workload 최적화는
+`workload_optimization: "O0" | "O2"`로 지원한다. v2는 허용하지 않는 필드를
+거부하며, legacy는 모든 미사용 key를 거부하지는 않는다. 생성된 source·plan·
+실제 compile command에서 적용 여부를 확인한다.
 
-새 패턴을 구현하면 C 생성뿐 아니라 `job_access_count()`, `access_offsets()`,
-checksum 기대값과 locality 분석의 접근 종류·크기 검증도 맞춰야 한다.
-기존 공용 분석은 private byte-load stream을 기대하므로 store/FPU/shared-memory
-코드를 추가하고 그대로 적격하다고 볼 수 없다. 전용 진단 생성기는 기존
-false-sharing처럼 별도로 구성할 수 있다.
+새 legacy 패턴은 C 생성뿐 아니라 `job_access_count()`, `access_offsets()`와
+checksum 기대값을 맞춘다. v2 커널은 `kernels/`의 정규화·source·reference event와
+load/store count·checksum·loop budget을 함께 구현한다. 공용 분석은 v2의 typed
+load/store와 여러 object를 검증한다. FPU·공유 쓰기는 아직 지원하지 않으므로
+별도 수치·소유권·동기화·분석 계약이 필요하다. False-sharing 전용 생성기는
+v2의 읽기 공유와 별도 경로다.
 
 Tick 크기 변경은 `period_ticks` 변경과 다르다. Tick 자체를 바꾸려면
 `init.c`의 `CONFIGURE_MICROSECONDS_PER_TICK`·`TICK_NS`, Python의 `TICK_NS`와
@@ -312,7 +475,7 @@ parser/plan, BSP timer 설정을 함께 맞춘다. Scheduler 변경도 topology.
 바꿔서는 안 되고 plan의 domain·topology identity·검증을 함께 갱신해야 한다.
 
 `wscript`의 CFLAGS 변경은 workload뿐 아니라 init/probe에도 영향을 준다.
-Kernel만 최적화하려면 빌드 target별 옵션을 분리하는 코드 변경이 필요하다.
+`workload_optimization`은 workload.c에만 적용되고 init/probe는 O0를 유지한다.
 SDK/BSP를 변경하면 공용 build와 전용 runner의 경로·pkg-config·manifest 대상도
 확인한다. Linker 주소를 바꾸면 `check_layout()`의 기대 주소도 맞춰야 한다.
 
@@ -400,7 +563,7 @@ uint32_t task_job_example(void)
 ```
 
 전제는 `volatile uint8_t data_example[64 * 32]`의 전체 요소를 1로 초기화하는 것이다.
-이 job은 64번 load하고 checksum은 64+96=160이다. 현재 generic plan의
+이 job은 64번 load하고 checksum은 64+96=160이다. legacy private-byte plan의
 checksum=load 수 규칙과 다르므로 전용 planner/생성기와 `workload_expected[]`를
 모두 160에 맞춘다. `job_access_count()`를 160으로 바꿔 맞추면 안 된다.
 `sum`만 반환하면 최적화로 불필요한 FPU 연산이 제거될 수 있어 결과에 포함한다.
@@ -598,11 +761,11 @@ tail -f "$fs_trial/supervisor.log"
 - **같은 설정에서 재빌드:** JSON + 생성기/소스 버전 + toolchain을 보존한다.
   생성기나 compiler가 달라지면 같은 JSON에서도 다른 ELF가 나올 수 있다.
 
-공유-memory 등 새 동작은 전용 생성기 변경도 필요하다. 기존 패턴·task 수·주기
-조정은 JSON부터 시작한다. 입력·생성기·source/ELF·manifest·raw·분석 코드를
+지원되는 typed 배열·읽기 공유·정수 GEMM·task 수·주기 조정은 JSON부터 시작한다.
+float32·공유 쓰기 등 지원하지 않는 동작은 커널·planner·분석 계약 확장이 필요하다. 입력·생성기·source/ELF·manifest·raw·분석 코드를
 함께 보관해야 `.cache` 삭제 이후에도 재현할 수 있다.
 
-검증: 위 paired-pass 원본에서 임시 경로의 G/C/P ELF 빌드·manifest 검사를
+이전 workspace의 2026-09-27 검증 기록: 위 paired-pass 원본에서 임시 경로의 G/C/P ELF 빌드·manifest 검사를
 통과했다. 12 tasks, warm-up 240 jobs, 측정 2400 jobs를 확인했다.
 False-sharing prepare-only로 두 배치의 ELF 6개·manifest 검사도 통과했다.
 문서의 shell 문법·링크와 Python 집계 예제의 기존 raw 재검증을 확인했다.
@@ -614,7 +777,8 @@ job/접근 수, 역순 offset·checksum·분석 반복 수, C의 domain/ID를 �
 FPU 예제는 호스트 checksum=160과 SPARC object의 부동소수점 명령을 확인했다.
 이는 build/정적 검증이며 변경 variant의 RTEMS 실행·시간 결과 검증은 아니다.
 Phase 확장과 다른 SDK/BSP 사용은 설계 예시로, 구현·실행하지 않았다.
-프로젝트의 실제 생성기·계측 코드는 이 문서 예시에 맞춰 변경하지 않았다.
+§4의 변형 예시에 맞춰 실제 생성기·계측 코드를 변경하지는 않았다.
+schema v2의 입력·실행·검증 기록은 §2.2–2.4를 따른다.
 
 ## 7. Raw 로그 위치와 읽는 법
 
@@ -645,11 +809,12 @@ Phase 확장과 다른 SDK/BSP 사용은 설계 예시로, 구현·실행하지 
     p/0.log                   P의 첫 독립 실행 raw
 ```
 
-현재 N=20 spaced의
+이전 실험의 N=20 spaced raw 경로는
 [G raw](../../.cache/periodic-memory-gap-v1/l1-set-pressure-v1/n20-spaced/g/0.log),
 [C raw](../../.cache/periodic-memory-gap-v1/l1-set-pressure-v1/n20-spaced/c/0.log),
 [P raw](../../.cache/periodic-memory-gap-v1/l1-set-pressure-v1/n20-spaced/p/0.log)를
-직접 열 수 있다. `0.log`의 0은 task 번호가 아니라 **독립 실행 index**다.
+이다. 이 worktree에는 없으므로 원본을 확보한 경우에 열 수 있다.
+`0.log`의 0은 task 번호가 아니라 **독립 실행 index**다.
 한 raw에 그 실행의 모든 task/job이 들어 있다.
 
 False-sharing처럼 한 번의 runner 호출 안에서 여러 조건을 비교하면 경로가 더 깊다.
