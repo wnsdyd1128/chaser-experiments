@@ -99,6 +99,17 @@ def test_periods_determine_job_counts_with_a_common_horizon():
         make_plan(config, 0)
 
 
+def test_taskset_supports_32_tasks_but_rejects_33():
+    config = configuration()
+    config['tasks'] = [dict(task_id=f't{i:02d}', period_ticks=10, core=i % 4,
+                            distinct=8, stride=32, sweeps=2)
+                       for i in range(32)]
+    assert len(make_plan(config, 2)['tasks']) == 32
+    config['tasks'].append(dict(config['tasks'][0], task_id='t32'))
+    with pytest.raises(ValueError, match='32 tasks'):
+        make_plan(config, 2)
+
+
 def test_topology_and_effective_domains_are_in_mapping_hash():
     plans = [make_plan(configuration(), a) for a in range(3)]
     assert len({p['mapping_hash'] for p in plans}) == 3

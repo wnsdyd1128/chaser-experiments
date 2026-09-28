@@ -32,8 +32,8 @@ def make_plan(configuration: dict, architecture: int) -> dict:
     horizon = configuration['horizon_ticks']
     if type(horizon) is not int or not 1 <= horizon <= 1_000_000:
         raise ValueError('Positive bounded horizon is required')
-    if not 1 <= len(configuration['tasks']) <= 16:
-        raise ValueError('Between 1 and 16 tasks are supported')
+    if not 1 <= len(configuration['tasks']) <= 32:
+        raise ValueError('Between 1 and 32 tasks are supported')
     tasks = []
     for task in configuration['tasks']:
         task = dict(task)
