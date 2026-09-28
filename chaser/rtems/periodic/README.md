@@ -1,5 +1,9 @@
 # RTEMS periodic measurement harness
 
+설정 JSON으로 실험을 생성하고 환경을 수정·재현하는 절차는
+[실험 가이드](EXPERIMENT-GUIDE.md)를 참고한다. 실제 보드의 준비·실행·계측 검증은
+[HW 검증 가이드](HARDWARE-VALIDATION.md)를 따른다.
+
 This checkout uses the [current measurement contract](../../system-prompt-extraction/plan/MEASUREMENT-CONTRACT-V3.md) and [dataset rebuild plan](../../system-prompt-extraction/plan/DATASET-REBUILD-PLAN.md). The serialized contract ID remains `chaser-periodic-measurement-v3` so stored plans and raw measurements keep their identity. Python modules use their ordinary names.
 
 `tools.rtems_periodic` is the supported build, analysis, and single-batch runner. The old candidate pool, characterization collector, calibration CLI, G/C/P collector, and dataset-relocation scripts have been removed. `chaser.periodic.calibration` contains the current P-only threshold planner, selector, and batch classifier; it does not yet provide an end-to-end collection CLI. The archived `datasets/periodic-v2` and `datasets/periodic-final-v1` describe an earlier experiment and are not measurements under the current contract. S1's PolyBench experiment has a separate runner.

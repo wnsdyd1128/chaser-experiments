@@ -646,6 +646,10 @@ PolyBench 계열 고정 크기 kernel 4개의 별도 host 비교와 correlation 
 The [periodic dataset README](datasets/periodic-v2/README.md) is the entry point for
 current inputs, measurement results, exclusions and RF export status (2026-09-24).
 The [RTEMS harness](rtems/periodic/README.md) implements periodic G/C/P timing and independent U.
+See the [experiment guide](rtems/periodic/EXPERIMENT-GUIDE.md) for creating, modifying,
+and reproducing RTEMS experiment environments. The
+[hardware validation guide](rtems/periodic/HARDWARE-VALIDATION.md) covers board setup,
+execution, log collection, and measurement validation.
 
 - `datasets/periodic-v2/`: 207 fixed tasksets, independent U, locality analysis and validation calibration.
 - `datasets/periodic-final-v1/`: final labels and legacy scalar RF samples for the same 198 eligible
