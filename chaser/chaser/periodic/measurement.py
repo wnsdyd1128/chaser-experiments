@@ -32,6 +32,9 @@ def make_plan(configuration: dict, architecture: int) -> dict:
     horizon = configuration['horizon_ticks']
     if type(horizon) is not int or not 1 <= horizon <= 1_000_000:
         raise ValueError('Positive bounded horizon is required')
+    alignment = configuration.get('array_alignment_bytes', 4096)
+    if type(alignment) is not int or alignment not in (32, 4096):
+        raise ValueError('Array alignment must be 32 or 4096 bytes')
     if not 1 <= len(configuration['tasks']) <= 32:
         raise ValueError('Between 1 and 32 tasks are supported')
     tasks = []
@@ -73,8 +76,8 @@ def make_plan(configuration: dict, architecture: int) -> dict:
         task['warmup_jobs'] = warmup // task['period_ticks']
     plan = {k: configuration[k] for k in ('workload_id', 'family_id', 'policy_id')}
     plan.update(contract_id=CONTRACT, architecture=architecture,
-                topology_id=TOPOLOGIES[architecture], tick_ns=TICK_NS,
-                horizon_ticks=horizon, tasks=tasks,
+                 topology_id=TOPOLOGIES[architecture], tick_ns=TICK_NS,
+                horizon_ticks=horizon, tasks=tasks, array_alignment_bytes=alignment,
                 measurement_source='measured', execution_backend='laysim-gr740',
                 checksum_boundary='after-completion-before-next-period',
                 locality_scope='one-cold-task-local-job',

@@ -42,6 +42,19 @@ def test_waf_builds_three_sparc_elfs_from_one_workload_object(prepared):
         prepare(configuration(), prepared)
 
 
+def test_compact_alignment_changes_actual_linked_array_addresses(tmp_path):
+    config = configuration()
+    config['array_alignment_bytes'] = 32
+    output = tmp_path / 'compact'
+    prepare(config, output)
+    for architecture in 'gcp':
+        symbols = read_symbols(output / f'build/{architecture}.exe')
+        assert symbols['data_a'][0] == 0x01000000
+        assert symbols['data_b'][0] == 0x01000020
+        assert [row['address'] for row in check_layout(symbols,
+            make_plan(config, 2)['tasks'], 32)] == [0x01000000, 0x01000020]
+
+
 def test_moved_or_resized_workload_symbol_is_rejected(prepared):
     symbols = read_symbols(prepared / 'build/p.exe')
     tasks = make_plan(configuration(), 2)['tasks']

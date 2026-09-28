@@ -110,6 +110,20 @@ def test_taskset_supports_32_tasks_but_rejects_33():
         make_plan(config, 2)
 
 
+def test_array_alignment_is_frozen_and_rejects_unsupported_values():
+    config = configuration()
+    spaced = make_plan(config, 2)
+    assert spaced['array_alignment_bytes'] == 4096
+    config['array_alignment_bytes'] = 32
+    compact = make_plan(config, 2)
+    assert compact['array_alignment_bytes'] == 32
+    assert compact['plan_hash'] != spaced['plan_hash']
+    for invalid in (0, 64, True):
+        config['array_alignment_bytes'] = invalid
+        with pytest.raises(ValueError, match='alignment'):
+            make_plan(config, 2)
+
+
 def test_topology_and_effective_domains_are_in_mapping_hash():
     plans = [make_plan(configuration(), a) for a in range(3)]
     assert len({p['mapping_hash'] for p in plans}) == 3

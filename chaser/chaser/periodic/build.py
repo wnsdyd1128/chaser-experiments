@@ -15,7 +15,7 @@ SDK = Path('/opt/rtems/6')
 YARDA = ROOT / 'rtems/baseline/build/yarda'
 
 
-def workload_source(tasks: list[dict]) -> str:
+def workload_source(tasks: list[dict], alignment: int = 4096) -> str:
     """Emit fixed sweep wrappers and private load-only arrays for APE and SPARC."""
     source = ['#include "workload.h"', '#ifdef __clang__',
               '#define ANALYZE __attribute__((annotate("ape.analyze")))',
@@ -25,7 +25,7 @@ def workload_source(tasks: list[dict]) -> str:
         name = task['task_id']
         source.extend([
             f'volatile uint8_t data_{name}[{task["data_size"]}] '
-            f'__attribute__((aligned(4096), section(".chaser_data.{i:02d}")));',
+            f'__attribute__((aligned({alignment}), section(".chaser_data.{i:02d}")));',
             f'INLINE static uint32_t kernel_{name}(void) {{',
             '    uint32_t sum = 0;',
             *kernel_body(task), '    return sum;', '}',
@@ -72,16 +72,17 @@ def read_symbols(elf: Path) -> dict[str, tuple[int, int]]:
     return symbols
 
 
-def check_layout(symbols: dict, tasks: list[dict]) -> list[dict]:
+def check_layout(symbols: dict, tasks: list[dict], alignment: int = 4096) -> list[dict]:
     """Reject any linker movement, misalignment, size change, or data overlap."""
     address = 0x01000000
     layout = []
     for task in tasks:
+        address = (address + alignment - 1) // alignment * alignment
         name = 'data_' + task['task_id']
         if symbols.get(name) != (address, task['data_size']):
             raise ValueError(f'Workload layout mismatch: {name}')
-        layout.append(dict(symbol=name, address=address, size=task['data_size'], alignment=4096))
-        address += (task['data_size'] + 4095) // 4096 * 4096
+        layout.append(dict(symbol=name, address=address, size=task['data_size'], alignment=alignment))
+        address += task['data_size']
     return layout
 
 
@@ -93,6 +94,7 @@ def prepare(configuration: dict, output: Path) -> dict:
     source = output / 'source'
     source.mkdir()
     tasks = plans[0]['tasks']
+    alignment = plans[0]['array_alignment_bytes']
     for name in ('init.c', 'probe.c', 'probe.h'):
         shutil.copyfile(ROOT / 'rtems/periodic' / name, source / name)
     (source / 'workload.h').write_text(
@@ -101,7 +103,7 @@ def prepare(configuration: dict, output: Path) -> dict:
         'void workload_prepare(void);\n'
         'extern uint32_t (*const workload_jobs[])(void);\n'
         'extern const uint32_t workload_expected[];\n')
-    (source / 'workload.c').write_text(workload_source(tasks))
+    (source / 'workload.c').write_text(workload_source(tasks, alignment))
     for name, plan in zip(('g', 'c', 'p'), plans):
         directory = output / name
         directory.mkdir()
@@ -131,7 +133,8 @@ def prepare(configuration: dict, output: Path) -> dict:
         subprocess.run(command, cwd=output, stdout=log, stderr=subprocess.STDOUT, check=True)
     layouts = {}
     for name in ('g', 'c', 'p'):
-        layouts[name] = check_layout(read_symbols(output / f'build/{name}.exe'), tasks)
+        layouts[name] = check_layout(read_symbols(output / f'build/{name}.exe'), tasks,
+                                     alignment)
     write_json(output / 'layout.json', layouts)
     files = [*source.iterdir(), *[p for n in ('g', 'c', 'p') for p in (output / n).iterdir()],
              *[output / n for n in ('layout.ld', 'layout.json', 'wscript', 'waf',

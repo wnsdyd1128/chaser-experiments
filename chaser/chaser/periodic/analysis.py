@@ -95,7 +95,8 @@ def _analyze(prepared, timeout, compress_events, compression_queue, reservations
             directory = output / name / task_id
             directory.mkdir(parents=True)
             elf = prepared / f'build/{name}.exe'
-            layout = check_layout(read_symbols(elf), plan['tasks'])
+            layout = check_layout(read_symbols(elf), plan['tasks'],
+                                  plan.get('array_alignment_bytes', 4096))
             results = {}
             for mode, flags in (
                 ('element', ['--mode', 'unroll', '--granularity', 'element']),
