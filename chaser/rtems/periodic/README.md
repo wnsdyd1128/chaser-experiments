@@ -38,7 +38,7 @@ The measurement contract remains v3; schema-less inputs keep the legacy recipes.
 | [shared-reads-smoke.json](../../configs/periodic-multi-array/shared-reads-smoke.json) | Cyclic and paired-read tasks sharing an input |
 
 Use the same `prepare`, `analyze`, and `run` commands with one of these inputs and
-fresh output directories. The [walkthrough](EXPERIMENT-GUIDE.md#multi-array) includes
+fresh output directories. The [walkthrough](experiment-guide/INPUTS.md#multi-array) includes
 G/C/P and independent P commands. GEMM overwrites C each sweep and hashes logical
 output once at the end of the job; its hash reads are included in timing and analysis.
 Arrays are initialized once before workers start, not between jobs.
@@ -47,8 +47,8 @@ Analysis validates every object's linked address, access width, and load/store o
 It records clang O0 analysis separately from workload O0/O2 compilation, and treats
 stores as demand residency accesses without modeling write traffic or delays.
 Sharing does not turn this cold task-local analysis into an interference/coherence model.
-See the [input contract](EXPERIMENT-GUIDE.md#multi-array) and
-[verification record](EXPERIMENT-GUIDE.md#multi-array-verification) for bounds and completed checks.
+See the [input contract](experiment-guide/INPUTS.md#multi-array) and
+[verification record](experiment-guide/INPUTS.md#multi-array-verification) for bounds and completed checks.
 Python callers pass `arrays=plan['arrays']` to `workload_source` and `check_layout`
 for v2; the existing positional arguments and legacy results remain supported.
 

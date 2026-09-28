@@ -654,10 +654,10 @@ The input schema is separate from the unchanged measurement contract
 Start with the [GEMM smoke configuration](configs/periodic-multi-array/gemm-u32-smoke.json),
 [shared-input GEMM](configs/periodic-multi-array/gemm-u32-shared-smoke.json), or
 [shared cyclic/paired reads](configs/periodic-multi-array/shared-reads-smoke.json).
-The [multi-array experiment walkthrough](rtems/periodic/EXPERIMENT-GUIDE.md#multi-array)
+The [multi-array experiment walkthrough](rtems/periodic/experiment-guide/INPUTS.md#multi-array)
 covers field units, bounds, preparation, analysis, G/C/P execution, and independent P runs.
 The walkthrough also specifies the checksum and access-count contracts; its
-[verification record](rtems/periodic/EXPERIMENT-GUIDE.md#multi-array-verification)
+[verification record](rtems/periodic/experiment-guide/INPUTS.md#multi-array-verification)
 lists the completed checks and local evidence paths.
 
 Verification on 2026-09-28: `scripts/verify` passed **566 tests**, with 3 optional

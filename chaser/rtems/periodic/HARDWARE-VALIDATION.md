@@ -49,7 +49,7 @@ Simulator와 비교할 때는 가능하면 동일 ELF를 사용한다. 보드에
 
 보드에 맞는 BSP로 빌드하고 boot CPU·SMP·메모리 map을 확인한다.
 소스·입력·빌드 명령·ELF hash를 보존한다. 로컬 공용 생성기 사용법은
-[실험 가이드 §3](EXPERIMENT-GUIDE.md#3-공용-생성기로-빌드실행)을 따른다.
+[실험 가이드 §3](experiment-guide/EXECUTION.md#build-and-run)을 따른다.
 
 다음 경로는 **사용자가 실제 ELF 경로로 바꿀 자리**다. 일반 ELF 예제의 output은
 Chaser 예제와 별도이며, 실행마다 새 디렉터리를 만든다.
@@ -128,7 +128,7 @@ cores를 시작한다. 네 코어에 같은 ELF를 각각 독립 실행하는 �
 
 Wall time과 CPU time은 선점·대기 때문에 다를 수 있다. TAT는 이름만 같다고
 다른 실험과 같은 의미가 아니다. Chaser 정의와 raw 필드는
-[로그 가이드 §7](EXPERIMENT-GUIDE.md#7-raw-로그-위치와-읽는-법)을 따른다.
+[로그 가이드 §7](experiment-guide/RAW-LOGS.md#raw-logs)을 따른다.
 
 측정 중 printf·breakpoint·single-step·반복 register polling은 측정에 영향을 줄 수 있다.
 가능하면 결과를 메모리에 모아 측정 후 출력한다. 첫 smoke는 UART forwarding으로
@@ -334,7 +334,7 @@ PY
 Parser는 CPU 수 4·flags·plan hash·scheduler domain·전체 job·checksum·deadline·
 period/accounting 등을 검사한다. 실제 clock이나 cache enable은 검사하지 않는다.
 기대 job 수는 각 plan에서 읽고 특정 실험의 숫자로 고정하지 않는다. 현재 TET/TAT와
-warm-up 정의는 [로그 가이드](EXPERIMENT-GUIDE.md#7-raw-로그-위치와-읽는-법)를 따른다.
+warm-up 정의는 [로그 가이드](experiment-guide/RAW-LOGS.md#raw-logs)를 따른다.
 
 독립 U 진단은 P ELF의 `mode=i+1`, empty job은 `empty=1`, dispatch 진단은
 `trace=1`인 별도 실행으로 한다. Script의 wmem과 parser 인자를 모두 같은 값으로
