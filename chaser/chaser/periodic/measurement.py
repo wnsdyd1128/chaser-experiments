@@ -6,6 +6,8 @@ import json
 import re
 
 from chaser.periodic.patterns import job_access_count, validate_pattern
+from chaser.periodic.arrays import fields, normalize_arrays, validate_ownership
+from chaser.periodic.kernels import normalize_task
 
 CONTRACT = 'chaser-periodic-measurement-v3'
 TOPOLOGIES = ('g-edfsmp-4-v1', 'c-edfsmp-1-3-v1', 'p-edfsmp-4x1-v1')
@@ -26,6 +28,23 @@ def make_plan(configuration: dict, architecture: int) -> dict:
     """
     if type(architecture) is not int or architecture not in range(3):
         raise ValueError('Architecture must be G=0, C=1, or P=2')
+    version = configuration.get('schema_version')
+    explicit = 'schema_version' in configuration
+    if explicit and (type(version) is not int or version != 2):
+        raise ValueError('Unknown input schema version')
+    if not explicit and ('arrays' in configuration or any('arrays' in t for t in configuration['tasks'])):
+        raise ValueError('Explicit arrays require schema_version 2')
+    if explicit:
+        fields(configuration, ('schema_version', 'workload_id', 'family_id', 'policy_id',
+            'measurement_contract_id', 'horizon_ticks', 'warmup_ticks', 'u_repeats',
+            'workload_optimization', 'arrays', 'tasks'),
+            ('workload_id', 'family_id', 'policy_id', 'horizon_ticks', 'arrays', 'tasks'))
+        if not isinstance(configuration['tasks'], list):
+            raise ValueError('Tasks must be a list')
+        arrays = normalize_arrays(configuration['arrays'])
+        registry = {a['array_id']: a for a in arrays}
+        if configuration.get('workload_optimization', 'O0') not in ('O0', 'O2'):
+            raise ValueError('Workload optimization must be O0 or O2')
     for key in ('workload_id', 'family_id', 'policy_id'):
         if not isinstance(configuration[key], str) or not configuration[key]:
             raise ValueError(f'Nonempty {key} is required')
@@ -39,20 +58,24 @@ def make_plan(configuration: dict, architecture: int) -> dict:
         raise ValueError('Between 1 and 32 tasks are supported')
     tasks = []
     for task in configuration['tasks']:
-        task = dict(task)
-        if not re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*', task['task_id']):
+        task = normalize_task(task, registry) if explicit else dict(task)
+        if (not isinstance(task['task_id'], str)
+                or not re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*', task['task_id'])):
             raise ValueError('Task IDs must be C identifiers')
-        for key, low, high in (('period_ticks', 1, horizon), ('core', 0, 3),
-                               ('distinct', 1, 131072), ('stride', 1, 4096),
-                               ('sweeps', 1, 1_000_000)):
+        bounds = [('period_ticks', 1, horizon), ('core', 0, 3), ('sweeps', 1, 1_000_000)]
+        if not explicit:
+            bounds += [('distinct', 1, 131072), ('stride', 1, 4096)]
+        for key, low, high in bounds:
             if type(task[key]) is not int or not low <= task[key] <= high:
                 raise ValueError(f'Invalid {key}')
         if horizon % task['period_ticks']:
             raise ValueError('Every period must divide the common horizon')
-        validate_pattern(task)
+        if not explicit:
+            validate_pattern(task)
         task['job_count'] = horizon // task['period_ticks']
-        task['data_size'] = task['distinct'] * task['stride']
-        task['expected_checksum'] = job_access_count(task) % (1 << 32)
+        if not explicit:
+            task['data_size'] = task['distinct'] * task['stride']
+            task['expected_checksum'] = job_access_count(task) % (1 << 32)
         task['domain'] = (list(range(4)) if architecture == 0 else
                           ([0] if task['core'] == 0 else [1, 2, 3]) if architecture == 1
                           else [task['core']])
@@ -61,7 +84,7 @@ def make_plan(configuration: dict, architecture: int) -> dict:
         raise ValueError('Task IDs must be unique')
     if sum(t['job_count'] for t in tasks) > 4096:
         raise ValueError('At most 4096 job records per run')
-    if sum((t['data_size'] + 4095) // 4096 * 4096 for t in tasks) > 16 * 1024**2:
+    if not explicit and sum((t['data_size'] + 4095) // 4096 * 4096 for t in tasks) > 16 * 1024**2:
         raise ValueError('Workload data exceeds the reserved 16 MiB')
     if configuration.get('measurement_contract_id', CONTRACT) != CONTRACT:
         raise ValueError('Unknown measurement contract')
@@ -89,6 +112,11 @@ def make_plan(configuration: dict, architecture: int) -> dict:
                 measurement_boundary_id='public-workload-bracket-v1')
     plan['mapping_hash'] = digest({'topology': plan['topology_id'],
                                   'domains': {t['task_id']: t['domain'] for t in tasks}})
+    if explicit:
+        validate_ownership(tasks, arrays)
+        del plan['array_alignment_bytes']
+        plan.update(input_schema_version=2, kernel_contract_id='periodic-multi-array-v1',
+                    arrays=arrays, workload_optimization=configuration.get('workload_optimization', 'O0'))
     plan['plan_hash'] = digest(plan)
     return plan
 

@@ -7,6 +7,7 @@ import subprocess
 import sys
 
 from chaser.periodic.measurement import make_plan
+from chaser.periodic.kernels import kernel_source
 from chaser.periodic.patterns import kernel_body, wrapper_sweeps
 from tools.rtems_smoke import file_hash, write_json, check_inputs
 
@@ -15,13 +16,21 @@ SDK = Path('/opt/rtems/6')
 YARDA = ROOT / 'rtems/baseline/build/yarda'
 
 
-def workload_source(tasks: list[dict], alignment: int = 4096) -> str:
-    """Emit fixed sweep wrappers and private load-only arrays for APE and SPARC."""
+def workload_source(tasks: list[dict], alignment: int = 4096, *,
+                    arrays: list[dict] | None = None) -> str:
+    """Emit fixed jobs with legacy private arrays or a normalized typed registry."""
     source = ['#include "workload.h"', '#ifdef __clang__',
               '#define ANALYZE __attribute__((annotate("ape.analyze")))',
               '#define INLINE __attribute__((annotate("ape.inline")))',
               '#else', '#define ANALYZE', '#define INLINE', '#endif']
-    for i, task in enumerate(tasks):
+    if arrays is not None:
+        registry = {a['array_id']: a for a in arrays}
+        for i, array in enumerate(arrays):
+            source.append(f'volatile {array["element_type"]} {array["symbol"]}[{array["length"]}] '
+                          f'__attribute__((aligned({array["alignment_bytes"]}), section(".chaser_data.{i:02d}")));')
+        for task in tasks:
+            source.extend(kernel_source(task, registry))
+    for i, task in enumerate(tasks if arrays is None else []):
         name = task['task_id']
         source.extend([
             f'volatile uint8_t data_{name}[{task["data_size"]}] '
@@ -36,7 +45,10 @@ def workload_source(tasks: list[dict], alignment: int = 4096) -> str:
             f'    for (int s = 0; s < {wrapper_sweeps(task)}; ++s)',
             f'        sum += kernel_{name}();', '    return sum;', '}'])
     source.append('void workload_prepare(void) {')
-    for task in tasks:
+    for array in arrays or []:
+        source.append(f'    for (int i = 0; i < {array["length"]}; ++i) '
+                      f'{array["symbol"]}[i] = {array["initial_value"]}U;')
+    for task in tasks if arrays is None else []:
         source.append(f'    for (int i = 0; i < {task["data_size"]}; ++i) '
                       f'data_{task["task_id"]}[i] = 1;')
     source.extend(['}', 'uint32_t (*const workload_jobs[])(void) = {'])
@@ -72,8 +84,21 @@ def read_symbols(elf: Path) -> dict[str, tuple[int, int]]:
     return symbols
 
 
-def check_layout(symbols: dict, tasks: list[dict], alignment: int = 4096) -> list[dict]:
+def check_layout(symbols: dict, tasks: list[dict], alignment: int = 4096, *,
+                 arrays: list[dict] | None = None) -> list[dict]:
     """Reject any linker movement, misalignment, size change, or data overlap."""
+    if arrays is not None:
+        layout = []
+        end = 0x01000000
+        for array in arrays:
+            address, size, alignment = array['address'], array['size_bytes'], array['alignment_bytes']
+            if (symbols.get(array['symbol']) != (address, size) or address % alignment
+                    or address < end or address + size > 0x02000000):
+                raise ValueError(f'Workload layout mismatch: {array["symbol"]}')
+            layout.append(dict(array_id=array['array_id'], symbol=array['symbol'], address=address,
+                               size=size, alignment=alignment, element_type=array['element_type']))
+            end = address + size
+        return layout
     address = 0x01000000
     layout = []
     for task in tasks:
@@ -96,7 +121,8 @@ def prepare(configuration: dict, output: Path) -> dict:
     source = output / 'source'
     source.mkdir()
     tasks = plans[0]['tasks']
-    alignment = plans[0]['array_alignment_bytes']
+    alignment = plans[0].get('array_alignment_bytes', 4096)
+    arrays = plans[0].get('arrays')
     for name in ('init.c', 'probe.c', 'probe.h'):
         shutil.copyfile(ROOT / 'rtems/periodic' / name, source / name)
     (source / 'workload.h').write_text(
@@ -105,7 +131,7 @@ def prepare(configuration: dict, output: Path) -> dict:
         'void workload_prepare(void);\n'
         'extern uint32_t (*const workload_jobs[])(void);\n'
         'extern const uint32_t workload_expected[];\n')
-    (source / 'workload.c').write_text(workload_source(tasks, alignment))
+    (source / 'workload.c').write_text(workload_source(tasks, alignment, arrays=arrays))
     for name, plan in zip(('g', 'c', 'p'), plans):
         directory = output / name
         directory.mkdir()
@@ -136,7 +162,7 @@ def prepare(configuration: dict, output: Path) -> dict:
     layouts = {}
     for name in ('g', 'c', 'p'):
         layouts[name] = check_layout(read_symbols(output / f'build/{name}.exe'), tasks,
-                                     alignment)
+                                     alignment, arrays=arrays)
     write_json(output / 'layout.json', layouts)
     files = [*source.iterdir(), *[p for n in ('g', 'c', 'p') for p in (output / n).iterdir()],
              *[output / n for n in ('layout.ld', 'layout.json', 'wscript', 'waf',

@@ -1,0 +1,62 @@
+{
+  "schema_version": 2,
+  "workload_id": "multi-array-shared-reads-smoke-v1",
+  "family_id": "shared-reads-diagnostic",
+  "policy_id": "explicit-core-map-v1",
+  "measurement_contract_id": "chaser-periodic-measurement-v3",
+  "horizon_ticks": 40,
+  "warmup_ticks": 20,
+  "u_repeats": 1,
+  "workload_optimization": "O0",
+  "arrays": [
+    {
+      "array_id": "a",
+      "element_type": "uint32_t",
+      "length": 66,
+      "alignment_bytes": 32,
+      "initial_value": 3
+    },
+    {
+      "array_id": "b",
+      "element_type": "uint32_t",
+      "length": 66,
+      "alignment_bytes": 4096,
+      "initial_value": 5
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "pair",
+      "pattern": "paired-read",
+      "arrays": {
+        "a": {
+          "array_id": "a",
+          "offset_elements": 1
+        },
+        "b": {
+          "array_id": "b",
+          "offset_elements": 1
+        }
+      },
+      "distinct": 3,
+      "stride_bytes": 32,
+      "sweeps": 2,
+      "core": 0,
+      "period_ticks": 10
+    },
+    {
+      "task_id": "cycle",
+      "pattern": "cyclic",
+      "arrays": {
+        "input": {
+          "array_id": "a"
+        }
+      },
+      "distinct": 3,
+      "stride_bytes": 32,
+      "sweeps": 2,
+      "core": 2,
+      "period_ticks": 10
+    }
+  ]
+}

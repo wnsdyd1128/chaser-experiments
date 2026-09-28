@@ -70,6 +70,13 @@ def load_batch(prepared: Path, directory: Path) -> list[dict]:
                 or row.get('contract_id') != CONTRACT
                 or protocol.get('contract_id') != CONTRACT):
             raise ValueError('Measurement contract mismatch')
+        if plan.get('input_schema_version') == 2:
+            required = {'implementation/chaser/periodic/' + name for name in
+                        ('arrays.py', 'kernels/__init__.py', 'kernels/reads.py', 'kernels/gemm.py')}
+            if (not required <= set(protocol['implementation_hashes']) or any(
+                    protocol.get(key) != plan[key] for key in
+                    ('input_schema_version', 'kernel_contract_id', 'workload_optimization'))):
+                raise ValueError('Multi-array implementation or kernel provenance mismatch')
         elf = prepared / 'build' / (('g', 'c', 'p')[row['architecture']] + '.exe')
         if (row['elf_hash'] != file_hash(elf) or row['elf_hash'] != protocol['elf_hash']
                 or row['plan_hash'] != plan['plan_hash'] or row['plan_hash'] != protocol['plan_hash']
@@ -151,6 +158,8 @@ def feature_record(member: dict, locality: dict, utilization: dict) -> dict:
     if set(values) != set(locality['cases']):
         raise ValueError('Locality and independent U task IDs differ')
     reasons = []
+    if locality.get('dataset_eligible') is False:
+        reasons.append('diagnostic_kernel_requires_dataset_qualification')
     if any(value is None or not isfinite(value) or not 0 < value <= 1
            for value in values.values()):
         reasons.append('task_u_outside_0_1')
@@ -171,6 +180,8 @@ def feature_record(member: dict, locality: dict, utilization: dict) -> dict:
 
 def to_measurement(plan: dict, row: dict) -> Measurement:
     """Convert only normal timing runs; keep failed attempts in the population."""
+    if plan.get('input_schema_version') == 2:
+        raise ValueError('Multi-array diagnostic workloads require separate dataset qualification')
     if row['mode'] or row['trace'] or row['empty'] or row['plan_hash'] != plan['plan_hash']:
         raise ValueError('Only matching normal timing runs can enter the dataset')
     ok = row['execution_status'] == 'ok'

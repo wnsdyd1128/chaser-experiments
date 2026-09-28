@@ -43,6 +43,8 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
     implementation.mkdir()
     root = Path(__file__).resolve().parents[1]
     for relative in ('chaser/periodic/measurement.py', 'chaser/periodic/build.py',
+                     'chaser/periodic/arrays.py', 'chaser/periodic/kernels/__init__.py',
+                     'chaser/periodic/kernels/reads.py', 'chaser/periodic/kernels/gemm.py',
                      'chaser/periodic/patterns.py', 'chaser/periodic/structures.py',
                      'chaser/periodic/recipes.py',
                      'chaser/periodic/staged_recipes.py',
@@ -68,6 +70,9 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
                                            for p in implementation.rglob('*.py')},
                     execution_backend='laysim-gr740', measurement_source='measured',
                     scope='periodic-diagnostic' if trace else 'empty-overhead' if empty else 'periodic-timing')
+    if plan.get('input_schema_version') == 2:
+        protocol.update(input_schema_version=2, kernel_contract_id=plan['kernel_contract_id'],
+                        workload_optimization=plan['workload_optimization'])
     write_json(output / 'protocol.json', protocol)
     records = []
     with (output / 'measurements.jsonl').open('x') as stream:
