@@ -665,6 +665,8 @@ MEDIUM 크기, 초기화 방식, `double`/`float`/정수 자료형을 유지한�
 YARDA도 **30종 모두 통과**했다. 네이티브·G·C·P 합계 **120/120개 분석이 통과**했으며,
 이전에 종료 경계 때문에 차단됐던 9종도 해결됐다. 전체 결과와 별도 접근 횟수 검사는
 [MEDIUM 재검증 기록](artifacts/periodic/polybench-medium-v3/README.md)에 있다.
+2mm·atax·correlation·gemm·jacobi-2d의 CAAS-CA, CA-CSRD, CLS, CLP는
+[MEDIUM locality 분석](artifacts/periodic/polybench-locality-medium-v1/README.md)에 정리했다.
 
 <a id="periodic-multi-array-workloads"></a>
 
