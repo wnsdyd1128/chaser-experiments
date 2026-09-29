@@ -21,6 +21,17 @@ python3 -m tools.rtems_periodic run .cache/periodic-example \
 
 The example has a short horizon for a smoke run. A paper measurement must use the warm-up and measurement lengths, repeat counts, and frozen inputs in the active plan. The configuration specifies `warmup_ticks`, `u_repeats`, `horizon_ticks`, task periods, literal access patterns, and explicit core placement. The warm-up boundary must align with every task period. G, C, and P use the same workload source with different EDF SMP scheduler domains; analysis checks the linked ELF streams and array layout for each architecture.
 
+## Original PolyBench MEDIUM kernels
+
+[PolyBench/C 4.2.1, all 30 benchmarks](polybench/README.md) use schema version 3
+and the same `prepare/analyze/run` CLI. Each configuration selects one original
+kernel with its published MEDIUM dimensions and original arithmetic. Preparation
+compares original/adapted native live-out dumps, then builds G/C/P RTEMS ELFs.
+Initialization runs before each job's measurement bracket; the upstream formatted
+live-out checksum runs after it. These examples remain diagnostic workloads.
+The standalone `tools.polybench_suite` command also attempts YARDA for every
+benchmark and preserves unsupported cases in its report.
+
 ## Explicit arrays and integer GEMM
 
 Set `schema_version: 2` to define storage in top-level `arrays` and bind task roles

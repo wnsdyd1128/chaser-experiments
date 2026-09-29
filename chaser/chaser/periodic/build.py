@@ -54,6 +54,9 @@ def prepare(configuration: dict, output: Path) -> dict:
     output.mkdir(parents=True, exist_ok=False)
     source = output / 'source'
     kernel_inputs = snapshot_inputs(output)
+    if plans[0]['input_schema_version'] == 3:
+        from chaser.periodic.polybench.project import prepare_sources
+        prepare_sources(output, plans)
     write_project(output, plans)
     shutil.copyfile('/opt/src/rtems/waf', output / 'waf')
     shutil.copyfile(ROOT / 'rtems/baseline/cache.yaml', output / 'cache.yaml')
@@ -63,11 +66,15 @@ def prepare(configuration: dict, output: Path) -> dict:
         subprocess.run(command, cwd=output, stdout=log, stderr=subprocess.STDOUT, check=True)
     layouts = {}
     for name in ('g', 'c', 'p'):
-        layouts[name] = check_layout(read_symbols(output / f'build/{name}.exe'), plans[0]['arrays'])
+        if plans[0]['input_schema_version'] == 3:
+            from chaser.periodic.polybench.project import storage_layout
+            layouts[name] = storage_layout(output / f'build/{name}.exe', source / 'workload.c')
+        else:
+            layouts[name] = check_layout(read_symbols(output / f'build/{name}.exe'), plans[0]['arrays'])
     if not layouts['g'] == layouts['c'] == layouts['p']:
         raise ValueError('G/C/P workload layouts differ')
     write_json(output / 'layout.json', layouts)
-    files = [*source.iterdir(), *[p for n in ('g', 'c', 'p') for p in (output / n).iterdir()],
+    files = [*output.glob('native*'), *output.glob('original*'), *source.iterdir(), *[p for n in ('g', 'c', 'p') for p in (output / n).iterdir()],
              *[output / n for n in ('layout.ld', 'layout.json', 'wscript', 'waf',
                                      'configuration.json', 'cache.yaml', 'build.log',
                                      'build/compile_commands.json')],

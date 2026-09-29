@@ -6,6 +6,11 @@
 
 ## 3. 공용 생성기로 빌드·실행
 
+원본 PolyBench MEDIUM 30종도 같은 명령을 사용한다. 설정은
+`configs/periodic-polybench/<benchmark>-medium.json`에 있고, 전체 검증은
+[PolyBench 실행 안내](../polybench/README.md)를 따른다. MEDIUM은 smoke보다
+오래 걸리므로 `run --timeout`과 설정의 `period_ticks`를 각각 조정한다.
+
 ### 소스·ELF 생성
 
 ```sh

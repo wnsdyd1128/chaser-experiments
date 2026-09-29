@@ -1,0 +1,16 @@
+{
+  "schema_version": 3,
+  "workload_id": "polybench-nussinov-medium",
+  "family_id": "polybench-original",
+  "policy_id": "explicit-core0",
+  "polybench": {
+    "benchmark": "nussinov",
+    "dataset": "MEDIUM"
+  },
+  "period_ticks": 100000,
+  "core": 0,
+  "horizon_ticks": 200000,
+  "warmup_ticks": 100000,
+  "u_repeats": 1,
+  "workload_optimization": "O0"
+}

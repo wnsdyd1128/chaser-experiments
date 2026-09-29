@@ -99,6 +99,9 @@ static rtems_task worker(rtems_task_argument argument)
             require(rtems_event_send(coordinator, 1U << i));
             require(rtems_barrier_wait(start_barrier, RTEMS_NO_TIMEOUT));
         }
+#ifdef CHASER_WORKLOAD_LIFECYCLE
+        if (!chaser_empty) workload_reset(i);
+#endif
         if (chaser_trace) probe_period(period, &jobs[i][j].diagnostic_before);
         jobs[i][j].start_core = rtems_scheduler_get_processor();
         jobs[i][j].start = rtems_clock_get_uptime_nanoseconds();
@@ -110,6 +113,9 @@ static rtems_task worker(rtems_task_argument argument)
         jobs[i][j].completion = rtems_clock_get_uptime_nanoseconds();
         jobs[i][j].end_core = rtems_scheduler_get_processor();
         if (chaser_trace) probe_period(period, &jobs[i][j].diagnostic_after);
+#ifdef CHASER_WORKLOAD_LIFECYCLE
+        if (!chaser_empty) jobs[i][j].checksum = workload_checksum(i);
+#endif
         placement[i].count++;
         /* Preserve the offending final record, including a final-job miss. */
         if (jobs[i][j].status != RTEMS_SUCCESSFUL

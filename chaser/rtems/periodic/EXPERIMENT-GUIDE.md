@@ -19,6 +19,7 @@ False-sharing의 `.cache` 입력·전용 실행기·raw는 로컬 산출물로,
 
 - §1–2 [입력·다중 배열 예제](experiment-guide/INPUTS.md)
 - <a id="multi-array"></a>§2.2 [다중 배열 입력 계약](experiment-guide/INPUTS.md#multi-array)
+- §2.2 [원본 PolyBench MEDIUM 전체 30종](polybench/README.md)
 - §2.2 [PolyBench 기반 정수 ATAX 예제](experiment-guide/INPUTS.md#polybench-atax)
 - <a id="multi-array-verification"></a>§2.4 [다중 배열 검증 기록](experiment-guide/INPUTS.md#multi-array-verification)
 - <a id="3-공용-생성기로-빌드실행"></a>§3 [공용 빌드·SIM 실행](experiment-guide/EXECUTION.md#build-and-run)

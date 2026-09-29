@@ -125,6 +125,20 @@ SDK/BSP를 변경하면 공용 build와 전용 runner의 경로·pkg-config·man
 
 <a id="kernel-interface"></a>
 
+#### v3: 원본 PolyBench C 소스
+
+[원본 PolyBench 경로](../polybench/README.md)는 30종의 원본 C·header와 MEDIUM
+설정을 보존한다. JSON의 `polybench.benchmark`로 catalog 항목을 선택하며,
+자료형을 uint32로 바꾸지 않는다. `chaser/periodic/polybench/sources.py`의
+어댑터는 고정 revision의 main을 초기화·kernel 호출·출력 검증으로 나눈다.
+커널 배열은 ELF 주소를 갖는 전역 storage로 옮기고 원본 루프는 유지한다.
+
+이 경로는 benchmark 하나당 task 하나를 제공한다. 매 job의 reset과 live-out
+검증은 측정 bracket 밖이며, 기존 v2의 Python reference-event 계약을 대신하지
+않는다. `trace_validation: not-validated`인 YARDA 결과를 reference 검증 통과로
+해석하면 안 된다. upstream 수정 시 revision·native 출력 비교·전체 분석 결과를
+함께 갱신하고 새 snapshot으로 `prepare/analyze/run`한다.
+
 #### v2: 직접 작성하는 C 커널과 Python 계약
 
 현재 구현된 인터페이스는 **원본 JSON + 커널 C 템플릿 + Python 계약**이다.

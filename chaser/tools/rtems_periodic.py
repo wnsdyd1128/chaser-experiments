@@ -34,7 +34,7 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
     check_inputs(prepared, manifest)
     name = ('g', 'c', 'p')[architecture]
     plan = json.loads((prepared / name / 'plan.json').read_text())
-    if plan.get('input_schema_version') != 2:
+    if plan.get('input_schema_version') not in (2, 3):
         raise ValueError('Legacy prepared input is deprecated; prepare schema_version: 2 arrays')
     if type(mode) is not int or not 0 <= mode <= len(plan['tasks']) or (mode and architecture != 2):
         raise ValueError('Characterization needs one task and the P ELF')
@@ -137,12 +137,16 @@ def main() -> None:
     execute.add_argument('--empty', action='store_true')
     analysis = commands.add_parser('analyze')
     analysis.add_argument('prepared', type=Path)
+    analysis.add_argument('--timeout', type=float, default=120)
     args = parser.parse_args()
     if args.command == 'prepare':
         prepare(json.loads(args.configuration.read_text()), args.output)
     elif args.command == 'analyze':
         from chaser.periodic.analysis import analyze
-        analyze(args.prepared)
+        report = analyze(args.prepared, timeout=args.timeout)
+        if any(case.get('execution_status') in ('failed', 'timeout', 'blocked')
+               for case in report['cases'].values()):
+            raise SystemExit(1)
     else:
         records = run(args.prepared, args.output, architecture=('g', 'c', 'p').index(args.architecture),
                       runs=args.runs, timeout=args.timeout, mode=args.mode, trace=args.trace, empty=args.empty)

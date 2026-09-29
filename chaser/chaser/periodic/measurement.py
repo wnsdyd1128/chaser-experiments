@@ -31,6 +31,9 @@ def make_plan(configuration: dict, architecture: int) -> dict:
     if type(architecture) is not int or architecture not in range(3):
         raise ValueError('Architecture must be G=0, C=1, or P=2')
     version = configuration.get('schema_version')
+    if type(version) is int and version == 3:
+        from chaser.periodic.polybench.plan import make_plan as polybench_plan
+        return polybench_plan(configuration, architecture)
     if 'schema_version' not in configuration:
         raise ValueError('Legacy periodic input is deprecated; use schema_version: 2 with explicit arrays')
     if type(version) is not int or version != 2:

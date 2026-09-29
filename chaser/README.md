@@ -641,6 +641,17 @@ python3 -m tools.run_s1_cachegrind --input rtems/s1/build/host-trace-v2 \
 PolyBench 계열 고정 크기 kernel 4개의 별도 host 비교와 correlation 제외 근거는
 [S1 외부 Cachegrind 확인](artifacts/s1/polybench-cold-v1/README.md)에 보존했다.
 
+## Original PolyBench MEDIUM suite
+
+[All 30 PolyBench/C 4.2.1 examples](rtems/periodic/polybench/README.md) preserve
+upstream MEDIUM dimensions, initialization, and `double`/`float`/integer types.
+Use the [schema v3 configurations](configs/periodic-polybench) with the same
+`tools.rtems_periodic prepare/analyze/run` commands. A separate
+`python3 -m tools.polybench_suite --periodic --output .cache/polybench-medium --timeout 600`
+verifies native outputs, builds G/C/P RTEMS ELFs, and attempts YARDA on every case.
+Frontend failures, backend failures and timeouts remain in the report; execution
+success is distinct from independent access-trace validation.
+
 ## Periodic multi-array workloads
 
 The periodic harness supports explicit arrays with `schema_version: 2`:

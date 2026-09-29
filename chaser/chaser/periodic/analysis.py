@@ -45,6 +45,12 @@ def analyze(prepared: Path, *, timeout: float = 120, compress_events: bool = Fal
     A shared compression queue reserves capacity before export and is drained for
     this snapshot before publishing its manifest. The caller owns queue shutdown.
     """
+    plan = json.loads((prepared / 'p/plan.json').read_text())
+    if plan.get('input_schema_version') == 3:
+        if compress_events or compression_queue is not None:
+            raise ValueError('Original PolyBench analysis does not export event streams')
+        from chaser.periodic.polybench.analysis import analyze_prepared
+        return analyze_prepared(prepared, timeout=timeout)
     if compression_queue is not None and not compress_events:
         raise ValueError('A compression queue requires compress_events=True')
     with ExitStack() as reservations:

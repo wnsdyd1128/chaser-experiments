@@ -73,7 +73,7 @@ def load_batch(prepared: Path, directory: Path) -> list[dict]:
                 or row.get('contract_id') != CONTRACT
                 or protocol.get('contract_id') != CONTRACT):
             raise ValueError('Measurement contract mismatch')
-        if plan.get('input_schema_version') == 2:
+        if plan.get('input_schema_version') in (2, 3):
             required = {'implementation/chaser/periodic/' + name for name in
                         ('arrays.py', 'kernels/__init__.py', 'kernels/reads.py', 'kernels/gemm.py')}
             if (not required <= set(protocol['implementation_hashes']) or any(
@@ -183,7 +183,7 @@ def feature_record(member: dict, locality: dict, utilization: dict) -> dict:
 
 def to_measurement(plan: dict, row: dict) -> Measurement:
     """Convert only normal timing runs; keep failed attempts in the population."""
-    if plan.get('input_schema_version') == 2:
+    if plan.get('input_schema_version') in (2, 3):
         raise ValueError('Multi-array diagnostic workloads require separate dataset qualification')
     if row['mode'] or row['trace'] or row['empty'] or row['plan_hash'] != plan['plan_hash']:
         raise ValueError('Only matching normal timing runs can enter the dataset')

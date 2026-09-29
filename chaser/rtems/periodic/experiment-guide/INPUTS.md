@@ -6,6 +6,7 @@
 
 | 종류 | 입력 | 생성·실행 도구 |
 |---|---|---|
+| 원본 PolyBench 30종 | `schema_version: 3`, `polybench.benchmark`, `polybench.dataset: MEDIUM` | [원본 소스 예제](../polybench/README.md); 공용 `prepare/analyze/run` 및 독립 검증 |
 | 명시적 다중 배열 workload | `schema_version: 2`, `arrays`, 역할별 task binding | `python3 -m tools.rtems_periodic`의 `prepare`, `analyze`, `run`; cyclic/paired-read/gemm-u32/polybench-atax-u32 |
 | False-sharing reader/writer | `pairs`, `layouts` 등이 있는 JSON | `.cache/configs/periodic-memory-gap/false-sharing/run.py` |
 
@@ -147,6 +148,9 @@ GEMM의 job당 load 수는 `sweeps*2*m*n*k + m*n`, store 수는 `sweeps*m*n`이�
 
 #### PolyBench 기반 정수 ATAX
 
+원본 자료형·초기화·MEDIUM 설정을 보존하는 ATAX와 나머지 29종은
+[원본 PolyBench 예제](../polybench/README.md)를 사용한다. 아래는 uint32 변형이다.
+
 `polybench-atax-u32`는 [PolyBench/C 4.2.1의 ATAX 소스](https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/kernels/atax/atax.c)
 (`kernel_atax`, 2016-05-10)의 알고리즘을 정수 C 커널로 재구현한 예제다.
 `y`를 0으로 만들고 각 행 i마다 `tmp[i] = A[i,:]·x`를 계산한 뒤
@@ -255,6 +259,7 @@ ATAX 전용 테스트 **20개**는 상수 초기값 checksum, 비균일 입력�
 O0/O2 수치 결과, padding·offset, 반복 job의 scratch/output 초기화,
 입력 공유·쓰기 독점 계약을 검사한다. SPARC G/C/P ELF와 실제 APE stream의
 작은 회귀 fixture의 109 accesses 일치 및 C/Python snapshot 포함도 O0/O2에서 확인했다.
+실제 MEDIUM 크기와 원본 30종의 실행 결과는 [PolyBench 안내](../polybench/README.md)를 참고한다.
 ATAX의 SIM/HW 실행은 수행하지 않았다.
 
 SIM은 이번 변경 후 재실행하지 않았다. 앞서 수행한 다중 배열 smoke는

@@ -48,13 +48,20 @@ def compilation_database(bld):
 
 
 def build(bld):
-    optimization = json.loads((Path(bld.srcnode.abspath()) / 'configuration.json').read_text()).get(
-        'workload_optimization', 'O0')
+    configuration = json.loads((Path(bld.srcnode.abspath()) / 'configuration.json').read_text())
+    optimization = configuration.get('workload_optimization', 'O0')
     workload_options = {}
     if optimization == 'O2':
         workload_env = bld.env.derive()
         workload_env.CFLAGS = [flag for flag in bld.env.CFLAGS
                                if not flag.startswith('-O')] + ['-O2']
+        workload_options['env'] = workload_env
+    if configuration.get('schema_version') == 3:
+        workload_env = bld.env.derive()
+        # Upstream sources retain unused scalar bounds and SCoP pragmas.
+        workload_env.CFLAGS = list(bld.env.CFLAGS) + [
+            '-Wno-unused-parameter', '-Wno-unknown-pragmas',
+            '-Wno-unused-variable', '-Wno-misleading-indentation', '-ffp-contract=off']
         workload_options['env'] = workload_env
     bld.objects(source='source/workload.c', target='workload',
                 includes=['source'], **workload_options)
