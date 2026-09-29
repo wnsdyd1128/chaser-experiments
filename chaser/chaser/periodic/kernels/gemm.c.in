@@ -1,0 +1,24 @@
+INLINE static void kernel_${task_id}(void) {
+    for (int i = 0; i < ${m}; ++i) {
+        for (int j = 0; j < ${n}; ++j) {
+            uint32_t acc = 0;
+            for (int k = 0; k < ${k}; ++k) {
+                uint32_t av = ${A}[${A_offset} + i * ${lda} + k * ${A_step}];
+                uint32_t bv = ${B}[${B_offset} + k * ${ldb} + j * ${B_step}];
+                acc += av * bv;
+            }
+            ${C}[${C_offset} + i * ${ldc} + j * ${C_step}] = acc;
+        }
+    }
+}
+/** @brief Overwrite C per sweep, then hash logical output inside the job.
+ * @return Word-wise FNV-1a hash, modulo 2^32. */
+ANALYZE uint32_t task_job_${task_id}(void) {
+    for (int s = 0; s < ${sweeps}; ++s)
+        kernel_${task_id}();
+    uint32_t h = 2166136261U;
+    for (int i = 0; i < ${m}; ++i)
+        for (int j = 0; j < ${n}; ++j)
+            h = (h ^ ${C}[${C_offset} + i * ${ldc} + j * ${C_step}]) * 16777619U;
+    return h;
+}

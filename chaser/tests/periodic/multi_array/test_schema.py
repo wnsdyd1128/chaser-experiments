@@ -6,12 +6,43 @@ from chaser.periodic.measurement import make_plan, parse_log
 from chaser.periodic.build import workload_source
 
 
-def test_legacy_plans_and_source_remain_byte_identical():
-    rows = json.loads((Path(__file__).parent / 'fixtures/legacy.json').read_text())
-    for row in rows:
-        config = row['configuration']
-        assert [make_plan(config, a) for a in range(3)] == row['plans']
-        assert workload_source(row['plans'][0]['tasks'], config['array_alignment_bytes']) == row['source']
+@pytest.mark.parametrize('architecture', range(3))
+@pytest.mark.parametrize('with_arrays', [False, True])
+def test_legacy_input_is_deprecated_before_build(config, tmp_path, architecture, with_arrays):
+    from chaser.periodic.build import prepare
+    del config['schema_version']
+    if not with_arrays:
+        del config['arrays']
+        config['tasks'] = [dict(task_id='old', distinct=8, stride=32, sweeps=2,
+                               core=0, period_ticks=10)]
+    with pytest.raises(ValueError, match='deprecated.*schema_version'):
+        make_plan(config, architecture)
+    output = tmp_path / 'legacy'
+    with pytest.raises(ValueError, match='deprecated.*schema_version'):
+        prepare(config, output)
+    assert not output.exists()
+
+
+def test_legacy_source_generation_is_deprecated():
+    with pytest.raises(ValueError, match='deprecated'):
+        workload_source([])
+
+
+@pytest.mark.parametrize('operation', ['analyze', 'run'])
+def test_legacy_prepared_snapshot_is_rejected_before_side_effects(tmp_path, operation):
+    from chaser.periodic.analysis import analyze
+    from tools.rtems_periodic import run
+    prepared = tmp_path / 'prepared'
+    (prepared / 'p').mkdir(parents=True)
+    (prepared / 'manifest.json').write_text('{"files": {}, "tools": {}}')
+    (prepared / 'p/plan.json').write_text('{"tasks": []}')
+    with pytest.raises(ValueError, match='deprecated.*schema_version'):
+        if operation == 'analyze':
+            analyze(prepared)
+        else:
+            run(prepared, tmp_path / 'runs', architecture=2, runs=1)
+    assert not (prepared / 'analysis').exists()
+    assert not (tmp_path / 'runs').exists()
 
 
 def test_gemm_plan_counts_and_identity(config):

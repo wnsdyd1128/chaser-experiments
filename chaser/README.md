@@ -646,8 +646,10 @@ PolyBench 계열 고정 크기 kernel 4개의 별도 host 비교와 correlation 
 The periodic harness supports explicit arrays with `schema_version: 2`:
 typed `cyclic` and `paired-read` kernels (`uint8_t`/`uint32_t`), and row-major
 `gemm-u32` with uint32 multiplication, accumulation, and output stores.
+Arrays can declare multidimensional `shape` and positive row-major
+`strides_elements`; GEMM derives its matrix dimensions from rank-2 shapes.
+The existing flat `length` interface remains supported.
 Tasks may share immutable inputs; each output array belongs to one task.
-Inputs without a schema version retain the legacy private-byte-array recipes.
 The input schema is separate from the unchanged measurement contract
 `chaser-periodic-measurement-v3`.
 
@@ -659,9 +661,14 @@ covers field units, bounds, preparation, analysis, G/C/P execution, and independ
 The walkthrough also specifies the checksum and access-count contracts; its
 [verification record](rtems/periodic/experiment-guide/INPUTS.md#multi-array-verification)
 lists the completed checks and local evidence paths.
+For new operations, register a Python validation/reference contract alongside a
+directly editable C template using the
+[custom kernel interface](rtems/periodic/experiment-guide/CUSTOMIZATION.md#kernel-interface).
+GEMM uses this interface.
 
-Verification on 2026-09-28: `scripts/verify` passed **566 tests**, with 3 optional
-environment tests skipped; the final multi-array SIM smoke set passed **20/20** runs.
+Verification on 2026-09-28: `scripts/verify` passed **511 tests**, with 3 optional
+environment tests skipped. Earlier multi-array SIM smoke runs passed **20/20**;
+SIM was not rerun for the latest changes.
 Analysis checks typed load/store order against linked ELF objects, including GEMM's
 output-hash reads inside the measured job. It remains a cold task-local model;
 store traffic, coherence, and periodic interference are not modeled.

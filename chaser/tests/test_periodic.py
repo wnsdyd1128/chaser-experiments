@@ -8,13 +8,15 @@ from chaser.periodic.measurement import CONTRACT, make_plan, aggregate, parse_lo
 
 
 def configuration():
-    return {'workload_id': 'tiny', 'family_id': 'layout',
+    return {'schema_version': 2, 'workload_id': 'tiny', 'family_id': 'layout',
             'policy_id': 'pilot-explicit-v1', 'horizon_ticks': 40,
             'warmup_ticks': 20, 'u_repeats': 5,
-            'tasks': [dict(task_id='a', period_ticks=10, core=0,
-                           distinct=8, stride=1, sweeps=100),
-                      dict(task_id='b', period_ticks=20, core=2,
-                           distinct=8, stride=4096, sweeps=100)]}
+            'arrays': [dict(array_id=name, element_type='uint8_t', length=8*stride)
+                       for name, stride in (('a', 1), ('b', 4096))],
+            'tasks': [dict(task_id=name, pattern='cyclic', period_ticks=period, core=core,
+                           arrays={'input': {'array_id': name}},
+                           distinct=8, stride_bytes=stride, sweeps=100)
+                      for name, period, core, stride in (('a', 10, 0, 1), ('b', 20, 2, 4096))]}
 
 
 def evidence():
@@ -101,8 +103,10 @@ def test_periods_determine_job_counts_with_a_common_horizon():
 
 def test_taskset_supports_32_tasks_but_rejects_33():
     config = configuration()
-    config['tasks'] = [dict(task_id=f't{i:02d}', period_ticks=10, core=i % 4,
-                            distinct=8, stride=32, sweeps=2)
+    config['arrays'] = [dict(array_id='shared', element_type='uint8_t', length=256)]
+    config['tasks'] = [dict(task_id=f't{i:02d}', pattern='cyclic', period_ticks=10, core=i % 4,
+                            arrays={'input': {'array_id': 'shared'}},
+                            distinct=8, stride_bytes=32, sweeps=2)
                        for i in range(32)]
     assert len(make_plan(config, 2)['tasks']) == 32
     config['tasks'].append(dict(config['tasks'][0], task_id='t32'))
@@ -113,13 +117,13 @@ def test_taskset_supports_32_tasks_but_rejects_33():
 def test_array_alignment_is_frozen_and_rejects_unsupported_values():
     config = configuration()
     spaced = make_plan(config, 2)
-    assert spaced['array_alignment_bytes'] == 4096
-    config['array_alignment_bytes'] = 32
+    assert all(a['alignment_bytes'] == 4096 for a in spaced['arrays'])
+    for array in config['arrays']: array['alignment_bytes'] = 32
     compact = make_plan(config, 2)
-    assert compact['array_alignment_bytes'] == 32
+    assert all(a['alignment_bytes'] == 32 for a in compact['arrays'])
     assert compact['plan_hash'] != spaced['plan_hash']
     for invalid in (0, 64, True):
-        config['array_alignment_bytes'] = invalid
+        config['arrays'][0]['alignment_bytes'] = invalid
         with pytest.raises(ValueError, match='alignment'):
             make_plan(config, 2)
 

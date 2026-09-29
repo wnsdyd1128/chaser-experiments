@@ -1,0 +1,19 @@
+INLINE static uint32_t kernel_${task_id}(void) {
+    uint32_t sum = 0;
+    for (int i = 0; i < ${distinct}; ++i) {
+        uint32_t a_value = ${read_a}[${read_a_offset} + i * ${read_a_step}];
+        sum += a_value;
+#if ${paired}
+        uint32_t b_value = ${read_b}[${read_b_offset} + i * ${read_b_step}];
+        sum += b_value;
+#endif
+    }
+    return sum;
+}
+/** @brief Execute one job without resetting arrays. @return Unsigned load sum. */
+ANALYZE uint32_t task_job_${task_id}(void) {
+    uint32_t sum = 0;
+    for (int s = 0; s < ${sweeps}; ++s)
+        sum += kernel_${task_id}();
+    return sum;
+}

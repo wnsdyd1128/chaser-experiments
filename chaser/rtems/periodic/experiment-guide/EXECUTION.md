@@ -9,17 +9,17 @@
 ### 소스·ELF 생성
 
 ```sh
-# 현재 workspace root에서 실행한다. 이 legacy 예제의 원본 입력을 먼저 확보한다.
-export trial_root=.cache/periodic-memory-gap-v1/my-paired-pass-12-v1
+# 현재 workspace root에서 버전 관리되는 schema v2 예제를 실행한다.
+export trial_root=.cache/periodic-memory-gap-v1/my-gemm-v1
 python3 -m tools.rtems_periodic prepare \
-  .cache/configs/periodic-memory-gap/paired-pass-12-sweeps4-balanced-full.json \
+  configs/periodic-multi-array/gemm-u32-smoke.json \
   --output "$trial_root/prepared"
 ```
 
 Output은 새 경로여야 한다. 생성되는 구조는 다음과 같다.
 
 ```text
-my-paired-pass-12-v1/prepared/
+my-gemm-v1/prepared/
   configuration.json          입력 snapshot
   source/                     workload.c/h, init.c, probe.c/h
   g/  c/  p/                  각각 plan.json, config.h, topology.h
@@ -165,18 +165,5 @@ tail -f "$fs_trial/supervisor.log"
 float32·공유 쓰기 등 지원하지 않는 동작은 커널·planner·분석 계약 확장이 필요하다. 입력·생성기·source/ELF·manifest·raw·분석 코드를
 함께 보관해야 `.cache` 삭제 이후에도 재현할 수 있다.
 
-이전 workspace의 2026-09-27 검증 기록: 위 paired-pass 원본에서 임시 경로의 G/C/P ELF 빌드·manifest 검사를
-통과했다. 12 tasks, warm-up 240 jobs, 측정 2400 jobs를 확인했다.
-False-sharing prepare-only로 두 배치의 ELF 6개·manifest 검사도 통과했다.
-문서의 shell 문법·링크와 Python 집계 예제의 기존 raw 재검증을 확인했다.
-새 장시간 SIM 측정이나 HW 실행은 시작하지 않았다.
-
-[환경 수정 예시](CUSTOMIZATION.md) 추가 검증: 임시 소스에서 workload O2·stack 32 KiB·reverse-cyclic·
-C 2+2 variant의 G/C/P 빌드를 통과했다. Compiler 옵션 분리, 16-task JSON의
-job/접근 수, 역순 offset·checksum·분석 반복 수, C의 domain/ID를 확인했다.
-FPU 예제는 호스트 checksum=160과 SPARC object의 부동소수점 명령을 확인했다.
-이는 build/정적 검증이며 변경 variant의 RTEMS 실행·시간 결과 검증은 아니다.
-Phase 확장과 다른 SDK/BSP 사용은 설계 예시로, 구현·실행하지 않았다.
-[환경 수정 가이드](CUSTOMIZATION.md)의 변형 예시에 맞춰 실제 생성기·계측 코드를 변경하지는 않았다.
-schema v2의 입력·실행·검증 기록은
-[다중 배열 가이드](INPUTS.md#multi-array)를 따른다.
+입력·실행 절차는 [다중 배열 가이드](INPUTS.md#multi-array),
+완료된 검증과 후속 범위는 [검증 기록](INPUTS.md#multi-array-verification)을 따른다.

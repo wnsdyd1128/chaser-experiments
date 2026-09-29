@@ -12,10 +12,10 @@
 | task 수·주기·sweeps·작업집합·core 배치 | 원본 configuration JSON | `make_plan()` 검증, job 수·접근 수·domain |
 | 독립 실행 횟수·timeout·로그 경로 | 공용 CLI의 `--runs`, `--timeout`, `--output` | ELF 재빌드 없이 새 run output 사용 가능 |
 | 공유 라인 실험의 쌍 수·주기·작업량·반복 수 | false-sharing 원본 scenario JSON | 전용 prepare 재실행, 두 layout 확인 |
-| v2 배열 크기·타입·offset·GEMM 차원 | 원본 JSON의 `arrays`와 task별 커널 필드 | 자료형·bounds·공유 소유권, 접근 수·출력 검증 |
-| 새로운 접근 순서·load/store·산술/FPU 코드 | v2는 `chaser/periodic/kernels/`와 `arrays.py`; legacy는 `patterns.py` 및 패턴별 모듈 | reference stream·횟수·checksum·plan/provenance 및 분석 가정 |
+| v2 배열 형상·크기·타입·offset | 원본 JSON의 `arrays[].shape/strides_elements/length`와 task binding | 자료형·bounds·공유 소유권, GEMM 차원 유도·출력 검증 |
+| 새로운 접근 순서·load/store·산술/FPU 코드 | `kernels/`의 C 템플릿·Python 계약·등록 표 | reference stream·횟수·checksum·plan/provenance 및 분석 가정 |
 | RTEMS task 생성·phase·계측 경계 | `rtems/periodic/init.c`, `probe.c/h` | source와 Python plan/parser의 계약 일치 |
-| G/C/P scheduler 구성 | `build.py::topology_header()`, `init.c::scheduler_index()`, `measurement.py::make_plan()` 및 topology ID | 실제 scheduler와 기대 domain 일치 |
+| G/C/P scheduler 구성 | `codegen/project.py::topology_header()`, `init.c::scheduler_index()`, `measurement.py::make_plan()` 및 topology ID | 실제 scheduler와 기대 domain 일치 |
 | workload 최적화 | 원본 JSON의 `workload_optimization` (`O0`/`O2`) | workload와 init/probe의 compile_commands, ELF 주소, checksum |
 | compiler/BSP·링커 배치 | `rtems/periodic/wscript`, `chaser/periodic/build.py`와 전용 runner의 빌드 설정 | compile_commands, ELF 주소, layout 검사·manifest |
 | 분석기의 캐시 형상·정책 | 생성 시 복사하는 `rtems/baseline/cache.yaml` | 분석기 지원 여부; 실제 HW 설정과 구분 |
@@ -25,99 +25,52 @@
 
 ### 4.1. JSON: task 수·주기·sweeps·working set·배치
 
-이 절의 수정 예제는 legacy 입력이다. v2 배열·커널 필드는
-[다중 배열 입력](INPUTS.md#multi-array)을 따른다.
+입력은 `schema_version: 2`를 사용하며,
+배열·커널 필드는 [다중 배열 입력](INPUTS.md#multi-array)을 따른다.
+다음은 버전 관리되는 GEMM 예제의 주기와 반복 수를 바꾸는 예다.
 
 ```sh
-mkdir -p .cache/configs/periodic-memory-gap/my-study
-cp .cache/configs/periodic-memory-gap/paired-pass-12-sweeps4-balanced-full.json \
-  .cache/configs/periodic-memory-gap/my-study/configuration.json
-```
-
-복사한 파일의 `workload_id`를 새 이름으로 바꾸고 task 수·core·pattern·distinct·
-stride·sweeps·period·horizon·warm-up 등을 수정한다. 최상위
-`array_alignment_bytes`는 32 또는 4096이며 생략 시 4096이다.
-수정한 입력으로 **새 output에 prepare**를 실행한다.
-
-기존 prepared의 C/header/JSON을 직접 고치면 manifest가 깨진다.
-원본 JSON 변경이 이미 빌드한 ELF에 자동 반영되지는 않는다.
-
-두 입력 형식에 공통인 task·job 제한과 legacy 패턴의 제약:
-
-- Task 수 1–32, core 0–3, task_id는 고유한 C identifier.
-- 모든 task period는 horizon과 warm-up 구간을 나누어떨어지게 해야 한다.
-- `job_count=horizon_ticks/period_ticks`, `warmup_jobs=warmup_ticks/period_ticks`.
-  혼합 주기는 공통 horizon에서 task별 job 수가 달라진다.
-- Warm-up 포함 전체 job 레코드는 최대 4096. 예를 들어 32×220 jobs는
-  7040이므로 현재 공용 생성기의 제한을 넘는다.
-- Legacy pattern마다 추가 제약이 있다. 예를 들어 paired-pass를 cyclic으로 바꾸면
-  cyclic에서 허용하지 않는 `width`도 제거한다.
-- Legacy의 `distinct`는 논리적 byte 위치 수다. Stride에 따라 고유 line 수·set 배치가
-  달라지므로 주소 범위와 캐시 working set을 구분한다.
-
-다음은 원본 12-task 예시를 주기 6→12 ms, sweeps 4→8로 바꾸되
-task당 warm-up 20개·측정 200개를 유지하는 예다. Horizon과 warm-up tick도
-함께 바꾼다. 위에서 복사한 `my-study/configuration.json`을 덮어쓰므로
-다른 수정본이 있으면 새 파일명을 사용한다.
-
-```sh
-python3 - <<'PY'
+python3 - <<'PYCONFIG'
 import json
 from pathlib import Path
 from chaser.periodic.measurement import make_plan
 
-source = Path('.cache/configs/periodic-memory-gap/paired-pass-12-sweeps4-balanced-full.json')
-destination = Path('.cache/configs/periodic-memory-gap/my-study/configuration.json')
-config = json.loads(source.read_text())
-config['workload_id'] = 'my-paired-pass-12-p12-s8-v1'
+config = json.loads(Path('configs/periodic-multi-array/gemm-u32-smoke.json').read_text())
+config['workload_id'] = 'my-gemm-p12-s8-v1'
 config['horizon_ticks'] = 12 * 220
 config['warmup_ticks'] = 12 * 20
 for task in config['tasks']:
     task['period_ticks'] = 12
     task['sweeps'] = 8
 for architecture in range(3):
-    plan = make_plan(config, architecture)
-    print(architecture, plan['warmup_jobs'], plan['measurement_jobs'])
+    make_plan(config, architecture)
+destination = Path('.cache/configs/periodic-multi-array/my-study/configuration.json')
 destination.parent.mkdir(parents=True, exist_ok=True)
 destination.write_text(json.dumps(config, indent=2) + '\n')
-PY
+PYCONFIG
 
 python3 -m tools.rtems_periodic prepare \
-  .cache/configs/periodic-memory-gap/my-study/configuration.json \
-  --output .cache/periodic-memory-gap-v1/my-study-v1/prepared
+  .cache/configs/periodic-multi-array/my-study/configuration.json \
+  --output .cache/periodic-multi-array/my-study-v1/prepared
 ```
 
-이 예시는 단위 시간당 명목 접근 횟수를 유지하지만 실제 CPU 이용률 U가 같다는
-보장은 없다. U를 통제하려면 변경한 workload의 독립 P characterization이 필요하다.
+원본 JSON을 수정하고 **새 output에 prepare**를 실행한다. 기존 prepared의
+C/header/JSON을 직접 고치면 manifest가 깨진다. 원본 변경은 이미 빌드한 ELF에
+자동 반영되지 않는다.
 
-Task 수와 working set도 바꾸려면 위 Python 예제에서 `make_plan()`을 호출하기
-전에 다음 블록을 적용한다. `config`는 원본 JSON을 읽은 dict다.
+- Task 수 1–32, core 0–3, task_id는 고유한 C identifier다.
+- 모든 period는 horizon과 warm-up 구간을 나누어떨어지게 해야 한다.
+  `job_count=horizon_ticks/period_ticks`, `warmup_jobs=warmup_ticks/period_ticks`다.
+- Warm-up 포함 전체 job 레코드는 최대 4096개다.
+- 배열 크기는 `shape`/`length`, 간격은 `strides_elements`, 정렬은 배열별
+  `alignment_bytes`(32 또는 4096)로 지정한다. GEMM은 shape에서 차원을 유도한다.
+- 읽기 커널의 `distinct`는 역할별 접근 위치 수이고 `stride_bytes`는 바이트 간격이다.
+  고유 cache line 수와 접근 횟수는 서로 다르다.
+- Task를 복제할 때 읽기 입력은 공유할 수 있지만 쓰기 배열은 별도로 할당해야 한다.
 
-```python
-from copy import deepcopy
-
-template = deepcopy(config['tasks'][0])
-config['workload_id'] = 'my-paired-pass-16-wss4k-p10-s8-v1'
-config['horizon_ticks'] = 10 * 220
-config['warmup_ticks'] = 10 * 20
-config['array_alignment_bytes'] = 32
-config['tasks'] = [
-    dict(template, task_id=f't{i:02d}', core=i % 4,
-         distinct=128, stride=32, sweeps=8, period_ticks=10)
-    for i in range(16)
-]
-```
-
-결과는 16 tasks, P의 코어별 4 tasks, task당 128개의 32 B line=4 KiB,
-주기 10 ms, warm-up 20+측정 200 jobs다. 총 기록은 3520개로 현재 제한 이하다.
-`paired-pass/width=8`의 블록 크기 16이 distinct=128을 나누어떨어지게 한다.
-접근 수는 단순히 `distinct*sweeps`가 아니라 패턴식에 따라 3072 loads/job이다.
-P의 코어당 task 데이터 합 16 KiB는 OS·stack까지 포함한 상주 보장이 아니다.
-
-배치만 비교하고 싶으면 같은 config에서 `task['core']`만 바꾼 별도 입력을 만든다.
-예를 들어 `core=i//4`는 연속된 네 task를 같은 코어로 묶는다. Task가 모두 같다면
-이 순서 변경만으로 큰 효과가 생긴다고 기대할 수 없고, 이질적인 task의 배치 비교에
-유용하다. Task 수를 늘릴 때는 ID 중복·기록 한도·총 데이터 크기·deadline도 확인한다.
+배치만 비교하려면 `task['core']`만 바꾼 별도 입력을 만든다. 주기·sweeps를 바꿀
+때 실제 CPU 이용률 U가 유지된다는 보장은 없으므로 독립 P characterization으로
+다시 확인한다. Warm-up 20개·측정 200개를 사용하는 위 예제는 task당 220 jobs다.
 
 ### 4.2. CLI: 실행 반복·timeout·계측 모드
 
@@ -125,8 +78,8 @@ ELF를 그대로 두고 P를 독립 프로세스 5회, 실행당 최대 7200초�
 새 output을 사용한다. `prepared`는 이미 빌드한 환경이다.
 
 ```sh
-prepared=.cache/periodic-memory-gap-v1/my-study-v1/prepared
-batch=.cache/periodic-memory-gap-v1/my-study-v1/p-repeat5
+prepared=.cache/periodic-multi-array/my-study-v1/prepared
+batch=.cache/periodic-multi-array/my-study-v1/p-repeat5
 nohup python3 -u -m tools.rtems_periodic run "$prepared" \
   --architecture p --runs 5 --timeout 7200 --output "$batch" \
   > "${batch}-supervisor.log" 2>&1 < /dev/null &
@@ -149,11 +102,10 @@ G/C도 각 architecture와 output을 바꾼다. DISPLAY 설정은
 현재 공용 JSON에는 임의 C 함수 삽입, FPU 연산 비율, task별 phase,
 C의 2+2 topology를 지정하는 옵션이 없다. Workload 최적화는
 `workload_optimization: "O0" | "O2"`로 지원한다. v2는 허용하지 않는 필드를
-거부하며, legacy는 모든 미사용 key를 거부하지는 않는다. 생성된 source·plan·
+거부한다. 생성된 source·plan·
 실제 compile command에서 적용 여부를 확인한다.
 
-새 legacy 패턴은 C 생성뿐 아니라 `job_access_count()`, `access_offsets()`와
-checksum 기대값을 맞춘다. v2 커널은 `kernels/`의 정규화·source·reference event와
+새 커널은 `kernels/`의 정규화·source·reference event와
 load/store count·checksum·loop budget을 함께 구현한다. 공용 분석은 v2의 typed
 load/store와 여러 object를 검증한다. FPU·공유 쓰기는 아직 지원하지 않으므로
 별도 수치·소유권·동기화·분석 계약이 필요하다. False-sharing 전용 생성기는
@@ -171,97 +123,139 @@ SDK/BSP를 변경하면 공용 build와 전용 runner의 경로·pkg-config·man
 
 ### 4.3. 생성 코드: 새로운 접근 순서·산술/FPU
 
-아래 코드는 **원본에 적용할 수정 예시**다. 문서를 추가하면서 생성기 자체를
-변경한 것은 아니다. 새 이름을 JSON에 넣기 전에 대응 코드를 구현해야 한다.
+<a id="kernel-interface"></a>
 
-**예 A: `reverse-cyclic` 패턴 추가.** 기존 cyclic과 접근 수는 같고 순서만
-역순으로 바꾼다. `chaser/periodic/patterns.py`에서 다음 다섯 부분을 맞춘다.
+#### v2: 직접 작성하는 C 커널과 Python 계약
 
-1. `validate_pattern()`의 허용 패턴과 cyclic의 region-field 금지 조건에
-   `reverse-cyclic`을 함께 넣는다. `width`는 기존처럼 허용하지 않는다.
+현재 구현된 인터페이스는 **원본 JSON + 커널 C 템플릿 + Python 계약**이다.
+GEMM의 C 루프는 [gemm.c.in](../../../chaser/periodic/kernels/gemm.c.in)에,
+검증·reference stream·checksum·stride 값은
+[gemm.py](../../../chaser/periodic/kernels/gemm.py)에 있다.
+JSON에는 형상·타입·binding·주기·sweeps를 두고, 연산 변경은 원본 C에 작성한 뒤
+새 output으로 공용 prepare/analyze/run을 사용한다. prepared/workload.c를 직접
+고치거나 JSON 문자열에 임의 C를 넣는 인터페이스는 제공하지 않는다.
 
-```python
-# validate_pattern()의 기존 대응 조건을 교체한다.
-if pattern not in ('cyclic', 'reverse-cyclic', 'hot-cold', 'phase'):
-    raise ValueError('Invalid workload pattern')
-fields = ('hot_distinct', 'hot_repeats', 'cold_repeats')
-if pattern in ('cyclic', 'reverse-cyclic'):
-    if any(key in task for key in fields):
-        raise ValueError('Region parameters are not valid for cyclic workloads')
-    return
-```
+새 커널은 같은 소유 디렉터리에 `<name>.py`, `<name>.c.in`을 만들고
+[kernels/__init__.py](../../../chaser/periodic/kernels/__init__.py)의 `KERNELS`에
+명시적으로 등록한다. Python 모듈은 신뢰하는 프로젝트 코드이며 JSON에서 임의
+모듈을 import하지 않는다.
 
-2. `job_access_count()`에서 cyclic의 수식 분기를 공유한다.
+| 인터페이스 | 계약 |
+|---|---|
+| `Kernel(module, roles, parameter_type=NoParameters, write_roles=())` | 매개변수 dataclass의 필드에서 허용/필수 JSON key를 유도. 기본값 없는 필드는 필수. 쓰기 object는 task 간 독점 |
+| `module.validate(task, registry)` | `TaskSpec`·`ArrayRegistry`를 받아 타입·shape·bounds를 검증하고 `KernelMetrics` 반환. `task.parameters`의 선택 값 유도 가능 |
+| `module.events(task, registry)` | sweeps와 checksum용 접근을 포함한 **한 job 전체**의 실제 순서. `ReferenceEvent(array_id, offset_bytes, access_size_bytes, operation)`을 yield |
+| `module.source(task, registry)` | `task_job_<task_id>(void)`를 정의하는 C 문자열 **목록** 반환. C 템플릿을 읽는 `render_template()` 사용 가능 |
+| `module.footprint(task, registry)` | 선택적 빠른 계산. `MemoryFootprint(allocation_bytes, unique_accessed_bytes, unique_cache_lines)` 반환. 생략하면 reference events로 계산하며 count·typed bounds·쓰기 권한도 검사 |
 
-```python
-if task.get('pattern', 'cyclic') in ('cyclic', 'reverse-cyclic'):
-    return task['sweeps'] * task['distinct']
-```
+내부 모델은 [`workload/model.py`](../../../chaser/periodic/workload/model.py)에 정의한다.
+`ArrayRegistry`는 `dict[str, ArraySpec]`, `task.arrays`는 `dict[str, ArrayBinding]`이다.
+배열은 `array.symbol`, `array.length`, `array.shape`처럼 속성으로 읽는다. 형상을
+선언하면 shape/strides_elements는 tuple이며, 미선언이면 None이다. binding의
+`offset_elements`는 바이트가 아닌 원소 단위다. `task.parameters`는 GEMM의
+`GemmParameters`, 읽기 커널의 `ReadParameters` 또는 사용자 정의 dataclass다.
 
-3. `access_offsets()`의 region 처리 전에 다음 분기를 추가한다.
+`KernelMetrics` 필드는 `source_loads`, `source_stores`, `expected_checksum`,
+`checksum_kind`, `loop_iterations`이고 `source_accesses`는 계산된 property다.
+`normalize_task()`가 metrics와 footprint를 채운 뒤에 source/events를 호출한다.
+validate/events/footprint에서 dict를 반환하던 사용자 모듈은 이 dataclass 반환형으로
+수정해야 한다. `KernelImplementation` Protocol이 모듈의 필수 함수 계약을 명시한다.
 
-```python
-if pattern == 'reverse-cyclic':
-    for _ in range(task['sweeps']):
-        yield from range((task['distinct'] - 1) * task['stride'],
-                         -1, -task['stride'])
-    return
-```
-
-4. `kernel_body()`의 region 처리 전에 다음 분기를 추가한다.
-
-```python
-if pattern == 'reverse-cyclic':
-    last = (task['distinct'] - 1) * stride
-    return [f'    for (int i = {last}; i >= 0; i -= {stride})',
-            f'        sum += data_{name}[i];']
-```
-
-5. `loop_iterations()`도 cyclic과 같은 비-region 패턴으로 취급한다.
-   기존 `overhead` 계산부터 함수 끝까지 다음과 같이 바꾼다.
+예를 들어 아래 선언은 JSON의 count를 필수로, increment를 기본값 0인 선택 필드로
+정의한다. 커널에서는 `task.parameters.count`, `task.parameters.increment`로 읽고
+validate에서 수치 범위·타입·bounds를 확인한다. Dataclass 생성 자체는 입력 검증을
+대신하지 않는다. 공통 task 필드나 계산 결과와 겹치지 않는 매개변수 이름을 사용한다.
 
 ```python
-overhead = task['sweeps']
-if pattern not in ('cyclic', 'reverse-cyclic'):
-    overhead += task['sweeps'] * (task['hot_repeats'] + task['cold_repeats'])
-    if pattern == 'phase':
-        overhead += task['sweeps'] + 1
-return job_access_count(task) + overhead
+from dataclasses import dataclass
+
+@dataclass
+class CopyParameters:
+    count: int
+    increment: int = 0
 ```
 
-JSON 예시는 `pattern=reverse-cyclic, distinct=8, stride=32, sweeps=2`다.
-기대 offset은 `[224,192,160,128,96,64,32,0]` 두 번, checksum은 배열을 1로
-초기화하므로 16이다. 수정한 `loop_iterations()`의 비-region 경로는 이 경우
-18을 반환한다. 이 세 값을 회귀 검사하고 generated C의 순서와 비교한다.
-Prepare 및 analyze로 실제 ELF의 주소·byte-load stream까지 확인한다.
+JSON 입력과 저장된 plan의 필드 형식은 그대로다. 정규화 때 dataclass로 변환하고
+`TaskSpec.to_dict()`/`ArraySpec.to_dict()`로 plan에 기록한다. 저장된 task를 읽을 때는
+`task_from_plan()`을 사용한다. `workload_source()`는 저장된 dict와 정규화된
+`TaskSpec`/`ArraySpec`을 모두 받을 수 있다. 생성기 내부는 별도
+[`codegen/model.py`](../../../chaser/periodic/codegen/model.py)의 `ArrayDeclaration`,
+`JobDefinition`, `PolicyHeader`·`TaskSchedule`을 사용한다.
 
-**예 B: load와 FPU 연산을 섞은 전용 job.** 아래는 생성해야 할 C 함수의 예시다.
-배열 선언·초기화·함수 포인터 등록은 전용 생성기가 수행해야 한다.
+공용 검사기는 job당 10,000,000 source accesses 상한을 적용한다. validate 내부에서
+checksum 등 큰 반복을 수행한다면 먼저 이 상한을 검사해야 한다.
+분석 단계에서는 빠른 footprint를 제공한 커널도 reference count·bounds·권한을 검사한다.
+이는 Python 계약의 자기 일관성 검사이며 C의 정확성 증명을 대신하지 않는다.
+
+`render_template(path, task, registry, **substitutions)`는 다음 값을 치환한다.
+
+- `${task_id}`, `${sweeps}` 등 공통 필드와 매개변수 dataclass·metrics의 필드.
+- `${A}`처럼 역할 이름은 기본적으로 물리 배열 symbol, `${A_offset}`은 원소 offset.
+- 모듈이 전달한 추가 정수·식별자. GEMM은 `${A_step}` 같은 열 stride를 전달하고
+  `${A}[${A_offset} + i * ${lda} + k * ${A_step}]` 주소식은 C 파일에 직접 작성한다.
+
+치환값은 정수 또는 C identifier만 허용하며 C 식·문장 문자열, bool, float는 거부한다.
+인덱스 계산·연산자·분기·루프는 C 템플릿에 둔다. `reads.c.in`도 같은 규칙을 따른다.
+커널 선택은 `Kernel` 전략으로, 공통 C 파일의 조립은
+[`codegen/workload.py`](../../../chaser/periodic/codegen/workload.py)로 분리한다.
+[`codegen/project.py`](../../../chaser/periodic/codegen/project.py)는 RTEMS 파일과 정책
+header를 생성하고 `build.py`는 빌드·ELF 검사·manifest 절차를 조정한다.
+정적 공개 header와 linker script의 원본은 `rtems/periodic/workload.h`, `layout.ld`다.
+기존 `build.workload_source()`와 `build.topology_header()` import는 계속 사용할 수 있다.
+
+문자 그대로의 `$`는 템플릿에서 `$$`로 쓴다. 예를 들어 새 커널이 유효한 N개
+uint32 입력을 합한다면 C 본문을 아래처럼 직접 작성할 수 있다. validate는 N개
+typed 접근의 bounds와 sweeps*N load 수, 초기값 기반 checksum을 확인해야 한다.
+events도 이 루프의 순서를 그대로 정의한다.
 
 ```c
-uint32_t task_job_example(void)
-{
+/** @brief Sum the validated input span. @return Unsigned sum modulo 2^32. */
+ANALYZE uint32_t task_job_${task_id}(void) {
     uint32_t sum = 0;
-    float fp = 0.0f;
-    for (int i = 0; i < 64; ++i) {
-        uint8_t value = data_example[i * 32];
-        sum += value;
-        fp += (float)value * 1.5f;
-    }
-    return sum + (uint32_t)fp;
+    for (int s = 0; s < ${sweeps}; ++s)
+        for (int i = 0; i < ${count}; ++i)
+            sum += ${input}[${input_offset} + i];
+    return sum;
 }
 ```
 
-전제는 `volatile uint8_t data_example[64 * 32]`의 전체 요소를 1로 초기화하는 것이다.
-이 job은 64번 load하고 checksum은 64+96=160이다. legacy private-byte plan의
-checksum=load 수 규칙과 다르므로 전용 planner/생성기와 `workload_expected[]`를
-모두 160에 맞춘다. `job_access_count()`를 160으로 바꿔 맞추면 안 된다.
-`sum`만 반환하면 최적화로 불필요한 FPU 연산이 제거될 수 있어 결과에 포함한다.
+생성기는 전역 volatile 배열과 초기화·함수 포인터 등록을 담당한다. C 템플릿은
+배열을 다시 선언하거나 RTEMS task/계측 코드를 구현하지 않는다. 반환값은 uint32다.
+`ANALYZE` root만 있어도 분석할 수 있다. 보조 함수가 필요하면 `INLINE` annotation과
+`kernel_<task_id>` 또는 `kernel_<task_id>_<suffix>` 이름을 사용한다.
+APE가 해석할 수 있는 bounded loop·typed 전역 접근이 필요하며, 지원하지 않는
+호출·접근은 분석 실패로 다룬다. 커널 추가만으로 FPU·공유 쓰기·RF 적격성을 얻지 않는다.
 
-현재 `init.c`는 worker를 `RTEMS_FLOATING_POINT`로 생성하고 wscript도 hard-float를
-지정한다. 다른 BSP에서는 이를 재확인한다. Disassembly에서 FPU 명령과 load 수를
-확인하고 checksum·G/C/P 동일 코드를 검증한다. Store도 추가하면 쓰기 대상·기대값·
-read/write 분석을 함께 설계해야 한다. 기존 private-load 분석 적격성은 이월하지 않는다.
+**기존 GEMM에서 새 접근 순서 커널을 만드는 예:**
+
+1. `gemm.py`와 `gemm.c.in`을 `gemm_ji.py`와 `gemm_ji.c.in`으로 복사한다.
+   `source()`는 모듈 옆의 같은 이름 `.c.in`을 읽는다.
+2. C 템플릿의 곱셈 루프를 j→i→k로 바꾸고 Python `events()`의 대응 루프도 바꾼다.
+   출력 hash 순서는 두 파일에서 기존 i→j를 유지한다.
+3. `validate()`의 loop budget은 `sweeps*(1+n+n*m+n*m*k)+m+m*n`으로 변경한다.
+   이 예에서는 load/store 수·checksum·footprint는 그대로다.
+4. `kernels/__init__.py`에서 모듈을 import하고 아래 항목을 추가한다.
+
+```python
+from chaser.periodic.kernels import gemm_ji
+from chaser.periodic.workload import GemmParameters
+
+# KERNELS 정의 뒤에 추가
+KERNELS['gemm-u32-ji'] = Kernel(gemm_ji, ('A', 'B', 'C'),
+    parameter_type=GemmParameters, write_roles=('C',))
+```
+
+5. 원본 예제 JSON을 새 이름으로 복사하고 workload_id와 pattern을 변경한다.
+   `make_plan()` → host O0/O2 출력·padding 검사 → 새 prepare/analyze에서
+   실제 ELF 주소·reference stream 비교 → run의 checksum·raw 재검증 순서로 확인한다.
+
+같은 인터페이스로 새로운 연산도 등록할 수 있으며 이때는 validate/events/C를 모두
+정의한다. 공용 planner나 arrays.py에 새 pattern 분기를 추가하지 않는다.
+GEMM의 선택적 footprint 수식이 새 연산에도 맞는지 확인하고, 맞지 않으면
+해당 hook을 생략해 정확한 event 기반 계산을 사용하거나 새 수식을 검증한다.
+
+필요한 선언을
+source()가 생성 소스에 포함해야 하며 커스텀 compiler/linker 옵션은 별도 빌드 변경이다.
 
 ### 4.4. RTEMS: task 생성·phase·계측
 
@@ -347,7 +341,7 @@ GR740을 다른 BSP 이름으로 치환하는 것만으로 4-core 계측 이식�
 별도 variant의 수정 예다. G/P는 유지하고 C만 core 0–1과 core 2–3의
 두 EDF scheduler로 나눈다. JSON의 `core` 의미는 유지한다.
 
-**① `build.py::topology_header()`의 할당 배열**
+**① `codegen/project.py::topology_header()`의 할당 배열**
 
 ```python
 assignments = ([0, 0, 0, 0], [0, 0, 1, 1], [0, 1, 2, 3])[architecture]

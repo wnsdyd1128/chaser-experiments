@@ -5,9 +5,8 @@ from hashlib import sha256
 import json
 import re
 
-from chaser.periodic.patterns import job_access_count, validate_pattern
 from chaser.periodic.arrays import fields, normalize_arrays, validate_ownership
-from chaser.periodic.kernels import normalize_task
+from chaser.periodic.kernels import kernel_for, normalize_task
 
 CONTRACT = 'chaser-periodic-measurement-v3'
 TOPOLOGIES = ('g-edfsmp-4-v1', 'c-edfsmp-1-3-v1', 'p-edfsmp-4x1-v1')
@@ -25,57 +24,63 @@ def make_plan(configuration: dict, architecture: int) -> dict:
 
     The common horizon determines every task's job count. No utilization or
     calibrated-policy claim is inferred from the supplied core assignment.
+
+    .. deprecated:: 2
+       Schema-less private-array inputs were removed. Use schema_version: 2.
     """
     if type(architecture) is not int or architecture not in range(3):
         raise ValueError('Architecture must be G=0, C=1, or P=2')
     version = configuration.get('schema_version')
-    explicit = 'schema_version' in configuration
-    if explicit and (type(version) is not int or version != 2):
+    if 'schema_version' not in configuration:
+        raise ValueError('Legacy periodic input is deprecated; use schema_version: 2 with explicit arrays')
+    if type(version) is not int or version != 2:
         raise ValueError('Unknown input schema version')
-    if not explicit and ('arrays' in configuration or any('arrays' in t for t in configuration['tasks'])):
-        raise ValueError('Explicit arrays require schema_version 2')
-    if explicit:
-        fields(configuration, ('schema_version', 'workload_id', 'family_id', 'policy_id',
-            'measurement_contract_id', 'horizon_ticks', 'warmup_ticks', 'u_repeats',
-            'workload_optimization', 'arrays', 'tasks'),
-            ('workload_id', 'family_id', 'policy_id', 'horizon_ticks', 'arrays', 'tasks'))
-        if not isinstance(configuration['tasks'], list):
-            raise ValueError('Tasks must be a list')
-        arrays = normalize_arrays(configuration['arrays'])
-        registry = {a['array_id']: a for a in arrays}
-        if configuration.get('workload_optimization', 'O0') not in ('O0', 'O2'):
-            raise ValueError('Workload optimization must be O0 or O2')
+    fields(configuration, ('schema_version', 'workload_id', 'family_id', 'policy_id',
+        'measurement_contract_id', 'horizon_ticks', 'warmup_ticks', 'u_repeats',
+        'workload_optimization', 'arrays', 'tasks'),
+        ('workload_id', 'family_id', 'policy_id', 'horizon_ticks', 'arrays', 'tasks'))
+    if not isinstance(configuration['tasks'], list):
+        raise ValueError('Tasks must be a list')
+    arrays = normalize_arrays(configuration['arrays'])
+    registry = {a.array_id: a for a in arrays}
+    if configuration.get('workload_optimization', 'O0') not in ('O0', 'O2'):
+        raise ValueError('Workload optimization must be O0 or O2')
+    workloads = [normalize_task(t, registry) for t in configuration['tasks']]
+    plan = schedule_plan(configuration, architecture, [t.to_dict() for t in workloads])
+    validate_ownership(workloads, arrays,
+                       write_roles={t.pattern: kernel_for(t.pattern).write_roles for t in workloads})
+    plan.update(input_schema_version=2, kernel_contract_id='periodic-multi-array-v1',
+                arrays=[a.to_dict() for a in arrays],
+                workload_optimization=configuration.get('workload_optimization', 'O0'))
+    plan['plan_hash'] = digest(plan)
+    return plan
+
+
+def schedule_plan(configuration: dict, architecture: int, normalized_tasks: list[dict]) -> dict:
+    """Validate releases and accounting independently of kernel representation."""
+    if type(architecture) is not int or architecture not in range(3):
+        raise ValueError('Architecture must be G=0, C=1, or P=2')
     for key in ('workload_id', 'family_id', 'policy_id'):
         if not isinstance(configuration[key], str) or not configuration[key]:
             raise ValueError(f'Nonempty {key} is required')
     horizon = configuration['horizon_ticks']
     if type(horizon) is not int or not 1 <= horizon <= 1_000_000:
         raise ValueError('Positive bounded horizon is required')
-    alignment = configuration.get('array_alignment_bytes', 4096)
-    if type(alignment) is not int or alignment not in (32, 4096):
-        raise ValueError('Array alignment must be 32 or 4096 bytes')
-    if not 1 <= len(configuration['tasks']) <= 32:
+    if not 1 <= len(normalized_tasks) <= 32:
         raise ValueError('Between 1 and 32 tasks are supported')
     tasks = []
-    for task in configuration['tasks']:
-        task = normalize_task(task, registry) if explicit else dict(task)
+    for task in normalized_tasks:
+        task = dict(task)
         if (not isinstance(task['task_id'], str)
                 or not re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*', task['task_id'])):
             raise ValueError('Task IDs must be C identifiers')
         bounds = [('period_ticks', 1, horizon), ('core', 0, 3), ('sweeps', 1, 1_000_000)]
-        if not explicit:
-            bounds += [('distinct', 1, 131072), ('stride', 1, 4096)]
         for key, low, high in bounds:
             if type(task[key]) is not int or not low <= task[key] <= high:
                 raise ValueError(f'Invalid {key}')
         if horizon % task['period_ticks']:
             raise ValueError('Every period must divide the common horizon')
-        if not explicit:
-            validate_pattern(task)
         task['job_count'] = horizon // task['period_ticks']
-        if not explicit:
-            task['data_size'] = task['distinct'] * task['stride']
-            task['expected_checksum'] = job_access_count(task) % (1 << 32)
         task['domain'] = (list(range(4)) if architecture == 0 else
                           ([0] if task['core'] == 0 else [1, 2, 3]) if architecture == 1
                           else [task['core']])
@@ -84,8 +89,6 @@ def make_plan(configuration: dict, architecture: int) -> dict:
         raise ValueError('Task IDs must be unique')
     if sum(t['job_count'] for t in tasks) > 4096:
         raise ValueError('At most 4096 job records per run')
-    if not explicit and sum((t['data_size'] + 4095) // 4096 * 4096 for t in tasks) > 16 * 1024**2:
-        raise ValueError('Workload data exceeds the reserved 16 MiB')
     if configuration.get('measurement_contract_id', CONTRACT) != CONTRACT:
         raise ValueError('Unknown measurement contract')
     warmup = configuration.get('warmup_ticks')
@@ -100,7 +103,7 @@ def make_plan(configuration: dict, architecture: int) -> dict:
     plan = {k: configuration[k] for k in ('workload_id', 'family_id', 'policy_id')}
     plan.update(contract_id=CONTRACT, architecture=architecture,
                  topology_id=TOPOLOGIES[architecture], tick_ns=TICK_NS,
-                horizon_ticks=horizon, tasks=tasks, array_alignment_bytes=alignment,
+                horizon_ticks=horizon, tasks=tasks,
                 measurement_source='measured', execution_backend='laysim-gr740',
                 checksum_boundary='after-completion-before-next-period',
                 locality_scope='one-cold-task-local-job',
@@ -112,12 +115,6 @@ def make_plan(configuration: dict, architecture: int) -> dict:
                 measurement_boundary_id='public-workload-bracket-v1')
     plan['mapping_hash'] = digest({'topology': plan['topology_id'],
                                   'domains': {t['task_id']: t['domain'] for t in tasks}})
-    if explicit:
-        validate_ownership(tasks, arrays)
-        del plan['array_alignment_bytes']
-        plan.update(input_schema_version=2, kernel_contract_id='periodic-multi-array-v1',
-                    arrays=arrays, workload_optimization=configuration.get('workload_optimization', 'O0'))
-    plan['plan_hash'] = digest(plan)
     return plan
 
 

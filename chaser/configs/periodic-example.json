@@ -6,8 +6,71 @@
   "warmup_ticks": 20,
   "u_repeats": 5,
   "tasks": [
-    {"task_id": "packed", "distinct": 8, "stride": 1, "sweeps": 1200, "core": 0, "period_ticks": 20},
-    {"task_id": "spread", "distinct": 8, "stride": 32, "sweeps": 1200, "core": 1, "period_ticks": 20},
-    {"task_id": "conflict", "distinct": 8, "stride": 4096, "sweeps": 1200, "core": 2, "period_ticks": 20}
+    {
+      "task_id": "packed",
+      "distinct": 8,
+      "sweeps": 1200,
+      "core": 0,
+      "period_ticks": 20,
+      "pattern": "cyclic",
+      "stride_bytes": 1,
+      "arrays": {
+        "input": {
+          "array_id": "packed"
+        }
+      }
+    },
+    {
+      "task_id": "spread",
+      "distinct": 8,
+      "sweeps": 1200,
+      "core": 1,
+      "period_ticks": 20,
+      "pattern": "cyclic",
+      "stride_bytes": 32,
+      "arrays": {
+        "input": {
+          "array_id": "spread"
+        }
+      }
+    },
+    {
+      "task_id": "conflict",
+      "distinct": 8,
+      "sweeps": 1200,
+      "core": 2,
+      "period_ticks": 20,
+      "pattern": "cyclic",
+      "stride_bytes": 4096,
+      "arrays": {
+        "input": {
+          "array_id": "conflict"
+        }
+      }
+    }
+  ],
+  "schema_version": 2,
+  "arrays": [
+    {
+      "array_id": "packed",
+      "element_type": "uint8_t",
+      "length": 8,
+      "alignment_bytes": 4096,
+      "initial_value": 1
+    },
+    {
+      "array_id": "spread",
+      "element_type": "uint8_t",
+      "length": 256,
+      "alignment_bytes": 4096,
+      "initial_value": 1
+    },
+    {
+      "array_id": "conflict",
+      "element_type": "uint8_t",
+      "length": 32768,
+      "alignment_bytes": 4096,
+      "initial_value": 1
+    }
   ]
 }

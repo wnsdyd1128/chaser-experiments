@@ -9,13 +9,18 @@ from chaser.periodic.build import workload_source
 
 @pytest.mark.parametrize('optimization', ['O0', 'O2'])
 @pytest.mark.parametrize('overflow', [False, True])
-def test_nonuniform_padded_offset_gemm_preserves_inputs_and_padding(config, tmp_path, optimization, overflow):
+@pytest.mark.parametrize('layout', ['flat', 'shape', 'strided'])
+def test_nonuniform_padded_offset_gemm_preserves_inputs_and_padding(config, tmp_path, optimization, overflow, layout):
     for a, length, initial in zip(config['arrays'], (14, 17, 12), (1, 2, 99)):
         a.update(length=length, initial_value=initial)
     t = config['tasks'][0]
     t.update(m=2, n=2, k=3, lda=5, ldb=4, ldc=4, sweeps=3)
     for role, offset in zip(('A','B','C'), (2, 3, 1)):
         t['arrays'][role]['offset_elements'] = offset
+    if layout != 'flat':
+        for a, shape, ld in zip(config['arrays'], ([2, 3], [3, 2], [2, 2]), (5, 4, 4)):
+            a.update(shape=shape, strides_elements=[ld, 2 if layout == 'strided' else 1])
+        for key in ('m', 'n', 'k', 'lda', 'ldb', 'ldc'): t.pop(key)
     plan = make_plan(config, 2)
     (tmp_path / 'workload.h').write_text('#include <stdint.h>\n')
     (tmp_path / 'workload.c').write_text(workload_source(plan['tasks'], arrays=plan['arrays']))
@@ -32,12 +37,14 @@ def test_nonuniform_padded_offset_gemm_preserves_inputs_and_padding(config, tmp_
     if overflow:
         aa[0][1] = 0xffffffff
         bb[1][1] = 0xfffffffe
-    a[2:5], a[7:10] = aa[0], aa[1]
-    b[3:5], b[7:9], b[11:13] = bb[0], bb[1], bb[2]
+    ai, bi, ci = (([2, 4, 6, 7, 9, 11], [3, 5, 7, 9, 11, 13], [1, 3, 5, 7])
+                  if layout == 'strided' else ([2, 3, 4, 7, 8, 9], [3, 4, 7, 8, 11, 12], [1, 2, 5, 6]))
+    for index, value in zip(ai, sum(aa, [])): a[index] = value
+    for index, value in zip(bi, sum(bb, [])): b[index] = value
     before_a, before_b = list(a), list(b)
     dense = [[sum(x*y for x, y in zip(row, col)) % 2**32 for col in zip(*bb)] for row in aa]
     expected = [99]*12
-    expected[1:3], expected[5:7] = dense[0], dense[1]
+    for index, value in zip(ci, sum(dense, [])): expected[index] = value
     checksum = 2166136261
     for row in dense:
         for value in row:

@@ -2,6 +2,7 @@
 
 from copy import deepcopy
 import json
+from pathlib import Path
 import pytest
 
 from chaser.dataset.builder import Workload, freeze_split
@@ -10,6 +11,13 @@ from chaser.periodic.dataset import characterize, to_measurement, verify_frozen_
 from chaser.dataset.splits import taskset_signature
 from tools.rtems_smoke import file_hash, write_json
 from test_periodic import evidence
+
+
+@pytest.fixture
+def archived_plan():
+    """Exercise historical label conversion without regenerating legacy jobs."""
+    path = Path(__file__).parent / 'periodic/multi_array/fixtures/legacy-raw.json'
+    return json.loads(path.read_text())['plan']
 
 
 def batch(plan, *, mode=0):
@@ -50,16 +58,16 @@ def test_utilization_rejects_incomparable_or_incomplete_measurements(failure):
 
 
 @pytest.mark.parametrize('field,value', [('trace', True), ('empty', True), ('mode', 1)])
-def test_diagnostic_runs_cannot_become_timing_labels(field, value):
-    plan, _ = evidence()
+def test_diagnostic_runs_cannot_become_timing_labels(archived_plan, field, value):
+    plan = archived_plan
     row = batch(plan)[0]
     row[field] = value
     with pytest.raises(ValueError):
         to_measurement(plan, row)
 
 
-def test_failed_run_keeps_its_identity_without_valid_label_metrics():
-    plan, _ = evidence()
+def test_failed_run_keeps_its_identity_without_valid_label_metrics(archived_plan):
+    plan = archived_plan
     row = batch(plan)[0]
     row['execution_status'] = 'failed'
     m = to_measurement(plan, row)

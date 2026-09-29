@@ -11,7 +11,8 @@ from tools.rtems_periodic import run
 
 
 @pytest.mark.parametrize('optimization', ['O0', 'O2'])
-def test_gemm_real_elf_typed_store_stream_and_layout(config, tmp_path, optimization):
+def test_gemm_real_elf_typed_store_stream_and_layout(shaped_config, tmp_path, optimization):
+    config = shaped_config
     config['workload_optimization'] = optimization
     config['arrays'][1]['alignment_bytes'] = 4096
     prepared = tmp_path / 'prepared'
@@ -25,7 +26,7 @@ def test_gemm_real_elf_typed_store_stream_and_layout(config, tmp_path, optimizat
     assert symbols['data_c0'][1] == 16
     for replacement in ((0x1000004, 24), (0x1000000, 25)):
         with pytest.raises(ValueError):
-            check_layout(dict(symbols, data_a0=replacement), plan['tasks'], arrays=plan['arrays'])
+            check_layout(dict(symbols, data_a0=replacement), plan['arrays'])
     result = analyze(prepared)
     assert result['cases']['gemm0']['modeled_accesses'] == 60
     assert result['cases']['gemm0']['clp'] == [57/60, 0, 3/60]
@@ -100,27 +101,26 @@ def test_snapshot_revalidation_and_diagnostic_dataset_guard(config, tmp_path):
     with pytest.raises(ValueError, match='provenance'): load_batch(prepared, output)
     path.write_text(original)
 
-
-def test_legacy_sparc_layout_matches_preimplementation_fixture(tmp_path):
-    row = json.loads((Path(__file__).parent / 'fixtures/legacy.json').read_text())[0]
-    prepared = tmp_path / 'legacy'
-    prepare(row['configuration'], prepared)
-    assert json.loads((prepared / 'layout.json').read_text()) == row['layout']
-
-
-def test_padded_offset_gemm_real_ape_stream(config, tmp_path):
+@pytest.mark.parametrize('column_step', [1, 2])
+def test_padded_offset_gemm_real_ape_stream(shaped_config, tmp_path, column_step):
+    config = shaped_config
     for a, length in zip(config['arrays'], (14, 17, 12)):
         a['length'] = length
     task = config['tasks'][0]
-    task.update(lda=5, ldb=4, ldc=4)
+    for array, ld in zip(config['arrays'], (5, 4, 4)):
+        array['strides_elements'] = [ld, column_step]
     for role, offset in zip(('A', 'B', 'C'), (2, 3, 1)):
         task['arrays'][role]['offset_elements'] = offset
     prepared = tmp_path / 'padded'
     prepare(config, prepared)
     result = analyze(prepared)
-    assert result['cases']['gemm0']['clp'] == [55/60, 0, 5/60]
+    assert result['cases']['gemm0']['modeled_accesses'] == 60
+    if column_step == 1:
+        assert result['cases']['gemm0']['clp'] == [55/60, 0, 5/60]
     events = json.loads((prepared / 'analysis/p/gemm0/events.json').read_text())['events']
     symbols = read_symbols(prepared / 'build/p.exe')
     assert [(e['object_id'], e['linked_address']) for e in events[:7]] == [
         ('global::data_'+name, symbols['data_'+name][0]+offset)
-        for name, offset in [('a0',8),('b0',12),('a0',12),('b0',28),('a0',16),('b0',44),('c0',4)]]
+        for name, offset in [('a0',8),('b0',12),('a0',8+4*column_step),('b0',28),
+                             ('a0',8+8*column_step),('b0',44),('c0',4)]]
+

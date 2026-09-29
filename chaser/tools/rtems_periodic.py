@@ -34,6 +34,8 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
     check_inputs(prepared, manifest)
     name = ('g', 'c', 'p')[architecture]
     plan = json.loads((prepared / name / 'plan.json').read_text())
+    if plan.get('input_schema_version') != 2:
+        raise ValueError('Legacy prepared input is deprecated; prepare schema_version: 2 arrays')
     if type(mode) is not int or not 0 <= mode <= len(plan['tasks']) or (mode and architecture != 2):
         raise ValueError('Characterization needs one task and the P ELF')
     elf = prepared / f'build/{name}.exe'
@@ -45,9 +47,6 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
     for relative in ('chaser/periodic/measurement.py', 'chaser/periodic/build.py',
                      'chaser/periodic/arrays.py', 'chaser/periodic/kernels/__init__.py',
                      'chaser/periodic/kernels/reads.py', 'chaser/periodic/kernels/gemm.py',
-                     'chaser/periodic/patterns.py', 'chaser/periodic/structures.py',
-                     'chaser/periodic/recipes.py',
-                     'chaser/periodic/staged_recipes.py',
                      'chaser/periodic/dataset.py', 'tools/rtems_periodic.py',
                      'tools/rtems_smoke.py'):
         destination = implementation / relative
@@ -70,9 +69,8 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
                                            for p in implementation.rglob('*.py')},
                     execution_backend='laysim-gr740', measurement_source='measured',
                     scope='periodic-diagnostic' if trace else 'empty-overhead' if empty else 'periodic-timing')
-    if plan.get('input_schema_version') == 2:
-        protocol.update(input_schema_version=2, kernel_contract_id=plan['kernel_contract_id'],
-                        workload_optimization=plan['workload_optimization'])
+    protocol.update(input_schema_version=plan['input_schema_version'], kernel_contract_id=plan['kernel_contract_id'],
+                    workload_optimization=plan['workload_optimization'])
     write_json(output / 'protocol.json', protocol)
     records = []
     with (output / 'measurements.jsonl').open('x') as stream:

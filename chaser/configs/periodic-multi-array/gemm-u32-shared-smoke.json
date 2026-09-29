@@ -12,30 +12,42 @@
     {
       "array_id": "a0",
       "element_type": "uint32_t",
-      "length": 6,
       "alignment_bytes": 32,
-      "initial_value": 1
+      "initial_value": 1,
+      "shape": [
+        2,
+        3
+      ]
     },
     {
       "array_id": "b0",
       "element_type": "uint32_t",
-      "length": 6,
       "alignment_bytes": 32,
-      "initial_value": 2
+      "initial_value": 2,
+      "shape": [
+        3,
+        2
+      ]
     },
     {
       "array_id": "c0",
       "element_type": "uint32_t",
-      "length": 4,
       "alignment_bytes": 32,
-      "initial_value": 0
+      "initial_value": 0,
+      "shape": [
+        2,
+        2
+      ]
     },
     {
       "array_id": "c1",
       "element_type": "uint32_t",
-      "length": 4,
       "alignment_bytes": 4096,
-      "initial_value": 0
+      "initial_value": 0,
+      "shape": [
+        2,
+        2
+      ]
     }
   ],
   "tasks": [
@@ -56,12 +68,6 @@
           "offset_elements": 0
         }
       },
-      "m": 2,
-      "n": 2,
-      "k": 3,
-      "lda": 3,
-      "ldb": 2,
-      "ldc": 2,
       "sweeps": 2,
       "core": 0,
       "period_ticks": 10
@@ -83,12 +89,6 @@
           "offset_elements": 0
         }
       },
-      "m": 2,
-      "n": 2,
-      "k": 3,
-      "lda": 3,
-      "ldb": 2,
-      "ldc": 2,
       "sweeps": 2,
       "core": 2,
       "period_ticks": 10

@@ -6,8 +6,7 @@
 
 | 종류 | 입력 | 생성·실행 도구 |
 |---|---|---|
-| Legacy private-array workload | schema를 생략한 `tasks` JSON, `distinct`/`stride` | `python3 -m tools.rtems_periodic prepare/analyze/run` |
-| 명시적 다중 배열 workload | `schema_version: 2`, `arrays`, 역할별 task binding | 같은 공용 CLI; cyclic/paired-read/gemm-u32 |
+| 명시적 다중 배열 workload | `schema_version: 2`, `arrays`, 역할별 task binding | `python3 -m tools.rtems_periodic`의 `prepare`, `analyze`, `run`; cyclic/paired-read/gemm-u32 |
 | False-sharing reader/writer | `pairs`, `layouts` 등이 있는 JSON | `.cache/configs/periodic-memory-gap/false-sharing/run.py` |
 
 `configs/periodic-multi-array/`는 버전 관리되는 다중 배열 입력이고,
@@ -43,22 +42,14 @@ toolchain·GR740 BSP, `/opt/src/rtems/waf`다. SIM 실행에는
 
 ## 2. 입력 예시
 
-### 2.1. Legacy paired-pass 설정의 의미
+### 2.1. 기본 읽기 예제
 
-입력: `.cache/configs/periodic-memory-gap/paired-pass-12-sweeps4-balanced-full.json`.
-
-| 설정 | 의미 |
-|---|---|
-| tasks 12개 | P에서 코어당 3 task |
-| `period_ticks=6` | 현재 1 tick=1 ms, 주기 6 ms |
-| `horizon_ticks=1320` | task당 총 220 jobs |
-| `warmup_ticks=120` | 앞 20 jobs 제외, 200 jobs/task 측정 |
-| `sweeps=4` | job 내부 패턴 반복 수; job 수와 별개 |
-| `u_repeats=5` | 독립 U characterization 계획값; G/C/P 5회 자동 실행 아님 |
-
-실제 실행 횟수는 CLI `--runs`로 지정한다. G=4-core, C=1+3, P=4×1
-EDF scheduler다. `core`는 P의 고정 코어와 C의 domain 선택에 쓰이며
-G의 고정 pinning을 뜻하지 않는다.
+[`configs/periodic-example.json`](../../../configs/periodic-example.json)은
+세 cyclic task를 각각 별도의 `uint8_t` 배열에 연결한다.
+각 task는 `distinct: 8`과 `sweeps: 1200`을 사용하며,
+`stride_bytes`를 1, 32, 4096으로 달리해 접근 간격을 비교한다.
+배열은 `initial_value: 1`, `alignment_bytes: 4096`으로 선언하고
+`tasks[].arrays.input.array_id`로 연결한다.
 
 <a id="multi-array"></a>
 
@@ -72,21 +63,22 @@ G의 고정 pinning을 뜻하지 않는다.
 | [gemm-u32-shared-smoke.json](../../../configs/periodic-multi-array/gemm-u32-shared-smoke.json) | 두 task가 A/B를 공유하고 각각 독점 C에 저장 |
 | [shared-reads-smoke.json](../../../configs/periodic-multi-array/shared-reads-smoke.json) | cyclic과 paired-read가 입력 배열을 공유 |
 
-`schema_version: 2`는 **입력 형식**이다. 계측 계약은 계속
-`chaser-periodic-measurement-v3`이며 schema가 없는 입력은 legacy로 처리한다.
-schema 없이 `arrays`를 추가하거나 v2에 legacy `stride`·최상위
-`array_alignment_bytes`를 넣으면 오류다. 기존 recipe를 v2로 자동 변환하지 않는다.
+`schema_version: 2`는 **입력 형식**이다. 계측 계약은
+`chaser-periodic-measurement-v3`다.
 
 | 필드 | 단위·계약 |
 |---|---|
 | `arrays[].array_id` | 고유 C identifier; ELF symbol은 `data_<array_id>` |
-| `element_type`, `length` | `uint8_t` 또는 `uint32_t`, 양의 **원소 수** |
+| `element_type` | `uint8_t` 또는 `uint32_t` |
+| `shape` | 선택적 논리 형상. `[2,3]`, `[2,3,4]`처럼 양의 정수 목록 |
+| `strides_elements` | shape의 차원별 **원소 간격**. 생략하면 조밀한 row-major |
+| `length` | 물리 저장 공간의 원소 수. shape가 없으면 필수, 있으면 마지막 논리 원소까지의 extent로 유도 |
 | `alignment_bytes` | 배열별 32 또는 4096 B; 기본값 4096 |
 | `initial_value` | 자료형 범위의 정수 상수; 기본값 1 |
 | `tasks[].arrays` | 역할 → `{array_id, offset_elements}`; offset은 원소 수, 기본값 0 |
 | cyclic/paired-read의 `distinct`, `stride_bytes` | 각 역할에서 읽는 위치 수, 바이트 간격; stride는 자료형 크기의 배수 |
-| GEMM의 `m`, `n`, `k` | A m×k, B k×n, C m×n; 양의 정수 |
-| GEMM의 `lda`, `ldb`, `ldc` | 원소 단위 행 간격; 각각 k/n/n 이상 |
+| GEMM의 `m`, `n`, `k` | A m×k, B k×n, C m×n. rank-2 shape에서 유도하며 명시하면 반드시 일치 |
+| GEMM의 `lda`, `ldb`, `ldc` | 원소 단위 행 간격. shape가 있으면 첫 stride에서 유도; 기존 length 전용 입력에서는 필수 |
 | `sweeps` | 한 job 내부의 커널 반복 수; period에 따른 job 수와 별개 |
 
 역할은 cyclic의 `input`, paired-read의 `a`/`b`, GEMM의 `A`/`B`/`C`다.
@@ -94,12 +86,31 @@ paired-read의 두 배열은 같은 자료형이어야 하며 a→b 순서로 �
 GEMM은 uint32 배열만 받으며 `distinct`·`stride_bytes`·`width`를 받지 않는다.
 배열은 workers 시작 전에 한 번 초기화한다. job 사이에 재초기화나 cache flush는 없다.
 
+GEMM 예제 JSON은 A의 `shape: [2,3]`, B의 `[3,2]`, C의 `[2,2]`를 선언한다.
+task에는 역할 binding과 sweeps·core·period만 지정해 차원을 중복하지 않는다.
+자료형을 명시한 다차원 배열 선언은 1차원 이상을 지원하며 GEMM은 정확히 2차원이다.
+cyclic/paired-read는 다차원 배열에도 기존 물리 offset·stride 순서로 접근한다.
+shape를 지정했다고 자동으로 다차원 순회나 padding 건너뛰기가 생기지는 않는다.
+
+예를 들어 `[2,3]`에 `strides_elements: [8,2]`를 지정하면 원소 위치는
+`0,2,4,8,10,12`이고 최소 length는 13이다. 전체 마지막 행 padding도 확보하려면
+`length: 16`을 함께 지정한다. 일반식은
+`extent = 1 + sum((shape[d]-1)*strides_elements[d])`이며 `length >= extent`다.
+각 외부 stride는 내부 차원 전체 extent 이상이어야 한다. 양의 row-major 간격과
+padding은 허용하지만 transpose/음수 stride/겹치는 view/broadcast는 지원하지 않는다.
+shape 없이 strides만 지정하거나 bool·0·비정수 차원, rank가 다른 strides는 거부한다.
+binding의 offset은 이 형상 전체를 물리 원소 수만큼 이동시키므로, offset을 쓰면
+`offset_elements + extent <= length`를 만족하는 저장 공간을 명시한다.
+shape와 strides는 plan과 hash에 보존하고 C 저장소는 평탄한 배열로 생성한다.
+`length`만 지정하는 평탄 배열도 지원한다. C 템플릿을 수정하면
+새 prepared를 만들고 접근 순서·결과를 재검증한다.
+
 읽기 전용 입력은 여러 task가 공유할 수 있다. 쓰기 배열은 다른 task가 읽거나
 쓰도록 binding할 수 없으며, 같은 task의 서로 다른 역할도 동일 array ID를
 사용할 수 없다. 사용하지 않는 배열과 범위를 넘는 offset·행 간격은 거부한다.
 배열은 1–96개, 입력 순서대로 배치하며 정렬 padding 포함 16 MiB 이내여야 한다.
 v2의 job당 source access 상한은 10,000,000이며 load와 store를 모두 센다.
-task 수·horizon·warm-up·전체 job 수 제한은 legacy와 같으며
+task 수·horizon·warm-up·전체 job 수 제한은 유지되며
 [JSON 입력 제약](CUSTOMIZATION.md#json-input)을 따른다.
 
 정수 필드는 bool·float·문자열을 받지 않는다. 읽기 커널은 `distinct` 1–131072,
@@ -110,8 +121,9 @@ plan의 주소는 기대값이고 `layout.json`에는 실제 ELF와 일치한 �
 
 읽기 커널의 마지막 접근 끝은 다음 범위 안이어야 한다.
 `offset_elements*itemsize + (distinct-1)*stride_bytes + itemsize <= length*itemsize`.
-GEMM은 역할별로 `offset_A+(m-1)*lda+k <= length_A`,
-`offset_B+(k-1)*ldb+n <= length_B`, `offset_C+(m-1)*ldc+n <= length_C`를 검사한다.
+GEMM은 각 역할의 행 수 R, 열 수 S, 행 stride L, 열 stride T에 대해
+`offset+(R-1)*L+(S-1)*T+1 <= length`를 검사한다. 기존 평탄 입력은 T=1이다.
+shape가 있으면 행렬 차원·행 간격 명시값과의 불일치도 거부한다.
 
 단일 GEMM 예제는 A=1, B=2이므로 C의 네 원소가 모두 6이다.
 각 sweep이 `C = A × B`를 덮어쓰며 연산은 modulo 2^32다.
@@ -157,7 +169,7 @@ python3 -m tools.rtems_periodic run "$multi_trial/prepared" \
 
 두 task 예제는 prepare의 config 경로와 output 이름을 바꿔 실행한다.
 각 task의 독립 U에는 `--mode 1`, `--mode 2`를 각각 새 output으로 실행하고
-`--runs`를 해당 입력의 `u_repeats`와 맞춘다. 세 예제의 현재 값은 1이다.
+`--runs`를 해당 입력의 `u_repeats`와 맞춘다. 위 예제의 현재 값은 1이다.
 긴 측정은 [SIM 실행 절차](EXECUTION.md#build-and-run)의 supervisor 방식으로 실행한다.
 재검증은 [batch 검증](EXECUTION.md#build-and-run)과
 [raw 조회](RAW-LOGS.md#raw-logs)의 `load_batch()` 예제에서 root를 `$multi_trial`로 지정한다.
@@ -168,6 +180,8 @@ python3 -m tools.rtems_periodic run "$multi_trial/prepared" \
 공유 입력이 있으므로 task별 allocation을 합해 taskset의 고유 할당으로 쓰면 안 된다.
 `protocol.json`은 schema/kernel contract/O0·O2와 새 배열·커널 모듈 snapshot hash를
 보존한다. `load_batch()`가 필수 hash 누락 및 config/plan/ELF/raw 변조를 거부한다.
+직접 작성하는 C 커널의 등록·reference 계약은
+[커널 인터페이스](CUSTOMIZATION.md#kernel-interface)를 따른다.
 
 분석은 linked object별 크기·load/store 순서와 checksum용 접근을 검사한다.
 clang O0 분석 stream과 SPARC workload O0/O2 provenance는 구분된다.
@@ -180,14 +194,21 @@ guard는 별도 적격성 설계 전 v2 진단 결과의 자동 RF label 편입�
 
 ### 2.4. 다중 배열 검증 기록과 후속 범위
 
-2026-09-28 전체 `scripts/verify`는 **566 passed, 3 skipped**, 신규
-`tests/periodic/multi_array`는 **56 passed**, 최종 SIM smoke는 **20/20 성공**이다.
-skip은 기존 선택적 Cachegrind/PolyBench raw/CLP export 환경 테스트다.
-legacy cyclic/paired-pass/matrix-reuse × 정렬 32/4096 × O0/O2의 12조합에 대해
-G/C/P plan과 source를 fixture로 보존했고 기존 plan/raw 재집계와 ELF 배치를 검사했다.
-host C O0/O2에서는 비균일 비정방 GEMM, padding·offset, 여러 sweeps/jobs,
-uint32 overflow, 전체 출력·입력·padding 보존을 확인했다. 실제 APE와 G/C/P ELF의
-typed load/store·hash 접근 순서, 공유 입력, 혼합 정렬도 검증했다.
+2026-09-28 전체 `scripts/verify`는 **511 passed, 3 skipped**다.
+skip은 선택적 Cachegrind/PolyBench raw/CLP export 환경 테스트다.
+rank-1/2/3 형상, 행·열 padding/offset, 평탄 v2 plan hash,
+사용자 매개변수 dataclass의 필수값·기본값과 typed/JSON 왕복 변환을 검사했다.
+host C O0/O2에서는 비균일 비정방 GEMM, 여러 sweeps/jobs, uint32 overflow,
+전체 출력·입력·padding 보존을 확인했다. 실제 APE와 G/C/P ELF의 typed
+load/store·hash 접근 순서, 공유 입력, 혼합 정렬도 검증했다.
+사용자 C 커널의 실행·reference stream, 잘못된 store 대상도 검사했다.
+
+SIM은 이번 변경 후 재실행하지 않았다. 앞서 수행한 다중 배열 smoke는
+**20/20 성공**했고, 형상 기반 GEMM과 C 생성 모듈 분리 후 G/C/P SIM도
+각각 **3/3 성공**했다. 각 결과는 `load_batch()` 재검증을 통과했다.
+형상 기반 실행의 prepared·raw·검증 로그는
+`.cache/periodic-multi-array/shape-kernel-interface/`에,
+C 생성 모듈 분리 후 실행은 `.cache/periodic-multi-array/codegen-refactor/`에 있다.
 
 아래 경로는 `.cache/periodic-multi-array/` 아래의 로컬 검증 산출물이다.
 버전 관리되는 예제 JSON과 구분하며 `.cache` 삭제 시 함께 사라진다.

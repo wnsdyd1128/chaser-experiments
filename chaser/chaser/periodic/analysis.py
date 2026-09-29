@@ -12,33 +12,25 @@ from chaser.locality.cls import cls, DEFAULT_ALPHAS
 from chaser.periodic.event_storage import compress_events as archive_events
 from chaser.periodic.event_compression import EventCompressionQueue
 from chaser.periodic.build import YARDA, check_layout, read_symbols
-from chaser.periodic.patterns import access_offsets, job_access_count, loop_iterations
-from chaser.periodic.kernels import reference_events
+from chaser.periodic.kernels import reference_events, task_from_plan
+from chaser.periodic.workload import ArraySpec
 from chaser.locality.artifacts import read_analysis
 from tools.rtems_smoke import check_inputs, file_hash, write_json
 
 
-def check_stream(task: dict, events: list[dict], address: int | dict, *,
-                 arrays: list[dict] | None = None) -> None:
+def check_stream(task: dict, events: list[dict], address: dict, *,
+                 arrays: list[dict]) -> None:
     """Require the full job's object, address, size and operation order."""
-    if arrays is not None:
-        registry = {a['array_id']: a for a in arrays}
-        if len(events) != task['source_accesses']:
-            raise ValueError('Wrapper access count differs from the emitted workload')
-        for event, expected in zip(events, reference_events(task, registry), strict=True):
-            symbol = registry[expected['array_id']]['symbol']
-            if (event['object_id'] != 'global::' + symbol
-                    or event['linked_address'] != address[symbol] + expected['offset_bytes']
-                    or event['access_size'] != expected['access_size_bytes']
-                    or event['operation'] != expected['operation']):
-                raise ValueError('Wrapper access order/address/kind differs from workload')
-        return
-    if len(events) != job_access_count(task):
+    objects = [a if isinstance(a, ArraySpec) else ArraySpec.from_dict(a) for a in arrays]
+    registry = {a.array_id: a for a in objects}
+    if len(events) != task['source_accesses']:
         raise ValueError('Wrapper access count differs from the emitted workload')
-    for event, offset in zip(events, access_offsets(task), strict=True):
-        if (event['linked_address'] != address + offset
-                or event['access_size'] != 1 or event['operation'] != 'load'
-                or event['object_id'] != 'global::data_' + task['task_id']):
+    for event, expected in zip(events, reference_events(task_from_plan(task), registry), strict=True):
+        symbol = registry[expected.array_id].symbol
+        if (event['object_id'] != 'global::' + symbol
+                or event['linked_address'] != address[symbol] + expected.offset_bytes
+                or event['access_size'] != expected.access_size_bytes
+                or event['operation'] != expected.operation):
             raise ValueError('Wrapper access order/address/kind differs from workload')
 
 
@@ -63,6 +55,8 @@ def _analyze(prepared, timeout, compress_events, compression_queue, reservations
     manifest = json.loads((prepared / 'manifest.json').read_text())
     check_inputs(prepared, manifest)
     plan = json.loads((prepared / 'p/plan.json').read_text())
+    if plan.get('input_schema_version') != 2:
+        raise ValueError('Legacy prepared input is deprecated; prepare schema_version: 2 arrays')
     output = prepared / 'analysis'
     output.mkdir(exist_ok=False)
     source = prepared / 'source/workload.c'
@@ -95,22 +89,23 @@ def _analyze(prepared, timeout, compress_events, compression_queue, reservations
     cases, provenance, event_storage = {}, {}, {}
     for task in plan['tasks']:
         task_id, root = task['task_id'], 'task_job_' + task['task_id']
+        helper = 'kernel_' + task_id
         functions = [f for f in raw['functions']
-                     if f['function'] in (root, 'kernel_' + task_id)]
-        if len(functions) != 2:
+                     if f['function'] in (root, helper)
+                     or f['function'].startswith(helper + '_')]
+        if not any(f['function'] == root for f in functions):
             raise ValueError('Expected the emitted job wrapper and inline kernel')
         ape = output / f'{task_id}.ape.json'
         write_json(ape, {**raw, 'functions': functions})
-        accesses = task['source_accesses'] if 'arrays' in plan else job_access_count(task)
-        limit = (task['loop_iterations'] if 'arrays' in plan else loop_iterations(task)) + 10
+        accesses = task['source_accesses']
+        limit = task['loop_iterations'] + 10
         for name in ('g', 'c', 'p'):
             reservation = (reservations.enter_context(compression_queue.reserve())
                            if compression_queue is not None else None)
             directory = output / name / task_id
             directory.mkdir(parents=True)
             elf = prepared / f'build/{name}.exe'
-            layout = check_layout(read_symbols(elf), plan['tasks'],
-                                  plan.get('array_alignment_bytes', 4096), arrays=plan.get('arrays'))
+            layout = check_layout(read_symbols(elf), plan['arrays'])
             results = {}
             for mode, flags in (
                 ('element', ['--mode', 'unroll', '--granularity', 'element']),
@@ -130,9 +125,8 @@ def _analyze(prepared, timeout, compress_events, compression_queue, reservations
                             cache_config_sha256=file_hash(prepared / 'cache.yaml'))
             events = json.loads((directory / 'events.json').read_text())
             checked = read_analysis(hierarchy, events, root, expected)
-            address = ({r['symbol']: r['address'] for r in layout} if 'arrays' in plan else
-                       next(r['address'] for r in layout if r['symbol'] == 'data_' + task_id))
-            check_stream(task, events['events'], address, arrays=plan.get('arrays'))
+            address = {r['symbol']: r['address'] for r in layout}
+            check_stream(task, events['events'], address, arrays=plan['arrays'])
             case = dict(ca_caas_element=ca_from_histogram(results['element']['program']['histogram']),
                         ca_global_line=ca_from_histogram(results['line']['program']['histogram']),
                         ca_csrd_l1=ca_csrd(checked.task), modeled_accesses=accesses,
@@ -171,12 +165,11 @@ def _analyze(prepared, timeout, compress_events, compression_queue, reservations
                   manifest_hash=file_hash(prepared / 'manifest.json'),
                   scope='cold-task-local-job-not-periodic-interference',
                   commands_hash=file_hash(output / 'commands.json'))
-    if 'arrays' in plan:
-        report.update(input_schema_version=2, kernel_contract_id=plan['kernel_contract_id'],
-                      analysis_compiler='clang-14-O0',
-                      workload_optimization=plan['workload_optimization'],
-                      store_model='demand-residency-same-as-load; excludes-write-traffic-and-timing',
-                      dataset_eligible=False)
+    report.update(input_schema_version=2, kernel_contract_id=plan['kernel_contract_id'],
+                  analysis_compiler='clang-14-O0',
+                  workload_optimization=plan['workload_optimization'],
+                  store_model='demand-residency-same-as-load; excludes-write-traffic-and-timing',
+                  dataset_eligible=False)
     write_json(output / 'locality.json', report)
     write_json(output / 'manifest.json', dict(event_storage=event_storage,
         files={str(p.relative_to(output)): file_hash(p) for p in output.rglob('*') if p.is_file()}))

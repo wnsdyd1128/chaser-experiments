@@ -13,7 +13,7 @@
 | triangular-solve | triangular-solve / triangular-solve-transposed | 41 |
 
 새 두 계보는 고정 revision의 FFT stage와 LU forward/back substitution에서 읽기 주소
-관계를 일반화했다. [계약](../../../rtems/periodic/STAGED-RECIPES.md)에 source anchors,
+관계를 일반화했다. [보존된 입력 묶음](input-pool.tar.gz)의 `pool/implementation/STAGED-RECIPES.md`에 source anchors,
 주소식·load 수·허용 범위·생략 특성·계보 관계를 명시한다. Triangular 두 역할은 공간 배치
 대비이며 같은 temporal reuse다. Butterfly n=2는 정확성 fixture에만 사용하고 후보는 n=8이다.
 Benchmark 자체·입력·trace를 학습 표본으로 사용하지 않으며 PolyBench는 외부 평가용이다.

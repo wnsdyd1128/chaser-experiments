@@ -15,7 +15,6 @@ from tools.rtems_periodic import run
 from tools.rtems_smoke import check_inputs
 from test_periodic import configuration, evidence
 from test_periodic_public import public_evidence
-from test_periodic_patterns import pattern_configuration
 
 
 @pytest.fixture(scope='module')
@@ -72,7 +71,7 @@ def test_unknown_workload_optimization_is_rejected_before_build(tmp_path):
 
 def test_compact_alignment_changes_actual_linked_array_addresses(tmp_path):
     config = configuration()
-    config['array_alignment_bytes'] = 32
+    for array in config['arrays']: array['alignment_bytes'] = 32
     output = tmp_path / 'compact'
     prepare(config, output)
     for architecture in 'gcp':
@@ -80,16 +79,16 @@ def test_compact_alignment_changes_actual_linked_array_addresses(tmp_path):
         assert symbols['data_a'][0] == 0x01000000
         assert symbols['data_b'][0] == 0x01000020
         assert [row['address'] for row in check_layout(symbols,
-            make_plan(config, 2)['tasks'], 32)] == [0x01000000, 0x01000020]
+            make_plan(config, 2)['arrays'])] == [0x01000000, 0x01000020]
 
 
 def test_moved_or_resized_workload_symbol_is_rejected(prepared):
     symbols = read_symbols(prepared / 'build/p.exe')
-    tasks = make_plan(configuration(), 2)['tasks']
+    arrays = make_plan(configuration(), 2)['arrays']
     address, size = symbols['data_a']
     for changed in ((address + 32, size), (address, size + 1)):
         with pytest.raises(ValueError, match='layout mismatch'):
-            check_layout({**symbols, 'data_a': changed}, tasks)
+            check_layout({**symbols, 'data_a': changed}, arrays)
 
 
 def test_actual_elf_with_shifted_section_is_rejected(prepared, tmp_path):
@@ -98,7 +97,7 @@ def test_actual_elf_with_shifted_section_is_rejected(prepared, tmp_path):
                     '--change-section-address', '.chaser_data=0x01001000',
                     str(prepared / 'build/p.exe'), str(moved)], check=True, capture_output=True)
     with pytest.raises(ValueError, match='layout mismatch'):
-        check_layout(read_symbols(moved), make_plan(configuration(), 2)['tasks'])
+        check_layout(read_symbols(moved), make_plan(configuration(), 2)['arrays'])
 
 
 def test_cpp_expands_all_sweeps_and_matches_all_final_elfs(prepared):
@@ -114,14 +113,14 @@ def test_cpp_expands_all_sweeps_and_matches_all_final_elfs(prepared):
         ('ape.analyze',), ('ape.inline',)}
 
 
-@pytest.mark.parametrize('cold_repeats', [1, 2])
+@pytest.mark.parametrize('sweeps', [1, 2])
 @pytest.mark.parametrize('compress_events', [False, True, 'queued'])
-def test_region_patterns_match_literal_streams_in_all_final_elfs(tmp_path, cold_repeats,
+def test_typed_reads_match_literal_streams_in_all_final_elfs(tmp_path, sweeps,
                                                               compress_events):
     snapshot = tmp_path / 'patterns'
-    config = pattern_configuration()
+    config = configuration()
     for task in config['tasks']:
-        task['cold_repeats'] = cold_repeats
+        task['sweeps'] = sweeps
     prepare(config, snapshot)
     if compress_events == 'queued':
         with EventCompressionQueue(workers=2, max_files=2) as queue:
@@ -131,11 +130,10 @@ def test_region_patterns_match_literal_streams_in_all_final_elfs(tmp_path, cold_
         result = analyze(snapshot, compress_events=compress_events)
     check_inputs(snapshot / 'analysis', json.loads(
         (snapshot / 'analysis/manifest.json').read_text()))
-    cold = [64, 96, 128] * cold_repeats
-    offsets = {'hot': [0, 32, 0, 32, *cold] * 2,
-               'phase': [0, 32] * 4 + cold * 2}
+    offsets = {'a': list(range(8)) * sweeps,
+               'b': list(range(0, 8*4096, 4096)) * sweeps}
     for name, expected in offsets.items():
-        assert result['cases'][name]['modeled_accesses'] == 8 + 6 * cold_repeats
+        assert result['cases'][name]['modeled_accesses'] == 8 * sweeps
         assert set(result['provenance'][name]['elf_hashes']) == {'g', 'c', 'p'}
         for architecture in ('g', 'c', 'p'):
             address, _ = read_symbols(snapshot / f'build/{architecture}.exe')['data_' + name]
@@ -152,7 +150,7 @@ def test_region_patterns_match_literal_streams_in_all_final_elfs(tmp_path, cold_
 def test_failed_queued_compression_does_not_publish_analysis_manifest(tmp_path, monkeypatch):
     import chaser.periodic.event_compression as storage
     snapshot = tmp_path / 'failed-compression'
-    prepare(pattern_configuration(), snapshot)
+    prepare(configuration(), snapshot)
 
     def fail(path):
         raise ValueError('restore mismatch')
@@ -182,10 +180,7 @@ def test_fresh_processes_reparse_the_same_raw_evidence(prepared, tmp_path):
     assert all(r['execution_status'] == 'ok' for r in rows)
     assert load_batch(prepared, directory) == rows
     protocol = json.loads((directory / 'protocol.json').read_text())
-    assert 'implementation/chaser/periodic/patterns.py' in protocol['implementation_hashes']
-    assert 'implementation/chaser/periodic/structures.py' in protocol['implementation_hashes']
-    assert 'implementation/chaser/periodic/recipes.py' in protocol['implementation_hashes']
-    assert 'implementation/chaser/periodic/staged_recipes.py' in protocol['implementation_hashes']
+    assert 'implementation/chaser/periodic/patterns.py' not in protocol['implementation_hashes']
     assert (directory / '0.log').read_text().splitlines()[0] != (
         directory / '1.log').read_text().splitlines()[0]
     stored = directory / 'measurements.jsonl'

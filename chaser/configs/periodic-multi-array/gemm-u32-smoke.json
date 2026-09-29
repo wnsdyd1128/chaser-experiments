@@ -9,11 +9,11 @@
   "u_repeats": 1,
   "workload_optimization": "O0",
   "arrays": [
-    {"array_id": "a0", "element_type": "uint32_t", "length": 6,
+    {"array_id": "a0", "element_type": "uint32_t", "shape": [2, 3],
      "alignment_bytes": 32, "initial_value": 1},
-    {"array_id": "b0", "element_type": "uint32_t", "length": 6,
+    {"array_id": "b0", "element_type": "uint32_t", "shape": [3, 2],
      "alignment_bytes": 32, "initial_value": 2},
-    {"array_id": "c0", "element_type": "uint32_t", "length": 4,
+    {"array_id": "c0", "element_type": "uint32_t", "shape": [2, 2],
      "alignment_bytes": 32, "initial_value": 0}
   ],
   "tasks": [
@@ -25,8 +25,6 @@
         "B": {"array_id": "b0", "offset_elements": 0},
         "C": {"array_id": "c0", "offset_elements": 0}
       },
-      "m": 2, "n": 2, "k": 3,
-      "lda": 3, "ldb": 2, "ldc": 2,
       "sweeps": 2, "core": 0, "period_ticks": 10
     }
   ]

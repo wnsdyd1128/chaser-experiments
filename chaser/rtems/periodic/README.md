@@ -6,7 +6,7 @@
 
 This checkout uses the [current measurement contract](../../system-prompt-extraction/plan/MEASUREMENT-CONTRACT-V3.md) and [dataset rebuild plan](../../system-prompt-extraction/plan/DATASET-REBUILD-PLAN.md). The serialized contract ID remains `chaser-periodic-measurement-v3` so stored plans and raw measurements keep their identity. Python modules use their ordinary names.
 
-`tools.rtems_periodic` is the supported build, analysis, and single-batch runner. The old candidate pool, characterization collector, calibration CLI, G/C/P collector, and dataset-relocation scripts have been removed. `chaser.periodic.calibration` contains the current P-only threshold planner, selector, and batch classifier; it does not yet provide an end-to-end collection CLI. The archived `datasets/periodic-v2` and `datasets/periodic-final-v1` describe an earlier experiment and are not measurements under the current contract. S1's PolyBench experiment has a separate runner.
+`tools.rtems_periodic` is the supported build, analysis, and single-batch runner. `chaser.periodic.calibration` contains the current P-only threshold planner, selector, and batch classifier; it does not yet provide an end-to-end collection CLI. S1's PolyBench experiment has a separate runner.
 
 ## Prepare and inspect a small run
 
@@ -25,11 +25,14 @@ The example has a short horizon for a smoke run. A paper measurement must use th
 
 Set `schema_version: 2` to define storage in top-level `arrays` and bind task roles
 through `tasks[].arrays`. Array `length` and binding `offset_elements` count elements;
+optional `shape` and `strides_elements` describe multidimensional row-major storage.
+Shape infers the minimum allocation length; explicit length can reserve padding.
+Rank-2 shapes infer GEMM dimensions and strides, rejecting conflicting task values;
 read-kernel `stride_bytes` counts bytes. Supported kernels are typed `cyclic`,
 `paired-read`, and `gemm-u32`. Each array has its own 32/4096-byte alignment, type,
 and constant initial value. Immutable inputs may be shared, while output arrays
 must be exclusive to one task. Unsupported fields, aliases, and bounds are rejected.
-The measurement contract remains v3; schema-less inputs keep the legacy recipes.
+The measurement contract is `chaser-periodic-measurement-v3`.
 
 | Configuration | Workload |
 |---|---|
@@ -42,6 +45,10 @@ fresh output directories. The [walkthrough](experiment-guide/INPUTS.md#multi-arr
 G/C/P and independent P commands. GEMM overwrites C each sweep and hashes logical
 output once at the end of the job; its hash reads are included in timing and analysis.
 Arrays are initialized once before workers start, not between jobs.
+To define a new kernel, register its Python validation/reference contract and
+write its C template under `chaser/periodic/kernels/`, following the
+[customization interface](experiment-guide/CUSTOMIZATION.md#kernel-interface).
+GEMM's loop is in `kernels/gemm.c.in`. Edit original inputs and prepare a new snapshot.
 
 Analysis validates every object's linked address, access width, and load/store order.
 It records clang O0 analysis separately from workload O0/O2 compilation, and treats
@@ -49,13 +56,11 @@ stores as demand residency accesses without modeling write traffic or delays.
 Sharing does not turn this cold task-local analysis into an interference/coherence model.
 See the [input contract](experiment-guide/INPUTS.md#multi-array) and
 [verification record](experiment-guide/INPUTS.md#multi-array-verification) for bounds and completed checks.
-Python callers pass `arrays=plan['arrays']` to `workload_source` and `check_layout`
-for v2; the existing positional arguments and legacy results remain supported.
+Python callers use `workload_source(plan['tasks'], arrays=plan['arrays'])` and
+`check_layout(symbols, plan['arrays'])`.
 
 ## Accounting and validation
 
 Every job, including warm-up jobs, must pass completeness, checksum, release, status, deadline, and domain checks. Metrics use only measured jobs. TET sums per-job CPU-accounting differences. TAT sums, for each nominal-release cohort, the time from its first job start to its last job completion. `response_sum_ns` separately records the sum of job release-to-completion intervals. Independent U is the median of per-run mean CPU time over measured jobs, divided by task period. A failed or incomplete run cannot yield a successful architecture label.
 
 The runner writes `protocol.json`, `measurements.jsonl`, and one numbered `.log` per run. Use `tail -f <output>/0.log` while an execution is running. `chaser.periodic.dataset.load_batch` checks the stored hashes and reparses raw logs; `feature_record` joins the independently measured U with locality features. Diagnostic `--trace` and `--empty` runs stay outside timing labels. Schema v2 protocols also preserve the kernel contract, workload optimization, and new array/kernel module snapshots. Multi-array results remain diagnostic: locality reports set `dataset_eligible=false`, and `to_measurement` rejects their automatic conversion into RF labels pending separate qualification.
-
-Legacy workload patterns are documented in [RECIPES.md](RECIPES.md) and [STAGED-RECIPES.md](STAGED-RECIPES.md). Their `matrix-reuse` pattern models reads; `gemm-u32` performs actual integer multiplication and stores.

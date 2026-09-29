@@ -7,69 +7,13 @@ import subprocess
 import sys
 
 from chaser.periodic.measurement import make_plan
-from chaser.periodic.kernels import kernel_source
-from chaser.periodic.patterns import kernel_body, wrapper_sweeps
+from chaser.periodic.workload import ArraySpec
+from chaser.periodic.codegen import workload_source, topology_header, write_project
 from tools.rtems_smoke import file_hash, write_json, check_inputs
 
 ROOT = Path(__file__).resolve().parents[2]
 SDK = Path('/opt/rtems/6')
 YARDA = ROOT / 'rtems/baseline/build/yarda'
-
-
-def workload_source(tasks: list[dict], alignment: int = 4096, *,
-                    arrays: list[dict] | None = None) -> str:
-    """Emit fixed jobs with legacy private arrays or a normalized typed registry."""
-    source = ['#include "workload.h"', '#ifdef __clang__',
-              '#define ANALYZE __attribute__((annotate("ape.analyze")))',
-              '#define INLINE __attribute__((annotate("ape.inline")))',
-              '#else', '#define ANALYZE', '#define INLINE', '#endif']
-    if arrays is not None:
-        registry = {a['array_id']: a for a in arrays}
-        for i, array in enumerate(arrays):
-            source.append(f'volatile {array["element_type"]} {array["symbol"]}[{array["length"]}] '
-                          f'__attribute__((aligned({array["alignment_bytes"]}), section(".chaser_data.{i:02d}")));')
-        for task in tasks:
-            source.extend(kernel_source(task, registry))
-    for i, task in enumerate(tasks if arrays is None else []):
-        name = task['task_id']
-        source.extend([
-            f'volatile uint8_t data_{name}[{task["data_size"]}] '
-            f'__attribute__((aligned({alignment}), section(".chaser_data.{i:02d}")));',
-            f'INLINE static uint32_t kernel_{name}(void) {{',
-            '    uint32_t sum = 0;',
-            *kernel_body(task), '    return sum;', '}',
-            '/** @brief Execute one fixed job without resetting data or cache.',
-            ' * @return Load-count checksum, modulo 2^32. */',
-            f'ANALYZE uint32_t task_job_{name}(void) {{',
-            '    uint32_t sum = 0;',
-            f'    for (int s = 0; s < {wrapper_sweeps(task)}; ++s)',
-            f'        sum += kernel_{name}();', '    return sum;', '}'])
-    source.append('void workload_prepare(void) {')
-    for array in arrays or []:
-        source.append(f'    for (int i = 0; i < {array["length"]}; ++i) '
-                      f'{array["symbol"]}[i] = {array["initial_value"]}U;')
-    for task in tasks if arrays is None else []:
-        source.append(f'    for (int i = 0; i < {task["data_size"]}; ++i) '
-                      f'data_{task["task_id"]}[i] = 1;')
-    source.extend(['}', 'uint32_t (*const workload_jobs[])(void) = {'])
-    source.extend(f'    task_job_{t["task_id"]},' for t in tasks)
-    source.extend(['};', 'const uint32_t workload_expected[] = {',
-                   ', '.join(str(t['expected_checksum']) + 'U' for t in tasks), '};'])
-    return '\n'.join(source) + '\n'
-
-
-def topology_header(architecture: int) -> str:
-    """Configure actual EDF SMP scheduler ownership, not partial affinity masks."""
-    assignments = ([0, 0, 0, 0], [0, 1, 1, 1], [0, 1, 2, 3])[architecture]
-    count = max(assignments) + 1
-    lines = [f'RTEMS_SCHEDULER_EDF_SMP(edf{i});' for i in range(count)]
-    lines.append('#define CONFIGURE_SCHEDULER_TABLE_ENTRIES \\\n' + ', \\\n'.join(
-        f"RTEMS_SCHEDULER_TABLE_EDF_SMP(edf{i}, rtems_build_name('E','D','F','{i}'))"
-        for i in range(count)))
-    lines.append('#define CONFIGURE_SCHEDULER_ASSIGNMENTS \\\n' + ', \\\n'.join(
-        f'RTEMS_SCHEDULER_ASSIGN({i}, RTEMS_SCHEDULER_ASSIGN_PROCESSOR_MANDATORY)'
-        for i in assignments))
-    return '\n'.join(lines) + '\n'
 
 
 def read_symbols(elf: Path) -> dict[str, tuple[int, int]]:
@@ -84,30 +28,19 @@ def read_symbols(elf: Path) -> dict[str, tuple[int, int]]:
     return symbols
 
 
-def check_layout(symbols: dict, tasks: list[dict], alignment: int = 4096, *,
-                 arrays: list[dict] | None = None) -> list[dict]:
+def check_layout(symbols: dict, arrays: list[dict] | list[ArraySpec]) -> list[dict]:
     """Reject any linker movement, misalignment, size change, or data overlap."""
-    if arrays is not None:
-        layout = []
-        end = 0x01000000
-        for array in arrays:
-            address, size, alignment = array['address'], array['size_bytes'], array['alignment_bytes']
-            if (symbols.get(array['symbol']) != (address, size) or address % alignment
-                    or address < end or address + size > 0x02000000):
-                raise ValueError(f'Workload layout mismatch: {array["symbol"]}')
-            layout.append(dict(array_id=array['array_id'], symbol=array['symbol'], address=address,
-                               size=size, alignment=alignment, element_type=array['element_type']))
-            end = address + size
-        return layout
-    address = 0x01000000
     layout = []
-    for task in tasks:
-        address = (address + alignment - 1) // alignment * alignment
-        name = 'data_' + task['task_id']
-        if symbols.get(name) != (address, task['data_size']):
-            raise ValueError(f'Workload layout mismatch: {name}')
-        layout.append(dict(symbol=name, address=address, size=task['data_size'], alignment=alignment))
-        address += task['data_size']
+    end = 0x01000000
+    for array in arrays:
+        array = array if isinstance(array, ArraySpec) else ArraySpec.from_dict(array)
+        address, size, alignment = array.address, array.size_bytes, array.alignment_bytes
+        if (symbols.get(array.symbol) != (address, size) or address % alignment
+                or address < end or address + size > 0x02000000):
+            raise ValueError(f'Workload layout mismatch: {array.symbol}')
+        layout.append(dict(array_id=array.array_id, symbol=array.symbol, address=address,
+                           size=size, alignment=alignment, element_type=array.element_type))
+        end = address + size
     return layout
 
 
@@ -119,40 +52,7 @@ def prepare(configuration: dict, output: Path) -> dict:
     output = output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     source = output / 'source'
-    source.mkdir()
-    tasks = plans[0]['tasks']
-    alignment = plans[0].get('array_alignment_bytes', 4096)
-    arrays = plans[0].get('arrays')
-    for name in ('init.c', 'probe.c', 'probe.h'):
-        shutil.copyfile(ROOT / 'rtems/periodic' / name, source / name)
-    (source / 'workload.h').write_text(
-        '#include <stdint.h>\n'
-        '/** @brief Initialize all arrays once before workers start. @return None. */\n'
-        'void workload_prepare(void);\n'
-        'extern uint32_t (*const workload_jobs[])(void);\n'
-        'extern const uint32_t workload_expected[];\n')
-    (source / 'workload.c').write_text(workload_source(tasks, alignment, arrays=arrays))
-    for name, plan in zip(('g', 'c', 'p'), plans):
-        directory = output / name
-        directory.mkdir()
-        write_json(directory / 'plan.json', plan)
-        lines = [f'#define TASK_COUNT {len(tasks)}',
-                 f'#define MAX_JOBS {max(t["job_count"] for t in tasks)}',
-                 f'#define ARCHITECTURE {plan["architecture"]}',
-                 f'#define CHASER_CONTRACT_ID "{plan["contract_id"]}"',
-                 f'#define CHASER_PLAN_HASH "{plan["plan_hash"]}"']
-        for key, macro in (('period_ticks', 'PERIODS'), ('job_count', 'JOB_COUNTS'),
-                           ('core', 'CORES')):
-            lines.append('#define CHASER_' + macro + ' {' +
-                         ', '.join(str(t[key]) for t in tasks) + '}')
-        (directory / 'config.h').write_text('\n'.join(lines) + '\n')
-        (directory / 'topology.h').write_text(topology_header(plan['architecture']))
-    (output / 'layout.ld').write_text(
-        'SECTIONS { .chaser_data 0x01000000 (NOLOAD) : {\n'
-        '  KEEP(*(SORT_BY_NAME(.chaser_data.*)))\n'
-        '} > ram } INSERT BEFORE .bss;\n'
-        'ASSERT(SIZEOF(.chaser_data) <= 0x01000000, "workload data overflow")\n')
-    shutil.copyfile(ROOT / 'rtems/periodic/wscript', output / 'wscript')
+    write_project(output, plans)
     shutil.copyfile('/opt/src/rtems/waf', output / 'waf')
     shutil.copyfile(ROOT / 'rtems/baseline/cache.yaml', output / 'cache.yaml')
     write_json(output / 'configuration.json', configuration)
@@ -161,8 +61,9 @@ def prepare(configuration: dict, output: Path) -> dict:
         subprocess.run(command, cwd=output, stdout=log, stderr=subprocess.STDOUT, check=True)
     layouts = {}
     for name in ('g', 'c', 'p'):
-        layouts[name] = check_layout(read_symbols(output / f'build/{name}.exe'), tasks,
-                                     alignment, arrays=arrays)
+        layouts[name] = check_layout(read_symbols(output / f'build/{name}.exe'), plans[0]['arrays'])
+    if not layouts['g'] == layouts['c'] == layouts['p']:
+        raise ValueError('G/C/P workload layouts differ')
     write_json(output / 'layout.json', layouts)
     files = [*source.iterdir(), *[p for n in ('g', 'c', 'p') for p in (output / n).iterdir()],
              *[output / n for n in ('layout.ld', 'layout.json', 'wscript', 'waf',

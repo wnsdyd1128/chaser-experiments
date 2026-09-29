@@ -1,0 +1,70 @@
+{
+  "configuration": {
+    "schema_version": 2,
+    "workload_id": "multi-array-gemm-u32-smoke-v1",
+    "family_id": "gemm-u32-diagnostic",
+    "policy_id": "explicit-core-map-v1",
+    "measurement_contract_id": "chaser-periodic-measurement-v3",
+    "horizon_ticks": 40,
+    "warmup_ticks": 20,
+    "u_repeats": 1,
+    "workload_optimization": "O0",
+    "arrays": [
+      {
+        "array_id": "a0",
+        "element_type": "uint32_t",
+        "length": 6,
+        "alignment_bytes": 32,
+        "initial_value": 1
+      },
+      {
+        "array_id": "b0",
+        "element_type": "uint32_t",
+        "length": 6,
+        "alignment_bytes": 32,
+        "initial_value": 2
+      },
+      {
+        "array_id": "c0",
+        "element_type": "uint32_t",
+        "length": 4,
+        "alignment_bytes": 32,
+        "initial_value": 0
+      }
+    ],
+    "tasks": [
+      {
+        "task_id": "gemm0",
+        "pattern": "gemm-u32",
+        "arrays": {
+          "A": {
+            "array_id": "a0",
+            "offset_elements": 0
+          },
+          "B": {
+            "array_id": "b0",
+            "offset_elements": 0
+          },
+          "C": {
+            "array_id": "c0",
+            "offset_elements": 0
+          }
+        },
+        "m": 2,
+        "n": 2,
+        "k": 3,
+        "lda": 3,
+        "ldb": 2,
+        "ldc": 2,
+        "sweeps": 2,
+        "core": 0,
+        "period_ticks": 10
+      }
+    ]
+  },
+  "plan_hashes": [
+    "6586083b467a20fc15edd74538885b808b18a7e4959bc45cc37ae006f0e98f17",
+    "152a767966028d6b0a37f7ef810104ad6064730107516e39d05534bbbc6455ab",
+    "7e8dfa9cf1c3a8c29bcea91e372e1438ee96037684724851ba204eec94df8aec"
+  ]
+}

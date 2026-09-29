@@ -1,0 +1,18 @@
+#include "workload.h"
+#ifdef __clang__
+#define ANALYZE __attribute__((annotate("ape.analyze")))
+#define INLINE __attribute__((annotate("ape.inline")))
+#else
+#define ANALYZE
+#define INLINE
+#endif
+${definitions}
+void workload_prepare(void) {
+${initializers}
+}
+uint32_t (*const workload_jobs[])(void) = {
+${jobs}
+};
+const uint32_t workload_expected[] = {
+${checksums}
+};
