@@ -1,0 +1,35 @@
+/* Integer reimplementation of the PolyBench/C 4.2.1 ATAX algorithm.
+ * Source: linear-algebra/kernels/atax/atax.c, kernel_atax (May 10, 2016).
+ * See rtems/periodic/experiment-guide/INPUTS.md#polybench-atax for provenance
+ * and the initialization, arithmetic and instrumentation differences. */
+INLINE static void kernel_${task_id}(void) {
+    for (int j = 0; j < ${n}; ++j)
+        ${y}[${y_offset} + j * ${y_step}] = 0;
+    for (int i = 0; i < ${m}; ++i) {
+        ${tmp}[${tmp_offset} + i * ${tmp_step}] = 0;
+        for (int j = 0; j < ${n}; ++j) {
+            uint32_t previous = ${tmp}[${tmp_offset} + i * ${tmp_step}];
+            uint32_t av = ${A}[${A_offset} + i * ${A_row} + j * ${A_col}];
+            uint32_t xv = ${x}[${x_offset} + j * ${x_step}];
+            ${tmp}[${tmp_offset} + i * ${tmp_step}] = previous + av * xv;
+        }
+        for (int j = 0; j < ${n}; ++j) {
+            uint32_t previous = ${y}[${y_offset} + j * ${y_step}];
+            uint32_t av = ${A}[${A_offset} + i * ${A_row} + j * ${A_col}];
+            uint32_t tv = ${tmp}[${tmp_offset} + i * ${tmp_step}];
+            ${y}[${y_offset} + j * ${y_step}] = previous + av * tv;
+        }
+    }
+}
+/** @brief Compute y = A^T (A x) with scratch/output reset on every sweep.
+ * @pre Validated uint32 views with exclusive tmp and y storage.
+ * @return Word-wise FNV-1a hash of logical y, computed inside the measured job.
+ * @note All arithmetic is modulo 2^32; padding and inputs are preserved. */
+ANALYZE uint32_t task_job_${task_id}(void) {
+    for (int s = 0; s < ${sweeps}; ++s)
+        kernel_${task_id}();
+    uint32_t h = 2166136261U;
+    for (int j = 0; j < ${n}; ++j)
+        h = (h ^ ${y}[${y_offset} + j * ${y_step}]) * 16777619U;
+    return h;
+}

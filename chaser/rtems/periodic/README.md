@@ -29,7 +29,7 @@ optional `shape` and `strides_elements` describe multidimensional row-major stor
 Shape infers the minimum allocation length; explicit length can reserve padding.
 Rank-2 shapes infer GEMM dimensions and strides, rejecting conflicting task values;
 read-kernel `stride_bytes` counts bytes. Supported kernels are typed `cyclic`,
-`paired-read`, and `gemm-u32`. Each array has its own 32/4096-byte alignment, type,
+`paired-read`, `gemm-u32`, and `polybench-atax-u32`. Each array has its own 32/4096-byte alignment, type,
 and constant initial value. Immutable inputs may be shared, while output arrays
 must be exclusive to one task. Unsupported fields, aliases, and bounds are rejected.
 The measurement contract is `chaser-periodic-measurement-v3`.
@@ -39,12 +39,16 @@ The measurement contract is `chaser-periodic-measurement-v3`.
 | [gemm-u32-smoke.json](../../configs/periodic-multi-array/gemm-u32-smoke.json) | One task, A × B → C, two sweeps per job |
 | [gemm-u32-shared-smoke.json](../../configs/periodic-multi-array/gemm-u32-shared-smoke.json) | Two tasks sharing A/B with separate C arrays |
 | [shared-reads-smoke.json](../../configs/periodic-multi-array/shared-reads-smoke.json) | Cyclic and paired-read tasks sharing an input |
+| [polybench-atax-u32-medium.json](../../configs/periodic-multi-array/polybench-atax-u32-medium.json) | PolyBench-derived y = Aᵀ(Ax), uint32 matrix/vector kernel with private scratch and output |
 
 Use the same `prepare`, `analyze`, and `run` commands with one of these inputs and
 fresh output directories. The [walkthrough](experiment-guide/INPUTS.md#multi-array) includes
 G/C/P and independent P commands. GEMM overwrites C each sweep and hashes logical
 output once at the end of the job; its hash reads are included in timing and analysis.
 Arrays are initialized once before workers start, not between jobs.
+ATAX resets its logical scratch/output on every sweep. Its
+[walkthrough](experiment-guide/INPUTS.md#polybench-atax) describes the source,
+shape contract, and differences from the original PolyBench benchmark.
 To define a new kernel, register its Python validation/reference contract and
 write its C template under `chaser/periodic/kernels/`, following the
 [customization interface](experiment-guide/CUSTOMIZATION.md#kernel-interface).

@@ -646,6 +646,10 @@ PolyBench 계열 고정 크기 kernel 4개의 별도 host 비교와 correlation 
 The periodic harness supports explicit arrays with `schema_version: 2`:
 typed `cyclic` and `paired-read` kernels (`uint8_t`/`uint32_t`), and row-major
 `gemm-u32` with uint32 multiplication, accumulation, and output stores.
+The [PolyBench-derived ATAX example](configs/periodic-multi-array/polybench-atax-u32-medium.json)
+computes `y = Aᵀ(Ax)` using a matrix, input vector, scratch vector, and output vector.
+It uses uint32 arithmetic and the periodic measurement harness; adaptation details
+and commands are in the [ATAX walkthrough](rtems/periodic/experiment-guide/INPUTS.md#polybench-atax).
 Arrays can declare multidimensional `shape` and positive row-major
 `strides_elements`; GEMM derives its matrix dimensions from rank-2 shapes.
 The existing flat `length` interface remains supported.

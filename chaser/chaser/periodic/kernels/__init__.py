@@ -9,7 +9,7 @@ from chaser.periodic.arrays import fields, integer, normalize_bindings
 from chaser.periodic.workload import (ArrayRegistry, GemmParameters, KernelMetrics,
     MemoryFootprint, NoParameters, ReadParameters, ReferenceEvent, TaskSpec)
 from chaser.periodic.kernels.templates import render_template
-from chaser.periodic.kernels import gemm, reads
+from chaser.periodic.kernels import atax, gemm, reads
 
 
 class KernelImplementation(Protocol):
@@ -59,6 +59,7 @@ KERNELS = {
     'cyclic': Kernel(reads, ('input',), ReadParameters),
     'paired-read': Kernel(reads, ('a', 'b'), ReadParameters),
     'gemm-u32': Kernel(gemm, ('A', 'B', 'C'), GemmParameters, write_roles=('C',)),
+    'polybench-atax-u32': Kernel(atax, ('A', 'x', 'tmp', 'y'), write_roles=('tmp', 'y')),
 }
 
 

@@ -135,6 +135,13 @@ JSON에는 형상·타입·binding·주기·sweeps를 두고, 연산 변경은 �
 새 output으로 공용 prepare/analyze/run을 사용한다. prepared/workload.c를 직접
 고치거나 JSON 문자열에 임의 C를 넣는 인터페이스는 제공하지 않는다.
 
+추가 구현 예시는 [PolyBench 기반 ATAX](INPUTS.md#polybench-atax)다.
+[atax.c.in](../../../chaser/periodic/kernels/atax.c.in)의 행렬·벡터 연산과
+[atax.py](../../../chaser/periodic/kernels/atax.py)의 검증·reference stream을
+같이 볼 수 있다. `NoParameters`를 사용해 차원을 배열 shape에서 읽고,
+`write_roles=('tmp', 'y')`로 임시 배열과 출력의 독점 소유권을 선언한다.
+별도 planner 분기나 runner 없이 공용 prepare/analyze/run으로 실행한다.
+
 새 커널은 같은 소유 디렉터리에 `<name>.py`, `<name>.c.in`을 만들고
 [kernels/__init__.py](../../../chaser/periodic/kernels/__init__.py)의 `KERNELS`에
 명시적으로 등록한다. Python 모듈은 신뢰하는 프로젝트 코드이며 JSON에서 임의

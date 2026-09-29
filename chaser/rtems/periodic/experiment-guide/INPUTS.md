@@ -6,7 +6,7 @@
 
 | 종류 | 입력 | 생성·실행 도구 |
 |---|---|---|
-| 명시적 다중 배열 workload | `schema_version: 2`, `arrays`, 역할별 task binding | `python3 -m tools.rtems_periodic`의 `prepare`, `analyze`, `run`; cyclic/paired-read/gemm-u32 |
+| 명시적 다중 배열 workload | `schema_version: 2`, `arrays`, 역할별 task binding | `python3 -m tools.rtems_periodic`의 `prepare`, `analyze`, `run`; cyclic/paired-read/gemm-u32/polybench-atax-u32 |
 | False-sharing reader/writer | `pairs`, `layouts` 등이 있는 JSON | `.cache/configs/periodic-memory-gap/false-sharing/run.py` |
 
 `configs/periodic-multi-array/`는 버전 관리되는 다중 배열 입력이고,
@@ -62,6 +62,7 @@ toolchain·GR740 BSP, `/opt/src/rtems/waf`다. SIM 실행에는
 | [gemm-u32-smoke.json](../../../configs/periodic-multi-array/gemm-u32-smoke.json) | 단일 task, A 2×3와 B 3×2를 곱해 C 2×2에 저장 |
 | [gemm-u32-shared-smoke.json](../../../configs/periodic-multi-array/gemm-u32-shared-smoke.json) | 두 task가 A/B를 공유하고 각각 독점 C에 저장 |
 | [shared-reads-smoke.json](../../../configs/periodic-multi-array/shared-reads-smoke.json) | cyclic과 paired-read가 입력 배열을 공유 |
+| [polybench-atax-u32-medium.json](../../../configs/periodic-multi-array/polybench-atax-u32-medium.json) | A 390×410, x 410개, tmp 390개, y 410개로 y = Aᵀ(Ax) 계산 |
 
 `schema_version: 2`는 **입력 형식**이다. 계측 계약은
 `chaser-periodic-measurement-v3`다.
@@ -142,6 +143,48 @@ checksum 계약은 `u32-word-fnv1a-output-v1`이다. `h=2166136261`에서 시작
 GEMM의 job당 load 수는 `sweeps*2*m*n*k + m*n`, store 수는 `sweeps*m*n`이다.
 읽기 커널은 `sweeps*distinct*역할 수`만큼 load하고 store는 없다.
 
+<a id="polybench-atax"></a>
+
+#### PolyBench 기반 정수 ATAX
+
+`polybench-atax-u32`는 [PolyBench/C 4.2.1의 ATAX 소스](https://github.com/MatthiasJReisinger/PolyBenchC-4.2.1/blob/master/linear-algebra/kernels/atax/atax.c)
+(`kernel_atax`, 2016-05-10)의 알고리즘을 정수 C 커널로 재구현한 예제다.
+`y`를 0으로 만들고 각 행 i마다 `tmp[i] = A[i,:]·x`를 계산한 뒤
+`y[:] += A[i,:]·tmp[i]`를 수행한다. 행별 두 순회와 임시 배열의 load/store를
+유지하며 volatile load 순서는 C의 개별 문장으로 고정한다.
+
+원본의 기본 double 자료형·초기화 수식·PolyBench timer 대신 `uint32_t`의
+modulo 2^32 연산, JSON의 상수 초기값, RTEMS periodic 계측을 사용한다.
+배열 크기는 원본 MEDIUM의 M=390, N=410과 같다. 자료형과 초기화가 다르므로
+원본 PolyBench 수치 결과나 성능 점수와는 대응하지 않는다.
+각 sweep에서 논리적 tmp/y를 초기화하므로 이전 job 결과에 의존하지 않는다.
+마지막 sweep 뒤 y의 논리 원소를 순서대로 읽는 FNV-1a hash도 계측·분석에 포함한다.
+
+배열 역할과 필수 shape는 `A: [m,n]`, `x: [n]`, `tmp: [m]`, `y: [n]`이다.
+모두 `uint32_t`이며 `m`·`n` 등의 별도 task 매개변수는 받지 않는다.
+각 배열의 `strides_elements`와 binding의 `offset_elements`로 padding과
+view를 지정할 수 있다. A/x는 읽기 전용으로 공유할 수 있고 tmp/y는 task마다
+독점해야 한다. 출력과 임시 배열의 padding은 변경하지 않는다.
+
+예제는 A=1, x=2이므로 tmp의 각 원소는 820, y의 각 원소는 319800이다.
+job당 load 수는 `sweeps*6*m*n+n`, store 수는 `sweeps*(n+m+2*m*n)`이며,
+기본 1 sweep에서 **959810 loads + 320600 stores = 1280410 accesses**다.
+생성·reference 계약은 [atax.py](../../../chaser/periodic/kernels/atax.py),
+직접 수정할 C 루프는 [atax.c.in](../../../chaser/periodic/kernels/atax.c.in)에 있다.
+
+```sh
+python3 -m tools.rtems_periodic prepare \
+  configs/periodic-multi-array/polybench-atax-u32-medium.json \
+  --output .cache/periodic-multi-array/my-atax-v1/prepared
+python3 -m tools.rtems_periodic analyze .cache/periodic-multi-array/my-atax-v1/prepared
+python3 -m tools.rtems_periodic run .cache/periodic-multi-array/my-atax-v1/prepared \
+  --architecture p --runs 1 --timeout 60 \
+  --output .cache/periodic-multi-array/my-atax-v1/p
+```
+
+G/C 실행은 아래 §2.3처럼 architecture와 output을 바꾼다.
+이 예제도 cold task-local 진단용이며 RF label 편입 대상은 아니다.
+
 ### 2.3. 다중 배열 smoke 실행
 
 현재 workspace root에서 실행하고, 이미 존재하지 않는 output 이름을 선택한다.
@@ -207,6 +250,12 @@ host C O0/O2에서는 비균일 비정방 GEMM, 여러 sweeps/jobs, uint32 overf
 load/store·hash 접근 순서, 공유 입력, 혼합 정렬도 검증했다.
 사용자 C 커널의 실행·reference stream, 잘못된 store 대상과
 커널·모델 snapshot의 누락·변조 거부도 검사했다.
+
+ATAX 전용 테스트 **20개**는 상수 초기값 checksum, 비균일 입력과 overflow,
+O0/O2 수치 결과, padding·offset, 반복 job의 scratch/output 초기화,
+입력 공유·쓰기 독점 계약을 검사한다. SPARC G/C/P ELF와 실제 APE stream의
+작은 회귀 fixture의 109 accesses 일치 및 C/Python snapshot 포함도 O0/O2에서 확인했다.
+ATAX의 SIM/HW 실행은 수행하지 않았다.
 
 SIM은 이번 변경 후 재실행하지 않았다. 앞서 수행한 다중 배열 smoke는
 **20/20 성공**했고, 형상 기반 GEMM과 C 생성 모듈 분리 후 G/C/P SIM도

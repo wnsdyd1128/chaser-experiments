@@ -1,0 +1,73 @@
+{
+  "schema_version": 2,
+  "workload_id": "polybench-atax-u32-medium-v1",
+  "family_id": "polybench-atax-u32-diagnostic",
+  "policy_id": "explicit-core-map-v1",
+  "measurement_contract_id": "chaser-periodic-measurement-v3",
+  "horizon_ticks": 4000,
+  "warmup_ticks": 2000,
+  "u_repeats": 1,
+  "workload_optimization": "O0",
+  "arrays": [
+    {
+      "array_id": "a0",
+      "element_type": "uint32_t",
+      "shape": [
+        390,
+        410
+      ],
+      "alignment_bytes": 32,
+      "initial_value": 1
+    },
+    {
+      "array_id": "x0",
+      "element_type": "uint32_t",
+      "shape": [
+        410
+      ],
+      "alignment_bytes": 32,
+      "initial_value": 2
+    },
+    {
+      "array_id": "tmp0",
+      "element_type": "uint32_t",
+      "shape": [
+        390
+      ],
+      "alignment_bytes": 32,
+      "initial_value": 99
+    },
+    {
+      "array_id": "y0",
+      "element_type": "uint32_t",
+      "shape": [
+        410
+      ],
+      "alignment_bytes": 32,
+      "initial_value": 99
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "atax0",
+      "pattern": "polybench-atax-u32",
+      "arrays": {
+        "A": {
+          "array_id": "a0"
+        },
+        "x": {
+          "array_id": "x0"
+        },
+        "tmp": {
+          "array_id": "tmp0"
+        },
+        "y": {
+          "array_id": "y0"
+        }
+      },
+      "sweeps": 1,
+      "core": 0,
+      "period_ticks": 2000
+    }
+  ]
+}
