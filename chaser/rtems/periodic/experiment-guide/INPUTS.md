@@ -180,6 +180,10 @@ python3 -m tools.rtems_periodic run "$multi_trial/prepared" \
 공유 입력이 있으므로 task별 allocation을 합해 taskset의 고유 할당으로 쓰면 안 된다.
 `protocol.json`은 schema/kernel contract/O0·O2와 새 배열·커널 모듈 snapshot hash를
 보존한다. `load_batch()`가 필수 hash 누락 및 config/plan/ELF/raw 변조를 거부한다.
+새 prepared는 `kernel-inputs/`에 배열 검증 코드와 커널 Python/C/template를 복사하고
+manifest에 `kernel_input_hashes`를 보존한다. 분석은 현재 커널 입력과 이 hash가
+다르면 새 prepare를 요구한다. run은 저장된 커널 입력을 실행 provenance로 복사하며
+`load_batch()`는 C 템플릿 hash의 누락·변조도 검사한다.
 직접 작성하는 C 커널의 등록·reference 계약은
 [커널 인터페이스](CUSTOMIZATION.md#kernel-interface)를 따른다.
 
@@ -201,7 +205,8 @@ rank-1/2/3 형상, 행·열 padding/offset, 평탄 v2 plan hash,
 host C O0/O2에서는 비균일 비정방 GEMM, 여러 sweeps/jobs, uint32 overflow,
 전체 출력·입력·padding 보존을 확인했다. 실제 APE와 G/C/P ELF의 typed
 load/store·hash 접근 순서, 공유 입력, 혼합 정렬도 검증했다.
-사용자 C 커널의 실행·reference stream, 잘못된 store 대상도 검사했다.
+사용자 C 커널의 실행·reference stream, 잘못된 store 대상과
+커널·모델 snapshot의 누락·변조 거부도 검사했다.
 
 SIM은 이번 변경 후 재실행하지 않았다. 앞서 수행한 다중 배열 smoke는
 **20/20 성공**했고, 형상 기반 GEMM과 C 생성 모듈 분리 후 G/C/P SIM도

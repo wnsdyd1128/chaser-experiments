@@ -180,6 +180,8 @@ def test_fresh_processes_reparse_the_same_raw_evidence(prepared, tmp_path):
     assert all(r['execution_status'] == 'ok' for r in rows)
     assert load_batch(prepared, directory) == rows
     protocol = json.loads((directory / 'protocol.json').read_text())
+    for name in ('workload/model.py', 'codegen/workload.py', 'kernels/reads.c.in'):
+        assert 'implementation/chaser/periodic/' + name in protocol['implementation_hashes']
     assert 'implementation/chaser/periodic/patterns.py' not in protocol['implementation_hashes']
     assert (directory / '0.log').read_text().splitlines()[0] != (
         directory / '1.log').read_text().splitlines()[0]

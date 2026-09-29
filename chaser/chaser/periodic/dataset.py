@@ -60,6 +60,9 @@ def load_batch(prepared: Path, directory: Path) -> list[dict]:
     for name, expected in protocol['implementation_hashes'].items():
         if file_hash(directory / name) != expected:
             raise ValueError('Measurement implementation snapshot changed')
+    for name, expected in manifest.get('kernel_input_hashes', {}).items():
+        if protocol['implementation_hashes'].get('implementation/' + name) != expected:
+            raise ValueError('Kernel implementation provenance differs from prepared inputs')
     records = [json.loads(line) for line in (directory / 'measurements.jsonl').read_text().splitlines()]
     if (len(records) != protocol['runs']
             or {r['run_id'] for r in records} != {str(i) for i in range(protocol['runs'])}):

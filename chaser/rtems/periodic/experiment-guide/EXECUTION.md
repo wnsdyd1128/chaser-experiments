@@ -27,6 +27,7 @@ my-gemm-v1/prepared/
   layout.ld, layout.json      주소 배치·검사 결과
   wscript, waf, build.log     빌드 절차·실제 명령
   cache.yaml                  분석 모델 설정; HW cache enable 설정이 아님
+  kernel-inputs/             C 템플릿·Python 계약 snapshot
   manifest.json               소스·ELF·빌드 파일 등의 hash
 ```
 

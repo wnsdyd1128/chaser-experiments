@@ -51,7 +51,13 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
                      'tools/rtems_smoke.py'):
         destination = implementation / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(root / relative, destination)
+        original = (prepared / 'kernel-inputs' / relative
+                    if relative in manifest.get('kernel_input_hashes', {}) else root / relative)
+        shutil.copyfile(original, destination)
+    for relative in manifest.get('kernel_input_hashes', {}):
+        destination = implementation / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(prepared / 'kernel-inputs' / relative, destination)
     batch = output / 'boot.batch'
     batch.write_text(f'wmem 0x{symbols["chaser_mode"][0]:x} 0x{mode:x}\n'
                      f'wmem 0x{symbols["chaser_trace"][0]:x} 0x{int(trace):x}\n'
@@ -66,7 +72,7 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
                     simulator_hash=simulator_hash, manifest_hash=file_hash(prepared / 'manifest.json'),
                     plan_hash=plan['plan_hash'], mode=mode, trace=trace, empty=empty,
                     implementation_hashes={str(p.relative_to(output)): file_hash(p)
-                                           for p in implementation.rglob('*.py')},
+                                           for p in implementation.rglob('*') if p.is_file()},
                     execution_backend='laysim-gr740', measurement_source='measured',
                     scope='periodic-diagnostic' if trace else 'empty-overhead' if empty else 'periodic-timing')
     protocol.update(input_schema_version=plan['input_schema_version'], kernel_contract_id=plan['kernel_contract_id'],

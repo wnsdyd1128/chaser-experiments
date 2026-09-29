@@ -48,7 +48,8 @@ Arrays are initialized once before workers start, not between jobs.
 To define a new kernel, register its Python validation/reference contract and
 write its C template under `chaser/periodic/kernels/`, following the
 [customization interface](experiment-guide/CUSTOMIZATION.md#kernel-interface).
-GEMM's loop is in `kernels/gemm.c.in`. Edit original inputs and prepare a new snapshot.
+GEMM's loop is in `kernels/gemm.c.in`. Edit original inputs and prepare a new
+snapshot: analysis rejects changed kernel sources, and saved runs preserve their hashes.
 
 Analysis validates every object's linked address, access width, and load/store order.
 It records clang O0 analysis separately from workload O0/O2 compilation, and treats

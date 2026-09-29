@@ -138,7 +138,7 @@ JSON에는 형상·타입·binding·주기·sweeps를 두고, 연산 변경은 �
 새 커널은 같은 소유 디렉터리에 `<name>.py`, `<name>.c.in`을 만들고
 [kernels/__init__.py](../../../chaser/periodic/kernels/__init__.py)의 `KERNELS`에
 명시적으로 등록한다. Python 모듈은 신뢰하는 프로젝트 코드이며 JSON에서 임의
-모듈을 import하지 않는다.
+모듈을 import하지 않는다. 보조 코드와 `.h`도 `kernels/` 아래에 두어 snapshot에 포함한다.
 
 | 인터페이스 | 계약 |
 |---|---|
@@ -254,7 +254,10 @@ KERNELS['gemm-u32-ji'] = Kernel(gemm_ji, ('A', 'B', 'C'),
 GEMM의 선택적 footprint 수식이 새 연산에도 맞는지 확인하고, 맞지 않으면
 해당 hook을 생략해 정확한 event 기반 계산을 사용하거나 새 수식을 검증한다.
 
-필요한 선언을
+prepare는 `kernel-inputs/`와 manifest에 C 템플릿·Python 계약을 함께 보존한다.
+원본 커널을 수정했다면 새 prepare가 필요하며 analyze는 이전 snapshot과 현재
+계약이 다르면 거부한다. run/load_batch는 저장된 입력과 hash로 검증한다.
+header 파일의 hash 보존이 자동 include를 의미하지는 않는다. 필요한 선언을
 source()가 생성 소스에 포함해야 하며 커스텀 compiler/linker 옵션은 별도 빌드 변경이다.
 
 ### 4.4. RTEMS: task 생성·phase·계측

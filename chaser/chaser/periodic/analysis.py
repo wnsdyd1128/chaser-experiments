@@ -14,6 +14,7 @@ from chaser.periodic.event_compression import EventCompressionQueue
 from chaser.periodic.build import YARDA, check_layout, read_symbols
 from chaser.periodic.kernels import reference_events, task_from_plan
 from chaser.periodic.workload import ArraySpec
+from chaser.periodic.kernels.inputs import check_current_inputs
 from chaser.locality.artifacts import read_analysis
 from tools.rtems_smoke import check_inputs, file_hash, write_json
 
@@ -54,6 +55,7 @@ def _analyze(prepared, timeout, compress_events, compression_queue, reservations
     prepared = prepared.resolve()
     manifest = json.loads((prepared / 'manifest.json').read_text())
     check_inputs(prepared, manifest)
+    check_current_inputs(manifest)
     plan = json.loads((prepared / 'p/plan.json').read_text())
     if plan.get('input_schema_version') != 2:
         raise ValueError('Legacy prepared input is deprecated; prepare schema_version: 2 arrays')

@@ -9,6 +9,7 @@ import sys
 from chaser.periodic.measurement import make_plan
 from chaser.periodic.workload import ArraySpec
 from chaser.periodic.codegen import workload_source, topology_header, write_project
+from chaser.periodic.kernels.inputs import snapshot_inputs, record_inputs
 from tools.rtems_smoke import file_hash, write_json, check_inputs
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -52,6 +53,7 @@ def prepare(configuration: dict, output: Path) -> dict:
     output = output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     source = output / 'source'
+    kernel_inputs = snapshot_inputs(output)
     write_project(output, plans)
     shutil.copyfile('/opt/src/rtems/waf', output / 'waf')
     shutil.copyfile(ROOT / 'rtems/baseline/cache.yaml', output / 'cache.yaml')
@@ -77,6 +79,7 @@ def prepare(configuration: dict, output: Path) -> dict:
     manifest = dict(schema_version=1, build_command=command,
                     tools={str(p): file_hash(p) for p in sdk_files},
                     files={str(p.relative_to(output)): file_hash(p) for p in files})
+    record_inputs(manifest, kernel_inputs)
     write_json(output / 'manifest.json', manifest)
     check_inputs(output, manifest)
     return manifest

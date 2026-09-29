@@ -664,7 +664,7 @@ lists the completed checks and local evidence paths.
 For new operations, register a Python validation/reference contract alongside a
 directly editable C template using the
 [custom kernel interface](rtems/periodic/experiment-guide/CUSTOMIZATION.md#kernel-interface).
-GEMM uses this interface.
+GEMM uses this interface. Prepared snapshots preserve and hash both source forms.
 
 Verification on 2026-09-28: `scripts/verify` passed **511 tests**, with 3 optional
 environment tests skipped. Earlier multi-array SIM smoke runs passed **20/20**;

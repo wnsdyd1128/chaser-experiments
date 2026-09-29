@@ -80,7 +80,10 @@ def test_snapshot_revalidation_and_diagnostic_dataset_guard(config, tmp_path):
     assert rows[0]['execution_status'] == 'ok'
     assert load_batch(prepared, output) == rows
     with pytest.raises(ValueError, match='diagnostic'): to_measurement(plan, rows[0])
-    for relative in ('arrays.py', 'kernels/__init__.py', 'kernels/gemm.py', 'kernels/reads.py'):
+    for relative in ('arrays.py', 'kernels/__init__.py', 'kernels/gemm.py', 'kernels/reads.py',
+                     'kernels/gemm.c.in', 'kernels/reads.c.in', 'kernels/templates.py', 'kernels/inputs.py',
+                     'codegen/workload.py', 'codegen/workload.c.in', 'codegen/project.py',
+                     'codegen/model.py', 'workload/model.py', 'workload/__init__.py'):
         path = output / 'implementation/chaser/periodic' / relative
         original = path.read_bytes()
         path.write_bytes(original + b'\n# tampered\n')
@@ -100,6 +103,13 @@ def test_snapshot_revalidation_and_diagnostic_dataset_guard(config, tmp_path):
     path.write_text(json.dumps(protocol))
     with pytest.raises(ValueError, match='provenance'): load_batch(prepared, output)
     path.write_text(original)
+
+    protocol = json.loads(original)
+    del protocol['implementation_hashes']['implementation/chaser/periodic/kernels/gemm.c.in']
+    path.write_text(json.dumps(protocol))
+    with pytest.raises(ValueError, match='provenance'): load_batch(prepared, output)
+    path.write_text(original)
+
 
 @pytest.mark.parametrize('column_step', [1, 2])
 def test_padded_offset_gemm_real_ape_stream(shaped_config, tmp_path, column_step):
@@ -124,3 +134,12 @@ def test_padded_offset_gemm_real_ape_stream(shaped_config, tmp_path, column_step
         for name, offset in [('a0',8),('b0',12),('a0',8+4*column_step),('b0',28),
                              ('a0',8+8*column_step),('b0',44),('c0',4)]]
 
+
+def test_changed_template_requires_new_prepare(shaped_config, tmp_path, monkeypatch):
+    from chaser.periodic.kernels import inputs
+    prepared = tmp_path / 'prepared'
+    prepare(shaped_config, prepared)
+    original_hash = inputs.file_hash
+    monkeypatch.setattr(inputs, 'file_hash', lambda p: 'changed' if p.name == 'gemm.c.in' else original_hash(p))
+    with pytest.raises(ValueError, match='prepare a new snapshot'): analyze(prepared)
+    assert not (prepared / 'analysis').exists()
