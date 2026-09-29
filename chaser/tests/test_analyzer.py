@@ -20,7 +20,7 @@ def run(tmp_path, **kwargs):
 
 
 def test_actual_cpp_analysis_has_matching_values_and_provenance(tmp_path):
-    result = run(tmp_path)
+    result = run(tmp_path, max_line_references=1100000, timeout=60)
     baseline = json.loads((ROOT / 'exports/locality.json').read_text())['cases']['packed']
     for key in ('ca_caas_element', 'ca_global_line', 'ca_csrd_l1', 'clp', 'cls'):
         assert result['case'][key] == baseline[key]
@@ -28,6 +28,9 @@ def test_actual_cpp_analysis_has_matching_values_and_provenance(tmp_path):
     assert all(r['wall_seconds'] >= 0 and r['started_at'] for r in result['provenance']['runs'])
     assert len(result['provenance']['analyzer_binary_hash']) == 64
     assert result['provenance']['analyzer_commit'] in baseline['provenance']['tool_version']
+    hierarchy = result['provenance']['runs'][2]['argv']
+    assert hierarchy[hierarchy.index('--max-cumulative-loop-iterations') + 1] == '2000000'
+    assert hierarchy[hierarchy.index('--max-line-references') + 1] == '1100000'
 
 
 def test_failure_never_writes_success_artifact(tmp_path, monkeypatch):

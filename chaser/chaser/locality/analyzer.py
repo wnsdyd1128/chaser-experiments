@@ -3,6 +3,7 @@
 from datetime import datetime, timezone
 from hashlib import sha256
 import json
+from math import isfinite
 from pathlib import Path
 import re
 import subprocess
@@ -18,7 +19,9 @@ def _hash(path: Path) -> str:
 
 def analyze_task(task_id: str, *, ape: Path, elf: Path, cache: Path, source: Path,
                  executable: Path, output_dir: Path,
-                 max_cumulative_loop_iterations: int, max_source_accesses: int) -> dict:
+                 max_cumulative_loop_iterations: int, max_source_accesses: int,
+                 max_line_references: int | None = None,
+                 timeout: float | None = None) -> dict:
     """Analyze a single-function APE using element, line-control and hierarchy modes.
 
     Compilation/APE extraction belongs to the caller. Limits are explicit so
@@ -32,8 +35,12 @@ def analyze_task(task_id: str, *, ape: Path, elf: Path, cache: Path, source: Pat
     if len(functions) != 1 or functions[0]['function'] != task_id:
         raise ValueError('Expected exactly one matching APE function')
     if any(type(n) is not int or n < 1 for n in
-           (max_cumulative_loop_iterations, max_source_accesses)):
+           (max_cumulative_loop_iterations, max_source_accesses)) or (
+               max_line_references is not None and
+               (type(max_line_references) is not int or max_line_references < 1)):
         raise ValueError('Positive analyzer limits are required')
+    if timeout is not None and (not isfinite(timeout) or timeout <= 0):
+        raise ValueError('Positive finite timeout is required')
     # YARDA's wire schema names the APE input hash map_sha256.
     inputs = {'map_sha256': _hash(ape), 'elf_sha256': _hash(elf),
               'cache_config_sha256': _hash(cache)}
@@ -46,8 +53,12 @@ def analyze_task(task_id: str, *, ape: Path, elf: Path, cache: Path, source: Pat
         'line': ['--mode', 'unroll', '--granularity', 'cache-line', '--cache', str(cache),
                  '--max-cumulative-loop-iterations', str(max_cumulative_loop_iterations)],
         'hierarchy': ['--analysis', 'hierarchy-rd', '--elf', str(elf), '--cache', str(cache),
-                      '--max-source-accesses', str(max_source_accesses)],
+                      '--max-source-accesses', str(max_source_accesses),
+                      '--max-cumulative-loop-iterations',
+                      str(max_cumulative_loop_iterations)],
     }
+    if max_line_references is not None:
+        modes['hierarchy'] += ['--max-line-references', str(max_line_references)]
     results, runs = {}, []
     for name, flags in modes.items():
         output = output_dir / (name + '.json')
@@ -55,7 +66,8 @@ def analyze_task(task_id: str, *, ape: Path, elf: Path, cache: Path, source: Pat
         started_at = datetime.now(timezone.utc).isoformat()
         start = perf_counter()
         with (output_dir / (name + '.log')).open('w') as log:
-            subprocess.run(argv, check=True, stdout=log, stderr=subprocess.STDOUT)
+            subprocess.run(argv, check=True, stdout=log, stderr=subprocess.STDOUT,
+                           timeout=timeout)
         runs.append({'mode': name, 'argv': argv, 'started_at': started_at,
                      'wall_seconds': perf_counter() - start, 'output_hash': _hash(output)})
         results[name] = json.loads(output.read_text())
