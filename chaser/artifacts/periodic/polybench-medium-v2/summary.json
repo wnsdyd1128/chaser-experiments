@@ -1,0 +1,2041 @@
+{
+  "all_passed": false,
+  "analyzer_commits": {
+    "ape": "462ed4ed55edfa832c27d59fdb720bb28ee14fe5",
+    "yarda": "b33abc15ee48c40c645456715f2310ca583bad3b"
+  },
+  "benchmarks": {
+    "2mm": {
+      "dimensions": {
+        "NI": 180,
+        "NJ": 190,
+        "NK": 210,
+        "NL": 220
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/2mm",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 58937406,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 58937406,
+          "source_accesses": 58937406
+        },
+        "elf_sha256": "e873fc27977e71bbd7baf4cb656078744daed67512da87f60da17cb3347c76d3",
+        "execution_status": "passed",
+        "modeled_accesses": 58937406,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 58937406,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 58937406,
+            "source_accesses": 58937406
+          },
+          "elf_sha256": "5c6073dce6af3f8b6365950d79fcfffebf85823078bf1e76af96dc9d011d3f2f",
+          "execution_status": "passed",
+          "modeled_accesses": 58937406,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 58937406,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 58937406,
+            "source_accesses": 58937406
+          },
+          "elf_sha256": "4541e1394f30e0bbf8e6a50d267dec7d1e8fc74f37bcc0fb9b5d6aad3bd2f5d3",
+          "execution_status": "passed",
+          "modeled_accesses": 58937406,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 58937406,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 58937406,
+            "source_accesses": 58937406
+          },
+          "elf_sha256": "c2bef38c3408380842e62f542f2b3ca8b0e486412a00f9590f9240f59b91442b",
+          "execution_status": "passed",
+          "modeled_accesses": 58937406,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "6a5916198eb361bf3b8e502dbc256b2d0da44bfee3b07955a192252e7207ff79"
+    },
+    "3mm": {
+      "dimensions": {
+        "NI": 180,
+        "NJ": 190,
+        "NK": 200,
+        "NL": 210,
+        "NM": 220
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/3mm",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 91311905,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 91311905,
+          "source_accesses": 91311905
+        },
+        "elf_sha256": "6514922020d0e299c398b3c3fd08343c5dfb9e682c75e9d5cedffa6e31d9e649",
+        "execution_status": "passed",
+        "modeled_accesses": 91311905,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 91311905,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 91311905,
+            "source_accesses": 91311905
+          },
+          "elf_sha256": "23b5d2d2a73a2399b4e3e6b6fedd454c50aa7b13a666a8c5683980b7cc665c26",
+          "execution_status": "passed",
+          "modeled_accesses": 91311905,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 91311905,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 91311905,
+            "source_accesses": 91311905
+          },
+          "elf_sha256": "92932bd8b372534e551a0b3ef076baa625dde45eaafd1aa9062acf2a0cc09e5b",
+          "execution_status": "passed",
+          "modeled_accesses": 91311905,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 91311905,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 91311905,
+            "source_accesses": 91311905
+          },
+          "elf_sha256": "39ae72edfa3fb4e1c391b8bd8be9c0953851bfe50674ab1ff9bd36f805bef74f",
+          "execution_status": "passed",
+          "modeled_accesses": 91311905,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "f03f14dc4dde8b5cb5f34607a0783a8ee189e4be264dc9028d2307432c3f508a"
+    },
+    "adi": {
+      "dimensions": {
+        "N": 200,
+        "TSTEPS": 100
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/adi",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 94287602,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 94287602,
+          "source_accesses": 94287602
+        },
+        "elf_sha256": "92efadf11c28a3e5d6d39d968c58734fb2c695ebb8bc0b3d386ac35fc261cd2c",
+        "execution_status": "passed",
+        "modeled_accesses": 94287602,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 94287602,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 94287602,
+            "source_accesses": 94287602
+          },
+          "elf_sha256": "1ec37b4d410231f80b847aa603a7c64a56ecc0221673cc8785ff5eb2bbdf6484",
+          "execution_status": "passed",
+          "modeled_accesses": 94287602,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 94287602,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 94287602,
+            "source_accesses": 94287602
+          },
+          "elf_sha256": "937c8812326c49c9a0fc975595b125c26b40760eb433734cb1f316ffb5bf0a31",
+          "execution_status": "passed",
+          "modeled_accesses": 94287602,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 94287602,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 94287602,
+            "source_accesses": 94287602
+          },
+          "elf_sha256": "5ccb7d746eb54d36208b351875cb785457f3cf4fac1cceb0c6508b1c5ca67f64",
+          "execution_status": "passed",
+          "modeled_accesses": 94287602,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "e87a85d3cf904d0ef91ef3e85ff2a8b03f4c7ebe30a26065ef4dc3c38959d32c"
+    },
+    "atax": {
+      "dimensions": {
+        "M": 390,
+        "N": 410
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/atax",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 1280002,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 1280002,
+          "source_accesses": 1280002
+        },
+        "elf_sha256": "b97435839f66c281ae1378edbfb03ec18f4f9d684a9c652232f0339877c4e8ee",
+        "execution_status": "passed",
+        "modeled_accesses": 1280002,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 1280002,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 1280002,
+            "source_accesses": 1280002
+          },
+          "elf_sha256": "e94ca65d6332365452139391b8c9ac61ac1f9490e1ce3e2bd1190f842521650f",
+          "execution_status": "passed",
+          "modeled_accesses": 1280002,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 1280002,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 1280002,
+            "source_accesses": 1280002
+          },
+          "elf_sha256": "ec9dac6403518316dbc7ca8b83f83db81da6e428e9f1ef5576f0387c711beb95",
+          "execution_status": "passed",
+          "modeled_accesses": 1280002,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 1280002,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 1280002,
+            "source_accesses": 1280002
+          },
+          "elf_sha256": "903e898380d135d0c2f4b2e44e81c2397bab9bbe63bcaf896154c61ca03e042b",
+          "execution_status": "passed",
+          "modeled_accesses": 1280002,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "4a805500e40c716c70cef45263a1e29f2758dc712870ad50620878886f6aa4e4"
+    },
+    "bicg": {
+      "dimensions": {
+        "M": 390,
+        "N": 410
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/bicg",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 1280002,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 1280002,
+          "source_accesses": 1280002
+        },
+        "elf_sha256": "7cf48e559ca7977bc763e1bc5552e363264351e5a4bde39e70a019716625a21c",
+        "execution_status": "passed",
+        "modeled_accesses": 1280002,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 1280002,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 1280002,
+            "source_accesses": 1280002
+          },
+          "elf_sha256": "7353d6001adf141b9ad3a7c14c961bc461b47a88df0a47d8cf41983319c8ca43",
+          "execution_status": "passed",
+          "modeled_accesses": 1280002,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 1280002,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 1280002,
+            "source_accesses": 1280002
+          },
+          "elf_sha256": "9dd0b5152ae5124fe07226b01f5acfe41273b7e04be79b6c4f1b335f63c8baca",
+          "execution_status": "passed",
+          "modeled_accesses": 1280002,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 1280002,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 1280002,
+            "source_accesses": 1280002
+          },
+          "elf_sha256": "3a690542f70b2200f504465329fdc6659acce414d543a961f26b5f56d1d8358b",
+          "execution_status": "passed",
+          "modeled_accesses": 1280002,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "1b407cb05b6635e7f713b66d2c631a653d46c0c24b2be7864ac567867c84363e"
+    },
+    "cholesky": {
+      "dimensions": {
+        "N": 400
+      },
+      "effective_yarda_execution_status": "blocked",
+      "element_type": "double",
+      "frontend_error": "error: [MemoryAccessPatterns] unsupported affine index: unresolved or unsupported region loop bound",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/cholesky",
+      "native": "passed",
+      "native_yarda": {
+        "elf_sha256": "93447ae45247b55838b51313a7ef1f86f50f416ca18d6251707bcc7466dfcf97",
+        "execution_status": "blocked",
+        "log": "ape.log",
+        "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+        "stage": "frontend",
+        "trace_validation": "unavailable"
+      },
+      "periodic_yarda": {
+        "c": {
+          "elf_sha256": "b47a28b077fbc8876a0c842869131499ee8694bd07b8e9cc1a958a1f4ccb83c5",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "g": {
+          "elf_sha256": "8edeb3f81fc46adc31bcbd8183c01794bf1452f7db5cea7875bb27bec4060506",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "p": {
+          "elf_sha256": "0c2febcc5976a3e45739fe2f86a47d02af15384bf3dbf2ecc2be34a59ae1883b",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        }
+      },
+      "previous_yarda_execution_status": "blocked",
+      "rtems_build": "passed",
+      "source_sha256": "1f5dc43accdd3f34d3761fbeb06dd100114ac6fd7f05f18a8a4819b56f728825"
+    },
+    "correlation": {
+      "dimensions": {
+        "M": 240,
+        "N": 260
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/correlation",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 30852123,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 30852123,
+          "source_accesses": 30852123
+        },
+        "elf_sha256": "1c84aa1c81292fe690ef904b873249f9b9bdbc279f4c5b11896c2927502caf40",
+        "execution_status": "passed",
+        "modeled_accesses": 30852123,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 30852123,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 30852123,
+            "source_accesses": 30852123
+          },
+          "elf_sha256": "749be199db7f86533c4d477f757b4c56c6a8e949ef9fd46a610674f8248c9069",
+          "execution_status": "passed",
+          "modeled_accesses": 30852123,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 30852123,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 30852123,
+            "source_accesses": 30852123
+          },
+          "elf_sha256": "c84b97693df1c3a04094f301a15270b47fed619f8fcd80f95a6cea1d45b81643",
+          "execution_status": "passed",
+          "modeled_accesses": 30852123,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 30852123,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 30852123,
+            "source_accesses": 30852123
+          },
+          "elf_sha256": "536358edc50a7c18985b6a775ad1c4714246c6d5ff92162f13b10f99f5bf651b",
+          "execution_status": "passed",
+          "modeled_accesses": 30852123,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "blocked",
+      "rtems_build": "passed",
+      "source_sha256": "eff9cbb807bf520ed6f99a6f18885f9b8f9e1dab6494fcf2285dcadd1839e22a"
+    },
+    "covariance": {
+      "dimensions": {
+        "M": 240,
+        "N": 260
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/covariance",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 30596523,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 30596523,
+          "source_accesses": 30596523
+        },
+        "elf_sha256": "3d76b87817e1a2f5f0cea5df64117f18ee2627c4f3ecf45cd88d563a236d69ef",
+        "execution_status": "passed",
+        "modeled_accesses": 30596523,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 30596523,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 30596523,
+            "source_accesses": 30596523
+          },
+          "elf_sha256": "2ef8e49203dc5b3c2addb66cad219a7c63d12271c9ee78f93c781f3b6d388bb6",
+          "execution_status": "passed",
+          "modeled_accesses": 30596523,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 30596523,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 30596523,
+            "source_accesses": 30596523
+          },
+          "elf_sha256": "112ac47dce67c3c631080688cd57e42dcdad94836074005679d849ce2aea57ae",
+          "execution_status": "passed",
+          "modeled_accesses": 30596523,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 30596523,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 30596523,
+            "source_accesses": 30596523
+          },
+          "elf_sha256": "5b6c7bdedbf9ebc10b3f878394944b643508a9e9ff25abc75967b4380ff33175",
+          "execution_status": "passed",
+          "modeled_accesses": 30596523,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "blocked",
+      "rtems_build": "passed",
+      "source_sha256": "8dde8813c7c26c670e40ebb4338c5691429ddfd73251fe0365ebd3574bfb4621"
+    },
+    "deriche": {
+      "dimensions": {
+        "H": 480,
+        "W": 720
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "float",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/deriche",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 6912003,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 6912003,
+          "source_accesses": 6912003
+        },
+        "elf_sha256": "774321fbb2732c4957391dfbecc97814c3e7ad316549c505ae079781339ed6b5",
+        "execution_status": "passed",
+        "modeled_accesses": 6912003,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 6912003,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 6912003,
+            "source_accesses": 6912003
+          },
+          "elf_sha256": "891f41354730740ba95ba15f3ee29701d1fbc18302d26955f51ff8ef286856e2",
+          "execution_status": "passed",
+          "modeled_accesses": 6912003,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 6912003,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 6912003,
+            "source_accesses": 6912003
+          },
+          "elf_sha256": "2da843f263f4655a52e2c95ec3776a9474abe095e647353a4f9b993cb1eedf2f",
+          "execution_status": "passed",
+          "modeled_accesses": 6912003,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 6912003,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 6912003,
+            "source_accesses": 6912003
+          },
+          "elf_sha256": "e54bc03ac4563abfa0ddb0ab199ad7b114632d12595e0365c1bdc86b46cd0635",
+          "execution_status": "passed",
+          "modeled_accesses": 6912003,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "2cb6f2288c259b23d3901a4093c397fa9ec14d4cc274ec89bfcaebb3a6efa9a8"
+    },
+    "doitgen": {
+      "dimensions": {
+        "NP": 60,
+        "NQ": 40,
+        "NR": 50
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/doitgen",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 29160003,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 29160003,
+          "source_accesses": 29160003
+        },
+        "elf_sha256": "e821a20d4f63a9634804704e76005a85b33beb26e8e397a401f14663de42047a",
+        "execution_status": "passed",
+        "modeled_accesses": 29160003,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 29160003,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 29160003,
+            "source_accesses": 29160003
+          },
+          "elf_sha256": "5616bf0d5a8713c360966595cf354d45ed105d26e4f168d1abe219bba201fdbe",
+          "execution_status": "passed",
+          "modeled_accesses": 29160003,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 29160003,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 29160003,
+            "source_accesses": 29160003
+          },
+          "elf_sha256": "1e1bd5553f113c7384f61c30fb1b2982fca2c11dc3962e6fae7b81797087a7ec",
+          "execution_status": "passed",
+          "modeled_accesses": 29160003,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 29160003,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 29160003,
+            "source_accesses": 29160003
+          },
+          "elf_sha256": "fe088225313560629c109a522bfeb07c42ed1e2e7fec37440fae308b4c8b3019",
+          "execution_status": "passed",
+          "modeled_accesses": 29160003,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "d30d9c32538347ef6c9afc37c038aec61eb52a6c6954d2f83f37ac272b67a525"
+    },
+    "durbin": {
+      "dimensions": {
+        "N": 400
+      },
+      "effective_yarda_execution_status": "blocked",
+      "element_type": "double",
+      "frontend_error": "error: [MemoryAccessPatterns] unsupported affine index: unresolved or unsupported region loop bound",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/durbin",
+      "native": "passed",
+      "native_yarda": {
+        "elf_sha256": "22df679f1d1b8da64e9843459e4026d903054621d756700c924188fa83ad3f1a",
+        "execution_status": "blocked",
+        "log": "ape.log",
+        "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+        "stage": "frontend",
+        "trace_validation": "unavailable"
+      },
+      "periodic_yarda": {
+        "c": {
+          "elf_sha256": "b4ec080eecbbec3940c06523a41e1547094c47c253cd181fe0300b98aa30db87",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "g": {
+          "elf_sha256": "0a5b59d9aafdfa5bdcab754081cf12df63c854545aca400f250098fc4f78b4fd",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "p": {
+          "elf_sha256": "56f57660fd6ccaa31efff1ca663ffad0dd3ca99fc0a84877b0a6793037b24cf5",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        }
+      },
+      "previous_yarda_execution_status": "blocked",
+      "rtems_build": "passed",
+      "source_sha256": "76019cf3745bd523ca73b8e81b177539ee9e750b6f2e4c50989f8201c608d099"
+    },
+    "fdtd-2d": {
+      "dimensions": {
+        "NX": 200,
+        "NY": 240,
+        "TMAX": 100
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/fdtd-2d",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 66808603,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 66808603,
+          "source_accesses": 66808603
+        },
+        "elf_sha256": "cf52c97c21eb43ba43bb167e1ae0aea4e1be6e134951412c7724792e804f0eb9",
+        "execution_status": "passed",
+        "modeled_accesses": 66808603,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 66808603,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 66808603,
+            "source_accesses": 66808603
+          },
+          "elf_sha256": "e8852b47bc6a4060449b4320901dd57d8a75ecf4ded9a349b8017d9c623a748a",
+          "execution_status": "passed",
+          "modeled_accesses": 66808603,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 66808603,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 66808603,
+            "source_accesses": 66808603
+          },
+          "elf_sha256": "47243859074398e5cf85eccb45cc7a068cb872e44640b6853e9862eef6a1a821",
+          "execution_status": "passed",
+          "modeled_accesses": 66808603,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 66808603,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 66808603,
+            "source_accesses": 66808603
+          },
+          "elf_sha256": "b9eb1ee9fd35c1d79fb9e3cdcc210b451d6f872df39cd678cfce3d87a8b22d60",
+          "execution_status": "passed",
+          "modeled_accesses": 66808603,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "b8e7187a6f189805de26c28bf57904a2618c0cbe041b77d293f292c22dc51652"
+    },
+    "floyd-warshall": {
+      "dimensions": {
+        "N": 500
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "int",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/floyd-warshall",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 875000001,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 875000001,
+          "source_accesses": 875000001
+        },
+        "elf_sha256": "f17657cda6cdcee8195e9826a2ec5f1e8b66bc6ca59dd665643fe491bd64374e",
+        "execution_status": "passed",
+        "modeled_accesses": 875000001,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 875000001,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 875000001,
+            "source_accesses": 875000001
+          },
+          "elf_sha256": "d23c108240a60bb111496ee89fa401193d5abfaca06c35de144f95619c6e2f2e",
+          "execution_status": "passed",
+          "modeled_accesses": 875000001,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 875000001,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 875000001,
+            "source_accesses": 875000001
+          },
+          "elf_sha256": "2ba3256c23f5750f48205712260a04c6c06f3929096ea6db2d1976bc25094a97",
+          "execution_status": "passed",
+          "modeled_accesses": 875000001,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 875000001,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 875000001,
+            "source_accesses": 875000001
+          },
+          "elf_sha256": "c805a7f914cb95ba1a6caa50304abf1053a9249bf0addd73b9105a778e66e9d5",
+          "execution_status": "passed",
+          "modeled_accesses": 875000001,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "6fd98208cea00dcb51f78da9f7a6345af76fe8dc09eefacfaf3d8ec9975491a4"
+    },
+    "gemm": {
+      "dimensions": {
+        "NI": 200,
+        "NJ": 220,
+        "NK": 240
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/gemm",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 42328005,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 42328005,
+          "source_accesses": 42328005
+        },
+        "elf_sha256": "19a4d40cb0dcd9ea11878c3cbc7d2a23f04848e888a712a14350bbd83c0fd782",
+        "execution_status": "passed",
+        "modeled_accesses": 42328005,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 42328005,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 42328005,
+            "source_accesses": 42328005
+          },
+          "elf_sha256": "6329477d3beb38d0b2ba07446c02a2327018fd3c581e114c99eda52cb479fb67",
+          "execution_status": "passed",
+          "modeled_accesses": 42328005,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 42328005,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 42328005,
+            "source_accesses": 42328005
+          },
+          "elf_sha256": "b74bcba5ade882a32c37dbc858a34d0a2e95d6918bb8add14742b42633f94ddf",
+          "execution_status": "passed",
+          "modeled_accesses": 42328005,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 42328005,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 42328005,
+            "source_accesses": 42328005
+          },
+          "elf_sha256": "dd4007b03f8540eed5621c84487867bbcab715c000931999d8afd621eb629e06",
+          "execution_status": "passed",
+          "modeled_accesses": 42328005,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "4ea8778821842230d56bc78ea901ca3cfaa8a416534160bef0a87b62d123284d"
+    },
+    "gemver": {
+      "dimensions": {
+        "N": 400
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/gemver",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 2241203,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 2241203,
+          "source_accesses": 2241203
+        },
+        "elf_sha256": "517f09cc4652fbf4b7b0c3a5a9fdee5f53eba3a205d4170b50a24f1a104b8615",
+        "execution_status": "passed",
+        "modeled_accesses": 2241203,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 2241203,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 2241203,
+            "source_accesses": 2241203
+          },
+          "elf_sha256": "850594cf1c83dfb13b6779791874144637e27e40cbe3416e35bda8ac83a98611",
+          "execution_status": "passed",
+          "modeled_accesses": 2241203,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 2241203,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 2241203,
+            "source_accesses": 2241203
+          },
+          "elf_sha256": "04d49d480df2f54c3c92ba6d0b853b4e50ae13bce954ef4c201f07142dc81dfa",
+          "execution_status": "passed",
+          "modeled_accesses": 2241203,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 2241203,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 2241203,
+            "source_accesses": 2241203
+          },
+          "elf_sha256": "e3e5f535ccdb4f14e66da9302e2fd838d0dfae8ef9f3ea043cebdd2aefcef35e",
+          "execution_status": "passed",
+          "modeled_accesses": 2241203,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "28ede1a04f89ed4f1c9a4e5aa7db52dbfdd4ea9340f7d22a32d39ca871657698"
+    },
+    "gesummv": {
+      "dimensions": {
+        "N": 250
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/gesummv",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 501253,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 501253,
+          "source_accesses": 501253
+        },
+        "elf_sha256": "77e8c33a909123fd1ad97b26a1180004a56d606d682e0a9047c37b20dda9a0c6",
+        "execution_status": "passed",
+        "modeled_accesses": 501253,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 501253,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 501253,
+            "source_accesses": 501253
+          },
+          "elf_sha256": "862bd4c3c993f3e41066c66f4a5c3c09cce29b1975074c255988d95e08a579e1",
+          "execution_status": "passed",
+          "modeled_accesses": 501253,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 501253,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 501253,
+            "source_accesses": 501253
+          },
+          "elf_sha256": "e25b29c6afdbcab7b50636856a4d7669a45239adeb00f5888f6686c16e76ee2f",
+          "execution_status": "passed",
+          "modeled_accesses": 501253,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 501253,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 501253,
+            "source_accesses": 501253
+          },
+          "elf_sha256": "a7deaa560f190e92a821d187dd9eae80b47dcbb2de2ea4c18d92383a0ca46577",
+          "execution_status": "passed",
+          "modeled_accesses": 501253,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "a4ccdd8eeaed73a99f7a3be6d39fb2d0571872e1bd6925ddc0ec0486b48b2609"
+    },
+    "gramschmidt": {
+      "dimensions": {
+        "M": 200,
+        "N": 240
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/gramschmidt",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 46156922,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 46156922,
+          "source_accesses": 46156922
+        },
+        "elf_sha256": "fad11a7c271e4ec4b0ee198e83b9e3f0a36064eed5706e438b51d95e0f2ed042",
+        "execution_status": "passed",
+        "modeled_accesses": 46156922,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 46156922,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 46156922,
+            "source_accesses": 46156922
+          },
+          "elf_sha256": "5eedcfe300a83adc5315b390341f87b559dbba45e9637314a0f5bef2f6f407ca",
+          "execution_status": "passed",
+          "modeled_accesses": 46156922,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 46156922,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 46156922,
+            "source_accesses": 46156922
+          },
+          "elf_sha256": "32d074089e9136a53c507068e3505795ba09273395edb4f80c12bc67035c7547",
+          "execution_status": "passed",
+          "modeled_accesses": 46156922,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 46156922,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 46156922,
+            "source_accesses": 46156922
+          },
+          "elf_sha256": "9e4f65bb89bd40de91905bc743d606e7fe24e26287143b9b68907d7c8f38212b",
+          "execution_status": "passed",
+          "modeled_accesses": 46156922,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "blocked",
+      "rtems_build": "passed",
+      "source_sha256": "6524a094a7881a682a8f07d6b1c8df77087fd4ca82d56fff33217f4c66821ba4"
+    },
+    "heat-3d": {
+      "dimensions": {
+        "N": 40,
+        "TSTEPS": 100
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/heat-3d",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 120718402,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 120718402,
+          "source_accesses": 120718402
+        },
+        "elf_sha256": "b93e9176d8fba2c127d6e858940b536604a8bdb5780685249f38a06d9a6356f8",
+        "execution_status": "passed",
+        "modeled_accesses": 120718402,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 120718402,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 120718402,
+            "source_accesses": 120718402
+          },
+          "elf_sha256": "e868d44cb33820cd3661656e561fd1b882d5e815f11cdac9d669a4b9901b699b",
+          "execution_status": "passed",
+          "modeled_accesses": 120718402,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 120718402,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 120718402,
+            "source_accesses": 120718402
+          },
+          "elf_sha256": "243c655731687dd169bfd6fe4fc0189231d99024a7a10cb2fb841743e16dfe4f",
+          "execution_status": "passed",
+          "modeled_accesses": 120718402,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 120718402,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 120718402,
+            "source_accesses": 120718402
+          },
+          "elf_sha256": "e1923ce338232e192f630a63b58b423d50b689d0130f2317ee547ae4926229ec",
+          "execution_status": "passed",
+          "modeled_accesses": 120718402,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "acfb329b40081d4e4c65f46ddefb786d9859a03494ada2e353095c9499d43413"
+    },
+    "jacobi-1d": {
+      "dimensions": {
+        "N": 400,
+        "TSTEPS": 100
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/jacobi-1d",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 318402,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 318402,
+          "source_accesses": 318402
+        },
+        "elf_sha256": "3eeaeebdc0ae5e4e74015f4b9bd46d46a008e5251d9c424b95036e8fd77ca1cd",
+        "execution_status": "passed",
+        "modeled_accesses": 318402,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 318402,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 318402,
+            "source_accesses": 318402
+          },
+          "elf_sha256": "37f26e9cd3a69eff27a91ae1188fdf34bdbd58fb64d855ca8dd30bb17c4469eb",
+          "execution_status": "passed",
+          "modeled_accesses": 318402,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 318402,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 318402,
+            "source_accesses": 318402
+          },
+          "elf_sha256": "6105da2322c0d9a1b77089810dbfe3da0b1600008dc1da67d0387334007a75cd",
+          "execution_status": "passed",
+          "modeled_accesses": 318402,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 318402,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 318402,
+            "source_accesses": 318402
+          },
+          "elf_sha256": "7d6ca9b19a4da73d614676771044eb8407b22b9cb3e670a2753ae2fb5cfa389e",
+          "execution_status": "passed",
+          "modeled_accesses": 318402,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "2162cc4c0194ca805aef4853d4bc4686206341b37ee219e70c438954fb7439a3"
+    },
+    "jacobi-2d": {
+      "dimensions": {
+        "N": 250,
+        "TSTEPS": 100
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/jacobi-2d",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 73804802,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 73804802,
+          "source_accesses": 73804802
+        },
+        "elf_sha256": "c611ea5881e1e2ff63883a56e898b8f0ae282d9b56177d041ba055f6a64782f8",
+        "execution_status": "passed",
+        "modeled_accesses": 73804802,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 73804802,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 73804802,
+            "source_accesses": 73804802
+          },
+          "elf_sha256": "6c9d7f27a1d2070fd36e9f7d9d24b07fd069edd2620bfdf7c0969db40a048733",
+          "execution_status": "passed",
+          "modeled_accesses": 73804802,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 73804802,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 73804802,
+            "source_accesses": 73804802
+          },
+          "elf_sha256": "529f086207b4a7a52b1f292ec695db07bd8def0c07fc6c45f08a8f830aaf833f",
+          "execution_status": "passed",
+          "modeled_accesses": 73804802,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 73804802,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 73804802,
+            "source_accesses": 73804802
+          },
+          "elf_sha256": "775140b2a8a3f94469b3dd11e0ab569d263dba24abafc3f40bfe42a357de99eb",
+          "execution_status": "passed",
+          "modeled_accesses": 73804802,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "a0d40fd68e64122511a72e90c9b830bfdb42150f5e9e76912a3a4413ff2517fd"
+    },
+    "lu": {
+      "dimensions": {
+        "N": 400
+      },
+      "effective_yarda_execution_status": "blocked",
+      "element_type": "double",
+      "frontend_error": "error: [MemoryAccessPatterns] unsupported affine index: unresolved or unsupported region loop bound",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/lu",
+      "native": "passed",
+      "native_yarda": {
+        "elf_sha256": "fd7b474d51222ae1e1d126e80a3fe953cc939d637f1ae93cb58fe82cf739298f",
+        "execution_status": "blocked",
+        "log": "ape.log",
+        "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+        "stage": "frontend",
+        "trace_validation": "unavailable"
+      },
+      "periodic_yarda": {
+        "c": {
+          "elf_sha256": "171389a11e4714037a96a501c956cd7177d22931de3caaf90fd69e2decf85566",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "g": {
+          "elf_sha256": "2b08e32426be4d1d619e03cb6e2df6928feb7888ded6f8cb9df682d8fca2eedf",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "p": {
+          "elf_sha256": "0bcca837e0761d03dbe17af445e3767593af9ed24a008af556a9001585521904",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        }
+      },
+      "previous_yarda_execution_status": "blocked",
+      "rtems_build": "passed",
+      "source_sha256": "ce025c64a967aae306d5358ab3515a6bbc6ca3d7294c72e498d4d0676675c292"
+    },
+    "ludcmp": {
+      "dimensions": {
+        "N": 400
+      },
+      "effective_yarda_execution_status": "blocked",
+      "element_type": "double",
+      "frontend_error": "error: [MemoryAccessPatterns] unsupported affine index: unresolved or unsupported region loop bound",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/ludcmp",
+      "native": "passed",
+      "native_yarda": {
+        "elf_sha256": "8fab8c3636a6282c1058d098b60dc2925ed765dd3dfee82e5a88a074b6af5224",
+        "execution_status": "blocked",
+        "log": "ape.log",
+        "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+        "stage": "frontend",
+        "trace_validation": "unavailable"
+      },
+      "periodic_yarda": {
+        "c": {
+          "elf_sha256": "702c91865e74ee59088008196dd05329371b15d06710037fbe77965c36116bd9",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "g": {
+          "elf_sha256": "0c99854e9fc4f2fa3738fe0974e971bc39e491f388364eb042dda03d75d30a05",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "p": {
+          "elf_sha256": "2d9d6ec60d6194edda17244199b7fb831baa94f16c0433a8ff8dda929ef63631",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        }
+      },
+      "previous_yarda_execution_status": "blocked",
+      "rtems_build": "passed",
+      "source_sha256": "78138de91737ec70e3ef83d110cca2e5c932cb17d46dfeccffd0fe8c360b995f"
+    },
+    "mvt": {
+      "dimensions": {
+        "N": 400
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/mvt",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 1280001,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 1280001,
+          "source_accesses": 1280001
+        },
+        "elf_sha256": "4c138101a417864f348ec534a826672f1cb7e681732555494005a9833044cc28",
+        "execution_status": "passed",
+        "modeled_accesses": 1280001,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 1280001,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 1280001,
+            "source_accesses": 1280001
+          },
+          "elf_sha256": "0037ea8a32d5c14e786f613c412d5aab2545f35a79cc10013cc1b5471393bdfd",
+          "execution_status": "passed",
+          "modeled_accesses": 1280001,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 1280001,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 1280001,
+            "source_accesses": 1280001
+          },
+          "elf_sha256": "2f94652bf1d1b730b30681b308ef99f7000d63ef1a2ab94a161616fc6df808c8",
+          "execution_status": "passed",
+          "modeled_accesses": 1280001,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 1280001,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 1280001,
+            "source_accesses": 1280001
+          },
+          "elf_sha256": "3befd912a4b5c59679b4470ffb7d440b0afccc9f5884c3c32b5ff2d880109ec2",
+          "execution_status": "passed",
+          "modeled_accesses": 1280001,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "2d18d09f2a0eadc117c075953d333e749445212d9edd0b80c119c3f2a5df07f4"
+    },
+    "nussinov": {
+      "dimensions": {
+        "N": 500
+      },
+      "effective_yarda_execution_status": "blocked",
+      "element_type": "int",
+      "frontend_error": "error: [MemoryAccessPatterns] unsupported affine index: unresolved or unsupported region loop bound",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/nussinov",
+      "native": "passed",
+      "native_yarda": {
+        "elf_sha256": "589bfd3653e9e441c41a9017ee8149210e0d25deb76fd424f647a9cb1d1d7483",
+        "execution_status": "blocked",
+        "log": "ape.log",
+        "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+        "stage": "frontend",
+        "trace_validation": "unavailable"
+      },
+      "periodic_yarda": {
+        "c": {
+          "elf_sha256": "b3083ef71589f78830130004688dd4b3bea3153455b63ae5f6a7098fea55efb0",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "g": {
+          "elf_sha256": "d7f06003873487187ffac1f89bf61f2b026549bbe92f82ad546fd91bf00c2891",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "p": {
+          "elf_sha256": "83f50a42391bbe2f229789107ae32d9f418700de540e24f798b482b4754d5f1b",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        }
+      },
+      "previous_yarda_execution_status": "blocked",
+      "rtems_build": "passed",
+      "source_sha256": "c1a5188375373030a967fc91299229cc2018c9f5d2b9750f440594fbb1433c93"
+    },
+    "seidel-2d": {
+      "dimensions": {
+        "N": 400,
+        "TSTEPS": 100
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/seidel-2d",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 158404002,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 158404002,
+          "source_accesses": 158404002
+        },
+        "elf_sha256": "f6230f84378b054734a9223fded7bcd58e1ac72d3732d66f666fdb6fd965c5ec",
+        "execution_status": "passed",
+        "modeled_accesses": 158404002,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 158404002,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 158404002,
+            "source_accesses": 158404002
+          },
+          "elf_sha256": "ae7cd5539215d5c171b85ae643330eb3fe21bffc10ec10edb15de0633dedffdf",
+          "execution_status": "passed",
+          "modeled_accesses": 158404002,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 158404002,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 158404002,
+            "source_accesses": 158404002
+          },
+          "elf_sha256": "bfcaaa8fc1627b48dc060668719a744ed9097b96cf5ddab47fc8647874417297",
+          "execution_status": "passed",
+          "modeled_accesses": 158404002,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 158404002,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 158404002,
+            "source_accesses": 158404002
+          },
+          "elf_sha256": "09934fc875a2ae7af3ac1bad6a90b2ba8c9ee2136f84119cb523bc9f11042495",
+          "execution_status": "passed",
+          "modeled_accesses": 158404002,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "passed",
+      "rtems_build": "passed",
+      "source_sha256": "9b9885368ec64c48bacaadf903ee7b928e0eaeb332dbe3082086c4a0292d10a6"
+    },
+    "symm": {
+      "dimensions": {
+        "M": 200,
+        "N": 240
+      },
+      "effective_yarda_execution_status": "blocked",
+      "element_type": "double",
+      "frontend_error": "error: [MemoryAccessPatterns] unsupported affine index: unresolved or unsupported region loop bound",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/symm",
+      "native": "passed",
+      "native_yarda": {
+        "elf_sha256": "4f26adab981a19e656a989a415b93845ee4cd6fa63d0e4e8f0fad84212f65fc7",
+        "execution_status": "blocked",
+        "log": "ape.log",
+        "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+        "stage": "frontend",
+        "trace_validation": "unavailable"
+      },
+      "periodic_yarda": {
+        "c": {
+          "elf_sha256": "0e68e33d02ef76c8431787fd6f75898d6aa4f7d2757f157f6f39889bccc20b37",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "g": {
+          "elf_sha256": "0cb22ed0f93f6cd365b92c5696ff94b76066d05481b8993f2e8a68e27736d85c",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "p": {
+          "elf_sha256": "2882d47be2c9f276f64362f762ff721226d5493c1c9e0ad5cca4ac9ba37e201f",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        }
+      },
+      "previous_yarda_execution_status": "blocked",
+      "rtems_build": "passed",
+      "source_sha256": "d34491a24475eaae6622c3b0647aced429284e2a5d9c59bea8c81e78020e5beb"
+    },
+    "syr2k": {
+      "dimensions": {
+        "M": 200,
+        "N": 240
+      },
+      "effective_yarda_execution_status": "blocked",
+      "element_type": "double",
+      "frontend_error": "error: [MemoryAccessPatterns] unsupported affine index: unresolved or unsupported region loop bound",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/syr2k",
+      "native": "passed",
+      "native_yarda": {
+        "elf_sha256": "5f1aa69a41fc09f462a6d7f7aec2938ade750a858335b6c27bb43ed3a292e6ce",
+        "execution_status": "blocked",
+        "log": "ape.log",
+        "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+        "stage": "frontend",
+        "trace_validation": "unavailable"
+      },
+      "periodic_yarda": {
+        "c": {
+          "elf_sha256": "0917367a7c6094e11f5992a04ab2cba046c664adffde86e56efabd22fdc0eb6c",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "g": {
+          "elf_sha256": "acf68e16b13e318111e3e8098518ed642254e471c9d97198c02b020605b120e0",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "p": {
+          "elf_sha256": "207e97b930df3ec72670589234fb9729f53ff670117e8e2fa342585d78bb3c0a",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        }
+      },
+      "previous_yarda_execution_status": "blocked",
+      "rtems_build": "passed",
+      "source_sha256": "9c9921dc5ae094070aadf13f7e22c262ed97514af9047cb42a0deb266b1e1241"
+    },
+    "syrk": {
+      "dimensions": {
+        "M": 200,
+        "N": 240
+      },
+      "effective_yarda_execution_status": "blocked",
+      "element_type": "double",
+      "frontend_error": "error: [MemoryAccessPatterns] unsupported affine index: unresolved or unsupported region loop bound",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/syrk",
+      "native": "passed",
+      "native_yarda": {
+        "elf_sha256": "19ff269a8baaf0274e790c1c8596a901d1ba8215cecb76aa1281dbf01cd71065",
+        "execution_status": "blocked",
+        "log": "ape.log",
+        "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+        "stage": "frontend",
+        "trace_validation": "unavailable"
+      },
+      "periodic_yarda": {
+        "c": {
+          "elf_sha256": "cb7823ee1c1f112afdc39030e04d2c2aa782cf01369a08b9d1c5672ac5563e38",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "g": {
+          "elf_sha256": "70753ae5ffbc3396e9de9fdda341ff463dcd5b9a71d1aa2b20c0dd0dbe71f75b",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "p": {
+          "elf_sha256": "2a5fcd42d4522bb51889603bdc63e370d74653323012b7b83214467a09bec132",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        }
+      },
+      "previous_yarda_execution_status": "blocked",
+      "rtems_build": "passed",
+      "source_sha256": "9a3fca7fc6724910029669551636cd8971307645d4e262e2fcfd03a7cb7856b4"
+    },
+    "trisolv": {
+      "dimensions": {
+        "N": 400
+      },
+      "effective_yarda_execution_status": "blocked",
+      "element_type": "double",
+      "frontend_error": "error: [MemoryAccessPatterns] unsupported affine index: unresolved or unsupported region loop bound",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/trisolv",
+      "native": "passed",
+      "native_yarda": {
+        "elf_sha256": "d21c2d8ebc90f02f9a93a00fffa95152859b0a90e4966a85d798e03e49ea4eb9",
+        "execution_status": "blocked",
+        "log": "ape.log",
+        "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+        "stage": "frontend",
+        "trace_validation": "unavailable"
+      },
+      "periodic_yarda": {
+        "c": {
+          "elf_sha256": "799b97e3e32d66122191718180dc2c79800d214d2fe2b46a189fb27496ebc79c",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "g": {
+          "elf_sha256": "abd7eddc6b45409397dbda570d42810b659362cb6f47061f2c36a28dd0631ed0",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        },
+        "p": {
+          "elf_sha256": "c2f8406c326a9db3fef98a252e38d6acfcc4a89c2458201110e11bae36b2c4ca",
+          "execution_status": "blocked",
+          "log": "ape.log",
+          "reason": "Command '['opt-14', '-load-pass-plugin=/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so', '-passes=function(mem2reg),loop-simplify,loop-annotated-trace', 'kernel.ll', '-o', '/dev/null']' returned non-zero exit status 1.",
+          "stage": "frontend",
+          "trace_validation": "unavailable"
+        }
+      },
+      "previous_yarda_execution_status": "blocked",
+      "rtems_build": "passed",
+      "source_sha256": "0ab6d6c65a15d24006b7e3fc985d6f649702d3817a920cbb3d60df6341bcce18"
+    },
+    "trmm": {
+      "dimensions": {
+        "M": 200,
+        "N": 240
+      },
+      "effective_yarda_execution_status": "passed",
+      "element_type": "double",
+      "full_snapshot": "/workspace/experiments-array-support/chaser/.cache/periodic-polybench/triangular-20260929/suite/trmm",
+      "native": "passed",
+      "native_yarda": {
+        "coverage": {
+          "complete": true,
+          "emitted_line_references": 19200003,
+          "excluded_opaque_call_sites": 0,
+          "rejected_accesses": 0,
+          "resolved_accesses": 19200003,
+          "source_accesses": 19200003
+        },
+        "elf_sha256": "ee1fe937444dee8ce2ea96e2b80550c6ad9a7a4017c0fc0d0d616bb3197063e2",
+        "execution_status": "passed",
+        "modeled_accesses": 19200003,
+        "result": "native.json",
+        "trace_validation": "not-validated"
+      },
+      "periodic_yarda": {
+        "c": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 19200003,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 19200003,
+            "source_accesses": 19200003
+          },
+          "elf_sha256": "efc0a07ab6035c801af246289555046eb7aba18e8b66881ba7eb67fa16df43f8",
+          "execution_status": "passed",
+          "modeled_accesses": 19200003,
+          "result": "c.json",
+          "trace_validation": "not-validated"
+        },
+        "g": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 19200003,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 19200003,
+            "source_accesses": 19200003
+          },
+          "elf_sha256": "75f3ccdcb6ae0929c6867203daf4e318c4dc09fbf1d813eaab323ff2adde5a25",
+          "execution_status": "passed",
+          "modeled_accesses": 19200003,
+          "result": "g.json",
+          "trace_validation": "not-validated"
+        },
+        "p": {
+          "coverage": {
+            "complete": true,
+            "emitted_line_references": 19200003,
+            "excluded_opaque_call_sites": 0,
+            "rejected_accesses": 0,
+            "resolved_accesses": 19200003,
+            "source_accesses": 19200003
+          },
+          "elf_sha256": "a71ea0d1af061498c7cf31a47fa53a9e7f3ad7d25f1e0994502ca92cab8d3f3d",
+          "execution_status": "passed",
+          "modeled_accesses": 19200003,
+          "result": "p.json",
+          "trace_validation": "not-validated"
+        }
+      },
+      "previous_yarda_execution_status": "blocked",
+      "rtems_build": "passed",
+      "source_sha256": "ffb35b6b2df2340fd2269dad0bd777af91a36ef91db7768557cf0d7d5b98adfa"
+    }
+  },
+  "counts": {
+    "blocked": 9,
+    "passed": 21
+  },
+  "dataset": "MEDIUM",
+  "dataset_eligible": false,
+  "elf_analysis_counts": {
+    "blocked": 36,
+    "passed": 84
+  },
+  "finished_at": "2026-09-29T05:01:58.594901+00:00",
+  "newly_supported": [
+    "correlation",
+    "covariance",
+    "gramschmidt",
+    "trmm"
+  ],
+  "periodic": true,
+  "started_at": "2026-09-29T04:56:30.613757+00:00",
+  "timeout_seconds": 600,
+  "tools": {
+    "/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/backend/yarda_cpp": "7fee865ae857007f7ad1143a092b81dd38314665e6f281ecef90d6de943a1cdd",
+    "/workspace/experiments-array-support/chaser/rtems/baseline/build/yarda/libMemoryAccessPatterns.so": "e445dc8b2804f414cc14a077231820326927426eee97485fe50fd7cb57e86b54"
+  },
+  "upstream_revision": "3e872547cef7e5c9909422ef1e6af03cf4e56072",
+  "verification": "589 passed, 3 skipped, 1 pre-existing sklearn warning",
+  "workers": 8
+}
