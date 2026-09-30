@@ -1,0 +1,24 @@
+#!/bin/sh
+# Cache-affinity O2 (prepared already). Waits for the O0 run, then runs every
+# stage with the default 84 workers. Stops at the first failure.
+W=/workspace/experiments/chaser
+CODE=$W/.cache/period-distribution-code-4d03b93-c2
+S=$W/.cache/configs/cache-affinity
+O=$W/.cache/cache-affinity-o2-v1
+L=$W/.cache/cache-affinity-o2-v1-supervisor
+PREV=$W/.cache/cache-affinity-v2-supervisor
+cd "$CODE" || exit 1
+export PYTHONPATH="$CODE" DISPLAY=165.246.44.80:90.0 PYTHONUNBUFFERED=1
+printf "%s waiting for O0 run pid=%s\n" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$(cat $PREV/supervisor.pid)"
+while [ ! -f "$PREV/supervisor.exit" ] && kill -0 "$(cat $PREV/supervisor.pid)" 2>/dev/null; do sleep 30; done
+status=0
+for stage in isolated pilot empty full stats; do
+    printf "%s stage=%s started\n" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$stage"
+    python3 -u "$S/aff_run.py" "$stage" --output "$O"
+    status=$?
+    printf "%s stage=%s exit=%s\n" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$stage" "$status"
+    [ "$status" -ne 0 ] && break
+done
+printf "%s\n" "$status" > "$L/supervisor.exit"
+printf "%s finished status=%s\n" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$status"
+exit "$status"
