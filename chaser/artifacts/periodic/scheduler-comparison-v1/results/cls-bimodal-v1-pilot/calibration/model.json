@@ -1,0 +1,30 @@
+{
+  "cls_mismatches": [],
+  "coefficients": {
+    "base": 5405.804174584601,
+    "l1_hits": 20.12757786243924,
+    "l2_hits": 68.21670904813159,
+    "pad_loops": 20.069060295163272,
+    "pad_rounds": 16.074780626585422,
+    "region_loops": 17.942757150509305,
+    "sweeps": 78.5988142923778,
+    "tail_loops": 29.392747484736624,
+    "tail_rounds": 20.14040822281006
+  },
+  "features": [
+    "base",
+    "sweeps",
+    "region_loops",
+    "l1_hits",
+    "l2_hits",
+    "pad_loops",
+    "pad_rounds",
+    "tail_loops",
+    "tail_rounds"
+  ],
+  "max_relative_error": {
+    "fit": 0.0014810562617766365,
+    "validation": 0.003208325657447997
+  },
+  "measured_hash": "e657234a0cb01d6b12a59e5c811f07527d4b95a91f9a9369390fad179c558a4a"
+}
