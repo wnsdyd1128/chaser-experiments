@@ -13,7 +13,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 
-O = Path('/workspace/experiments/chaser/.cache/cls-distribution-v1')
+O = Path(__file__).resolve().parents[4] / '.cache/cls-distribution-v1'
 KEYS = ('g', 'c', 'c2', 'p', 'c_grp', 'c2_grp', 'p_grp')
 rows = [r for r in map(json.loads, open(O / 'results.jsonl')) if all(r[k]['status'] == 'ok' for k in KEYS)]
 stats = {p: json.load(open(O / f'stats-p{p:03d}.json')) for p in (20, 100)}

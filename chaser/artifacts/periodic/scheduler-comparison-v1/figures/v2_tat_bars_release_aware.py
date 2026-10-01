@@ -11,8 +11,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 
-O = Path('/workspace/experiments/chaser/.cache/period-distribution-v2')
-CONTROL = Path('/workspace/experiments/chaser/.cache/period-distribution-cohort-v2')
+O = Path(__file__).resolve().parents[4] / '.cache/period-distribution-v2'
+CONTROL = Path(__file__).resolve().parents[4] / '.cache/period-distribution-cohort-v2'
 main = [json.loads(l) for l in open(O / 'results.jsonl')]
 main = [r for r in main if all(r[a]['status'] == 'ok' for a in ('g', 'c', 'p', 'c2'))]
 control = {(r['mean'], r['cv'], r['set_id']): r for r in map(json.loads, open(CONTROL / 'results.jsonl'))

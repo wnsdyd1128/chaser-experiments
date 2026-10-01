@@ -12,7 +12,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 
-O = Path('/workspace/experiments/chaser/.cache/period-distribution-v2')
+O = Path(__file__).resolve().parents[4] / '.cache/period-distribution-v2'
 import sys
 # Primary analysis keeps every random draw (n = 20); --dedup merges identical task sets.
 DEDUP = '--dedup' in sys.argv

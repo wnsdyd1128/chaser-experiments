@@ -14,7 +14,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 
-O = Path('/workspace/experiments/chaser/.cache/cls-distribution-v1')
+O = Path(__file__).resolve().parents[4] / '.cache/cls-distribution-v1'
 calibration = json.load(open(O / 'calibration/calibration.json'))
 ISOLATED_U = {(int(p), r['hot_repeats'], r['sweeps']): r['u']
               for p, rows in calibration['tables'].items() for r in rows}
