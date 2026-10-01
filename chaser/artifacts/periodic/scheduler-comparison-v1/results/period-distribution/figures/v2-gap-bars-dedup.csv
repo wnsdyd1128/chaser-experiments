@@ -1,0 +1,25 @@
+panel,series,cv,n,median_pct,q1_pct,q3_pct,significant_all_mu
+(a) TAT,Global,0.0000,5,0.1186,0.0940,0.2106,False
+(a) TAT,Global,0.1000,70,-0.0041,-7.5258,0.1753,False
+(a) TAT,Global,0.2000,95,-9.4062,-15.9949,-0.0984,True
+(a) TAT,Global,0.3000,100,-13.6137,-18.2992,-9.7236,True
+(a) TAT,Clustered (1+3),0.0000,5,0.0136,0.0087,0.0161,False
+(a) TAT,Clustered (1+3),0.1000,70,0.0559,-0.0001,0.1613,False
+(a) TAT,Clustered (1+3),0.2000,95,0.0182,-6.1352,0.1097,False
+(a) TAT,Clustered (1+3),0.3000,100,-3.3358,-6.6976,0.0597,True
+(a) TAT,Clustered (1+1+2),0.0000,5,0.0125,0.0122,0.0138,False
+(a) TAT,Clustered (1+1+2),0.1000,70,0.0332,0.0032,0.0753,False
+(a) TAT,Clustered (1+1+2),0.2000,95,0.0375,0.0086,0.0718,False
+(a) TAT,Clustered (1+1+2),0.3000,100,0.0358,-0.0220,0.0841,False
+(b) TET,Global,0.0000,5,0.0584,0.0474,0.0885,False
+(b) TET,Global,0.1000,70,0.0834,0.0633,0.1432,True
+(b) TET,Global,0.2000,95,0.0944,0.0678,0.1558,True
+(b) TET,Global,0.3000,100,0.1085,0.0802,0.1803,True
+(b) TET,Clustered (1+3),0.0000,5,0.0167,0.0148,0.0220,False
+(b) TET,Clustered (1+3),0.1000,70,0.0536,0.0409,0.0931,True
+(b) TET,Clustered (1+3),0.2000,95,0.0537,0.0393,0.0950,True
+(b) TET,Clustered (1+3),0.3000,100,0.0632,0.0430,0.1071,True
+(b) TET,Clustered (1+1+2),0.0000,5,0.0202,0.0197,0.0309,False
+(b) TET,Clustered (1+1+2),0.1000,70,0.0288,0.0204,0.0517,True
+(b) TET,Clustered (1+1+2),0.2000,95,0.0246,0.0168,0.0433,True
+(b) TET,Clustered (1+1+2),0.3000,100,0.0276,0.0207,0.0472,True

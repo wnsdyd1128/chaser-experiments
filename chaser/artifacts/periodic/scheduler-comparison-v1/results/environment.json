@@ -1,0 +1,28 @@
+{
+  "tools": {
+    "laysim": {
+      "path": "/opt/laysim-gr740/laysim-gr740-cli",
+      "sha256": "191c6a94b579d2853017117e4351a2a2f5b65a24b1d6961e6de99d65fe532f3d"
+    },
+    "sparc-rtems6-gcc": {
+      "path": "/opt/rtems/6/bin/sparc-rtems6-gcc",
+      "sha256": "a1e9cd84001683db0bd5c0d09017cca15b5ba2e2b876110f8cf6ed1453df4f1c"
+    },
+    "yarda_cpp (CLS distribution, feat/cpp-backend a058a454)": {
+      "path": "/workspace/experiments/chaser/rtems/baseline/build/yarda/backend/yarda_cpp",
+      "sha256": "dc482959bc2bbed277ddd99a8c6bd2e124076636a02ee63634e3d72d553499b8"
+    },
+    "yarda_cpp (CLS bimodal, feat/cpp-backend 374b2c9 + frontend 2670c6e)": {
+      "path": "/workspace/experiments/chaser/.cache/yarda-374b2c9-build/backend/yarda_cpp",
+      "sha256": "dc482959bc2bbed277ddd99a8c6bd2e124076636a02ee63634e3d72d553499b8"
+    }
+  },
+  "compiler_version": "sparc-rtems6-gcc (GCC) 13.3.0 20240521 (RTEMS 6, RSB b1aec32059aa0e86385ff75ec01daf93713fa382-modified, Newlib 1b3dcfd)",
+  "clang_version": "Ubuntu clang version 14.0.0-1ubuntu1.1",
+  "python": "3.10.12",
+  "packages": {
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "matplotlib": "3.10.9"
+  }
+}
