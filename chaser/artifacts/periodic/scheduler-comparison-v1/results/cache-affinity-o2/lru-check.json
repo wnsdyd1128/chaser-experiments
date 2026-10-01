@@ -1,0 +1,1550 @@
+{
+  "ws025/s02": {
+    "g": {
+      "jobs": 3200,
+      "per_load_ns_mean": 49.59048963785388,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 79.062,
+      "overlap_mean": 0.420125,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.6375,
+          "per_load_ns_mean": 43.57057562980712
+        },
+        "8-16 KiB": {
+          "share": 0.3303125,
+          "per_load_ns_mean": 59.58213198161337
+        },
+        "> 16 KiB": {
+          "share": 0.0003125,
+          "per_load_ns_mean": 91.24177083333333
+        },
+        "never on this core": {
+          "share": 0.031875,
+          "per_load_ns_mean": 66.03958118556099
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.644375,
+          "per_load_ns_mean": 49.14411179185396
+        },
+        "0.5-1.5": {
+          "share": 0.354375,
+          "per_load_ns_mean": 50.40678600463469
+        },
+        "1.5-2.5": {
+          "share": 0.00125,
+          "per_load_ns_mean": 48.27824926845319
+        }
+      }
+    },
+    "c": {
+      "jobs": 3200,
+      "per_load_ns_mean": 42.022450817392134,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 28.864,
+      "overlap_mean": 0.38599999999999995,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.9903125,
+          "per_load_ns_mean": 41.83022507973113
+        },
+        "8-16 KiB": {
+          "share": 0.0015625,
+          "per_load_ns_mean": 61.63359356889307
+        },
+        "never on this core": {
+          "share": 0.008125,
+          "per_load_ns_mean": 61.680437313169705
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.616875,
+          "per_load_ns_mean": 40.876763102660206
+        },
+        "0.5-1.5": {
+          "share": 0.383125,
+          "per_load_ns_mean": 43.86713886705023
+        }
+      }
+    },
+    "c2": {
+      "jobs": 3200,
+      "per_load_ns_mean": 39.139089727225084,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 16.024,
+      "overlap_mean": 0.40168750000000003,
+      "bins": {
+        "< 8 KiB": {
+          "share": 1.0,
+          "per_load_ns_mean": 39.139089727225084
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.6146875,
+          "per_load_ns_mean": 38.33859191887558
+        },
+        "0.5-1.5": {
+          "share": 0.3846875,
+          "per_load_ns_mean": 40.42943124203869
+        },
+        "1.5-2.5": {
+          "share": 0.000625,
+          "per_load_ns_mean": 32.22348187119675
+        }
+      }
+    },
+    "p": {
+      "jobs": 3200,
+      "per_load_ns_mean": 35.71706592549389,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 5.978,
+      "overlap_mean": 1.5802500000000002,
+      "bins": {
+        "< 8 KiB": {
+          "share": 1.0,
+          "per_load_ns_mean": 35.71706592549389
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.01625,
+          "per_load_ns_mean": 25.078055793793855
+        },
+        "0.5-1.5": {
+          "share": 0.3328125,
+          "per_load_ns_mean": 31.981022524725105
+        },
+        "1.5-2.5": {
+          "share": 0.6509375,
+          "per_load_ns_mean": 37.892829126966355
+        }
+      }
+    }
+  },
+  "ws025/s08": {
+    "g": {
+      "jobs": 3200,
+      "per_load_ns_mean": 27.26217674202461,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 78.024,
+      "overlap_mean": 0.001,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.675,
+          "per_load_ns_mean": 25.775589965767942
+        },
+        "8-16 KiB": {
+          "share": 0.28875,
+          "per_load_ns_mean": 30.66614580010777
+        },
+        "never on this core": {
+          "share": 0.03625,
+          "per_load_ns_mean": 27.829073526900167
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 1.0,
+          "per_load_ns_mean": 27.26217674202461
+        }
+      }
+    },
+    "c": {
+      "jobs": 3200,
+      "per_load_ns_mean": 24.889574133141963,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 27.328,
+      "overlap_mean": 0.054875,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.99125,
+          "per_load_ns_mean": 24.831895013723692
+        },
+        "8-16 KiB": {
+          "share": 0.003125,
+          "per_load_ns_mean": 32.51490450997646
+        },
+        "never on this core": {
+          "share": 0.005625,
+          "per_load_ns_mean": 30.81762207905455
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.948125,
+          "per_load_ns_mean": 25.015868031922942
+        },
+        "0.5-1.5": {
+          "share": 0.051875,
+          "per_load_ns_mean": 22.58128685060291
+        }
+      }
+    },
+    "c2": {
+      "jobs": 3200,
+      "per_load_ns_mean": 23.581927635848366,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 14.6,
+      "overlap_mean": 0.026062500000000002,
+      "bins": {
+        "< 8 KiB": {
+          "share": 1.0,
+          "per_load_ns_mean": 23.581927635848366
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.9840625,
+          "per_load_ns_mean": 23.628887756910782
+        },
+        "0.5-1.5": {
+          "share": 0.0159375,
+          "per_load_ns_mean": 20.682370356916195
+        }
+      }
+    },
+    "p": {
+      "jobs": 3200,
+      "per_load_ns_mean": 23.471006510382868,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 6.012,
+      "overlap_mean": 0.46025000000000005,
+      "bins": {
+        "< 8 KiB": {
+          "share": 1.0,
+          "per_load_ns_mean": 23.471006510382868
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.56875,
+          "per_load_ns_mean": 22.36542273565039
+        },
+        "0.5-1.5": {
+          "share": 0.4025,
+          "per_load_ns_mean": 24.70526887227701
+        },
+        "1.5-2.5": {
+          "share": 0.02875,
+          "per_load_ns_mean": 28.062664639659577
+        }
+      }
+    }
+  },
+  "ws025/s32": {
+    "g": {
+      "jobs": 3200,
+      "per_load_ns_mean": 21.620888753013933,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 78.188,
+      "overlap_mean": 0.0,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.6096875,
+          "per_load_ns_mean": 21.268261706110675
+        },
+        "8-16 KiB": {
+          "share": 0.355625,
+          "per_load_ns_mean": 22.165386601204784
+        },
+        "never on this core": {
+          "share": 0.0346875,
+          "per_load_ns_mean": 22.236535755420043
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 1.0,
+          "per_load_ns_mean": 21.620888753013933
+        }
+      }
+    },
+    "c": {
+      "jobs": 3200,
+      "per_load_ns_mean": 21.92919267053926,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 27.036,
+      "overlap_mean": 0.0109375,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.8890625,
+          "per_load_ns_mean": 21.757094751811902
+        },
+        "8-16 KiB": {
+          "share": 0.0946875,
+          "per_load_ns_mean": 23.241370106711617
+        },
+        "never on this core": {
+          "share": 0.01625,
+          "per_load_ns_mean": 23.698977586291125
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.9875,
+          "per_load_ns_mean": 21.925385644897077
+        },
+        "0.5-1.5": {
+          "share": 0.0125,
+          "per_load_ns_mean": 22.22994769627187
+        }
+      }
+    },
+    "c2": {
+      "jobs": 3200,
+      "per_load_ns_mean": 21.443148837249577,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 14.43,
+      "overlap_mean": 0.0270625,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.99875,
+          "per_load_ns_mean": 21.44144195972897
+        },
+        "never on this core": {
+          "share": 0.00125,
+          "per_load_ns_mean": 22.80694397621272
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.9746875,
+          "per_load_ns_mean": 21.446567168255047
+        },
+        "0.5-1.5": {
+          "share": 0.0253125,
+          "per_load_ns_mean": 21.311521992730167
+        }
+      }
+    },
+    "p": {
+      "jobs": 3200,
+      "per_load_ns_mean": 21.639973213170457,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 4.78,
+      "overlap_mean": 0.1894375,
+      "bins": {
+        "< 8 KiB": {
+          "share": 1.0,
+          "per_load_ns_mean": 21.639973213170457
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.8146875,
+          "per_load_ns_mean": 21.517953697340346
+        },
+        "0.5-1.5": {
+          "share": 0.1796875,
+          "per_load_ns_mean": 22.15465292992424
+        },
+        "1.5-2.5": {
+          "share": 0.005625,
+          "per_load_ns_mean": 22.87130880404087
+        }
+      }
+    }
+  },
+  "ws050/s02": {
+    "g": {
+      "jobs": 3200,
+      "per_load_ns_mean": 60.85175696596688,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 80.09,
+      "overlap_mean": 0.4925,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.3384375,
+          "per_load_ns_mean": 50.169557587614484
+        },
+        "8-16 KiB": {
+          "share": 0.309375,
+          "per_load_ns_mean": 65.70945251821628
+        },
+        "> 16 KiB": {
+          "share": 0.31625,
+          "per_load_ns_mean": 67.43603377385126
+        },
+        "never on this core": {
+          "share": 0.0359375,
+          "per_load_ns_mean": 61.690150013355826
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.555,
+          "per_load_ns_mean": 58.907384571538564
+        },
+        "0.5-1.5": {
+          "share": 0.4384375,
+          "per_load_ns_mean": 63.25738061631174
+        },
+        "1.5-2.5": {
+          "share": 0.0065625,
+          "per_load_ns_mean": 64.57153749314976
+        }
+      }
+    },
+    "c": {
+      "jobs": 3200,
+      "per_load_ns_mean": 47.04196891022424,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 29.78,
+      "overlap_mean": 0.4971875,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.84375,
+          "per_load_ns_mean": 42.04094332329209
+        },
+        "8-16 KiB": {
+          "share": 0.1359375,
+          "per_load_ns_mean": 75.09719330281845
+        },
+        "> 16 KiB": {
+          "share": 0.0046875,
+          "per_load_ns_mean": 79.58745915771205
+        },
+        "never on this core": {
+          "share": 0.015625,
+          "per_load_ns_mean": 63.253251314744574
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.5675,
+          "per_load_ns_mean": 43.997890942743155
+        },
+        "0.5-1.5": {
+          "share": 0.424375,
+          "per_load_ns_mean": 51.26845425661752
+        },
+        "1.5-2.5": {
+          "share": 0.008125,
+          "per_load_ns_mean": 38.9065261619017
+        }
+      }
+    },
+    "c2": {
+      "jobs": 3200,
+      "per_load_ns_mean": 45.73161943766334,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 17.608,
+      "overlap_mean": 0.47974999999999995,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.973125,
+          "per_load_ns_mean": 45.05028388507906
+        },
+        "8-16 KiB": {
+          "share": 0.02625,
+          "per_load_ns_mean": 70.11895501009519
+        },
+        "never on this core": {
+          "share": 0.000625,
+          "per_load_ns_mean": 82.30298076923077
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.5540625,
+          "per_load_ns_mean": 46.16280523483176
+        },
+        "0.5-1.5": {
+          "share": 0.4428125,
+          "per_load_ns_mean": 45.28342737372125
+        },
+        "1.5-2.5": {
+          "share": 0.003125,
+          "per_load_ns_mean": 32.79119306029473
+        }
+      }
+    },
+    "p": {
+      "jobs": 3200,
+      "per_load_ns_mean": 42.067126016403684,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 6.936,
+      "overlap_mean": 1.4815625,
+      "bins": {
+        "< 8 KiB": {
+          "share": 1.0,
+          "per_load_ns_mean": 42.067126016403684
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.0346875,
+          "per_load_ns_mean": 30.98468275452139
+        },
+        "0.5-1.5": {
+          "share": 0.430625,
+          "per_load_ns_mean": 37.281000855504736
+        },
+        "1.5-2.5": {
+          "share": 0.53375,
+          "per_load_ns_mean": 46.59985853395516
+        },
+        "2.5-3": {
+          "share": 0.0009375,
+          "per_load_ns_mean": 69.90863728632479
+        }
+      }
+    }
+  },
+  "ws050/s08": {
+    "g": {
+      "jobs": 3200,
+      "per_load_ns_mean": 27.349329793911682,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 78.68,
+      "overlap_mean": 0.00525,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.3653125,
+          "per_load_ns_mean": 25.14856593390548
+        },
+        "8-16 KiB": {
+          "share": 0.31875,
+          "per_load_ns_mean": 28.39358482344177
+        },
+        "> 16 KiB": {
+          "share": 0.2884375,
+          "per_load_ns_mean": 28.856953518988348
+        },
+        "never on this core": {
+          "share": 0.0275,
+          "per_load_ns_mean": 28.667694839147895
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.999375,
+          "per_load_ns_mean": 27.349980122525448
+        },
+        "0.5-1.5": {
+          "share": 0.000625,
+          "per_load_ns_mean": 26.309454340499784
+        }
+      }
+    },
+    "c": {
+      "jobs": 3200,
+      "per_load_ns_mean": 26.250278273849602,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 28.07,
+      "overlap_mean": 0.059937500000000005,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.8259375,
+          "per_load_ns_mean": 24.963575788553154
+        },
+        "8-16 KiB": {
+          "share": 0.1378125,
+          "per_load_ns_mean": 32.545431245972864
+        },
+        "> 16 KiB": {
+          "share": 0.019375,
+          "per_load_ns_mean": 32.264370474362885
+        },
+        "never on this core": {
+          "share": 0.016875,
+          "per_load_ns_mean": 30.911731820152013
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.9409375,
+          "per_load_ns_mean": 26.391787001689334
+        },
+        "0.5-1.5": {
+          "share": 0.0590625,
+          "per_load_ns_mean": 23.9958720329743
+        }
+      }
+    },
+    "c2": {
+      "jobs": 3200,
+      "per_load_ns_mean": 25.139492658409498,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 16.758,
+      "overlap_mean": 0.054875,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.96375,
+          "per_load_ns_mean": 24.99902336688452
+        },
+        "8-16 KiB": {
+          "share": 0.03625,
+          "per_load_ns_mean": 28.8740383055048
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.9534375,
+          "per_load_ns_mean": 25.218996046794206
+        },
+        "0.5-1.5": {
+          "share": 0.0465625,
+          "per_load_ns_mean": 23.511540725780367
+        }
+      }
+    },
+    "p": {
+      "jobs": 3200,
+      "per_load_ns_mean": 24.704691710850085,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 6.638,
+      "overlap_mean": 0.5,
+      "bins": {
+        "< 8 KiB": {
+          "share": 1.0,
+          "per_load_ns_mean": 24.704691710850085
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.540625,
+          "per_load_ns_mean": 23.88434546887572
+        },
+        "0.5-1.5": {
+          "share": 0.42125,
+          "per_load_ns_mean": 25.412764335609335
+        },
+        "1.5-2.5": {
+          "share": 0.038125,
+          "per_load_ns_mean": 28.51384827183515
+        }
+      }
+    }
+  },
+  "ws050/s32": {
+    "g": {
+      "jobs": 3200,
+      "per_load_ns_mean": 21.9027032313429,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 73.738,
+      "overlap_mean": 0.0,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.27,
+          "per_load_ns_mean": 21.317380890567065
+        },
+        "8-16 KiB": {
+          "share": 0.2678125,
+          "per_load_ns_mean": 22.01072961709752
+        },
+        "> 16 KiB": {
+          "share": 0.4328125,
+          "per_load_ns_mean": 22.18943775142871
+        },
+        "never on this core": {
+          "share": 0.029375,
+          "per_load_ns_mean": 22.073049821978767
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 1.0,
+          "per_load_ns_mean": 21.9027032313429
+        }
+      }
+    },
+    "c": {
+      "jobs": 3200,
+      "per_load_ns_mean": 21.779193217722828,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 28.908,
+      "overlap_mean": 0.0023125000000000003,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.5565625,
+          "per_load_ns_mean": 21.189906162880103
+        },
+        "8-16 KiB": {
+          "share": 0.264375,
+          "per_load_ns_mean": 22.50615055280752
+        },
+        "> 16 KiB": {
+          "share": 0.170625,
+          "per_load_ns_mean": 22.538949093700328
+        },
+        "never on this core": {
+          "share": 0.0084375,
+          "per_load_ns_mean": 22.508364732890026
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.9984375,
+          "per_load_ns_mean": 21.779647088637418
+        },
+        "0.5-1.5": {
+          "share": 0.0015625,
+          "per_load_ns_mean": 21.48916970329799
+        }
+      }
+    },
+    "c2": {
+      "jobs": 3200,
+      "per_load_ns_mean": 21.48849763819483,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 16.354,
+      "overlap_mean": 0.04775,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.820625,
+          "per_load_ns_mean": 21.354937286959043
+        },
+        "8-16 KiB": {
+          "share": 0.178125,
+          "per_load_ns_mean": 22.094487862574322
+        },
+        "> 16 KiB": {
+          "share": 0.000625,
+          "per_load_ns_mean": 22.758392033811475
+        },
+        "never on this core": {
+          "share": 0.000625,
+          "per_load_ns_mean": 22.8761304670126
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.955625,
+          "per_load_ns_mean": 21.482934340530864
+        },
+        "0.5-1.5": {
+          "share": 0.044375,
+          "per_load_ns_mean": 21.608304428732847
+        }
+      }
+    },
+    "p": {
+      "jobs": 3200,
+      "per_load_ns_mean": 21.483491767240658,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 4.91,
+      "overlap_mean": 0.22274999999999998,
+      "bins": {
+        "< 8 KiB": {
+          "share": 1.0,
+          "per_load_ns_mean": 21.483491767240658
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.7953125,
+          "per_load_ns_mean": 21.31824318403941
+        },
+        "0.5-1.5": {
+          "share": 0.1953125,
+          "per_load_ns_mean": 22.11328018421909
+        },
+        "1.5-2.5": {
+          "share": 0.009375,
+          "per_load_ns_mean": 22.381487888429096
+        }
+      }
+    }
+  },
+  "ws100/s02": {
+    "g": {
+      "jobs": 3200,
+      "per_load_ns_mean": 65.22305075063905,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 86.14,
+      "overlap_mean": 0.5894999999999999,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.0425,
+          "per_load_ns_mean": 55.325119368816196
+        },
+        "8-16 KiB": {
+          "share": 0.298125,
+          "per_load_ns_mean": 62.386075058862936
+        },
+        "> 16 KiB": {
+          "share": 0.62375,
+          "per_load_ns_mean": 67.12418677134318
+        },
+        "never on this core": {
+          "share": 0.035625,
+          "per_load_ns_mean": 67.48555935201534
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.4290625,
+          "per_load_ns_mean": 59.34520084652879
+        },
+        "0.5-1.5": {
+          "share": 0.5565625,
+          "per_load_ns_mean": 69.37699866583569
+        },
+        "1.5-2.5": {
+          "share": 0.014375,
+          "per_load_ns_mean": 79.83406556320773
+        }
+      }
+    },
+    "c": {
+      "jobs": 3200,
+      "per_load_ns_mean": 68.01785350125623,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 31.66,
+      "overlap_mean": 0.731625,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.8275,
+          "per_load_ns_mean": 65.31494173514784
+        },
+        "> 16 KiB": {
+          "share": 0.1575,
+          "per_load_ns_mean": 81.91416879764577
+        },
+        "never on this core": {
+          "share": 0.015,
+          "per_load_ns_mean": 71.2171753194787
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.341875,
+          "per_load_ns_mean": 55.96730524434484
+        },
+        "0.5-1.5": {
+          "share": 0.59625,
+          "per_load_ns_mean": 74.21691887857547
+        },
+        "1.5-2.5": {
+          "share": 0.061875,
+          "per_load_ns_mean": 74.86372750699329
+        }
+      }
+    },
+    "c2": {
+      "jobs": 3200,
+      "per_load_ns_mean": 66.28653857015277,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 18.676,
+      "overlap_mean": 0.7365,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.970625,
+          "per_load_ns_mean": 65.74859085024283
+        },
+        "> 16 KiB": {
+          "share": 0.02875,
+          "per_load_ns_mean": 84.11167274888061
+        },
+        "never on this core": {
+          "share": 0.000625,
+          "per_load_ns_mean": 81.76317536879587
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.3203125,
+          "per_load_ns_mean": 59.558421362008495
+        },
+        "0.5-1.5": {
+          "share": 0.618125,
+          "per_load_ns_mean": 67.93234332263414
+        },
+        "1.5-2.5": {
+          "share": 0.0615625,
+          "per_load_ns_mean": 84.76835754446608
+        }
+      }
+    },
+    "p": {
+      "jobs": 3200,
+      "per_load_ns_mean": 75.62021385056347,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 6.45,
+      "overlap_mean": 1.7046875,
+      "bins": {
+        "8-16 KiB": {
+          "share": 1.0,
+          "per_load_ns_mean": 75.62021385056347
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.04125,
+          "per_load_ns_mean": 54.40836719293025
+        },
+        "0.5-1.5": {
+          "share": 0.2609375,
+          "per_load_ns_mean": 65.88435191981232
+        },
+        "1.5-2.5": {
+          "share": 0.6809375,
+          "per_load_ns_mean": 80.21696163701102
+        },
+        "2.5-3": {
+          "share": 0.016875,
+          "per_load_ns_mean": 92.52938133788939
+        }
+      }
+    }
+  },
+  "ws100/s08": {
+    "g": {
+      "jobs": 3200,
+      "per_load_ns_mean": 30.842409902232912,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 86.28,
+      "overlap_mean": 0.046625,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.0246875,
+          "per_load_ns_mean": 28.307358154438415
+        },
+        "8-16 KiB": {
+          "share": 0.240625,
+          "per_load_ns_mean": 30.374170342042508
+        },
+        "> 16 KiB": {
+          "share": 0.6978125,
+          "per_load_ns_mean": 31.132864554232246
+        },
+        "never on this core": {
+          "share": 0.036875,
+          "per_load_ns_mean": 30.098582033655525
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.989375,
+          "per_load_ns_mean": 30.777363533440877
+        },
+        "0.5-1.5": {
+          "share": 0.010625,
+          "per_load_ns_mean": 36.899374713867736
+        }
+      }
+    },
+    "c": {
+      "jobs": 3200,
+      "per_load_ns_mean": 30.380516732133266,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 31.708,
+      "overlap_mean": 0.0645,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.678125,
+          "per_load_ns_mean": 29.570432907678953
+        },
+        "> 16 KiB": {
+          "share": 0.315,
+          "per_load_ns_mean": 32.08284035528384
+        },
+        "never on this core": {
+          "share": 0.006875,
+          "per_load_ns_mean": 32.286866138046044
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.9621875,
+          "per_load_ns_mean": 30.35998910332837
+        },
+        "0.5-1.5": {
+          "share": 0.0378125,
+          "per_load_ns_mean": 30.902868542796618
+        }
+      }
+    },
+    "c2": {
+      "jobs": 3200,
+      "per_load_ns_mean": 30.09318671276389,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 20.428,
+      "overlap_mean": 0.1715625,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.8934375,
+          "per_load_ns_mean": 29.994912900413986
+        },
+        "> 16 KiB": {
+          "share": 0.1059375,
+          "per_load_ns_mean": 30.935043546188663
+        },
+        "never on this core": {
+          "share": 0.000625,
+          "per_load_ns_mean": 27.880868201447242
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.835625,
+          "per_load_ns_mean": 29.623833672853905
+        },
+        "0.5-1.5": {
+          "share": 0.164375,
+          "per_load_ns_mean": 32.47921338333291
+        }
+      }
+    },
+    "p": {
+      "jobs": 3200,
+      "per_load_ns_mean": 32.51537385245814,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 5.21,
+      "overlap_mean": 0.7193125,
+      "bins": {
+        "8-16 KiB": {
+          "share": 1.0,
+          "per_load_ns_mean": 32.51537385245814
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.4765625,
+          "per_load_ns_mean": 29.654043156715133
+        },
+        "0.5-1.5": {
+          "share": 0.3284375,
+          "per_load_ns_mean": 33.68694305328472
+        },
+        "1.5-2.5": {
+          "share": 0.19375,
+          "per_load_ns_mean": 37.52176982513212
+        },
+        "2.5-3": {
+          "share": 0.00125,
+          "per_load_ns_mean": 39.57651832283112
+        }
+      }
+    }
+  },
+  "ws100/s32": {
+    "g": {
+      "jobs": 3200,
+      "per_load_ns_mean": 21.887218941032547,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 76.494,
+      "overlap_mean": 0.000125,
+      "bins": {
+        "< 8 KiB": {
+          "share": 0.004375,
+          "per_load_ns_mean": 21.47781222091233
+        },
+        "8-16 KiB": {
+          "share": 0.2675,
+          "per_load_ns_mean": 21.729236575107866
+        },
+        "> 16 KiB": {
+          "share": 0.69875,
+          "per_load_ns_mean": 21.948138268519948
+        },
+        "never on this core": {
+          "share": 0.029375,
+          "per_load_ns_mean": 21.937740037323962
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 1.0,
+          "per_load_ns_mean": 21.887218941032547
+        }
+      }
+    },
+    "c": {
+      "jobs": 3200,
+      "per_load_ns_mean": 22.230574947120985,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 32.164,
+      "overlap_mean": 0.012937500000000001,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.5234375,
+          "per_load_ns_mean": 22.04762749672949
+        },
+        "> 16 KiB": {
+          "share": 0.46875,
+          "per_load_ns_mean": 22.43261466962385
+        },
+        "never on this core": {
+          "share": 0.0078125,
+          "per_load_ns_mean": 22.36567077317898
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.9875,
+          "per_load_ns_mean": 22.22164544991568
+        },
+        "0.5-1.5": {
+          "share": 0.0125,
+          "per_load_ns_mean": 22.936005226340068
+        }
+      }
+    },
+    "c2": {
+      "jobs": 3200,
+      "per_load_ns_mean": 22.418686359332124,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 20.138,
+      "overlap_mean": 0.0843125,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.8009375,
+          "per_load_ns_mean": 22.41314664590122
+        },
+        "> 16 KiB": {
+          "share": 0.1984375,
+          "per_load_ns_mean": 22.442838248101207
+        },
+        "never on this core": {
+          "share": 0.000625,
+          "per_load_ns_mean": 21.84960443684612
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.9246875,
+          "per_load_ns_mean": 22.35738019645241
+        },
+        "0.5-1.5": {
+          "share": 0.0746875,
+          "per_load_ns_mean": 23.16592917768509
+        },
+        "1.5-2.5": {
+          "share": 0.000625,
+          "per_load_ns_mean": 23.825637546685343
+        }
+      }
+    },
+    "p": {
+      "jobs": 3200,
+      "per_load_ns_mean": 22.683504012067825,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 5.442,
+      "overlap_mean": 0.30700000000000005,
+      "bins": {
+        "8-16 KiB": {
+          "share": 1.0,
+          "per_load_ns_mean": 22.683504012067825
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.7403125,
+          "per_load_ns_mean": 22.182575699774222
+        },
+        "0.5-1.5": {
+          "share": 0.2275,
+          "per_load_ns_mean": 24.02974948976778
+        },
+        "1.5-2.5": {
+          "share": 0.0321875,
+          "per_load_ns_mean": 24.689644439815208
+        }
+      }
+    }
+  },
+  "ws150/s02": {
+    "g": {
+      "jobs": 3200,
+      "per_load_ns_mean": 72.24285529984647,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 86.218,
+      "overlap_mean": 0.8230625,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.1146875,
+          "per_load_ns_mean": 74.73148827573598
+        },
+        "> 16 KiB": {
+          "share": 0.86,
+          "per_load_ns_mean": 71.8846648157493
+        },
+        "never on this core": {
+          "share": 0.0253125,
+          "per_load_ns_mean": 73.13682949841359
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.31,
+          "per_load_ns_mean": 59.62425210860924
+        },
+        "0.5-1.5": {
+          "share": 0.55625,
+          "per_load_ns_mean": 75.08321253173658
+        },
+        "1.5-2.5": {
+          "share": 0.13375,
+          "per_load_ns_mean": 89.67701065718965
+        }
+      }
+    },
+    "c": {
+      "jobs": 3200,
+      "per_load_ns_mean": 74.53303329984197,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 31.728,
+      "overlap_mean": 0.7546250000000001,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.085,
+          "per_load_ns_mean": 72.85196141846939
+        },
+        "> 16 KiB": {
+          "share": 0.9053125,
+          "per_load_ns_mean": 74.64007787062856
+        },
+        "never on this core": {
+          "share": 0.0096875,
+          "per_load_ns_mean": 79.27959556321572
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.3003125,
+          "per_load_ns_mean": 62.62205084454305
+        },
+        "0.5-1.5": {
+          "share": 0.666875,
+          "per_load_ns_mean": 79.20682814210224
+        },
+        "1.5-2.5": {
+          "share": 0.0328125,
+          "per_load_ns_mean": 88.55756612040274
+        }
+      }
+    },
+    "c2": {
+      "jobs": 3200,
+      "per_load_ns_mean": 78.88980357258747,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 20.07,
+      "overlap_mean": 1.03275,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.115625,
+          "per_load_ns_mean": 81.30092300790841
+        },
+        "> 16 KiB": {
+          "share": 0.88375,
+          "per_load_ns_mean": 78.56262834249435
+        },
+        "never on this core": {
+          "share": 0.000625,
+          "per_load_ns_mean": 95.45848338986431
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.17125,
+          "per_load_ns_mean": 66.82387973562435
+        },
+        "0.5-1.5": {
+          "share": 0.5953125,
+          "per_load_ns_mean": 77.5541480028743
+        },
+        "1.5-2.5": {
+          "share": 0.2334375,
+          "per_load_ns_mean": 91.14756812808864
+        }
+      }
+    },
+    "p": {
+      "jobs": 3200,
+      "per_load_ns_mean": 91.83751357809535,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 5.976,
+      "overlap_mean": 1.8677499999999998,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.10625,
+          "per_load_ns_mean": 91.4640374420526
+        },
+        "> 16 KiB": {
+          "share": 0.89375,
+          "per_load_ns_mean": 91.88191283902351
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.025625,
+          "per_load_ns_mean": 63.82011974864793
+        },
+        "0.5-1.5": {
+          "share": 0.1940625,
+          "per_load_ns_mean": 81.55795927094576
+        },
+        "1.5-2.5": {
+          "share": 0.7209375,
+          "per_load_ns_mean": 94.42105953704066
+        },
+        "2.5-3": {
+          "share": 0.059375,
+          "per_load_ns_mean": 106.15745563845178
+        }
+      }
+    }
+  },
+  "ws150/s08": {
+    "g": {
+      "jobs": 3200,
+      "per_load_ns_mean": 31.248823218109557,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 80.222,
+      "overlap_mean": 0.1449375,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.048125,
+          "per_load_ns_mean": 32.056787399127344
+        },
+        "> 16 KiB": {
+          "share": 0.9278125,
+          "per_load_ns_mean": 31.224024874427908
+        },
+        "never on this core": {
+          "share": 0.0240625,
+          "per_load_ns_mean": 30.589080341668893
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.915625,
+          "per_load_ns_mean": 30.68886183256219
+        },
+        "0.5-1.5": {
+          "share": 0.084375,
+          "per_load_ns_mean": 37.32544121682726
+        }
+      }
+    },
+    "c": {
+      "jobs": 3200,
+      "per_load_ns_mean": 30.61152952351188,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 34.026,
+      "overlap_mean": 0.10925000000000001,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.054375,
+          "per_load_ns_mean": 30.6632753200472
+        },
+        "> 16 KiB": {
+          "share": 0.9353125,
+          "per_load_ns_mean": 30.600418950101854
+        },
+        "never on this core": {
+          "share": 0.0103125,
+          "per_load_ns_mean": 31.346383390756067
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.956875,
+          "per_load_ns_mean": 30.469017126955215
+        },
+        "0.5-1.5": {
+          "share": 0.043125,
+          "per_load_ns_mean": 33.7736524094286
+        }
+      }
+    },
+    "c2": {
+      "jobs": 3200,
+      "per_load_ns_mean": 32.23872448266632,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 20.588,
+      "overlap_mean": 0.2654375,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.1025,
+          "per_load_ns_mean": 33.007660277280095
+        },
+        "> 16 KiB": {
+          "share": 0.8975,
+          "per_load_ns_mean": 32.15090730278007
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.72875,
+          "per_load_ns_mean": 30.936944019481945
+        },
+        "0.5-1.5": {
+          "share": 0.27,
+          "per_load_ns_mean": 35.730888400305105
+        },
+        "1.5-2.5": {
+          "share": 0.00125,
+          "per_load_ns_mean": 36.86932830918125
+        }
+      }
+    },
+    "p": {
+      "jobs": 3200,
+      "per_load_ns_mean": 34.685739494113406,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 4.794,
+      "overlap_mean": 0.806625,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.10625,
+          "per_load_ns_mean": 34.69836733718065
+        },
+        "> 16 KiB": {
+          "share": 0.89375,
+          "per_load_ns_mean": 34.68423828200052
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.480625,
+          "per_load_ns_mean": 31.096816542819006
+        },
+        "0.5-1.5": {
+          "share": 0.2528125,
+          "per_load_ns_mean": 35.307611374885816
+        },
+        "1.5-2.5": {
+          "share": 0.25875,
+          "per_load_ns_mean": 40.519774932518175
+        },
+        "2.5-3": {
+          "share": 0.0078125,
+          "per_load_ns_mean": 42.12925167598403
+        }
+      }
+    }
+  },
+  "ws150/s32": {
+    "g": {
+      "jobs": 3200,
+      "per_load_ns_mean": 21.95390548181813,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 77.768,
+      "overlap_mean": 0.0099375,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.0409375,
+          "per_load_ns_mean": 21.93707929339815
+        },
+        "> 16 KiB": {
+          "share": 0.930625,
+          "per_load_ns_mean": 21.953455244683067
+        },
+        "never on this core": {
+          "share": 0.0284375,
+          "per_load_ns_mean": 21.992861930952596
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.9996875,
+          "per_load_ns_mean": 21.95335590936314
+        },
+        "0.5-1.5": {
+          "share": 0.0003125,
+          "per_load_ns_mean": 23.71198776533019
+        }
+      }
+    },
+    "c": {
+      "jobs": 3200,
+      "per_load_ns_mean": 22.351854455585958,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 34.672,
+      "overlap_mean": 0.027625,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.0584375,
+          "per_load_ns_mean": 22.27544312474954
+        },
+        "> 16 KiB": {
+          "share": 0.9321875,
+          "per_load_ns_mean": 22.35545600803334
+        },
+        "never on this core": {
+          "share": 0.009375,
+          "per_load_ns_mean": 22.4700373861152
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.9775,
+          "per_load_ns_mean": 22.33962470898523
+        },
+        "0.5-1.5": {
+          "share": 0.0225,
+          "per_load_ns_mean": 22.883169002350872
+        }
+      }
+    },
+    "c2": {
+      "jobs": 3200,
+      "per_load_ns_mean": 22.76270335709692,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 22.162,
+      "overlap_mean": 0.133875,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.08875,
+          "per_load_ns_mean": 23.04082924439199
+        },
+        "> 16 KiB": {
+          "share": 0.91125,
+          "per_load_ns_mean": 22.735615650652544
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.8675,
+          "per_load_ns_mean": 22.590876820522933
+        },
+        "0.5-1.5": {
+          "share": 0.1325,
+          "per_load_ns_mean": 23.887680870137935
+        }
+      }
+    },
+    "p": {
+      "jobs": 3200,
+      "per_load_ns_mean": 23.07023454001923,
+      "migrated_share": 0.0,
+      "start_spread_us_median": 4.666,
+      "overlap_mean": 0.449125,
+      "bins": {
+        "8-16 KiB": {
+          "share": 0.10625,
+          "per_load_ns_mean": 23.021687043445052
+        },
+        "> 16 KiB": {
+          "share": 0.89375,
+          "per_load_ns_mean": 23.076005920730843
+        }
+      },
+      "overlap_bins": {
+        "0-0.5": {
+          "share": 0.7009375,
+          "per_load_ns_mean": 22.282782611628754
+        },
+        "0.5-1.5": {
+          "share": 0.1584375,
+          "per_load_ns_mean": 24.507347682158642
+        },
+        "1.5-2.5": {
+          "share": 0.1396875,
+          "per_load_ns_mean": 25.373486033171737
+        },
+        "2.5-3": {
+          "share": 0.0009375,
+          "per_load_ns_mean": 25.76519949867785
+        }
+      }
+    }
+  }
+}
