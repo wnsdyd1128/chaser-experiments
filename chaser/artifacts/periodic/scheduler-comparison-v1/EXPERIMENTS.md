@@ -17,6 +17,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 7 | task별 U 불균형 | `cls-bimodal/`(`--design u-imbalance`) | `u-imbalance-v1` | `u-imbalance` |
 | 8 | CLS × 작업 집합 | `footprint/` | `l2-probe-v1`, `footprint-v1` | `footprint` |
 | 9 | 고부하·큰 task | `high-load/` | `high-load-v1` | `high-load` |
+| 10 | Partitioned 배치 불가 영역(진행 중) | `high-load/`(`--design infeasible`) | `infeasible-v1` | `infeasible` |
 
 ---
 
@@ -694,6 +695,48 @@ python3 $R/figures/high_load_bars.py $O
 `results/high-load/`: `protocol.json`, `results.jsonl`(구성별 state, 최대 response time ÷ 주기, 계획 코어 U 포함),
 `isolated-u.json`, `stats-high-load.json/md`(셀 검정, schedulable 집계와 McNemar, response 검정, 부하 추세),
 그림 `high-load-{schedulable,response,tat,tet}-{light,heavy}`, `per-set.jsonl.gz`.
+
+---
+
+## 10. Partitioned 배치 불가 영역 — 진행 중
+
+### 개요
+9절의 계산 위주 task 구성에서 큰 task 수를 늘려, 어떤 Partitioned 배치로도 코어당 U ≤ 1을 맞출 수 없는
+task set을 만든다. 이때 Global과 Clustered 중 무엇이 deadline을 더 잘 지키는지 본다.
+
+### 목적
+1. Partitioned를 쓸 수 없는 영역에서 Global과 Clustered (1+3)·(1+1+2)의 schedulability를 비교한다.
+   9절에서 Clustered (1+1+2)가 모든 셀에서 deadline을 지켜, 이 영역에서 Global보다 강할 가능성이 보였다.
+2. 이 영역에서 G와 C 중 무엇을 고를지가 task set에 따라 달라지는지 확인한다. 달라진다면 정적 판정만으로는
+   답할 수 없는 선택이 되어, RF 같은 추천 모델이 역할을 가질 수 있다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | 큰 task 수 H ∈ {4, 5, 6}(U ~ 균등(0.51, 0.55], 두 개가 한 코어에 들어가면 1 초과 → H ≥ 5면 배치 불가, H = 4는 대조); 코어당 명목 U ∈ {0.85, 0.95}; 구성 7개: Global, Clustered (1+3)·(1+1+2)(U 균형 배치 기준), Partitioned U 균형, Partitioned 정보 기반, Clustered (1+3)·(1+1+2) 용량 기반 |
+| 통제 변인 | 9절과 같음(task 16개, 주기 {20, 40, 80} ms, cyclic 2 KiB O0, warm-up 2 + 측정 4 hyperperiod). 작은 task는 Dirichlet(α = 8) 비율, 가장 높은 부하에서 ≤ 0.35, 가장 낮은 부하에서 ≥ 0.002. 공통 난수(set마다 주기·task 순서·큰 task 6개의 U와 위치 고정, H개만 사용; 작은 task 비율은 H마다 고정, 부하는 크기만 바꿈); **셀당 set 30개** |
+| 종속 변인 | schedulable 여부(주 지표); 최대 response time ÷ 주기; deadline을 모두 지킨 run의 TET·TAT |
+| 조작 확인 | 계획 코어 U(H ≥ 5에서 Partitioned 두 배치의 가장 바쁜 코어 > 1); 단독 U(각 셀 set 0, 게이트 3%) |
+
+**용량 기반 Clustered.** task를 U 내림차순으로, 넣은 뒤의 "코어당 부하(클러스터 U 합 ÷ 코어 수)"가
+가장 낮은 클러스터에 넣는다. (1+3)은 {0}, {1, 2, 3}, (1+1+2)는 {0}, {1}, {2, 3}이다.
+
+### 실험 방법
+1. `prepare`: 6 셀 × 30 set을 배치 4종(wfd, informed, c-cap, c2-cap)으로 빌드한다.
+2. `isolated`: 각 셀 set 0의 task 16개를 단독 실행해 U 오차 3% 이내를 확인한다.
+3. `pilot`(set 0, 42 run, deadline miss 허용) → `full`(1,260 run 중 나머지) → `stats`.
+4. 통계:
+   - schedulable 비율: 셀별 McNemar(Holm 보정).
+   - TET·TAT: 둘 다 deadline을 지킨 set끼리 짝지은 Wilcoxon.
+   - 큰 task 수에 따른 격차 추세: Friedman과 양방향 Page 검정.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+O=$W/.cache/infeasible-v1
+for s in prepare isolated pilot full stats; do python3 $R/high-load/hl_run.py $s --design infeasible --output $O; done
+```
 
 ---
 

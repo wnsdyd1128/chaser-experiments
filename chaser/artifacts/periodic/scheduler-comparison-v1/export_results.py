@@ -40,6 +40,7 @@ STUDIES = {
     'l2-probe': 'l2-probe-v1',
     'footprint': 'footprint-v1',
     'high-load': 'high-load-v1',
+    'infeasible': 'infeasible-v1',
     # The 20 ms design whose pilot missed deadlines; kept as the reason for v2.
     'cls-bimodal-v1-pilot': 'cls-bimodal-v1',
 }
