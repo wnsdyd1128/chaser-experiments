@@ -16,6 +16,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 6 | 부하 수준 | `cls-bimodal/`(`--design load-level`) | `load-level-v1` | `load-level` |
 | 7 | task별 U 불균형 | `cls-bimodal/`(`--design u-imbalance`) | `u-imbalance-v1` | `u-imbalance` |
 | 8 | CLS × 작업 집합 | `footprint/` | `l2-probe-v1`, `footprint-v1` | `footprint` |
+| 9 | 고부하·큰 task | `high-load/` | `high-load-v1` | `high-load` |
 
 ---
 
@@ -629,6 +630,70 @@ python3 $R/figures/footprint_bars.py $O
 - `results/footprint/`: `protocol.json`(특수 task 모양 포함), `results.jsonl`(구성별 state, 최대 response time ÷ 주기,
   코어 부하 불균형, 특수 job 동시 실행 수 포함), `isolated-u.json`, `stats-footprint.json/md`(종류별 셀 검정,
   작업 집합·CLS 대비, schedulable 집계), 그림 `footprint-{tet,tat,response,overlap}`, `per-set.jsonl.gz`.
+
+---
+
+## 9. 고부하·큰 task
+
+### 개요
+계산 위주 task 16개(L1에 들어가는 cyclic 2 KiB, 실험 1과 같은 O0 커널)로 메모리 경합을 거의 없앤 상태에서,
+코어당 부하와 큰 task 포함 여부를 바꿔 Partitioned 배치가 빡빡해질 때 Global·Clustered가 이기는지 본다.
+
+### 목적
+1. 지금까지 "정보를 쓴 Partitioned가 Global·Clustered와 같거나 낫다"는 결과가 낮은 부하(코어당 U ≤ 0.5)에서만
+   확인됐다. 높은 부하와 큰 task에서도 성립하는지 확인한다.
+2. Clustered가 이길 수 있는 영역이 있는지 확인한다. Partitioned는 bin-packing 한계가 있고,
+   Global EDF는 큰 task와 작은 task가 섞일 때 약하며, Clustered는 그 중간이다.
+3. RF(아키텍처 추천)를 유지할지 판단할 근거를 만든다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | 코어당 명목 U ∈ {0.5, 0.7, 0.85}(총 U 2.0 / 2.8 / 3.4); task 크기 ∈ {작은 task만, 큰 task 포함}; 구성 6개: Global, Clustered (1+3)·(1+1+2)(U 균형 배치 기준), Partitioned U 균형(WFD), Partitioned 정보 기반, Clustered (1+3) 정보 기반 |
+| 통제 변인 | task 16개, 주기는 {20, 40, 80} ms에서 task마다 무작위(set마다 고정); workload는 cyclic 64줄(2 KiB, O0, L1 상주, 실험 1의 job 모델 5.58 µs + 6.044 µs × sweep); warm-up 2 hyperperiod(160 ms) + 측정 4 hyperperiod(320 ms); 공통 난수(set마다 주기·task 순서·U 비율 고정, 부하 수준은 크기만 바꿈); 셀당 set 20개 |
+| 종속 변인 | schedulable 여부(주 지표); 최대 response time ÷ 주기; deadline을 모두 지킨 run의 TET·TAT; 코어 부하 불균형 |
+| 조작 확인 | 단독 U(각 셀 set 0의 16개 task, 게이트 3%); 배치별 계획 코어 U(`high_load.core_u`) |
+
+**task U 생성.**
+- 작은 task만: 16개의 비율을 대칭 Dirichlet(α = 8)에서 뽑습니다. 가장 높은 부하(총 3.4)에서 모든 task ≤ 0.35, 가장 낮은 부하에서 모든 task ≥ 0.005인 표본만 받습니다.
+- 큰 task 포함: 큰 task 2개를 U ~ 균등(0.5, 0.8)에서 뽑고(모든 부하에서 같음), 나머지 14개가 남은 U를 같은 방식으로 나눕니다.
+- 순수 UUniFast는 총 U 3.4에서 16개 task의 최댓값이 보통 0.7 안팎이라, "작은 task만" 조건을 만족하는 표본이 사실상 나오지 않아 이 방식으로 바꿨다.
+
+**배치.**
+- U 균형(WFD): U가 큰 task부터 가장 덜 찬 코어에 둡니다. 코어당 task 수는 자유입니다.
+- Partitioned 정보 기반: WFD에서 시작해 국소 탐색으로 "hyperperiod 안의 release 시점마다 가장 바쁜 코어의 release된 작업량"의 합을 최소화합니다(실험 2 P′의 U 일반화). 코어당 U ≤ 0.95를 지키고, 0.05는 스케줄링 오버헤드 여유입니다.
+- Clustered (1+3) 정보 기반: 단일 코어 클러스터(코어 0)에 작은 task를 코어당 평균 U까지 넣고, 큰 task를 포함한 나머지는 3코어 클러스터에서 global EDF로 돌게 합니다.
+
+### 실험 방법
+1. `prepare`: 6 셀 × 20 set을 배치 3종으로 빌드한다(소스·배열 배치 동일 확인).
+2. `isolated`: 각 셀 set 0의 task 16개를 단독 실행해 U 오차 3% 이내를 확인한다.
+   O0 cyclic job 모델은 실험 1에서 이미 검증했다.
+3. `pilot`(set 0, 36 run, deadline miss 허용) → `full`(720 run 중 나머지) → `stats`.
+4. 통계:
+   - schedulable 비율: 셀별 McNemar(Holm 보정).
+   - 최대 response time ÷ 주기: 짝지은 Wilcoxon.
+   - TET·TAT: 둘 다 deadline을 지킨 set끼리 짝지은 Wilcoxon과 Holm 보정.
+   - 부하에 따른 격차 추세: Friedman과 양방향 Page 검정.
+
+### 판단 기준
+- 고부하·큰 task 셀에서 Global이나 Clustered가 schedulable 비율 또는 TAT에서 정보 기반 Partitioned를 유의하게 이기면,
+  "부하·task 크기·locality로 P와 G/C의 경계를 학습하는" RF의 역할이 성립한다.
+- 거기서도 정보 기반 Partitioned가 같거나 이기면, 정보 기반 Partitioned가 지배적이라는 결론이 되어 RF 설계를 재검토한다.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+O=$W/.cache/high-load-v1
+for s in prepare isolated pilot full stats; do python3 $R/high-load/hl_run.py $s --design high-load --output $O; done
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R/high-load $R/high-load   # 명세 테스트
+python3 $R/figures/high_load_bars.py $O
+```
+
+### 결과 파일
+`results/high-load/`: `protocol.json`, `results.jsonl`(구성별 state, 최대 response time ÷ 주기, 계획 코어 U 포함),
+`isolated-u.json`, `stats-high-load.json/md`(셀 검정, schedulable 집계와 McNemar, response 검정, 부하 추세),
+그림 `high-load-{schedulable,response,tat,tet}-{light,heavy}`, `per-set.jsonl.gz`.
 
 ---
 
