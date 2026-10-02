@@ -1,0 +1,197 @@
+{
+ "placement": {
+  "R0": {
+   "dimensions": 11,
+   "near_pairs": 2779,
+   "conflicting_pairs": 809,
+   "conflicts_by_condition": {
+    "exp5 as-is p=0.5 | exp5 matched p=0.5": 441,
+    "exp5 as-is p=0.25 | exp5 matched p=0.25": 232,
+    "exp5 as-is p=0.25 | exp5 as-is p=0.25": 85,
+    "exp5 matched p=0.25 | exp5 matched p=0.25": 18,
+    "exp5 as-is p=0.75 | exp5 matched p=0.75": 17,
+    "exp8 BH | exp8 SH": 9,
+    "exp8 BH | exp8 BH": 3,
+    "exp5 matched p=0.5 | exp5 matched p=0.5": 2,
+    "exp8 BL | exp8 BL": 2
+   },
+   "named": {
+    "exp5 traffic as-is vs matched (same p, CV, set)": {
+     "pairs": 238,
+     "near": 238,
+     "labels_differ": 170,
+     "median_max_scaled_difference": 0.00021723645246487372
+    },
+    "exp8 SH vs BH (same set)": {
+     "pairs": 20,
+     "near": 20,
+     "labels_differ": 13,
+     "median_max_scaled_difference": 0.006782390916595382
+    },
+    "exp8 SL vs BL (same set)": {
+     "pairs": 19,
+     "near": 0,
+     "labels_differ": 3,
+     "median_max_scaled_difference": 0.04731002164531362
+    }
+   }
+  },
+  "R0-CLP": {
+   "dimensions": 21,
+   "near_pairs": 1200,
+   "conflicting_pairs": 104,
+   "conflicts_by_condition": {
+    "exp5 as-is p=0.25 | exp5 as-is p=0.25": 84,
+    "exp5 matched p=0.25 | exp5 matched p=0.25": 16,
+    "exp8 BL | exp8 BL": 2,
+    "exp8 BH | exp8 BH": 2
+   },
+   "named": {
+    "exp5 traffic as-is vs matched (same p, CV, set)": {
+     "pairs": 238,
+     "near": 0,
+     "labels_differ": 170,
+     "median_max_scaled_difference": 0.4021061672929621
+    },
+    "exp8 SH vs BH (same set)": {
+     "pairs": 20,
+     "near": 0,
+     "labels_differ": 13,
+     "median_max_scaled_difference": 0.5007011152188336
+    },
+    "exp8 SL vs BL (same set)": {
+     "pairs": 19,
+     "near": 0,
+     "labels_differ": 3,
+     "median_max_scaled_difference": 0.9805396062021553
+    }
+   }
+  },
+  "R1": {
+   "dimensions": 17,
+   "near_pairs": 2779,
+   "conflicting_pairs": 809,
+   "conflicts_by_condition": {
+    "exp5 as-is p=0.5 | exp5 matched p=0.5": 441,
+    "exp5 as-is p=0.25 | exp5 matched p=0.25": 232,
+    "exp5 as-is p=0.25 | exp5 as-is p=0.25": 85,
+    "exp5 matched p=0.25 | exp5 matched p=0.25": 18,
+    "exp5 as-is p=0.75 | exp5 matched p=0.75": 17,
+    "exp8 BH | exp8 SH": 9,
+    "exp8 BH | exp8 BH": 3,
+    "exp5 matched p=0.5 | exp5 matched p=0.5": 2,
+    "exp8 BL | exp8 BL": 2
+   },
+   "named": {
+    "exp5 traffic as-is vs matched (same p, CV, set)": {
+     "pairs": 238,
+     "near": 238,
+     "labels_differ": 170,
+     "median_max_scaled_difference": 0.00021723645246487372
+    },
+    "exp8 SH vs BH (same set)": {
+     "pairs": 20,
+     "near": 20,
+     "labels_differ": 13,
+     "median_max_scaled_difference": 0.006782390916595382
+    },
+    "exp8 SL vs BL (same set)": {
+     "pairs": 19,
+     "near": 0,
+     "labels_differ": 3,
+     "median_max_scaled_difference": 0.04731002164531362
+    }
+   }
+  },
+  "R2": {
+   "dimensions": 36,
+   "near_pairs": 1140,
+   "conflicting_pairs": 98,
+   "conflicts_by_condition": {
+    "exp5 as-is p=0.25 | exp5 as-is p=0.25": 84,
+    "exp5 matched p=0.25 | exp5 matched p=0.25": 14
+   },
+   "named": {
+    "exp5 traffic as-is vs matched (same p, CV, set)": {
+     "pairs": 238,
+     "near": 0,
+     "labels_differ": 170,
+     "median_max_scaled_difference": 0.9601422271342513
+    },
+    "exp8 SH vs BH (same set)": {
+     "pairs": 20,
+     "near": 0,
+     "labels_differ": 13,
+     "median_max_scaled_difference": 0.995608500328169
+    },
+    "exp8 SL vs BL (same set)": {
+     "pairs": 19,
+     "near": 0,
+     "labels_differ": 3,
+     "median_max_scaled_difference": 0.992976631336994
+    }
+   }
+  },
+  "R3": {
+   "dimensions": 42,
+   "near_pairs": 1276,
+   "conflicting_pairs": 109,
+   "conflicts_by_condition": {
+    "exp5 as-is p=0.25 | exp5 as-is p=0.25": 85,
+    "exp5 matched p=0.25 | exp5 matched p=0.25": 17,
+    "exp8 BH | exp8 BH": 3,
+    "exp5 matched p=0.5 | exp5 matched p=0.5": 2,
+    "exp8 BL | exp8 BL": 2
+   },
+   "named": {
+    "exp5 traffic as-is vs matched (same p, CV, set)": {
+     "pairs": 238,
+     "near": 0,
+     "labels_differ": 170,
+     "median_max_scaled_difference": 0.5714285714285714
+    },
+    "exp8 SH vs BH (same set)": {
+     "pairs": 20,
+     "near": 0,
+     "labels_differ": 13,
+     "median_max_scaled_difference": 1.0
+    },
+    "exp8 SL vs BL (same set)": {
+     "pairs": 19,
+     "near": 0,
+     "labels_differ": 3,
+     "median_max_scaled_difference": 1.0
+    }
+   }
+  },
+  "R4": {
+   "dimensions": 60,
+   "near_pairs": 1140,
+   "conflicting_pairs": 98,
+   "conflicts_by_condition": {
+    "exp5 as-is p=0.25 | exp5 as-is p=0.25": 84,
+    "exp5 matched p=0.25 | exp5 matched p=0.25": 14
+   },
+   "named": {
+    "exp5 traffic as-is vs matched (same p, CV, set)": {
+     "pairs": 238,
+     "near": 0,
+     "labels_differ": 170,
+     "median_max_scaled_difference": 0.9601422271342513
+    },
+    "exp8 SH vs BH (same set)": {
+     "pairs": 20,
+     "near": 0,
+     "labels_differ": 13,
+     "median_max_scaled_difference": 1.0
+    },
+    "exp8 SL vs BL (same set)": {
+     "pairs": 19,
+     "near": 0,
+     "labels_differ": 3,
+     "median_max_scaled_difference": 1.0
+    }
+   }
+  }
+ }
+}

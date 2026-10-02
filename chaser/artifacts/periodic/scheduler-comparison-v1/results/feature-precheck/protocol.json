@@ -1,0 +1,127 @@
+{
+  "design": "feature-precheck",
+  "inputs": {
+    "cls-bimodal/results.jsonl": "80434b58224e89801309e2451654247bd57cc50800b330c3c63337c27ba42e80",
+    "cls-bimodal/per-set.jsonl.gz": "08efb4e9c7303dae72f4d13d21b523332acca9361d4d302a026200fb349fc8e1",
+    "cls-bimodal-ext/results.jsonl": "7f6f8414b6b4ef2ce459d9862a22f6f70a7ac3419f38550b90c60ac8d8096c38",
+    "cls-bimodal-ext/results-combined.jsonl": "98e67ba4c53b4124bc167b4570d67f6f2ca1093a3b509a193ac6d3881be8859b",
+    "cls-bimodal-ext/per-set.jsonl.gz": "eab684dbc21fb8fdc18d9e056bb3b2e514df07ce3541a031743837a8671c4e6c",
+    "load-level/results.jsonl": "28f4f11b20e010ac38c9d6e7790c292eb1a81c5f654d49aa1d986c394f7f3c6e",
+    "load-level/per-set.jsonl.gz": "09c64663870bcab4d622217aef92054a04a1d7db8722f9b25b2a14064fa65c45",
+    "u-imbalance/results.jsonl": "e482620a2bc43c957338a74dc69195b2bb5938f75439305b1e3eea1a14cb2009",
+    "u-imbalance/per-set.jsonl.gz": "22e9f1bc2c163423cde90890b1992be3d1ecbacd3fb2226266c8ef5afed929ad",
+    "footprint/results.jsonl": "b4abe0266b9dc969e905ae4cfe197aabcc3b069b790c30b3460afb6dea19c23b",
+    "footprint/per-set.jsonl.gz": "ac99b45ad452450b88cfcb1e11f7541741313bb7edcfac9c122e66d164910ac5",
+    "high-load/results.jsonl": "3d673138a361504cbc0c3fa842fe882db4fb0e5e34250750bf7216ae506d1332",
+    "high-load/per-set.jsonl.gz": "b897c0f2d2d638380f1e060b6e7364d976ff11791b21633d6775557f5e76158e"
+  },
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "rf": {
+    "n_estimators": 100,
+    "max_depth": null,
+    "min_samples_leaf": 1,
+    "max_features": "sqrt",
+    "n_jobs": 1
+  },
+  "learners": [
+    "classifier",
+    "weighted",
+    "regressor"
+  ],
+  "schemes": [
+    "set",
+    "condition"
+  ],
+  "margin": 0.01,
+  "near": 0.01,
+  "cap": 1.0,
+  "representations": {
+    "R0": 11,
+    "R0-CLP": 21,
+    "R1": 17,
+    "R2": 36,
+    "R3": 42,
+    "R4": 60
+  },
+  "decisions": {
+    "placement": {
+      "options": [
+        "mixed",
+        "grouped"
+      ],
+      "samples": 677,
+      "label_counts": {
+        "mixed": 259,
+        "grouped": 418
+      },
+      "near_ties": 197,
+      "conditions": [
+        "exp5 as-is p=0.25",
+        "exp5 as-is p=0.5",
+        "exp5 as-is p=0.75",
+        "exp5 matched p=0.25",
+        "exp5 matched p=0.5",
+        "exp5 matched p=0.75",
+        "exp6 period 20 ms",
+        "exp6 period 30 ms",
+        "exp6 period 80 ms",
+        "exp7 U CV 0.25",
+        "exp7 U CV 0.5",
+        "exp7 U CV 0.75",
+        "exp8 BH",
+        "exp8 BL",
+        "exp8 SH",
+        "exp8 SL"
+      ]
+    },
+    "hl-policy": {
+      "options": [
+        "WFD",
+        "informed"
+      ],
+      "samples": 120,
+      "label_counts": {
+        "WFD": 39,
+        "informed": 81
+      },
+      "near_ties": 18,
+      "conditions": [
+        "exp9 heavy U/core 0.5",
+        "exp9 heavy U/core 0.7",
+        "exp9 heavy U/core 0.85",
+        "exp9 light U/core 0.5",
+        "exp9 light U/core 0.7",
+        "exp9 light U/core 0.85"
+      ]
+    },
+    "hl-family": {
+      "options": [
+        "Partitioned",
+        "Clustered",
+        "Global"
+      ],
+      "samples": 120,
+      "label_counts": {
+        "Partitioned": 91,
+        "Clustered": 23,
+        "Global": 6
+      },
+      "near_ties": 31,
+      "conditions": [
+        "exp9 heavy U/core 0.5",
+        "exp9 heavy U/core 0.7",
+        "exp9 heavy U/core 0.85",
+        "exp9 light U/core 0.5",
+        "exp9 light U/core 0.7",
+        "exp9 light U/core 0.85"
+      ]
+    }
+  },
+  "dropped_duplicate_sets": 40
+}

@@ -18,6 +18,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 8 | CLS × 작업 집합 | `footprint/` | `l2-probe-v1`, `footprint-v1` | `footprint` |
 | 9 | 고부하·큰 task | `high-load/` | `high-load-v1` | `high-load` |
 | 10 | Partitioned 배치 불가 영역(진행 중) | `high-load/`(`--design infeasible`) | `infeasible-v1` | `infeasible` |
+| 13 | Feature 사전 점검(실험 5–9 재분석, 시뮬레이션 없음) | `feature-precheck/` | `feature-precheck-v1` | `feature-precheck` |
 
 ---
 
@@ -766,3 +767,48 @@ for s in prepare isolated pilot full stats; do python3 $R/high-load/hl_run.py $s
   다시 빌드할 수 있다.
 - `MANIFEST.json`은 복사한 파일의 SHA-256을, `results/environment.json`은 laysim·컴파일러·
   yarda_cpp 바이너리 해시와 Python 패키지 버전을 담는다.
+
+---
+
+## 13. Feature 사전 점검 — 끝난 실험 재분석
+
+### 개요
+새 시뮬레이션 없이 실험 5–9의 결과 묶음에서 정적 task 정보만으로 feature를 만든다.
+그 feature로 RF가 "더 나은 배치·아키텍처"를 고르는지 비교한다.
+- 비교 대상은 계획의 RF 입력(R0: CLS 통계 + U 통계 11개)과 이를 넓힌 표현이다.
+- 넓힌 표현은 주기, 트래픽·작업 집합 통계, 하드웨어 기준 task 유형의 bag-of-words를 더한다.
+
+상세 설계와 결과는 [`feature-precheck/README.md`](feature-precheck/README.md)에 있다.
+
+### 목적
+1. R0로는 구분되지 않는데 결과가 다른 task set 쌍이 실제로 있는지 확인한다. 있다면 넓힌 표현이 그 쌍을 구분하는지 본다.
+2. Partitioned 배치 정책 선택(P-first)과 아키텍처 선택에서 표현을 넓히면 TAT regret이 줄어드는지 확인한다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | 입력 표현 6종(R0, CLP+U, R1–R4); 학습 방식 3종(하드 레이블, 손해 가중치, 선택지별 regret 회귀); 교차 검증 2종(set 번호 단위 10겹, 조건 하나씩 제외) |
+| 통제 변인 | 같은 표본과 레이블(측정 TAT 최소, 동률은 TET); 계획의 기준 RF 설정(트리 100, 깊이 제한 없음, max_features sqrt, 튜닝 없음); seed 42–46 |
+| 종속 변인 | 고른 선택지의 TAT regret(고른 TAT ÷ 최선 TAT − 1)의 평균·95백분위·최대; 정확도; deadline을 놓친 선택 수; feature가 1% 이내로 같은데 레이블이 다른 set 쌍의 수 |
+
+### 판단 대상
+- **placement:** Partitioned 묶음 대 섞음. 실험 5–8의 677 set이다. 실험 6의 40 ms와 실험 7의 U CV 0은 실험 5와 같은 실행이라 뺐다.
+- **hl-policy:** Partitioned WFD 대 정보 기반. 실험 9의 120 set이다.
+- **hl-family:** Partitioned·Clustered·Global 중 계열별 최선. 실험 9의 120 set이며, deadline을 놓친 구성은 고를 수 없는 선택지로 둔다.
+
+### 재현 명령
+```sh
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R/feature-precheck $R/feature-precheck   # feature 명세 테스트
+python3 $R/feature-precheck/precheck.py --output $W/.cache/feature-precheck-v1 --jobs 6
+python3 $R/figures/feature_precheck_bars.py $W/.cache/feature-precheck-v1
+python3 $R/export_results.py feature-precheck
+```
+입력은 `results/`의 결과 묶음만 쓰므로 `.cache`의 원시 출력이 없어도 다시 돌릴 수 있다.
+
+### 결과 파일
+`results/feature-precheck/`에는 다음이 있다.
+- `protocol.json`(입력 묶음 SHA-256, 설정, 표본 수, 레이블 분포)
+- `samples.jsonl`, `results.json`, `predictions.jsonl`, `collisions.json`, `summary.md`
+- 스크립트 사본
+- 그림 `precheck-*`
