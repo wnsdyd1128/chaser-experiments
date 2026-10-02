@@ -15,6 +15,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 5 | CLS 양극단 | `cls-bimodal/` | `cls-bimodal-v2`, 확장 `cls-bimodal-v2-ext` | `cls-bimodal` |
 | 6 | 부하 수준 | `cls-bimodal/`(`--design load-level`) | `load-level-v1` | `load-level` |
 | 7 | task별 U 불균형 | `cls-bimodal/`(`--design u-imbalance`) | `u-imbalance-v1` | `u-imbalance` |
+| 8 | CLS × 작업 집합 | `footprint/` | `l2-probe-v1`, `footprint-v1` | `footprint` |
 
 ---
 
@@ -555,6 +556,79 @@ python3 $R/figures/level_bars.py $O
 (구성별 state, 최대 response time ÷ 주기, 코어 부하 불균형 포함), `isolated-u.json`,
 `stats-u-imbalance.json/md`, 그림 `u-imbalance-{tet,tat,response,core-load}`(`figures/level_bars.py`),
 `per-set.jsonl.gz`.
+
+---
+
+## 8. CLS × 작업 집합(L2 용량 경합)
+
+### 개요
+task 하나만 보는 CLS로는 잡히지 않는 "동시에 도는 task들의 L2 용량 경합"이 TAT 격차를 만드는지 본다.
+특수 task 4개의 CLS 수준과 작업 집합 크기를 2 × 2로 바꾸고, 나머지 12개는 높은 CLS task로 고정한다.
+
+### 배경(사전 측정, `footprint/l2_probe.py`)
+- task N개(1–4)를 코어마다 하나씩 두고 같은 크기 배열을 동시에 반복 순회시켰다.
+- 32 KiB 배열의 접근당 시간: 68 → 97 → 145 → 193 ns. 2개부터 약 48 ns × N이다.
+  laysim의 공유 L2는 요청을 하나씩 처리한다(12 cycle, 250 MHz 가정 시 48 ns).
+- 3 MiB 배열(항상 메모리): 약 220 ns × N. 메모리도 하나씩 처리한다.
+- 768 KiB 배열: 2개 겹침 97 ns(L2 안), 3개 433 ns(부분적으로 밀려남), 4개 879 ns(완전히 밀려남).
+  640 KiB는 4개 겹침에서만 밀려났다.
+- 이 때문에 트래픽이 많은 task set의 TAT는 "전체 L2 요청 수 × 48 ns"에 묶인다(5절 데이터와 일치).
+  배치·아키텍처가 TAT를 바꾸려면 전체 메모리 처리 시간 자체(L2 miss 수)를 바꿔야 한다.
+
+### 목적
+1. 큰 작업 집합 task가 동시에 도는지(아키텍처·배치가 정함)에 따라 TAT 격차가 생기는지 확인한다.
+2. 그 격차가 CLS 수준이 아니라 작업 집합 크기에서 나오는지 확인한다.
+   같은 CLS·같은 트래픽에서 작업 집합만 바꾸고, 같은 작업 집합에서 CLS만 바꿔 비교한다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | 특수 task 종류 ∈ {SL, BL, SH, BH}(작업 집합 32 / 768 KiB × CLS 낮음 / 높음); 구성: Global, Clustered (1+3)·(1+1+2)(섞음 배치 기준), Partitioned 섞음(코어마다 특수 task 1개), Partitioned 묶음(특수 task 4개를 코어 0에) |
+| 통제 변인 | 모든 task의 단독 job 5.5 ms, 주기 200 ms(task U 0.0275, 코어당 0.11); 배경 task 12개(높은 CLS 중심 0.90, CV 0.1); 같은 CLS 수준의 SL/BL, SH/BH는 job당 load 수가 같고 L1 miss도 같거나 비슷함(SL 73,800 / BL 73,731, SH 52,224 / BH 49,280); workload O2, hot-cold; 공통 난수(set k의 task 위치·배경 CLS를 네 종류가 공유, `bimodal.draws`); warm-up 5 + 측정 10 job; 셀당 set 20개 |
+| 종속 변인 | TET, TAT; schedulable 여부; 최대 response time ÷ 주기; 코어 부하 불균형; 특수 job 동시 실행 수(특수 job 하나가 도는 동안 함께 도는 다른 특수 job 수의 평균) |
+| 조작 확인 | yarda_cpp CLS = 설계식(SL 0.088, BL 0.059, SH 0.670, BH 0.674); 단독 job 시간(게이트 3%) |
+
+특수 task 모양(job당):
+
+| 종류 | hot | hot 반복 | cold | sweep | 단독 job |
+|---|---|---|---|---|---|
+| SL | 1줄 | 2 | 1,024줄(32 KiB) | 72 | 5.5 ms |
+| BL | 1줄 | 2 | 24,576줄(768 KiB) | 3 | 5.5 ms |
+| SH | 64줄 | 31 | 1,024줄 | 48 | 5.5 ms |
+| BH | 64줄 | 744 | 24,576줄 | 2 | 5.5 ms |
+
+### 실험 방법
+1. `prepare`: 4종류 × 20 set을 두 배치로 빌드하고, 모든 task의 CLS를 yarda_cpp로 확인한다.
+2. `isolated`: 서로 다른 수준을 단독 실행해 job 시간을 5.5 ms ± 3%로 확인한다.
+3. `pilot`(set 0, 20 run) → `full`(400 run 중 나머지) → `stats`.
+4. 통계:
+   - 종류별 구성 쌍의 짝지은 Wilcoxon + Holm.
+   - **작업 집합 대비**: 같은 set의 (큰 쪽 격차 − 작은 쪽 격차)를 CLS 수준별로 검정.
+   - **CLS 대비**: (낮은 쪽 격차 − 높은 쪽 격차)를 작업 집합별로 검정.
+   - schedulable 비율은 McNemar로 검정.
+
+### 예상(가설)
+- 작은 작업 집합(SL, SH)에서는 5절처럼 TAT 격차가 작다.
+- 큰 작업 집합(BL, BH)에서는 특수 task의 겹침에 따라 TAT가 갈린다. Partitioned 묶음은 겹침이 없어 가장 짧고,
+  Partitioned 섞음은 코어 4개가 동시에 시작해 겹침이 많아 가장 길 수 있다. Global은 그 중간이다.
+- 이 차이가 BL과 BH에서 비슷하면, TAT 격차는 CLS가 아니라 작업 집합 크기에서 나온다.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 $R/footprint/l2_probe.py --output $W/.cache/l2-probe-v1
+O=$W/.cache/footprint-v1
+mkdir -p $O && cp -a $W/.cache/cls-bimodal-v2/calibration $O/calibration
+for s in prepare isolated pilot full stats; do python3 $R/footprint/fp_run.py $s --output $O; done
+python3 $R/figures/footprint_bars.py $O
+```
+
+### 결과 파일
+- `results/l2-probe/`: `probe.json`(크기 × 동시 task 수별 접근당 시간), `per-set.jsonl.gz`.
+- `results/footprint/`: `protocol.json`(특수 task 모양 포함), `results.jsonl`(구성별 state, 최대 response time ÷ 주기,
+  코어 부하 불균형, 특수 job 동시 실행 수 포함), `isolated-u.json`, `stats-footprint.json/md`(종류별 셀 검정,
+  작업 집합·CLS 대비, schedulable 집계), 그림 `footprint-{tet,tat,response,overlap}`, `per-set.jsonl.gz`.
 
 ---
 

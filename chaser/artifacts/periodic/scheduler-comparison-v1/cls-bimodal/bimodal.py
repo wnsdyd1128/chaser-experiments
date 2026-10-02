@@ -162,8 +162,8 @@ def features(hot, repeats, sweeps, pad, tail, cold=COLD_LINES):
         sweeps * tail), axis=-1)
 
 
-def job_ns(model: dict, hot, repeats, sweeps, pad, tail=0):
-    return features(hot, repeats, sweeps, pad, tail) @ np.array([model[name] for name in FEATURES])
+def job_ns(model: dict, hot, repeats, sweeps, pad, tail=0, cold=COLD_LINES):
+    return features(hot, repeats, sweeps, pad, tail, cold) @ np.array([model[name] for name in FEATURES])
 
 
 def _levels(model, free, budget, **values):

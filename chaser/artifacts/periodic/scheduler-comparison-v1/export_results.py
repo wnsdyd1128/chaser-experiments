@@ -38,6 +38,7 @@ STUDIES = {
     'load-level': 'load-level-v1',
     'u-imbalance': 'u-imbalance-v1',
     'l2-probe': 'l2-probe-v1',
+    'footprint': 'footprint-v1',
     # The 20 ms design whose pilot missed deadlines; kept as the reason for v2.
     'cls-bimodal-v1-pilot': 'cls-bimodal-v1',
 }
