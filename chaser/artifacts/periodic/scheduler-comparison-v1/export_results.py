@@ -35,6 +35,7 @@ STUDIES = {
     'cache-affinity-o2': 'cache-affinity-o2-v1',
     'cls-bimodal': 'cls-bimodal-v2',
     'cls-bimodal-ext': 'cls-bimodal-v2-ext',
+    'load-level': 'load-level-v1',
     # The 20 ms design whose pilot missed deadlines; kept as the reason for v2.
     'cls-bimodal-v1-pilot': 'cls-bimodal-v1',
 }

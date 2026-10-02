@@ -35,6 +35,13 @@ RUNS = (('mixed', 'g', 'g'), ('mixed', 'c', 'c'), ('mixed', 'c2', 'c2'), ('mixed
         ('grouped', 'p', 'p_grp'))
 PAIRS = (('g', 'p'), ('c', 'p'), ('c2', 'p'), ('g', 'c'), ('g', 'c2'), ('c', 'c2'),
          ('p_grp', 'p'), ('g', 'p_grp'), ('c', 'p_grp'), ('c2', 'p_grp'))
+# Task-U imbalance: cluster domains follow the U-balanced placement.
+RUNS_MAIN, PAIRS_MAIN = RUNS, PAIRS
+IMBALANCE_RUNS = (('balanced', 'g', 'g'), ('balanced', 'c', 'c'), ('balanced', 'c2', 'c2'),
+                  ('balanced', 'p', 'p_bal'), ('mixed', 'p', 'p'), ('grouped', 'p', 'p_grp'),
+                  ('grouped-balanced', 'p', 'p_grp_bal'))
+IMBALANCE_PAIRS = (('g', 'p_bal'), ('c', 'p_bal'), ('c2', 'p_bal'), ('p', 'p_bal'), ('p_grp', 'p_bal'),
+                   ('p_grp_bal', 'p_bal'), ('g', 'p_grp_bal'), ('p_grp_bal', 'p_grp'))
 U_TOLERANCE = 0.03
 CLS_TOLERANCE = 1e-9
 # Startup-only failures: the coordinator sometimes arms one tick after its
@@ -44,28 +51,30 @@ STARTUP_ERRORS = {'arm_phase', 'release_mismatch'}
 
 
 DESIGN = 'main'
-LEVEL_KEYS = {'load-level': 'period'}
+LEVEL_KEYS = {'load-level': 'period', 'u-imbalance': 'u_cv'}
 
 
 def select_design(name):
-    global DESIGN
+    global DESIGN, RUNS, PAIRS
     DESIGN = name
+    RUNS, PAIRS = (IMBALANCE_RUNS, IMBALANCE_PAIRS) if name == 'u-imbalance' else (RUNS_MAIN, PAIRS_MAIN)
 
 
 def cases():
-    """(low fraction, CV, traffic, period, set id) of every task set in the design."""
-    return [(p, cv, traffic, period, k) for p, cv, traffic in bimodal.cells(DESIGN)
-            for period in bimodal.periods(DESIGN) for k in bimodal.set_ids(p, cv)]
+    """(low fraction, CV, traffic, period, task-U CV, set id) of every task set in the design."""
+    return [(p, cv, traffic, period, u_cv, k) for p, cv, traffic in bimodal.cells(DESIGN)
+            for period in bimodal.periods(DESIGN) for u_cv in bimodal.u_cvs(DESIGN)
+            for k in bimodal.set_ids(p, cv)]
 
 
 def label(case):
-    p, cv, traffic, period, k = case
-    level_part = {'load-level': f'/t{period:03d}'}.get(DESIGN, '')
+    p, cv, traffic, period, u_cv, k = case
+    level_part = {'load-level': f'/t{period:03d}', 'u-imbalance': f'/u{round(u_cv * 100):03d}'}.get(DESIGN, '')
     return f'{traffic}{level_part}/p{round(p * 100):03d}/cv{round(cv * 100):02d}/s{k:02d}'
 
 
 def placements_for(case):
-    return bimodal.placements(case[0])
+    return bimodal.IMBALANCE_PLACEMENTS if DESIGN == 'u-imbalance' else bimodal.placements(case[0])
 
 
 def case_dir(output, case):
@@ -85,14 +94,17 @@ def prepare_one(output, case, levels):
     for placement in placements_for(case):
         directory = target / placement
         directory.mkdir(parents=True)
-        p, cv, traffic, period, k = case
-        config = bimodal.configuration(p, cv, traffic, k, levels, placement, period=period)
+        p, cv, traffic, period, u_cv, k = case
+        if DESIGN == 'u-imbalance':
+            config = bimodal.imbalance_configuration(u_cv, k, levels, placement)
+        else:
+            config = bimodal.configuration(p, cv, traffic, k, levels, placement, period=period)
         write_json(directory / 'configuration.json', config)
         prepare(config, directory / 'prepared')
-    for placement in placements_for(case):
-        for name in ('source/workload.c', 'layout.json'):
-            if (target / placement / 'prepared' / name).read_bytes() != (target / 'mixed/prepared' / name).read_bytes():
-                raise ValueError(f'{label(case)}: placements differ in {name}')
+        if placement != 'mixed':
+            for name in ('source/workload.c', 'layout.json'):
+                if (directory / 'prepared' / name).read_bytes() != (target / 'mixed/prepared' / name).read_bytes():
+                    raise ValueError(f'{label(case)}: placements differ in {name}')
     counts = yarda_counts.analyze(target / 'mixed/prepared', target / 'yarda')
     config = json.loads((target / 'mixed/configuration.json').read_text())
     rows = []
@@ -109,6 +121,11 @@ def prepare_one(output, case, levels):
 
 def prepare_all(output, workers):
     levels = tables(output)
+    if DESIGN == 'u-imbalance':
+        model = json.loads((output / 'calibration/model.json').read_text())['coefficients']
+        budgets = {b for case in cases() for b in bimodal.imbalance_budgets(case[4], case[5])}
+        by_budget = {b: bimodal.solve_tables(model, b) for b in sorted(budgets)}
+        levels = by_budget.__getitem__
     for name in SNAPSHOT:
         shutil.copyfile(Path(__file__).with_name(name), output / name)
     manifests = {}
@@ -119,10 +136,10 @@ def prepare_all(output, workers):
             design.announce(f'prepared {label(futures[future])}')
     write_json(output / 'protocol.json', dict(
         low_fractions=bimodal.LOW_FRACTIONS, cvs=bimodal.CVS, sets=bimodal.SETS, tasks=bimodal.TASKS,
-        periods=bimodal.periods(DESIGN), job_ns=bimodal.JOB_NS,
+        periods=bimodal.periods(DESIGN), u_cvs=bimodal.u_cvs(DESIGN), job_ns=bimodal.JOB_NS,
         high_center=bimodal.HIGH_CENTER,
         low_center=bimodal.LOW_CENTER, workload_optimization='O2', runs=[r[2] for r in RUNS],
-        center_l1_misses=float(levels['center_l1_misses']), design=DESIGN,
+        center_l1_misses=float(tables(output)['center_l1_misses']), design=DESIGN,
         model_hash=file_hash(output / 'calibration/model.json'),
         prepared_manifest_hashes=dict(sorted(manifests.items())),
         snapshot_hashes={name: file_hash(output / name) for name in SNAPSHOT}))
@@ -154,7 +171,7 @@ def isolated(output, workers):
     marked 'model' in the report; any other failure stops the stage.
     """
     plans, sources = {}, {}
-    for case in sorted(cases(), key=lambda c: c[4]):
+    for case in sorted(cases(), key=lambda c: c[5]):
         plans[case] = json.loads((case_dir(output, case) / 'mixed/prepared/p/plan.json').read_text())['tasks']
         for i, task in enumerate(plans[case]):
             sources.setdefault(level_key(task), (case, i, task['task_id']))
@@ -183,7 +200,7 @@ def isolated(output, workers):
         period_ns = case[3] * 1e6
         u = {t['task_id']: (config[t['task_id']]['u_planned'] if level_key(t) in startup
                             else cpu[level_key(t)] / period_ns) for t in tasks}
-        errors = {t['task_id']: u[t['task_id']] / (bimodal.JOB_NS / period_ns) - 1
+        errors = {t['task_id']: u[t['task_id']] / config[t['task_id']].get('u_target', bimodal.JOB_NS / period_ns) - 1
                   for t in tasks if level_key(t) not in startup}
         worst = max(worst, *(abs(e) for e in errors.values()), 0.0)
         report[label(case)] = dict(utilization=u, relative_error=errors, source={
@@ -230,6 +247,15 @@ def max_response_ratio(result, config):
     return max(ratios) if ratios else None
 
 
+def core_imbalance(result, config):
+    """Largest over mean of the per-core sums of measured job CPU (by start core)."""
+    tasks, load = config['tasks'], [0.0] * bimodal.CORES
+    for job in result['jobs']:
+        if job['job'] >= config['warmup_ticks'] // tasks[job['task']]['period_ticks']:
+            load[job['start_core']] += job['cpu_after_ns'] - job['cpu_before_ns']
+    return max(load) / (sum(load) / len(load))
+
+
 def summarize(output):
     isolated_u = json.loads((output / 'isolated-u.json').read_text())
     rows = []
@@ -240,7 +266,7 @@ def summarize(output):
             continue
         locality = json.loads((target / 'locality.json').read_text())['tasks']
         u = isolated_u[label(case)]['utilization']
-        row = dict(mean=case[0], cv=case[1], traffic=case[2], period=case[3], set_id=case[4],
+        row = dict(mean=case[0], cv=case[1], traffic=case[2], period=case[3], u_cv=case[4], set_id=case[5],
                    modes=[t['mode'] for t in locality], cls=[t['cls'] for t in locality],
                    l1_misses=[t['l1_misses'] for t in locality],
                    isolated_cpu_ns=[u[t['task_id']] * case[3] * 1e6 for t in locality],
@@ -255,7 +281,8 @@ def summarize(output):
                 measured_jobs=result.get('measured_jobs'), cohorts=len(result.get('cohorts', [])),
                 start_core_changes=design._start_core_changes(result, config) if ok else None,
                 task_cpu_ns=task_cpu(result, config) if ok else None,
-                state=run_state(result), max_response_ratio=max_response_ratio(result, config))
+                state=run_state(result), max_response_ratio=max_response_ratio(result, config),
+                core_imbalance=core_imbalance(result, config) if ok else None)
         write_json(target / 'summary.json', row)
         rows.append(row)
     with (output / 'results.jsonl').open('w') as stream:
@@ -421,7 +448,7 @@ def main():
     if args.stage == 'isolated':
         isolated(output, args.workers)
     elif args.stage == 'pilot':
-        failed, _ = design.run_specs(specs_for(output, [c for c in cases() if c[4] == 0]), args.workers)
+        failed, _ = design.run_specs(specs_for(output, [c for c in cases() if c[5] == 0]), args.workers)
         summarize(output)
         if DESIGN in LEVEL_KEYS:
             # Deadline misses are measured outcomes here; stop only on other failures.
@@ -431,7 +458,7 @@ def main():
         if failed:
             raise RuntimeError(f'Pilot runs failed: {failed}')
     elif args.stage == 'full':
-        remaining = sorted((c for c in cases() if c[4] != 0), key=lambda c: (c[4], c[2], c[3], c[0], c[1]))
+        remaining = sorted((c for c in cases() if c[5] != 0), key=lambda c: (c[5], c[2], c[3], c[4], c[0], c[1]))
         failed, _ = design.run_specs(specs_for(output, remaining), args.workers)
         summarize(output)
         if failed:

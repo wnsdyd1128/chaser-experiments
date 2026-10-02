@@ -137,3 +137,63 @@ def test_load_level_varies_only_the_period_of_one_cls_condition():
                for p, cv, _ in bimodal.cells('load-level')) * len(bimodal.periods('load-level'))
     assert runs == 400
 
+
+def test_level_designs_carry_their_level_in_the_path_and_the_main_paths_stay_unchanged():
+    import bi_run
+    try:
+        bi_run.select_design('load-level')
+        assert bi_run.label((0.5, 0.1, 'as-is', 30, 0.0, 7)) == 'as-is/t030/p050/cv10/s07'
+        assert len(bi_run.cases()) == 80
+        bi_run.select_design('u-imbalance')
+        assert bi_run.label((0.5, 0.1, 'as-is', 40, 0.25, 7)) == 'as-is/u025/p050/cv10/s07'
+        assert len(bi_run.cases()) == 80
+        assert sum(len(bi_run.runs_for(c)) for c in bi_run.cases()) == 560
+        bi_run.select_design('main')
+        assert bi_run.label((0.5, 0.1, 'as-is', 40, 0.0, 7)) == 'as-is/p050/cv10/s07'
+    finally:
+        bi_run.DESIGN, bi_run.RUNS, bi_run.PAIRS = 'main', bi_run.RUNS_MAIN, bi_run.PAIRS_MAIN
+
+
+@cache
+def budget_tables(budget):
+    return bimodal.solve_tables(MODEL, budget)
+
+
+def test_task_utilizations_keep_the_total_and_share_draws_across_cv():
+    assert bimodal.task_utilizations(0.0, 5) == pytest.approx([bimodal.U_TOTAL / bimodal.TASKS] * bimodal.TASKS)
+    small, large = (np.log(bimodal.task_utilizations(cv, 5)) for cv in (0.25, 0.75))
+    for cv in (0.25, 0.5, 0.75):
+        assert sum(bimodal.task_utilizations(cv, 5)) == pytest.approx(bimodal.U_TOTAL)
+    # Same standard draws: log U deviations scale with sigma = sqrt(ln(1 + CV^2)).
+    ratio = np.sqrt(np.log(1 + 0.75 ** 2) / np.log(1 + 0.25 ** 2))
+    assert large - large.mean() == pytest.approx(ratio * (small - small.mean()))
+
+
+def test_budgets_are_rounded_job_lengths_of_the_task_utilizations():
+    budgets = bimodal.imbalance_budgets(0.5, 2)
+    assert all(b % bimodal.BUDGET_STEP_NS == 0 for b in budgets)
+    for b, u in zip(budgets, bimodal.task_utilizations(0.5, 2)):
+        assert abs(b - u * bimodal.PERIOD * 1e6) <= bimodal.BUDGET_STEP_NS / 2
+
+
+def test_balanced_cores_put_four_tasks_per_core_and_even_out_the_load():
+    us = bimodal.task_utilizations(0.75, 9)
+    cores = bimodal.balanced_cores(us, range(16), range(4))
+    loads = [sum(u for i, u in enumerate(us) if cores[i] == c) for c in range(4)]
+    assert sorted(cores.values()) == [0] * 4 + [1] * 4 + [2] * 4 + [3] * 4
+    naive = [sum(us[c * 4:(c + 1) * 4]) for c in range(4)]
+    assert max(loads) - min(loads) < max(naive) - min(naive)
+
+
+def test_imbalance_placements_differ_only_in_cores_and_group_balanced_keeps_modes_apart():
+    configs = {p: bimodal.imbalance_configuration(0.5, 4, budget_tables, p) for p in bimodal.IMBALANCE_PLACEMENTS}
+    strip = lambda c: [{k: v for k, v in t.items() if k != 'core'} for t in c['tasks']]
+    assert all(strip(c) == strip(configs['mixed']) for c in configs.values())
+    gb = configs['grouped-balanced']['tasks']
+    assert {t['core'] for t in gb if t['mode'] == 'low'} == {0, 1}
+    assert {t['core'] for t in gb if t['mode'] == 'high'} == {2, 3}
+    for task, budget in zip(configs['balanced']['tasks'], bimodal.imbalance_budgets(0.5, 4)):
+        assert task['u_target'] == pytest.approx(budget / (bimodal.PERIOD * 1e6))
+        assert task['period_ticks'] == bimodal.PERIOD
+    for architecture in range(4):
+        make_plan(configs['balanced'], architecture)

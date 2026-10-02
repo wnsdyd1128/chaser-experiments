@@ -22,6 +22,7 @@ CLS is the yarda_cpp cold-job value (alpha 0.5); `cls_model` is its closed form
 for this kernel and prepare checks every task against yarda_cpp.
 """
 
+import math
 import random
 import sys
 from pathlib import Path
@@ -76,14 +77,24 @@ HOT, REPEATS, SWEEPS, PAD, TAIL, U_ERROR, CLS = range(7)
 # other mixed fractions and pairs with the main as-is cells through set ids;
 # 'load-level' keeps one CLS condition and its 2.5 ms jobs and varies only the
 # period (per-core nominal U 0.125-0.5).
-DESIGNS = ('main', 'matched-extension', 'load-level')
+DESIGNS = ('main', 'matched-extension', 'load-level', 'u-imbalance')
 LOAD_PERIODS = (80, 40, 30, 20)
+# Task-U imbalance (EXPERIMENTS.md 7): the load-level CLS condition at the
+# default period, total U 1.0, task U log-normal from a set-specific draw per
+# task position that is independent of the CLS draws.
+U_CVS = (0.0, 0.25, 0.5, 0.75)
+U_TOTAL = 1.0
+U_TRUNCATION_SIGMA = 2.0
+U_SEED_BASE = 20261201
+BUDGET_STEP_NS = 10_000
+IMBALANCE_CLS = (0.5, 0.1)
+IMBALANCE_PLACEMENTS = ('balanced', 'mixed', 'grouped', 'grouped-balanced')
 
 
 def cells(design: str = 'main') -> list[tuple[float, float, str]]:
     if design == 'matched-extension':
         return [(p, cv, 'matched') for p in (0.25, 0.75) for cv in CVS]
-    if design == 'load-level':
+    if design in ('load-level', 'u-imbalance'):
         return [(0.5, 0.1, 'as-is')]
     return ([(p, cv, 'as-is') for p in LOW_FRACTIONS for cv in CVS]
             + [(0.5, cv, 'matched') for cv in CVS])
@@ -91,6 +102,10 @@ def cells(design: str = 'main') -> list[tuple[float, float, str]]:
 
 def periods(design: str = 'main') -> tuple[int, ...]:
     return LOAD_PERIODS if design == 'load-level' else (PERIOD,)
+
+
+def u_cvs(design: str = 'main') -> tuple[float, ...]:
+    return U_CVS if design == 'u-imbalance' else (0.0,)
 
 
 def set_ids(low_fraction: float, cv: float) -> list[int]:
@@ -151,13 +166,12 @@ def job_ns(model: dict, hot, repeats, sweeps, pad, tail=0):
     return features(hot, repeats, sweeps, pad, tail) @ np.array([model[name] for name in FEATURES])
 
 
-def _levels(model, free, **values):
+def _levels(model, free, budget, **values):
     """Largest free integer keeping the job within budget, then a tail for the rest.
 
     Job time is linear in the free variable. Returns rows of the level table
     without CLS; rows whose tail would exceed TAIL_SHARE are dropped.
     """
-    budget = TASK_U * PERIOD * 1e6
     values = dict(values, tail=0)
     low = job_ns(model, **{**values, free: 1})
     slope = job_ns(model, **{**values, free: 2}) - low
@@ -177,16 +191,16 @@ def _with_cls(rows):
     return np.column_stack([rows, cls_model(rows[:, HOT], rows[:, REPEATS], rows[:, SWEEPS])])
 
 
-def solve_tables(model: dict) -> dict:
-    """Level tables (hot, repeats, sweeps, pad, tail, U error, CLS) per mode."""
+def solve_tables(model: dict, budget: float = JOB_NS) -> dict:
+    """Level tables (hot, repeats, sweeps, pad, tail, U error, CLS) per mode for one job budget (ns)."""
     h, s = np.meshgrid(np.array(HIGH_HOT), np.array(HIGH_SWEEPS), indexing='ij')
-    high = _levels(model, 'repeats', hot=h, repeats=None, sweeps=s, pad=0)
+    high = _levels(model, 'repeats', budget, hot=h, repeats=None, sweeps=s, pad=0)
     h, r = np.meshgrid(np.array(LOW_HOT), np.array(LOW_REPEATS), indexing='ij')
-    low = _levels(model, 'sweeps', hot=h, repeats=r, sweeps=None, pad=0)
+    low = _levels(model, 'sweeps', budget, hot=h, repeats=r, sweeps=None, pad=0)
     tables = {'high': _with_cls(high[high[:, REPEATS] >= 2]), 'as-is': _with_cls(low[low[:, SWEEPS] >= 1])}
     center = tables['high'][_nearest(tables['high'], HIGH_CENTER)]
     misses = center[SWEEPS] * (center[HOT] + COLD_LINES)
-    rows = [_levels(model, 'pad', hot=h, repeats=r, pad=None,
+    rows = [_levels(model, 'pad', budget, hot=h, repeats=r, pad=None,
                     sweeps=np.maximum(1, np.round(misses / (h + COLD_LINES)) + offset))
             for offset in (-1, 0, 1)]
     matched = np.concatenate(rows)
@@ -247,3 +261,76 @@ def configuration(low_fraction: float, cv: float, traffic: str, set_id: int,
                                  truncation_sigma=TRUNCATION_SIGMA, task_u=task_u,
                                  center_l1_misses=float(tables['center_l1_misses'])))
 
+
+def task_utilizations(u_cv: float, set_id: int) -> list[float]:
+    """Log-normal task U with coefficient of variation u_cv, scaled to U_TOTAL.
+
+    One standard draw per task position (truncated at U_TRUNCATION_SIGMA) is
+    shared by every u_cv, so only the spread changes between CV levels.
+    """
+    rng = random.Random(U_SEED_BASE + set_id)
+    z = []
+    while len(z) < TASKS:
+        value = rng.gauss(0.0, 1.0)
+        if abs(value) <= U_TRUNCATION_SIGMA:
+            z.append(value)
+    sigma = math.sqrt(math.log(1 + u_cv ** 2))
+    weights = [math.exp(sigma * value) for value in z]
+    return [U_TOTAL * w / sum(weights) for w in weights]
+
+
+def imbalance_budgets(u_cv: float, set_id: int) -> list[int]:
+    """Job budgets (ns) of a task set, rounded to BUDGET_STEP_NS."""
+    return [max(BUDGET_STEP_NS, round(u * PERIOD * 1e6 / BUDGET_STEP_NS) * BUDGET_STEP_NS)
+            for u in task_utilizations(u_cv, set_id)]
+
+
+def balanced_cores(utilizations, indices, core_ids) -> dict[int, int]:
+    """Largest U first onto the least-loaded core that still holds fewer than its share."""
+    share = len(indices) // len(core_ids)
+    load, count, cores = dict.fromkeys(core_ids, 0.0), dict.fromkeys(core_ids, 0), {}
+    for i in sorted(indices, key=lambda i: (-utilizations[i], i)):
+        core = min((c for c in core_ids if count[c] < share), key=lambda c: (load[c], c))
+        cores[i] = core
+        load[core] += utilizations[i]
+        count[core] += 1
+    return cores
+
+
+def imbalance_cores(placement: str, values, modes, utilizations) -> list[int]:
+    if placement == 'mixed':
+        return zigzag(values)
+    if placement == 'grouped':
+        return grouped(values)
+    if placement == 'balanced':
+        cores = balanced_cores(utilizations, range(TASKS), range(CORES))
+    elif placement == 'grouped-balanced':
+        low = [i for i, m in enumerate(modes) if m == 'low']
+        high = [i for i, m in enumerate(modes) if m == 'high']
+        cores = {**balanced_cores(utilizations, low, range(0, CORES // 2)),
+                 **balanced_cores(utilizations, high, range(CORES // 2, CORES))}
+    else:
+        raise ValueError(f'Unknown placement: {placement}')
+    return [cores[i] for i in range(TASKS)]
+
+
+def imbalance_configuration(u_cv: float, set_id: int, tables_for, placement: str) -> dict:
+    """Task-U imbalance set: per-task job budgets, CLS levels from each budget's table."""
+    low_fraction, cv = IMBALANCE_CLS
+    wanted = targets(low_fraction, cv, set_id)
+    budgets = imbalance_budgets(u_cv, set_id)
+    levels = [level(tables_for(b), mode, 'as-is', target) for (mode, target), b in zip(wanted, budgets)]
+    task_us = [b / (PERIOD * 1e6) for b in budgets]
+    cores = imbalance_cores(placement, [lv['cls'] for lv in levels], [m for m, _ in wanted], task_us)
+    tasks = _tasks(wanted, levels, cores, PERIOD, task_us)
+    for task, task_u in zip(tasks, task_us):
+        task['u_target'] = task_u
+    return dict(workload_id=f'u-imbalance-ucv{round(u_cv * 100):03d}-s{set_id:02d}-{placement}-v1',
+                family_id='u-imbalance-hot-cold-v1', policy_id=f'u-imbalance-{placement}-v1',
+                measurement_contract_id=CONTRACT, array_alignment_bytes=32,
+                workload_optimization='O2', horizon_ticks=(WARMUP_JOBS + MEASURED_JOBS) * PERIOD,
+                warmup_ticks=WARMUP_JOBS * PERIOD, u_repeats=1, diagnostic_only=True, tasks=tasks,
+                u_imbalance=dict(u_cv=u_cv, set_id=set_id, u_seed=U_SEED_BASE + set_id,
+                                 cls_seed=SEED_BASE + set_id, low_fraction=low_fraction, cls_cv=cv,
+                                 placement=placement, total_u=U_TOTAL, truncation_sigma=U_TRUNCATION_SIGMA,
+                                 budget_step_ns=BUDGET_STEP_NS))

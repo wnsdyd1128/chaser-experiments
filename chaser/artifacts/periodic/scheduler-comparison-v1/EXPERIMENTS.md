@@ -13,6 +13,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 3 | CLS 분포 | `cls-distribution/` | `cls-distribution-v1` | `cls-distribution` |
 | 4 | 캐시 친화성 | `cache-affinity/` | `cache-affinity-v2`(O0), `cache-affinity-o2-v1`(O2) | `cache-affinity-o0`, `cache-affinity-o2` |
 | 5 | CLS 양극단 | `cls-bimodal/` | `cls-bimodal-v2`, 확장 `cls-bimodal-v2-ext` | `cls-bimodal` |
+| 6 | 부하 수준 | `cls-bimodal/`(`--design load-level`) | `load-level-v1` | `load-level` |
 
 ---
 
@@ -436,7 +437,61 @@ python3 -m pytest -q -p no:cacheprovider --rootdir=$R/cls-bimodal $R/cls-bimodal
 
 ---
 
-## 6. 폐기하거나 바꾼 설계
+## 6. 부하 수준(Utilization)
+
+### 개요
+task 구성과 job은 완전히 그대로 두고 주기만 바꿔 코어당 명목 U를 0.125에서 0.5까지 올린다.
+부하가 높아질 때 네 아키텍처와 두 가지 P 배치의 TET/TAT, 그리고 deadline을 지키는지를 비교한다.
+
+### 목적
+1. 부하가 높아질수록 아키텍처·배치 간 TET/TAT 격차가 커지는지 확인한다.
+2. 공동 실행 경합이 job을 늘려(5절 v1에서 최대 2.75배) schedulability를 깨는 부하 수준이
+   아키텍처·배치마다 다른지 확인한다. 예: 낮은 CLS task를 묶은 Partitioned가 더 높은 부하까지 버티는가.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | 주기 ∈ {80, 40, 30, 20} ms(task U {0.03125, 0.0625, 0.0833, 0.125}, 코어당 명목 U {0.125, 0.25, 0.333, 0.5}); 아키텍처: Global, Clustered (1+3)·(1+1+2)(섞음 배치 기준), Partitioned 섞음, Partitioned 묶음 |
+| 통제 변인 | job 길이 2.5 ms(모든 주기에서 같은 수준표, 같은 job 코드); CLS 조건 고정: 높은 CLS 8개(중심 0.90) + 낮은 CLS 8개(중심 0.13), 모드 내 CV 0.1(경계까지 거리에 적용), 트래픽 그대로; workload O2, hot-cold; set 번호가 같으면 모든 주기에서 task 구성이 완전히 같고 주기만 다름(공통 난수, 시드 20261001 + set); 셀당 set 20개; warm-up·측정 job 각 10개(horizon = 주기 20개) |
+| 종속 변인 | TET, TAT(deadline miss가 없는 run); schedulable 여부(run에 deadline miss가 있는가); 최대 response time ÷ 주기(완료된 job 기준); 모드별 job CPU 증가율(단독 대비) |
+| 조작 확인 | yarda_cpp CLS가 설계식과 같음; 단독 U(job CPU는 주기와 무관하므로 수준마다 1회 실행, U = job CPU ÷ 주기, 게이트 3%); 주기 40 ms 수준은 5절 v2의 "트래픽 그대로, p = 0.5, CV 0.1" 셀과 입력이 같으므로 TET/TAT가 v2와 같아야 함(결정성 확인) |
+
+U를 job 길이로 바꾸지 않고 주기로 바꾼 이유: 주기를 고정하고 job을 늘리면 부하와 job 길이가
+함께 바뀐다. job 길이가 바뀌면 고정 스케줄링 비용의 비중(4절)과 job 안의 캐시 동작(sweep 수,
+수준 구조)도 달라져 부하 효과와 섞인다. 주기만 바꾸면 job 하나하나가 같으므로 차이를 부하에 돌릴 수 있다.
+
+### 실험 방법
+1. 5절과 같은 시간 모델(`calibration/model.json`)과 수준표를 쓴다. job 예산이 2.5 ms로 같으므로
+   보정을 다시 하지 않는다.
+2. `prepare`: 주기 4개 × set 20개를 빌드하고 모든 task를 yarda_cpp로 분석한다.
+3. `isolated`: 서로 다른 수준을 한 번씩 단독 실행하고, 각 set의 주기로 나눠 U를 구한다.
+   시작 단계 오류(`arm_phase`)만으로 실패한 수준은 모델 예측 U를 쓴다(5절과 같은 규칙).
+4. `pilot`(set 0) → `full`(4 × 20 × 5 = 400 run) → `stats`.
+   - pilot은 deadline miss와 시작 단계 오류를 허용하고, 그 밖의 실패에서만 멈춘다.
+   - deadline miss가 난 run은 실패로 버리지 않고 schedulable = 아니오로 집계한다.
+     deadline miss 뒤에는 job 기록이 끊기므로 TET/TAT는 deadline miss가 없는 run에서만 비교한다.
+   - TET/TAT: 주기별로 짝지은 Wilcoxon + Holm, 주기에 대한 Friedman·Page.
+   - schedulable 비율: (주기, 구성)별로 집계하고, 구성 쌍마다 exact McNemar 검정(Holm 보정).
+   - 최대 response time ÷ 주기: 짝지은 Wilcoxon.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+O=$W/.cache/load-level-v1
+mkdir -p $O && cp -a $W/.cache/cls-bimodal-v2/calibration $O/calibration
+for s in prepare isolated pilot full stats; do python3 $R/cls-bimodal/bi_run.py $s --design load-level --output $O; done
+python3 $R/figures/level_bars.py $O
+```
+
+### 결과 파일
+`results/load-level/`: `protocol.json`, `results.jsonl`(구성별 state, 최대 response time ÷ 주기 포함),
+`isolated-u.json`, `stats-load-level.json/md`(주기별 셀 검정, schedulable 집계, McNemar, 추세),
+그림 `load-level-{tet,tat,response}`(`figures/level_bars.py`), `per-set.jsonl.gz`.
+
+---
+
+## 11. 폐기하거나 바꾼 설계
 
 | 출력(`.cache/`) | 내용 | 바꾼 이유 |
 |---|---|---|
@@ -448,7 +503,7 @@ python3 -m pytest -q -p no:cacheprovider --rootdir=$R/cls-bimodal $R/cls-bimodal
 
 ---
 
-## 7. 결과 묶음 사용법
+## 12. 결과 묶음 사용법
 
 - `python3 export_results.py <실험> ...`이 `.cache`의 출력에서 설계 입력과 결과만
   `results/<실험>/`로 복사한다. 다시 만들 수 있는 빌드와 원시 run 로그는 복사하지 않는다.
