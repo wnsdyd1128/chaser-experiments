@@ -14,6 +14,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 4 | 캐시 친화성 | `cache-affinity/` | `cache-affinity-v2`(O0), `cache-affinity-o2-v1`(O2) | `cache-affinity-o0`, `cache-affinity-o2` |
 | 5 | CLS 양극단 | `cls-bimodal/` | `cls-bimodal-v2`, 확장 `cls-bimodal-v2-ext` | `cls-bimodal` |
 | 6 | 부하 수준 | `cls-bimodal/`(`--design load-level`) | `load-level-v1` | `load-level` |
+| 7 | task별 U 불균형 | `cls-bimodal/`(`--design u-imbalance`) | `u-imbalance-v1` | `u-imbalance` |
 
 ---
 
@@ -488,6 +489,72 @@ python3 $R/figures/level_bars.py $O
 `results/load-level/`: `protocol.json`, `results.jsonl`(구성별 state, 최대 response time ÷ 주기 포함),
 `isolated-u.json`, `stats-load-level.json/md`(주기별 셀 검정, schedulable 집계, McNemar, 추세),
 그림 `load-level-{tet,tat,response}`(`figures/level_bars.py`), `per-set.jsonl.gz`.
+
+---
+
+## 7. task별 U 불균형
+
+### 개요
+코어당 총 U는 고정하고, task별 U를 로그정규분포로 흩뜨려 task 크기가 불균형한 task set을 만든다.
+U를 고려하는 배치와 무시하는 배치를 포함한 Partitioned 네 가지와 Global·Clustered를 비교한다.
+
+### 목적
+1. task 크기가 불균형할 때 Partitioned의 코어 배치(bin-packing) 손실이 Global의 동적 분산 대비
+   얼마나 큰지 확인한다.
+2. CLS 기준 배치(경합)와 U 기준 배치(부하)가 충돌할 때 어느 쪽이 유리한지, 둘을 함께 고려한
+   배치가 가장 좋은지 확인한다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | task U의 CV ∈ {0, 0.25, 0.5, 0.75}(로그정규); 구성: Global, Clustered (1+3)·(1+1+2)(U 균형 배치 기준), Partitioned U 균형, Partitioned CLS 섞음, Partitioned CLS 묶음, Partitioned CLS 묶음 + U 균형 |
+| 통제 변인 | 주기 40 ms(모든 task 공통, job 길이 = U_i × 40 ms); 총 U = 1.0(코어당 명목 0.25); CLS 조건은 6절과 같음(높은 8 + 낮은 8, 모드 내 CV 0.1, 트래픽 그대로); U와 CLS 모드는 서로 독립으로 배정; O2, hot-cold; 공통 난수(set 번호마다 U용·CLS용 난수 고정, CV만 크기를 바꿈); 셀당 set 20개; warm-up·측정 job 각 10개 |
+| 종속 변인 | TET, TAT; schedulable 여부; 최대 response time ÷ 주기; 코어별 실측 CPU 합의 불균형(최대 ÷ 평균) |
+| 조작 확인 | 실현된 U의 CV; yarda_cpp CLS가 설계식과 같음; 단독 U(task별 목표 U 대비, 게이트 3%) |
+
+**U 추출.** 위치(task)마다 z ~ N(0, 1)을 ±2σ에서 자르고, w = exp(σ·z), σ = √ln(1 + CV²)로 둔다.
+U_i = 1.0 × w_i ÷ Σw로 합을 맞춘 뒤, job 예산(U_i × 40 ms)을 10 µs 단위로 반올림한다.
+±3σ가 아니라 ±2σ에서 자르는 이유는, CV 0.75에서 ±3σ면 task 하나의 U가 평균의 7배
+가까이(job 약 15 ms) 나올 수 있기 때문이다. ±2σ면 대략 평균의 0.26–3.8배다.
+- 자르기와 task 16개라는 표본 크기 때문에, 실현된 CV(set별 중앙값)는 목표보다 작다:
+  0.25 → 0.21, 0.5 → 0.40, 0.75 → 0.60.
+- job 예산은 0.52–7.63 ms 범위이고, 서로 다른 예산은 363개다.
+- 가장 짧은 job(0.6 ms 안팎)에서는 수준표가 성겨 목표 CLS와의 오차가 최대 약 0.015다.
+  실현 CLS는 yarda_cpp로 모든 task를 기록한다.
+
+**Partitioned 배치(모두 코어당 4개).**
+- U 균형: U가 큰 task부터, task가 4개 미만인 코어 중 U 합이 가장 작은 코어에 둔다(최악 적합 감소).
+- CLS 섞음 / CLS 묶음: 5절과 같은 규칙. U는 보지 않는다.
+- CLS 묶음 + U 균형: 낮은 CLS 8개를 코어 0·1에, 높은 CLS 8개를 코어 2·3에 두고, 각 그룹 안에서
+  U 균형 규칙을 적용한다.
+
+### 실험 방법
+1. **시간 모델 범위 확인**(`bi_calibrate.py extend`): 기존 모델은 job 1.0–2.75 ms로 보정했다.
+   - 이 설계가 실제로 쓸 수준 40개를 단독 실행해 예측 오차가 2% 이내인지 확인한다.
+     예산 범위(0.52–7.63 ms)에서 고르게 고르고, 높은·낮은 모드 중심을 번갈아 쓴다.
+   - 벗어나면 새 표본을 포함해 다시 맞춘다.
+   - 실제 결과: 최대 오차 0.41%라 다시 맞추지 않았고, CLS 설계식도 모두 일치했다(`calibration/extend.json`).
+2. 설계: task마다 자기 job 예산에 맞춘 수준표에서 목표 CLS에 가장 가까운 수준을 고른다.
+3. `prepare` → `isolated`(task별 목표 U 대비 3% 게이트; 시작 단계 오류만 난 수준은 모델 U) →
+   `pilot`(set 0, deadline miss 허용) → `full`(4 × 20 × 7 = 560 run) → `stats`.
+4. 통계: CV 수준별 짝지은 Wilcoxon + Holm, CV에 대한 Friedman·Page, schedulable 비율은 McNemar.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+O=$W/.cache/u-imbalance-v1
+mkdir -p $O && cp -a $W/.cache/cls-bimodal-v2/calibration $O/calibration
+python3 $R/cls-bimodal/bi_calibrate.py extend --output $O/calibration   # v2 보정 폴더는 건드리지 않음
+for s in prepare isolated pilot full stats; do python3 $R/cls-bimodal/bi_run.py $s --design u-imbalance --output $O; done
+python3 $R/figures/level_bars.py $O
+```
+
+### 결과 파일
+`results/u-imbalance/`: `calibration/{model,measured,extend}.json`, `protocol.json`, `results.jsonl`
+(구성별 state, 최대 response time ÷ 주기, 코어 부하 불균형 포함), `isolated-u.json`,
+`stats-u-imbalance.json/md`, 그림 `u-imbalance-{tet,tat,response,core-load}`(`figures/level_bars.py`),
+`per-set.jsonl.gz`.
 
 ---
 

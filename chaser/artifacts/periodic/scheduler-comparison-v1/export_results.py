@@ -36,11 +36,13 @@ STUDIES = {
     'cls-bimodal': 'cls-bimodal-v2',
     'cls-bimodal-ext': 'cls-bimodal-v2-ext',
     'load-level': 'load-level-v1',
+    'u-imbalance': 'u-imbalance-v1',
     # The 20 ms design whose pilot missed deadlines; kept as the reason for v2.
     'cls-bimodal-v1-pilot': 'cls-bimodal-v1',
 }
 TOP_LEVEL = ('.json', '.jsonl', '.md', '.py')
-CALIBRATION = ('calibration.json', 'sweeps.json', 'sweep-cost.json', 'model.json', 'measured.json')
+CALIBRATION = ('calibration.json', 'sweeps.json', 'sweep-cost.json', 'model.json', 'measured.json',
+               'extend.json', 'model-before-extend.json')
 PER_SET = ('configuration.json', 'cls.json', 'locality.json', 'summary.json')
 TOOLS = {
     'laysim': Path('/opt/laysim-gr740/laysim-gr740-cli'),
