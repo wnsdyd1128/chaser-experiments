@@ -3,10 +3,13 @@
 Bars: median over the task sets of a cell (failed runs excluded); whiskers: IQR.
 Files (in <run dir>/figures):
   cls-bimodal-{tet,tat}-cv{00,10,20,30}   traffic as-is; panels = share of low-CLS tasks
-  cls-bimodal-{tet,tat}-traffic           half low-CLS tasks; panels = CV; as-is vs matched
-  cls-bimodal-jobcpu-{as-is,matched}      half low-CLS tasks; panels = CV; mean job CPU of
-                                          high- and low-CLS tasks, dashed line = isolated
-Usage: python3 cls_bimodal_bars.py <run output dir>
+  cls-bimodal-{tet,tat}-traffic[-pNNN]    one share of low-CLS tasks with matched cells
+                                          (suffix omitted for 8 of 16); panels = CV; as-is vs matched
+  cls-bimodal-jobcpu-{as-is,matched}[-pNNN]  same shares; mean job CPU of high- and low-CLS
+                                          tasks, dashed line = isolated
+Usage: python3 cls_bimodal_bars.py <run output dir> [results file] [--matched-only]
+  results file  e.g. results-combined.jsonl of the matched extension (default results.jsonl)
+  --matched-only  skip the as-is share figures (they belong to the main run)
 """
 import json
 from pathlib import Path
@@ -17,8 +20,11 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 
-O = Path(sys.argv[1]).resolve()
-rows = [json.loads(l) for l in open(O / 'results.jsonl')]
+ARGS = [a for a in sys.argv[1:] if not a.startswith('--')]
+O = Path(ARGS[0]).resolve()
+rows = [json.loads(l) for l in open(Path(ARGS[1]).resolve() if len(ARGS) > 1 else O / 'results.jsonl')]
+MATCHED_ONLY = '--matched-only' in sys.argv
+MATCHED_FRACTIONS = sorted({r['mean'] for r in rows if r['traffic'] == 'matched'})
 FRACTIONS, CVS = (0.0, 0.25, 0.5, 0.75, 1.0), (0.0, 0.1, 0.2, 0.3)
 SERIES = (('g', 'Global', '#2a78d6', ''), ('c', 'Clustered (1+3)', '#eb6834', '//'),
           ('c2', 'Clustered (1+1+2)', '#4a3aa7', '..'), ('p', 'Partitioned (mixed)', '#1baf7a', '\\\\'),
@@ -80,8 +86,12 @@ def metric_values(members, metric):
     return {s: [r[s][metric] / 1e6 for r in members if r[s]['status'] == 'ok'] for s, *_ in SERIES}
 
 
+def suffix(fraction):
+    return '' if fraction == 0.5 else f'-p{round(fraction * 100):03d}'
+
+
 for metric, name in (('tet_ns', 'TET'), ('tat_ns', 'TAT')):
-    for cv in CVS:
+    for cv in () if MATCHED_ONLY else CVS:
         fig, axes = plt.subplots(1, len(FRACTIONS), figsize=(17, 4.2), dpi=200)
         table = []
         for j, fraction in enumerate(FRACTIONS):
@@ -90,31 +100,34 @@ for metric, name in (('tet_ns', 'TET'), ('tat_ns', 'TAT')):
         axes[0].set_ylabel(f'Measured {name} (ms)')
         finish(fig, f'CV = {cv}, workload O2', f'cls-bimodal-{name.lower()}-cv{round(cv * 100):02d}',
                table, 'metric,cv,low_fraction')
-    fig, axes = plt.subplots(1, len(CVS), figsize=(15, 4.2), dpi=200)
-    table = []
-    for j, cv in enumerate(CVS):
-        draw(axes[j], [(f'traffic {t}', metric_values(cell(t, 0.5, cv), metric)) for t in ('as-is', 'matched')],
-             table, (name, cv))
-        axes[j].set_title(f'CV = {cv}', loc='left', fontsize=10)
-    axes[0].set_ylabel(f'Measured {name} (ms)')
-    finish(fig, '8 of 16 low-CLS tasks, workload O2', f'cls-bimodal-{name.lower()}-traffic', table, 'metric,cv')
+    for fraction in MATCHED_FRACTIONS:
+        fig, axes = plt.subplots(1, len(CVS), figsize=(15, 4.2), dpi=200)
+        table = []
+        for j, cv in enumerate(CVS):
+            draw(axes[j], [(f'traffic {t}', metric_values(cell(t, fraction, cv), metric)) for t in ('as-is', 'matched')],
+                 table, (name, fraction, cv))
+            axes[j].set_title(f'CV = {cv}', loc='left', fontsize=10)
+        axes[0].set_ylabel(f'Measured {name} (ms)')
+        finish(fig, f'{round(16 * fraction)} of 16 low-CLS tasks, workload O2',
+               f'cls-bimodal-{name.lower()}-traffic{suffix(fraction)}', table, 'metric,low_fraction,cv')
 
-for traffic in ('as-is', 'matched'):
-    fig, axes = plt.subplots(1, len(CVS), figsize=(15, 4.2), dpi=200)
-    table = []
-    for j, cv in enumerate(CVS):
-        members = cell(traffic, 0.5, cv)
-        groups = []
-        for mode in ('high', 'low'):
-            pick = lambda r, values: np.mean([v for v, m in zip(values, r['modes']) if m == mode]) / 1e6
-            groups.append((f'{mode}-CLS tasks', {s: [pick(r, r[s]['task_cpu_ns']) for r in members if r[s]['status'] == 'ok']
-                                                 for s, *_ in SERIES}))
-        draw(axes[j], groups, table, (traffic, cv))
-        isolated = np.median([np.mean(r['isolated_cpu_ns']) for r in members]) / 1e6
-        axes[j].axhline(isolated, color='black', linestyle='--', linewidth=0.9, zorder=5)
-        axes[j].text(0.98, isolated, 'isolated', transform=axes[j].get_yaxis_transform(), ha='right',
-                     va='bottom', fontsize=7.5)
-        axes[j].set_title(f'CV = {cv}', loc='left', fontsize=10)
-    axes[0].set_ylabel('Measured job CPU (ms)')
-    finish(fig, f'8 of 16 low-CLS tasks, traffic {traffic}, workload O2', f'cls-bimodal-jobcpu-{traffic}',
-           table, 'traffic,cv')
+for fraction in MATCHED_FRACTIONS:
+    for traffic in ('as-is', 'matched'):
+        fig, axes = plt.subplots(1, len(CVS), figsize=(15, 4.2), dpi=200)
+        table = []
+        for j, cv in enumerate(CVS):
+            members = cell(traffic, fraction, cv)
+            groups = []
+            for mode in ('high', 'low'):
+                pick = lambda r, values: np.mean([v for v, m in zip(values, r['modes']) if m == mode]) / 1e6
+                groups.append((f'{mode}-CLS tasks', {s: [pick(r, r[s]['task_cpu_ns']) for r in members
+                                                         if r[s]['status'] == 'ok'] for s, *_ in SERIES}))
+            draw(axes[j], groups, table, (traffic, fraction, cv))
+            isolated = np.median([np.mean(r['isolated_cpu_ns']) for r in members]) / 1e6
+            axes[j].axhline(isolated, color='black', linestyle='--', linewidth=0.9, zorder=5)
+            axes[j].text(0.98, isolated, 'isolated', transform=axes[j].get_yaxis_transform(), ha='right',
+                         va='bottom', fontsize=7.5)
+            axes[j].set_title(f'CV = {cv}', loc='left', fontsize=10)
+        axes[0].set_ylabel('Measured job CPU (ms)')
+        finish(fig, f'{round(16 * fraction)} of 16 low-CLS tasks, traffic {traffic}, workload O2',
+               f'cls-bimodal-jobcpu-{traffic}{suffix(fraction)}', table, 'traffic,low_fraction,cv')

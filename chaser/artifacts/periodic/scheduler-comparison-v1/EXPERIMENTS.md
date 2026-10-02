@@ -1,7 +1,7 @@
 # 스케줄링 아키텍처 비교 실험 — 실험별 설계와 재현 방법
 
 laysim(GR740)에서 Global, Clustered (1+3), Clustered (1+1+2), Partitioned EDF의
-TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 다섯 실험의 문서다.
+TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 실험들의 문서다.
 실험마다 개요, 목적, 변인(조작·통제·종속), 실험 방법, 재현 명령, 결과 파일을 적는다.
 결과 수치와 결론은 이 문서에 담지 않는다. 결과는 `results/<실험>/`에 있다. 예외로 5절에는
 트래픽 조건의 의미를 설명하려고 핵심 결과를 함께 적었다.
@@ -12,7 +12,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 2 | release-aware P′ 대조 | `period-distribution/{placement,control}.py` | `period-distribution-cohort-v2` | `release-aware-control` |
 | 3 | CLS 분포 | `cls-distribution/` | `cls-distribution-v1` | `cls-distribution` |
 | 4 | 캐시 친화성 | `cache-affinity/` | `cache-affinity-v2`(O0), `cache-affinity-o2-v1`(O2) | `cache-affinity-o0`, `cache-affinity-o2` |
-| 5 | CLS 양극단 | `cls-bimodal/` | `cls-bimodal-v2` | `cls-bimodal` |
+| 5 | CLS 양극단 | `cls-bimodal/` | `cls-bimodal-v2`, 확장 `cls-bimodal-v2-ext` | `cls-bimodal` |
 
 ---
 
@@ -307,7 +307,7 @@ task set 안에서 CLS가 높은 모드와 낮은 모드 두 극단으로 갈리
 
 | 구분 | 내용 |
 |---|---|
-| 조작 변인 | 낮은 CLS task 비율 p ∈ {0, 0.25, 0.5, 0.75, 1}; 모드 내 CV ∈ {0, 0.1, 0.2, 0.3}; 트래픽 ∈ {그대로, 맞춤}(맞춤은 p = 0.5에서만); 아키텍처: Global, Clustered (1+3)·(1+1+2)(섞음 배치 기준), Partitioned 섞음, Partitioned 묶음(0 < p < 1) |
+| 조작 변인 | 낮은 CLS task 비율 p ∈ {0, 0.25, 0.5, 0.75, 1}; 모드 내 CV ∈ {0, 0.1, 0.2, 0.3}; 트래픽 ∈ {그대로, 맞춤}(맞춤은 v2에서 p = 0.5, 확장 `cls-bimodal-v2-ext`에서 p = 0.25·0.75); 아키텍처: Global, Clustered (1+3)·(1+1+2)(섞음 배치 기준), Partitioned 섞음, Partitioned 묶음(0 < p < 1) |
 | 통제 변인 | 모드 중심 CLS 높음 0.90 / 낮음 0.13, CV는 가까운 경계까지의 거리에 적용(높음 = 1 − 0.10(1 + CV·z), 낮음 = 0.08 + 0.05(1 + CV·z), z는 ±3σ에서 자름); 주기 40 ms, task U 0.0625(job 2.5 ms); workload O2; hot-cold(높음: hot 16–256줄 × R + cold 1024줄, S sweep / 낮음: hot H줄 2회 + cold 1024줄); U 미세 조정용 sweep 끝 레지스터 연산(`pad_tail`, job의 8% 이하, 3라운드 이상); 트래픽 맞춤 = 낮은 task의 job당 L1 miss를 높은 모드 중심 수준(±5%)에 맞추고 남는 시간을 load당 레지스터 연산(`pad_rounds`, 3라운드 이상)으로 채움; 공통 난수(시드 20261001 + set: task 순서 순열과 슬롯별 z를 모든 p·CV·트래픽이 공유, 낮은 슬롯은 p에 대해 포함 관계); 두 배치가 소스·배열 배치 공유; warm-up·측정 job 각 10개 |
 | 종속 변인 | TET, TAT, 모드별 job CPU 증가율(단독 대비), 코어 이동 횟수, (트래픽 그대로 격차 − 맞춤 격차) |
 | 조작 확인 | yarda_cpp CLS가 설계식과 같음(허용 1e-9, 모든 task); job당 L1 miss, IR 명령어 1,000개당 L1 miss(yarda `ir-instructions`); 단독 U(서로 다른 수준마다 1회, 게이트 3%) |
@@ -381,7 +381,16 @@ for (s = 0; s < 10; s++)
 생기는 트래픽**이다. 스케줄링·배치를 판단하려면 CLS 하나로는 부족하고 접근 빈도를 함께
 봐야 한다. 둘을 곱한 "명령어당 L1 miss"가 격차와 더 직접 연결되는 정적 지표다.
 경합이 원인이라는 것은 CPU 시간 증가로 추론한 것이며, 버스·L2 경합을 카운터로 측정하지는
-않았다. 트래픽 맞춤은 p = 0.5에서만 했다.
+않았다.
+
+**확장(p = 0.25·0.75, `cls-bimodal-v2-ext`).** 같은 set 번호로 트래픽 맞춤 셀을 추가해 v2의 트래픽
+그대로 셀과 짝지었다(`bi_run.py --design matched-extension --baseline <v2 출력>`).
+- (그대로 격차 − 맞춤 격차)는 Partitioned 묶음 대 섞음의 TET에서 p = 0.25일 때 −7.1 ~ −9.0%p,
+  p = 0.75일 때 −7.4 ~ −8.7%p였다.
+- 모든 CV에서 20/20 set이 같은 방향이고 Holm 보정 후 유의하다.
+- 트래픽을 맞추면 섞은 Partitioned 대비 TET 격차는 대부분 ±1% 이내로 줄었다.
+
+따라서 위 해석은 낮은 CLS task 수(4·8·12개)와 상관없이 성립한다.
 
 ### 실험 방법
 1. **패딩 추가**(`padding.patch`): hot-cold에 `pad_rounds`(load마다 `pad = (pad ^ v) * P`)와
