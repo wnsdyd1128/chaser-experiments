@@ -37,6 +37,7 @@ STUDIES = {
     'cls-bimodal-ext': 'cls-bimodal-v2-ext',
     'load-level': 'load-level-v1',
     'u-imbalance': 'u-imbalance-v1',
+    'l2-probe': 'l2-probe-v1',
     # The 20 ms design whose pilot missed deadlines; kept as the reason for v2.
     'cls-bimodal-v1-pilot': 'cls-bimodal-v1',
 }
@@ -75,8 +76,9 @@ def environment() -> dict:
 
 def export(name: str) -> None:
     source = CACHE / STUDIES[name]
-    if not (source / 'protocol.json').exists():
-        raise SystemExit(f'{name}: {source} has no protocol.json')
+    # A study output has protocol.json; the L2 probe writes probe.json instead.
+    if not any((source / marker).exists() for marker in ('protocol.json', 'probe.json')):
+        raise SystemExit(f'{name}: {source} has no protocol.json or probe.json')
     target = RESULTS / name
     if target.exists():
         shutil.rmtree(target)
