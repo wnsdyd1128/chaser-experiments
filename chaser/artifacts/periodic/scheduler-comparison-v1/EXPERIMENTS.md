@@ -19,7 +19,8 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 9 | 고부하·큰 task | `high-load/` | `high-load-v1` | `high-load` |
 | 10 | Partitioned 배치 불가 영역 | `high-load/`(`--design infeasible`) | `infeasible-v1` | `infeasible` |
 | 11 | 고부하 + 메모리 경합 | `high-load/`(`--design memory`, `mem_check.py`) | `memory-load-v1` | `memory-load` |
-| 14 | Feature 사전 점검(실험 5–9 재분석, 시뮬레이션 없음) | `feature-precheck/` | `feature-precheck-v1` | `feature-precheck` |
+| 12 | 배치 불가 영역의 G 대 C(설계 실패) | `high-load/`(`--design g-vs-c`) | `g-vs-c-v1` | `g-vs-c` |
+| 15 | Feature 사전 점검(실험 5–9 재분석, 시뮬레이션 없음) | `feature-precheck/` | `feature-precheck-v1` | `feature-precheck` |
 
 ---
 
@@ -795,7 +796,61 @@ python3 $R/figures/high_load_bars.py $O
 
 ---
 
-## 12. 폐기하거나 바꾼 설계
+## 12. 배치 불가 영역의 G 대 C — 설계 실패(모든 run이 deadline miss)
+
+### 개요
+10절에서 배치가 불가능할 때 Global과 Clustered의 승자가 task set마다 갈렸다. 10절 데이터에서 그 차이와
+관련이 큰 특징이 **큰 task의 주기**였으므로, 이를 조작 변인으로 두고 C가 유리한 조건과 G가 유리한 조건을
+의도적으로 만들어 검증한다.
+
+### 10절 데이터에서 찾은 신호
+- 큰 task 6개(0.85)에서 Global 성공은 "주기 80 ms인 큰 task 0–2개"일 때 8/17, "3개 이상"일 때 11/13이었다.
+  큰 task의 주기가 짧으면 동시 release되는 짧은 구간에 큰 job이 몰리고, global EDF는 이 몰림에 약하다.
+- 단일 코어 클러스터에 혼자 둔 큰 task는 주기와 상관없이 U ≤ 1이면 deadline을 지킨다(단일 코어 EDF).
+  Clustered (1+1+2)의 2코어 클러스터에 들어간 큰 task가 모두 80 ms면 12/12, 모두 20 ms면 3/8 성공이었다.
+- 클러스터의 코어당 U가 1을 넘으면 Clustered는 항상 실패했다(큰 task 6개에서 (1+1+2) 0/30).
+
+### 목적
+1. 큰 task 5개·짧은 주기에서 Clustered (1+1+2)가 Global보다 유의하게 낫다(C 유리)는 것을 보인다.
+2. 큰 task 6개·긴 주기에서 Global이 Clustered보다 유의하게 낫다(G 유리)는 것을 보인다.
+3. 나머지 두 조합(5개·긴 주기, 6개·짧은 주기)을 함께 넣어, 승자가 "큰 task 수 × 큰 task 주기"로 갈리는지 본다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | 큰 task 수 ∈ {5, 6}; 큰 task 주기 ∈ {20 ms(모두 짧게), 80 ms(모두 길게)}; 구성 3개: Global, Clustered (1+3) 용량 기반, Clustered (1+1+2) 용량 기반 |
+| 통제 변인 | 10절과 같은 생성(코어당 0.85, 큰 task U 0.51–0.55, 작은 task Dirichlet(α = 8), 작은 task 주기는 {20, 40, 80} ms 무작위); **set 번호가 같으면 10절 set과 task U·위치·작은 task 주기가 같고 큰 task 주기만 다름**; 셀당 set 30개 |
+| 종속 변인 | schedulable 여부(주 지표); 최대 response time ÷ 주기; deadline을 모두 지킨 run의 TET·TAT |
+
+Partitioned는 배치가 불가능하므로 돌리지 않는다.
+
+### 실험 방법
+`prepare`(4 셀 × 30 set × 배치 3종) → `isolated`(각 셀 set 0) → `pilot`(set 0, 12 run) → `full`(360 run 중 나머지) → `stats`.
+- 통계: schedulable 비율은 셀별 McNemar(Holm 보정)로 검정한다.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+O=$W/.cache/g-vs-c-v1
+for s in prepare isolated pilot full stats; do python3 $R/high-load/hl_run.py $s --design g-vs-c --output $O; done
+python3 $R/figures/high_load_bars.py $O
+```
+
+### 결과: 설계 실패
+- 네 셀 모두 세 구성이 30/30 deadline을 놓쳤다(360 run, 모두 `deadline_miss`; 단독 U 게이트는 0.41% 이내로 통과).
+- 원인: 큰 task를 모두 **같은 주기**로 만들면서, 큰 job들이 매 주기 동시에 release되었다.
+  큰 job은 각각 주기의 절반 넘게 필요하므로(U > 0.5), 한 코어는 한 주기 안에 큰 job을 하나만 끝낼 수 있다.
+  큰 job 5–6개가 4개 코어에서 동시에 시작되면, 이 EDF 기반 스케줄러들은 모두 deadline을 지키지 못한다.
+- 10절 데이터를 다시 보면, 성공을 가른 것은 주기의 길이가 아니라 **같은 주기를 공유하는 큰 task의 수**였다.
+  큰 task 5개(0.85) 기준 Global 성공: 같은 주기 공유 최대 2개면 12/16, 3개면 5/11, 4개면 0/3.
+  6개에서는 2개 3/4, 3개 14/21, 4개 2/4, 5개 0/1.
+  "긴 주기가 유리하다"는 해석은 잘못이었다. 큰 task 주기가 섞여 release가 엇갈릴수록 유리하다.
+- 이 실험은 10절 결과를 보고 세운 가설을 같은 set 번호로 검증하려 한 것이라, 독립적인 확인도 아니었다.
+
+---
+
+## 13. 폐기하거나 바꾼 설계
 
 | 출력(`.cache/`) | 내용 | 바꾼 이유 |
 |---|---|---|
@@ -807,7 +862,7 @@ python3 $R/figures/high_load_bars.py $O
 
 ---
 
-## 13. 결과 묶음 사용법
+## 14. 결과 묶음 사용법
 
 - `python3 export_results.py <실험> ...`이 `.cache`의 출력에서 설계 입력과 결과만
   `results/<실험>/`로 복사한다. 다시 만들 수 있는 빌드와 원시 run 로그는 복사하지 않는다.
@@ -824,7 +879,7 @@ python3 $R/figures/high_load_bars.py $O
 
 ---
 
-## 14. Feature 사전 점검 — 끝난 실험 재분석
+## 15. Feature 사전 점검 — 끝난 실험 재분석
 
 ### 개요
 새 시뮬레이션 없이 실험 5–9의 결과 묶음에서 정적 task 정보만으로 feature를 만든다.

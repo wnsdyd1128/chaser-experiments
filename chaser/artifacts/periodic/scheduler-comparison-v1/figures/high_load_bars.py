@@ -37,6 +37,8 @@ TITLES = {'light': 'all tasks U <= 0.35', 'heavy': '2 heavy tasks (U 0.5-0.8) + 
           'h6': '6 heavy tasks (U 0.51-0.55), no feasible partition',
           'as-is': '8 high- + 8 low-CLS tasks, low-CLS traffic as-is (memory-bound)',
           'matched': '8 high- + 8 low-CLS tasks, low-CLS traffic matched (control)'}
+PANEL_TITLES = {'h5-short': '5 heavy tasks, heavy period 20 ms', 'h5-long': '5 heavy tasks, heavy period 80 ms',
+                'h6-short': '6 heavy tasks, heavy period 20 ms', 'h6-long': '6 heavy tasks, heavy period 80 ms'}
 plt.rcParams.update({'font.family': 'serif', 'font.serif': ['DejaVu Serif'], 'font.size': 10,
                      'hatch.linewidth': 0.7, 'axes.linewidth': 1.0})
 (O / 'figures').mkdir(exist_ok=True)
@@ -54,19 +56,33 @@ def values(members, key, metric):
     return np.array([r[key][metric] / scale for r in members if r[key]['state'] == 'ok'])
 
 
-for heaviness in protocol['heaviness']:
+def figures():
+    """(file suffix, title, panels); a panel is (title, heaviness, load). A design with one
+    load level draws its cells as panels of one file, otherwise one file per heaviness."""
+    if len(LOADS) == 1:
+        load = LOADS[0]
+        yield '', f'U per core {load}, no feasible partition', [
+            (PANEL_TITLES.get(h, h), h, load) for h in protocol['heaviness']]
+        return
+    for heaviness in protocol['heaviness']:
+        yield f'-{heaviness}', TITLES[heaviness], [(f'U per core {load}', heaviness, load) for load in LOADS]
+
+
+for suffix, title, panels in figures():
     for metric, label, direction in METRICS:
-        fig, axes = plt.subplots(1, len(LOADS), figsize=(14 if len(LOADS) > 2 else 11, 4.2), dpi=200)
+        fig, axes = plt.subplots(1, len(panels), figsize=(14 if len(panels) > 2 else 11, 4.2), dpi=200)
         table, top = [], 0
-        for j, load in enumerate(LOADS):
+        for j, (panel_title, heaviness, load) in enumerate(panels):
             ax = axes[j]
             members = [r for r in rows if r['heaviness'] == heaviness and r['load'] == load]
+            drawn = 0
             for k, (key, _, color, hatch) in enumerate(SERIES):
                 v = values(members, key, metric)
                 if not len(v):
                     continue
                 q1, m, q3 = np.percentile(v, [25, 50, 75])
                 top = max(top, q3)
+                drawn += 1
                 ax.bar(k, m, 0.75, color=color, edgecolor='black', linewidth=0.7, hatch=hatch, zorder=3)
                 if metric != 'schedulable':
                     ax.errorbar(k, m, yerr=[[m - q1], [q3 - m]], fmt='none', ecolor='black', elinewidth=0.8,
@@ -75,7 +91,7 @@ for heaviness in protocol['heaviness']:
                             va='bottom', fontsize=7.5)
                 table.append((heaviness, metric, load, key, len(v) if metric != 'schedulable' else len(members),
                               m, q1, q3))
-            if not any(t[2] == load for t in table):
+            if not drawn:
                 ax.text(0.5, 0.5, 'no task set met every deadline', transform=ax.transAxes, ha='center',
                         va='center', fontsize=9)
             if metric == 'max_response_ratio':
@@ -83,7 +99,7 @@ for heaviness in protocol['heaviness']:
                 ax.text(0.98, 1.0, 'deadline', transform=ax.get_yaxis_transform(), ha='right', va='bottom', fontsize=7.5)
             ax.set_xticks([])
             ax.grid(axis='y', color='#dddddd', linewidth=0.6, zorder=0)
-            ax.set_title(f'U per core {load}', loc='left', fontsize=10)
+            ax.set_title(panel_title, loc='left', fontsize=10)
             ax.text(0.02, 0.95, direction, transform=ax.transAxes, fontsize=8, va='top')
         for ax in axes:
             ax.set_ylim(0, 1.15 if metric == 'schedulable' else max(top * 1.22, 1.1 if metric == 'max_response_ratio' else 0))
@@ -91,12 +107,11 @@ for heaviness in protocol['heaviness']:
         handles = [Patch(facecolor=c, edgecolor='black', hatch=h, label=l) for _, l, c, h in SERIES]
         fig.legend(handles=handles, loc='upper center', ncol=3 if len(SERIES) <= 6 else 4, frameon=False,
                    bbox_to_anchor=(0.5, 1.0), fontsize=9.5)
-        # The legend takes two rows, so the title sits above it.
+        # The legend takes up to two rows, so the title sits above it.
         kind = 'hot-cold O2 tasks' if DESIGN == 'memory' else 'compute-bound tasks'
-        fig.suptitle(f'16 {kind}, periods 20/40/80 ms, {TITLES[heaviness]}', x=0.01, ha='left',
-                     y=1.07, fontsize=10.5)
+        fig.suptitle(f'16 {kind}, periods 20/40/80 ms, {title}', x=0.01, ha='left', y=1.07, fontsize=10.5)
         fig.tight_layout(rect=(0, 0, 1, 0.88))
-        stem = f"{DESIGN}-{metric.replace('_ns', '').replace('max_response_ratio', 'response')}-{heaviness}"
+        stem = f"{DESIGN}-{metric.replace('_ns', '').replace('max_response_ratio', 'response')}{suffix}"
         for ext in ('png', 'pdf'):
             fig.savefig(O / f'figures/{stem}.{ext}', bbox_inches='tight')
         with open(O / f'figures/{stem}.csv', 'w') as f:

@@ -42,6 +42,7 @@ STUDIES = {
     'high-load': 'high-load-v1',
     'infeasible': 'infeasible-v1',
     'memory-load': 'memory-load-v1',
+    'g-vs-c': 'g-vs-c-v1',
     # Re-analysis of the bundles above (feature-precheck/precheck.py); no simulation.
     'feature-precheck': 'feature-precheck-v1',
     # The 20 ms design whose pilot missed deadlines; kept as the reason for v2.

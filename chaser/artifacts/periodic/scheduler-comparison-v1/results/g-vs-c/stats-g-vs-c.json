@@ -1,0 +1,567 @@
+{
+  "alpha": 0.05,
+  "cell_keys": {
+    "cv": "heaviness index + 1 in ('h5-short', 'h5-long', 'h6-short', 'h6-long')",
+    "mean": "per-core load"
+  },
+  "cells": [
+    {
+      "cv": 1,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tet_ns",
+      "n": 0,
+      "pair": "g-c_cap"
+    },
+    {
+      "cv": 2,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tet_ns",
+      "n": 0,
+      "pair": "g-c_cap"
+    },
+    {
+      "cv": 3,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tet_ns",
+      "n": 0,
+      "pair": "g-c_cap"
+    },
+    {
+      "cv": 4,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tet_ns",
+      "n": 0,
+      "pair": "g-c_cap"
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tet_ns",
+      "n": 0,
+      "pair": "g-c2_cap"
+    },
+    {
+      "cv": 2,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tet_ns",
+      "n": 0,
+      "pair": "g-c2_cap"
+    },
+    {
+      "cv": 3,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tet_ns",
+      "n": 0,
+      "pair": "g-c2_cap"
+    },
+    {
+      "cv": 4,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tet_ns",
+      "n": 0,
+      "pair": "g-c2_cap"
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tet_ns",
+      "n": 0,
+      "pair": "c_cap-c2_cap"
+    },
+    {
+      "cv": 2,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tet_ns",
+      "n": 0,
+      "pair": "c_cap-c2_cap"
+    },
+    {
+      "cv": 3,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tet_ns",
+      "n": 0,
+      "pair": "c_cap-c2_cap"
+    },
+    {
+      "cv": 4,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tet_ns",
+      "n": 0,
+      "pair": "c_cap-c2_cap"
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tat_ns",
+      "n": 0,
+      "pair": "g-c_cap"
+    },
+    {
+      "cv": 2,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tat_ns",
+      "n": 0,
+      "pair": "g-c_cap"
+    },
+    {
+      "cv": 3,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tat_ns",
+      "n": 0,
+      "pair": "g-c_cap"
+    },
+    {
+      "cv": 4,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tat_ns",
+      "n": 0,
+      "pair": "g-c_cap"
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tat_ns",
+      "n": 0,
+      "pair": "g-c2_cap"
+    },
+    {
+      "cv": 2,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tat_ns",
+      "n": 0,
+      "pair": "g-c2_cap"
+    },
+    {
+      "cv": 3,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tat_ns",
+      "n": 0,
+      "pair": "g-c2_cap"
+    },
+    {
+      "cv": 4,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tat_ns",
+      "n": 0,
+      "pair": "g-c2_cap"
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tat_ns",
+      "n": 0,
+      "pair": "c_cap-c2_cap"
+    },
+    {
+      "cv": 2,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tat_ns",
+      "n": 0,
+      "pair": "c_cap-c2_cap"
+    },
+    {
+      "cv": 3,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tat_ns",
+      "n": 0,
+      "pair": "c_cap-c2_cap"
+    },
+    {
+      "cv": 4,
+      "failures": {
+        "c": 30,
+        "g": 30,
+        "p": 30
+      },
+      "mean": 0.85,
+      "metric": "tat_ns",
+      "n": 0,
+      "pair": "c_cap-c2_cap"
+    }
+  ],
+  "load_trends": [],
+  "max_response_ratio_tests": [
+    {
+      "cell": "h5-long/u085",
+      "n": 0,
+      "pair": "g-c_cap"
+    },
+    {
+      "cell": "h5-short/u085",
+      "n": 0,
+      "pair": "g-c_cap"
+    },
+    {
+      "cell": "h6-long/u085",
+      "n": 0,
+      "pair": "g-c_cap"
+    },
+    {
+      "cell": "h6-short/u085",
+      "n": 0,
+      "pair": "g-c_cap"
+    },
+    {
+      "cell": "h5-long/u085",
+      "n": 0,
+      "pair": "g-c2_cap"
+    },
+    {
+      "cell": "h5-short/u085",
+      "n": 0,
+      "pair": "g-c2_cap"
+    },
+    {
+      "cell": "h6-long/u085",
+      "n": 0,
+      "pair": "g-c2_cap"
+    },
+    {
+      "cell": "h6-short/u085",
+      "n": 0,
+      "pair": "g-c2_cap"
+    },
+    {
+      "cell": "h5-long/u085",
+      "n": 0,
+      "pair": "c_cap-c2_cap"
+    },
+    {
+      "cell": "h5-short/u085",
+      "n": 0,
+      "pair": "c_cap-c2_cap"
+    },
+    {
+      "cell": "h6-long/u085",
+      "n": 0,
+      "pair": "c_cap-c2_cap"
+    },
+    {
+      "cell": "h6-short/u085",
+      "n": 0,
+      "pair": "c_cap-c2_cap"
+    }
+  ],
+  "pairs": [
+    [
+      "g",
+      "c_cap"
+    ],
+    [
+      "g",
+      "c2_cap"
+    ],
+    [
+      "c_cap",
+      "c2_cap"
+    ]
+  ],
+  "schedulability_tests": [
+    {
+      "cell": "h5-long/u085",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 0,
+      "only_b_schedulable": 0,
+      "pair": "g-c_cap",
+      "sets": 30,
+      "significant": false
+    },
+    {
+      "cell": "h5-short/u085",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 0,
+      "only_b_schedulable": 0,
+      "pair": "g-c_cap",
+      "sets": 30,
+      "significant": false
+    },
+    {
+      "cell": "h6-long/u085",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 0,
+      "only_b_schedulable": 0,
+      "pair": "g-c_cap",
+      "sets": 30,
+      "significant": false
+    },
+    {
+      "cell": "h6-short/u085",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 0,
+      "only_b_schedulable": 0,
+      "pair": "g-c_cap",
+      "sets": 30,
+      "significant": false
+    },
+    {
+      "cell": "h5-long/u085",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 0,
+      "only_b_schedulable": 0,
+      "pair": "g-c2_cap",
+      "sets": 30,
+      "significant": false
+    },
+    {
+      "cell": "h5-short/u085",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 0,
+      "only_b_schedulable": 0,
+      "pair": "g-c2_cap",
+      "sets": 30,
+      "significant": false
+    },
+    {
+      "cell": "h6-long/u085",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 0,
+      "only_b_schedulable": 0,
+      "pair": "g-c2_cap",
+      "sets": 30,
+      "significant": false
+    },
+    {
+      "cell": "h6-short/u085",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 0,
+      "only_b_schedulable": 0,
+      "pair": "g-c2_cap",
+      "sets": 30,
+      "significant": false
+    },
+    {
+      "cell": "h5-long/u085",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 0,
+      "only_b_schedulable": 0,
+      "pair": "c_cap-c2_cap",
+      "sets": 30,
+      "significant": false
+    },
+    {
+      "cell": "h5-short/u085",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 0,
+      "only_b_schedulable": 0,
+      "pair": "c_cap-c2_cap",
+      "sets": 30,
+      "significant": false
+    },
+    {
+      "cell": "h6-long/u085",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 0,
+      "only_b_schedulable": 0,
+      "pair": "c_cap-c2_cap",
+      "sets": 30,
+      "significant": false
+    },
+    {
+      "cell": "h6-short/u085",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 0,
+      "only_b_schedulable": 0,
+      "pair": "c_cap-c2_cap",
+      "sets": 30,
+      "significant": false
+    }
+  ],
+  "schedulable": {
+    "h5-long/u085": {
+      "c2_cap": {
+        "deadline": 30,
+        "excluded": 0,
+        "ok": 0
+      },
+      "c_cap": {
+        "deadline": 30,
+        "excluded": 0,
+        "ok": 0
+      },
+      "g": {
+        "deadline": 30,
+        "excluded": 0,
+        "ok": 0
+      }
+    },
+    "h5-short/u085": {
+      "c2_cap": {
+        "deadline": 30,
+        "excluded": 0,
+        "ok": 0
+      },
+      "c_cap": {
+        "deadline": 30,
+        "excluded": 0,
+        "ok": 0
+      },
+      "g": {
+        "deadline": 30,
+        "excluded": 0,
+        "ok": 0
+      }
+    },
+    "h6-long/u085": {
+      "c2_cap": {
+        "deadline": 30,
+        "excluded": 0,
+        "ok": 0
+      },
+      "c_cap": {
+        "deadline": 30,
+        "excluded": 0,
+        "ok": 0
+      },
+      "g": {
+        "deadline": 30,
+        "excluded": 0,
+        "ok": 0
+      }
+    },
+    "h6-short/u085": {
+      "c2_cap": {
+        "deadline": 30,
+        "excluded": 0,
+        "ok": 0
+      },
+      "c_cap": {
+        "deadline": 30,
+        "excluded": 0,
+        "ok": 0
+      },
+      "g": {
+        "deadline": 30,
+        "excluded": 0,
+        "ok": 0
+      }
+    }
+  },
+  "task_sets": 120
+}
