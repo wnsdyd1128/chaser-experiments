@@ -2,6 +2,9 @@
 
 갱신: 2026-09-24. 현재 파일과 최종 export 기록을 기준으로 한다.
 
+이 문서는 기존 architecture RF 데이터의 생성·재현 기록이다. 2026-10-03에 채택한
+[P-first 연구 계획](../../system-prompt-extraction/plan/PLAN.md)은 별도 계약과 검증 데이터를 사용한다.
+
 ## 현재 완료 범위
 
 | 단계 | 현재 상태 |
@@ -49,7 +52,7 @@
 현재 scalar 11-feature sample은 보존하고, 제안 RF의 CLP 세 성분별 통계15개+U 통계6개(21차원)는
 별도 feature version으로 구현해야 한다. CLS는 배치에만 사용하고 RF-CLP 입력에는 α가 없다.
 같은 배치 정책의 세 RF는 같은 label을 사용한다. 다른 정책은 자기 측정의 label을 사용한다.
-[실험 설계](../../system-prompt-extraction/CHASER%20실험%20상세%20계획.md)를 따른다.
+[보존된 당시 실험 설계](../../system-prompt-extraction/archive/2026-10-03-research-direction/CHASER%20실험%20상세%20계획.md)를 참조한다.
 
 2026-09-24 read-only 대조 결과: 207개×3정책의 실제 소스 해시가 원본과 일치했다.
 입력은 policy ID·core 배치를 제외하면 같고 독립 U·캐시 분석값·split도 동일하다.

@@ -311,7 +311,8 @@ CAAS-CA, CA-CSRD와 CLS alpha 5개에 같은 보정 워크로드를 사용한다
 
 현재 계측 계약으로 실험용 임곗값을 선택한 결과는 없다.
 전체 P 수집·고정 CLI는 아직 구현해야 하며,
-[재구축 계획](system-prompt-extraction/plan/DATASET-REBUILD-PLAN.md)을 참고한다.
+[P-first 구현 계획](system-prompt-extraction/plan/IMPLEMENTATION-PLAN.md)을 참고한다.
+현재 연구 방향과 논문 구성은 [연구 문서](system-prompt-extraction/README.md)에서 관리한다.
 
 <a id="plan-5-analyzer-and-dataset-bridge"></a>
 

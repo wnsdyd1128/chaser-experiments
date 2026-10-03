@@ -1,5 +1,8 @@
 # Periodic 최종 학습용 dataset v1
 
+이 문서는 기존 architecture RF export의 재현 기록이다. 현재 연구 방향은
+[P-first 연구 계획](../../system-prompt-extraction/plan/PLAN.md)이며 이 데이터의 label·split을 소급 변경하지 않는다.
+
 2026-09-24: 기존 `.cache/final-mapping-v1/dataset/`의 최종 export를 이곳으로 이전했다.
 원본18개 파일·38,743,724 bytes의 SHA-256을 이동 전후 대조했고 모두 동일하다.
 기존 경로에는 `../../datasets/periodic-final-v1` 상대 호환 링크만 남아 있으며 데이터 복사본은 없다.
@@ -25,7 +28,7 @@
 제안 입력인 CLP21은 아래 별도 `clp-v1/` export에 있다.
 이후 로컬 RF 학습·튜닝 결과는 [실행 기록](../../.cache/rf-tuning-v1/results/run.json)에 있으며,
 선택한 모델 파일은 [models/rf-tuning-v1](../../models/rf-tuning-v1/README.md)에 보존했다.
-추가 C 표본·FHC 비교는 [로컬 후속 계획](../../system-prompt-extraction/plan/RF-C-FHC-FOLLOWUP.md)을 따른다
+추가 C 표본·FHC 비교의 당시 방향은 [보존된 후속 계획](../../system-prompt-extraction/archive/2026-10-03-research-direction/plan/RF-C-FHC-FOLLOWUP.md)에 있다
 (`system-prompt-extraction/`은 Git 제외 경로).
 디렉터리명 `cls/`는 배치 정책이며 기존 scalar sample을 CLP로 개명하지 않는다.
 `models/caas-legacy/`의 두 `.pkl`은 기존 CAAS에서 제안한 모델 파일이다.

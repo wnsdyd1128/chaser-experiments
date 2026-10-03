@@ -6,8 +6,9 @@
 [실험 가이드](EXPERIMENT-GUIDE.md)를 참고한다. 실제 보드의 준비·실행·계측 검증은
 [HW 검증 가이드](HARDWARE-VALIDATION.md)를 따른다.
 
-이 작업 트리는 [현재 계측 계약](../../system-prompt-extraction/plan/MEASUREMENT-CONTRACT-V3.md)과
-[데이터셋 재구축 계획](../../system-prompt-extraction/plan/DATASET-REBUILD-PLAN.md)을 따른다.
+현행 시간 정의는 [계측 계약](../../system-prompt-extraction/plan/MEASUREMENT-CONTRACT-V3.md)을 따른다.
+P-first의 후보별 데이터와 실행 확장은 [데이터 계약](../../system-prompt-extraction/plan/DATA-CONTRACT.md)과
+[구현 계획](../../system-prompt-extraction/plan/IMPLEMENTATION-PLAN.md)에서 관리하며, 아직 구현할 항목을 구분한다.
 저장된 계획과 원시 측정 결과의 식별을 유지하기 위해 직렬화된 계약 ID는
 `chaser-periodic-measurement-v3`를 그대로 사용한다. Python 모듈은 일반 모듈 이름을 사용한다.
 
