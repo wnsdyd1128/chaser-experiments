@@ -18,7 +18,8 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 8 | CLS × 작업 집합 | `footprint/` | `l2-probe-v1`, `footprint-v1` | `footprint` |
 | 9 | 고부하·큰 task | `high-load/` | `high-load-v1` | `high-load` |
 | 10 | Partitioned 배치 불가 영역 | `high-load/`(`--design infeasible`) | `infeasible-v1` | `infeasible` |
-| 13 | Feature 사전 점검(실험 5–9 재분석, 시뮬레이션 없음) | `feature-precheck/` | `feature-precheck-v1` | `feature-precheck` |
+| 11 | 고부하 + 메모리 경합 | `high-load/`(`--design memory`, `mem_check.py`) | `memory-load-v1` | `memory-load` |
+| 14 | Feature 사전 점검(실험 5–9 재분석, 시뮬레이션 없음) | `feature-precheck/` | `feature-precheck-v1` | `feature-precheck` |
 
 ---
 
@@ -747,7 +748,54 @@ schedulable 집계와 McNemar, response 검정, 큰 task 수 추세), 그림 `in
 
 ---
 
-## 11. 폐기하거나 바꾼 설계
+## 11. 고부하 + 메모리 경합
+
+### 개요
+트래픽이 많은 task와 적은 task가 섞인 task set에서 코어당 부하를 올리며, 메모리 경합으로 job이 늘어날 때
+어느 구성이 먼저 deadline을 놓치는지, 트래픽 묶음 배치가 이를 막는지 본다. 낮은 CLS task의 트래픽을
+높은 CLS task 수준으로 맞춘 조건을 경합 없는 대조군으로 둔다.
+
+### 목적
+1. 5절(CLS 양극단)에서 본 경합 효과가 부하가 높고 주기가 다양할 때 schedulability로 이어지는지 확인한다.
+   5절 v1(주기 20 ms)에서는 명목 코어당 U 0.5에서도 deadline miss가 났다.
+2. 8절에서 확인한 "공유 L2가 요청을 하나씩 처리한다"는 구조 아래에서, 배치·아키텍처가 경합으로 인한
+   deadline miss를 줄일 수 있는지 확인한다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | 코어당 명목 U ∈ {0.3, 0.45, 0.6}(단독 실행 기준); 낮은 CLS task의 트래픽 ∈ {그대로, 맞춤}; 구성 5개: Global, Clustered (1+3)·(1+1+2), Partitioned U 균형(WFD, CLS를 보지 않음; Clustered 소속도 이 배치 기준), Partitioned 트래픽 묶음 + U 균형(낮은 CLS를 코어 0·1, 높은 CLS를 코어 2·3, 그룹 안에서 WFD) |
+| 통제 변인 | task 16개 = 높은 CLS 8개(중심 0.90) + 낮은 CLS 8개(중심 0.13), 모드 내 CV 0.1, 위치 무작위(`bimodal.targets(0.5, 0.1, k)`); 주기 {20, 40, 80} ms(`hl_set.periods`); task U는 Dirichlet(α = 8) 비율(가장 높은 부하에서 ≤ 0.35, 가장 낮은 부하에서 ≥ 0.005); job 예산 = U × 주기(10 µs 단위), 예산마다 5절의 O2 시간 모델로 수준표를 만들어 목표 CLS에 가장 가까운 수준 선택; workload O2; warm-up 2 + 측정 4 hyperperiod; 공통 난수(set마다 주기·모드·CLS·U 비율 고정, 부하는 크기만, 트래픽은 낮은 CLS 수준 모양만 바꿈); 셀당 set 30개 |
+| 종속 변인 | schedulable 여부(주 지표); 최대 response time ÷ 주기; deadline을 모두 지킨 run의 TET·TAT |
+| 조작 확인 | 시간 모델 확인(`mem_check.py`: 설계 예산 범위 0.26–23.9 ms에서 고르게 고른 45개 수준을 단독 실행, 오차 2% 이내, yarda_cpp CLS = 설계식); 단독 U(각 셀 set 0, 게이트 3%) |
+
+트래픽 맞춤의 낮은 CLS task 중 일부는 짧은 job에서 수준표가 성겨, 목표 CLS와 최대 0.058 차이가 난다(중앙값 0.0001).
+
+### 실험 방법
+1. `mem_check.py`: 시간 모델이 이 설계의 예산 범위에서 맞는지 확인한다(실패하면 중단).
+2. `prepare`: 6 셀 × 30 set을 배치 2종으로 빌드한다.
+3. `isolated`: 각 셀 set 0의 task 16개를 단독 실행해 U 오차 3% 이내를 확인한다.
+4. `pilot`(set 0, 30 run, deadline miss 허용) → `full`(900 run 중 나머지) → `stats`.
+5. 통계: schedulable 비율은 셀별 McNemar(Holm 보정)로 검정한다. TET·TAT는 짝지은 Wilcoxon, 부하 추세는 Friedman·Page로 검정한다.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+O=$W/.cache/memory-load-v1
+python3 $R/high-load/mem_check.py --output $O
+for s in prepare isolated pilot full stats; do python3 $R/high-load/hl_run.py $s --design memory --output $O; done
+python3 $R/figures/high_load_bars.py $O
+```
+
+### 결과 파일
+`results/memory-load/`: `model-check.json`(45개 수준, 오차 최대 0.33%), `protocol.json`, `results.jsonl`,
+`isolated-u.json`, `stats-memory.json/md`, 그림 `memory-{schedulable,response,tat,tet}-{as-is,matched}`,
+`per-set.jsonl.gz`.
+
+---
+
+## 12. 폐기하거나 바꾼 설계
 
 | 출력(`.cache/`) | 내용 | 바꾼 이유 |
 |---|---|---|
@@ -759,7 +807,7 @@ schedulable 집계와 McNemar, response 검정, 큰 task 수 추세), 그림 `in
 
 ---
 
-## 12. 결과 묶음 사용법
+## 13. 결과 묶음 사용법
 
 - `python3 export_results.py <실험> ...`이 `.cache`의 출력에서 설계 입력과 결과만
   `results/<실험>/`로 복사한다. 다시 만들 수 있는 빌드와 원시 run 로그는 복사하지 않는다.
@@ -776,7 +824,7 @@ schedulable 집계와 McNemar, response 검정, 큰 task 수 추세), 그림 `in
 
 ---
 
-## 13. Feature 사전 점검 — 끝난 실험 재분석
+## 14. Feature 사전 점검 — 끝난 실험 재분석
 
 ### 개요
 새 시뮬레이션 없이 실험 5–9의 결과 묶음에서 정적 task 정보만으로 feature를 만든다.

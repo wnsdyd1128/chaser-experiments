@@ -25,7 +25,8 @@ LOADS = sorted({r['load'] for r in rows})
 ALL_SERIES = (('g', 'Global', '#2a78d6', ''), ('c', 'Clustered (1+3)', '#eb6834', '//'),
               ('c2', 'Clustered (1+1+2)', '#4a3aa7', '..'), ('p', 'Partitioned (U-balanced)', '#8c6d31', '--'),
               ('p_inf', 'Partitioned (informed)', '#1baf7a', '\\\\'), ('c_inf', 'Clustered (1+3, informed)', '#e0b83a', 'xx'),
-              ('c_cap', 'Clustered (1+3, capacity)', '#e0b83a', 'xx'), ('c2_cap', 'Clustered (1+1+2, capacity)', '#d95f02', '++'))
+              ('c_cap', 'Clustered (1+3, capacity)', '#e0b83a', 'xx'), ('c2_cap', 'Clustered (1+1+2, capacity)', '#d95f02', '++'),
+              ('p_grp', 'Partitioned (traffic grouped + U-balanced)', '#e0b83a', 'xx'))
 SERIES = tuple(s for s in ALL_SERIES if s[0] in protocol['runs'])
 METRICS = (('schedulable', 'schedulable share', 'Higher is better ↑'),
            ('max_response_ratio', 'max response time / period', 'Lower is better ↓'),
@@ -33,7 +34,9 @@ METRICS = (('schedulable', 'schedulable share', 'Higher is better ↑'),
 TITLES = {'light': 'all tasks U <= 0.35', 'heavy': '2 heavy tasks (U 0.5-0.8) + 14 light',
           'h4': '4 heavy tasks (U 0.51-0.55), partition feasible',
           'h5': '5 heavy tasks (U 0.51-0.55), no feasible partition',
-          'h6': '6 heavy tasks (U 0.51-0.55), no feasible partition'}
+          'h6': '6 heavy tasks (U 0.51-0.55), no feasible partition',
+          'as-is': '8 high- + 8 low-CLS tasks, low-CLS traffic as-is (memory-bound)',
+          'matched': '8 high- + 8 low-CLS tasks, low-CLS traffic matched (control)'}
 plt.rcParams.update({'font.family': 'serif', 'font.serif': ['DejaVu Serif'], 'font.size': 10,
                      'hatch.linewidth': 0.7, 'axes.linewidth': 1.0})
 (O / 'figures').mkdir(exist_ok=True)
@@ -89,7 +92,8 @@ for heaviness in protocol['heaviness']:
         fig.legend(handles=handles, loc='upper center', ncol=3 if len(SERIES) <= 6 else 4, frameon=False,
                    bbox_to_anchor=(0.5, 1.0), fontsize=9.5)
         # The legend takes two rows, so the title sits above it.
-        fig.suptitle(f'16 compute-bound tasks, periods 20/40/80 ms, {TITLES[heaviness]}', x=0.01, ha='left',
+        kind = 'hot-cold O2 tasks' if DESIGN == 'memory' else 'compute-bound tasks'
+        fig.suptitle(f'16 {kind}, periods 20/40/80 ms, {TITLES[heaviness]}', x=0.01, ha='left',
                      y=1.07, fontsize=10.5)
         fig.tight_layout(rect=(0, 0, 1, 0.88))
         stem = f"{DESIGN}-{metric.replace('_ns', '').replace('max_response_ratio', 'response')}-{heaviness}"
