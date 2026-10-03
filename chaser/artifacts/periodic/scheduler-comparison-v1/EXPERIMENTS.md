@@ -24,6 +24,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 16 | Feature 사전 점검(실험 5–9 재분석, 시뮬레이션 없음) | `feature-precheck/` | `feature-precheck-v1` | `feature-precheck` |
 | 17 | 다요인 배치 정책 비교(P-first 후보 배치) | `policy-mix/` | `policy-mix-v1` | `policy-mix` |
 | 18 | CLS 기준 묶음 배치(17의 같은 set) | `policy-mix/`(`--design policy-mix-cls`) | `policy-mix-cls-v1` | `policy-mix-cls` |
+| 19 | 주기 분포 × 메모리 구성의 배치 경계 | `policy-mix/`(`--design policy-boundary`) | `policy-boundary-v1` | `policy-boundary` |
 
 ---
 
@@ -1100,4 +1101,60 @@ python3 $R/figures/policy_mix_cls_bars.py $O $W/.cache/policy-mix-v1
 - `protocol.json`, `model-check.json`(17절 복사), `results.jsonl`, `isolated-u.json`, `stats-policy-mix-cls.json/md`
 - `cls-compare.json/md`
 - 그림 `policy-mix-cls-{tat,tet}`
+- `per-set.jsonl.gz`
+
+---
+
+## 19. 주기 분포 × 메모리 구성의 배치 경계
+
+### 개요
+주기 분포의 크기와 메모리 위주 task의 구성을 함께 단계적으로 바꾸며, 어떤 Partitioned 배치가 이기는지를 본다.
+1–2절에서는 주기 분포가 클 때 release 고려 배치가 이겼고, 3·5·7·8절에서는 주기가 하나일 때 CLS 기준 묶음이
+이겼다. 하지만 두 조건이 함께 바뀌는 실험은 없었다. 17·18절에서 묶음 규칙이 부하를 한 코어에 몰아넣었던 문제를
+고친 부하 균등 CLS 묶음(cgb)을 쓴다.
+
+### 목적
+1. (가설 1) 주기 분포가 작고(CV 0, 0.1) 메모리 위주 task가 있으면 부하 균등 CLS 묶음이 release 고려보다 TAT가 짧다.
+2. (가설 2) 주기 분포가 크고(CV 0.2, 0.3) 메모리 위주 task가 없으면 release 고려가 U 균형보다 TAT가 짧다.
+3. (가설 3) 부하 균등 CLS 묶음 안의 release 고려(결합)가 모든 셀에서 이기는지 확인한다. 모든 셀에서 이기면
+   선택기 없이 정책 하나로 충분하다는 결론이고, 지는 셀이 있으면 선택기의 근거가 된다.
+4. yarda 정적 feature로 셀마다 다른 승자를 맞힐 수 있는지 확인한다(16절 RF, 셀 단위 교차 검증 포함).
+5. TAT를 주 지표로 하되 TET도 같은 방식으로 보고한다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | 주기 CV {0, 0.1, 0.2, 0.3}(평균 40 ms, 주기 = 40(1 + CV·z)을 로그 척도로 {20, 24, 30, 40, 48, 60, 80, 120} ms에 맞춤, z는 ±3σ 자른 정규); 낮은 CLS 32 KiB task(트래픽 그대로) 수 {0, 4, 8}; 768 KiB task(실험 8의 BL 모양) 수 {0, 2}. 완전 교차 24개 셀. 배치 4종: U 균형(wfd), 부하 균등 CLS 묶음(cgb), release 고려(ra), 부하 균등 CLS 묶음 안의 release 고려(ra-cgb) |
+| 통제 변인 | task 16개, 나머지는 높은 CLS(중심 0.90, 모드 내 CV 0.1); 코어당 명목 U 0.4; task U 비율은 Dirichlet(α = 8); job 예산 = U × 주기, 5절의 O2 시간 모델(768 KiB는 `mix_set.big_level`); workload O2; warm-up 1 + 측정 2 hyperperiod(240 ms); 공통 난수(set k는 모든 셀에서 U 비율·CLS 편차·주기 편차·task 순서를 공유하고, 낮은 CLS 4개는 8개 안에 포함, 768 KiB task 2개는 셀마다 같은 task); 셀당 set 10개; 부하 균등 묶음의 코어 상한 = 평균 코어 부하 × 1.05(묶음의 가장 큰 task보다 작아지지 않음) |
+| 종속 변인 | 모든 deadline 준수 여부; deadline을 지킨 run의 TAT·TET; 배치별 regret(같은 경우의 최선 배치 대비) |
+| 조작 확인 | 실현 주기 CV(중앙값 0, 0.098, 0.186, 0.258); 경우마다 yarda CLS = 계획값; 단독 U(셀마다 set 0, 게이트 3%); job 예산 0.97–8.65 ms는 17절 시간 모델 검증 범위(0.21–43 ms, 같은 task 모양 종류) 안이라 그 결과를 복사 |
+
+낮은 CLS task는 모두 트래픽도 많다. 그래서 이 실험에서는 CLS 기준과 트래픽 기준이 같은 task를 묶는다.
+
+### 실험 방법
+1. `prepare`(240개 경우 × 배치 4종, yarda CLS 대조) → `isolated`(셀마다 set 0) → `pilot`(셀마다 set 0, 96 run)
+   → `full`(864 run) → `stats`.
+2. `boundary_analysis.py`는 다음을 계산한다.
+   - 셀별 배치 비교
+   - 가설 1–3 검정(짝지은 상대 차이, Wilcoxon + Holm)
+   - 고정 배치의 regret
+   - TAT·TET 각각의 배치 선택 RF(set 단위, 셀 단위 교차 검증)
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R/policy-mix $R/policy-mix   # 명세 테스트
+O=$W/.cache/policy-boundary-v1
+mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design policy-boundary --output $O; done
+python3 $R/policy-mix/boundary_analysis.py --output $O
+python3 $R/figures/policy_boundary_bars.py $O
+```
+
+### 예정 결과 파일
+실험 종료 기록과 보관 결과는 아직 없다. 완료 후 `results/policy-boundary/`에 다음을 보관한다.
+- `protocol.json`(셀 정의, 768 KiB task 위치), `model-check.json`(17절 복사), `results.jsonl`, `isolated-u.json`
+- `stats-policy-boundary.json/md`, `boundary-analysis.json/md`
+- 그림 `policy-boundary-{tat,tet}-low{0,4,8}-big{0,2}`
 - `per-set.jsonl.gz`

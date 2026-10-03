@@ -1,0 +1,76 @@
+"""Paper-style bars of measured TAT and TET for the policy-boundary run (period spread x memory mix).
+
+One file per memory mix (low-CLS 32 KiB tasks x 768 KiB tasks) and metric; panels = period CV;
+bars = the four Partitioned placements; median over the sets of the cell where all four met
+every deadline, whiskers IQR; the panel title gives that count.
+Files in <run dir>/figures: policy-boundary-{tat,tet}-low{0,4,8}-big{0,2}
+Usage: python3 policy_boundary_bars.py <run output dir>
+"""
+import json
+from pathlib import Path
+import sys
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
+
+O = Path(sys.argv[1]).resolve()
+rows = [json.loads(l) for l in open(O / 'results.jsonl')]
+cells = json.loads((O / 'protocol.json').read_text())['cells']
+SERIES = (('p', 'Partitioned (U-balanced, WFD)', '#8c6d31', '--'),
+          ('p_cgb', 'Partitioned (balanced CLS grouping)', '#9e9ac8', 'oo'),
+          ('p_ra', 'Partitioned (release-aware)', '#1baf7a', '\\\\'),
+          ('p_racgb', 'Partitioned (release-aware within balanced CLS grouping)', '#c51b7d', '..'))
+CVS = sorted({c['period_cv'] for c in cells.values()})
+plt.rcParams.update({'font.family': 'serif', 'font.serif': ['DejaVu Serif'], 'font.size': 10,
+                     'hatch.linewidth': 0.7, 'axes.linewidth': 1.0})
+(O / 'figures').mkdir(exist_ok=True)
+
+
+def fmt(v):
+    return f'{v:.1f}' if v < 1000 else f'{v:.0f}'
+
+
+for metric, label in (('tat_ns', 'TAT'), ('tet_ns', 'TET')):
+    for low in sorted({c['low'] for c in cells.values()}):
+        for big in sorted({c['big'] for c in cells.values()}):
+            fig, axes = plt.subplots(1, len(CVS), figsize=(3.9 * len(CVS) + 1, 5.0), dpi=200)
+            table = []
+            for ax, cv in zip(axes, CVS):
+                name = next(h for h, c in cells.items() if c == dict(period_cv=cv, low=low, big=big))
+                members = [r for r in rows if r['heaviness'] == name and all(r[k].get('state') == 'ok' for k, *_ in SERIES)]
+                top = 0
+                for k, (key, _, color, hatch) in enumerate(SERIES):
+                    v = np.array([r[key][metric] / 1e6 for r in members])
+                    if not len(v):
+                        continue
+                    q1, m, q3 = np.percentile(v, [25, 50, 75])
+                    top = max(top, q3)
+                    ax.bar(k, m, 0.78, color=color, edgecolor='black', linewidth=0.7, hatch=hatch, zorder=3)
+                    ax.errorbar(k, m, yerr=[[m - q1], [q3 - m]], fmt='none', ecolor='black', elinewidth=0.8,
+                                capsize=2, zorder=4)
+                    ax.annotate(fmt(m), (k, q3), xytext=(0, 2), textcoords='offset points', ha='center',
+                                va='bottom', fontsize=7.5)
+                    table.append((cv, key, len(v), m, q1, q3))
+                ax.set_ylim(0, top * 1.3 if top else 1)
+                ax.set_xticks([])
+                ax.grid(axis='y', color='#dddddd', linewidth=0.6, zorder=0)
+                ax.set_title(f'Period CV {cv} ({len(members)} sets)', loc='left', fontsize=9.5)
+                ax.text(0.02, 0.97, 'Lower is better ↓', transform=ax.transAxes, fontsize=8, va='top')
+            axes[0].set_ylabel(f'Measured {label} (ms)')
+            handles = [Patch(facecolor=c, edgecolor='black', hatch=h, label=l) for _, l, c, h in SERIES]
+            fig.legend(handles=handles, loc='upper center', ncol=2, frameon=False, bbox_to_anchor=(0.55, 0.96),
+                       fontsize=9)
+            fig.suptitle(f'{label}: {low} low-CLS 32 KiB + {big} 768 KiB of 16 tasks, per-core U 0.4, workload O2',
+                         x=0.01, ha='left', y=0.995, fontsize=10.5)
+            fig.tight_layout(rect=(0, 0, 1, 0.84))
+            stem = f'policy-boundary-{label.lower()}-low{low}-big{big}'
+            for ext in ('png', 'pdf'):
+                fig.savefig(O / f'figures/{stem}.{ext}', bbox_inches='tight')
+            with open(O / f'figures/{stem}.csv', 'w') as f:
+                f.write('period_cv,placement,n,median_ms,q1_ms,q3_ms\n')
+                for t in table:
+                    f.write(','.join(f'{v:.6g}' if isinstance(v, float) else str(v) for v in t) + '\n')
+            plt.close(fig)
+            print('wrote', stem)
