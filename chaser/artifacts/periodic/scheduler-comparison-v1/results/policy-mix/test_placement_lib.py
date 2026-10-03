@@ -1,0 +1,90 @@
+"""Specification tests for the shared Partitioned placement policies.
+
+Run from the c3 code copy with PYTHONPATH set to it (the regression test imports hl_set).
+"""
+from pathlib import Path
+import sys
+
+import pytest
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(HERE.parent / 'high-load'))
+
+from placement_lib import (CORE_CAP, TRAFFIC_HIGH, Item, cohort_cost, is_high_traffic, release_aware,
+                           release_aware_grouped, traffic_grouped, wfd)
+
+
+def items(us, periods=None, traffic=None):
+    periods = periods or [40] * len(us)
+    traffic = traffic or [1.0] * len(us)
+    return [Item(u=u, period=p, traffic=r) for u, p, r in zip(us, periods, traffic)]
+
+
+def core_loads(assign, tasks, cores=4):
+    return [sum(t.u for t, c in zip(tasks, assign) if c == core) for core in range(cores)]
+
+
+def test_wfd_places_the_largest_task_first_on_the_least_loaded_core():
+    assert wfd(items([0.1, 0.4, 0.3, 0.2, 0.05])) == [3, 0, 1, 2, 3]
+
+
+def test_traffic_above_the_per_core_share_of_l2_bandwidth_is_high():
+    assert not is_high_traffic(Item(u=0.1, period=40, traffic=TRAFFIC_HIGH))
+    assert is_high_traffic(Item(u=0.1, period=40, traffic=TRAFFIC_HIGH * 1.01))
+
+
+def test_traffic_grouping_packs_high_traffic_tasks_onto_the_fewest_cores_under_the_cap():
+    tasks = items([0.3, 0.3, 0.3, 0.2, 0.2, 0.2, 0.2, 0.2], traffic=[14, 14, 14, 1, 1, 1, 1, 1])
+    assign = traffic_grouped(tasks)
+    assert {assign[i] for i in range(3)} == {0}  # 0.9 fits one core under the 0.95 cap
+    assert max(core_loads(assign, tasks)) <= CORE_CAP
+
+
+def test_traffic_grouping_opens_another_core_when_one_would_exceed_the_cap():
+    tasks = items([0.4, 0.4, 0.4, 0.1, 0.1], traffic=[14, 14, 14, 1, 1])
+    assign = traffic_grouped(tasks)
+    assert len({assign[i] for i in range(3)}) == 2
+
+
+def test_traffic_grouping_without_high_traffic_tasks_is_wfd():
+    tasks = items([0.1, 0.4, 0.3, 0.2, 0.05])
+    assert traffic_grouped(tasks) == wfd(tasks)
+
+
+def test_cohort_cost_sums_the_busiest_core_released_work_over_one_hyperperiod():
+    tasks = items([0.5, 0.25, 0.5], periods=[20, 40, 40])
+    # releases at 0 (all) and 20 (the 20 ms task); work = U x period
+    assert cohort_cost([0, 1, 1], tasks, cores=2) == pytest.approx(max(10, 10 + 20) + 10)
+
+
+def test_cohort_cost_penalizes_a_core_above_the_cap():
+    tasks = items([0.6, 0.6])
+    assert cohort_cost([0, 0], tasks, cores=2) > 1e5
+
+
+def test_release_aware_reproduces_the_informed_placement_of_experiment_9():
+    import hl_set
+    for set_id in range(3):
+        for load, heaviness in ((0.5, 'light'), (0.85, 'heavy')):
+            periods = hl_set.periods(set_id)
+            targets = hl_set.utilizations(load, heaviness, set_id)
+            sweeps = [hl_set.sweeps(u, p) for u, p in zip(targets, periods)]
+            us = [hl_set.planned_u(s, p) for s, p in zip(sweeps, periods)]
+            expected = hl_set.informed(us, periods, hl_set.SEED_BASE + set_id)
+            assert release_aware(items(us, periods), seed=hl_set.SEED_BASE + set_id) == expected
+
+
+def test_combined_policy_keeps_high_traffic_tasks_on_the_cores_traffic_grouping_chose():
+    tasks = items([0.2, 0.2, 0.2, 0.15, 0.1, 0.1, 0.1, 0.1], periods=[20, 40, 80, 20, 40, 80, 20, 40],
+                  traffic=[14, 14, 14, 1, 1, 1, 1, 1])
+    grouped = traffic_grouped(tasks)
+    combined = release_aware_grouped(tasks, seed=1)
+    assert {combined[i] for i in range(3)} <= {grouped[i] for i in range(3)}
+    assert cohort_cost(combined, tasks) <= cohort_cost(grouped, tasks)
+    assert max(core_loads(combined, tasks)) <= CORE_CAP
+
+
+def test_combined_policy_without_high_traffic_tasks_is_release_aware():
+    tasks = items([0.2, 0.15, 0.1, 0.3, 0.25, 0.1], periods=[20, 40, 80, 20, 40, 80])
+    assert release_aware_grouped(tasks, seed=7) == release_aware(tasks, seed=7)

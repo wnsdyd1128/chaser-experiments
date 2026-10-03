@@ -22,6 +22,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 12 | 배치 불가 영역의 G 대 C(설계 실패) | `high-load/`(`--design g-vs-c`) | `g-vs-c-v1` | `g-vs-c` |
 | 13 | 배치 불가 영역의 G 대 C, 재설계 | `high-load/`(`--design g-vs-c-sync`) | `g-vs-c-sync-v1` | `g-vs-c-sync` |
 | 16 | Feature 사전 점검(실험 5–9 재분석, 시뮬레이션 없음) | `feature-precheck/` | `feature-precheck-v1` | `feature-precheck` |
+| 17 | 다요인 배치 정책 비교(P-first 후보 배치) | `policy-mix/` | `policy-mix-v1` | `policy-mix` |
 
 ---
 
@@ -989,3 +990,66 @@ python3 $R/export_results.py feature-precheck
 - `samples.jsonl`, `results.json`, `predictions.jsonl`, `collisions.json`, `summary.md`
 - 스크립트 사본
 - 그림 `precheck-*`
+
+---
+
+## 17. 다요인 배치 정책 비교(P-first 후보 배치)
+
+### 개요
+P-first 프레임워크의 후보 배치들을 여러 메커니즘이 한 task set 안에 함께 있는 조건에서 비교한다.
+메커니즘은 주기 다양성, 트래픽 많은 task, 768 KiB 작업 집합, U 분산, 큰 task다.
+- 실험마다 따로 있던 배치 정책을 공통 라이브러리(`policy-mix/placement_lib.py`)로 모았다.
+- 트래픽 묶음을 제약으로 둔 release 고려 배치(결합 정책)를 처음 시험한다.
+
+### 목적
+1. 결합 정책이 단일 정책(U 균형, 트래픽 묶음, release 고려)보다 나은지 확인한다.
+2. 가장 좋은 배치가 task set이나 요인 수준에 따라 달라지는지 확인한다. 달라져야 배치 선택기가 필요하다.
+3. 정적 feature로 그 차이를 예측할 수 있는지 확인한다(16절 사전 점검의 RF).
+4. Global과 Clustered (1+1+2)가 가장 좋은 Partitioned 배치를 이기는 경우가 있는지 본다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | set마다 여섯 요인을 독립적으로 뽑는다(요인마다 따로 섞어 수준별 개수를 맞춤): 주기 {모두 40 ms, task마다 {20, 40, 80} ms}; 낮은 CLS 32 KiB task 수 {0, 4, 8}; 그 task의 트래픽 {그대로, 맞춤}; 768 KiB task(실험 8 BL 모양) 수 {0, 2, 4}; 가벼운 task U 비율의 Dirichlet α {32, 4}; 큰 task(U ~ 균등(0.5, 0.6), 높은 CLS) {0, 1}. 코어당 명목 U {0.3, 0.45}. 구성 6개: Global, Clustered (1+1+2)(U 균형 배치 기준), Partitioned U 균형 / 트래픽 묶음 + U 균형 / release 고려 / release 고려 + 트래픽 묶음 |
+| 통제 변인 | task 16개, 높은 CLS 중심 0.90·낮은 CLS 중심 0.13(모드 내 CV 0.1); job 예산 = U × 주기(10 µs 단위)이고 5절의 O2 시간 모델로 수준을 고른다(768 KiB는 `mix_set.big_level`); workload O2; warm-up 2 + 측정 4 hyperperiod(80 ms); 공통 난수(set k는 두 부하에서 요인·주기·역할·CLS·U 비율을 공유하고, 부하는 가벼운 task의 U만 바꾼다); 배치 탐색 seed는 set마다 고정; 코어당 계획 U 상한 0.95; set 80개 |
+| 종속 변인 | 모든 deadline 준수 여부; deadline을 지킨 run의 TAT·TET; 배치별 regret(같은 경우의 가장 좋은 배치 대비 TAT); 최대 response time ÷ 주기; 코어 부하 불균형 |
+| 조작 확인 | 시간 모델 검증(`pm_check.py`: 네 종류 task 모양 48개를 단독 실행, 오차 2% 이내, yarda CLS = 설계식); 경우마다 yarda CLS = 계획값(`locality.json`); 단독 U(각 부하 set 0, 게이트 3%) |
+
+**배치 정책**(`placement_lib.py`)은 task를 계획 U, 주기, 트래픽(job 실행 1 µs당 L1 miss)으로만 본다.
+- **U 균형(wfd):** U가 큰 task부터 가장 덜 찬 코어에 넣는다.
+- **트래픽 묶음 + U 균형(tg):** 트래픽이 많은 task(1 µs당 5.2개 초과, L2 처리 능력의 코어당 몫)를 모은다. 코어당 U 0.95를 넘지 않는 가장 적은 코어에 WFD로 넣고, 나머지 task는 전체 코어에 WFD로 넣는다.
+- **release 고려(ra):** WFD에서 출발해 국소 탐색으로, hyperperiod 안 release 시점마다 가장 바쁜 코어의 release된 작업량을 합한 값을 최소화한다. 9절의 정보 기반 배치와 같은 결과를 내며, 회귀 테스트로 확인했다.
+- **결합(ra-tg):** tg에서 출발해 ra와 같은 탐색을 한다. 다만 트래픽이 많은 task는 tg가 정한 코어 안에서만 움직인다. 가중치는 쓰지 않는다.
+
+큰 768 KiB task는 sweep을 한 번 이상 해야 하므로, 낮은 부하에서도 예산이 그만큼 되는 task 중에서 고른다. 그래서 주기가 긴 task로 치우친다.
+
+### 실험 방법
+1. `pm_check.py`: 시간 모델을 검증한다. 실패하면 중단한다.
+2. `prepare`: 160개 경우 × 배치 4종을 빌드한다. 경우마다 yarda_cpp로 task별 CLS를 대조하고 `locality.json`을 남긴다.
+3. `isolated`: 각 부하의 set 0에서 task 16개를 단독 실행해 U 오차 3% 이내를 확인한다.
+4. `pilot`(set 0, 12 run) → `full`(948 run) → `stats`(셀별 짝지은 Wilcoxon + Holm, schedulability McNemar).
+5. `pm_analysis.py`는 다음을 계산한다.
+   - 배치별 regret과 승수
+   - 결합 대 단일 비교
+   - 요인 수준별 분석
+   - Global·Clustered (1+1+2) 대 최선 배치
+   - 배치 선택 RF(set 단위, 메커니즘 조합 단위 교차 검증)
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R/policy-mix $R/policy-mix   # 명세 테스트
+O=$W/.cache/policy-mix-v1
+python3 $R/policy-mix/pm_check.py --output $O
+for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --output $O; done
+python3 $R/policy-mix/pm_analysis.py --output $O
+python3 $R/figures/policy_mix_bars.py $O
+```
+
+### 결과 파일
+`results/policy-mix/`에는 다음이 있다.
+- `protocol.json`(set별 요인 포함), `model-check.json`, `results.jsonl`, `isolated-u.json`
+- `stats-policy-mix.json/md`, `analysis.json/md`
+- 그림 `policy-mix-*`
+- `per-set.jsonl.gz`(경우별 설정, `locality.json`, `summary.json`)
