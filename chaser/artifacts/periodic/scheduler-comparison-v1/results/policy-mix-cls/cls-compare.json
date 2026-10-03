@@ -1,0 +1,217 @@
+{
+ "cases": 160,
+ "identical": {
+  "cg = tg": {
+   "cases": 110,
+   "result_mismatches": 0
+  },
+  "ra-cg = ra-tg": {
+   "cases": 110,
+   "result_mismatches": 0
+  }
+ },
+ "differ": [
+  {
+   "n": 39,
+   "wins": 12,
+   "ties": 0,
+   "losses": 27,
+   "median": 0.025605119394560782,
+   "mean": 0.15511132237688932,
+   "deadline_miss": {
+    "cls_key": 11,
+    "traffic_key": 6
+   },
+   "wilcoxon_p": 6.83826110616792e-05,
+   "pair": "cg vs tg",
+   "metric": "TAT",
+   "holm_p": 6.83826110616792e-05,
+   "significant": true
+  },
+  {
+   "n": 39,
+   "wins": 36,
+   "ties": 0,
+   "losses": 3,
+   "median": -0.027554158941928364,
+   "mean": -0.04118735000583908,
+   "deadline_miss": {
+    "cls_key": 11,
+    "traffic_key": 6
+   },
+   "wilcoxon_p": 6.326445145532489e-09,
+   "pair": "cg vs tg",
+   "metric": "TET",
+   "holm_p": 1.8979335436597466e-08,
+   "significant": true
+  },
+  {
+   "n": 38,
+   "wins": 9,
+   "ties": 0,
+   "losses": 29,
+   "median": 0.07810366554755077,
+   "mean": 0.1939191463882752,
+   "deadline_miss": {
+    "cls_key": 12,
+    "traffic_key": 7
+   },
+   "wilcoxon_p": 2.0793231669813395e-06,
+   "pair": "ra-cg vs ra-tg",
+   "metric": "TAT",
+   "holm_p": 4.158646333962679e-06,
+   "significant": true
+  },
+  {
+   "n": 38,
+   "wins": 36,
+   "ties": 0,
+   "losses": 2,
+   "median": -0.030790005556952715,
+   "mean": -0.039532677052925014,
+   "deadline_miss": {
+    "cls_key": 12,
+    "traffic_key": 7
+   },
+   "wilcoxon_p": 7.275957614183426e-11,
+   "pair": "ra-cg vs ra-tg",
+   "metric": "TET",
+   "holm_p": 2.9103830456733704e-10,
+   "significant": true
+  }
+ ],
+ "regret": {
+  "all": {
+   "tat_ns": {
+    "wfd": {
+     "mean": 0.062318896667279335,
+     "at_least_5pct": 45,
+     "infeasible": 35
+    },
+    "tg": {
+     "mean": 0.06682129730853788,
+     "at_least_5pct": 51,
+     "infeasible": 33
+    },
+    "ra": {
+     "mean": 0.016727906818918146,
+     "at_least_5pct": 11,
+     "infeasible": 35
+    },
+    "ra-tg": {
+     "mean": 0.03760070623314077,
+     "at_least_5pct": 25,
+     "infeasible": 35
+    },
+    "cg": {
+     "mean": 0.12046423962978889,
+     "at_least_5pct": 64,
+     "infeasible": 38
+    },
+    "ra-cg": {
+     "mean": 0.09865949487760949,
+     "at_least_5pct": 43,
+     "infeasible": 40
+    }
+   },
+   "tet_ns": {
+    "wfd": {
+     "mean": 0.09804391964686242,
+     "at_least_5pct": 61,
+     "infeasible": 35
+    },
+    "tg": {
+     "mean": 0.017354637475018572,
+     "at_least_5pct": 20,
+     "infeasible": 33
+    },
+    "ra": {
+     "mean": 0.11102261125571705,
+     "at_least_5pct": 65,
+     "infeasible": 35
+    },
+    "ra-tg": {
+     "mean": 0.020218641313822446,
+     "at_least_5pct": 21,
+     "infeasible": 35
+    },
+    "cg": {
+     "mean": 0.0033596867365635924,
+     "at_least_5pct": 3,
+     "infeasible": 38
+    },
+    "ra-cg": {
+     "mean": 0.006932971904526792,
+     "at_least_5pct": 3,
+     "infeasible": 40
+    }
+   }
+  },
+  "differ": {
+   "tat_ns": {
+    "wfd": {
+     "mean": 0.05788296930251565,
+     "at_least_5pct": 14,
+     "infeasible": 7
+    },
+    "tg": {
+     "mean": 0.03964390446795592,
+     "at_least_5pct": 9,
+     "infeasible": 6
+    },
+    "ra": {
+     "mean": 0.016741919880831884,
+     "at_least_5pct": 3,
+     "infeasible": 8
+    },
+    "ra-tg": {
+     "mean": 0.010174220309646731,
+     "at_least_5pct": 3,
+     "infeasible": 7
+    },
+    "cg": {
+     "mean": 0.2039657505958973,
+     "at_least_5pct": 22,
+     "infeasible": 11
+    },
+    "ra-cg": {
+     "mean": 0.19938269946014084,
+     "at_least_5pct": 21,
+     "infeasible": 12
+    }
+   },
+   "tet_ns": {
+    "wfd": {
+     "mean": 0.0711857505735688,
+     "at_least_5pct": 21,
+     "infeasible": 7
+    },
+    "tg": {
+     "mean": 0.041672091264133355,
+     "at_least_5pct": 17,
+     "infeasible": 6
+    },
+    "ra": {
+     "mean": 0.0855702757138234,
+     "at_least_5pct": 24,
+     "infeasible": 8
+    },
+    "ra-tg": {
+     "mean": 0.040410408088844156,
+     "at_least_5pct": 18,
+     "infeasible": 7
+    },
+    "cg": {
+     "mean": 0.0010106368757760776,
+     "at_least_5pct": 0,
+     "infeasible": 11
+    },
+    "ra-cg": {
+     "mean": 0.001112474003571261,
+     "at_least_5pct": 0,
+     "infeasible": 12
+    }
+   }
+  }
+ }
+}

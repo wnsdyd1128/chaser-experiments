@@ -23,6 +23,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 13 | 배치 불가 영역의 G 대 C, 재설계 | `high-load/`(`--design g-vs-c-sync`) | `g-vs-c-sync-v1` | `g-vs-c-sync` |
 | 16 | Feature 사전 점검(실험 5–9 재분석, 시뮬레이션 없음) | `feature-precheck/` | `feature-precheck-v1` | `feature-precheck` |
 | 17 | 다요인 배치 정책 비교(P-first 후보 배치) | `policy-mix/` | `policy-mix-v1` | `policy-mix` |
+| 18 | CLS 기준 묶음 배치(17의 같은 set) | `policy-mix/`(`--design policy-mix-cls`) | `policy-mix-cls-v1` | `policy-mix-cls` |
 
 ---
 
@@ -1053,3 +1054,50 @@ python3 $R/figures/policy_mix_bars.py $O
 - `stats-policy-mix.json/md`, `analysis.json/md`
 - 그림 `policy-mix-*`
 - `per-set.jsonl.gz`(경우별 설정, `locality.json`, `summary.json`)
+
+---
+
+## 18. CLS 기준 묶음 배치(17절의 같은 set)
+
+### 개요
+17절의 160개 경우에 CLS를 기준으로 묶는 Partitioned 배치 두 가지를 더해 돌린다.
+17절의 트래픽 기준 배치와 경우별로 짝지어 비교한다. 연구 계획의 배치 지표인 CLS를 P-first 구조 안에서
+트래픽과 정면으로 비교하는 첫 실험이다.
+
+### 목적
+1. 묶는 기준을 CLS로 바꿨을 때 TAT·TET가 트래픽 기준과 어떻게 달라지는지 확인한다.
+2. 두 기준이 갈리는 조건이 어디인지와 그 차이의 크기를 정한다. 트래픽 그대로인 set에서는 낮은 CLS와 많은 트래픽이
+   같은 task라 두 기준이 같은 배치를 낸다. 트래픽 맞춤인 set에서는 CLS 기준만 트래픽 적은 낮은 CLS task까지 묶는다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | 묶는 기준: CLS(계획 CLS ≤ 0.5) 대 트래픽(17절). 배치 2종: CLS 묶음 + U 균형(cg), CLS 묶음 안의 release 고려(ra-cg). 짝: cg ↔ tg, ra-cg ↔ ra-tg |
+| 통제 변인 | 17절과 같은 160개 경우(요인·역할·예산·수준·seed가 같고 설정 생성 함수도 같다. 17절 설정 640개가 바이트 단위로 재현됨을 확인). 묶음 알고리즘은 기준만 다르고 같다(`placement_lib._grouped`). CLS 기준 0.5는 이 설계의 두 모드(약 0.9, 0.13 이하) 사이 어디에 두어도 같은 분할이다. |
+| 종속 변인 | 모든 deadline 준수 여부, TAT, TET, 같은 경우의 Partitioned 배치 6종 중 최선 대비 regret |
+| 조작 확인 | 경우마다 yarda CLS = 계획값; 단독 U(각 부하 set 0, 게이트 3%); 시간 모델 검증은 task 모양이 같아 17절 결과(`model-check.json`)를 복사; 두 기준이 같은 배정을 내는 경우에는 결과가 같아야 한다(결정성 확인) |
+
+### 실험 방법
+1. `prepare`(배치 wfd·cg·ra-cg 빌드, yarda CLS 대조) → `isolated` → `pilot` → `full`(320 run) → `stats`.
+2. `cls_compare.py`로 17절 결과와 경우별로 짝짓는다.
+   - 같은 배정인 경우: 결과 일치를 확인한다.
+   - 배정이 다른 경우: TAT·TET의 짝지은 상대 차이, 승·무·패, Wilcoxon + Holm, deadline miss 수를 낸다.
+   - 여섯 배치 중 최선 대비 regret을 낸다.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+O=$W/.cache/policy-mix-cls-v1
+mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design policy-mix-cls --output $O; done
+python3 $R/policy-mix/cls_compare.py --cls $O --policy-mix $W/.cache/policy-mix-v1
+python3 $R/figures/policy_mix_cls_bars.py $O $W/.cache/policy-mix-v1
+```
+
+### 결과 파일
+`results/policy-mix-cls/`에는 다음이 있다.
+- `protocol.json`, `model-check.json`(17절 복사), `results.jsonl`, `isolated-u.json`, `stats-policy-mix-cls.json/md`
+- `cls-compare.json/md`
+- 그림 `policy-mix-cls-{tat,tet}`
+- `per-set.jsonl.gz`

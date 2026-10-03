@@ -45,6 +45,7 @@ STUDIES = {
     'g-vs-c': 'g-vs-c-v1',
     'g-vs-c-sync': 'g-vs-c-sync-v1',
     'policy-mix': 'policy-mix-v1',
+    'policy-mix-cls': 'policy-mix-cls-v1',
     # Re-analysis of the bundles above (feature-precheck/precheck.py); no simulation.
     'feature-precheck': 'feature-precheck-v1',
     # The 20 ms design whose pilot missed deadlines; kept as the reason for v2.
