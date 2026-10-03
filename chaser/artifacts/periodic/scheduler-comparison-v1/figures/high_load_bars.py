@@ -38,7 +38,9 @@ TITLES = {'light': 'all tasks U <= 0.35', 'heavy': '2 heavy tasks (U 0.5-0.8) + 
           'as-is': '8 high- + 8 low-CLS tasks, low-CLS traffic as-is (memory-bound)',
           'matched': '8 high- + 8 low-CLS tasks, low-CLS traffic matched (control)'}
 PANEL_TITLES = {'h5-short': '5 heavy tasks, heavy period 20 ms', 'h5-long': '5 heavy tasks, heavy period 80 ms',
-                'h6-short': '6 heavy tasks, heavy period 20 ms', 'h6-long': '6 heavy tasks, heavy period 80 ms'}
+                'h6-short': '6 heavy tasks, heavy period 20 ms', 'h6-long': '6 heavy tasks, heavy period 80 ms',
+                'h5-stagger': '5 heavy, <= 2 share a period', 'h5-sync': '5 heavy, 3 share a period',
+                'h6-stagger': '6 heavy, <= 2 share a period', 'h6-sync': '6 heavy, 3 share a period'}
 plt.rcParams.update({'font.family': 'serif', 'font.serif': ['DejaVu Serif'], 'font.size': 10,
                      'hatch.linewidth': 0.7, 'axes.linewidth': 1.0})
 (O / 'figures').mkdir(exist_ok=True)

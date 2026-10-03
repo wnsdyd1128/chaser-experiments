@@ -20,7 +20,8 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 10 | Partitioned 배치 불가 영역 | `high-load/`(`--design infeasible`) | `infeasible-v1` | `infeasible` |
 | 11 | 고부하 + 메모리 경합 | `high-load/`(`--design memory`, `mem_check.py`) | `memory-load-v1` | `memory-load` |
 | 12 | 배치 불가 영역의 G 대 C(설계 실패) | `high-load/`(`--design g-vs-c`) | `g-vs-c-v1` | `g-vs-c` |
-| 15 | Feature 사전 점검(실험 5–9 재분석, 시뮬레이션 없음) | `feature-precheck/` | `feature-precheck-v1` | `feature-precheck` |
+| 13 | 배치 불가 영역의 G 대 C, 재설계 | `high-load/`(`--design g-vs-c-sync`) | `g-vs-c-sync-v1` | `g-vs-c-sync` |
+| 16 | Feature 사전 점검(실험 5–9 재분석, 시뮬레이션 없음) | `feature-precheck/` | `feature-precheck-v1` | `feature-precheck` |
 
 ---
 
@@ -850,7 +851,74 @@ python3 $R/figures/high_load_bars.py $O
 
 ---
 
-## 13. 폐기하거나 바꾼 설계
+## 13. 배치 불가 영역의 G 대 C — 재설계(독립 set)
+
+### 개요
+12절의 실패 원인(큰 task를 모두 같은 주기로 만들어 큰 job이 동시에 몰림)을 고쳐, **같은 주기를 공유하는
+큰 task 수**를 조작 변인으로 두고, 가설을 만든 10절과 겹치지 않는 **새 난수의 task set**으로 확인한다.
+
+### 사전 등록한 주 가설과 표본 크기
+- H1(C 유리): 큰 task 5개, 3개가 같은 주기(몰림)에서 Clustered (1+1+2) 용량 기반이 Global보다 deadline을 더 자주 지킨다.
+- H2(G 유리): 큰 task 6개, 엇갈림·몰림 각각에서 Global이 Clustered (1+1+2) 용량 기반보다 더 자주 지킨다.
+- 주 검정은 위 세 McNemar 검정이며, 셋에 Holm 보정을 한다. 방향이 가설과 같고 보정 후 p < 0.05일 때만 지지로 본다.
+- 셀당 set 수 40: 10절 데이터를 pilot으로 쓴 시뮬레이션에서 H1의 검정력이 n = 30에서 0.91, n = 40에서 0.99,
+  H2는 n = 20에서도 1.00이었다(α = 0.05/4).
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | 큰 task 수 ∈ {5, 6}; 같은 주기 공유 ∈ {엇갈림(주기마다 최대 2개: 5개 2/2/1, 6개 2/2/2), 몰림(한 주기에 3개: 5개 3/1/1, 6개 3/2/1)}; 어느 주기가 몇 개를 받는지는 set마다 무작위; 구성 3개: Global, Clustered (1+3)·(1+1+2) 용량 기반 |
+| 통제 변인 | 10절과 같은 생성 규칙(코어당 0.85, 큰 task U 0.51–0.55, 작은 task Dirichlet(α = 8), 작은 task 주기 {20, 40, 80} ms 무작위, 계산 위주 cyclic O0); **새 시드 20261701**; 같은 set의 엇갈림·몰림은 큰 task 주기만 다름; 셀당 set 40개 |
+| 종속 변인 | schedulable 여부(주 지표); 최대 response time ÷ 주기; deadline을 모두 지킨 run의 TET·TAT |
+
+### 실험 방법
+1. `prepare`: 4 셀 × 40 set을 배치 3종(wfd, c-cap, c2-cap)으로 빌드한다.
+2. `isolated`: 각 셀 set 0의 task 16개를 단독 실행해 U 오차를 확인한다(최대 0.43%).
+3. `pilot`(set 0, 12 run) → `full`(480 run 중 나머지) → `stats`.
+4. 통계: 주 검정은 위 세 McNemar(Holm 3개). 나머지 쌍(G 대 C(1+3), C(1+3) 대 C(1+1+2))의 McNemar와
+   TET·TAT Wilcoxon은 탐색적 결과로 본다.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+O=$W/.cache/g-vs-c-sync-v1
+for s in prepare isolated pilot full stats; do python3 $R/high-load/hl_run.py $s --design g-vs-c-sync --output $O; done
+python3 $R/figures/high_load_bars.py $O
+```
+주 가설 검정 결과는 `stats-g-vs-c-sync.json`의 `primary_tests`에 있다.
+
+### 결과
+480 run, 시작 실패 0. deadline을 모두 지킨 set 수(40개 중):
+
+| 셀 | Global | Clustered (1+3) 용량 | Clustered (1+1+2) 용량 |
+|---|---:|---:|---:|
+| 큰 task 5, 엇갈림 | 34 | 30 | 31 |
+| 큰 task 5, 몰림 | 23 | 30 | 24 |
+| 큰 task 6, 엇갈림 | 40 | 7 | 0 |
+| 큰 task 6, 몰림 | 24 | 13 | 0 |
+
+- H1 **지지 안 됨**: 큰 task 5·몰림에서 (1+1+2)만 성공 5 set, Global만 성공 4 set(Holm p = 1.0).
+- H2 **지지됨**: 큰 task 6에서 Global만 성공이 엇갈림 40 대 0(Holm p = 5.5e-12), 몰림 24 대 0(2.4e-7).
+  다만 (1+1+2)의 실패는 구조적으로 예상된 것이다. 단일 코어 클러스터에는 큰 task를 하나씩만 넣을 수 있으므로
+  2코어 클러스터에 큰 task가 4개 이상 들어가고, 그 U 합은 4 × 0.51 > 2이다.
+- 탐색적 결과(사전 등록 아님):
+  - 큰 task 6에서는 Global이 (1+3)보다도 낫다(33 대 0, 13 대 2, 둘 다 Holm p < 0.05).
+  - 큰 task 5·몰림에서는 (1+3)만 성공 10 대 Global만 성공 3이다(Holm p = 0.18, 유의하지 않음).
+    몰림으로 바꿔도 (1+3)의 성공 수는 30 → 30으로 그대로였다. 반면 Global은 34 → 23,
+    (1+1+2)는 31 → 24로 떨어졌다.
+  - 둘 다 성공한 set의 TET 차이는 +0.04–0.12%로 실질적으로 없다.
+    TAT는 큰 task 5에서 Global이 (1+1+2)보다 4–5% 길다(유의).
+- 결론: 배치가 불가능할 때는 클러스터 용량을 넘는 경우(큰 task 6) Global이 확실히 낫다.
+  C가 유리한 조건은 이 설계로 확인하지 못했다.
+
+### 결과 파일
+`results/g-vs-c-sync/`: `protocol.json`, `results.jsonl`, `isolated-u.json`, `stats-g-vs-c-sync.json/md`(`primary_tests`,
+셀별 McNemar, response·TET·TAT 검정), 그림 `g-vs-c-sync-{schedulable,response,tat,tet}`, `per-set.jsonl.gz`.
+
+---
+
+## 14. 폐기하거나 바꾼 설계
 
 | 출력(`.cache/`) | 내용 | 바꾼 이유 |
 |---|---|---|
@@ -862,7 +930,7 @@ python3 $R/figures/high_load_bars.py $O
 
 ---
 
-## 14. 결과 묶음 사용법
+## 15. 결과 묶음 사용법
 
 - `python3 export_results.py <실험> ...`이 `.cache`의 출력에서 설계 입력과 결과만
   `results/<실험>/`로 복사한다. 다시 만들 수 있는 빌드와 원시 run 로그는 복사하지 않는다.
@@ -879,7 +947,7 @@ python3 $R/figures/high_load_bars.py $O
 
 ---
 
-## 15. Feature 사전 점검 — 끝난 실험 재분석
+## 16. Feature 사전 점검 — 끝난 실험 재분석
 
 ### 개요
 새 시뮬레이션 없이 실험 5–9의 결과 묶음에서 정적 task 정보만으로 feature를 만든다.

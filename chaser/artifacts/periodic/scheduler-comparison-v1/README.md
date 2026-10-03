@@ -106,7 +106,7 @@ cd $C3 && PYTHONPATH=$C3 python3 -m pytest -q -p no:cacheprovider --rootdir=$R/c
 결과(results.jsonl, 통계, 대조 측정, 그림 PNG·CSV)만 `results/<실험>/`로 복사한다.
 실험 이름은 `period-distribution`, `release-aware-control`, `cls-distribution`,
 `cache-affinity-o0`, `cache-affinity-o2`, `cls-bimodal`, `cls-bimodal-v1-pilot`이다.
-사용법은 [EXPERIMENTS.md](EXPERIMENTS.md) 14절.
+사용법은 [EXPERIMENTS.md](EXPERIMENTS.md) 15절.
 
 ## 결과 위치(버전 관리 안 함)
 
