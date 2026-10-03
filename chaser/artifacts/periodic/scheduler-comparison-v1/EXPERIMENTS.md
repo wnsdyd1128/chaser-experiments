@@ -17,7 +17,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 7 | task별 U 불균형 | `cls-bimodal/`(`--design u-imbalance`) | `u-imbalance-v1` | `u-imbalance` |
 | 8 | CLS × 작업 집합 | `footprint/` | `l2-probe-v1`, `footprint-v1` | `footprint` |
 | 9 | 고부하·큰 task | `high-load/` | `high-load-v1` | `high-load` |
-| 10 | Partitioned 배치 불가 영역(진행 중) | `high-load/`(`--design infeasible`) | `infeasible-v1` | `infeasible` |
+| 10 | Partitioned 배치 불가 영역 | `high-load/`(`--design infeasible`) | `infeasible-v1` | `infeasible` |
 | 13 | Feature 사전 점검(실험 5–9 재분석, 시뮬레이션 없음) | `feature-precheck/` | `feature-precheck-v1` | `feature-precheck` |
 
 ---
@@ -699,7 +699,7 @@ python3 $R/figures/high_load_bars.py $O
 
 ---
 
-## 10. Partitioned 배치 불가 영역 — 진행 중
+## 10. Partitioned 배치 불가 영역
 
 ### 개요
 9절의 계산 위주 task 구성에서 큰 task 수를 늘려, 어떤 Partitioned 배치로도 코어당 U ≤ 1을 맞출 수 없는
@@ -737,7 +737,13 @@ task set을 만든다. 이때 Global과 Clustered 중 무엇이 deadline을 더 
 cd $C3 && export PYTHONPATH=$C3
 O=$W/.cache/infeasible-v1
 for s in prepare isolated pilot full stats; do python3 $R/high-load/hl_run.py $s --design infeasible --output $O; done
+python3 $R/figures/high_load_bars.py $O
 ```
+
+### 결과 파일
+`results/infeasible/`: `protocol.json`, `results.jsonl`, `isolated-u.json`, `stats-infeasible.json/md`(셀 검정,
+schedulable 집계와 McNemar, response 검정, 큰 task 수 추세), 그림 `infeasible-{schedulable,response,tat,tet}-{h4,h5,h6}`,
+`per-set.jsonl.gz`.
 
 ---
 
