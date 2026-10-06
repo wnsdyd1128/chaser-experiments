@@ -26,6 +26,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 18 | CLS 기준 묶음 배치(17의 같은 set) | `policy-mix/`(`--design policy-mix-cls`) | `policy-mix-cls-v1` | `policy-mix-cls` |
 | 19 | 주기 분포 × 메모리 구성의 배치 경계 | `policy-mix/`(`--design policy-boundary`) | `policy-boundary-v1` | `policy-boundary` |
 | 20 | task 수(12–20) × 메모리 압박 | `policy-mix/`(`--design task-count`) | `task-count-v1` | `task-count` |
+| 21 | 작은 작업 집합의 저-CLS task × 주기 분포 × task 수 | `policy-mix/`(`--design small-memory`) | `small-memory-v1` | `small-memory` |
 
 ---
 
@@ -1227,4 +1228,65 @@ python3 $R/figures/task_count_bars.py $O
 - `protocol.json`(set별 task 수와 768 KiB task 위치), `model-check.json`(17절 복사), `results.jsonl`, `isolated-u.json`
 - `stats-task-count.json/md`, `task-count-analysis.json/md`
 - 그림 `task-count-{tat,tet}-mem*-u*`, `task-count-schedulable-u*`
+- `per-set.jsonl.gz`
+
+---
+
+## 21. 작은 작업 집합의 저-CLS task × 주기 분포 × task 수
+
+### 개요
+20절에서 CLS 기반 배치가 이긴 조건은 768 KiB task가 U의 25%를 차지할 때였다. 그런 task는 실무에서 흔하지 않다.
+5절에서는 32 KiB만 읽는 저-CLS task로도 묶음이 이겼지만, 주기가 40 ms 하나였고 task가 16개로 고정이었다.
+19절에서는 같은 32 KiB task를 쓰면서 주기를 다양하게 하자 TAT의 승자가 release 고려 배치로 바뀌었다. 이 실험도 task가 16개였다.
+이 실험은 768 KiB task 없이, 32 KiB 저-CLS task의 U 비율과 주기 분포를 바꾸고 task 수를 12–20으로 다양하게 한다.
+이를 통해 CLS 기반 배치가 이기는 조건을 찾는다. 19절에 대해서는 4의 배수가 아닌 task 수로 보충하는 역할도 한다.
+
+### 목적
+1. 32 KiB 저-CLS task가 U의 25%·50%를 차지할 때 다음 두 배치가 release 고려 배치(ra)보다 TAT·TET·deadline 준수에서 나은지 확인한다.
+   - 부하 균등 CLS 묶음(cgb)
+   - 그 묶음 안의 release 고려(ra-cgb)
+2. 그 우열이 주기 CV(0–0.3)에 따라 어디서 바뀌는지 확인한다.
+3. 그 결과가 task 수(12–14, 15–17, 18–20)와 4의 배수 여부에 따라 달라지는지 확인한다.
+4. 저-CLS 0% 칸에서, 실험 1·2의 "release 고려 배치 대 U 균형 배치" 결론이 task 수 12–20에서도 유지되는지 본다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | **주기 CV** {0, 0.1, 0.2, 0.3}<br>**저-CLS task의 U 비율** {0, 25%, 50%}<br>- 저-CLS task는 5절 낮은 모드: cold 1,024줄(32 KiB), 트래픽 그대로<br>- 25% task는 50% task에 포함<br>**task 수** 12–20(set마다 하나, 각 값이 셀마다 3번)<br>**구성 6개**<br>- Global, Clustered (1+1+2): U 균형 배치 기준<br>- Partitioned 4종: wfd, cgb, ra, ra-cgb |
+| 통제 변인 | **CLS**: 나머지 task는 높은 CLS(중심 0.90, 모드 내 CV 0.1). 저-CLS task는 모두 트래픽이 많아 CLS 묶음과 트래픽 묶음이 같은 task를 고른다<br>**주기**: 40 ms × (1 + CV·z), z는 ±3σ에서 자름. 로그 기준으로 {20, 24, 30, 40, 48, 60, 80, 120} ms 중 가장 가까운 값(hyperperiod 240 ms)<br>**부하**: 코어당 명목 U 0.4. task U 비율은 Dirichlet(α = 8), 가장 큰 task ≤ 0.35, 가장 작은 task ≥ 0.011<br>**workload**: O2, 5절 시간 모델<br>**측정 구간**: warm-up 1 + 측정 2 hyperperiod<br>**공통 난수**: set k는 모든 셀에서 task 수·U 비율·CLS 편차·주기 z·순서를 공유하고, CV는 주기 z의 배율만 바꾼다<br>**규모**: 셀 12개 × set 27개 |
+| 종속 변인 | 모든 deadline 준수 여부; deadline을 지킨 run의 TAT·TET; 최선 Partitioned 배치 대비 regret |
+| 조작 확인 | **실현 저-CLS U 비율**: 목표 25%에서 중앙값 0.253(0.19–0.29), 50%에서 0.507(0.46–0.55)<br>**CLS**: 경우마다 yarda CLS = 계획값<br>**단독 U**: 셀마다 set 0, 게이트 3%<br>**job 예산**: 0.46–12.86 ms. 17절 시간 모델 검증의 계열별 범위(높은 CLS 0.24–43.17 ms, 낮은 CLS 트래픽 그대로 0.23–18.12 ms) 안이라 그 결과를 복사 |
+
+저-CLS task는 다음 조건을 만족하는 task 중에서 set 순서대로 고른다. 목표 U 비율에 가장 가까워지는 지점에서 멈춘다.
+- 모든 CV 칸에서 job 예산이 낮은 CLS 계열의 검증 범위 안에 든다.
+
+저-CLS 0% 칸에서는 cgb가 wfd와, ra-cgb가 ra와 같은 배치가 된다. 이 칸의 그 run들은 결정성 확인을 겸한다.
+
+### 실험 방법
+1. 단계는 다음 순서로 진행한다.
+   - `prepare`: 324 경우 × 배치 4종, yarda CLS 대조
+   - `isolated`: 셀마다 set 0
+   - `pilot`: 셀마다 set 0, 72 run
+   - `full`: 1,872 run
+   - `stats`
+2. `smallmem_analysis.py`는 20절의 분석을 셀(주기 CV × 저-CLS 비율)별로 계산한다. 추가로 같은 대비를 주기 CV별로도 계산한다(저-CLS 칸 합침).
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R/policy-mix $R/policy-mix   # 명세 테스트
+O=$W/.cache/small-memory-v1
+mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design small-memory --output $O; done
+python3 $R/policy-mix/smallmem_analysis.py --output $O
+python3 $R/figures/small_memory_bars.py $O
+```
+실제 실행은 `supervisors/small-memory-v1.sh`다.
+
+### 결과 파일
+`results/small-memory/`에는 다음이 있다.
+- `protocol.json`(set별 task 수와 저-CLS task 위치), `model-check.json`(17절 복사), `results.jsonl`, `isolated-u.json`
+- `stats-small-memory.json/md`, `small-memory-analysis.json/md`
+- 그림 `small-memory-*`
 - `per-set.jsonl.gz`

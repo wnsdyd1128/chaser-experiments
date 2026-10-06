@@ -48,6 +48,7 @@ STUDIES = {
     'policy-mix-cls': 'policy-mix-cls-v1',
     'policy-boundary': 'policy-boundary-v1',
     'task-count': 'task-count-v1',
+    'small-memory': 'small-memory-v1',
     # Re-analysis of the bundles above (feature-precheck/precheck.py); no simulation.
     'feature-precheck': 'feature-precheck-v1',
     # The 20 ms design whose pilot missed deadlines; kept as the reason for v2. Its .cache output
