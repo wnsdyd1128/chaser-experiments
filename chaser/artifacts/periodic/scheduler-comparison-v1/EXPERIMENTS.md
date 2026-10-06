@@ -30,6 +30,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 22 | 실험 1·2의 task 수 12–20 재실행 | `period-distribution/{tc_taskset,tc_run}.py` | `period-taskcount-v1`, `period-taskcount-cohort-v1` | `period-taskcount`, `period-taskcount-cohort` |
 | 23 | CLS 분포·다양성 × 주기 분포 × task 수 | `policy-mix/`(`--design cls-spread`) | `cls-spread-v1` | `cls-spread` |
 | 24 | 작은 작업 집합의 저-CLS task × 부하(탐색) | `policy-mix/`(`--design small-memory-load`) | `small-memory-load-v1` | `small-memory-load` |
+| 25 | 접근 패턴 때문에 CLS가 낮은 task(L1 충돌 miss, 21절과 같은 set) | `policy-mix/`(`--design conflict-cls`, `conflict_calibrate.py`) | `conflict-calibration-v1`, `conflict-cls-v2`(v1은 게이트에서 멈춤) | `conflict-calibration`, `conflict-cls` |
 
 ---
 
@@ -1457,5 +1458,61 @@ for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $
 `results/small-memory-load/`에는 다음이 있다.
 - `protocol.json`, `model-check.json`(17절 복사), `results.jsonl`, `isolated-u.json`
 - `stats-small-memory-load.json/md`
+- 분석과 그림
+- `per-set.jsonl.gz`
+
+---
+
+## 25. 접근 패턴 때문에 CLS가 낮은 task (작은 작업 집합, L1 충돌 miss)
+
+### 개요
+21절의 저-CLS task는 32 KiB cold 영역을 훑는다. 이 영역은 L1(16 KiB)의 두 배라서, 이 task는 sweep마다 자기 코어의 L1을 통째로 밀어낸다.
+실제로는 읽는 데이터가 작아도 접근 패턴 때문에 캐시를 못 쓰는 task가 있다. 예를 들어 행렬을 열 방향으로 읽거나, 2의 거듭제곱 간격으로 접근하는 경우다.
+
+이 실험은 21절과 같은 set에서 저-CLS task만 그런 모양으로 바꾼다.
+- 바꾼 모양: 43–61줄(1.4–1.9 KiB)을 4 KiB(L1 한 way 크기) 간격으로 읽는다.
+- 그러면 task의 모든 줄이 L1의 한 집합에 몰린다.
+- 4-way보다 줄이 많으므로 hot 반복을 빼면 매번 L1 miss가 나고, L2에서는 hit한다(줄마다 다른 L2 집합).
+
+L2 요청량은 21절과 같고, 더럽히는 L1 범위만 한 집합으로 줄어든다.
+그래서 CLS 묶음의 이득이 L2 대역폭 경합에서 오는지, 같은 코어의 L1 오염에서 오는지를 21절과 짝지어 가를 수 있다.
+
+### 목적
+1. 저-CLS가 작업 집합 크기가 아니라 접근 패턴에서 올 때도 CLS 고려 배치(cgb, ra-cgb)가 21절처럼 TET에서 이기고 TAT를 유지하는지 확인한다.
+2. 같은 set의 21절 결과와 비교해, 21절의 이득 중 L1 오염이 차지하는 몫을 추정한다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | **저-CLS task 모양**: 충돌형(이 실험). 21절의 스트리밍형과 같은 set으로 짝지음<br>**주기 CV** {0, 0.2}<br>**저-CLS U 비율** {25%, 50%}<br>**구성 6개**: 21절과 같음 |
+| 통제 변인 | **같은 set**: 21절과 같은 시드(20262101)·task 수·U 비율·주기·역할·높은 CLS task·job 예산을 쓴다. 저-CLS 0% 칸은 21절과 같으므로 다시 돌리지 않는다<br>**충돌형 모양**: hot 1–4줄(연관도 4 이하라 반복이 L1에서 hit) × 2회 + cold 28–60줄. 모두 4,096 B 간격이라 한 L1 집합에 든다. 목표 CLS에 가장 가까운 (hot, cold)를 고르고, sweep 수와 tail로 예산을 맞춘다 |
+| 종속 변인 | 21절과 같음. 추가로, 같은 set·배치에서 충돌형과 스트리밍형의 TAT·TET 차이 |
+| 조작 확인 | **충돌형 task**(전체 652개):<br>- 계획 CLS 0.118–0.144(21절 스트리밍형 약 0.13)<br>- 1 µs당 L1 miss 13.5–14.0(스트리밍형과 같은 수준)<br>- sweep 186–3,964회<br>**yarda CLS**: 집합 단위 reuse distance(CSRD)를 쓰므로 충돌 miss를 반영한다. 계획 CLS(`bimodal.cls_model`, cold = C줄)와 같은지 prepare에서 확인한다. 사전 점검으로 한 경우(cv20-low50, set 0)를 빌드했고, 모든 task가 일치했다<br>**단독 U**: 셀마다 set 0, 게이트 3%. 충돌형 모양은 17절 시간 모델 검증 밖이므로 이 게이트가 모델 검증을 겸한다<br>**보정**: 첫 실행(`conflict-cls-v1`)은 이 게이트에서 멈췄다. 충돌형 task가 모델보다 4.2–5.3% 빨랐고(sweep당 약 0.17 µs), 높은 CLS task는 ±0.1%였다. 그래서 `conflict_calibrate.py`로 충돌형 수준 64개(hot 1–4 × cold 28–60 × sweep 150–3,500)를 단독 실행해 job당·sweep당·L1 적중당·L2 적중당 계수의 보정량을 맞췄다. 따로 뽑은 24개 수준으로 검증한 최대 오차는 0.17%다(보정 전 +3.2 ~ +8.5%). 결과는 `results/conflict-calibration/`에 있고, 다시 실행한 출력은 `conflict-cls-v2`다<br>**보정 후 충돌형 task**: 1 µs당 L1 miss 14.5–14.6으로, 21절 스트리밍형(약 13–14)보다 5–7% 높다. 같은 예산에서 접근을 더 많이 하는 모양이기 때문이다. 이 차이는 충돌형 쪽 경합을 키우는 방향이다 |
+
+### 실험 방법
+단계는 다음 순서로 진행한다.
+- `prepare`: 108 경우 × 배치 4종, yarda CLS 대조
+- `isolated`
+- `pilot`: 셀마다 set 0, 24 run
+- `full`: 624 run
+- `stats`
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R/policy-mix $R/policy-mix   # 명세 테스트
+C=$W/.cache/conflict-calibration-v1
+for s in measure fit; do python3 $R/policy-mix/conflict_calibrate.py $s --output $C; done
+# 설계는 results/conflict-calibration/conflict-model.json을 읽는다(C의 결과를 복사).
+O=$W/.cache/conflict-cls-v2
+for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design conflict-cls --output $O; done
+```
+실제 실행은 `supervisors/conflict-cls-v2.sh`다(26절 확장분이 끝난 뒤 시작). `conflict-cls-v1.sh`는 게이트에서 멈춘 첫 실행이다. 그 출력은 2026-10-05에 지웠고, 게이트 기록은 `results/conflict-calibration/conflict-cls-v1-isolated-u.json`에 있다.
+
+### 결과 파일
+`results/conflict-cls/`에는 다음이 있다.
+- `protocol.json`(짝지은 21절 출력, 충돌 간격), `results.jsonl`, `isolated-u.json`
+- `stats-conflict-cls.json/md`
 - 분석과 그림
 - `per-set.jsonl.gz`

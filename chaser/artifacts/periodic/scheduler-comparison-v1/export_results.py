@@ -53,6 +53,7 @@ STUDIES = {
     'period-taskcount-cohort': 'period-taskcount-cohort-v1',
     'cls-spread': 'cls-spread-v1',
     'small-memory-load': 'small-memory-load-v1',
+    'conflict-cls': 'conflict-cls-v2',
     # Re-analysis of the bundles above (feature-precheck/precheck.py); no simulation.
     'feature-precheck': 'feature-precheck-v1',
     # The 20 ms design whose pilot missed deadlines; kept as the reason for v2. Its .cache output
