@@ -1,0 +1,1809 @@
+{
+ "alpha": 0.05,
+ "steps": {
+  "L1": [
+   "cls-a1",
+   "caas",
+   "violated"
+  ],
+  "L2": [
+   "cgb",
+   "cls-a1",
+   "deployable"
+  ],
+  "L3": [
+   "ra-cgb",
+   "cgb",
+   "tat"
+  ],
+  "L4": [
+   "ra-cgb",
+   "caas",
+   "violated"
+  ]
+ },
+ "primary": [
+  {
+   "pairs": 77,
+   "violating_pairs": 76,
+   "fewer_first": 0,
+   "fewer_second": 0,
+   "median_difference": 0.0,
+   "only_first_met": 0,
+   "only_second_met": 0,
+   "mcnemar_p": 1.0,
+   "p": null,
+   "direction_holds": false,
+   "step": "L1",
+   "type": "small",
+   "first": "cls-a1",
+   "second": "caas",
+   "metric": "violated",
+   "holm_p": null,
+   "significant": false
+  },
+  {
+   "pairs": 252,
+   "only_first": 135,
+   "only_second": 0,
+   "p": 4.591774807899561e-41,
+   "direction_holds": true,
+   "step": "L2",
+   "type": "small",
+   "first": "cgb",
+   "second": "cls-a1",
+   "metric": "deployable",
+   "holm_p": 3.2142423655296924e-40,
+   "significant": true
+  },
+  {
+   "pairs": 125,
+   "median_change": -0.006868448403913541,
+   "wins": 89,
+   "losses": 32,
+   "p": 1.777916705320275e-08,
+   "direction_holds": true,
+   "step": "L3",
+   "type": "small",
+   "first": "ra-cgb",
+   "second": "cgb",
+   "metric": "tat",
+   "holm_p": 8.889583526601374e-08,
+   "significant": true
+  },
+  {
+   "pairs": 77,
+   "violating_pairs": 76,
+   "fewer_first": 76,
+   "fewer_second": 0,
+   "median_difference": -0.13333333333333333,
+   "only_first_met": 76,
+   "only_second_met": 0,
+   "mcnemar_p": 2.6469779601696886e-23,
+   "p": 3.5916293265016116e-14,
+   "direction_holds": true,
+   "step": "L4",
+   "type": "small",
+   "first": "ra-cgb",
+   "second": "caas",
+   "metric": "violated",
+   "holm_p": 2.154977595900967e-13,
+   "significant": true
+  },
+  {
+   "pairs": 143,
+   "violating_pairs": 63,
+   "fewer_first": 24,
+   "fewer_second": 14,
+   "median_difference": 0.0,
+   "only_first_met": 2,
+   "only_second_met": 4,
+   "mcnemar_p": 0.6875,
+   "p": 0.0056011148419084,
+   "direction_holds": false,
+   "step": "L1",
+   "type": "big",
+   "first": "cls-a1",
+   "second": "caas",
+   "metric": "violated",
+   "holm_p": 0.0224044593676336,
+   "significant": false
+  },
+  {
+   "pairs": 142,
+   "only_first": 3,
+   "only_second": 6,
+   "p": 0.5078125,
+   "direction_holds": false,
+   "step": "L2",
+   "type": "big",
+   "first": "cgb",
+   "second": "cls-a1",
+   "metric": "deployable",
+   "holm_p": 1.0,
+   "significant": false
+  },
+  {
+   "pairs": 75,
+   "median_change": -0.0013140336119413787,
+   "wins": 41,
+   "losses": 23,
+   "p": 0.012379885915020166,
+   "direction_holds": true,
+   "step": "L3",
+   "type": "big",
+   "first": "ra-cgb",
+   "second": "cgb",
+   "metric": "tat",
+   "holm_p": 0.0371396577450605,
+   "significant": true
+  },
+  {
+   "pairs": 144,
+   "violating_pairs": 69,
+   "fewer_first": 24,
+   "fewer_second": 28,
+   "median_difference": 0.0,
+   "only_first_met": 2,
+   "only_second_met": 9,
+   "mcnemar_p": 0.0654296875,
+   "p": 0.941915226678537,
+   "direction_holds": false,
+   "step": "L4",
+   "type": "big",
+   "first": "ra-cgb",
+   "second": "caas",
+   "metric": "violated",
+   "holm_p": 1.0,
+   "significant": false
+  }
+ ],
+ "supported": {
+  "small": {
+   "L1": false,
+   "L2": true,
+   "L3": true,
+   "L4": true
+  },
+  "big": {
+   "L1": false,
+   "L2": false,
+   "L3": true,
+   "L4": false
+  }
+ },
+ "secondary": [
+  {
+   "pairs": 1,
+   "median_change": 0.0,
+   "wins": 0,
+   "losses": 0,
+   "p": null,
+   "direction_holds": false,
+   "step": "L1",
+   "type": "small",
+   "first": "cls-a1",
+   "second": "caas",
+   "metric": "inflation",
+   "holm_p": null,
+   "significant": false
+  },
+  {
+   "pairs": 1,
+   "median_change": 0.0,
+   "wins": 0,
+   "losses": 0,
+   "p": null,
+   "direction_holds": false,
+   "step": "L1",
+   "type": "small",
+   "first": "cls-a1",
+   "second": "caas",
+   "metric": "tet",
+   "holm_p": null,
+   "significant": false
+  },
+  {
+   "pairs": 252,
+   "only_first": 0,
+   "only_second": 0,
+   "p": 1.0,
+   "direction_holds": false,
+   "step": "L1",
+   "type": "small",
+   "first": "cls-a1",
+   "second": "caas",
+   "metric": "deployable",
+   "holm_p": 1.0,
+   "significant": false
+  },
+  {
+   "pairs": 1,
+   "median_change": 0.2708147780691035,
+   "wins": 0,
+   "losses": 1,
+   "p": null,
+   "direction_holds": false,
+   "step": "L2",
+   "type": "small",
+   "first": "cgb",
+   "second": "cls-a1",
+   "metric": "inflation",
+   "holm_p": null,
+   "significant": false
+  },
+  {
+   "pairs": 1,
+   "median_change": 0.22481505488208486,
+   "wins": 0,
+   "losses": 1,
+   "p": null,
+   "direction_holds": false,
+   "step": "L2",
+   "type": "small",
+   "first": "cgb",
+   "second": "cls-a1",
+   "metric": "tet",
+   "holm_p": null,
+   "significant": false
+  },
+  {
+   "pairs": 77,
+   "violating_pairs": 76,
+   "fewer_first": 76,
+   "fewer_second": 0,
+   "median_difference": -0.13333333333333333,
+   "only_first_met": 76,
+   "only_second_met": 0,
+   "mcnemar_p": 2.6469779601696886e-23,
+   "p": 3.5916293265016116e-14,
+   "direction_holds": true,
+   "step": "L2",
+   "type": "small",
+   "first": "cgb",
+   "second": "cls-a1",
+   "metric": "violated",
+   "holm_p": 7.542421585653385e-13,
+   "significant": true
+  },
+  {
+   "pairs": 125,
+   "median_change": -0.00196263065436042,
+   "wins": 69,
+   "losses": 52,
+   "p": 0.01998390266496189,
+   "direction_holds": true,
+   "step": "L3",
+   "type": "small",
+   "first": "ra-cgb",
+   "second": "cgb",
+   "metric": "inflation",
+   "holm_p": 0.23980683197954267,
+   "significant": false
+  },
+  {
+   "pairs": 125,
+   "median_change": -0.000688654140608369,
+   "wins": 68,
+   "losses": 53,
+   "p": 0.0042432237008444475,
+   "direction_holds": true,
+   "step": "L3",
+   "type": "small",
+   "first": "ra-cgb",
+   "second": "cgb",
+   "metric": "tet",
+   "holm_p": 0.05516190811097782,
+   "significant": false
+  },
+  {
+   "pairs": 252,
+   "violating_pairs": 127,
+   "fewer_first": 39,
+   "fewer_second": 44,
+   "median_difference": 0.0,
+   "only_first_met": 7,
+   "only_second_met": 11,
+   "mcnemar_p": 0.480682373046875,
+   "p": 0.5489527446313829,
+   "direction_holds": false,
+   "step": "L3",
+   "type": "small",
+   "first": "ra-cgb",
+   "second": "cgb",
+   "metric": "violated",
+   "holm_p": 1.0,
+   "significant": false
+  },
+  {
+   "pairs": 1,
+   "median_change": 0.2529146885577389,
+   "wins": 0,
+   "losses": 1,
+   "p": null,
+   "direction_holds": false,
+   "step": "L4",
+   "type": "small",
+   "first": "ra-cgb",
+   "second": "caas",
+   "metric": "inflation",
+   "holm_p": null,
+   "significant": false
+  },
+  {
+   "pairs": 1,
+   "median_change": 0.22291149114283093,
+   "wins": 0,
+   "losses": 1,
+   "p": null,
+   "direction_holds": false,
+   "step": "L4",
+   "type": "small",
+   "first": "ra-cgb",
+   "second": "caas",
+   "metric": "tet",
+   "holm_p": null,
+   "significant": false
+  },
+  {
+   "pairs": 252,
+   "only_first": 131,
+   "only_second": 0,
+   "p": 7.346839692639297e-40,
+   "direction_holds": true,
+   "step": "L4",
+   "type": "small",
+   "first": "ra-cgb",
+   "second": "caas",
+   "metric": "deployable",
+   "holm_p": 1.6163047323806453e-38,
+   "significant": true
+  },
+  {
+   "pairs": 28,
+   "violating_pairs": 28,
+   "fewer_first": 0,
+   "fewer_second": 6,
+   "median_difference": 0.0,
+   "only_first_met": 0,
+   "only_second_met": 0,
+   "mcnemar_p": 1.0,
+   "p": 0.027707849358079864,
+   "direction_holds": false,
+   "step": "S1",
+   "type": "small",
+   "first": "cls-a1-cal",
+   "second": "caas",
+   "metric": "violated",
+   "holm_p": 0.2770784935807986,
+   "significant": false
+  },
+  {
+   "pairs": 252,
+   "only_first": 0,
+   "only_second": 1,
+   "p": 1.0,
+   "direction_holds": false,
+   "step": "S2",
+   "type": "small",
+   "first": "cls-a1-cal",
+   "second": "cls-a1",
+   "metric": "deployable",
+   "holm_p": 1.0,
+   "significant": false
+  },
+  {
+   "pairs": 80,
+   "median_change": -0.09222628545680955,
+   "wins": 45,
+   "losses": 4,
+   "p": 2.6253872967106627e-09,
+   "direction_holds": true,
+   "step": "L1",
+   "type": "big",
+   "first": "cls-a1",
+   "second": "caas",
+   "metric": "inflation",
+   "holm_p": 4.7256971340791926e-08,
+   "significant": true
+  },
+  {
+   "pairs": 80,
+   "median_change": 0.0,
+   "wins": 37,
+   "losses": 12,
+   "p": 0.0009085203278360517,
+   "direction_holds": false,
+   "step": "L1",
+   "type": "big",
+   "first": "cls-a1",
+   "second": "caas",
+   "metric": "tet",
+   "holm_p": 0.014536325245376827,
+   "significant": false
+  },
+  {
+   "pairs": 143,
+   "only_first": 2,
+   "only_second": 4,
+   "p": 0.6875,
+   "direction_holds": false,
+   "step": "L1",
+   "type": "big",
+   "first": "cls-a1",
+   "second": "caas",
+   "metric": "deployable",
+   "holm_p": 1.0,
+   "significant": false
+  },
+  {
+   "pairs": 75,
+   "median_change": 0.0,
+   "wins": 26,
+   "losses": 18,
+   "p": 0.9256163432125206,
+   "direction_holds": false,
+   "step": "L2",
+   "type": "big",
+   "first": "cgb",
+   "second": "cls-a1",
+   "metric": "inflation",
+   "holm_p": 1.0,
+   "significant": false
+  },
+  {
+   "pairs": 75,
+   "median_change": 0.0,
+   "wins": 35,
+   "losses": 9,
+   "p": 0.02084953467418497,
+   "direction_holds": false,
+   "step": "L2",
+   "type": "big",
+   "first": "cgb",
+   "second": "cls-a1",
+   "metric": "tet",
+   "holm_p": 0.23980683197954267,
+   "significant": false
+  },
+  {
+   "pairs": 142,
+   "violating_pairs": 67,
+   "fewer_first": 3,
+   "fewer_second": 24,
+   "median_difference": 0.0,
+   "only_first_met": 3,
+   "only_second_met": 6,
+   "mcnemar_p": 0.5078125,
+   "p": 0.0012254951646291665,
+   "direction_holds": false,
+   "step": "L2",
+   "type": "big",
+   "first": "cgb",
+   "second": "cls-a1",
+   "metric": "violated",
+   "holm_p": 0.018382427469437496,
+   "significant": false
+  },
+  {
+   "pairs": 75,
+   "median_change": 0.0,
+   "wins": 36,
+   "losses": 28,
+   "p": 0.4701404753991639,
+   "direction_holds": false,
+   "step": "L3",
+   "type": "big",
+   "first": "ra-cgb",
+   "second": "cgb",
+   "metric": "inflation",
+   "holm_p": 1.0,
+   "significant": false
+  },
+  {
+   "pairs": 75,
+   "median_change": 0.005031361666139045,
+   "wins": 21,
+   "losses": 43,
+   "p": 0.050061411401998386,
+   "direction_holds": false,
+   "step": "L3",
+   "type": "big",
+   "first": "ra-cgb",
+   "second": "cgb",
+   "metric": "tet",
+   "holm_p": 0.45055270261798547,
+   "significant": false
+  },
+  {
+   "pairs": 143,
+   "violating_pairs": 68,
+   "fewer_first": 12,
+   "fewer_second": 18,
+   "median_difference": 0.0,
+   "only_first_met": 1,
+   "only_second_met": 3,
+   "mcnemar_p": 0.625,
+   "p": 0.5037201414367287,
+   "direction_holds": false,
+   "step": "L3",
+   "type": "big",
+   "first": "ra-cgb",
+   "second": "cgb",
+   "metric": "violated",
+   "holm_p": 1.0,
+   "significant": false
+  },
+  {
+   "pairs": 75,
+   "median_change": -0.08640836913184125,
+   "wins": 61,
+   "losses": 11,
+   "p": 1.368851881430837e-07,
+   "direction_holds": true,
+   "step": "L4",
+   "type": "big",
+   "first": "ra-cgb",
+   "second": "caas",
+   "metric": "inflation",
+   "holm_p": 2.327048198432423e-06,
+   "significant": true
+  },
+  {
+   "pairs": 75,
+   "median_change": -0.028013410322526577,
+   "wins": 45,
+   "losses": 27,
+   "p": 0.0028842793781844885,
+   "direction_holds": true,
+   "step": "L4",
+   "type": "big",
+   "first": "ra-cgb",
+   "second": "caas",
+   "metric": "tet",
+   "holm_p": 0.04037991129458284,
+   "significant": true
+  },
+  {
+   "pairs": 144,
+   "only_first": 2,
+   "only_second": 9,
+   "p": 0.0654296875,
+   "direction_holds": false,
+   "step": "L4",
+   "type": "big",
+   "first": "ra-cgb",
+   "second": "caas",
+   "metric": "deployable",
+   "holm_p": 0.5234375,
+   "significant": false
+  },
+  {
+   "pairs": 142,
+   "violating_pairs": 93,
+   "fewer_first": 9,
+   "fewer_second": 74,
+   "median_difference": 0.07692307692307693,
+   "only_first_met": 0,
+   "only_second_met": 35,
+   "mcnemar_p": 5.820766091346741e-11,
+   "p": 1.023272348137194e-10,
+   "direction_holds": false,
+   "step": "S1",
+   "type": "big",
+   "first": "cls-a1-cal",
+   "second": "caas",
+   "metric": "violated",
+   "holm_p": 2.046544696274388e-09,
+   "significant": false
+  },
+  {
+   "pairs": 143,
+   "only_first": 0,
+   "only_second": 33,
+   "p": 2.3283064365386963e-10,
+   "direction_holds": false,
+   "step": "S2",
+   "type": "big",
+   "first": "cls-a1-cal",
+   "second": "cls-a1",
+   "metric": "deployable",
+   "holm_p": 4.423782229423523e-09,
+   "significant": false
+  }
+ ],
+ "summary": {
+  "small": {
+   "cv00-low50/u0450": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5184
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5184
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5184
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5184
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 17,
+     "met": 0,
+     "missed_jobs": 504,
+     "expected_jobs": 4950
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 17,
+     "met": 0,
+     "missed_jobs": 504,
+     "expected_jobs": 4950
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 8,
+     "met": 0,
+     "missed_jobs": 288,
+     "expected_jobs": 2250
+    }
+   },
+   "cv00-low50/u0475": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5184
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5184
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5184
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5184
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 14,
+     "met": 0,
+     "missed_jobs": 612,
+     "expected_jobs": 4068
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 14,
+     "met": 0,
+     "missed_jobs": 612,
+     "expected_jobs": 4068
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 5,
+     "met": 0,
+     "missed_jobs": 234,
+     "expected_jobs": 1368
+    }
+   },
+   "cv00-low50/u0500": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 17,
+     "missed_jobs": 18,
+     "expected_jobs": 5184
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 17,
+     "missed_jobs": 18,
+     "expected_jobs": 5184
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5184
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5184
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 7,
+     "met": 0,
+     "missed_jobs": 360,
+     "expected_jobs": 1980
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 7,
+     "met": 0,
+     "missed_jobs": 360,
+     "expected_jobs": 1980
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 1,
+     "met": 0,
+     "missed_jobs": 54,
+     "expected_jobs": 270
+    }
+   },
+   "cv00-low50/u0525": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 9,
+     "missed_jobs": 181,
+     "expected_jobs": 5184
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 12,
+     "missed_jobs": 144,
+     "expected_jobs": 5184
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 12,
+     "missed_jobs": 162,
+     "expected_jobs": 5184
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 15,
+     "missed_jobs": 72,
+     "expected_jobs": 5184
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 1,
+     "met": 0,
+     "missed_jobs": 72,
+     "expected_jobs": 360
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 1,
+     "met": 0,
+     "missed_jobs": 72,
+     "expected_jobs": 360
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    }
+   },
+   "cv00-low50/u0550": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 774,
+     "expected_jobs": 5184
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 2,
+     "missed_jobs": 612,
+     "expected_jobs": 5184
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 1,
+     "missed_jobs": 594,
+     "expected_jobs": 5184
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 2,
+     "missed_jobs": 486,
+     "expected_jobs": 5184
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    }
+   },
+   "cv00-low50/u0575": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 1116,
+     "expected_jobs": 5184
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 864,
+     "expected_jobs": 5184
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 882,
+     "expected_jobs": 5184
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 810,
+     "expected_jobs": 5184
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    }
+   },
+   "cv00-low50/u0600": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 1386,
+     "expected_jobs": 5184
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 1098,
+     "expected_jobs": 5184
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 1224,
+     "expected_jobs": 5184
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 972,
+     "expected_jobs": 5184
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    }
+   },
+   "cv20-low50/u0450": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5400
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5400
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5400
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5400
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 17,
+     "met": 1,
+     "missed_jobs": 549,
+     "expected_jobs": 5181
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 17,
+     "met": 1,
+     "missed_jobs": 549,
+     "expected_jobs": 5181
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 8,
+     "met": 0,
+     "missed_jobs": 312,
+     "expected_jobs": 2382
+    }
+   },
+   "cv20-low50/u0475": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 17,
+     "missed_jobs": 18,
+     "expected_jobs": 5400
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5400
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5400
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 18,
+     "missed_jobs": 0,
+     "expected_jobs": 5400
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 13,
+     "met": 0,
+     "missed_jobs": 669,
+     "expected_jobs": 3861
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 13,
+     "met": 0,
+     "missed_jobs": 669,
+     "expected_jobs": 3861
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 5,
+     "met": 0,
+     "missed_jobs": 201,
+     "expected_jobs": 1410
+    }
+   },
+   "cv20-low50/u0500": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 17,
+     "missed_jobs": 36,
+     "expected_jobs": 5400
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 17,
+     "missed_jobs": 18,
+     "expected_jobs": 5400
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 15,
+     "missed_jobs": 78,
+     "expected_jobs": 5400
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 15,
+     "missed_jobs": 78,
+     "expected_jobs": 5400
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 7,
+     "met": 0,
+     "missed_jobs": 414,
+     "expected_jobs": 2040
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 7,
+     "met": 0,
+     "missed_jobs": 414,
+     "expected_jobs": 2040
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 1,
+     "met": 0,
+     "missed_jobs": 72,
+     "expected_jobs": 264
+    }
+   },
+   "cv20-low50/u0525": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 9,
+     "missed_jobs": 281,
+     "expected_jobs": 5400
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 13,
+     "missed_jobs": 165,
+     "expected_jobs": 5400
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 8,
+     "missed_jobs": 333,
+     "expected_jobs": 5400
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 10,
+     "missed_jobs": 252,
+     "expected_jobs": 5400
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 1,
+     "met": 0,
+     "missed_jobs": 84,
+     "expected_jobs": 354
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 1,
+     "met": 0,
+     "missed_jobs": 84,
+     "expected_jobs": 354
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    }
+   },
+   "cv20-low50/u0550": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 636,
+     "expected_jobs": 5400
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 3,
+     "missed_jobs": 663,
+     "expected_jobs": 5400
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 834,
+     "expected_jobs": 5400
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 795,
+     "expected_jobs": 5400
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    }
+   },
+   "cv20-low50/u0575": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 1011,
+     "expected_jobs": 5400
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 972,
+     "expected_jobs": 5400
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 1146,
+     "expected_jobs": 5400
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 1218,
+     "expected_jobs": 5400
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    }
+   },
+   "cv20-low50/u0600": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 1425,
+     "expected_jobs": 5400
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 1428,
+     "expected_jobs": 5400
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 1596,
+     "expected_jobs": 5400
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 0,
+     "missed_jobs": 1431,
+     "expected_jobs": 5400
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 0,
+     "met": 0,
+     "missed_jobs": 0,
+     "expected_jobs": 0
+    }
+   }
+  },
+  "big": {
+   "cv00-big25/u0300": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 15,
+     "missed_jobs": 216,
+     "expected_jobs": 5184
+    },
+    "cgb": {
+     "runs": 17,
+     "placeable": 17,
+     "met": 14,
+     "missed_jobs": 72,
+     "expected_jobs": 4950
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 15,
+     "missed_jobs": 126,
+     "expected_jobs": 5184
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 16,
+     "missed_jobs": 54,
+     "expected_jobs": 5184
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 16,
+     "missed_jobs": 36,
+     "expected_jobs": 5184
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 16,
+     "missed_jobs": 36,
+     "expected_jobs": 5184
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 9,
+     "missed_jobs": 342,
+     "expected_jobs": 5184
+    }
+   },
+   "cv00-big25/u0350": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 13,
+     "missed_jobs": 199,
+     "expected_jobs": 5184
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 12,
+     "missed_jobs": 162,
+     "expected_jobs": 5184
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 12,
+     "missed_jobs": 306,
+     "expected_jobs": 5184
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 12,
+     "missed_jobs": 144,
+     "expected_jobs": 5184
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 12,
+     "missed_jobs": 198,
+     "expected_jobs": 5184
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 12,
+     "missed_jobs": 144,
+     "expected_jobs": 5184
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 6,
+     "missed_jobs": 522,
+     "expected_jobs": 5184
+    }
+   },
+   "cv00-big25/u0400": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 9,
+     "missed_jobs": 504,
+     "expected_jobs": 5184
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 8,
+     "missed_jobs": 324,
+     "expected_jobs": 5184
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 7,
+     "missed_jobs": 522,
+     "expected_jobs": 5184
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 8,
+     "missed_jobs": 360,
+     "expected_jobs": 5184
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 9,
+     "missed_jobs": 378,
+     "expected_jobs": 5184
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 8,
+     "missed_jobs": 252,
+     "expected_jobs": 5184
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 4,
+     "missed_jobs": 756,
+     "expected_jobs": 5184
+    }
+   },
+   "cv00-big25/u0450": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 5,
+     "missed_jobs": 972,
+     "expected_jobs": 5184
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 1,
+     "missed_jobs": 666,
+     "expected_jobs": 5184
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 4,
+     "missed_jobs": 972,
+     "expected_jobs": 5184
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 1,
+     "missed_jobs": 630,
+     "expected_jobs": 5184
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 4,
+     "missed_jobs": 684,
+     "expected_jobs": 5184
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 4,
+     "missed_jobs": 432,
+     "expected_jobs": 5184
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 17,
+     "met": 2,
+     "missed_jobs": 756,
+     "expected_jobs": 4824
+    }
+   },
+   "cv20-big25/u0300": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 14,
+     "missed_jobs": 237,
+     "expected_jobs": 5340
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 14,
+     "missed_jobs": 114,
+     "expected_jobs": 5340
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 14,
+     "missed_jobs": 183,
+     "expected_jobs": 5340
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 14,
+     "missed_jobs": 105,
+     "expected_jobs": 5340
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 15,
+     "missed_jobs": 132,
+     "expected_jobs": 5340
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 14,
+     "missed_jobs": 114,
+     "expected_jobs": 5340
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 10,
+     "missed_jobs": 375,
+     "expected_jobs": 5340
+    }
+   },
+   "cv20-big25/u0350": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 13,
+     "missed_jobs": 264,
+     "expected_jobs": 5340
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 13,
+     "missed_jobs": 180,
+     "expected_jobs": 5340
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 12,
+     "missed_jobs": 378,
+     "expected_jobs": 5340
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 11,
+     "missed_jobs": 275,
+     "expected_jobs": 5340
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 11,
+     "missed_jobs": 305,
+     "expected_jobs": 5340
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 11,
+     "missed_jobs": 201,
+     "expected_jobs": 5340
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 9,
+     "missed_jobs": 648,
+     "expected_jobs": 5340
+    }
+   },
+   "cv20-big25/u0400": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 8,
+     "missed_jobs": 636,
+     "expected_jobs": 5340
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 9,
+     "missed_jobs": 510,
+     "expected_jobs": 5340
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 8,
+     "missed_jobs": 552,
+     "expected_jobs": 5340
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 9,
+     "missed_jobs": 426,
+     "expected_jobs": 5340
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 9,
+     "missed_jobs": 555,
+     "expected_jobs": 5340
+    },
+    "cls-a1": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 9,
+     "missed_jobs": 429,
+     "expected_jobs": 5340
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 5,
+     "missed_jobs": 957,
+     "expected_jobs": 5340
+    }
+   },
+   "cv20-big25/u0450": {
+    "wfd": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 5,
+     "missed_jobs": 1425,
+     "expected_jobs": 5340
+    },
+    "cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 7,
+     "missed_jobs": 687,
+     "expected_jobs": 5340
+    },
+    "ra": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 7,
+     "missed_jobs": 864,
+     "expected_jobs": 5340
+    },
+    "ra-cgb": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 6,
+     "missed_jobs": 813,
+     "expected_jobs": 5340
+    },
+    "caas": {
+     "runs": 18,
+     "placeable": 18,
+     "met": 8,
+     "missed_jobs": 708,
+     "expected_jobs": 5340
+    },
+    "cls-a1": {
+     "runs": 17,
+     "placeable": 17,
+     "met": 8,
+     "missed_jobs": 555,
+     "expected_jobs": 5037
+    },
+    "cls-a1-cal": {
+     "runs": 18,
+     "placeable": 17,
+     "met": 4,
+     "missed_jobs": 861,
+     "expected_jobs": 4986
+    }
+   }
+  }
+ },
+ "isolation": {
+  "small": {
+   "caas": {
+    "high": [
+     0,
+     617
+    ],
+    "low": [
+     626,
+     626
+    ]
+   },
+   "cls-a1": {
+    "high": [
+     0,
+     617
+    ],
+    "low": [
+     626,
+     626
+    ]
+   },
+   "cls-a1-cal": {
+    "high": [
+     6,
+     216
+    ],
+    "low": [
+     216,
+     216
+    ]
+   }
+  },
+  "big": {
+   "caas": {
+    "high": [
+     0,
+     1784
+    ],
+    "big": [
+     320,
+     520
+    ]
+   },
+   "cls-a1": {
+    "high": [
+     0,
+     1784
+    ],
+    "big": [
+     520,
+     520
+    ]
+   },
+   "cls-a1-cal": {
+    "high": [
+     215,
+     1754
+    ],
+    "big": [
+     510,
+     510
+    ]
+   }
+  }
+ }
+}

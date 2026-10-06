@@ -1,0 +1,8073 @@
+{
+ "builds": [
+  "caas",
+  "cls-a1",
+  "cls-a1-cal"
+ ],
+ "cases": {
+  "cv00-low50/u045/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.936483875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.936483875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.890188175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u045/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.920609275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.920609275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.828868575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u045/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.804472575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.804472575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.728424775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u045/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.860779075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.860779075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.772723275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u045/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.880886375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.880886375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.737796675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u045/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.813011775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.813011775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.623031675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u045/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.783339175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.783339175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.783339175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u045/s07": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.923420175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.923420175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.822471875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u045/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.889354075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.889354075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.774486975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u045/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.941149775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.941149775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.818961475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u045/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.943540375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.943540375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.885326575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   }
+  },
+  "cv00-low50/u045/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.900655975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.900655975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.900655975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   }
+  },
+  "cv00-low50/u045/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.904169875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.904169875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.839579875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u045/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.758614375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.758614375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.758614375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u045/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.869053675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.869053675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.869053675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   }
+  },
+  "cv00-low50/u045/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.836708375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.836708375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.778760375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u045/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.835306275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.835306275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.835306275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u045/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.912770775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.912770775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.912770775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18
+   }
+  },
+  "cv00-low50/u048/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.890354275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.890354275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.662596575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u048/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.813171575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.813171575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.845450075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u048/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.826337875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.826337875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.698418375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u048/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.776081175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.776081175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.776081175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u048/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.782144675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.782144675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.693059275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u048/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.610272475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.610272475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.537575475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u048/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.819250775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.819250775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.819250775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u048/s07": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.923187675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.923187675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.829366875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u048/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.853015975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.853015975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.619725175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u048/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.774656075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.774656075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.692975575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u048/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.803161275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.803161275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.802589675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u048/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.842453175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.842453175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.842453175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u048/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.810683475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.810683475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.743530675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u048/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.770820975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.770820975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.770820975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u048/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.776122875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.776122875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.776122875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u048/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.881112575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.881112575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.776247475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u048/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.725707875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.725707875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.725707875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u048/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.779992075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.779992075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.779992075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u050/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.640453275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.640453275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.641851875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u050/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.849191975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.849191975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.704302975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u050/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.675180375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.675180375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.727681575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u050/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.753520275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.753520275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.753520275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u050/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.708032875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.708032875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.589629875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u050/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.760433675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.760433675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.655026275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u050/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.771750775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.771750775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.771750775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u050/s07": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.766423575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.766423575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.808238575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u050/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.689932675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.689932675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.614614175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u050/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.807134975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.807134975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.795416575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u050/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.631048875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.631048875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.691717075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u050/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.799609175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.799609175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.799609175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u050/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.856723575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.856723575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.756758775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u050/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.714054575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.714054575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.714054575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u050/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.756769575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.756769575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.756769575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u050/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.739775975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.739775975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.590823275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u050/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.809894175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.809894175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.809894175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u050/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.767632975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.767632975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.767632975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u052/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.707999275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.707999275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.715492375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u052/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.701048375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.701048375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.709953575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u052/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.647355675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.647355675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.732541375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u052/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.756255075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.756255075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.754152875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u052/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.714978075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.714978075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.647084375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u052/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.748785375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.748785375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.670159475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u052/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.694302675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.694302675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.694302675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u052/s07": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.802009875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.802009875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.777729475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u052/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.720513375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.720513375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.670436875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u052/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.803885075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.803885075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.647347975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u052/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.711693275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.711693275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.717770175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u052/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.694134275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.694134275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.694134275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u052/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.727364075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.727364075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.757935075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u052/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.801141375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.801141375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.801141375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u052/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.791918575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.791918575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.791918575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u052/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.776820975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.776820975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.627528575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u052/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.683541175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.683541175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.683541175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u052/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.797047575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.797047575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.797047575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u055/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.741484675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.741484675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.744364775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u055/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.729408375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.729408375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.635798575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u055/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.712928375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.712928375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.658279175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u055/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.730885275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.730885275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.733396975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u055/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.687323175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.687323175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.650781275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u055/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.583925775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.583925775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.669609075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u055/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.664932975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.664932975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.664932975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u055/s07": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.780068575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.780068575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.713410575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u055/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.726313075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.726313075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.707077275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u055/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.641596675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.641596675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.757258775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u055/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.753102775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.753102775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.656790575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u055/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.724258475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.724258475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.724258475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u055/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.759003175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.759003175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.754029575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u055/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.725087775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.725087775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.725087775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u055/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.680025975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.680025975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.680025975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u055/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.783678175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.783678175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.654384375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u055/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.697454575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.697454575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.697454575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u055/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.794115775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.794115775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.794115775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u057/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.698452175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.698452175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.701415975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u057/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.730977275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.730977275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.693520175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u057/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.712547975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.712547975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.636985975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u057/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.678702375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.678702375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.678702375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u057/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.685447875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.685447875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.725815175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u057/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.760655575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.760655575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.709852475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u057/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.695395775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.695395775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.695395775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u057/s07": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.738105575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.738105575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.777397175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u057/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.663179975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.663179975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.724490475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u057/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.765657675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.765657675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.782465775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u057/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.770185575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.770185575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.755383275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u057/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.666182875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.666182875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.666182875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u057/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.652449775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.652449775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.655018775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u057/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.742338875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.742338875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.742338875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u057/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.692292375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.692292375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.692292375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u057/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.661813675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.661813675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.715140975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u057/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.703600075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.703600075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.703600075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u057/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.696807575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.696807575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.696807575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u060/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.657828275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.657828275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.656467275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u060/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.719407075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.719407075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.697829475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u060/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.664249475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.664249475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.668409375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u060/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.670296875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.670296875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.670296875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u060/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.676719375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.676719375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.810507375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u060/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.658592675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.658592675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.758993575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u060/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.644296975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.644296975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.644296975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u060/s07": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.707622475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.707622475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.717092475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 108,
+    "missed_jobs": 108
+   }
+  },
+  "cv00-low50/u060/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.715588175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.715588175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.754990975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 360,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u060/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.739570575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.739570575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.818393475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u060/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.821849475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.821849475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.773071275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   }
+  },
+  "cv00-low50/u060/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.786261875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.786261875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.786261875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u060/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.679246075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.679246075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.634460875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv00-low50/u060/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.747851875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.747851875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.747851875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u060/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.692616575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.692616575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.692616575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 216,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u060/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.693999375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.693999375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.668146575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 306,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv00-low50/u060/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.789268775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.789268775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.789268775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv00-low50/u060/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.670833375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.670833375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.670833375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 270,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv20-low50/u045/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.8514503125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 42,
+    "missed_jobs": 42
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.8514503125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 42,
+    "missed_jobs": 42
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7195024791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv20-low50/u045/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7937013958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7937013958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.8307163958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   }
+  },
+  "cv20-low50/u045/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.72535625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 66,
+    "missed_jobs": 66
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.72535625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 66,
+    "missed_jobs": 66
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.57947245,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   }
+  },
+  "cv20-low50/u045/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.8514205625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.8514205625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.8142384791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   }
+  },
+  "cv20-low50/u045/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6747717833333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6747717833333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.46491345,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 96,
+    "missed_jobs": 96
+   }
+  },
+  "cv20-low50/u045/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.849407375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 33,
+    "missed_jobs": 33
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.849407375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 33,
+    "missed_jobs": 33
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7458754791666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 33,
+    "missed_jobs": 33
+   }
+  },
+  "cv20-low50/u045/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7859064791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7859064791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7859064791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39
+   }
+  },
+  "cv20-low50/u045/s07": {
+   "caas": {
+    "state": "ok",
+    "max_response_ratio": 0.9850830333333334,
+    "worst_inflation": 1.58970726335663,
+    "worst_memory_inflation": 1.58970726335663,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0
+   },
+   "cls-a1": {
+    "state": "ok",
+    "max_response_ratio": 0.9850830333333334,
+    "worst_inflation": 1.58970726335663,
+    "worst_memory_inflation": 1.58970726335663,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.709774075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv20-low50/u045/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.778150375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.778150375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.46442245,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   }
+  },
+  "cv20-low50/u045/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7817549791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7817549791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6980009791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 33,
+    "missed_jobs": 33
+   }
+  },
+  "cv20-low50/u045/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7974814791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7974814791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.8502002291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   }
+  },
+  "cv20-low50/u045/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7148283958333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7148283958333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7148283958333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   }
+  },
+  "cv20-low50/u045/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.8122131458333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.8122131458333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7608684791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   }
+  },
+  "cv20-low50/u045/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7138394791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7138394791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7138394791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   }
+  },
+  "cv20-low50/u045/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.8379598958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.8379598958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.8379598958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   }
+  },
+  "cv20-low50/u045/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7155158958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7155158958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7271488125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 24,
+    "missed_jobs": 24
+   }
+  },
+  "cv20-low50/u045/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7510843125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7510843125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7510843125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   }
+  },
+  "cv20-low50/u045/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7262955625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7262955625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7262955625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   }
+  },
+  "cv20-low50/u048/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7782204791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 57,
+    "missed_jobs": 57
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7782204791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 57,
+    "missed_jobs": 57
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.8168285625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   }
+  },
+  "cv20-low50/u048/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.8520483125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.8520483125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7571848125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 33,
+    "missed_jobs": 33
+   }
+  },
+  "cv20-low50/u048/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.63744325,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 60,
+    "missed_jobs": 60
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.63744325,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 60,
+    "missed_jobs": 60
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5000813833333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   }
+  },
+  "cv20-low50/u048/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.8513931458333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.8513931458333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7561868958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   }
+  },
+  "cv20-low50/u048/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5539675833333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5539675833333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.538782675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 129,
+    "missed_jobs": 129
+   }
+  },
+  "cv20-low50/u048/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.730519275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 51,
+    "missed_jobs": 51
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.730519275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 51,
+    "missed_jobs": 51
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.527053275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   }
+  },
+  "cv20-low50/u048/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.8115693125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.8115693125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.8115693125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39
+   }
+  },
+  "cv20-low50/u048/s07": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.655351075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.655351075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7408373958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39
+   }
+  },
+  "cv20-low50/u048/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.643716975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.643716975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.47655438333333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   }
+  },
+  "cv20-low50/u048/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.556253975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 93,
+    "missed_jobs": 93
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.556253975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 93,
+    "missed_jobs": 93
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.711517275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   }
+  },
+  "cv20-low50/u048/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.8490268958333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.8490268958333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6276980625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   }
+  },
+  "cv20-low50/u048/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.643022175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.643022175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.643022175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   }
+  },
+  "cv20-low50/u048/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.8566404791666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.8566404791666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7920850625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   }
+  },
+  "cv20-low50/u048/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5900458125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5900458125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5900458125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv20-low50/u048/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.9051173125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.9051173125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.9051173125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   }
+  },
+  "cv20-low50/u048/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.4817676458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 87,
+    "missed_jobs": 87
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.4817676458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 87,
+    "missed_jobs": 87
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.630321475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   }
+  },
+  "cv20-low50/u048/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7048947291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7048947291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7048947291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   }
+  },
+  "cv20-low50/u048/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7633148958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7633148958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7633148958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   }
+  },
+  "cv20-low50/u050/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6410024791666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6410024791666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6507999791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv20-low50/u050/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.8169341458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.8169341458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5343299791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 66,
+    "missed_jobs": 66
+   }
+  },
+  "cv20-low50/u050/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7147189166666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7147189166666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5069152291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 114,
+    "missed_jobs": 114
+   }
+  },
+  "cv20-low50/u050/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7475943958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7475943958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7475943958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   }
+  },
+  "cv20-low50/u050/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.45058545,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 120,
+    "missed_jobs": 120
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.45058545,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 120,
+    "missed_jobs": 120
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.487319475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 129,
+    "missed_jobs": 129
+   }
+  },
+  "cv20-low50/u050/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.642137575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 51,
+    "missed_jobs": 51
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.642137575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 51,
+    "missed_jobs": 51
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.682876775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 51,
+    "missed_jobs": 51
+   }
+  },
+  "cv20-low50/u050/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6512757291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 78,
+    "missed_jobs": 78
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6512757291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 78,
+    "missed_jobs": 78
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6512757291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 78,
+    "missed_jobs": 78
+   }
+  },
+  "cv20-low50/u050/s07": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.532358475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.532358475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5438689791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv20-low50/u050/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.646623775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.646623775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.54671505,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   }
+  },
+  "cv20-low50/u050/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.592564175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 93,
+    "missed_jobs": 93
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.592564175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 93,
+    "missed_jobs": 93
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6461794333333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 66,
+    "missed_jobs": 66
+   }
+  },
+  "cv20-low50/u050/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6438390625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6438390625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6098975625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   }
+  },
+  "cv20-low50/u050/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.646247775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.646247775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.646247775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv20-low50/u050/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7496738958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7496738958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7163605625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   }
+  },
+  "cv20-low50/u050/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6220548125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6220548125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6220548125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv20-low50/u050/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.8736892291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.8736892291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.8736892291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   }
+  },
+  "cv20-low50/u050/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6692326458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6692326458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.466802075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 96,
+    "missed_jobs": 96
+   }
+  },
+  "cv20-low50/u050/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7189841458333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7189841458333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7189841458333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv20-low50/u050/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6496067291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6496067291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6496067291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39
+   }
+  },
+  "cv20-low50/u052/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7758942291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7758942291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.7830335625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15
+   }
+  },
+  "cv20-low50/u052/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6096577291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6096577291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.554788775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 66,
+    "missed_jobs": 66
+   }
+  },
+  "cv20-low50/u052/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5294765166666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 78,
+    "missed_jobs": 78
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5294765166666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 78,
+    "missed_jobs": 78
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5240039791666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 99,
+    "missed_jobs": 99
+   }
+  },
+  "cv20-low50/u052/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5601920625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 111,
+    "missed_jobs": 111
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5601920625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 111,
+    "missed_jobs": 111
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5512013958333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 111,
+    "missed_jobs": 111
+   }
+  },
+  "cv20-low50/u052/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.454245275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 111,
+    "missed_jobs": 111
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.454245275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 111,
+    "missed_jobs": 111
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.458952475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 141,
+    "missed_jobs": 141
+   }
+  },
+  "cv20-low50/u052/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6155193125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 51,
+    "missed_jobs": 51
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6155193125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 51,
+    "missed_jobs": 51
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.685833075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 51,
+    "missed_jobs": 51
+   }
+  },
+  "cv20-low50/u052/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6120323125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6120323125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6120323125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv20-low50/u052/s07": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.594308275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.594308275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.567389675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv20-low50/u052/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.4962499791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.4962499791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.588108675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv20-low50/u052/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.511026375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.511026375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6843911666666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 66,
+    "missed_jobs": 66
+   }
+  },
+  "cv20-low50/u052/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6299382291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6299382291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6447302291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   }
+  },
+  "cv20-low50/u052/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.734998975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 57,
+    "missed_jobs": 57
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.734998975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 57,
+    "missed_jobs": 57
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.734998975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 57,
+    "missed_jobs": 57
+   }
+  },
+  "cv20-low50/u052/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.7637579791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.7637579791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6946657291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   }
+  },
+  "cv20-low50/u052/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5500393,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5500393,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5500393,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   }
+  },
+  "cv20-low50/u052/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6513864791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6513864791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6513864791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   }
+  },
+  "cv20-low50/u052/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.45081364583333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 81,
+    "missed_jobs": 81
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.45081364583333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 81,
+    "missed_jobs": 81
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.42370091666666665,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 105,
+    "missed_jobs": 105
+   }
+  },
+  "cv20-low50/u052/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6939595625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 78,
+    "missed_jobs": 78
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6939595625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 78,
+    "missed_jobs": 78
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6939595625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 78,
+    "missed_jobs": 78
+   }
+  },
+  "cv20-low50/u052/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6716355625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6716355625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6716355625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39
+   }
+  },
+  "cv20-low50/u055/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6655561458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 57,
+    "missed_jobs": 57
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6655561458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 57,
+    "missed_jobs": 57
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6666634791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 57,
+    "missed_jobs": 57
+   }
+  },
+  "cv20-low50/u055/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6375263958333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6375263958333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.574739375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 81,
+    "missed_jobs": 81
+   }
+  },
+  "cv20-low50/u055/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5097083125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5097083125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5399593958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 99,
+    "missed_jobs": 99
+   }
+  },
+  "cv20-low50/u055/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.4402514791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 144,
+    "missed_jobs": 144
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.4402514791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 144,
+    "missed_jobs": 144
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.42746222916666665,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 144,
+    "missed_jobs": 144
+   }
+  },
+  "cv20-low50/u055/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.4476193125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 129,
+    "missed_jobs": 129
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.4476193125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 129,
+    "missed_jobs": 129
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.492687475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 123,
+    "missed_jobs": 123
+   }
+  },
+  "cv20-low50/u055/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6493339791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 51,
+    "missed_jobs": 51
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6493339791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 51,
+    "missed_jobs": 51
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.538230175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 66,
+    "missed_jobs": 66
+   }
+  },
+  "cv20-low50/u055/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6010302291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6010302291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6010302291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv20-low50/u055/s07": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5018172291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 123,
+    "missed_jobs": 123
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5018172291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 123,
+    "missed_jobs": 123
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.552891175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 132,
+    "missed_jobs": 132
+   }
+  },
+  "cv20-low50/u055/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.577007175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.577007175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.615542875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv20-low50/u055/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.512141775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 87,
+    "missed_jobs": 87
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.512141775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 87,
+    "missed_jobs": 87
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.512275575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 75,
+    "missed_jobs": 75
+   }
+  },
+  "cv20-low50/u055/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6710948125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6710948125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.4707290625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   }
+  },
+  "cv20-low50/u055/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.4794713125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 99,
+    "missed_jobs": 99
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.4794713125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 99,
+    "missed_jobs": 99
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.4794713125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 99,
+    "missed_jobs": 99
+   }
+  },
+  "cv20-low50/u055/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6923875625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6923875625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.48401947916666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   }
+  },
+  "cv20-low50/u055/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5705178333333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5705178333333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5705178333333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   }
+  },
+  "cv20-low50/u055/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6896180625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6896180625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6896180625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30
+   }
+  },
+  "cv20-low50/u055/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.4851043958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 81,
+    "missed_jobs": 81
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.4851043958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 81,
+    "missed_jobs": 81
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.39389365,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 123,
+    "missed_jobs": 123
+   }
+  },
+  "cv20-low50/u055/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.506187275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 111,
+    "missed_jobs": 111
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.506187275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 111,
+    "missed_jobs": 111
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.506187275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 111,
+    "missed_jobs": 111
+   }
+  },
+  "cv20-low50/u055/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.617266575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 81,
+    "missed_jobs": 81
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.617266575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 81,
+    "missed_jobs": 81
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.617266575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 81,
+    "missed_jobs": 81
+   }
+  },
+  "cv20-low50/u057/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5921139791666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5921139791666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5697680625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   }
+  },
+  "cv20-low50/u057/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.639363775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 78,
+    "missed_jobs": 78
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.639363775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 78,
+    "missed_jobs": 78
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.551182775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   }
+  },
+  "cv20-low50/u057/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5551345625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5551345625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.4770487291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 111,
+    "missed_jobs": 111
+   }
+  },
+  "cv20-low50/u057/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.4745582291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 129,
+    "missed_jobs": 129
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.4745582291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 129,
+    "missed_jobs": 129
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.4745582291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 129,
+    "missed_jobs": 129
+   }
+  },
+  "cv20-low50/u057/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5748895625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 93,
+    "missed_jobs": 93
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5748895625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 93,
+    "missed_jobs": 93
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.522213875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 129,
+    "missed_jobs": 129
+   }
+  },
+  "cv20-low50/u057/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5949888125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5949888125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5393776458333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   }
+  },
+  "cv20-low50/u057/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5364604791666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 105,
+    "missed_jobs": 105
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5364604791666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 105,
+    "missed_jobs": 105
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5364604791666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 105,
+    "missed_jobs": 105
+   }
+  },
+  "cv20-low50/u057/s07": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.4677590625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 159,
+    "missed_jobs": 159
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.4677590625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 159,
+    "missed_jobs": 159
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5800338125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 108,
+    "missed_jobs": 108
+   }
+  },
+  "cv20-low50/u057/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.603263375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.603263375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.508546575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 108,
+    "missed_jobs": 108
+   }
+  },
+  "cv20-low50/u057/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.675324075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.675324075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.690343775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 51,
+    "missed_jobs": 51
+   }
+  },
+  "cv20-low50/u057/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.525809875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.525809875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.553079275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   }
+  },
+  "cv20-low50/u057/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.4996620625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 99,
+    "missed_jobs": 99
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.4996620625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 99,
+    "missed_jobs": 99
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.4996620625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 99,
+    "missed_jobs": 99
+   }
+  },
+  "cv20-low50/u057/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5455123958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5455123958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.42628364583333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 87,
+    "missed_jobs": 87
+   }
+  },
+  "cv20-low50/u057/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5457006458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 93,
+    "missed_jobs": 93
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5457006458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 93,
+    "missed_jobs": 93
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5457006458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 93,
+    "missed_jobs": 93
+   }
+  },
+  "cv20-low50/u057/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6272406458333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6272406458333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6272406458333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   }
+  },
+  "cv20-low50/u057/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.4837291458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 99,
+    "missed_jobs": 99
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.4837291458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 99,
+    "missed_jobs": 99
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.44111711666666664,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 123,
+    "missed_jobs": 123
+   }
+  },
+  "cv20-low50/u057/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.522657575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 111,
+    "missed_jobs": 111
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.522657575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 111,
+    "missed_jobs": 111
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.522657575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 111,
+    "missed_jobs": 111
+   }
+  },
+  "cv20-low50/u057/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.543294575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 96,
+    "missed_jobs": 96
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.543294575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 96,
+    "missed_jobs": 96
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.543294575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 96,
+    "missed_jobs": 96
+   }
+  },
+  "cv20-low50/u060/s00": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5579349791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5579349791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5584929791666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 339,
+    "late_jobs": 0,
+    "lost_jobs": 90,
+    "missed_jobs": 90
+   }
+  },
+  "cv20-low50/u060/s01": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.663879275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 81,
+    "missed_jobs": 81
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.663879275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 81,
+    "missed_jobs": 81
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.582163175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 276,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   }
+  },
+  "cv20-low50/u060/s02": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.48583172916666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 99,
+    "missed_jobs": 99
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.48583172916666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 99,
+    "missed_jobs": 99
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5007120625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 348,
+    "late_jobs": 0,
+    "lost_jobs": 99,
+    "missed_jobs": 99
+   }
+  },
+  "cv20-low50/u060/s03": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5029114791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 147,
+    "missed_jobs": 147
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5029114791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 147,
+    "missed_jobs": 147
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5029114791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 378,
+    "late_jobs": 0,
+    "lost_jobs": 147,
+    "missed_jobs": 147
+   }
+  },
+  "cv20-low50/u060/s04": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5292733958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 123,
+    "missed_jobs": 123
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5292733958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 123,
+    "missed_jobs": 123
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.554313675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 336,
+    "late_jobs": 0,
+    "lost_jobs": 111,
+    "missed_jobs": 111
+   }
+  },
+  "cv20-low50/u060/s05": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6706638125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6706638125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6593274791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 219,
+    "late_jobs": 0,
+    "lost_jobs": 87,
+    "missed_jobs": 87
+   }
+  },
+  "cv20-low50/u060/s06": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.542367975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 96,
+    "missed_jobs": 96
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.542367975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 96,
+    "missed_jobs": 96
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.542367975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 342,
+    "late_jobs": 0,
+    "lost_jobs": 96,
+    "missed_jobs": 96
+   }
+  },
+  "cv20-low50/u060/s07": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5622127291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 141,
+    "missed_jobs": 141
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5622127291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 141,
+    "missed_jobs": 141
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.584681075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 354,
+    "late_jobs": 0,
+    "lost_jobs": 126,
+    "missed_jobs": 126
+   }
+  },
+  "cv20-low50/u060/s08": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.566062875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 114,
+    "missed_jobs": 114
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.566062875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 114,
+    "missed_jobs": 114
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.525954275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 369,
+    "late_jobs": 0,
+    "lost_jobs": 108,
+    "missed_jobs": 108
+   }
+  },
+  "cv20-low50/u060/s09": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.694221475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.694221475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.574809675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   }
+  },
+  "cv20-low50/u060/s10": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5673135625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5673135625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 45,
+    "missed_jobs": 45
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.579890675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 258,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   }
+  },
+  "cv20-low50/u060/s11": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5987403958333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5987403958333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5987403958333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 264,
+    "late_jobs": 0,
+    "lost_jobs": 102,
+    "missed_jobs": 102
+   }
+  },
+  "cv20-low50/u060/s12": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5948323125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5948323125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 84,
+    "missed_jobs": 84
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5357234333333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 285,
+    "late_jobs": 0,
+    "lost_jobs": 63,
+    "missed_jobs": 63
+   }
+  },
+  "cv20-low50/u060/s13": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.5959756458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.5959756458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.5959756458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 252,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69
+   }
+  },
+  "cv20-low50/u060/s14": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.6293297291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.6293297291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6293297291666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 207,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48
+   }
+  },
+  "cv20-low50/u060/s15": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.47818289583333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 114,
+    "missed_jobs": 114
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.47818289583333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 114,
+    "missed_jobs": 114
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.6169489791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 132,
+    "missed_jobs": 132
+   }
+  },
+  "cv20-low50/u060/s16": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.562932575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 105,
+    "missed_jobs": 105
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.562932575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 105,
+    "missed_jobs": 105
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.562932575,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 318,
+    "late_jobs": 0,
+    "lost_jobs": 105,
+    "missed_jobs": 105
+   }
+  },
+  "cv20-low50/u060/s17": {
+   "caas": {
+    "state": "deadline",
+    "max_response_ratio": 0.549070375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 114,
+    "missed_jobs": 114
+   },
+   "cls-a1": {
+    "state": "deadline",
+    "max_response_ratio": 0.549070375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 114,
+    "missed_jobs": 114
+   },
+   "cls-a1-cal": {
+    "state": "deadline",
+    "max_response_ratio": 0.549070375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 282,
+    "late_jobs": 0,
+    "lost_jobs": 114,
+    "missed_jobs": 114
+   }
+  }
+ }
+}

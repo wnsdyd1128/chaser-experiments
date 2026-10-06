@@ -1,0 +1,43 @@
+load,placement,sets
+0.45,CAAS (CA-CSRD + Algorithm 1),1
+0.475,CAAS (CA-CSRD + Algorithm 1),0
+0.5,CAAS (CA-CSRD + Algorithm 1),0
+0.525,CAAS (CA-CSRD + Algorithm 1),0
+0.55,CAAS (CA-CSRD + Algorithm 1),0
+0.575,CAAS (CA-CSRD + Algorithm 1),0
+0.6,CAAS (CA-CSRD + Algorithm 1),0
+0.45,CLS + Algorithm 1 (threshold 0.5),1
+0.475,CLS + Algorithm 1 (threshold 0.5),0
+0.5,CLS + Algorithm 1 (threshold 0.5),0
+0.525,CLS + Algorithm 1 (threshold 0.5),0
+0.55,CLS + Algorithm 1 (threshold 0.5),0
+0.575,CLS + Algorithm 1 (threshold 0.5),0
+0.6,CLS + Algorithm 1 (threshold 0.5),0
+0.45,CLS + Algorithm 1 (calibrated threshold 0.887),0
+0.475,CLS + Algorithm 1 (calibrated threshold 0.887),0
+0.5,CLS + Algorithm 1 (calibrated threshold 0.887),0
+0.525,CLS + Algorithm 1 (calibrated threshold 0.887),0
+0.55,CLS + Algorithm 1 (calibrated threshold 0.887),0
+0.575,CLS + Algorithm 1 (calibrated threshold 0.887),0
+0.6,CLS + Algorithm 1 (calibrated threshold 0.887),0
+0.45,Partitioned (balanced CLS grouping),18
+0.475,Partitioned (balanced CLS grouping),18
+0.5,Partitioned (balanced CLS grouping),17
+0.525,Partitioned (balanced CLS grouping),13
+0.55,Partitioned (balanced CLS grouping),3
+0.575,Partitioned (balanced CLS grouping),0
+0.6,Partitioned (balanced CLS grouping),0
+0.45,Partitioned (release-aware within balanced CLS grouping),18
+0.475,Partitioned (release-aware within balanced CLS grouping),18
+0.5,Partitioned (release-aware within balanced CLS grouping),15
+0.525,Partitioned (release-aware within balanced CLS grouping),10
+0.55,Partitioned (release-aware within balanced CLS grouping),0
+0.575,Partitioned (release-aware within balanced CLS grouping),0
+0.6,Partitioned (release-aware within balanced CLS grouping),0
+0.45,Partitioned (U-balanced, WFD),18
+0.475,Partitioned (U-balanced, WFD),17
+0.5,Partitioned (U-balanced, WFD),17
+0.525,Partitioned (U-balanced, WFD),9
+0.55,Partitioned (U-balanced, WFD),0
+0.575,Partitioned (U-balanced, WFD),0
+0.6,Partitioned (U-balanced, WFD),0

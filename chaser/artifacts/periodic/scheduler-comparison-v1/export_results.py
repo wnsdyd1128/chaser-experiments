@@ -63,6 +63,8 @@ STUDIES = {
     'random-policy-mix': 'random-policy-mix-v1',
     'deadline-small': 'deadline-small-v1',
     'deadline-big': 'deadline-big-v1',
+    'deadline-small-caas': 'deadline-small-caas-v1',
+    'deadline-big-caas': 'deadline-big-caas-v1',
     # Re-analysis of the bundles above (feature-precheck/precheck.py); no simulation.
     'feature-precheck': 'feature-precheck-v1',
     # The 20 ms design whose pilot missed deadlines; kept as the reason for v2. Its .cache output

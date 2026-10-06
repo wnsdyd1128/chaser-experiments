@@ -33,6 +33,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 25 | 접근 패턴 때문에 CLS가 낮은 task(L1 충돌 miss, 21절과 같은 set) | `policy-mix/`(`--design conflict-cls`, `conflict_calibrate.py`) | `conflict-calibration-v1`, `conflict-cls-v2`(v1은 게이트에서 멈춤) | `conflict-calibration`, `conflict-cls` |
 | 26 | 무작위 배치 기준선(21·20·23절, 확장 24·25·19·17절의 set) | `policy-mix/`(`--design random-*`) | `random-small-memory-v1`, `random-task-count-v1`, `random-cls-spread-v1` | `random-small-memory`, `random-task-count`, `random-cls-spread` |
 | 27 | 마감 위반 확증 실험(사전 등록, 새 set) | `policy-mix/`(`--design deadline-small`, `deadline-big`, `deadline_analysis.py`) | `deadline-small-v1`, `deadline-big-v1`, `deadline-confirm-v1` | `deadline-small`, `deadline-big`, `deadline-confirm` |
+| 28 | CAAS 대비 단계별 비교(27절의 set, 사전 등록) | `policy-mix/`(`--design deadline-small-caas`, `deadline-big-caas`, `algorithm1.py`, `ca_table.py`, `ladder_analysis.py`) | `deadline-small-caas-v1`, `deadline-big-caas-v1`, `deadline-ladder-v1` | `ca-csrd`, `deadline-small-caas`, `deadline-big-caas`, `deadline-ladder` |
 
 ---
 
@@ -1664,3 +1665,86 @@ python3 $R/policy-mix/deadline_analysis.py analyze --small $W/.cache/deadline-sm
 ### 결과 파일
 - `results/deadline-small/`, `results/deadline-big/`: `protocol.json`, `model-check.json`(17절 복사), `prediction-l2-demand.json`, `results.jsonl`, `isolated-u.json`, `rt-metrics.json`, `stats-*.json/md`, `per-set.jsonl.gz`
 - `results/deadline-confirm/`: `deadline-confirm.json/md`(사전 등록한 판정)와 그림
+
+---
+
+## 28. CAAS 대비 단계별 비교 (27절의 set, 사전 등록)
+
+### 개요
+연구 방향을 "캐시 친화도 + utilization·release"로 정리하면서(연구 문서의 PLAN 0절), 평가의 중심을 CAAS에서 한 가지씩 바꾸는 단계별 비교로 정했다.
+27절에는 단계 2(cgb)·3(ra-cgb)과 공통 비교 기준이 이미 있으므로, 같은 set에 단계 0·1의 Partitioned run만 덧붙인다.
+가설·판정·분석 스크립트(`policy-mix/ladder_analysis.py`와 테스트)는 2026-10-06 03:03 KST에, 27·28절의 어떤 결과도 읽기 전에 고정했다. 고정한 해시: `ladder_analysis.py` sha256 `90e6c86c4a1cc629565d05819f4ca0838501b2aa59427a699e248f95c877353d`, `algorithm1.py` sha256 `2490ac646bd7369c8bcee0008fffd55049a1106c6fb14a949a8f02cf469a1aa6`.
+
+| 단계 | 배치 | 바로 앞 단계와 다른 점 |
+|---|---|---|
+| 0 | caas: CA-CSRD + CAAS Algorithm 1 | 선행 연구. calibration-v2의 동결 정책(임곗값 0.178, 격리 코어 0, 비격리 코어 1–3, 코어 용량 1) |
+| 1 | cls-a1: CLS + Algorithm 1 | 지표만 CLS로(임곗값 0.5, 균형 CLS 묶음의 기준과 같음) |
+| 2 | cgb(27절) | 격리 코어 수를 부하 한도(평균 × 1.05)로 정함 |
+| 3 | ra-cgb(27절) | 묶음 제약 안에서 release 시각 몰림을 줄임 |
+| 민감도 | cls-a1-cal: CLS + Algorithm 1, 같은 calibration의 동결 CLS 임곗값 0.887 | CAAS와 같은 출처의 임곗값 |
+
+Algorithm 1은 `chaser/policy/allocator.py`(CAAS Algorithm 1 구현)를 그대로 쓴다. 격리 코어가 가득 차서 놓을 수 없는 task가 있으면
+CAAS 규칙으로는 배치가 없으므로, 그 run은 **배치 불가**로 표시한다. 빌드를 위해 그 task는 전체에서 가장 덜 찬 코어에 넣지만(`algorithm1.py`),
+이 대체 배치는 CAAS가 아니므로 분석에서 따로 다룬다.
+
+### 사전 등록한 가설과 판정
+
+유형(32 KiB, 768 KiB)마다 4단계, 모두 8개 검정에 Holm(유의수준 0.05). 진술한 방향으로 유의하면 그 유형에서 지지된다.
+
+| 단계 | 비교 | 주 지표와 판정 |
+|---|---|---|
+| L1 지표 | cls-a1 대 caas | 위반 job 비율 차이의 양측 Wilcoxon(둘 다 측정되고 한쪽이라도 위반한 쌍, 27절 V2와 같은 함수). 위반이 적은 방향 |
+| L2 utilization 균형 | cgb 대 cls-a1 | 배치 가능 여부를 포함한 마감 준수: "배치되고 모든 마감을 지킴"의 exact McNemar(양측). 배치 불가는 지키지 못한 것으로 센다. cgb가 더 많은 방향 |
+| L3 release | ra-cgb 대 cgb | 둘 다 마감을 지킨 쌍의 TAT 로그 비 양측 Wilcoxon. TAT가 짧은 방향 |
+| L4 전체 | ra-cgb 대 caas | 위반 job 비율(L1과 같은 검정). 위반이 적은 방향 |
+
+- **배치 불가 run:** 위반 job·최악 실행시간·TET·TAT의 짝지은 검정에서 빼고, 배치 가능 여부를 포함한 마감 준수에서만 실패로 센다. 시작 실패와 기타 상태는 27절처럼 결측이다.
+- **보조(Holm은 보조끼리):** 단계·유형마다 최악 실행시간 증가와 TET(둘 다 마감을 지킨 쌍), L1·L3·L4의 배치 가능 마감 준수, L2·L3의 위반 job. 민감도로 cls-a1-cal 대 caas(위반 job), cls-a1-cal 대 cls-a1(배치 가능 마감 준수).
+- **서술:** 칸·배치마다 배치 가능 수, 마감 준수 수, 위반 job 비율. Algorithm 1 변형마다 task 역할별 격리 비율.
+
+### 실행 전 정적 예측 (설정과 CA-CSRD 표에서 계산, 결과 열람 전)
+- **배치 가능한 set 수(36개 중, 두 주기 칸 합):**
+  - 32 KiB, caas와 cls-a1: U 0.45에서 34, 0.475에서 27, 0.5에서 14, 0.525에서 2, 0.55 이상 0. 저-CLS task가 U의 절반이라 코어 0 하나에 들어가지 않는다.
+  - 32 KiB, cls-a1-cal: 16, 10, 2, 그 위로 0.
+  - 768 KiB: 세 변형 모두 36(cls-a1-cal의 0.45만 34).
+- **격리하는 task:**
+  - 32 KiB: caas와 cls-a1 모두 저-CLS task를 전부 격리하고 고-CLS task는 하나도 격리하지 않는다. 저-CLS task의 CA-CSRD는 약 0.12로 CAAS 임곗값 아래다. 그래서 L1은 배치가 같아 차이가 없을 것으로 예상한다.
+  - 768 KiB: caas는 768 KiB task 520개 중 320개만 격리한다. 한 번만 훑는 task는 CA-CSRD가 1.0이다. cls-a1은 520개 모두 격리한다.
+  - cls-a1-cal은 고-CLS task도 일부 격리한다(32 KiB 6/216, 768 KiB 215/1754).
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | **배치**: caas, cls-a1, cls-a1-cal(이 절), cgb·ra-cgb·wfd·ra·무작위(27절) |
+| 통제 변인 | 27절의 set·task·주기·측정 구간 전부(설계 모듈이 27절의 wfd 설정을 그대로 받고 코어만 바꾼다. 테스트로 확인) |
+| 입력 | **CA-CSRD**: 27절 wfd 빌드의 yarda hierarchy-rd 분석에서 task별 L1 CSRD 히스토그램으로 `chaser.locality.ca.ca_csrd`를 계산(`ca_table.py`, `results/ca-csrd/`). 정적 분석만 읽는다<br>**CLS**: 설계의 계획값(= yarda CLS) |
+| 종속 변인 | 27절과 같다(`rt_metrics.py`, results.jsonl) |
+| 조작 확인 | yarda CLS = 계획값, 단독 U 게이트 3%(27절과 같은 task) |
+
+### 실험 방법
+1. `ca_table.py`로 27절 두 출력의 CA-CSRD 표를 만든다(완료).
+2. 설계마다(`deadline-small-caas` 다음 `deadline-big-caas`) `prepare`(wfd + 세 변형), `isolated`, `pilot`, `full`, `stats`, `rt`(`--builds caas,cls-a1,cls-a1-cal`).
+3. `ladder_analysis.py`가 27·28절 출력을 경우마다 짝지어 위 판정을 낸다.
+4. 규모는 396 경우 × 3 = 1,188 run이다. 27절이 정상 종료(`supervisor.exit` = 0)한 뒤 시작한다.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R/policy-mix $R/policy-mix   # 명세 테스트
+for t in small big; do
+    python3 $R/policy-mix/ca_table.py --output $W/.cache/deadline-$t-v1 --dest $R/results/ca-csrd/deadline-$t.json
+    O=$W/.cache/deadline-$t-caas-v1
+    mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+    for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design deadline-$t-caas --output $O; done
+    python3 $R/policy-mix/rt_metrics.py --output $O --builds caas,cls-a1,cls-a1-cal
+done
+python3 $R/policy-mix/ladder_analysis.py --small $W/.cache/deadline-small-v1 --small-caas $W/.cache/deadline-small-caas-v1 \
+    --big $W/.cache/deadline-big-v1 --big-caas $W/.cache/deadline-big-caas-v1 --dest $W/.cache/deadline-ladder-v1
+```
+실제 실행은 `supervisors/deadline-ladder-v1.sh`다.
+
+### 결과 파일
+- `results/ca-csrd/`: 두 유형의 task별 CA-CSRD 표와 원본 분석 파일 해시
+- `results/deadline-small-caas/`, `results/deadline-big-caas/`: `protocol.json`, `results.jsonl`, `isolated-u.json`, `rt-metrics.json`, `stats-*.json/md`, `per-set.jsonl.gz`
+- `results/deadline-ladder/`: `ladder.json/md`(사전 등록한 판정)와 그림

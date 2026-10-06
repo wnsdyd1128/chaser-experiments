@@ -1,0 +1,25 @@
+load,placement,violated_percent
+0.3,CAAS (CA-CSRD + Algorithm 1),2.47191
+0.35,CAAS (CA-CSRD + Algorithm 1),5.71161
+0.4,CAAS (CA-CSRD + Algorithm 1),10.3933
+0.45,CAAS (CA-CSRD + Algorithm 1),13.2584
+0.3,CLS + Algorithm 1 (threshold 0.5),2.13483
+0.35,CLS + Algorithm 1 (threshold 0.5),3.76404
+0.4,CLS + Algorithm 1 (threshold 0.5),8.03371
+0.45,CLS + Algorithm 1 (threshold 0.5),11.0185
+0.3,CLS + Algorithm 1 (calibrated threshold 0.887),7.02247
+0.35,CLS + Algorithm 1 (calibrated threshold 0.887),12.1348
+0.4,CLS + Algorithm 1 (calibrated threshold 0.887),17.9213
+0.45,CLS + Algorithm 1 (calibrated threshold 0.887),17.2684
+0.3,Partitioned (balanced CLS grouping),2.13483
+0.35,Partitioned (balanced CLS grouping),3.37079
+0.4,Partitioned (balanced CLS grouping),9.55056
+0.45,Partitioned (balanced CLS grouping),12.8652
+0.3,Partitioned (release-aware within balanced CLS grouping),1.96629
+0.35,Partitioned (release-aware within balanced CLS grouping),5.14981
+0.4,Partitioned (release-aware within balanced CLS grouping),7.97753
+0.45,Partitioned (release-aware within balanced CLS grouping),15.2247
+0.3,Partitioned (U-balanced, WFD),4.4382
+0.35,Partitioned (U-balanced, WFD),4.94382
+0.4,Partitioned (U-balanced, WFD),11.9101
+0.45,Partitioned (U-balanced, WFD),26.6854

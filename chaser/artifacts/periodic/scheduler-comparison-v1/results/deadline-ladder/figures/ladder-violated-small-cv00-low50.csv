@@ -1,0 +1,43 @@
+load,placement,violated_percent
+0.45,CAAS (CA-CSRD + Algorithm 1),10.1818
+0.475,CAAS (CA-CSRD + Algorithm 1),15.0442
+0.5,CAAS (CA-CSRD + Algorithm 1),18.1818
+0.525,CAAS (CA-CSRD + Algorithm 1),20
+0.55,CAAS (CA-CSRD + Algorithm 1),None
+0.575,CAAS (CA-CSRD + Algorithm 1),None
+0.6,CAAS (CA-CSRD + Algorithm 1),None
+0.45,CLS + Algorithm 1 (threshold 0.5),10.1818
+0.475,CLS + Algorithm 1 (threshold 0.5),15.0442
+0.5,CLS + Algorithm 1 (threshold 0.5),18.1818
+0.525,CLS + Algorithm 1 (threshold 0.5),20
+0.55,CLS + Algorithm 1 (threshold 0.5),None
+0.575,CLS + Algorithm 1 (threshold 0.5),None
+0.6,CLS + Algorithm 1 (threshold 0.5),None
+0.45,CLS + Algorithm 1 (calibrated threshold 0.887),12.8
+0.475,CLS + Algorithm 1 (calibrated threshold 0.887),17.1053
+0.5,CLS + Algorithm 1 (calibrated threshold 0.887),20
+0.525,CLS + Algorithm 1 (calibrated threshold 0.887),None
+0.55,CLS + Algorithm 1 (calibrated threshold 0.887),None
+0.575,CLS + Algorithm 1 (calibrated threshold 0.887),None
+0.6,CLS + Algorithm 1 (calibrated threshold 0.887),None
+0.45,Partitioned (balanced CLS grouping),0
+0.475,Partitioned (balanced CLS grouping),0
+0.5,Partitioned (balanced CLS grouping),0.347222
+0.525,Partitioned (balanced CLS grouping),2.77778
+0.55,Partitioned (balanced CLS grouping),11.8056
+0.575,Partitioned (balanced CLS grouping),16.6667
+0.6,Partitioned (balanced CLS grouping),21.1806
+0.45,Partitioned (release-aware within balanced CLS grouping),0
+0.475,Partitioned (release-aware within balanced CLS grouping),0
+0.5,Partitioned (release-aware within balanced CLS grouping),0
+0.525,Partitioned (release-aware within balanced CLS grouping),1.38889
+0.55,Partitioned (release-aware within balanced CLS grouping),9.375
+0.575,Partitioned (release-aware within balanced CLS grouping),15.625
+0.6,Partitioned (release-aware within balanced CLS grouping),18.75
+0.45,Partitioned (U-balanced, WFD),0
+0.475,Partitioned (U-balanced, WFD),0
+0.5,Partitioned (U-balanced, WFD),0.347222
+0.525,Partitioned (U-balanced, WFD),3.49151
+0.55,Partitioned (U-balanced, WFD),14.9306
+0.575,Partitioned (U-balanced, WFD),21.5278
+0.6,Partitioned (U-balanced, WFD),26.7361
