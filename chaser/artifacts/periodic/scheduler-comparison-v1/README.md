@@ -30,7 +30,7 @@ run 기록에 simulator 해시가 남지 않으므로 바이너리를 해시로 
 | X 디스플레이 | laysim이 접속할 `DISPLAY`(이 환경: `165.246.44.80:90.0`) |
 | RTEMS 6 SDK | `/opt/rtems/6`, sparc-rtems6-gcc 13.3.0(RSB b1aec32, Newlib 1b3dcfd), `/opt/src/rtems/waf` |
 | LLVM | clang-14 / opt-14(Ubuntu 14.0.0-1ubuntu1.1) |
-| YARDA(CLS 분포) | `OBC-SIM/Yet-Another-Reuse-Distance-Analyzer` `feat/cpp-backend` a058a454 → `rtems/baseline/build/yarda` |
+| YARDA(실험 1–4) | `OBC-SIM/Yet-Another-Reuse-Distance-Analyzer` `feat/cpp-backend` a058a454 → `.cache/yarda-a058a454-build`(공유 빌드 폴더 `rtems/baseline/build/yarda`의 빌드를 2026-10-03에 복사해 고정, 해시 동일) |
 | YARDA(CLS 양극단) | 같은 저장소 374b2c9 + frontend `Access-Pattern-Extractor` 2670c6e → `.cache/yarda-374b2c9-build` |
 | Python | 3.10.12, numpy 2.2.6, scipy 1.15.3, matplotlib 3.10.9 |
 
@@ -48,22 +48,27 @@ mkdir -p $B
 git ls-tree -r --name-only 4d03b93 -- chaser tools rtems/periodic rtems/baseline/cache.yaml |
   while read -r f; do mkdir -p "$B/$(dirname "$f")"; git show "4d03b93:./$f" > "$B/$f"; done
 cp -a $B $B-c2 && (cd .cache && patch -p1 -d period-distribution-code-4d03b93-c2 < ../artifacts/periodic/scheduler-comparison-v1/c2-topology.patch)
-ln -s /workspace/experiments/chaser/rtems/baseline/build $B-c2/rtems/baseline/build   # YARDA 사용
+mkdir $B-c2/rtems/baseline/build && ln -s /workspace/experiments/chaser/.cache/yarda-a058a454-build $B-c2/rtems/baseline/build/yarda
 ```
 
-CLS 양극단 실험은 c2 사본에 패딩 패치를 더하고, IR 명령어 카운트가 있는 YARDA
+c2의 YARDA는 a058a454 빌드다. 원래는 사본의 `rtems/baseline/build`가 저장소의 공유 빌드 폴더를
+가리켰다. 그 폴더는 다른 작업이 YARDA를 새로 빌드하면 바뀌므로, 2026-10-03에 빌드 폴더를 복사해 고정했다.
+복사본의 `yarda_cpp`(`dc482959…`)와 `libMemoryAccessPatterns.so`(`2e72346a…`)는 원본과 같고,
+고정본으로 실험 3의 한 경우를 다시 분석했을 때 CLS·CLP가 저장된 `cls.json`과 같았다.
+고정본이 없으면 YARDA 저장소를 a058a454로 checkout한 뒤 위 빌드 명령으로 만든다.
+
+실험 5–19은 c2 사본에 패딩 패치를 더하고, IR 명령어 카운트가 있는 YARDA
 (`feat/cpp-backend` 374b2c9, frontend 2670c6e)를 별도 빌드해 연결한 **c3 사본**을 쓴다.
-기존 실험의 YARDA 바이너리(`rtems/baseline/build/yarda`)는 그대로 둔다.
 
 ```sh
 Y=/workspace/experiments/chaser/.cache/yarda-374b2c9-build
 cmake -S /workspace/Yet-Another-Reuse-Distance-Analyzer -B $Y -DCMAKE_BUILD_TYPE=Release -DLLVM_DIR=/usr/lib/llvm-14/cmake && cmake --build $Y -j 32
-cp -a $B-c2 $B-c3 && rm $B-c3/rtems/baseline/build && mkdir $B-c3/rtems/baseline/build && ln -s $Y $B-c3/rtems/baseline/build/yarda
+cp -a $B-c2 $B-c3 && rm $B-c3/rtems/baseline/build/yarda && ln -s $Y $B-c3/rtems/baseline/build/yarda
 patch -p1 -d $B-c3 < artifacts/periodic/scheduler-comparison-v1/cls-bimodal/padding.patch
 ```
 
 모든 명령은 `PYTHONPATH=<사본>`으로, 사본 디렉터리를 현재 디렉터리로 두고 실행한다
-(CLS 양극단은 c3, 나머지는 c2).
+(실험 1–4는 c2, 실험 5–19는 c3).
 `python3 -m pytest`를 저장소 루트에서 실행하면 HEAD의 `chaser`가 import된다.
 
 ## 테스트

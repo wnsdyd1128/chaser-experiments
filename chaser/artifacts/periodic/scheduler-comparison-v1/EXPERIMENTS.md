@@ -102,7 +102,7 @@ Clustered의 소속은 같은 설정의 Partitioned 코어 배정에서 정해�
 1. **환경**: README의 "재현 환경"과 `results/environment.json`(도구 해시). 결과를 수치까지
    같게 재현하려면 laysim 바이너리와 RTEMS 툴체인이 같아야 한다.
 2. **코드 사본**: README "코드 기준"의 명령으로 만든다.
-   - c2 = 4d03b93 + `c2-topology.patch`, `rtems/baseline/build/yarda` = YARDA a058a454 빌드
+   - c2 = 4d03b93 + `c2-topology.patch`, `rtems/baseline/build/yarda` = YARDA a058a454 빌드(고정본 `.cache/yarda-a058a454-build`)
    - c3 = c2 + `cls-bimodal/padding.patch`, YARDA 374b2c9(+ frontend 2670c6e) 빌드
 3. **공통 셸 변수**(아래 재현 명령에서 사용):
 

@@ -59,7 +59,7 @@ PER_SET = ('configuration.json', 'cls.json', 'locality.json', 'summary.json')
 TOOLS = {
     'laysim': Path('/opt/laysim-gr740/laysim-gr740-cli'),
     'sparc-rtems6-gcc': Path('/opt/rtems/6/bin/sparc-rtems6-gcc'),
-    'yarda_cpp (CLS distribution, feat/cpp-backend a058a454)': ROOT / 'rtems/baseline/build/yarda/backend/yarda_cpp',
+    'yarda_cpp (CLS distribution, feat/cpp-backend a058a454)': CACHE / 'yarda-a058a454-build/backend/yarda_cpp',
     'yarda_cpp (CLS bimodal, feat/cpp-backend 374b2c9 + frontend 2670c6e)':
         CACHE / 'yarda-374b2c9-build/backend/yarda_cpp',
 }
