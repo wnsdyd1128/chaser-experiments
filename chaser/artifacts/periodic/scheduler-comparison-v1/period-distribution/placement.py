@@ -2,9 +2,10 @@
 
 P serializes the jobs of one release cohort that share a core. With equal
 per-task U, job CPU is proportional to the period, so the busiest core's summed
-periods bound that cohort's P span from below. The placement keeps an equal
-task count per core and minimizes the bound summed over every release instant
-of one window, over which the release pattern repeats.
+periods bound that cohort's P span from below. The placement keeps the snake's
+task count per core (equal when the cores divide the tasks) and minimizes the
+bound summed over every release instant of one window, over which the release
+pattern repeats.
 """
 
 import random
@@ -58,12 +59,12 @@ def _descend(releases, counts, cores):
 
 
 def cohort_cores(periods: list[int], window: int) -> list[int]:
-    """Best of a snake start and seeded random balanced starts."""
+    """Best of a snake start and seeded random starts with the snake's per-core counts."""
     releases, counts = _releases(periods, window)
     rng = random.Random(SEED)
     starts = [assign_cores(periods)]
     for _ in range(RESTARTS - 1):
-        cores = [c for c in range(CORES) for _ in range(len(periods) // CORES)]
+        cores = sorted(starts[0])
         rng.shuffle(cores)
         starts.append(cores)
     best = None

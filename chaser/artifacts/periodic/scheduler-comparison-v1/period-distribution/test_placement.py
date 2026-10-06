@@ -25,6 +25,14 @@ def test_local_search_matches_exhaustive_optimum_on_small_sets():
         assert placement.cohort_cost(periods, cores, window) == best
 
 
+def test_placement_keeps_the_snake_task_count_per_core_when_the_count_does_not_divide():
+    periods = [2, 3, 4, 6, 6, 12, 12, 4, 9, 18, 3, 36, 2]
+    snake = taskset.assign_cores(periods)
+    cores = placement.cohort_cores(periods, 36)
+    assert sorted(cores) == sorted(snake)
+    assert placement.cohort_cost(periods, cores, 36) <= placement.cohort_cost(periods, snake, 36)
+
+
 def test_placement_is_deterministic_and_never_worse_than_snake():
     for cv in (0.1, 0.2, 0.3):
         for set_id in taskset.set_ids(cv):

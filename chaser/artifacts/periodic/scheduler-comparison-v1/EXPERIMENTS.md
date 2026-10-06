@@ -27,6 +27,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 19 | 주기 분포 × 메모리 구성의 배치 경계 | `policy-mix/`(`--design policy-boundary`) | `policy-boundary-v1` | `policy-boundary` |
 | 20 | task 수(12–20) × 메모리 압박 | `policy-mix/`(`--design task-count`) | `task-count-v1` | `task-count` |
 | 21 | 작은 작업 집합의 저-CLS task × 주기 분포 × task 수 | `policy-mix/`(`--design small-memory`) | `small-memory-v1` | `small-memory` |
+| 22 | 실험 1·2의 task 수 12–20 재실행 | `period-distribution/{tc_taskset,tc_run}.py` | `period-taskcount-v1`, `period-taskcount-cohort-v1` | `period-taskcount`, `period-taskcount-cohort` |
 
 ---
 
@@ -1290,3 +1291,53 @@ python3 $R/figures/small_memory_bars.py $O
 - `stats-small-memory.json/md`, `small-memory-analysis.json/md`
 - 그림 `small-memory-*`
 - `per-set.jsonl.gz`
+
+---
+
+## 22. 실험 1·2의 task 수 12–20 재실행
+
+### 개요
+실험 1(주기 분포)과 실험 2(release 고려 P′ 대조)는 task 16개, 코어마다 4개였다.
+같은 조건에서 task 수만 12–20으로 바꿔 다시 돌린다.
+- task U는 n개가 나눠 가진다(task마다 2.0 / n). 그래서 코어당 명목 U는 실험 1과 같은 0.5다.
+- 4의 배수가 아니면 지그재그 배치에서 코어별 task 수가 1개 차이 난다.
+
+### 목적
+1. 실험 1의 결론이 task 수 12–20과 4의 배수 여부에 관계없이 유지되는지 확인한다. 실험 1의 결론은 두 가지다.
+   - 주기 CV가 커질수록 생기는 G/C/P 격차
+   - 평균 주기 μ의 영향
+2. 실험 2의 결론(release 고려 P′가 지그재그 P의 TAT 손해를 줄임)이 task 수에 따라 달라지는지 확인한다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | **평균 주기 μ** {20, 50, 80, 100, 500} ms<br>**주기 CV** {0, 0.1, 0.2, 0.3}<br>**task 수** 12–20: set k는 12 + (k mod 9)개. CV > 0 셀은 set 18개(각 값 2번), CV 0 셀은 task 수마다 set 1개(9개)<br>**구성 7개**<br>- G, C (1+3), P, C2 (1+1+2): 주기 순 지그재그<br>- P′, C′, C2′: cohort 부하 하한 최소화 |
+| 통제 변인 | 실험 1·2와 같다: 주기 격자·로그 반올림, ±3σ 자르기, workload cyclic 64줄(2 KiB) O0, job CPU 모델, warm-up과 측정이 각각 180 × (μ/10) tick, 배열은 코어·주기 순 연속<br>**task U**: 0.5 × 4 / n<br>**공통 난수**: 시드 20262201 + set. set k의 표준정규 n개를 모든 μ·CV가 공유<br>**P′ 국소 탐색**: 지그재그의 코어별 task 수를 유지한다. 16개이면 실험 2와 같은 배치이며, 실험 2의 300 set 배치가 모두 그대로 재현됨을 확인했다 |
+| 종속 변인 | TAT(주 지표), TET, response time 합 |
+| 조작 확인 | 단독 U: μ마다 CV 0.3·set 0(task 12개, task U가 가장 커 sweep이 가장 많음), 게이트 5%. `g-check`: 셀마다 set 0의 G를 P′ 빌드로 다시 돌려 main 단계의 G 결과와 같은지 확인 |
+
+### 실험 방법
+1. `tc_run.py`는 `run.py`·`control.py`의 설계 모듈 `taskset`을 `tc_taskset`으로 바꿔 실행한다. 단계와 옵션은 원래 실행기와 같다.
+2. main 단계: `prepare`(315 set) → `u-check`(60 run) → `pilot`(셀마다 set 0, 80 run) → `full`(1,180 run) → `stats.py`.
+3. control 단계: `prepare`(CV > 0의 270 set) → `g-check`(15 run) → `run`(810 run) → `summarize` → `stats`.
+4. `tc_analysis.py`는 task 수 그룹별·4의 배수 여부별로 G 대 P, P′ 대 P, G 대 P′의 TAT·TET 격차를 계산한다.
+
+### 재현 명령
+```sh
+cd $C2 && export PYTHONPATH=$C2
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R/period-distribution $R/period-distribution/test_tc_taskset.py $R/period-distribution/test_placement.py
+M=$W/.cache/period-taskcount-v1; O=$W/.cache/period-taskcount-cohort-v1
+for s in prepare u-check pilot full; do python3 $R/period-distribution/tc_run.py main $s --output $M; done
+python3 $R/period-distribution/stats.py $M
+for s in prepare g-check run summarize stats; do python3 $R/period-distribution/tc_run.py control $s --main $M --output $O; done
+python3 $R/period-distribution/tc_analysis.py --main $M --control $O
+python3 $R/figures/period_taskcount_bars.py --main $M --control $O
+```
+실제 실행은 `supervisors/period-taskcount-v1.sh`다.
+
+### 결과 파일
+- `results/period-taskcount/`: `protocol.json`(set별 task 수·task U), `results.jsonl`, `stats.json/md`, `isolated-u.json`,
+  `period-taskcount-analysis.json/md`, 그림, `per-set.jsonl.gz`
+- `results/period-taskcount-cohort/`: `protocol.json`, `results.jsonl`(행마다 `ps`/`cs`/`c2s` = 지그재그 결과), `stats.json/md`,
+  `g-check.json`, `per-set.jsonl.gz`
