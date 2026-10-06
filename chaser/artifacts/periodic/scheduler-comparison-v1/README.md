@@ -109,21 +109,35 @@ cd $C3 && PYTHONPATH=$C3 python3 -m pytest -q -p no:cacheprovider --rootdir=$R/c
 
 `python3 export_results.py <실험> ...`이 `.cache` 출력에서 설계 입력(보정표, set별 설정)과
 결과(results.jsonl, 통계, 대조 측정, 그림 PNG·CSV)만 `results/<실험>/`로 복사한다.
-실험 이름은 `period-distribution`, `release-aware-control`, `cls-distribution`,
-`cache-affinity-o0`, `cache-affinity-o2`, `cls-bimodal`, `cls-bimodal-v1-pilot`이다.
+실험 이름은 `export_results.py`의 `STUDIES`이며, EXPERIMENTS.md 맨 위 표의 마지막 열과 같다.
 사용법은 [EXPERIMENTS.md](EXPERIMENTS.md) 15절.
 
 ## 결과 위치(버전 관리 안 함)
 
-| 실험 | output |
-|---|---|
-| 주기 분포 | `.cache/period-distribution-v2/`(stats.json, stats-dedup.json, figures/) |
-| P′ 대조 | `.cache/period-distribution-cohort-v2/` |
-| CLS 분포 | `.cache/cls-distribution-v1/`(calibration/, stats-p020/p100.json, figures/) |
-| 캐시 친화성 | `.cache/cache-affinity-v2/`(O0), `.cache/cache-affinity-o2-v1/`(O2), 실패한 1 ms 설정 `.cache/cache-affinity-v1/` |
-| CLS 양극단 | `.cache/cls-bimodal-v2/`(calibration/model.json, isolated-u.json, stats-as-is/matched.json, stats-traffic-contrast.json). `.cache/cls-bimodal-v1/`은 주기 20 ms(U 0.125) 설정으로, pilot에서 낮은 CLS task가 많은 셀이 deadline miss로 실패해 중단했다(보정은 여기서 수행해 v2로 복사) |
-
+실험별 출력 폴더는 EXPERIMENTS.md 맨 위 표의 "출력" 열이다. 폐기한 설계의 목록과 이유는
+EXPERIMENTS.md 14절에 있다. 그 출력 일부와 빌드 폴더의 waf 라이브러리 사본은 2026-10-05에 지웠다
+(`.cache/cleanup-2026-10-05.log`).
 각 output의 `protocol.json`에 설계 파라미터, 빌드 manifest 해시, 당시 스크립트 해시가 있다.
+
+## 빌드 산출물 정리와 복구
+
+실험 출력의 약 9할은 준비한 빌드의 실행 파일과 목적 파일(`prepared/build/*.exe`, `*.o`)이다.
+같은 자리에서 같은 RTEMS 툴체인으로 다시 빌드하면 바이트 단위로 같은 파일이 나오므로,
+`prepared_builds.py`로 지우고 필요할 때 복구한다. 소스, 계획, layout, `build.log`, waf 상태,
+원시 run 로그와 측정값은 지우지 않는다.
+
+```sh
+R=/workspace/experiments/chaser/artifacts/periodic/scheduler-comparison-v1
+python3 $R/prepared_builds.py status  <출력 폴더> ...   # complete / pruned / other 개수
+python3 $R/prepared_builds.py prune   <출력 폴더> ...   # complete인 폴더의 .exe·.o 삭제, <출력>/pruned-builds.jsonl에 기록
+python3 $R/prepared_builds.py restore <출력 폴더> ...   # manifest의 도구 해시 확인 → waf build → 모든 manifest 파일 해시 확인
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R $R/test_prepared_builds.py
+```
+
+`dataset.load_batch`는 실행 파일 해시를 확인한다. 그래서 원시 로그를 다시 읽는 단계
+(각 실행기의 `summarize`·`full`·`stats` 전 집계, 실험 2의 `control.py`가 읽는 실험 1 출력)를
+돌리기 전에 해당 출력 폴더를 `restore`한다. 결과 묶음, 통계, 그림을 보는 데는 복구가 필요 없다.
+복구는 같은 절대 경로와 manifest에 기록된 툴체인(`/opt/rtems/6`) 해시가 필요하다.
 
 ## 해석 시 주의
 

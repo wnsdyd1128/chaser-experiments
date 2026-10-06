@@ -116,6 +116,11 @@ export DISPLAY=<laysim이 접속할 X 디스플레이> PYTHONUNBUFFERED=1
 
 명령은 코드 사본 디렉터리를 현재 디렉터리로 두고 `PYTHONPATH=<사본>`으로 실행한다.
 
+4. **빌드 산출물 복구**: 끝난 실험 출력의 실행 파일과 목적 파일은 2026-10-03에 지웠다(README
+   "빌드 산출물 정리와 복구", 출력마다 `pruned-builds.jsonl`). 새로 처음부터 재현할 때는 해당되지 않는다.
+   있는 출력의 원시 로그를 다시 읽는 단계(각 실행기의 `summarize`·`stats` 전 집계, 2절이 읽는 1절 출력)는
+   먼저 `python3 $R/prepared_builds.py restore <출력>`으로 복구한다.
+
 ---
 
 ## 1. 주기 분포
@@ -438,7 +443,7 @@ for s in prepare isolated pilot full stats; do python3 $R/cls-bimodal/bi_run.py 
 python3 $R/figures/cls_bimodal_bars.py $O
 python3 -m pytest -q -p no:cacheprovider --rootdir=$R/cls-bimodal $R/cls-bimodal   # 명세 테스트
 ```
-원래 실행은 보정을 v1 출력(`cls-bimodal-v1/calibration`)에서 하고 v2로 복사했다. job 시간
+원래 실행은 보정을 v1 출력(`cls-bimodal-v1/calibration`, 2026-10-05에 지움)에서 하고 v2로 복사했다. 보정 결과는 `results/cls-bimodal/calibration/`에 있다. job 시간
 모델은 주기와 무관하므로 결과는 같다.
 
 ### 결과 파일
@@ -490,7 +495,7 @@ U를 job 길이로 바꾸지 않고 주기로 바꾼 이유: 주기를 고정하
 ```sh
 cd $C3 && export PYTHONPATH=$C3
 O=$W/.cache/load-level-v1
-mkdir -p $O && cp -a $W/.cache/cls-bimodal-v2/calibration $O/calibration
+mkdir -p $O/calibration && cp $R/results/cls-bimodal/calibration/model.json $R/results/cls-bimodal/calibration/measured.json $O/calibration/   # 5절 보정 결과
 for s in prepare isolated pilot full stats; do python3 $R/cls-bimodal/bi_run.py $s --design load-level --output $O; done
 python3 $R/figures/level_bars.py $O
 ```
@@ -554,7 +559,7 @@ U_i = 1.0 × w_i ÷ Σw로 합을 맞춘 뒤, job 예산(U_i × 40 ms)을 10 µs
 ```sh
 cd $C3 && export PYTHONPATH=$C3
 O=$W/.cache/u-imbalance-v1
-mkdir -p $O && cp -a $W/.cache/cls-bimodal-v2/calibration $O/calibration
+mkdir -p $O/calibration && cp $R/results/cls-bimodal/calibration/model.json $R/results/cls-bimodal/calibration/measured.json $O/calibration/   # 5절 보정 결과
 python3 $R/cls-bimodal/bi_calibrate.py extend --output $O/calibration   # v2 보정 폴더는 건드리지 않음
 for s in prepare isolated pilot full stats; do python3 $R/cls-bimodal/bi_run.py $s --design u-imbalance --output $O; done
 python3 $R/figures/level_bars.py $O
@@ -628,7 +633,7 @@ task 하나만 보는 CLS로는 잡히지 않는 "동시에 도는 task들의 L2
 cd $C3 && export PYTHONPATH=$C3
 python3 $R/footprint/l2_probe.py --output $W/.cache/l2-probe-v1
 O=$W/.cache/footprint-v1
-mkdir -p $O && cp -a $W/.cache/cls-bimodal-v2/calibration $O/calibration
+mkdir -p $O/calibration && cp $R/results/cls-bimodal/calibration/model.json $R/results/cls-bimodal/calibration/measured.json $O/calibration/   # 5절 보정 결과
 for s in prepare isolated pilot full stats; do python3 $R/footprint/fp_run.py $s --output $O; done
 python3 $R/figures/footprint_bars.py $O
 ```
@@ -923,6 +928,10 @@ python3 $R/figures/high_load_bars.py $O
 
 ## 14. 폐기하거나 바꾼 설계
 
+2026-10-05에 `.cache` 정리로 `cache-affinity-v1`, `cls-bimodal-v1`(`calibration.failed-unroll-0` 포함), `conflict-cls-v1` 출력을 지웠다.
+같은 때 모든 빌드 폴더(`prepared/`)의 waf 라이브러리 사본(`.waf3-*`)도 지웠다. 이 사본은 manifest에 없고 waf를 실행하면 다시 풀린다.
+지운 목록은 `.cache/cleanup-2026-10-05.log`에 있다. 아래 표에서 지운 출력의 행은 기록으로만 남는다.
+
 | 출력(`.cache/`) | 내용 | 바꾼 이유 |
 |---|---|---|
 | `period-distribution-v1` | μ ∈ {20, 80, 320} ms, 격자 기준 20 | 기준 20인 격자가 μ = 50을 담지 못함 → 기준 10·격자 180(v2). 240 run 후 중단 |
@@ -947,6 +956,9 @@ python3 $R/figures/high_load_bars.py $O
   다시 빌드할 수 있다.
 - `MANIFEST.json`은 복사한 파일의 SHA-256을, `results/environment.json`은 laysim·컴파일러·
   yarda_cpp 바이너리 해시와 Python 패키지 버전을 담는다.
+- 재현 명령이 결과 묶음의 파일을 입력으로 쓰는 곳(6–8절의 5절 보정, 18–19절의 시간 모델 검증)은
+  `.cache` 원본과 바이트 단위로 같은 파일이다. 반면 2절(1절 출력), 4절의 `lru_check.py`·load당 분석(4절 원시 로그),
+  18절의 비교 분석·그림(17절 출력)은 앞 실험의 출력 폴더가 있어야 한다.
 
 ---
 
@@ -1090,7 +1102,7 @@ python3 $R/figures/policy_mix_bars.py $O
 ```sh
 cd $C3 && export PYTHONPATH=$C3
 O=$W/.cache/policy-mix-cls-v1
-mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+mkdir -p $O && cp $R/results/policy-mix/model-check.json $O/
 for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design policy-mix-cls --output $O; done
 python3 $R/policy-mix/cls_compare.py --cls $O --policy-mix $W/.cache/policy-mix-v1
 python3 $R/figures/policy_mix_cls_bars.py $O $W/.cache/policy-mix-v1
@@ -1146,7 +1158,7 @@ python3 $R/figures/policy_mix_cls_bars.py $O $W/.cache/policy-mix-v1
 cd $C3 && export PYTHONPATH=$C3
 python3 -m pytest -q -p no:cacheprovider --rootdir=$R/policy-mix $R/policy-mix   # 명세 테스트
 O=$W/.cache/policy-boundary-v1
-mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+mkdir -p $O && cp $R/results/policy-mix/model-check.json $O/
 for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design policy-boundary --output $O; done
 python3 $R/policy-mix/boundary_analysis.py --output $O
 python3 $R/figures/policy_boundary_bars.py $O
