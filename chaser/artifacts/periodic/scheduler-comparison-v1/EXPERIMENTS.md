@@ -28,6 +28,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 20 | task 수(12–20) × 메모리 압박 | `policy-mix/`(`--design task-count`) | `task-count-v1` | `task-count` |
 | 21 | 작은 작업 집합의 저-CLS task × 주기 분포 × task 수 | `policy-mix/`(`--design small-memory`) | `small-memory-v1` | `small-memory` |
 | 22 | 실험 1·2의 task 수 12–20 재실행 | `period-distribution/{tc_taskset,tc_run}.py` | `period-taskcount-v1`, `period-taskcount-cohort-v1` | `period-taskcount`, `period-taskcount-cohort` |
+| 23 | CLS 분포·다양성 × 주기 분포 × task 수 | `policy-mix/`(`--design cls-spread`) | `cls-spread-v1` | `cls-spread` |
 
 ---
 
@@ -1341,3 +1342,61 @@ python3 $R/figures/period_taskcount_bars.py --main $M --control $O
   `period-taskcount-analysis.json/md`, 그림, `per-set.jsonl.gz`
 - `results/period-taskcount-cohort/`: `protocol.json`, `results.jsonl`(행마다 `ps`/`cs`/`c2s` = 지그재그 결과), `stats.json/md`,
   `g-check.json`, `per-set.jsonl.gz`
+
+---
+
+## 23. CLS 분포·다양성 × 주기 분포 × task 수
+
+### 개요
+21절까지의 CLS는 높은 모드(0.90)와 낮은 모드(0.13) 두 값으로 갈려 있었다.
+이 실험은 3절의 질문(CLS의 평균과 퍼짐)을 지금 조건(O2, U 비균등, 주기 다양, task 12–20개)에서 다시 묻는다.
+CLS는 task마다 연속 분포에서 뽑는다.
+- CLS 0.5–0.85 task도 메모리를 자주 읽는다(1 µs당 L1 miss 약 9–11, L2 포화 기준 5.2).
+- 그런데 기존 규칙(CLS ≤ 0.5만 묶음)은 이런 task를 묶지 않는다.
+
+그래서 기존 규칙 옆에 상대 기준(set 안에서 CLS가 낮은 쪽 절반을 묶음)을 함께 비교한다.
+
+### 목적
+1. CLS 평균(높은 CLS 포함)과 다양성에 따라 CLS 고려 배치가 release 고려 배치보다 TAT·TET에서 나은 조건이 있는지 확인한다.
+2. 절대 기준(CLS ≤ 0.5)과 상대 기준(set 안 하위 절반) 중 어느 쪽이 나은지 비교한다.
+3. 그 결과가 주기 CV와 task 수에 따라 달라지는지 확인한다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | **CLS 평균** {0.3, 0.6, 0.9}<br>**CLS 표준편차** {0, 0.1, 0.2}: 목표 CLS = 평균 + 표준편차 × z, z는 ±3σ에서 자름<br>**주기 CV** {0, 0.2}<br>**task 수** 12–20(set마다 하나, 셀마다 각 값 2번)<br>**구성 8개**<br>- Global, Clustered (1+1+2): U 균형 배치 기준<br>- Partitioned 6종: wfd, cgb, ra, ra-cgb, 그리고 상대 기준 cgr(부하 균등 상대 CLS 묶음)·ra-cgr(그 안의 release 고려) |
+| 통제 변인 | **task 모양**: 모두 5절 높은 모드(hot H줄 × R회 + cold 32 KiB, 트래픽 그대로). sweep을 1,024회까지 허용해 긴 job도 중간 CLS에 닿게 했다(5절 표는 64회까지)<br>**CLS 수준**: 목표에 가장 가까운, job 예산이 허용하는 값(약 0.10–0.99). 그래서 넓은 퍼짐은 경계에서 잘린다<br>**상대 기준**: CLS를 소수 둘째 자리로 반올림해 순위를 매긴다. 같은 값의 task는 같은 쪽에 든다. 그래서 퍼짐 0이면 묶지 않아 wfd·ra와 같다<br>**주기·부하·측정 구간·공통 난수**: 21절과 같다. set k는 모든 셀에서 task 수·U 비율·CLS z·주기 z·순서를 공유한다<br>**규모**: 셀 18개 × set 18개 |
+| 종속 변인 | 모든 deadline 준수 여부; deadline을 지킨 run의 TAT·TET; 최선 Partitioned 배치 대비 regret |
+| 조작 확인 | **실현 CLS**(주기 CV 0.2 칸의 set 평균):<br>- 평균 0.3: 표준편차 0.09(목표 0.1), 0.16(목표 0.2)<br>- 평균 0.6: 0.09, 0.18<br>- 평균 0.9: 0.08, 0.14(실현 평균 0.86)<br>**묶음 크기**: 절대 기준은 평균 0.3에서 U의 88–100%(대부분 wfd와 같아짐), 0.6에서 16–29%, 0.9에서 0–2%를 묶는다. 상대 기준은 퍼짐이 있으면 약 51%를 묶는다<br>**CLS**: 경우마다 yarda CLS = 계획값<br>**job 예산**: 1.14–11.58 ms<br>**단독 U**: 셀마다 set 0의 모든 task, 게이트 3%. 이 설계의 모양은 17절 시간 모델 검증 밖이므로 이 게이트가 모델 검증을 겸한다 |
+
+### 실험 방법
+1. 단계는 다음 순서로 진행한다.
+   - `prepare`: 324 경우 × 배치 6종, yarda CLS 대조
+   - `isolated`: 셀마다 set 0
+   - `pilot`: 셀마다 set 0, 144 run
+   - `full`: 2,448 run
+   - `stats`
+2. `clsspread_analysis.py`는 셀별로 다음을 계산한다.
+   - TAT·TET 비교
+   - CLS 고려 4종 대 ra의 짝지은 대비
+   - 상대 기준 대 절대 기준
+   - CLS 평균·표준편차·task 수 그룹별 대비
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R/policy-mix $R/policy-mix   # 명세 테스트
+O=$W/.cache/cls-spread-v1
+for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design cls-spread --output $O; done
+python3 $R/policy-mix/clsspread_analysis.py --output $O
+python3 $R/figures/cls_spread_bars.py $O
+```
+실제 실행은 `supervisors/cls-spread-v1.sh`다(22절이 끝난 뒤 시작).
+
+### 결과 파일
+`results/cls-spread/`에는 다음이 있다.
+- `protocol.json`(set별 task 수), `results.jsonl`, `isolated-u.json`
+- `stats-cls-spread.json/md`, `cls-spread-analysis.json/md`
+- 그림 `cls-spread-*`
+- `per-set.jsonl.gz`

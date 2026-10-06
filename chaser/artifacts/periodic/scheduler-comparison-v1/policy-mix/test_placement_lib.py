@@ -12,8 +12,8 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / 'high-load'))
 
 from placement_lib import (BALANCE_SLACK, CLS_LOW, CORE_CAP, TRAFFIC_HIGH, Item, cls_grouped, cls_grouped_balanced,
-                           cohort_cost, is_high_traffic, is_low_cls, place, release_aware, release_aware_grouped,
-                           traffic_grouped, wfd)
+                           cohort_cost, is_high_traffic, is_low_cls, place, relative_cut, release_aware,
+                           release_aware_grouped, traffic_grouped, wfd)
 
 
 def items(us, periods=None, traffic=None, cls=None):
@@ -138,4 +138,27 @@ def test_release_aware_within_cls_grouping_keeps_low_cls_tasks_on_the_grouped_co
                   cls=[0.1, 0.1, 0.1, 0.9, 0.9, 0.9, 0.9, 0.9])
     grouped, combined = cls_grouped(tasks), place('ra-cg', tasks, seed=1)
     assert {combined[i] for i in range(3)} <= {grouped[i] for i in range(3)}
+    assert cohort_cost(combined, tasks) <= cohort_cost(grouped, tasks)
+
+
+def test_relative_cls_grouping_takes_the_lower_cls_half_of_the_u():
+    tasks = items([0.1] * 8, cls=[0.62, 0.55, 0.81, 0.47, 0.9, 0.58, 0.73, 0.66])
+    assert relative_cut(tasks) == 0.62  # 0.47, 0.55, 0.58 and 0.62 hold half of the U
+    assign = place('cgr', tasks, seed=0)
+    group = {i for i, t in enumerate(tasks) if t.cls <= 0.62}
+    assert {assign[i] for i in group}.isdisjoint({assign[i] for i in range(8) if i not in group})
+    assert max(core_loads(assign, tasks)) <= 0.2 * (1 + BALANCE_SLACK)
+
+
+def test_relative_cls_grouping_ignores_cls_differences_below_a_hundredth():
+    tasks = items([0.1] * 8, periods=[20, 40, 80, 40] * 2,
+                  cls=[0.6001, 0.5998, 0.6003, 0.6, 0.5999, 0.6002, 0.6, 0.6004])
+    assert place('cgr', tasks, seed=0) == wfd(tasks)
+    assert place('ra-cgr', tasks, seed=0) == release_aware(tasks, seed=0)
+
+
+def test_release_aware_within_relative_cls_grouping_keeps_the_group_on_its_cores():
+    tasks = items([0.075] * 16, periods=[20, 40, 80, 40] * 4, cls=[0.2 + 0.04 * i for i in range(16)])
+    grouped, combined = place('cgr', tasks, seed=3), place('ra-cgr', tasks, seed=3)
+    assert {combined[i] for i in range(8)} <= {grouped[i] for i in range(8)}
     assert cohort_cost(combined, tasks) <= cohort_cost(grouped, tasks)

@@ -10,6 +10,8 @@ ra-cgb/ builds with P on each (p, p_cgb, p_ra, p_racgb).
 builds, P on each and G, C2 (1+1+2) on wfd.
 --design small-memory (smallmem_set): 12-20 tasks x period CV x 32 KiB low-CLS share; runs
 as task-count.
+--design cls-spread (clsspread_set): 12-20 tasks x CLS mean x CLS SD x period CV; runs as
+task-count plus P on the relative CLS groupings cgr (p_cgr) and ra-cgr (p_racgr).
 On top of hl_run's prepare, every case runs yarda_cpp on the wfd build (locality.json:
 counts, CLS, IR instructions per task; CLS must equal the planned closed form) and the
 policy-mix scripts are snapshot next to hl_run's. Run pm_check.py first (its shapes are
@@ -31,6 +33,7 @@ from tools.rtems_smoke import file_hash, write_json
 
 import bi_run
 import boundary_set
+import clsspread_set
 import hl_run
 import mix_cls_set
 import mix_set
@@ -49,9 +52,12 @@ BOUNDARY_RUNS = (('wfd', 'p', 'p'), ('cgb', 'p', 'p_cgb'), ('ra', 'p', 'p_ra'), 
 BOUNDARY_PAIRS = (('p_cgb', 'p_ra'), ('p_racgb', 'p_ra'), ('p_racgb', 'p_cgb'), ('p_cgb', 'p'), ('p_ra', 'p'))
 TASKCOUNT_RUNS = (('wfd', 'g', 'g'), ('wfd', 'c2', 'c2')) + BOUNDARY_RUNS
 TASKCOUNT_PAIRS = BOUNDARY_PAIRS + (('g', 'p_racgb'), ('c2', 'p_racgb'), ('g', 'p_ra'))
+SPREAD_RUNS = TASKCOUNT_RUNS + (('cgr', 'p', 'p_cgr'), ('ra-cgr', 'p', 'p_racgr'))
+SPREAD_PAIRS = TASKCOUNT_PAIRS + (('p_cgr', 'p_ra'), ('p_racgr', 'p_ra'), ('p_racgr', 'p_racgb'))
 SNAPSHOT = ('placement_lib.py', 'mix_set.py', 'mix_cls_set.py', 'boundary_set.py', 'taskcount_set.py',
-            'smallmem_set.py', 'pm_check.py', 'pm_run.py', 'test_placement_lib.py', 'test_mix_set.py',
-            'test_boundary_set.py', 'test_taskcount_set.py', 'test_smallmem_set.py')
+            'smallmem_set.py', 'clsspread_set.py', 'pm_check.py', 'pm_run.py', 'test_placement_lib.py',
+            'test_mix_set.py', 'test_boundary_set.py', 'test_taskcount_set.py', 'test_smallmem_set.py',
+            'test_clsspread_set.py')
 HL_SNAPSHOT = ('hl_run.py', 'hl_set.py', 'mem_set.py')
 
 _hl_prepare_one, _hl_prepare_all = hl_run.prepare_one, hl_run.prepare_all
@@ -96,6 +102,7 @@ def main():
     hl_run.DESIGNS['policy-boundary'] = (boundary_set, BOUNDARY_RUNS, BOUNDARY_PAIRS)
     hl_run.DESIGNS['task-count'] = (taskcount_set, TASKCOUNT_RUNS, TASKCOUNT_PAIRS)
     hl_run.DESIGNS['small-memory'] = (smallmem_set, TASKCOUNT_RUNS, TASKCOUNT_PAIRS)
+    hl_run.DESIGNS['cls-spread'] = (clsspread_set, SPREAD_RUNS, SPREAD_PAIRS)
     hl_run.SNAPSHOT = HL_SNAPSHOT
     # hl_run's stages look these up as module globals.
     hl_run.prepare_one, hl_run.prepare_all = prepare_one, prepare_all

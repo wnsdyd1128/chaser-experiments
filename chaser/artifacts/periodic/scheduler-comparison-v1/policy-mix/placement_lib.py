@@ -20,6 +20,9 @@ one core index per task. Policies:
          plus BALANCE_SLACK (or the group's largest task, if larger), so grouping does not
          pile load onto one core
   ra-cgb release-aware within balanced CLS grouping
+  cgr    relative CLS grouping: cgb with the group cut inside the set, the lowest-CLS tasks
+         holding about half of the U (CLS rounded to CLS_DECIMALS, so equal-CLS sets stay wfd)
+  ra-cgr release-aware within relative CLS grouping
 High traffic means more than a core's share of the shared L2 request rate: the
 L2 serves one request every 48 ns (footprint/l2_probe.py), so above
 TRAFFIC_HIGH per microsecond on every core the L2 saturates. CLS_LOW splits the
@@ -38,10 +41,12 @@ RESTARTS = 20
 L2_REQUESTS_PER_US = 1000 / 48
 TRAFFIC_HIGH = L2_REQUESTS_PER_US / CORES
 CLS_LOW = 0.5
+CLS_DECIMALS = 2
 BALANCE_SLACK = 0.05
 POLICIES = ('wfd', 'tg', 'ra', 'ra-tg')  # the policy-mix study (experiment 17)
 CLS_POLICIES = ('cg', 'ra-cg')  # its CLS-keyed counterparts (experiment 18)
 BOUNDARY_POLICIES = ('wfd', 'cgb', 'ra', 'ra-cgb')  # the period x memory boundary study (experiment 19)
+RELATIVE_POLICIES = ('cgr', 'ra-cgr')  # the CLS spread study (experiment 23)
 
 
 @dataclass(frozen=True)
@@ -184,6 +189,20 @@ def _release_aware_within(tasks, member, cores, cap, seed, restarts, balanced=Fa
     return _search(start, tasks, cores, cap, seed, restarts, allowed)
 
 
+def relative_cut(tasks) -> float:
+    """Rounded CLS up to which the lowest-CLS tasks hold the U share nearest half of the total.
+
+    Tasks walk in rounded-CLS order and join while half of their U still fits under half of
+    the total; every task whose rounded CLS is at most the cut is in the group, so tasks with
+    the same rounded CLS fall on the same side."""
+    total, held, cut = sum(t.u for t in tasks), 0.0, float('-inf')
+    for t in sorted(tasks, key=lambda t: round(t.cls, CLS_DECIMALS)):
+        if held + t.u / 2 > total / 2:
+            break
+        held, cut = held + t.u, round(t.cls, CLS_DECIMALS)
+    return cut
+
+
 def release_aware_grouped(tasks, cores=CORES, cap=CORE_CAP, seed=0, restarts=RESTARTS) -> list[int]:
     return _release_aware_within(tasks, is_high_traffic, cores, cap, seed, restarts)
 
@@ -205,4 +224,10 @@ def place(policy: str, tasks, seed: int, cores=CORES, cap=CORE_CAP) -> list[int]
         return cls_grouped_balanced(tasks, cores, cap)
     if policy == 'ra-cgb':
         return _release_aware_within(tasks, is_low_cls, cores, cap, seed, RESTARTS, balanced=True)
+    if policy in RELATIVE_POLICIES:
+        cut = relative_cut(tasks)
+        member = lambda t: round(t.cls, CLS_DECIMALS) <= cut
+        if policy == 'cgr':
+            return _grouped(tasks, member, cores, cap, balanced=True)
+        return _release_aware_within(tasks, member, cores, cap, seed, RESTARTS, balanced=True)
     raise ValueError(f'Unknown placement policy: {policy}')
