@@ -32,6 +32,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 24 | 작은 작업 집합의 저-CLS task × 부하(탐색) | `policy-mix/`(`--design small-memory-load`) | `small-memory-load-v1` | `small-memory-load` |
 | 25 | 접근 패턴 때문에 CLS가 낮은 task(L1 충돌 miss, 21절과 같은 set) | `policy-mix/`(`--design conflict-cls`, `conflict_calibrate.py`) | `conflict-calibration-v1`, `conflict-cls-v2`(v1은 게이트에서 멈춤) | `conflict-calibration`, `conflict-cls` |
 | 26 | 무작위 배치 기준선(21·20·23절, 확장 24·25·19·17절의 set) | `policy-mix/`(`--design random-*`) | `random-small-memory-v1`, `random-task-count-v1`, `random-cls-spread-v1` | `random-small-memory`, `random-task-count`, `random-cls-spread` |
+| 27 | 마감 위반 확증 실험(사전 등록, 새 set) | `policy-mix/`(`--design deadline-small`, `deadline-big`, `deadline_analysis.py`) | `deadline-small-v1`, `deadline-big-v1`, `deadline-confirm-v1` | `deadline-small`, `deadline-big`, `deadline-confirm` |
 
 ---
 
@@ -1590,3 +1591,76 @@ python3 $R/figures/rt_compare_bars.py $R/results/rt-compare
 - `protocol.json`, `results.jsonl`, `isolated-u.json`
 - `stats-*.json/md`
 - `per-set.jsonl.gz`
+
+---
+
+## 27. 마감 위반 확증 실험 (사전 등록, 새 set)
+
+### 개요
+17–26절은 가설을 세운 탐색 실험이다. 그 결과로 연구 목표를 TAT/TET 개선에서 **공유 캐시 경합 아래의 실시간성 보호**로 바꿨다.
+이 실험은 그 가설을 **새로 뽑은 set**으로 확인한다.
+실행 전에 다음 세 가지를 고정했다.
+- 가설과 판정 기준: 아래 표, `policy-mix/deadline_analysis.py` 첫머리
+- 분석 스크립트와 그 테스트: `deadline_analysis.py`, `test_deadline_analysis.py`. `prepare` 때 `protocol.json`에 해시가 기록된다
+- 정적 L2 요청량 예측: `prepare` 직후, 첫 run 전에 `prediction-l2-demand.json`에 기록한다. run 기록이 하나라도 있으면 스크립트가 거부한다
+
+탐색 자료(17–26절)는 확증 표본에 합치지 않는다.
+분석 스크립트는 24절 출력(탐색 자료)으로 코드 경로만 확인했다. 판정 기준은 그 전에 정했다. 그 뒤 바꾼 것은 V4 판정의 코드 오류 하나뿐이다(방향이 없는 검정에서 방향 값을 읽던 문제, 회귀 테스트 추가).
+
+### 사전 등록한 가설과 판정
+
+| 가설 | 판정(유의수준 0.05) |
+|---|---|
+| V1 | **32 KiB 유형**에서 정적 L2 요청량 기준(23절에서 정하고 24절에서 확인, < 0.9 성공·≥ 1.0 실패)이 마감 결과를 맞힌다. 경우 단위로, 성공 예측은 결정적 P 배치 4종(wfd, cgb, ra, ra-cgb)이 모두 마감을 지켰을 때, 실패 예측은 모두 놓쳤을 때 맞은 것으로 센다. 두 예측 모두 맞힌 비율의 단측 95% Clopper–Pearson 하한이 0.9 이상이면 지지된다. 무작위 배치는 코어 U가 0.95까지 가능하므로 보고만 한다. 768 KiB 유형은 L2 용량 경합을 반영하지 않는 기준이므로(20절) 보고만 한다 |
+| V2 | ra-cgb는 ra보다, 그리고 wfd보다 위반 job이 적다. 유형·기준 배치마다, 둘 다 측정되고 한쪽이라도 위반한 쌍에서 위반 job 비율(위반 job ÷ release된 job) 차이의 양측 Wilcoxon 부호순위 검정. 4개 검정에 Holm. 한 유형에서 두 기준 배치 모두 유의하고, 중앙값 차이가 음수이며, ra-cgb가 적은 쌍이 더 많으면 그 유형에서 지지된다. 마감 준수의 exact McNemar는 보고한다 |
+| V3 | ra-cgb는 메모리 task의 최악 실행시간 증가(최악 job CPU ÷ 계획 예산)가 ra, wfd보다 작다. 둘 다 모든 마감을 지킨 쌍에서 로그 비의 양측 Wilcoxon. 4개 검정에 Holm. 유의하고 중앙값 변화가 음수이면 지지된다 |
+| V4 | ra-cgb의 TAT는 ra와 ±2% 안에서 같다. 둘 다 모든 마감을 지킨 쌍에서 로그 비의 TOST(log 1.02 미만, log 0.98 초과의 단측 Wilcoxon 두 개). 두 유형에 Holm |
+| 보조 | V2·V3를 주기 CV별로, 그리고 ra-cgb 대 무작위 3회 평균(위반 job 비율, 세 회차 모두 마감을 지킨 경우의 로그 실행시간 증가)을 따로 한 묶음으로 Holm. 서술: 칸·배치별 마감 준수 run 수와 위반 job, 결정적 P가 모두 놓친 경우의 G/C 구제 수 |
+
+- V5(위험 모델)는 모델을 아직 동결하지 않았으므로 이 실험에서 판정하지 않는다. 이 set은 이미 열리므로 V5는 별도 확증 자료로 확인한다.
+- CAAS(CA-CSRD Algorithm 1) 배치는 아직 구현하지 않아 이번 실행에서 뺐다. set이 결정적이므로 뒤에 같은 set으로 덧붙일 수 있다.
+- 측정 구간과 표본 수는 E0′의 pilot 없이 정했다. 측정 구간은 24절보다 길게(측정 3 hyperperiod) 정했고, set 수는 24절과 같은 칸당 18개로 시간 예산(약 6–7시간)에 맞춘 값이다. 검정력 계산에서 나온 값이 아니다.
+
+### 사전 등록 보완 (2026-10-06 02:52 KST, 결과 열람 전)
+- **V6 추가:** ra-cgb의 TET는 ra보다, 그리고 wfd보다 작다. 둘 다 모든 마감을 지킨 쌍에서 TET 로그 비의 양측 Wilcoxon, 4개 검정(유형 2 × 기준 배치 2)에 Holm. 유의하고 중앙값 변화가 음수이면 지지된다.
+- **보완 시점까지 본 것:** 진행 확인을 위해 supervisor 로그의 칸별 성공·실패 run 수(모든 구성 합계)만 봤다. 배치별 비교, TET, 위반 job, 분석 출력은 보지 않았다.
+- **분석 스크립트:** 두 출력의 `protocol.json`에 기록된 `deadline_analysis.py` 해시는 보완 전 버전이다. 보완 후 버전은 sha256 `55de28d255bd3a90e03a1bcd8ec36cb47a695a5adbeb6e32bbf0e360c5381a5b`이다. 바뀐 것은 V6 검정과 TET 필드 읽기이고, 최악 실행시간 검정을 TET와 같은 함수로 옮겼을 뿐 V1–V4의 계산은 그대로다(테스트 18개).
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | **메모리 task 유형**: 32 KiB 저-CLS(5절 낮은 모드, 트래픽 그대로, U 비율 50%) 또는 768 KiB(8절 BL 모양, U 비율 25%). 유형마다 설계가 따로다(`deadline-small`, `deadline-big`)<br>**코어당 명목 U**: 32 KiB는 0.45–0.6을 0.025 간격(7개), 768 KiB는 {0.30, 0.35, 0.40, 0.45}<br>**주기 CV** {0, 0.2}<br>**task 수** 12–20(유형마다 각 값 2번)<br>**구성 9개**: Global, Clustered (1+1+2)(wfd 기준), Partitioned wfd·cgb·ra·ra-cgb, 무작위 3회(rnd0–2) |
+| 통제 변인 | **새 set**: seed 20262701–18(32 KiB), 20262751–68(768 KiB). 17–26절의 어떤 seed와도 겹치지 않는다(테스트로 확인)<br>**주기**: 평균 40 ms의 주기 격자 {20, …, 120} ms, 1 hyperperiod 240 ms. CV 0이면 모든 task가 40 ms<br>**측정 구간**: warm-up 1 + 측정 3 hyperperiod(24절은 측정 2)<br>**U 비율**: Dirichlet(8), 가장 큰 task ≤ 0.35(최고 부하 기준), 가장 작은 task ≥ 0.0125(최저 부하 기준, 20 ms 주기에서도 모델 검증 하한 이상)<br>**메모리 task 선택**: 모든 부하·CV에서 job 예산이 17절 모델 검증의 해당 계열 범위(32 KiB 0.23–18.12 ms, 768 KiB 1.7–15.15 ms) 안에 드는 task 중 set 순서의 앞에서부터, 목표 U 비율에 가장 가까워질 때까지<br>**공통 난수**: set k는 모든 칸·부하에서 task 수·U 비율·CLS 편차·주기 z·순서·메모리 task를 공유하고, 부하는 job 예산의 크기만 바꾼다 |
+| 종속 변인 | **주 지표**: 위반 job 비율, 모든 마감 준수 여부, 메모리 task의 최악 실행시간 증가, 최악 응답시간 ÷ 주기(`rt_metrics.py`)<br>**보조 지표**: 마감을 지킨 run의 TAT·TET |
+| 조작 확인 | **CLS**: yarda CLS = 계획값(`pm_run.py`)<br>**단독 U**: 칸·부하마다 set 0, 게이트 3%<br>**계획 U**: 명목 부하 × 4의 ±2%(테스트) |
+
+### 실험 방법
+1. 설계마다(`deadline-small` 다음 `deadline-big`) 다음 순서로 진행한다.
+   - `prepare`: 32 KiB 252 경우, 768 KiB 144 경우 × 배치 7종
+   - `predict`: `deadline_analysis.py predict`, 첫 run 전
+   - `isolated`, `pilot`(칸·부하마다 set 0), `full`, `stats`(부하에 대한 Page 추세 포함)
+   - `rt`: `rt_metrics.py --builds wfd,cgb,ra,ra-cgb,rnd0,rnd1,rnd2`
+2. 두 설계가 끝나면 `deadline_analysis.py analyze`가 위 판정을 한 번에 낸다.
+3. 규모는 396 경우 × 9 구성 = 3,564 run이다.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R/policy-mix $R/policy-mix   # 명세 테스트
+for d in deadline-small deadline-big; do
+    O=$W/.cache/$d-v1
+    mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+    python3 $R/policy-mix/pm_run.py prepare --design $d --output $O
+    python3 $R/policy-mix/deadline_analysis.py predict --output $O
+    for s in isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design $d --output $O; done
+    python3 $R/policy-mix/rt_metrics.py --output $O --builds wfd,cgb,ra,ra-cgb,rnd0,rnd1,rnd2
+done
+python3 $R/policy-mix/deadline_analysis.py analyze --small $W/.cache/deadline-small-v1 \
+    --big $W/.cache/deadline-big-v1 --dest $W/.cache/deadline-confirm-v1
+```
+실제 실행은 `supervisors/deadline-confirm-v1.sh`다.
+
+### 결과 파일
+- `results/deadline-small/`, `results/deadline-big/`: `protocol.json`, `model-check.json`(17절 복사), `prediction-l2-demand.json`, `results.jsonl`, `isolated-u.json`, `rt-metrics.json`, `stats-*.json/md`, `per-set.jsonl.gz`
+- `results/deadline-confirm/`: `deadline-confirm.json/md`(사전 등록한 판정)와 그림

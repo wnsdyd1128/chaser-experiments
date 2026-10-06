@@ -6,7 +6,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 이 디렉터리에는 스크립트와 작은 결과 묶음(`results/`)만 둔다. 빌드·원시 run 로그는
 저장소 밖 `.cache/`에 있다(아래 "결과 위치").
 
-실험 목록(1–13, 16–26)과 실험별 스크립트·출력(`.cache/`)·결과 묶음(`results/`)의 대응은
+실험 목록(1–13, 16–27)과 실험별 스크립트·출력(`.cache/`)·결과 묶음(`results/`)의 대응은
 [EXPERIMENTS.md](EXPERIMENTS.md) 맨 위 표에 있다.
 
 `figures/`는 결과 그림 스크립트, `supervisors/`는 실제로 쓴 실행 순서(셸)다.
@@ -52,7 +52,7 @@ c2의 YARDA는 a058a454 빌드다. 원래는 사본의 `rtems/baseline/build`가
 고정본으로 실험 3의 한 경우를 다시 분석했을 때 CLS·CLP가 저장된 `cls.json`과 같았다.
 고정본이 없으면 YARDA 저장소를 a058a454로 checkout한 뒤 위 빌드 명령으로 만든다.
 
-실험 5–26(22절 제외)은 c2 사본에 패딩 패치를 더하고, IR 명령어 카운트가 있는 YARDA
+실험 5–27(22절 제외)은 c2 사본에 패딩 패치를 더하고, IR 명령어 카운트가 있는 YARDA
 (`feat/cpp-backend` 374b2c9, frontend 2670c6e)를 별도 빌드해 연결한 **c3 사본**을 쓴다.
 
 ```sh

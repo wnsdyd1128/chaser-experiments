@@ -19,6 +19,9 @@ random-conflict-cls / random-policy-boundary / random-policy-mix (rnd_*_set): ex
 23, 24, 25, 19 and 17's sets with P on placement_lib's random placements only, to pair with them.
 --design cls-spread (clsspread_set): 12-20 tasks x CLS mean x CLS SD x period CV; runs as
 task-count plus P on the relative CLS groupings cgr (p_cgr) and ra-cgr (p_racgr).
+--design deadline-small / deadline-big (deadline_set, deadline_big_set): experiment 27's
+pre-registered sets (32 KiB low-CLS at 50 % of U, 768 KiB at 25 %); runs as task-count plus P on
+the three random placements (p_rnd0-2). deadline_analysis.py is snapshot with the scripts.
 On top of hl_run's prepare, every case runs yarda_cpp on the wfd build (locality.json:
 counts, CLS, IR instructions per task; CLS must equal the planned closed form) and the
 policy-mix scripts are snapshot next to hl_run's. Run pm_check.py first (its shapes are
@@ -42,6 +45,8 @@ import bi_run
 import boundary_set
 import clsspread_set
 import conflictcls_set
+import deadline_big_set
+import deadline_set
 import hl_run
 import loadmem_set
 import mix_cls_set
@@ -73,12 +78,16 @@ SPREAD_RUNS = TASKCOUNT_RUNS + (('cgr', 'p', 'p_cgr'), ('ra-cgr', 'p', 'p_racgr'
 SPREAD_PAIRS = TASKCOUNT_PAIRS + (('p_cgr', 'p_ra'), ('p_racgr', 'p_ra'), ('p_racgr', 'p_racgb'))
 RANDOM_RUNS = tuple((policy, 'p', f'p_{policy}') for policy in placement_lib.RANDOM_POLICIES)
 RANDOM_PAIRS = (('p_rnd1', 'p_rnd0'), ('p_rnd2', 'p_rnd0'))
+DEADLINE_RUNS = TASKCOUNT_RUNS + RANDOM_RUNS
+DEADLINE_PAIRS = TASKCOUNT_PAIRS + tuple(('p_racgb', key) for _, _, key in RANDOM_RUNS)
 SNAPSHOT = ('placement_lib.py', 'mix_set.py', 'mix_cls_set.py', 'boundary_set.py', 'taskcount_set.py',
             'smallmem_set.py', 'clsspread_set.py', 'loadmem_set.py', 'conflictcls_set.py', 'pm_check.py',
             'pm_run.py', 'test_placement_lib.py', 'test_mix_set.py', 'test_boundary_set.py',
             'test_taskcount_set.py', 'test_smallmem_set.py', 'test_clsspread_set.py', 'test_loadmem_set.py',
             'test_conflictcls_set.py', 'rnd_smallmem_set.py', 'rnd_taskcount_set.py', 'rnd_spread_set.py',
-            'rnd_loadmem_set.py', 'rnd_conflict_set.py', 'rnd_boundary_set.py', 'rnd_mix_set.py', 'test_random_sets.py')
+            'rnd_loadmem_set.py', 'rnd_conflict_set.py', 'rnd_boundary_set.py', 'rnd_mix_set.py', 'test_random_sets.py',
+            'deadline_set.py', 'deadline_big_set.py', 'deadline_analysis.py', 'rt_metrics.py', 'test_deadline_set.py',
+            'test_deadline_analysis.py')
 HL_SNAPSHOT = ('hl_run.py', 'hl_set.py', 'mem_set.py')
 
 _hl_prepare_one, _hl_prepare_all = hl_run.prepare_one, hl_run.prepare_all
@@ -133,6 +142,8 @@ def main():
     hl_run.DESIGNS['random-conflict-cls'] = (rnd_conflict_set, RANDOM_RUNS, RANDOM_PAIRS)
     hl_run.DESIGNS['random-policy-boundary'] = (rnd_boundary_set, RANDOM_RUNS, RANDOM_PAIRS)
     hl_run.DESIGNS['random-policy-mix'] = (rnd_mix_set, RANDOM_RUNS, RANDOM_PAIRS)
+    hl_run.DESIGNS['deadline-small'] = (deadline_set, DEADLINE_RUNS, DEADLINE_PAIRS)
+    hl_run.DESIGNS['deadline-big'] = (deadline_big_set, DEADLINE_RUNS, DEADLINE_PAIRS)
     hl_run.SNAPSHOT = HL_SNAPSHOT
     # hl_run's stages look these up as module globals.
     hl_run.prepare_one, hl_run.prepare_all = prepare_one, prepare_all

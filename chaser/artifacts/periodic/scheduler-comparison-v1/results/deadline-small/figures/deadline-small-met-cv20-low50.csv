@@ -1,0 +1,50 @@
+load,configuration,measured_sets,sets_meeting_every_deadline
+0.45,Global,18,18
+0.475,Global,18,18
+0.5,Global,18,17
+0.525,Global,18,11
+0.55,Global,18,2
+0.575,Global,18,0
+0.6,Global,18,0
+0.45,Clustered (1+1+2),18,18
+0.475,Clustered (1+1+2),18,17
+0.5,Clustered (1+1+2),18,16
+0.525,Clustered (1+1+2),18,14
+0.55,Clustered (1+1+2),18,0
+0.575,Clustered (1+1+2),18,0
+0.6,Clustered (1+1+2),18,0
+0.45,Partitioned (U-balanced, WFD),18,18
+0.475,Partitioned (U-balanced, WFD),18,17
+0.5,Partitioned (U-balanced, WFD),18,17
+0.525,Partitioned (U-balanced, WFD),18,9
+0.55,Partitioned (U-balanced, WFD),18,0
+0.575,Partitioned (U-balanced, WFD),18,0
+0.6,Partitioned (U-balanced, WFD),18,0
+0.45,Partitioned (balanced CLS grouping),18,18
+0.475,Partitioned (balanced CLS grouping),18,18
+0.5,Partitioned (balanced CLS grouping),18,17
+0.525,Partitioned (balanced CLS grouping),18,13
+0.55,Partitioned (balanced CLS grouping),18,3
+0.575,Partitioned (balanced CLS grouping),18,0
+0.6,Partitioned (balanced CLS grouping),18,0
+0.45,Partitioned (release-aware),18,18
+0.475,Partitioned (release-aware),18,18
+0.5,Partitioned (release-aware),18,15
+0.525,Partitioned (release-aware),18,8
+0.55,Partitioned (release-aware),18,0
+0.575,Partitioned (release-aware),18,0
+0.6,Partitioned (release-aware),18,0
+0.45,Partitioned (release-aware within balanced CLS grouping),18,18
+0.475,Partitioned (release-aware within balanced CLS grouping),18,18
+0.5,Partitioned (release-aware within balanced CLS grouping),18,15
+0.525,Partitioned (release-aware within balanced CLS grouping),18,10
+0.55,Partitioned (release-aware within balanced CLS grouping),18,0
+0.575,Partitioned (release-aware within balanced CLS grouping),18,0
+0.6,Partitioned (release-aware within balanced CLS grouping),18,0
+0.45,Partitioned (random, mean of 3 draws),18,14
+0.475,Partitioned (random, mean of 3 draws),18,8
+0.5,Partitioned (random, mean of 3 draws),18,4.33333
+0.525,Partitioned (random, mean of 3 draws),18,0.666667
+0.55,Partitioned (random, mean of 3 draws),18,0
+0.575,Partitioned (random, mean of 3 draws),18,0
+0.6,Partitioned (random, mean of 3 draws),18,0
