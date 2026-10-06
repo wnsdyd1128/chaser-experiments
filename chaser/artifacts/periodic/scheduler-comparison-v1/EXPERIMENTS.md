@@ -29,6 +29,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 21 | 작은 작업 집합의 저-CLS task × 주기 분포 × task 수 | `policy-mix/`(`--design small-memory`) | `small-memory-v1` | `small-memory` |
 | 22 | 실험 1·2의 task 수 12–20 재실행 | `period-distribution/{tc_taskset,tc_run}.py` | `period-taskcount-v1`, `period-taskcount-cohort-v1` | `period-taskcount`, `period-taskcount-cohort` |
 | 23 | CLS 분포·다양성 × 주기 분포 × task 수 | `policy-mix/`(`--design cls-spread`) | `cls-spread-v1` | `cls-spread` |
+| 24 | 작은 작업 집합의 저-CLS task × 부하(탐색) | `policy-mix/`(`--design small-memory-load`) | `small-memory-load-v1` | `small-memory-load` |
 
 ---
 
@@ -1399,4 +1400,62 @@ python3 $R/figures/cls_spread_bars.py $O
 - `protocol.json`(set별 task 수), `results.jsonl`, `isolated-u.json`
 - `stats-cls-spread.json/md`, `cls-spread-analysis.json/md`
 - 그림 `cls-spread-*`
+- `per-set.jsonl.gz`
+
+---
+
+## 24. 작은 작업 집합의 저-CLS task × 부하 (탐색)
+
+### 개요
+21절(코어당 U 0.4)에서는 deadline miss가 없어서 배치 사이의 차이가 TAT·TET로만 드러났다.
+11절에서는 task 절반이 메모리를 자주 읽을 때 트래픽 묶음이 U 균형보다 다음만큼 나았다.
+- 코어당 U 0.3: TAT −4%
+- 코어당 U 0.45: TAT −8%
+- 코어당 U 0.6: 모든 구성이 deadline을 놓쳤다.
+
+다만 11절은 release 고려 배치와 비교하지 않았고 task가 16개였다.
+이 실험은 21절의 task set을 이 경계 근처의 부하로 올려, CLS 고려 배치가 deadline을 더 오래 지키는지 본다.
+21–23절 결과를 본 뒤 고른 조건이므로 **탐색 실험**이다. 유망한 조건은 새 set으로 다시 확인해야 한다.
+
+### 목적
+1. 부하가 오를 때 다음 두 배치가 release 고려 배치(ra)보다 deadline 준수와 TAT·TET에서 나은지 확인한다.
+   - 부하 균등 CLS 묶음(cgb)
+   - 그 안의 release 고려(ra-cgb)
+2. 그 차이가 주기 CV(0, 0.2)와 task 수에 따라 달라지는지 확인한다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | **코어당 명목 U** {0.45, 0.5, 0.55, 0.6}<br>**32 KiB 저-CLS task의 U 비율** {25%, 50%}: 5절 낮은 모드, 트래픽 그대로. 25% task는 50% task에 포함<br>**주기 CV** {0, 0.2}<br>**task 수** 12–20(셀마다 각 값 2번)<br>**구성 6개**: Global, Clustered (1+1+2)(U 균형 기준), Partitioned wfd·cgb·ra·ra-cgb |
+| 통제 변인 | 21절과 같은 task 모양·주기 격자·측정 구간<br>**U 비율**: 가장 큰 task ≤ 0.35(최고 부하 기준), 가장 작은 task ≥ 0.011(최저 부하 기준)<br>**공통 난수**: set k는 모든 셀·부하에서 task 수·U 비율·CLS 편차·주기 z·순서를 공유하고, 부하는 job 예산의 크기만 바꾼다<br>**규모**: 셀 4개 × 부하 4개 × set 18개 |
+| 종속 변인 | 모든 deadline 준수 여부(주 지표); deadline을 지킨 run의 TAT·TET |
+| 조작 확인 | **실현 저-CLS U 비율**(부하 0.5, CV 0.2): 목표 25%에서 중앙값 0.254(0.22–0.28), 50%에서 0.499(0.47–0.54)<br>**job 예산**: 0.65–18.14 ms. 저-CLS task는 모든 부하·CV에서 낮은 CLS 계열의 검증 범위 안에 드는 task 중에서 고르므로, 17절 모델 검증의 계열별 범위 안이다<br>**CLS**: yarda CLS = 계획값<br>**단독 U**: 셀·부하마다 set 0, 게이트 3% |
+
+### 실험 방법
+1. 단계는 다음 순서로 진행한다.
+   - `prepare`: 288 경우 × 배치 4종
+   - `isolated`
+   - `pilot`: 셀·부하마다 set 0, 96 run
+   - `full`: 1,632 run
+   - `stats`(부하에 대한 Page 추세 포함)
+2. 분석은 셀·부하별로 다음을 본다.
+   - deadline 준수 수와 짝지은 불일치(한쪽만 지킨 경우)
+   - TAT·TET 짝지은 비교
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R/policy-mix $R/policy-mix   # 명세 테스트
+O=$W/.cache/small-memory-load-v1
+mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design small-memory-load --output $O; done
+```
+실제 실행은 `supervisors/small-memory-load-v1.sh`다.
+
+### 결과 파일
+`results/small-memory-load/`에는 다음이 있다.
+- `protocol.json`, `model-check.json`(17절 복사), `results.jsonl`, `isolated-u.json`
+- `stats-small-memory-load.json/md`
+- 분석과 그림
 - `per-set.jsonl.gz`
