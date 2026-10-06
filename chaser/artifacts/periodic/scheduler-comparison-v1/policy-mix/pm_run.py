@@ -6,6 +6,8 @@ C2 (1+1+2) and P run on wfd, P on tg (p_tg), ra (p_ra) and ra-tg (p_ratg).
 P runs on cg (p_cg) and ra-cg (p_racg), to pair with a policy-mix output.
 --design policy-boundary (boundary_set): 24 period-CV x memory cells; wfd/, cgb/, ra/ and
 ra-cgb/ builds with P on each (p, p_cgb, p_ra, p_racgb).
+--design task-count (taskcount_set): 12-20 tasks x memory share x load; the same four
+builds, P on each and G, C2 (1+1+2) on wfd.
 On top of hl_run's prepare, every case runs yarda_cpp on the wfd build (locality.json:
 counts, CLS, IR instructions per task; CLS must equal the planned closed form) and the
 policy-mix scripts are snapshot next to hl_run's. Run pm_check.py first (its shapes are
@@ -30,6 +32,7 @@ import boundary_set
 import hl_run
 import mix_cls_set
 import mix_set
+import taskcount_set
 import yarda_counts
 
 DESIGN = 'policy-mix'
@@ -41,8 +44,10 @@ CLS_RUNS = (('cg', 'p', 'p_cg'), ('ra-cg', 'p', 'p_racg'))
 CLS_PAIRS = (('p_racg', 'p_cg'),)
 BOUNDARY_RUNS = (('wfd', 'p', 'p'), ('cgb', 'p', 'p_cgb'), ('ra', 'p', 'p_ra'), ('ra-cgb', 'p', 'p_racgb'))
 BOUNDARY_PAIRS = (('p_cgb', 'p_ra'), ('p_racgb', 'p_ra'), ('p_racgb', 'p_cgb'), ('p_cgb', 'p'), ('p_ra', 'p'))
-SNAPSHOT = ('placement_lib.py', 'mix_set.py', 'mix_cls_set.py', 'boundary_set.py', 'pm_check.py', 'pm_run.py',
-            'test_placement_lib.py', 'test_mix_set.py', 'test_boundary_set.py')
+TASKCOUNT_RUNS = (('wfd', 'g', 'g'), ('wfd', 'c2', 'c2')) + BOUNDARY_RUNS
+TASKCOUNT_PAIRS = BOUNDARY_PAIRS + (('g', 'p_racgb'), ('c2', 'p_racgb'), ('g', 'p_ra'))
+SNAPSHOT = ('placement_lib.py', 'mix_set.py', 'mix_cls_set.py', 'boundary_set.py', 'taskcount_set.py', 'pm_check.py',
+            'pm_run.py', 'test_placement_lib.py', 'test_mix_set.py', 'test_boundary_set.py', 'test_taskcount_set.py')
 HL_SNAPSHOT = ('hl_run.py', 'hl_set.py', 'mem_set.py')
 
 _hl_prepare_one, _hl_prepare_all = hl_run.prepare_one, hl_run.prepare_all
@@ -85,6 +90,7 @@ def main():
     hl_run.DESIGNS[DESIGN] = (mix_set, RUNS, PAIRS)
     hl_run.DESIGNS['policy-mix-cls'] = (mix_cls_set, CLS_RUNS, CLS_PAIRS)
     hl_run.DESIGNS['policy-boundary'] = (boundary_set, BOUNDARY_RUNS, BOUNDARY_PAIRS)
+    hl_run.DESIGNS['task-count'] = (taskcount_set, TASKCOUNT_RUNS, TASKCOUNT_PAIRS)
     hl_run.SNAPSHOT = HL_SNAPSHOT
     # hl_run's stages look these up as module globals.
     hl_run.prepare_one, hl_run.prepare_all = prepare_one, prepare_all

@@ -25,6 +25,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 17 | 다요인 배치 정책 비교(P-first 후보 배치) | `policy-mix/` | `policy-mix-v1` | `policy-mix` |
 | 18 | CLS 기준 묶음 배치(17의 같은 set) | `policy-mix/`(`--design policy-mix-cls`) | `policy-mix-cls-v1` | `policy-mix-cls` |
 | 19 | 주기 분포 × 메모리 구성의 배치 경계 | `policy-mix/`(`--design policy-boundary`) | `policy-boundary-v1` | `policy-boundary` |
+| 20 | task 수(12–20) × 메모리 압박 | `policy-mix/`(`--design task-count`) | `task-count-v1` | `task-count` |
 
 ---
 
@@ -1169,4 +1170,61 @@ python3 $R/figures/policy_boundary_bars.py $O
 - `protocol.json`(셀 정의, 768 KiB task 위치), `model-check.json`(17절 복사), `results.jsonl`, `isolated-u.json`
 - `stats-policy-boundary.json/md`, `boundary-analysis.json/md`
 - 그림 `policy-boundary-{tat,tet}-low{0,4,8}-big{0,2}`
+- `per-set.jsonl.gz`
+
+---
+
+## 20. task 수(12–20) × 메모리 압박
+
+### 개요
+1–19절은 모두 task 16개(코어 수 4의 배수)였다. 실무의 task 수는 기능 분해로 정해지며 코어 수와 무관하다.
+task 수를 12–20 사이에서 바꾸면서, 메모리 압박이 클 때 CLS 기반 배치가 release 고려 배치를 이기는지 본다.
+17·18절에서는 주기가 다른 조건에서도 768 KiB task가 많으면 묶음이 이겼다. 19절은 768 KiB task가 최대 2개라 이 조건을 거의 담지 못했다.
+같은 실험에서 Partitioned의 우위가 16개가 아닌 task 수에서도 유지되는지 확인한다.
+
+### 목적
+1. 768 KiB task가 전체 U의 25%·50%를 차지할 때, 부하 균등 CLS 묶음과 그 안의 release 고려가 release 고려보다
+   TAT·TET·deadline 준수에서 나은지 확인한다.
+2. 그 결과가 task 수(12–14, 15–17, 18–20)와 4의 배수 여부에 따라 달라지는지 확인한다.
+3. task 수가 적어 나눠 담기가 거칠 때 Global·Clustered (1+1+2)가 최선 Partitioned 배치를 이기는지 확인한다.
+4. yarda 정적 feature로 배치 승자를 맞힐 수 있는지 본다(16절 RF).
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | task 수 12–20(셀마다 값별로 set 4개, 12·16·20만 4의 배수); 768 KiB task(실험 8의 BL 모양, 트래픽 그대로)가 차지하는 U 비율 {0, 25%, 50%}(25% task는 50% task에 포함); 코어당 명목 U {0.35, 0.45}. 구성 6개: Global, Clustered (1+1+2)(U 균형 배치 기준), Partitioned U 균형(wfd) / 부하 균등 CLS 묶음(cgb) / release 고려(ra) / 부하 균등 CLS 묶음 안의 release 고려(ra-cgb) |
+| 통제 변인 | 나머지 task는 높은 CLS(중심 0.90, 모드 내 CV 0.1); 주기는 task마다 {20, 40, 80} ms(조화 주기); task U 비율은 Dirichlet(α = 8), 가장 큰 task ≤ 0.35, 가장 작은 task ≥ 0.011; job 예산은 5절의 O2 시간 모델(768 KiB는 `mix_set.big_level`); workload O2; warm-up 2 + 측정 4 hyperperiod(80 ms); 공통 난수(set k는 모든 셀에서 task 수·주기·U 비율·CLS 편차·순서 공유); 셀당 set 36개 |
+| 종속 변인 | 모든 deadline 준수 여부; deadline을 지킨 run의 TAT·TET; 최선 Partitioned 배치 대비 regret |
+| 조작 확인 | 실현 메모리 U 비율(목표 25%에서 중앙값 0.248, 50%에서 0.490); 경우마다 yarda CLS = 계획값; 단독 U(셀마다 set 0, 게이트 3%); job 예산 0.44–20.8 ms는 17절 시간 모델 검증 범위 안이라 그 결과를 복사 |
+
+768 KiB task는 낮은 부하에서도 768 KiB sweep을 한 번 할 수 있는 task 중에서 set 순서대로 고른다. 목표 U 비율에 가장 가까워지는 지점에서 멈춘다.
+그래서 주기가 긴 task로 치우친다.
+
+### 실험 방법
+1. `prepare`(216 경우 × 배치 4종, yarda CLS 대조) → `isolated`(셀마다 set 0) → `pilot`(셀마다 set 0, 36 run)
+   → `full`(1,260 run) → `stats`.
+2. `taskcount_analysis.py`는 다음을 계산한다.
+   - 셀별 deadline 준수
+   - TAT·TET 셀별 비교
+   - CLS 기반 배치 대 release 고려: 짝지은 차이, Wilcoxon + Holm, deadline 준수 불일치
+   - task 수 그룹별·4의 배수 여부별 같은 대비와 G·C2 대 최선 Partitioned
+   - TAT·TET 배치 선택 RF
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R/policy-mix $R/policy-mix   # 명세 테스트
+O=$W/.cache/task-count-v1
+mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design task-count --output $O; done
+python3 $R/policy-mix/taskcount_analysis.py --output $O
+python3 $R/figures/task_count_bars.py $O
+```
+
+### 결과 파일
+`results/task-count/`에는 다음이 있다.
+- `protocol.json`(set별 task 수와 768 KiB task 위치), `model-check.json`(17절 복사), `results.jsonl`, `isolated-u.json`
+- `stats-task-count.json/md`, `task-count-analysis.json/md`
+- 그림 `task-count-{tat,tet}-mem*-u*`, `task-count-schedulable-u*`
 - `per-set.jsonl.gz`
