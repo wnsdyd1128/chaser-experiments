@@ -31,6 +31,7 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 23 | CLS 분포·다양성 × 주기 분포 × task 수 | `policy-mix/`(`--design cls-spread`) | `cls-spread-v1` | `cls-spread` |
 | 24 | 작은 작업 집합의 저-CLS task × 부하(탐색) | `policy-mix/`(`--design small-memory-load`) | `small-memory-load-v1` | `small-memory-load` |
 | 25 | 접근 패턴 때문에 CLS가 낮은 task(L1 충돌 miss, 21절과 같은 set) | `policy-mix/`(`--design conflict-cls`, `conflict_calibrate.py`) | `conflict-calibration-v1`, `conflict-cls-v2`(v1은 게이트에서 멈춤) | `conflict-calibration`, `conflict-cls` |
+| 26 | 무작위 배치 기준선(21·20·23절, 확장 24·25·19·17절의 set) | `policy-mix/`(`--design random-*`) | `random-small-memory-v1`, `random-task-count-v1`, `random-cls-spread-v1` | `random-small-memory`, `random-task-count`, `random-cls-spread` |
 
 ---
 
@@ -1515,4 +1516,77 @@ for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $
 - `protocol.json`(짝지은 21절 출력, 충돌 간격), `results.jsonl`, `isolated-u.json`
 - `stats-conflict-cls.json/md`
 - 분석과 그림
+- `per-set.jsonl.gz`
+
+---
+
+## 26. 무작위 배치 기준선 (CAAS의 비교 기준)
+
+### 개요
+지금까지 CLS 기준 배치는 주로 release 고려 배치(ra)와 비교했다. 반면 CAAS 논문은 U 균형(WFD)과 지역성을 무시한 무작위 배치를 비교 기준으로 썼다.
+U 균형 결과는 17–25절에 이미 있으므로, 이 실험은 무작위 배치만 같은 set에서 새로 돌린다.
+돌린 결과는 기존 결과와 짝지어 다음을 비교한다.
+- CLS 기준 배치(cgb, ra-cgb, 23절은 cgr·ra-cgr 포함)
+- U 균형
+- release 고려
+
+### 목적
+1. CLS 기준 Partitioned 배치가 무작위 배치보다 TAT·TET·deadline 준수에서 나은지 확인한다.
+2. 비교 기준(무작위, U 균형, release 고려)에 따라 CLS 기준 배치의 효과가 얼마나 달라지는지 정리한다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | **배치**: 무작위 3회(`rnd0`–`rnd2`). 태스크마다 코어를 균등하게 뽑고, 어느 코어든 U 0.95를 넘으면 다시 뽑는다. set의 시드에서 결정적으로 뽑는다<br>**set**:<br>- 21절의 저-CLS 칸 8개(`random-small-memory`)<br>- 20절의 메모리 25% 칸, 두 부하(`random-task-count`)<br>- 23절의 CLS 평균 0.6·0.9이고 퍼짐이 있는 칸 8개(`random-cls-spread`)<br>**확장**(같은 정의, `supervisors/random-baseline-ext-v1.sh`):<br>- 24절의 모든 칸·부하(`random-small-memory-load`)<br>- 25절의 모든 칸(`random-conflict-cls`)<br>- 19절의 저-CLS 또는 768 KiB task가 있는 칸 20개(`random-policy-boundary`)<br>- 17절의 set(`random-policy-mix`, 17·18절과 짝지음) |
+| 통제 변인 | 각 실험과 같은 task·set·시드·job 예산. 배치만 다르다. 20절 메모리 50% 칸은 모든 배치가 실패했고, 23절 CLS 평균 0.3 칸은 L2 과부하이며, 퍼짐 0 칸은 묶을 집단이 없어 제외한다 |
+| 종속 변인 | deadline 준수 여부, TAT, TET. 같은 set의 기존 결과와 짝지어 비교한다 |
+| 조작 확인 | 단독 U(셀마다 set 0, 게이트 3%); yarda CLS = 계획값 |
+
+### 실험 방법
+1. 설계마다 다음 단계를 차례로 진행한다.
+   - `prepare`: wfd 빌드는 단독 U 게이트와 yarda용이며 실행하지 않는다
+   - `isolated`
+   - `pilot`
+   - `full`
+   - `stats`
+2. 규모는 다음과 같다.
+   - 21절: 216 경우 × 3
+   - 20절: 72 경우 × 3
+   - 23절: 144 경우 × 3
+   - 모두 1,296 run
+   - 확장분: 24절 288 경우 × 3, 25절 108 × 3, 19절 200 × 3, 17절 160 × 3, 모두 2,268 run
+3. 분석은 두 단계로 한다.
+   - `policy-mix/rt_metrics.py`는 출력마다 P run별 실시간 지표를 `rt-metrics.json`에 쓴다. 지표는 다음과 같다.
+     - 상태(ok/deadline/startup)
+     - 최악 응답시간 ÷ 주기
+     - 최악 job CPU ÷ 계획 예산(전체 task와 메모리 task)
+     - deadline 위반 job 수: 측정 구간에서 응답이 주기를 넘은 job과, 그 지연으로 다음 release가 연기되어(RTEMS rate monotonic) 구간 안에 실행되지 못한 job의 합. 측정 구간에 release되어야 할 job 수도 함께 기록한다
+     원시 기록(measurements.jsonl의 첫 줄)만 읽으므로 빌드를 정리한 출력에도 쓸 수 있다.
+   - `policy-mix/rt_compare.py`는 17–25절의 기존 출력과 무작위 출력을 같은 경우끼리 짝지어 비교한다.
+     배치마다 deadline 준수, 위반 job 비율, 최악 실행시간·최악 응답시간의 중앙값(모든 배치·무작위 회차가 deadline을 지킨 경우)을 낸다.
+     CLS 기준 배치마다 wfd·ra·무작위 대비 deadline 불일치, 위반 job 수 비교(어느 한쪽이라도 놓친 쌍), 최악 실행시간 상대 변화, 최악 응답시간 변화를 낸다.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 -m pytest -q -p no:cacheprovider --rootdir=$R/policy-mix $R/policy-mix   # 명세 테스트
+for d in random-small-memory random-task-count random-cls-spread random-small-memory-load random-conflict-cls random-policy-boundary random-policy-mix; do
+    O=$W/.cache/$d-v1
+    for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design $d --output $O; done
+done
+# 실시간 지표: 출력마다 rt_metrics.py(--builds는 그 출력의 P 빌드), 그 다음 비교와 그림
+python3 $R/policy-mix/rt_metrics.py --output $W/.cache/small-memory-v1 --builds wfd,cgb,ra,ra-cgb   # 다른 출력도 같은 방식
+python3 $R/policy-mix/rt_compare.py --cache $W/.cache --output $R/results/rt-compare
+python3 $R/figures/rt_compare_bars.py $R/results/rt-compare
+```
+실제 실행은 `supervisors/random-baseline-v1.sh`(25절이 끝난 뒤 시작)와, 그 뒤의 `supervisors/random-baseline-ext-v1.sh`다.
+확장분의 설계 이름은 `random-small-memory-load`, `random-conflict-cls`, `random-policy-boundary`, `random-policy-mix`다.
+
+### 결과 파일
+17–25절의 실시간 지표 비교는 `results/rt-compare/`(`rt-compare.json/md`, 그림 `rt-compare-<절>`)에 있다. 각 출력의 `rt-metrics.json`은 해당 결과 묶음에 들어 있다.
+
+`results/random-*/`(설계 이름과 같다)에는 각각 다음이 있다.
+- `protocol.json`, `results.jsonl`, `isolated-u.json`
+- `stats-*.json/md`
 - `per-set.jsonl.gz`

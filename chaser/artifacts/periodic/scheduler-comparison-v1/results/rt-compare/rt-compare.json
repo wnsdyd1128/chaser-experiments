@@ -1,0 +1,1072 @@
+{
+ "17-18 policy mix": {
+  "cases": 160,
+  "common_cases": 71,
+  "placements": {
+   "wfd": {
+    "runs": 159,
+    "met": 125,
+    "missed_jobs": 1689,
+    "expected_jobs": 21856,
+    "inflation": 1.8330266651450717,
+    "response": 0.5842851875
+   },
+   "tg": {
+    "runs": 159,
+    "met": 127,
+    "missed_jobs": 1112,
+    "expected_jobs": 21864,
+    "inflation": 1.5515624454539583,
+    "response": 0.593087375
+   },
+   "ra": {
+    "runs": 158,
+    "met": 125,
+    "missed_jobs": 1453,
+    "expected_jobs": 21728,
+    "inflation": 1.877844640677866,
+    "response": 0.595919275
+   },
+   "ra-tg": {
+    "runs": 160,
+    "met": 125,
+    "missed_jobs": 1172,
+    "expected_jobs": 22008,
+    "inflation": 1.55412594430318,
+    "response": 0.595919275
+   },
+   "cg": {
+    "runs": 158,
+    "met": 122,
+    "missed_jobs": 1568,
+    "expected_jobs": 21736,
+    "inflation": 1.5264570331751628,
+    "response": 0.603214275
+   },
+   "ra-cg": {
+    "runs": 159,
+    "met": 120,
+    "missed_jobs": 1612,
+    "expected_jobs": 21880,
+    "inflation": 1.5355400445606355,
+    "response": 0.60107255
+   },
+   "random": {
+    "runs": 480,
+    "met": 321,
+    "missed_jobs": 6300,
+    "expected_jobs": 66024,
+    "inflation": 1.664641393138423,
+    "response": 0.705729475
+   }
+  },
+  "contrasts": {
+   "cg vs wfd": {
+    "pairs": 157,
+    "only_first": 5,
+    "miss_pairs": 41,
+    "fewer_misses_first": 22,
+    "fewer_misses_second": 16,
+    "missed_difference": -8,
+    "only_second": 7,
+    "both_ok": 98,
+    "inflation_change": -0.2125741322211912,
+    "inflation_wins": 81,
+    "response_change": -0.0007815500000000197
+   },
+   "cg vs ra": {
+    "pairs": 156,
+    "only_first": 4,
+    "miss_pairs": 39,
+    "fewer_misses_first": 20,
+    "fewer_misses_second": 18,
+    "missed_difference": -1,
+    "only_second": 6,
+    "both_ok": 99,
+    "inflation_change": -0.22424752277377724,
+    "inflation_wins": 81,
+    "response_change": 0.0035161999999999694
+   },
+   "cg vs random": {
+    "pairs": 474,
+    "only_first": 62,
+    "miss_pairs": 170,
+    "fewer_misses_first": 109,
+    "fewer_misses_second": 46,
+    "missed_difference": -8.0,
+    "only_second": 11,
+    "both_ok": 250,
+    "inflation_change": -0.10302311417229648,
+    "inflation_wins": 180,
+    "response_change": -0.10421154999999999
+   },
+   "ra-cg vs wfd": {
+    "pairs": 158,
+    "only_first": 4,
+    "miss_pairs": 43,
+    "fewer_misses_first": 22,
+    "fewer_misses_second": 18,
+    "missed_difference": -1,
+    "only_second": 9,
+    "both_ok": 97,
+    "inflation_change": -0.2044075847346093,
+    "inflation_wins": 81,
+    "response_change": -0.0009409000000000223
+   },
+   "ra-cg vs ra": {
+    "pairs": 157,
+    "only_first": 3,
+    "miss_pairs": 41,
+    "fewer_misses_first": 19,
+    "fewer_misses_second": 19,
+    "missed_difference": 0,
+    "only_second": 8,
+    "both_ok": 98,
+    "inflation_change": -0.22120935549629112,
+    "inflation_wins": 80,
+    "response_change": -0.0006359000000000226
+   },
+   "ra-cg vs random": {
+    "pairs": 477,
+    "only_first": 54,
+    "miss_pairs": 171,
+    "fewer_misses_first": 109,
+    "fewer_misses_second": 44,
+    "missed_difference": -8,
+    "only_second": 12,
+    "both_ok": 252,
+    "inflation_change": -0.09897591247146875,
+    "inflation_wins": 180,
+    "response_change": -0.10166069999999999
+   },
+   "tg vs wfd": {
+    "pairs": 158,
+    "only_first": 6,
+    "miss_pairs": 38,
+    "fewer_misses_first": 26,
+    "fewer_misses_second": 10,
+    "missed_difference": -8.0,
+    "only_second": 4,
+    "both_ok": 102,
+    "inflation_change": -0.1930723221364013,
+    "inflation_wins": 70,
+    "response_change": -0.00014844999999996666
+   },
+   "tg vs ra": {
+    "pairs": 157,
+    "only_first": 5,
+    "miss_pairs": 36,
+    "fewer_misses_first": 24,
+    "fewer_misses_second": 11,
+    "missed_difference": -8.0,
+    "only_second": 3,
+    "both_ok": 103,
+    "inflation_change": -0.21164875721992737,
+    "inflation_wins": 80,
+    "response_change": 0.0006012999999999713
+   },
+   "tg vs random": {
+    "pairs": 477,
+    "only_first": 66,
+    "miss_pairs": 162,
+    "fewer_misses_first": 124,
+    "fewer_misses_second": 27,
+    "missed_difference": -16.0,
+    "only_second": 3,
+    "both_ok": 261,
+    "inflation_change": -0.0517926531658458,
+    "inflation_wins": 163,
+    "response_change": -0.12026219999999999
+   },
+   "ra-tg vs wfd": {
+    "pairs": 159,
+    "only_first": 4,
+    "miss_pairs": 39,
+    "fewer_misses_first": 24,
+    "fewer_misses_second": 12,
+    "missed_difference": -8,
+    "only_second": 5,
+    "both_ok": 102,
+    "inflation_change": -0.1944070505413968,
+    "inflation_wins": 75,
+    "response_change": -0.0010471499999999967
+   },
+   "ra-tg vs ra": {
+    "pairs": 158,
+    "only_first": 3,
+    "miss_pairs": 37,
+    "fewer_misses_first": 23,
+    "fewer_misses_second": 11,
+    "missed_difference": -8,
+    "only_second": 4,
+    "both_ok": 103,
+    "inflation_change": -0.18410804076018683,
+    "inflation_wins": 70,
+    "response_change": 0.0
+   },
+   "ra-tg vs random": {
+    "pairs": 480,
+    "only_first": 57,
+    "miss_pairs": 162,
+    "fewer_misses_first": 123,
+    "fewer_misses_second": 25,
+    "missed_difference": -16.0,
+    "only_second": 3,
+    "both_ok": 264,
+    "inflation_change": -0.03975905395361107,
+    "inflation_wins": 166,
+    "response_change": -0.12330289999999997
+   }
+  }
+ },
+ "19 period spread x memory mix": {
+  "cases": 200,
+  "common_cases": 166,
+  "placements": {
+   "wfd": {
+    "runs": 199,
+    "met": 199,
+    "missed_jobs": 0,
+    "expected_jobs": 38678,
+    "inflation": 2.2415507114247237,
+    "response": 0.591453725
+   },
+   "cgb": {
+    "runs": 200,
+    "met": 200,
+    "missed_jobs": 0,
+    "expected_jobs": 38870,
+    "inflation": 1.9613913422840046,
+    "response": 0.5757846041666667
+   },
+   "ra": {
+    "runs": 200,
+    "met": 200,
+    "missed_jobs": 0,
+    "expected_jobs": 38870,
+    "inflation": 2.313827067146092,
+    "response": 0.58550559375
+   },
+   "ra-cgb": {
+    "runs": 200,
+    "met": 200,
+    "missed_jobs": 0,
+    "expected_jobs": 38870,
+    "inflation": 1.9558978099416815,
+    "response": 0.5714309020833334
+   },
+   "random": {
+    "runs": 598,
+    "met": 564,
+    "missed_jobs": 606,
+    "expected_jobs": 116230,
+    "inflation": 2.0026162794029516,
+    "response": 0.6991146041666667
+   }
+  },
+  "contrasts": {
+   "cgb vs wfd": {
+    "pairs": 199,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 199,
+    "inflation_change": -0.11840977951837672,
+    "inflation_wins": 178,
+    "response_change": -0.0009687999999999919
+   },
+   "cgb vs ra": {
+    "pairs": 200,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 200,
+    "inflation_change": -0.1346691817786515,
+    "inflation_wins": 177,
+    "response_change": -0.006151125000000035
+   },
+   "cgb vs random": {
+    "pairs": 598,
+    "only_first": 34,
+    "miss_pairs": 34,
+    "fewer_misses_first": 34,
+    "fewer_misses_second": 0,
+    "missed_difference": -12.0,
+    "only_second": 0,
+    "both_ok": 564,
+    "inflation_change": -0.05527626891869597,
+    "inflation_wins": 369,
+    "response_change": -0.0887693
+   },
+   "ra-cgb vs wfd": {
+    "pairs": 199,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 199,
+    "inflation_change": -0.11984920582678182,
+    "inflation_wins": 178,
+    "response_change": -0.006668000000000007
+   },
+   "ra-cgb vs ra": {
+    "pairs": 200,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 200,
+    "inflation_change": -0.14158640010632578,
+    "inflation_wins": 181,
+    "response_change": -0.004760425000000068
+   },
+   "ra-cgb vs random": {
+    "pairs": 598,
+    "only_first": 34,
+    "miss_pairs": 34,
+    "fewer_misses_first": 34,
+    "fewer_misses_second": 0,
+    "missed_difference": -12.0,
+    "only_second": 0,
+    "both_ok": 564,
+    "inflation_change": -0.05576196740038797,
+    "inflation_wins": 374,
+    "response_change": -0.09895698333333336
+   }
+  }
+ },
+ "20 768 KiB tasks at 25 % of U": {
+  "cases": 72,
+  "common_cases": 3,
+  "placements": {
+   "wfd": {
+    "runs": 72,
+    "met": 29,
+    "missed_jobs": 2352,
+    "expected_jobs": 10992,
+    "inflation": 2.300295798921365,
+    "response": 0.460725475
+   },
+   "cgb": {
+    "runs": 72,
+    "met": 37,
+    "missed_jobs": 1152,
+    "expected_jobs": 10992,
+    "inflation": 2.300295798921365,
+    "response": 0.5163449875
+   },
+   "ra": {
+    "runs": 72,
+    "met": 25,
+    "missed_jobs": 2868,
+    "expected_jobs": 10992,
+    "inflation": 2.577845089832023,
+    "response": 0.4420871875
+   },
+   "ra-cgb": {
+    "runs": 72,
+    "met": 37,
+    "missed_jobs": 1168,
+    "expected_jobs": 10992,
+    "inflation": 2.2988984678616986,
+    "response": 0.5032224375
+   },
+   "random": {
+    "runs": 216,
+    "met": 45,
+    "missed_jobs": 9221,
+    "expected_jobs": 32976,
+    "inflation": 2.5100006829111563,
+    "response": 0.6255011375
+   }
+  },
+  "contrasts": {
+   "cgb vs wfd": {
+    "pairs": 72,
+    "only_first": 10,
+    "miss_pairs": 45,
+    "fewer_misses_first": 34,
+    "fewer_misses_second": 3,
+    "missed_difference": -16,
+    "only_second": 2,
+    "both_ok": 27,
+    "inflation_change": -0.1814452477360463,
+    "inflation_wins": 21,
+    "response_change": -0.025125262500000023
+   },
+   "cgb vs ra": {
+    "pairs": 72,
+    "only_first": 13,
+    "miss_pairs": 48,
+    "fewer_misses_first": 34,
+    "fewer_misses_second": 6,
+    "missed_difference": -16.0,
+    "only_second": 1,
+    "both_ok": 24,
+    "inflation_change": -0.20990977065827815,
+    "inflation_wins": 21,
+    "response_change": 0.024693112500000003
+   },
+   "cgb vs random": {
+    "pairs": 216,
+    "only_first": 67,
+    "miss_pairs": 172,
+    "fewer_misses_first": 151,
+    "fewer_misses_second": 16,
+    "missed_difference": -32.0,
+    "only_second": 1,
+    "both_ok": 44,
+    "inflation_change": -0.08485869568559118,
+    "inflation_wins": 31,
+    "response_change": -0.0860043875
+   },
+   "ra-cgb vs wfd": {
+    "pairs": 72,
+    "only_first": 10,
+    "miss_pairs": 45,
+    "fewer_misses_first": 30,
+    "fewer_misses_second": 6,
+    "missed_difference": -16,
+    "only_second": 2,
+    "both_ok": 27,
+    "inflation_change": -0.12830528301571342,
+    "inflation_wins": 23,
+    "response_change": -0.07392781250000002
+   },
+   "ra-cgb vs ra": {
+    "pairs": 72,
+    "only_first": 12,
+    "miss_pairs": 47,
+    "fewer_misses_first": 29,
+    "fewer_misses_second": 7,
+    "missed_difference": -16,
+    "only_second": 0,
+    "both_ok": 25,
+    "inflation_change": -0.20196060537002314,
+    "inflation_wins": 21,
+    "response_change": -0.025486950000000008
+   },
+   "ra-cgb vs random": {
+    "pairs": 216,
+    "only_first": 67,
+    "miss_pairs": 172,
+    "fewer_misses_first": 149,
+    "fewer_misses_second": 16,
+    "missed_difference": -32.0,
+    "only_second": 1,
+    "both_ok": 44,
+    "inflation_change": -0.08468627379891258,
+    "inflation_wins": 28,
+    "response_change": -0.11157389999999998
+   }
+  }
+ },
+ "21 32 KiB low-CLS tasks": {
+  "cases": 216,
+  "common_cases": 178,
+  "placements": {
+   "wfd": {
+    "runs": 216,
+    "met": 216,
+    "missed_jobs": 0,
+    "expected_jobs": 42964,
+    "inflation": 2.36056865786162,
+    "response": 0.604081125
+   },
+   "cgb": {
+    "runs": 216,
+    "met": 216,
+    "missed_jobs": 0,
+    "expected_jobs": 42964,
+    "inflation": 1.9514339510180685,
+    "response": 0.5941714250000001
+   },
+   "ra": {
+    "runs": 214,
+    "met": 214,
+    "missed_jobs": 0,
+    "expected_jobs": 42672,
+    "inflation": 2.3145279398395004,
+    "response": 0.5971580750000001
+   },
+   "ra-cgb": {
+    "runs": 216,
+    "met": 216,
+    "missed_jobs": 0,
+    "expected_jobs": 42964,
+    "inflation": 1.950784762969131,
+    "response": 0.5914600958333334
+   },
+   "random": {
+    "runs": 647,
+    "met": 607,
+    "missed_jobs": 756,
+    "expected_jobs": 128734,
+    "inflation": 2.010533336944645,
+    "response": 0.7242387291666667
+   }
+  },
+  "contrasts": {
+   "cgb vs wfd": {
+    "pairs": 216,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 216,
+    "inflation_change": -0.16444593138914115,
+    "inflation_wins": 200,
+    "response_change": -0.007510899999999959
+   },
+   "cgb vs ra": {
+    "pairs": 214,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 214,
+    "inflation_change": -0.155960127144172,
+    "inflation_wins": 198,
+    "response_change": -1.6041666666660737e-05
+   },
+   "cgb vs random": {
+    "pairs": 647,
+    "only_first": 40,
+    "miss_pairs": 40,
+    "fewer_misses_first": 40,
+    "fewer_misses_second": 0,
+    "missed_difference": -16.0,
+    "only_second": 0,
+    "both_ok": 607,
+    "inflation_change": -0.06833956212023484,
+    "inflation_wins": 405,
+    "response_change": -0.1199327
+   },
+   "ra-cgb vs wfd": {
+    "pairs": 216,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 216,
+    "inflation_change": -0.16086346523618317,
+    "inflation_wins": 198,
+    "response_change": -0.012550247916666701
+   },
+   "ra-cgb vs ra": {
+    "pairs": 214,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 214,
+    "inflation_change": -0.15328954363146757,
+    "inflation_wins": 199,
+    "response_change": -0.0002118916666666859
+   },
+   "ra-cgb vs random": {
+    "pairs": 647,
+    "only_first": 40,
+    "miss_pairs": 40,
+    "fewer_misses_first": 40,
+    "fewer_misses_second": 0,
+    "missed_difference": -16.0,
+    "only_second": 0,
+    "both_ok": 607,
+    "inflation_change": -0.06735692063513132,
+    "inflation_wins": 407,
+    "response_change": -0.11644725
+   }
+  }
+ },
+ "23 continuous CLS (mean 0.6-0.9, SD > 0)": {
+  "cases": 144,
+  "common_cases": 50,
+  "placements": {
+   "wfd": {
+    "runs": 144,
+    "met": 144,
+    "missed_jobs": 0,
+    "expected_jobs": 28072,
+    "inflation": 2.238298232923034,
+    "response": 0.74030296875
+   },
+   "cgb": {
+    "runs": 144,
+    "met": 144,
+    "missed_jobs": 0,
+    "expected_jobs": 28072,
+    "inflation": 2.2256553376018706,
+    "response": 0.76281699375
+   },
+   "ra": {
+    "runs": 144,
+    "met": 144,
+    "missed_jobs": 0,
+    "expected_jobs": 28072,
+    "inflation": 2.2335961871474685,
+    "response": 0.7217797770833334
+   },
+   "ra-cgb": {
+    "runs": 144,
+    "met": 144,
+    "missed_jobs": 0,
+    "expected_jobs": 28072,
+    "inflation": 2.203407690012044,
+    "response": 0.7290512437500001
+   },
+   "cgr": {
+    "runs": 144,
+    "met": 144,
+    "missed_jobs": 0,
+    "expected_jobs": 28072,
+    "inflation": 2.1891166935314583,
+    "response": 0.778305925
+   },
+   "ra-cgr": {
+    "runs": 144,
+    "met": 144,
+    "missed_jobs": 0,
+    "expected_jobs": 28072,
+    "inflation": 2.1784643031376953,
+    "response": 0.7261633125
+   },
+   "random": {
+    "runs": 426,
+    "met": 394,
+    "missed_jobs": 588,
+    "expected_jobs": 83022,
+    "inflation": 2.1293034345527952,
+    "response": 0.831950675
+   }
+  },
+  "contrasts": {
+   "cgb vs wfd": {
+    "pairs": 144,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 74,
+    "inflation_change": -0.007168875926723051,
+    "inflation_wins": 47,
+    "response_change": 0.0024117499999999903
+   },
+   "cgb vs ra": {
+    "pairs": 144,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 74,
+    "inflation_change": -0.005301502827640914,
+    "inflation_wins": 43,
+    "response_change": 0.008434699999999962
+   },
+   "cgb vs random": {
+    "pairs": 426,
+    "only_first": 32,
+    "miss_pairs": 32,
+    "fewer_misses_first": 32,
+    "fewer_misses_second": 0,
+    "missed_difference": -12.0,
+    "only_second": 0,
+    "both_ok": 190,
+    "inflation_change": 0.03396778168716874,
+    "inflation_wins": 64,
+    "response_change": -0.08806816458333333
+   },
+   "ra-cgb vs wfd": {
+    "pairs": 144,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 74,
+    "inflation_change": -0.006251230651928841,
+    "inflation_wins": 48,
+    "response_change": -0.0054688666666667385
+   },
+   "ra-cgb vs ra": {
+    "pairs": 144,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 74,
+    "inflation_change": 0.0022341887807996175,
+    "inflation_wins": 32,
+    "response_change": 0.000752549999999963
+   },
+   "ra-cgb vs random": {
+    "pairs": 426,
+    "only_first": 32,
+    "miss_pairs": 32,
+    "fewer_misses_first": 32,
+    "fewer_misses_second": 0,
+    "missed_difference": -12.0,
+    "only_second": 0,
+    "both_ok": 190,
+    "inflation_change": 0.03525961389380616,
+    "inflation_wins": 61,
+    "response_change": -0.09601925
+   },
+   "cgr vs wfd": {
+    "pairs": 144,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 74,
+    "inflation_change": -0.01241090903260278,
+    "inflation_wins": 54,
+    "response_change": 0.0034851000000000187
+   },
+   "cgr vs ra": {
+    "pairs": 144,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 74,
+    "inflation_change": -0.009199936642142137,
+    "inflation_wins": 44,
+    "response_change": 0.011714550000000046
+   },
+   "cgr vs random": {
+    "pairs": 426,
+    "only_first": 32,
+    "miss_pairs": 32,
+    "fewer_misses_first": 32,
+    "fewer_misses_second": 0,
+    "missed_difference": -12.0,
+    "only_second": 0,
+    "both_ok": 190,
+    "inflation_change": 0.024926952014028836,
+    "inflation_wins": 66,
+    "response_change": -0.08109500833333333
+   },
+   "ra-cgr vs wfd": {
+    "pairs": 144,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 74,
+    "inflation_change": -0.00989354585155755,
+    "inflation_wins": 56,
+    "response_change": -0.008606049999999976
+   },
+   "ra-cgr vs ra": {
+    "pairs": 144,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 74,
+    "inflation_change": -0.009173238355984603,
+    "inflation_wins": 56,
+    "response_change": 0.0013944000000000178
+   },
+   "ra-cgr vs random": {
+    "pairs": 426,
+    "only_first": 32,
+    "miss_pairs": 32,
+    "fewer_misses_first": 32,
+    "fewer_misses_second": 0,
+    "missed_difference": -12.0,
+    "only_second": 0,
+    "both_ok": 190,
+    "inflation_change": 0.020657756597164068,
+    "inflation_wins": 72,
+    "response_change": -0.09322391666666668
+   }
+  }
+ },
+ "24 32 KiB low-CLS tasks under load": {
+  "cases": 288,
+  "common_cases": 60,
+  "placements": {
+   "wfd": {
+    "runs": 288,
+    "met": 217,
+    "missed_jobs": 2498,
+    "expected_jobs": 56608,
+    "inflation": 2.010461670111856,
+    "response": 0.6758138604166666
+   },
+   "cgb": {
+    "runs": 287,
+    "met": 220,
+    "missed_jobs": 2076,
+    "expected_jobs": 56426,
+    "inflation": 1.5798621059861593,
+    "response": 0.664976225
+   },
+   "ra": {
+    "runs": 287,
+    "met": 216,
+    "missed_jobs": 3116,
+    "expected_jobs": 56426,
+    "inflation": 2.0944301366858102,
+    "response": 0.6700239750000001
+   },
+   "ra-cgb": {
+    "runs": 288,
+    "met": 221,
+    "missed_jobs": 2272,
+    "expected_jobs": 56608,
+    "inflation": 1.5757177160949638,
+    "response": 0.6676694750000001
+   },
+   "random": {
+    "runs": 864,
+    "met": 363,
+    "missed_jobs": 18352,
+    "expected_jobs": 169824,
+    "inflation": 1.95050488203128,
+    "response": 0.8285152833333334
+   }
+  },
+  "contrasts": {
+   "cgb vs wfd": {
+    "pairs": 287,
+    "only_first": 8,
+    "miss_pairs": 75,
+    "fewer_misses_first": 41,
+    "fewer_misses_second": 18,
+    "missed_difference": -6,
+    "only_second": 4,
+    "both_ok": 212,
+    "inflation_change": -0.17454600165600792,
+    "inflation_wins": 188,
+    "response_change": -0.01380647499999993
+   },
+   "cgb vs ra": {
+    "pairs": 287,
+    "only_first": 6,
+    "miss_pairs": 73,
+    "fewer_misses_first": 47,
+    "fewer_misses_second": 14,
+    "missed_difference": -12,
+    "only_second": 2,
+    "both_ok": 214,
+    "inflation_change": -0.1988532345218394,
+    "inflation_wins": 194,
+    "response_change": -0.009728285416666704
+   },
+   "cgb vs random": {
+    "pairs": 861,
+    "only_first": 300,
+    "miss_pairs": 501,
+    "fewer_misses_first": 465,
+    "fewer_misses_second": 25,
+    "missed_difference": -24,
+    "only_second": 0,
+    "both_ok": 360,
+    "inflation_change": -0.16487544715337293,
+    "inflation_wins": 275,
+    "response_change": -0.12518809999999997
+   },
+   "ra-cgb vs wfd": {
+    "pairs": 288,
+    "only_first": 9,
+    "miss_pairs": 76,
+    "fewer_misses_first": 35,
+    "fewer_misses_second": 23,
+    "missed_difference": 0.0,
+    "only_second": 5,
+    "both_ok": 212,
+    "inflation_change": -0.1770905230323303,
+    "inflation_wins": 184,
+    "response_change": -0.013090800000000014
+   },
+   "ra-cgb vs ra": {
+    "pairs": 287,
+    "only_first": 8,
+    "miss_pairs": 75,
+    "fewer_misses_first": 45,
+    "fewer_misses_second": 16,
+    "missed_difference": -12,
+    "only_second": 4,
+    "both_ok": 212,
+    "inflation_change": -0.2027457899294981,
+    "inflation_wins": 192,
+    "response_change": -0.009060624999999933
+   },
+   "ra-cgb vs random": {
+    "pairs": 864,
+    "only_first": 301,
+    "miss_pairs": 502,
+    "fewer_misses_first": 459,
+    "fewer_misses_second": 27,
+    "missed_difference": -22.5,
+    "only_second": 1,
+    "both_ok": 362,
+    "inflation_change": -0.17152760752394974,
+    "inflation_wins": 282,
+    "response_change": -0.12518809999999997
+   }
+  }
+ },
+ "25 conflict-miss low-CLS tasks": {
+  "cases": 108,
+  "common_cases": 85,
+  "placements": {
+   "wfd": {
+    "runs": 108,
+    "met": 108,
+    "missed_jobs": 0,
+    "expected_jobs": 21196,
+    "inflation": 2.397888110957373,
+    "response": 0.6238004791666667
+   },
+   "cgb": {
+    "runs": 107,
+    "met": 107,
+    "missed_jobs": 0,
+    "expected_jobs": 20992,
+    "inflation": 1.9745689573393836,
+    "response": 0.599851975
+   },
+   "ra": {
+    "runs": 107,
+    "met": 107,
+    "missed_jobs": 0,
+    "expected_jobs": 21006,
+    "inflation": 2.3308460834796687,
+    "response": 0.6057488958333334
+   },
+   "ra-cgb": {
+    "runs": 107,
+    "met": 107,
+    "missed_jobs": 0,
+    "expected_jobs": 20992,
+    "inflation": 1.9778476961515938,
+    "response": 0.602847775
+   },
+   "random": {
+    "runs": 323,
+    "met": 300,
+    "missed_jobs": 430,
+    "expected_jobs": 63420,
+    "inflation": 2.0225192666285294,
+    "response": 0.7524456458333333
+   }
+  },
+  "contrasts": {
+   "cgb vs wfd": {
+    "pairs": 107,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 107,
+    "inflation_change": -0.16453070351960142,
+    "inflation_wins": 99,
+    "response_change": -0.009952000000000072
+   },
+   "cgb vs ra": {
+    "pairs": 106,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 106,
+    "inflation_change": -0.14969892339147206,
+    "inflation_wins": 102,
+    "response_change": -0.002552975000000013
+   },
+   "cgb vs random": {
+    "pairs": 320,
+    "only_first": 23,
+    "miss_pairs": 23,
+    "fewer_misses_first": 23,
+    "fewer_misses_second": 0,
+    "missed_difference": -16,
+    "only_second": 0,
+    "both_ok": 297,
+    "inflation_change": -0.06428599717172667,
+    "inflation_wins": 193,
+    "response_change": -0.12065641666666665
+   },
+   "ra-cgb vs wfd": {
+    "pairs": 107,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 107,
+    "inflation_change": -0.17556351099557999,
+    "inflation_wins": 99,
+    "response_change": -0.013190600000000052
+   },
+   "ra-cgb vs ra": {
+    "pairs": 106,
+    "only_first": 0,
+    "miss_pairs": 0,
+    "fewer_misses_first": 0,
+    "fewer_misses_second": 0,
+    "missed_difference": null,
+    "only_second": 0,
+    "both_ok": 106,
+    "inflation_change": -0.16048869251012476,
+    "inflation_wins": 100,
+    "response_change": -0.0054110250000000415
+   },
+   "ra-cgb vs random": {
+    "pairs": 320,
+    "only_first": 23,
+    "miss_pairs": 23,
+    "fewer_misses_first": 23,
+    "fewer_misses_second": 0,
+    "missed_difference": -16,
+    "only_second": 0,
+    "both_ok": 297,
+    "inflation_change": -0.06473239306404732,
+    "inflation_wins": 192,
+    "response_change": -0.12171090000000007
+   }
+  }
+ }
+}

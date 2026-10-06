@@ -14,6 +14,9 @@ as task-count.
 per-core load 0.45-0.6; runs as task-count.
 --design conflict-cls (conflictcls_set): experiment 21's sets with conflict-miss low-CLS tasks
 (1-2 KiB walked 4 KiB apart); runs as task-count.
+--design random-small-memory / random-task-count / random-cls-spread / random-small-memory-load /
+random-conflict-cls / random-policy-boundary / random-policy-mix (rnd_*_set): experiments 21, 20,
+23, 24, 25, 19 and 17's sets with P on placement_lib's random placements only, to pair with them.
 --design cls-spread (clsspread_set): 12-20 tasks x CLS mean x CLS SD x period CV; runs as
 task-count plus P on the relative CLS groupings cgr (p_cgr) and ra-cgr (p_racgr).
 On top of hl_run's prepare, every case runs yarda_cpp on the wfd build (locality.json:
@@ -43,6 +46,14 @@ import hl_run
 import loadmem_set
 import mix_cls_set
 import mix_set
+import placement_lib
+import rnd_boundary_set
+import rnd_conflict_set
+import rnd_loadmem_set
+import rnd_mix_set
+import rnd_smallmem_set
+import rnd_spread_set
+import rnd_taskcount_set
 import smallmem_set
 import taskcount_set
 import yarda_counts
@@ -60,7 +71,14 @@ TASKCOUNT_RUNS = (('wfd', 'g', 'g'), ('wfd', 'c2', 'c2')) + BOUNDARY_RUNS
 TASKCOUNT_PAIRS = BOUNDARY_PAIRS + (('g', 'p_racgb'), ('c2', 'p_racgb'), ('g', 'p_ra'))
 SPREAD_RUNS = TASKCOUNT_RUNS + (('cgr', 'p', 'p_cgr'), ('ra-cgr', 'p', 'p_racgr'))
 SPREAD_PAIRS = TASKCOUNT_PAIRS + (('p_cgr', 'p_ra'), ('p_racgr', 'p_ra'), ('p_racgr', 'p_racgb'))
-SNAPSHOT = ('placement_lib.py', 'mix_set.py', 'mix_cls_set.py', 'boundary_set.py', 'taskcount_set.py', 'smallmem_set.py', 'clsspread_set.py', 'loadmem_set.py', 'conflictcls_set.py', 'pm_check.py', 'pm_run.py', 'test_placement_lib.py', 'test_mix_set.py', 'test_boundary_set.py', 'test_taskcount_set.py', 'test_smallmem_set.py', 'test_clsspread_set.py', 'test_loadmem_set.py', 'test_conflictcls_set.py')
+RANDOM_RUNS = tuple((policy, 'p', f'p_{policy}') for policy in placement_lib.RANDOM_POLICIES)
+RANDOM_PAIRS = (('p_rnd1', 'p_rnd0'), ('p_rnd2', 'p_rnd0'))
+SNAPSHOT = ('placement_lib.py', 'mix_set.py', 'mix_cls_set.py', 'boundary_set.py', 'taskcount_set.py',
+            'smallmem_set.py', 'clsspread_set.py', 'loadmem_set.py', 'conflictcls_set.py', 'pm_check.py',
+            'pm_run.py', 'test_placement_lib.py', 'test_mix_set.py', 'test_boundary_set.py',
+            'test_taskcount_set.py', 'test_smallmem_set.py', 'test_clsspread_set.py', 'test_loadmem_set.py',
+            'test_conflictcls_set.py', 'rnd_smallmem_set.py', 'rnd_taskcount_set.py', 'rnd_spread_set.py',
+            'rnd_loadmem_set.py', 'rnd_conflict_set.py', 'rnd_boundary_set.py', 'rnd_mix_set.py', 'test_random_sets.py')
 HL_SNAPSHOT = ('hl_run.py', 'hl_set.py', 'mem_set.py')
 
 _hl_prepare_one, _hl_prepare_all = hl_run.prepare_one, hl_run.prepare_all
@@ -108,6 +126,13 @@ def main():
     hl_run.DESIGNS['cls-spread'] = (clsspread_set, SPREAD_RUNS, SPREAD_PAIRS)
     hl_run.DESIGNS['small-memory-load'] = (loadmem_set, TASKCOUNT_RUNS, TASKCOUNT_PAIRS)
     hl_run.DESIGNS['conflict-cls'] = (conflictcls_set, TASKCOUNT_RUNS, TASKCOUNT_PAIRS)
+    hl_run.DESIGNS['random-small-memory'] = (rnd_smallmem_set, RANDOM_RUNS, RANDOM_PAIRS)
+    hl_run.DESIGNS['random-task-count'] = (rnd_taskcount_set, RANDOM_RUNS, RANDOM_PAIRS)
+    hl_run.DESIGNS['random-cls-spread'] = (rnd_spread_set, RANDOM_RUNS, RANDOM_PAIRS)
+    hl_run.DESIGNS['random-small-memory-load'] = (rnd_loadmem_set, RANDOM_RUNS, RANDOM_PAIRS)
+    hl_run.DESIGNS['random-conflict-cls'] = (rnd_conflict_set, RANDOM_RUNS, RANDOM_PAIRS)
+    hl_run.DESIGNS['random-policy-boundary'] = (rnd_boundary_set, RANDOM_RUNS, RANDOM_PAIRS)
+    hl_run.DESIGNS['random-policy-mix'] = (rnd_mix_set, RANDOM_RUNS, RANDOM_PAIRS)
     hl_run.SNAPSHOT = HL_SNAPSHOT
     # hl_run's stages look these up as module globals.
     hl_run.prepare_one, hl_run.prepare_all = prepare_one, prepare_all

@@ -1,0 +1,254 @@
+{
+  "alpha": 0.05,
+  "cell_keys": {
+    "cv": "heaviness index + 1 in ('mem25',)",
+    "mean": "per-core load"
+  },
+  "cells": [
+    {
+      "cv": 1,
+      "failures": {
+        "c": 36,
+        "g": 36,
+        "p": 36
+      },
+      "mean": 0.35,
+      "mean_gap": 0.13375104384259975,
+      "median": 0.014322687856333744,
+      "metric": "tet_ns",
+      "n": 4,
+      "pair": "p_rnd1-p_rnd0",
+      "positive": 2
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 36,
+        "g": 36,
+        "p": 36
+      },
+      "mean": 0.45,
+      "mean_gap": 0.021826666840963543,
+      "median": 0.021826666840963543,
+      "metric": "tet_ns",
+      "n": 2,
+      "pair": "p_rnd1-p_rnd0",
+      "positive": 1
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 36,
+        "g": 36,
+        "p": 36
+      },
+      "holm_p": 0.4375,
+      "mean": 0.35,
+      "mean_gap": -0.018261734423817337,
+      "median": -0.06525994549101273,
+      "median_ci95": [
+        -0.11400242549166956,
+        0.12447716771123027
+      ],
+      "metric": "tet_ns",
+      "n": 6,
+      "pair": "p_rnd2-p_rnd0",
+      "positive": 1,
+      "significant": false,
+      "wilcoxon_p": 0.4375
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 36,
+        "g": 36,
+        "p": 36
+      },
+      "mean": 0.45,
+      "metric": "tet_ns",
+      "n": 0,
+      "pair": "p_rnd2-p_rnd0"
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 36,
+        "g": 36,
+        "p": 36
+      },
+      "mean": 0.35,
+      "mean_gap": -0.03127060034414829,
+      "median": -0.04101481732105552,
+      "metric": "tat_ns",
+      "n": 4,
+      "pair": "p_rnd1-p_rnd0",
+      "positive": 2
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 36,
+        "g": 36,
+        "p": 36
+      },
+      "mean": 0.45,
+      "mean_gap": -0.024497744021857448,
+      "median": -0.024497744021857448,
+      "metric": "tat_ns",
+      "n": 2,
+      "pair": "p_rnd1-p_rnd0",
+      "positive": 1
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 36,
+        "g": 36,
+        "p": 36
+      },
+      "holm_p": 0.15625,
+      "mean": 0.35,
+      "mean_gap": 0.13344046004801702,
+      "median": 0.19184393985949297,
+      "median_ci95": [
+        -0.07665662989854366,
+        0.2851340701831017
+      ],
+      "metric": "tat_ns",
+      "n": 6,
+      "pair": "p_rnd2-p_rnd0",
+      "positive": 5,
+      "significant": false,
+      "wilcoxon_p": 0.15625
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 36,
+        "g": 36,
+        "p": 36
+      },
+      "mean": 0.45,
+      "metric": "tat_ns",
+      "n": 0,
+      "pair": "p_rnd2-p_rnd0"
+    }
+  ],
+  "load_trends": [],
+  "max_response_ratio_tests": [
+    {
+      "cell": "mem25/u035",
+      "n": 4,
+      "pair": "p_rnd1-p_rnd0"
+    },
+    {
+      "cell": "mem25/u045",
+      "n": 2,
+      "pair": "p_rnd1-p_rnd0"
+    },
+    {
+      "cell": "mem25/u035",
+      "holm_p": 0.4375,
+      "median": 0.09917988124999999,
+      "n": 6,
+      "pair": "p_rnd2-p_rnd0",
+      "significant": false,
+      "wilcoxon_p": 0.4375
+    },
+    {
+      "cell": "mem25/u045",
+      "n": 0,
+      "pair": "p_rnd2-p_rnd0"
+    }
+  ],
+  "pairs": [
+    [
+      "p_rnd1",
+      "p_rnd0"
+    ],
+    [
+      "p_rnd2",
+      "p_rnd0"
+    ]
+  ],
+  "primary_tests": [],
+  "schedulability_tests": [
+    {
+      "cell": "mem25/u035",
+      "exact_p": 0.143463134765625,
+      "holm_p": 0.28692626953125,
+      "only_a_schedulable": 12,
+      "only_b_schedulable": 5,
+      "pair": "p_rnd1-p_rnd0",
+      "sets": 36,
+      "significant": false
+    },
+    {
+      "cell": "mem25/u045",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 2,
+      "only_b_schedulable": 1,
+      "pair": "p_rnd1-p_rnd0",
+      "sets": 36,
+      "significant": false
+    },
+    {
+      "cell": "mem25/u035",
+      "exact_p": 0.34375,
+      "holm_p": 0.5,
+      "only_a_schedulable": 7,
+      "only_b_schedulable": 3,
+      "pair": "p_rnd2-p_rnd0",
+      "sets": 36,
+      "significant": false
+    },
+    {
+      "cell": "mem25/u045",
+      "exact_p": 0.25,
+      "holm_p": 0.5,
+      "only_a_schedulable": 0,
+      "only_b_schedulable": 3,
+      "pair": "p_rnd2-p_rnd0",
+      "sets": 36,
+      "significant": false
+    }
+  ],
+  "schedulable": {
+    "mem25/u035": {
+      "p_rnd0": {
+        "deadline": 27,
+        "excluded": 0,
+        "ok": 9
+      },
+      "p_rnd1": {
+        "deadline": 20,
+        "excluded": 0,
+        "ok": 16
+      },
+      "p_rnd2": {
+        "deadline": 23,
+        "excluded": 0,
+        "ok": 13
+      }
+    },
+    "mem25/u045": {
+      "p_rnd0": {
+        "deadline": 33,
+        "excluded": 0,
+        "ok": 3
+      },
+      "p_rnd1": {
+        "deadline": 32,
+        "excluded": 0,
+        "ok": 4
+      },
+      "p_rnd2": {
+        "deadline": 36,
+        "excluded": 0,
+        "ok": 0
+      }
+    }
+  },
+  "task_sets": 72
+}

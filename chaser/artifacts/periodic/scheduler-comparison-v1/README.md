@@ -6,13 +6,8 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 이 디렉터리에는 스크립트와 작은 결과 묶음(`results/`)만 둔다. 빌드·원시 run 로그는
 저장소 밖 `.cache/`에 있다(아래 "결과 위치").
 
-| 실험 | 디렉터리 | 내용 |
-|---|---|---|
-| 주기 분포 | `period-distribution/` | task별 주기 ~ N(μ, (CV·μ)²), μ ∈ {20,50,80,100,500} ms, CV ∈ {0,.1,.2,.3}, 셀당 20 set |
-| release-aware P′ 대조 | `period-distribution/{placement,control}.py` | 같은 set에서 P의 코어 배치만 release cohort 부하 하한 최소화로 변경 |
-| CLS 분포 | `cls-distribution/` | 공통 주기 20/100 ms, task별 CLS(yarda_cpp, α=0.5) ~ N(μ, (CV·μ)²), hot-cold workload, P 배치 2종 |
-| 캐시 친화성 | `cache-affinity/` | 코어당 작업 집합 {25,50,100,150}% of L1 × job당 sweep {2,8,32}, workload O0/O2 |
-| CLS 양극단 | `cls-bimodal/` | 주기 40 ms, task U 0.0625(job 2.5 ms), workload O2. 높은 모드 CLS 0.90·낮은 모드 0.13, 낮은 task 비율 p ∈ {0,.25,.5,.75,1} × CV ∈ {0,.1,.2,.3}(CV는 가까운 경계까지의 거리에 적용), p=0.5에서 트래픽 맞춤 조건 추가, P 배치 2종 |
+실험 목록(1–13, 16–26)과 실험별 스크립트·출력(`.cache/`)·결과 묶음(`results/`)의 대응은
+[EXPERIMENTS.md](EXPERIMENTS.md) 맨 위 표에 있다.
 
 `figures/`는 결과 그림 스크립트, `supervisors/`는 실제로 쓴 실행 순서(셸)다.
 `c2-topology.patch`는 C₂ (0,1,2,2) 토폴로지 추가 패치, `cls-bimodal/padding.patch`는
@@ -57,7 +52,7 @@ c2의 YARDA는 a058a454 빌드다. 원래는 사본의 `rtems/baseline/build`가
 고정본으로 실험 3의 한 경우를 다시 분석했을 때 CLS·CLP가 저장된 `cls.json`과 같았다.
 고정본이 없으면 YARDA 저장소를 a058a454로 checkout한 뒤 위 빌드 명령으로 만든다.
 
-실험 5–19은 c2 사본에 패딩 패치를 더하고, IR 명령어 카운트가 있는 YARDA
+실험 5–26(22절 제외)은 c2 사본에 패딩 패치를 더하고, IR 명령어 카운트가 있는 YARDA
 (`feat/cpp-backend` 374b2c9, frontend 2670c6e)를 별도 빌드해 연결한 **c3 사본**을 쓴다.
 
 ```sh
@@ -68,7 +63,7 @@ patch -p1 -d $B-c3 < artifacts/periodic/scheduler-comparison-v1/cls-bimodal/padd
 ```
 
 모든 명령은 `PYTHONPATH=<사본>`으로, 사본 디렉터리를 현재 디렉터리로 두고 실행한다
-(실험 1–4는 c2, 실험 5–19는 c3).
+(실험 1–4·22는 c2, 나머지는 c3).
 `python3 -m pytest`를 저장소 루트에서 실행하면 HEAD의 `chaser`가 import된다.
 
 ## 테스트

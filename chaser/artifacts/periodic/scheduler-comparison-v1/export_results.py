@@ -54,6 +54,13 @@ STUDIES = {
     'cls-spread': 'cls-spread-v1',
     'small-memory-load': 'small-memory-load-v1',
     'conflict-cls': 'conflict-cls-v2',
+    'random-small-memory': 'random-small-memory-v1',
+    'random-task-count': 'random-task-count-v1',
+    'random-cls-spread': 'random-cls-spread-v1',
+    'random-small-memory-load': 'random-small-memory-load-v1',
+    'random-conflict-cls': 'random-conflict-cls-v1',
+    'random-policy-boundary': 'random-policy-boundary-v1',
+    'random-policy-mix': 'random-policy-mix-v1',
     # Re-analysis of the bundles above (feature-precheck/precheck.py); no simulation.
     'feature-precheck': 'feature-precheck-v1',
     # The 20 ms design whose pilot missed deadlines; kept as the reason for v2. Its .cache output

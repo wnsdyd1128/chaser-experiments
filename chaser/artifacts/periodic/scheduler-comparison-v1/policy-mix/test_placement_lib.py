@@ -12,8 +12,8 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / 'high-load'))
 
 from placement_lib import (BALANCE_SLACK, CLS_LOW, CORE_CAP, TRAFFIC_HIGH, Item, cls_grouped, cls_grouped_balanced,
-                           cohort_cost, is_high_traffic, is_low_cls, place, relative_cut, release_aware,
-                           release_aware_grouped, traffic_grouped, wfd)
+                           RANDOM_DRAWS, cohort_cost, is_high_traffic, is_low_cls, place, relative_cut,
+                           release_aware, release_aware_grouped, traffic_grouped, wfd)
 
 
 def items(us, periods=None, traffic=None, cls=None):
@@ -162,3 +162,13 @@ def test_release_aware_within_relative_cls_grouping_keeps_the_group_on_its_cores
     grouped, combined = place('cgr', tasks, seed=3), place('ra-cgr', tasks, seed=3)
     assert {combined[i] for i in range(8)} <= {grouped[i] for i in range(8)}
     assert cohort_cost(combined, tasks) <= cohort_cost(grouped, tasks)
+
+
+def test_random_placement_is_reproducible_respects_the_cap_and_ignores_locality():
+    us = [0.3, 0.25, 0.2, 0.2, 0.15, 0.15, 0.1, 0.1, 0.1, 0.05]
+    tasks = items(us, cls=[0.1] * 5 + [0.9] * 5, traffic=[14.0] * 5 + [4.0] * 5)
+    draws = [place(f'rnd{k}', tasks, seed=7) for k in range(RANDOM_DRAWS)]
+    assert draws[0] == place('rnd0', tasks, seed=7)
+    assert len({tuple(d) for d in draws}) == RANDOM_DRAWS
+    assert all(max(core_loads(d, tasks)) <= CORE_CAP for d in draws)
+    assert place('rnd0', items(us, cls=[0.9] * 5 + [0.1] * 5), seed=7) == draws[0]

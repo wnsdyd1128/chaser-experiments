@@ -23,6 +23,8 @@ one core index per task. Policies:
   cgr    relative CLS grouping: cgb with the group cut inside the set, the lowest-CLS tasks
          holding about half of the U (CLS rounded to CLS_DECIMALS, so equal-CLS sets stay wfd)
   ra-cgr release-aware within relative CLS grouping
+  rnd<k> random: every task on a uniformly drawn core, redrawn until every core is under
+         CORE_CAP; draw k of RANDOM_DRAWS per seed (CAAS's affinity-blind baseline)
 High traffic means more than a core's share of the shared L2 request rate: the
 L2 serves one request every 48 ns (footprint/l2_probe.py), so above
 TRAFFIC_HIGH per microsecond on every core the L2 saturates. CLS_LOW splits the
@@ -47,6 +49,8 @@ POLICIES = ('wfd', 'tg', 'ra', 'ra-tg')  # the policy-mix study (experiment 17)
 CLS_POLICIES = ('cg', 'ra-cg')  # its CLS-keyed counterparts (experiment 18)
 BOUNDARY_POLICIES = ('wfd', 'cgb', 'ra', 'ra-cgb')  # the period x memory boundary study (experiment 19)
 RELATIVE_POLICIES = ('cgr', 'ra-cgr')  # the CLS spread study (experiment 23)
+RANDOM_DRAWS = 3
+RANDOM_POLICIES = tuple(f'rnd{k}' for k in range(RANDOM_DRAWS))  # the random baseline (experiment 26)
 
 
 @dataclass(frozen=True)
@@ -189,6 +193,14 @@ def _release_aware_within(tasks, member, cores, cap, seed, restarts, balanced=Fa
     return _search(start, tasks, cores, cap, seed, restarts, allowed)
 
 
+def random_placement(tasks, seed, draw, cores=CORES, cap=CORE_CAP) -> list[int]:
+    rng = random.Random(f'{seed}-rnd{draw}')
+    while True:
+        assign = [rng.randrange(cores) for _ in tasks]
+        if all(sum(t.u for t, c in zip(tasks, assign) if c == core) <= cap for core in range(cores)):
+            return assign
+
+
 def relative_cut(tasks) -> float:
     """Rounded CLS up to which the lowest-CLS tasks hold the U share nearest half of the total.
 
@@ -224,6 +236,8 @@ def place(policy: str, tasks, seed: int, cores=CORES, cap=CORE_CAP) -> list[int]
         return cls_grouped_balanced(tasks, cores, cap)
     if policy == 'ra-cgb':
         return _release_aware_within(tasks, is_low_cls, cores, cap, seed, RESTARTS, balanced=True)
+    if policy in RANDOM_POLICIES:
+        return random_placement(tasks, seed, int(policy[3:]), cores, cap)
     if policy in RELATIVE_POLICIES:
         cut = relative_cut(tasks)
         member = lambda t: round(t.cls, CLS_DECIMALS) <= cut
