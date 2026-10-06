@@ -123,7 +123,7 @@ def architectures(rows):
 
 
 def feature_tasks(output, row):
-    base = output / f"mix/u{round(row['load'] * 100):03d}/s{row['set_id']:02d}"
+    base = output / f"{row['heaviness']}/u{round(row['load'] * 100):03d}/s{row['set_id']:02d}"
     config = json.loads((base / 'wfd/configuration.json').read_text())['tasks']
     counts = {t['task_id']: t for t in json.loads((base / 'locality.json').read_text())['tasks']}
     tasks = []

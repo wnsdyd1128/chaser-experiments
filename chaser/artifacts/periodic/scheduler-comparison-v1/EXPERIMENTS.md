@@ -1164,8 +1164,8 @@ python3 $R/policy-mix/boundary_analysis.py --output $O
 python3 $R/figures/policy_boundary_bars.py $O
 ```
 
-### 예정 결과 파일
-실험 종료 기록과 보관 결과는 아직 없다. 완료 후 `results/policy-boundary/`에 다음을 보관한다.
+### 결과 파일
+`results/policy-boundary/`에는 다음이 있다.
 - `protocol.json`(셀 정의, 768 KiB task 위치), `model-check.json`(17절 복사), `results.jsonl`, `isolated-u.json`
 - `stats-policy-boundary.json/md`, `boundary-analysis.json/md`
 - 그림 `policy-boundary-{tat,tet}-low{0,4,8}-big{0,2}`
