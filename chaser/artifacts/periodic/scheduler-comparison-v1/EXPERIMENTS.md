@@ -1697,6 +1697,7 @@ python3 $R/policy-mix/deadline_analysis.py analyze --small $W/.cache/deadline-sm
 | 42 | 실행 전 점검: D + M 정적 규칙 대 RF(개발 점검, 시뮬레이션 없음) | `policy-mix/rf_occupancy.py` | `rf-occupancy-v1` | `rf-occupancy` |
 | 44 | 실행 전 점검과 구성 추천의 확증(사전 등록, 새 set) | `policy-mix/`(`confirm_set.py`, `--design confirm-small`·`confirm-big`·`confirm-mem`, `confirm_decide.py`, `confirm_analysis.py`) | `confirm-small-v1`, `confirm-big-v1`, `confirm-mem-v1`, `confirm-analysis-v1` | `confirm-small`, `confirm-big`, `confirm-mem`, `confirm-analysis` |
 | 45 | 실제 커널 task set의 실행 전 점검(사전 등록, 새 set) | `policy-mix/`(`kernel_tasks.py`, `kernel_calibrate.py`, `kernel_set.py`, `kernel_run.py`, `confirm_analysis.py`) | `kernel-calibration-v2`, `real-kernels-v1`, `real-kernels-analysis-v1` | `kernel-calibration`, `real-kernels`, `real-kernels-analysis` |
+| 29 | 실험 24 set의 CLS + Algorithm 1(탐색, 저친화도 비율 대 task 종류) | `policy-mix/`(`--design small-memory-load-a1`, `share_check.py`) | `small-memory-load-a1-v1`, `share-check-v1` | `small-memory-load-a1`, `share-check` |
 | 민감도 | cls-a1-cal: CLS + Algorithm 1, 같은 calibration의 동결 CLS 임곗값 0.887 | CAAS와 같은 출처의 임곗값 |
 
 Algorithm 1은 `chaser/policy/allocator.py`(CAAS Algorithm 1 구현)를 그대로 쓴다. 격리 코어가 가득 차서 놓을 수 없는 task가 있으면
@@ -2562,4 +2563,45 @@ python3 $R/policy-mix/confirm_analysis.py --cache $W/.cache --outputs real-kerne
 
 ### 결과 파일
 `results/kernel-calibration/`, `results/real-kernels/`, `results/real-kernels-analysis/`(실행 후 작성).
+
+---
+
+## 29. 실험 24 set의 CLS + Algorithm 1 (탐색: 저친화도 비율 대 task 종류)
+
+### 개요
+28절에서 단일 격리 코어(CLS + Algorithm 1)는 32 KiB task가 U의 50%일 때 균형 CLS 묶음보다 크게 나빴고, 768 KiB task가 U의 25%일 때는 같거나 나았다.
+그런데 비율과 task 종류가 함께 바뀌어 원인을 가를 수 없었다. 24절의 set은 32 KiB task를 U의 25%와 50%로 갖고(25% task는 50% task에 포함), 같은 set에서 비율만 다르다.
+이 set에 CLS + Algorithm 1을 덧붙인다. 24절의 결과를 이미 본 뒤의 설계이므로 **탐색**이다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | **배치**: cls-a1(CLS 0.5, 코어 0 격리, `algorithm1.py`), wfd(24절 재현 확인용) |
+| 통제 변인 | 24절의 set·task·주기·측정 구간 전부(설계 모듈이 24절 wfd 설정을 그대로 받고 코어만 바꾼다, 테스트로 확인) |
+| 비교 | 24절의 cgb·ra-cgb·ra·wfd 결과와 경우마다 짝지음. 27·28절(32 KiB 50%, 768 KiB 25%)도 같은 표로 정리 |
+| 종속 변인 | 배치 가능 여부, 배치되고 모든 마감을 지킴, 위반 job 비율(측정 계약 5-1절의 주의 참고), 최악 실행시간, TET |
+
+### 실험 방법
+1. `ca_table.py`로 24절의 CA-CSRD 표를 만든다(`algorithm1.py`가 요구, cls-a1은 쓰지 않음).
+2. `prepare`(wfd + cls-a1), `isolated`, `pilot`, `full`, `stats`, `rt`(`--builds wfd,cls-a1`). 288 경우 × 2 = 576 run.
+3. `share_check.py`가 24·27·28절을 비율·종류별로 한 표에 정리하고, wfd 재실행이 24절과 같은지 확인한다.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 $R/policy-mix/ca_table.py --output $W/.cache/small-memory-load-v1 --dest $R/results/ca-csrd/small-memory-load.json
+O=$W/.cache/small-memory-load-a1-v1
+mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design small-memory-load-a1 --output $O; done
+python3 $R/policy-mix/rt_metrics.py --output $O --builds wfd,cls-a1
+python3 $R/policy-mix/share_check.py --base24 $W/.cache/small-memory-load-v1 --a1 $O --small $W/.cache/deadline-small-v1 \
+    --small-caas $W/.cache/deadline-small-caas-v1 --big $W/.cache/deadline-big-v1 --big-caas $W/.cache/deadline-big-caas-v1 \
+    --dest $W/.cache/share-check-v1
+```
+실제 실행은 `supervisors/small-memory-load-a1-v1.sh`다.
+
+### 결과 파일
+- `results/small-memory-load-a1/`: `protocol.json`, `results.jsonl`, `isolated-u.json`, `rt-metrics.json`, `stats-*.json/md`, `per-set.jsonl.gz`
+- `results/share-check/`: `share-check.json/md`와 그림
 
