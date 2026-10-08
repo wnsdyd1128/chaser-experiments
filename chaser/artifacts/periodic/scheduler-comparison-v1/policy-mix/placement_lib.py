@@ -23,6 +23,12 @@ one core index per task. Policies:
   cgr    relative CLS grouping: cgb with the group cut inside the set, the lowest-CLS tasks
          holding about half of the U (CLS rounded to CLS_DECIMALS, so equal-CLS sets stay wfd)
   ra-cgr release-aware within relative CLS grouping
+  cgk    request-limited CLS grouping (exploratory, 2026-10-06): low-CLS tasks by WFD onto the fewest
+         cores whose load stays under CORE_CAP / request_inflation for that many group cores, those
+         cores holding nothing else; the rest by WFD over the other cores; if the rest overflows
+         there, the balanced CLS grouping
+  ra-cgk release-aware within cgk: low-CLS tasks stay on the group cores and, when cgk kept the
+         others off them, the others stay off
   rnd<k> random: every task on a uniformly drawn core, redrawn until every core is under
          CORE_CAP; draw k of RANDOM_DRAWS per seed (CAAS's affinity-blind baseline)
 High traffic means more than a core's share of the shared L2 request rate: the
@@ -45,6 +51,7 @@ TRAFFIC_HIGH = L2_REQUESTS_PER_US / CORES
 CLS_LOW = 0.5
 CLS_DECIMALS = 2
 BALANCE_SLACK = 0.05
+L2_REQUESTS_PER_US = 1000 / 48  # footprint/l2_probe.py: the L2 serves one request every 48 ns
 POLICIES = ('wfd', 'tg', 'ra', 'ra-tg')  # the policy-mix study (experiment 17)
 CLS_POLICIES = ('cg', 'ra-cg')  # its CLS-keyed counterparts (experiment 18)
 BOUNDARY_POLICIES = ('wfd', 'cgb', 'ra', 'ra-cgb')  # the period x memory boundary study (experiment 19)
@@ -193,6 +200,44 @@ def _release_aware_within(tasks, member, cores, cap, seed, restarts, balanced=Fa
     return _search(start, tasks, cores, cap, seed, restarts, allowed)
 
 
+def request_inflation(tasks, group, used, cores=CORES) -> float:
+    """Expected execution stretch with the group's tasks running on `used` cores and the others on the
+    rest at once: concurrent L1-miss request rate (mean per task) over the L2 service rate, at least 1."""
+    members = set(group)
+    others = [t for i, t in enumerate(tasks) if i not in members]
+    group_rate = sum(tasks[i].traffic for i in group) / len(group)
+    other_rate = sum(t.traffic for t in others) / len(others) if others else 0.0
+    return max(1.0, (used * group_rate + (cores - used) * other_rate) / L2_REQUESTS_PER_US)
+
+
+def cls_grouped_limited(tasks, cores=CORES, cap=CORE_CAP) -> list[int]:
+    group = [i for i, t in enumerate(tasks) if is_low_cls(t)]
+    if not group or len(group) == len(tasks):
+        return wfd(tasks, cores)
+    rest = [i for i in range(len(tasks)) if not is_low_cls(tasks[i])]
+    largest = max(tasks[i].u for i in group)
+    for used in range(1, cores):
+        load, assign = [0.0] * cores, {}
+        _wfd_into(tasks, group, range(used), load, assign)
+        if max(load) <= max(cap / request_inflation(tasks, group, used, cores), largest) + 1e-12:
+            _wfd_into(tasks, rest, range(used, cores), load, assign)
+            if max(load[used:]) <= cap + 1e-12:
+                return [assign[i] for i in range(len(tasks))]
+            break
+    return cls_grouped_balanced(tasks, cores, cap)
+
+
+def _release_aware_limited(tasks, cores, cap, seed, restarts) -> list[int]:
+    start = cls_grouped_limited(tasks, cores, cap)
+    group = {i for i, t in enumerate(tasks) if is_low_cls(t)}
+    group_cores = sorted({start[i] for i in group}) if group and len(group) < len(tasks) else []
+    other_cores = [c for c in range(cores) if c not in group_cores]
+    exclusive = bool(group_cores) and all(start[i] in other_cores for i in range(len(tasks)) if i not in group)
+    allowed = [group_cores if i in group and group_cores else other_cores if exclusive else list(range(cores))
+               for i in range(len(tasks))]
+    return _search(start, tasks, cores, cap, seed, restarts, allowed)
+
+
 def random_placement(tasks, seed, draw, cores=CORES, cap=CORE_CAP) -> list[int]:
     rng = random.Random(f'{seed}-rnd{draw}')
     while True:
@@ -236,6 +281,10 @@ def place(policy: str, tasks, seed: int, cores=CORES, cap=CORE_CAP) -> list[int]
         return cls_grouped_balanced(tasks, cores, cap)
     if policy == 'ra-cgb':
         return _release_aware_within(tasks, is_low_cls, cores, cap, seed, RESTARTS, balanced=True)
+    if policy == 'cgk':
+        return cls_grouped_limited(tasks, cores, cap)
+    if policy == 'ra-cgk':
+        return _release_aware_limited(tasks, cores, cap, seed, RESTARTS)
     if policy in RANDOM_POLICIES:
         return random_placement(tasks, seed, int(policy[3:]), cores, cap)
     if policy in RELATIVE_POLICIES:

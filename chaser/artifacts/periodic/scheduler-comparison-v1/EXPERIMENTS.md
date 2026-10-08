@@ -1682,6 +1682,7 @@ python3 $R/policy-mix/deadline_analysis.py analyze --small $W/.cache/deadline-sm
 | 2 | cgb(27절) | 격리 코어 수를 부하 한도(평균 × 1.05)로 정함 |
 | 3 | ra-cgb(27절) | 묶음 제약 안에서 release 시각 몰림을 줄임 |
 | 31 | 재분석: 마감 지표 분리, TET·TAT 비교, 친화도 지표의 실패 예측력(시뮬레이션 없음) | `policy-mix/`(`rt_metrics.py`, `rt_compare.py`, `timing_compare.py`, `affinity_auc.py`) | — | `rt-compare`, `timing-compare`, `affinity-auc` |
+| 32 | 요청량으로 제한한 CLS 묶음(탐색) | `policy-mix/`(`--design small-memory-load-k`, `task-count-k`) | `small-memory-load-k-v1`, `task-count-k-v1` | `small-memory-load-k`, `task-count-k` |
 | 민감도 | cls-a1-cal: CLS + Algorithm 1, 같은 calibration의 동결 CLS 임곗값 0.887 | CAAS와 같은 출처의 임곗값 |
 
 Algorithm 1은 `chaser/policy/allocator.py`(CAAS Algorithm 1 구현)를 그대로 쓴다. 격리 코어가 가득 차서 놓을 수 없는 task가 있으면
@@ -1775,4 +1776,32 @@ python3 $R/policy-mix/affinity_auc.py --cache $W/.cache --runs task-count-v1,cls
 
 ### 결과 파일
 `results/rt-compare/`(갱신), `results/timing-compare/`, `results/affinity-auc/`. 17–26절의 결과 묶음은 새 `rt-metrics.json`으로 다시 내보냈다.
+
+---
+
+## 32. 요청량으로 제한한 CLS 묶음 (탐색)
+
+### 개요
+29·30절에서 묶음 코어가 실효 부하로 과부하가 되고(메모리 task가 계획보다 길게 실행), 주기가 다양하면 release 고려 탐색이 다른 task를 묶음 코어로 옮긴다는 것을 봤다.
+`placement_lib`에 두 배치를 추가했다.
+- **cgk:** 친화도가 낮은 task를 가장 적은 코어에 모으되, 묶음 코어의 계획 부하가 코어 용량 ÷ 실행 증가 배수를 넘지 않게 한다.
+  실행 증가 배수는 동시에 실행되는 task의 L1 miss 요청률 합(묶음 코어 수 × 묶음 task 평균 + 나머지 코어 수 × 다른 task 평균) ÷ L2 처리 능력(1 µs당 20.8 요청)이다. 묶음 코어에는 다른 task를 올리지 않는다. 나머지가 다른 코어에 들어가지 않으면 균형 CLS 묶음으로 돌아간다.
+- **ra-cgk:** cgk에서 출발한 release 고려 탐색. 묶음 task는 묶음 코어 안에서만, 다른 task는 묶음 코어 밖에서만 옮긴다.
+
+24절의 set 전체와 20절의 25% 칸에 두 배치를 덧붙여 기존 결과와 짝지어 비교한다. 결과를 본 자료이므로 **탐색**이다. 실행 전 정적 미리보기에서 cgk의 배치는 25%에서 단일 격리 코어(29절의 cls-a1)와 같고, 50%에서는 균형 CLS 묶음과 거의 같았다.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+for d in small-memory-load-k task-count-k; do
+    O=$W/.cache/$d-v1
+    mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+    for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design $d --output $O; done
+    python3 $R/policy-mix/rt_metrics.py --output $O --builds cgk,ra-cgk
+done
+```
+실제 실행은 `supervisors/kgroup-v1.sh`다.
+
+### 결과 파일
+`results/small-memory-load-k/`, `results/task-count-k/`. 기존 결과와의 비교는 `results/kgroup-check/`(`policy-mix/kgroup_check.py --pair <24절 출력>:<small-memory-load-k-v1> --pair <20절 출력>:<task-count-k-v1>`, 그림 `figures/kgroup_bars.py`, 코어 부하는 `cv_miss_analysis.py --builds cgk,ra-cgk`).
 
