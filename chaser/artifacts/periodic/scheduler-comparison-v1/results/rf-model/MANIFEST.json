@@ -1,0 +1,10 @@
+{
+  "source": ".cache/rf-model-v1",
+  "exported_utc": "2026-10-07T09:36:41.449304+00:00",
+  "note": "Frozen pre-run RF (policy-mix/rf_freeze.py, experiment 43). The model file (.cache/rf-model-v1/model.joblib, 66930180 bytes, SHA-256 ec847c8755efcff2ebb57f53e7b7c251eee6e049367dffc8e4b56fece75b8f36) is not copied here. training-rows.jsonl.gz holds its 11733 development rows (policy-mix/rf_rows.py, exported 2026-10-07 from the raw outputs whose results.jsonl hashes model-spec.json lists, unchanged since the freeze). rf_freeze.py --rows on this table gives the same prediction fingerprint, calibration, rows and importance; the rebuilt file's bytes differ and its probabilities differ from the frozen file's by at most 5e-14 (floating-point summation order).",
+  "files": {
+    "model-spec.json": "b1f014c4d0cdfd9190273184e48d58121e359ea3343ffb8759e75aab2bf04850",
+    "model-spec.md": "0e03a3c11e3b6f4e33529cc42adbcec07129f368ec9d95c2aedad26e965500da",
+    "training-rows.jsonl.gz": "6f5c9d1758bde9f1b87e0caf9af47b7ce74d4968e39b103063d4c3e9c40494fa"
+  }
+}

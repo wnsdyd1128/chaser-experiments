@@ -1693,6 +1693,7 @@ python3 $R/policy-mix/deadline_analysis.py analyze --small $W/.cache/deadline-sm
 | 40 | task 단위 예측: 어느 task가 늦나(재분석, 시뮬레이션 없음) | `policy-mix/task_level.py` | `task-level-v1` | `task-level` |
 | 30 | 주기 다양 조건의 마감 실패 분석(재분석, 시뮬레이션 없음) | `policy-mix/cv_miss_analysis.py` | `cv-miss-analysis-v1` | `cv-miss-analysis` |
 | 41 | CLS·U는 같고 메모리 비용만 다른 짝지은 비교(사전 등록) | `policy-mix/`(`mem_calibrate.py`, `--design memory-cost`, `memcost_set.py`, `memcost_analysis.py`) | `mem-calibration-v1`, `memory-cost-v1` | `mem-calibration`, `memory-cost` |
+| 43 | RF 실행 전 점검 모델 동결(개발 자료, 시뮬레이션 없음) | `policy-mix/rf_freeze.py` | `rf-model-v1` | `rf-model` |
 | 민감도 | cls-a1-cal: CLS + Algorithm 1, 같은 calibration의 동결 CLS 임곗값 0.887 | CAAS와 같은 출처의 임곗값 |
 
 Algorithm 1은 `chaser/policy/allocator.py`(CAAS Algorithm 1 구현)를 그대로 쓴다. 격리 코어가 가득 차서 놓을 수 없는 task가 있으면
@@ -2348,4 +2349,41 @@ python3 $R/policy-mix/memcost_analysis.py --output $O --rows $R/results/rf-model
   D가 약했던 실험에서 크게 나아졌고(17·18: 0.832 → 0.972, 20: 0.929 → 0.989, 27 768 KiB: 0.759 → 0.966), D가 이미 잘 맞히던 실험에서는 거의 같았다(23·24·27 32 KiB: 0.99 수준, 차이 ≤ 0.006).
   문턱 1.0으로 자르면 실험 17–27에서 위반 1,607개 중 1,569개를 미리 잡고 잘못된 경보가 490개였다.
   결과를 본 뒤 고른 공식이므로 확증 실험에서 사전 등록해 확인해야 한다.
+
+---
+
+## 43. RF 실행 전 점검 모델 동결 (개발 자료, 시뮬레이션 없음)
+
+### 개요
+42절 뒤 사용자 결정(2026-10-07)으로 실행 전 점검의 주 방법은 RF f35m이다. 확증 실험 전에 **확률 보정 방식을 정하고, 개발 자료 전체로 학습한 모델을 파일과 해시로 동결**한다.
+확증 실험 결과로 모델·특징·τ를 바꾸지 않는다.
+
+- **자료:** 42절과 같다(실험 17–25·27의 후보 행, 실험 33의 C1+3, 실험 41의 P run). 특징 f35m(28개), 라벨은 run 전체에서 모든 마감을 지켰나.
+- **비교하는 두 모델:** A: RF(500그루, 잎 최소 3, 시드 0), 보정 없음. B: 같은 RF에 isotonic 보정(학습 자료 안에서 (seed base, set 번호) group 5-fold로 보정).
+- **보정 선택 규칙(실행 전 고정, `choose_calibration`):** 실험 하나를 빼고 맞힌 모든 행의 Brier 점수가 B에서 A보다 0.001 이상 낮으면 B, 아니면 A(더 단순한 쪽).
+- **고정 값:** τ 0.8, 결정 후보는 CHASER 배치(ra-cgb) + G4·C1+3·C1+1+2, 결정 규칙은 35절(P 확률 ≥ τ이면 P, 아니면 τ 이상인 G/C 중 가장 높은 것, 없으면 거절).
+- **동결물:** 개발 자료 전체로 학습한 모델 파일(joblib)과 SHA-256, 특징 목록과 순서, 학습 자료 목록(각 `results.jsonl`의 SHA-256, 행 수), 개발 행 전체 예측 확률의 지문(소수 6자리로 반올림한 값의 SHA-256), scikit-learn·numpy 버전.
+- **확인:** 저장한 모델을 다시 읽어 개발 행 전체의 예측이 지문과 같은지 확인한다.
+
+### 재현 명령
+```sh
+cd $C3 && PYTHONPATH=$C3 python3 $R/policy-mix/rf_freeze.py --rows $R/results/rf-model/training-rows.jsonl.gz --dest $W/.cache/rf-model-v1  # 2026-10-08 정리 이후: 개발 실험 원본 대신 학습 행 표(rf_rows.py)를 읽는다. 원래 실행은 --cache $W/.cache
+```
+
+### 결과 파일
+`results/rf-model/`(`model-spec.json`, `model-spec.md`). 모델 파일은 67 MB라 `.cache/rf-model-v1/model.joblib`에만 두고 SHA-256과 예측 지문으로 확인한다. 2026-10-07 18:23 KST 실행.
+
+### 결과
+| 보정 | 처음 보는 실험의 Brier | AUC(모든 행) | τ 0.8 결정: 받아들여 지킴 / 잘못 수락 / 잘못 거절 / 살린 set / 잘못된 전환 |
+|---|---:|---:|---|
+| 없음 | 0.0337 | 0.9908 | 1,222 / 6 / 121 / 4 / 0 |
+| isotonic | **0.0318** | 0.9905 | 1,223 / 8 / 118 / 4 / 0 |
+
+- **보정 선택:** Brier 차이 0.0019로 기준(0.001)을 넘어 **isotonic**을 쓴다. 결정 결과는 두 방식이 거의 같다.
+- **동결값:** 행 11,733개, 특징 28개(f35m), τ 0.8, 모델 SHA-256 `ec847c8755efcff2ebb57f53e7b7c251eee6e049367dffc8e4b56fece75b8f36`, 예측 지문 `6d67762a2e4105d027b73944ad3ff265d877144951680fe831a465983715da21`, scikit-learn 1.7.2.
+  저장한 모델을 다시 읽은 예측으로 지문을 만들었다.
+- **프레임워크 코드 대조(`policy-mix/pfirst_check.py`, `results/pfirst-check/`):** 동결 모델을 쓰는 공용 구현 `chaser/policy/pfirst/`(입력·배치·특징·결정)를 개발 자료 전체에 적용했다.
+  set 2,248개·행 11,733개에서 U 균형 배치 1,896/1,896, CHASER 배치 1,892/1,892가 저장된 배치와 같았고(실험 17·18의 ra-cg와 실험 41은 비교에서 뺌), 특징값이 다른 행은 0개, 동결 모델 확률의 최대 차이는 1.8 × 10⁻¹⁴였다.
+  결정 한 번(배치 + RF 예측)은 중앙값 0.42초, 최대 0.71초였다. 단위 테스트는 `tests/policy/pfirst/`(200개).
+- **중요도(불순도 감소, 보정 모델 안의 RF 5개 평균):** D + M 0.295, D 0.143, U 가중 (1 − CLS) 0.135, 저친화도 U 0.106, M 0.103, 작업 집합 ÷ L2 0.070. 나머지는 각 0.025 이하.
 
