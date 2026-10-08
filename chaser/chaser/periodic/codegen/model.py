@@ -67,8 +67,8 @@ class PolicyHeader:
     """One policy's header data, independent of the persisted plan dict.
 
     Attributes:
-        architecture: Scheduler layout: 0 for global (G), 1 for clustered (C),
-            or 2 for partitioned (P).
+        architecture: Scheduler layout: 0 for global (G), 1 for clustered (C1+3),
+            2 for partitioned (P), or 3 for clustered C1+1+2.
         contract_id: Measurement contract identifier embedded in runtime output.
         plan_hash: Canonical plan identity used to bind runtime data to its plan.
         tasks: Scheduling records in worker-index order, matching the generated

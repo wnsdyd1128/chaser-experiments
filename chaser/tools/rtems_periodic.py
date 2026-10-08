@@ -9,7 +9,7 @@ import subprocess
 import time
 import shutil
 
-from chaser.periodic.measurement import parse_log
+from chaser.periodic.measurement import ARCHITECTURES, parse_log
 from chaser.periodic.build import prepare, read_symbols
 from tools.rtems_smoke import SIMULATOR, check_inputs, file_hash, write_json
 
@@ -27,12 +27,12 @@ def run(prepared: Path, output: Path, *, architecture: int, runs: int,
     These diagnostic runs must not enter the timing dataset.
     """
     if (type(runs) is not int or runs < 1 or not 0 < timeout < float('inf')
-            or type(architecture) is not int or architecture not in range(3)):
+            or type(architecture) is not int or architecture not in range(len(ARCHITECTURES))):
         raise ValueError('Positive runs/timeout and a valid architecture are required')
     prepared, output, simulator = prepared.resolve(), output.resolve(), simulator.resolve()
     manifest = json.loads((prepared / 'manifest.json').read_text())
     check_inputs(prepared, manifest)
-    name = ('g', 'c', 'p')[architecture]
+    name = ARCHITECTURES[architecture]
     plan = json.loads((prepared / name / 'plan.json').read_text())
     if plan.get('input_schema_version') not in (2, 3):
         raise ValueError('Legacy prepared input is deprecated; prepare schema_version: 2 arrays')
@@ -129,7 +129,7 @@ def main() -> None:
     execute = commands.add_parser('run')
     execute.add_argument('prepared', type=Path)
     execute.add_argument('--output', type=Path, required=True)
-    execute.add_argument('--architecture', choices=('g', 'c', 'p'), required=True)
+    execute.add_argument('--architecture', choices=ARCHITECTURES, required=True)
     execute.add_argument('--runs', type=int, required=True)
     execute.add_argument('--timeout', type=float, default=60)
     execute.add_argument('--mode', type=int, default=0)
@@ -148,7 +148,7 @@ def main() -> None:
                for case in report['cases'].values()):
             raise SystemExit(1)
     else:
-        records = run(args.prepared, args.output, architecture=('g', 'c', 'p').index(args.architecture),
+        records = run(args.prepared, args.output, architecture=ARCHITECTURES.index(args.architecture),
                       runs=args.runs, timeout=args.timeout, mode=args.mode, trace=args.trace, empty=args.empty)
         passed = sum(r['execution_status'] == 'ok' for r in records)
         print(f'{passed}/{len(records)} successful runs: {args.output}')

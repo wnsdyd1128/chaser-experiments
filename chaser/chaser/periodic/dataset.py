@@ -8,7 +8,7 @@ from statistics import median
 
 from chaser.locality.features import build_features
 from chaser.dataset.labeling import Measurement
-from chaser.periodic.measurement import CONTRACT, digest, parse_log
+from chaser.periodic.measurement import ARCHITECTURES, CONTRACT, digest, parse_log
 from chaser.dataset.splits import taskset_signature, validate_taskset_split
 from tools.rtems_smoke import check_inputs, file_hash
 
@@ -68,7 +68,7 @@ def load_batch(prepared: Path, directory: Path) -> list[dict]:
             or {r['run_id'] for r in records} != {str(i) for i in range(protocol['runs'])}):
         raise ValueError('Missing or duplicate planned runs')
     for row in records:
-        plan = json.loads((prepared / ('g', 'c', 'p')[row['architecture']] / 'plan.json').read_text())
+        plan = json.loads((prepared / ARCHITECTURES[row['architecture']] / 'plan.json').read_text())
         if (plan['contract_id'] != CONTRACT
                 or row.get('contract_id') != CONTRACT
                 or protocol.get('contract_id') != CONTRACT):
@@ -80,7 +80,7 @@ def load_batch(prepared: Path, directory: Path) -> list[dict]:
                     protocol.get(key) != plan[key] for key in
                     ('input_schema_version', 'kernel_contract_id', 'workload_optimization'))):
                 raise ValueError('Multi-array implementation or kernel provenance mismatch')
-        elf = prepared / 'build' / (('g', 'c', 'p')[row['architecture']] + '.exe')
+        elf = prepared / 'build' / (ARCHITECTURES[row['architecture']] + '.exe')
         if (row['elf_hash'] != file_hash(elf) or row['elf_hash'] != protocol['elf_hash']
                 or row['plan_hash'] != plan['plan_hash'] or row['plan_hash'] != protocol['plan_hash']
                 or any(row[k] != protocol[k] for k in ('mode', 'trace', 'empty'))):

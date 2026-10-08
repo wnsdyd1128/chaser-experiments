@@ -24,16 +24,16 @@ def prepared(tmp_path_factory):
     return output
 
 
-def test_waf_builds_three_sparc_elfs_from_one_workload_object(prepared):
+def test_waf_builds_every_topology_elf_from_one_workload_object(prepared):
     manifest = json.loads((prepared / 'manifest.json').read_text())
     check_inputs(prepared, manifest)
     layouts = json.loads((prepared / 'layout.json').read_text())
-    assert layouts['g'] == layouts['c'] == layouts['p']
+    assert layouts['g'] == layouts['c'] == layouts['p'] == layouts['c2']
     commands = json.loads((prepared / 'build/compile_commands.json').read_text())
-    assert len(commands) == 7
+    assert len(commands) == 9  # workload.c once, init.c and probe.c per G, C1+3, P, C1+1+2
     assert sum(Path(r['file']).name == 'workload.c' for r in commands) == 1
-    assert len({r['output'] for r in commands}) == 7
-    for a in ('g', 'c', 'p'):
+    assert len({r['output'] for r in commands}) == 9
+    for a in ('g', 'c', 'p', 'c2'):
         elf = (prepared / f'build/{a}.exe').read_bytes()
         assert elf[:6] == b'\x7fELF\x01\x02'
         assert int.from_bytes(elf[18:20], 'big') == 2
@@ -47,7 +47,7 @@ def test_workload_o2_only_changes_workload_compile_flags(prepared, tmp_path):
     output = tmp_path / 'optimized'
     prepare(config, output)
     commands = json.loads((output / 'build/compile_commands.json').read_text())
-    assert len(commands) == 7
+    assert len(commands) == 9
     for row in commands:
         flags = row['arguments']
         if Path(row['file']).name == 'workload.c':
@@ -105,7 +105,7 @@ def test_cpp_expands_all_sweeps_and_matches_all_final_elfs(prepared):
     assert result['cases']['a']['modeled_accesses'] == 800
     assert result['cases']['a']['clp'] == [799 / 800, 0, 1 / 800]
     assert result['cases']['b']['clp'] == [0, 792 / 800, 8 / 800]
-    assert set(result['provenance']['a']['elf_hashes']) == {'g', 'c', 'p'}
+    assert set(result['provenance']['a']['elf_hashes']) == {'g', 'c', 'p', 'c2'}
     raw = json.loads((prepared / 'analysis/workload_ape.json').read_text())
     selected = json.loads((prepared / 'analysis/a.ape.json').read_text())
     assert all(f in raw['functions'] for f in selected['functions'])
@@ -134,8 +134,8 @@ def test_typed_reads_match_literal_streams_in_all_final_elfs(tmp_path, sweeps,
                'b': list(range(0, 8*4096, 4096)) * sweeps}
     for name, expected in offsets.items():
         assert result['cases'][name]['modeled_accesses'] == 8 * sweeps
-        assert set(result['provenance'][name]['elf_hashes']) == {'g', 'c', 'p'}
-        for architecture in ('g', 'c', 'p'):
+        assert set(result['provenance'][name]['elf_hashes']) == {'g', 'c', 'p', 'c2'}
+        for architecture in ('g', 'c', 'p', 'c2'):
             address, _ = read_symbols(snapshot / f'build/{architecture}.exe')['data_' + name]
             event_path = snapshot / f'analysis/{architecture}/{name}/events.json'
             if compress_events:

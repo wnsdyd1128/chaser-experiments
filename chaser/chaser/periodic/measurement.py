@@ -9,7 +9,8 @@ from chaser.periodic.arrays import fields, normalize_arrays, validate_ownership
 from chaser.periodic.kernels import kernel_for, normalize_task
 
 CONTRACT = 'chaser-periodic-measurement-v3'
-TOPOLOGIES = ('g-edfsmp-4-v1', 'c-edfsmp-1-3-v1', 'p-edfsmp-4x1-v1')
+TOPOLOGIES = ('g-edfsmp-4-v1', 'c-edfsmp-1-3-v1', 'p-edfsmp-4x1-v1', 'c2-edfsmp-1-1-2-v1')
+ARCHITECTURES = ('g', 'c', 'p', 'c2')  # G4, C1+3, P, C1+1+2 (cores {0}, {1}, {2, 3})
 TICK_NS = 1_000_000
 
 
@@ -28,8 +29,8 @@ def make_plan(configuration: dict, architecture: int) -> dict:
     .. deprecated:: 2
        Schema-less private-array inputs were removed. Use schema_version: 2.
     """
-    if type(architecture) is not int or architecture not in range(3):
-        raise ValueError('Architecture must be G=0, C=1, or P=2')
+    if type(architecture) is not int or architecture not in range(len(ARCHITECTURES)):
+        raise ValueError('Architecture must be G=0, C=1, P=2, or C1+1+2=3')
     version = configuration.get('schema_version')
     if type(version) is int and version == 3:
         from chaser.periodic.polybench.plan import make_plan as polybench_plan
@@ -61,8 +62,8 @@ def make_plan(configuration: dict, architecture: int) -> dict:
 
 def schedule_plan(configuration: dict, architecture: int, normalized_tasks: list[dict]) -> dict:
     """Validate releases and accounting independently of kernel representation."""
-    if type(architecture) is not int or architecture not in range(3):
-        raise ValueError('Architecture must be G=0, C=1, or P=2')
+    if type(architecture) is not int or architecture not in range(len(ARCHITECTURES)):
+        raise ValueError('Architecture must be G=0, C=1, P=2, or C1+1+2=3')
     for key in ('workload_id', 'family_id', 'policy_id'):
         if not isinstance(configuration[key], str) or not configuration[key]:
             raise ValueError(f'Nonempty {key} is required')
@@ -86,6 +87,7 @@ def schedule_plan(configuration: dict, architecture: int, normalized_tasks: list
         task['job_count'] = horizon // task['period_ticks']
         task['domain'] = (list(range(4)) if architecture == 0 else
                           ([0] if task['core'] == 0 else [1, 2, 3]) if architecture == 1
+                          else ([task['core']] if task['core'] < 2 else [2, 3]) if architecture == 3
                           else [task['core']])
         tasks.append(task)
     if len({t['task_id'] for t in tasks}) != len(tasks):

@@ -122,3 +122,18 @@ def test_truncated_run_keeps_complete_raw_jobs_for_failure_audit():
     assert result['execution_status'] == 'failed'
     assert 'truncated_record' in result['errors']
     assert len(result['jobs']) == 6
+
+
+def test_clustered_one_one_two_puts_cores_zero_and_one_alone_and_shares_two_and_three():
+    from chaser.periodic.codegen.project import topology_header
+    from chaser.periodic.measurement import ARCHITECTURES, TOPOLOGIES
+    config = configuration()
+    for i, task in enumerate(config['tasks']):
+        task['core'] = i % 4
+    plan = make_plan(config, ARCHITECTURES.index('c2'))
+    assert plan['topology_id'] == TOPOLOGIES[3] == 'c2-edfsmp-1-1-2-v1'
+    assert [t['domain'] for t in plan['tasks']] == [[0], [1], [2, 3], [2, 3]][:len(plan['tasks'])]
+    header = topology_header(3)
+    assert header.count('RTEMS_SCHEDULER_EDF_SMP(') == 3 and header.count('RTEMS_SCHEDULER_ASSIGN(2,') == 2
+    with pytest.raises(ValueError, match='Architecture'):
+        make_plan(config, 4)

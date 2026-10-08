@@ -15,6 +15,7 @@ from chaser.periodic.build import YARDA, check_layout, read_symbols
 from chaser.periodic.kernels import reference_events, task_from_plan
 from chaser.periodic.workload import ArraySpec
 from chaser.periodic.kernels.inputs import check_current_inputs
+from chaser.periodic.measurement import ARCHITECTURES
 from chaser.locality.artifacts import read_analysis
 from tools.rtems_smoke import check_inputs, file_hash, write_json
 
@@ -107,7 +108,7 @@ def _analyze(prepared, timeout, compress_events, compression_queue, reservations
         write_json(ape, {**raw, 'functions': functions})
         accesses = task['source_accesses']
         limit = task['loop_iterations'] + 10
-        for name in ('g', 'c', 'p'):
+        for name in ARCHITECTURES:
             reservation = (reservations.enter_context(compression_queue.reserve())
                            if compression_queue is not None else None)
             directory = output / name / task_id

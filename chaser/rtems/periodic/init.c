@@ -54,6 +54,7 @@ static unsigned scheduler_index(unsigned i)
 {
     if (chaser_mode || ARCHITECTURE == 0) return 0;
     if (ARCHITECTURE == 1) return cores[i] != 0;
+    if (ARCHITECTURE == 3) return cores[i] < 2 ? cores[i] : 2;
     return cores[i];
 }
 

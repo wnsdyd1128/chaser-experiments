@@ -6,7 +6,7 @@ import shutil
 import subprocess
 import sys
 
-from chaser.periodic.measurement import make_plan
+from chaser.periodic.measurement import ARCHITECTURES, make_plan
 from chaser.periodic.workload import ArraySpec
 from chaser.periodic.codegen import workload_source, topology_header, write_project
 from chaser.periodic.kernels.inputs import snapshot_inputs, record_inputs
@@ -46,10 +46,10 @@ def check_layout(symbols: dict, arrays: list[dict] | list[ArraySpec]) -> list[di
 
 
 def prepare(configuration: dict, output: Path) -> dict:
-    """Build all three final ELFs from a new source/config/launcher snapshot."""
+    """Build every topology's final ELF (G, C1+3, P, C1+1+2) from a new source/config/launcher snapshot."""
     if configuration.get('workload_optimization', 'O0') not in ('O0', 'O2'):
         raise ValueError('Workload optimization must be O0 or O2')
-    plans = [make_plan(configuration, a) for a in range(3)]
+    plans = [make_plan(configuration, a) for a in range(len(ARCHITECTURES))]
     output = output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     source = output / 'source'
@@ -65,16 +65,16 @@ def prepare(configuration: dict, output: Path) -> dict:
     with (output / 'build.log').open('w') as log:
         subprocess.run(command, cwd=output, stdout=log, stderr=subprocess.STDOUT, check=True)
     layouts = {}
-    for name in ('g', 'c', 'p'):
+    for name in ARCHITECTURES:
         if plans[0]['input_schema_version'] == 3:
             from chaser.periodic.polybench.project import storage_layout
             layouts[name] = storage_layout(output / f'build/{name}.exe', source / 'workload.c')
         else:
             layouts[name] = check_layout(read_symbols(output / f'build/{name}.exe'), plans[0]['arrays'])
-    if not layouts['g'] == layouts['c'] == layouts['p']:
-        raise ValueError('G/C/P workload layouts differ')
+    if any(layouts[name] != layouts['g'] for name in ARCHITECTURES):
+        raise ValueError('Workload layouts differ between topologies')
     write_json(output / 'layout.json', layouts)
-    files = [*output.glob('native*'), *output.glob('original*'), *source.iterdir(), *[p for n in ('g', 'c', 'p') for p in (output / n).iterdir()],
+    files = [*output.glob('native*'), *output.glob('original*'), *source.iterdir(), *[p for n in ARCHITECTURES for p in (output / n).iterdir()],
              *[output / n for n in ('layout.ld', 'layout.json', 'wscript', 'waf',
                                      'configuration.json', 'cache.yaml', 'build.log',
                                      'build/compile_commands.json')],

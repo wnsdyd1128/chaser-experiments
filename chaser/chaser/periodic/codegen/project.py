@@ -5,6 +5,7 @@ import shutil
 
 from chaser.periodic.codegen.workload import workload_source
 from chaser.periodic.codegen.model import PolicyHeader
+from chaser.periodic.measurement import ARCHITECTURES
 from tools.rtems_smoke import write_json
 
 RTEMS = Path(__file__).resolve().parents[3] / 'rtems/periodic'
@@ -18,7 +19,7 @@ def topology_header(architecture: int) -> str:
         - {0,0,1,1}: 2개 클러스터 (CPU0,1 / CPU2,3)
     """
 
-    assignments = ([0, 0, 0, 0], [0, 1, 1, 1], [0, 1, 2, 3])[architecture]
+    assignments = ([0, 0, 0, 0], [0, 1, 1, 1], [0, 1, 2, 3], [0, 1, 2, 2])[architecture]
     count = max(assignments) + 1
     lines = [f'RTEMS_SCHEDULER_EDF_SMP(edf{i});' for i in range(count)]
     lines.append('#define CONFIGURE_SCHEDULER_TABLE_ENTRIES \\\n' + ', \\\n'.join(
@@ -63,7 +64,7 @@ def write_project(output, plans):
                          '/** @brief Hash live-outs after the bracket at upstream print precision.\n'
                          ' * @param task Sole source-suite task index (zero). @return FNV-1a hash. */\n'
                          'uint32_t workload_checksum(unsigned task);\n')
-    for name, plan in zip(('g', 'c', 'p'), plans):
+    for name, plan in zip(ARCHITECTURES, plans):
         directory = output / name
         directory.mkdir()
         write_json(directory / 'plan.json', plan)
