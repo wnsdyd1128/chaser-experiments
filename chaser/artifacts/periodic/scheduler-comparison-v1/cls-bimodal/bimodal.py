@@ -79,7 +79,7 @@ HOT, REPEATS, SWEEPS, PAD, TAIL, U_ERROR, CLS = range(7)
 # period (per-core nominal U 0.125-0.5).
 DESIGNS = ('main', 'matched-extension', 'load-level', 'u-imbalance')
 LOAD_PERIODS = (80, 40, 30, 20)
-# Task-U imbalance (EXPERIMENTS.md 7): the load-level CLS condition at the
+# Task-U imbalance (EXPERIMENTS.md section 7 at commit 045d147): the load-level CLS condition at the
 # default period, total U 1.0, task U log-normal from a set-specific draw per
 # task position that is independent of the CLS draws.
 U_CVS = (0.0, 0.25, 0.5, 0.75)

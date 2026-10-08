@@ -2,14 +2,10 @@
 
 --design high-load (hl_set): wfd/, informed/ and c-informed/ builds; G, C (1+3),
 C2 (1+1+2) and P run on wfd, P on informed (p_inf), C (1+3) on c-informed (c_inf).
---design infeasible (inf_set): wfd/, informed/, c-cap/ and c2-cap/ builds; as
-above plus C (1+3) on c-cap (c_cap) and C2 on c2-cap (c2_cap).
 --design memory (mem_set): wfd/ and grouped-balanced/ builds; G, C, C2 and P on
 wfd, P on grouped-balanced (p_grp). Run mem_check.py first.
---design g-vs-c (gc_set): wfd/, c-cap/ and c2-cap/ builds; G on wfd, C (1+3) on
-c-cap, C2 on c2-cap (no Partitioned run: no partition fits).
---design g-vs-c-sync (gc_sync_set): the same runs on fresh sets with fixed heavy
-period sharing; stats adds the pre-registered primary McNemar tests (Holm).
+policy-mix/pm_run.py registers the thesis designs on top of these (the infeasible, g-vs-c and
+g-vs-c-sync designs were removed on 2026-10-07; their snapshots stay in results/).
 Builds of a set share task order and source and differ only in cores. Deadline
 misses are measured outcomes. The isolated gate runs every task of set 0 of
 each cell alone (the O0 cyclic job-time model was validated in experiment 1).
@@ -37,38 +33,22 @@ from tools.rtems_smoke import file_hash, write_json
 
 import bi_run
 import hl_set
-import inf_set
 import mem_set
-import gc_set
-import gc_sync_set
 import run as design
 import stats
 
-SNAPSHOT = ('hl_set.py', 'inf_set.py', 'mem_set.py', 'mem_check.py', 'gc_set.py', 'gc_sync_set.py', 'hl_run.py',
-            'test_hl.py')
+SNAPSHOT = ('hl_set.py', 'mem_set.py', 'mem_check.py', 'hl_run.py')
 DESIGNS = {
     'high-load': (hl_set,
                   (('wfd', 'g', 'g'), ('wfd', 'c', 'c'), ('wfd', 'c2', 'c2'), ('wfd', 'p', 'p'),
                    ('informed', 'p', 'p_inf'), ('c-informed', 'c', 'c_inf')),
                   (('g', 'p'), ('c', 'p'), ('c2', 'p'), ('p_inf', 'p'), ('c_inf', 'p'), ('g', 'p_inf'),
                    ('c', 'p_inf'), ('c2', 'p_inf'), ('c_inf', 'p_inf'), ('g', 'c_inf'), ('c_inf', 'c'))),
-    'infeasible': (inf_set,
-                   (('wfd', 'g', 'g'), ('wfd', 'c', 'c'), ('wfd', 'c2', 'c2'), ('wfd', 'p', 'p'),
-                    ('informed', 'p', 'p_inf'), ('c-cap', 'c', 'c_cap'), ('c2-cap', 'c2', 'c2_cap')),
-                   (('g', 'p_inf'), ('c', 'p_inf'), ('c2', 'p_inf'), ('c_cap', 'p_inf'), ('c2_cap', 'p_inf'),
-                    ('g', 'c_cap'), ('g', 'c2_cap'), ('c_cap', 'c2_cap'), ('c2_cap', 'c2'), ('p_inf', 'p'),
-                    ('g', 'p'))),
     'memory': (mem_set,
                (('wfd', 'g', 'g'), ('wfd', 'c', 'c'), ('wfd', 'c2', 'c2'), ('wfd', 'p', 'p'),
                 ('grouped-balanced', 'p', 'p_grp')),
                (('g', 'p_grp'), ('c', 'p_grp'), ('c2', 'p_grp'), ('p', 'p_grp'), ('g', 'p'), ('c', 'p'),
                 ('c2', 'p'), ('g', 'c'), ('g', 'c2'), ('c', 'c2'))),
-    'g-vs-c': (gc_set,
-               (('wfd', 'g', 'g'), ('c-cap', 'c', 'c_cap'), ('c2-cap', 'c2', 'c2_cap')),
-               (('g', 'c_cap'), ('g', 'c2_cap'), ('c_cap', 'c2_cap'))),
-    'g-vs-c-sync': (gc_sync_set,
-                    (('wfd', 'g', 'g'), ('c-cap', 'c', 'c_cap'), ('c2-cap', 'c2', 'c2_cap')),
-                    (('g', 'c_cap'), ('g', 'c2_cap'), ('c_cap', 'c2_cap'))),
 }
 DESIGN = 'high-load'
 hl, RUNS, PAIRS = DESIGNS[DESIGN]

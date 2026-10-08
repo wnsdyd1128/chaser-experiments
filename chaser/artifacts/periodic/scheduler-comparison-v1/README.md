@@ -6,8 +6,9 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 이 디렉터리에는 스크립트와 작은 결과 묶음(`results/`)만 둔다. 빌드·원시 run 로그는
 저장소 밖 `.cache/`에 있다(아래 "결과 위치").
 
-실험 목록(1–13, 16–28)과 실험별 스크립트·출력(`.cache/`)·결과 묶음(`results/`)의 대응은
-[EXPERIMENTS.md](EXPERIMENTS.md) 맨 위 표에 있다.
+실험별 스크립트·출력(`.cache/`)·결과 묶음(`results/`)의 대응은 [EXPERIMENTS.md](EXPERIMENTS.md) 맨 위 표에 있다.
+2026-10-08에 논문 실험(8, 20, 24, 27, 28, 30, 41–45)의 코드와 결과 묶음만 남기고 나머지를 지웠다
+(EXPERIMENTS.md 맨 끝 "정리" 절). 지운 실험의 기록은 EXPERIMENTS.md에 남아 있지만 그 재현 명령은 더는 실행되지 않는다.
 
 `figures/`는 결과 그림 스크립트, `supervisors/`는 실제로 쓴 실행 순서(셸)다.
 `c2-topology.patch`는 C₂ (0,1,2,2) 토폴로지 추가 패치, `cls-bimodal/padding.patch`는
@@ -25,7 +26,7 @@ run 기록에 simulator 해시가 남지 않으므로 바이너리를 해시로 
 | X 디스플레이 | laysim이 접속할 `DISPLAY`(이 환경: `165.246.44.80:90.0`) |
 | RTEMS 6 SDK | `/opt/rtems/6`, sparc-rtems6-gcc 13.3.0(RSB b1aec32, Newlib 1b3dcfd), `/opt/src/rtems/waf` |
 | LLVM | clang-14 / opt-14(Ubuntu 14.0.0-1ubuntu1.1) |
-| YARDA(실험 1–4) | `OBC-SIM/Yet-Another-Reuse-Distance-Analyzer` `feat/cpp-backend` a058a454 → `.cache/yarda-a058a454-build`(공유 빌드 폴더 `rtems/baseline/build/yarda`의 빌드를 2026-10-03에 복사해 고정, 해시 동일) |
+| YARDA(실험 1–4) | `OBC-SIM/Yet-Another-Reuse-Distance-Analyzer` `feat/cpp-backend` a058a454 → `.cache/yarda-a058a454-build`(공유 빌드 폴더 `rtems/baseline/build/yarda`의 빌드를 2026-10-03에 복사해 고정, 해시 동일; 논문 실험은 쓰지 않아 2026-10-08에 지움) |
 | YARDA(CLS 양극단) | 같은 저장소 374b2c9 + frontend `Access-Pattern-Extractor` 2670c6e → `.cache/yarda-374b2c9-build` |
 | Python | 3.10.12, numpy 2.2.6, scipy 1.15.3, matplotlib 3.10.9 |
 
@@ -68,35 +69,28 @@ patch -p1 -d $B-c3 < artifacts/periodic/scheduler-comparison-v1/cls-bimodal/padd
 
 ## 테스트
 
-```sh
-C=/workspace/experiments/chaser/.cache/period-distribution-code-4d03b93-c2
-R=/workspace/experiments/chaser/artifacts/periodic/scheduler-comparison-v1
-cd $C && PYTHONPATH=$C python3 -m pytest -q -p no:cacheprovider --rootdir=$R/period-distribution $R/period-distribution
-cd $C && PYTHONPATH=$C python3 -m pytest -q -p no:cacheprovider --rootdir=$R/cls-distribution $R/cls-distribution
-cd $C && PYTHONPATH=$C python3 -m pytest -q -p no:cacheprovider --rootdir=$R/cache-affinity $R/cache-affinity
-C3=/workspace/experiments/chaser/.cache/period-distribution-code-4d03b93-c3
-cd $C3 && PYTHONPATH=$C3 python3 -m pytest -q -p no:cacheprovider --rootdir=$R/cls-bimodal $R/cls-bimodal
-```
+실험 스크립트의 테스트는 두지 않는다(2026-10-08에 지움). 테스트를 통과한다고 실험이 의미 있어지지 않고, 실험의 근거는
+사전 등록, 결과 묶음, 재실행 점검(`results/reproduction-check/`)이다. 프레임워크(주 패키지 `chaser/`)의 테스트는
+저장소 루트의 `tests/`에 있고, 그중 `tests/policy/pfirst`는 `chaser.policy.pfirst`가 이 디렉터리의 실험 코드(`placement_lib`,
+`rf_devcheck`, `rf_candidates`, `rf_occupancy`)와 같은 값을 내는지 비교한다.
 
-`test_c2.py`는 패치 전 사본(`-c2` 접미사 없는 디렉터리)이 있으면 G/C/P 계획이 패치 전과
-같은지도 비교한다.
+```sh
+cd /workspace/experiments/chaser && python3 -m pytest -q -p no:cacheprovider tests/policy
+```
 
 ## 실행
 
 `supervisors/*.sh`가 실제 실행 순서다(백그라운드 `setsid nohup`, 로그·PID·exit 파일 기록).
 단계와 출력 경로는 스크립트 docstring에 있다. 요약:
 
-- 주기 분포: `run.py prepare|u-check|pilot|full|summarize --output O` → `stats.py O`,
-  대조: `control.py prepare|g-check|run|summarize|stats --main O --output O2`,
-  중복 제거 민감도: `dedup.py O`
-- CLS: `calibrate.py measure|verify|analyze --output O/calibration` →
-  `cls_run.py prepare|u-check|pilot|full|stats --output O`
-- 캐시 친화성: `aff_run.py prepare [--optimization O2]|isolated|pilot|empty|full|stats --output O`
-- CLS 양극단: `bi_calibrate.py measure|fit --output O/calibration`(O2 job 시간 모델, 검증 오차 2% 게이트) →
-  `bi_run.py prepare|isolated|pilot|full|summarize|stats --output O`
-  (prepare가 task마다 yarda_cpp CLS를 설계식과 대조, isolated가 서로 다른 수준의 U를 3% 게이트)
+- 합성 task set(20, 24, 27, 28, 41, 44): `policy-mix/pm_run.py prepare|isolated|pilot|full|stats --design <설계> --output O`
+  (설계는 `pm_run.py`의 `DESIGNS`), 실험별 분석은 EXPERIMENTS.md 해당 절의 재현 명령
+- 44의 실행 전 판정: `confirm_decide.py`(isolated와 pilot 사이), 45의 실제 커널: `kernel_calibrate.py`, `kernel_run.py`
+- 실행시간 모델: `cls-bimodal/bi_calibrate.py measure|fit`(`results/cls-bimodal/calibration/`), 메모리 task 형태:
+  `policy-mix/mem_calibrate.py`(`results/mem-calibration/`), 모델 점검: `policy-mix/pm_check.py`(각 출력의 `model-check.json`)
+- RF: `rf_rows.py`(학습 행 표, 원본에서 한 번), `rf_freeze.py`·`rf_occupancy.py`(표에서)
 
-`--output`은 항상 지정한다(스크립트의 기본 출력 경로는 `.cache/configs/…`에서 실행할 때 기준).
+`--output`은 항상 지정한다.
 같은 output으로 다시 실행하면 완료된 run은 건너뛰고, run header가 없는 run은
 `*.aborted-N`으로 옮긴 뒤 다시 돌린다. 동시 laysim은 최대 84개, 시작 간격 1초.
 
@@ -109,9 +103,9 @@ cd $C3 && PYTHONPATH=$C3 python3 -m pytest -q -p no:cacheprovider --rootdir=$R/c
 
 ## 결과 위치(버전 관리 안 함)
 
-실험별 출력 폴더는 EXPERIMENTS.md 맨 위 표의 "출력" 열이다. 폐기한 설계의 목록과 이유는
-EXPERIMENTS.md 14절에 있다. 그 출력 일부와 빌드 폴더의 waf 라이브러리 사본은 2026-10-05에 지웠다
-(`.cache/cleanup-2026-10-05.log`).
+실험별 출력 폴더는 EXPERIMENTS.md 맨 위 표의 "출력" 열이다. 폐기한 설계의 출력 일부와 빌드 폴더의 waf
+라이브러리 사본은 2026-10-05에(`.cache/cleanup-2026-10-05.log`), 논문에 싣지 않는 실험의 출력은 2026-10-08에
+(`.cache/cleanup-2026-10-08/`) 지웠다.
 각 output의 `protocol.json`에 설계 파라미터, 빌드 manifest 해시, 당시 스크립트 해시가 있다.
 
 ## 빌드 산출물 정리와 복구
@@ -126,11 +120,10 @@ R=/workspace/experiments/chaser/artifacts/periodic/scheduler-comparison-v1
 python3 $R/prepared_builds.py status  <출력 폴더> ...   # complete / pruned / other 개수
 python3 $R/prepared_builds.py prune   <출력 폴더> ...   # complete인 폴더의 .exe·.o 삭제, <출력>/pruned-builds.jsonl에 기록
 python3 $R/prepared_builds.py restore <출력 폴더> ...   # manifest의 도구 해시 확인 → waf build → 모든 manifest 파일 해시 확인
-python3 -m pytest -q -p no:cacheprovider --rootdir=$R $R/test_prepared_builds.py
 ```
 
 `dataset.load_batch`는 실행 파일 해시를 확인한다. 그래서 원시 로그를 다시 읽는 단계
-(각 실행기의 `summarize`·`full`·`stats` 전 집계, 실험 2의 `control.py`가 읽는 실험 1 출력)를
+(각 실행기의 `summarize`·`full`·`stats` 전 집계)를
 돌리기 전에 해당 출력 폴더를 `restore`한다. 결과 묶음, 통계, 그림을 보는 데는 복구가 필요 없다.
 복구는 같은 절대 경로와 manifest에 기록된 툴체인(`/opt/rtems/6`) 해시가 필요하다.
 

@@ -34,7 +34,7 @@ status=0
 # Resume after a stopped stage with e.g. DESIGNS="deadline-big-caas" STAGES="full stats rt".
 for design in ${DESIGNS:-deadline-small-caas deadline-big-caas}; do
     O=$W/.cache/$design-v1
-    mkdir -p "$O" && cp "$W/.cache/policy-mix-v1/model-check.json" "$O/model-check.json" || { status=1; break; }
+    mkdir -p "$O" && cp "$W/artifacts/periodic/scheduler-comparison-v1/results/deadline-small/model-check.json" "$O/model-check.json" || { status=1; break; }
     for stage in ${STAGES:-prepare isolated pilot full stats rt}; do
         case $stage in
             rt) step "design=$design stage=rt" python3 -u "$S/rt_metrics.py" --output "$O" --builds caas,cls-a1,cls-a1-cal ;;

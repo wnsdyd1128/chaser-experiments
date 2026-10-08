@@ -13,7 +13,7 @@
 `configs/periodic-multi-array/`는 버전 관리되는 다중 배열 입력이고,
 `.cache/periodic-multi-array/`는 새 worktree의 생성·분석·실행 결과 위치다.
 이전 실험의 `.cache/configs/periodic-memory-gap/`는 원본 입력·시나리오 실행기,
-`.cache/periodic-memory-gap-v1/`는 그 생성 환경·측정 결과 위치다.
+`.cache/periodic-memory-gap-v1/`는 그 생성 환경·측정 결과 위치였다(2026-10-06 삭제).
 디렉터리 이름이 실험 조건을 결정하지는 않는다.
 
 ```text
@@ -270,7 +270,7 @@ SIM은 이번 변경 후 재실행하지 않았다. 앞서 수행한 다중 배�
 C 생성 모듈 분리 후 실행은 `.cache/periodic-multi-array/codegen-refactor/`에 있다.
 
 아래 경로는 `.cache/periodic-multi-array/` 아래의 로컬 검증 산출물이다.
-버전 관리되는 예제 JSON과 구분하며 `.cache` 삭제 시 함께 사라진다.
+버전 관리되는 예제 JSON과 구분하며 `.cache` 삭제 시 함께 사라진다. 2026-10-06에 삭제해 지금은 없다.
 
 | 경로 | 증거 |
 |---|---|

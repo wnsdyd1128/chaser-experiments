@@ -1,34 +1,25 @@
-"""Run the policy-mix design through high-load/hl_run.py: prepare, isolated, pilot, full, stats.
+"""Run the thesis' synthetic designs through high-load/hl_run.py: prepare, isolated, pilot, full, stats.
 
---design policy-mix (default, mix_set): wfd/, tg/, ra/ and ra-tg/ builds per case; G,
-C2 (1+1+2) and P run on wfd, P on tg (p_tg), ra (p_ra) and ra-tg (p_ratg).
---design policy-mix-cls (mix_cls_set): the same cases with wfd/, cg/ and ra-cg/ builds;
-P runs on cg (p_cg) and ra-cg (p_racg), to pair with a policy-mix output.
---design policy-boundary (boundary_set): 24 period-CV x memory cells; wfd/, cgb/, ra/ and
-ra-cgb/ builds with P on each (p, p_cgb, p_ra, p_racgb).
---design task-count (taskcount_set): 12-20 tasks x memory share x load; the same four
-builds, P on each and G, C2 (1+1+2) on wfd.
---design small-memory (smallmem_set): 12-20 tasks x period CV x 32 KiB low-CLS share; runs
-as task-count.
---design small-memory-load (loadmem_set): 12-20 tasks x period CV x 32 KiB low-CLS share x
+--design task-count (taskcount_set): experiment 20, 12-20 tasks x memory share x load; wfd/, cgb/, ra/ and
+ra-cgb/ builds, P on each (p, p_cgb, p_ra, p_racgb) and G, C2 (1+1+2) on wfd.
+--design small-memory-load (loadmem_set): experiment 24, 12-20 tasks x period CV x 32 KiB low-CLS share x
 per-core load 0.45-0.6; runs as task-count.
---design conflict-cls (conflictcls_set): experiment 21's sets with conflict-miss low-CLS tasks
-(1-2 KiB walked 4 KiB apart); runs as task-count.
---design random-small-memory / random-task-count / random-cls-spread / random-small-memory-load /
-random-conflict-cls / random-policy-boundary / random-policy-mix (rnd_*_set): experiments 21, 20,
-23, 24, 25, 19 and 17's sets with P on placement_lib's random placements only, to pair with them.
---design cls-spread (clsspread_set): 12-20 tasks x CLS mean x CLS SD x period CV; runs as
-task-count plus P on the relative CLS groupings cgr (p_cgr) and ra-cgr (p_racgr).
 --design deadline-small / deadline-big (deadline_set, deadline_big_set): experiment 27's
 pre-registered sets (32 KiB low-CLS at 50 % of U, 768 KiB at 25 %); runs as task-count plus P on
 the three random placements (p_rnd0-2). deadline_analysis.py is snapshot with the scripts.
 --design deadline-small-caas / deadline-big-caas (deadline_caas_set, deadline_big_caas_set):
 experiment 28, CAAS Algorithm 1 on experiment 27's sets; P on algorithm1's caas (p_caas), cls-a1
 (p_clsa1) and cls-a1-cal (p_clsa1cal), to pair with experiment 27's results.
+--design memory-cost (memcost_set): experiment 41, pre-registered; the memory tasks hit L2 (l2) or go to
+memory (mem, mem_calibrate.py's shape) at the same CLS and U, same tasks and cores; wfd and cgb only.
+--design confirm-small / confirm-big / confirm-mem (confirm_set): experiment 44, pre-registered; CHASER (ra-cgb)
+under P and the wfd build under G4, C1+3 and C1+1+2 on every set. confirm_decide.py runs between isolated and pilot.
+The designs of the development experiments (17-26, 33, 38; their sets are in results/) were removed from this
+runner on 2026-10-07; their snapshots stay in the results bundles.
 On top of hl_run's prepare, every case runs yarda_cpp on the wfd build (locality.json:
 counts, CLS, IR instructions per task; CLS must equal the planned closed form) and the
 policy-mix scripts are snapshot next to hl_run's. Run pm_check.py first (its shapes are
-the same for both designs); run with PYTHONPATH set to the c3 code copy. Stages and
+the same for every design); run with PYTHONPATH set to the c3 code copy. Stages and
 options are hl_run's.
 """
 
@@ -46,45 +37,22 @@ from tools.rtems_smoke import file_hash, write_json
 
 import bi_run
 import confirm_set
-import memcost_set
-import boundary_set
-import clsspread_set
-import conflictcls_set
 import deadline_big_caas_set
 import deadline_big_set
 import deadline_caas_set
 import deadline_set
 import hl_run
 import loadmem_set
-import mix_cls_set
-import mix_set
+import memcost_set
 import placement_lib
-import rnd_boundary_set
-import rnd_conflict_set
-import rnd_loadmem_set
-import rnd_mix_set
-import rnd_smallmem_set
-import rnd_spread_set
-import rnd_taskcount_set
-import smallmem_set
 import taskcount_set
 import yarda_counts
 
-DESIGN = 'policy-mix'
-RUNS = (('wfd', 'g', 'g'), ('wfd', 'c2', 'c2'), ('wfd', 'p', 'p'), ('tg', 'p', 'p_tg'), ('ra', 'p', 'p_ra'),
-        ('ra-tg', 'p', 'p_ratg'))
-PAIRS = (('p_ratg', 'p'), ('p_ratg', 'p_tg'), ('p_ratg', 'p_ra'), ('p_tg', 'p'), ('p_ra', 'p'), ('g', 'p_ratg'),
-         ('c2', 'p_ratg'), ('g', 'p'))
-CLS_RUNS = (('cg', 'p', 'p_cg'), ('ra-cg', 'p', 'p_racg'))
-CLS_PAIRS = (('p_racg', 'p_cg'),)
 BOUNDARY_RUNS = (('wfd', 'p', 'p'), ('cgb', 'p', 'p_cgb'), ('ra', 'p', 'p_ra'), ('ra-cgb', 'p', 'p_racgb'))
 BOUNDARY_PAIRS = (('p_cgb', 'p_ra'), ('p_racgb', 'p_ra'), ('p_racgb', 'p_cgb'), ('p_cgb', 'p'), ('p_ra', 'p'))
 TASKCOUNT_RUNS = (('wfd', 'g', 'g'), ('wfd', 'c2', 'c2')) + BOUNDARY_RUNS
 TASKCOUNT_PAIRS = BOUNDARY_PAIRS + (('g', 'p_racgb'), ('c2', 'p_racgb'), ('g', 'p_ra'))
-SPREAD_RUNS = TASKCOUNT_RUNS + (('cgr', 'p', 'p_cgr'), ('ra-cgr', 'p', 'p_racgr'))
-SPREAD_PAIRS = TASKCOUNT_PAIRS + (('p_cgr', 'p_ra'), ('p_racgr', 'p_ra'), ('p_racgr', 'p_racgb'))
 RANDOM_RUNS = tuple((policy, 'p', f'p_{policy}') for policy in placement_lib.RANDOM_POLICIES)
-RANDOM_PAIRS = (('p_rnd1', 'p_rnd0'), ('p_rnd2', 'p_rnd0'))
 DEADLINE_RUNS = TASKCOUNT_RUNS + RANDOM_RUNS
 DEADLINE_PAIRS = TASKCOUNT_PAIRS + tuple(('p_racgb', key) for _, _, key in RANDOM_RUNS)
 CAAS_RUNS = (('caas', 'p', 'p_caas'), ('cls-a1', 'p', 'p_clsa1'), ('cls-a1-cal', 'p', 'p_clsa1cal'))
@@ -93,7 +61,11 @@ MEMCOST_RUNS = (('wfd', 'p', 'p'), ('cgb', 'p', 'p_cgb'))
 MEMCOST_PAIRS = (('p_cgb', 'p'),)
 CONFIRM_RUNS = (('ra-cgb', 'p', 'p_racgb'), ('wfd', 'g', 'g'), ('wfd', 'c', 'c'), ('wfd', 'c2', 'c2'))
 CONFIRM_PAIRS = (('g', 'p_racgb'),)
-SNAPSHOT = ('placement_lib.py', 'mix_set.py', 'mix_cls_set.py', 'boundary_set.py', 'taskcount_set.py', 'smallmem_set.py', 'clsspread_set.py', 'loadmem_set.py', 'conflictcls_set.py', 'pm_check.py', 'pm_run.py', 'test_placement_lib.py', 'test_mix_set.py', 'test_boundary_set.py', 'test_taskcount_set.py', 'test_smallmem_set.py', 'test_clsspread_set.py', 'test_loadmem_set.py', 'test_conflictcls_set.py', 'rnd_smallmem_set.py', 'rnd_taskcount_set.py', 'rnd_spread_set.py', 'rnd_loadmem_set.py', 'rnd_conflict_set.py', 'rnd_boundary_set.py', 'rnd_mix_set.py', 'test_random_sets.py', 'deadline_set.py', 'deadline_big_set.py', 'deadline_analysis.py', 'rt_metrics.py', 'test_deadline_set.py', 'test_deadline_analysis.py', 'algorithm1.py', 'ca_table.py', 'deadline_caas_set.py', 'deadline_big_caas_set.py', 'ladder_analysis.py', 'test_algorithm1.py', 'test_ladder_analysis.py', 'mem_calibrate.py', 'memcost_set.py', 'memcost_analysis.py', 'confirm_set.py', 'confirm_decide.py', 'confirm_analysis.py')
+SNAPSHOT = ('placement_lib.py', 'mix_set.py', 'taskcount_set.py', 'loadmem_set.py', 'pm_check.py', 'pm_run.py',
+            'deadline_set.py', 'deadline_big_set.py', 'deadline_analysis.py', 'rt_metrics.py', 'algorithm1.py',
+            'ca_table.py', 'deadline_caas_set.py', 'deadline_big_caas_set.py', 'ladder_analysis.py',
+            'mem_calibrate.py', 'memcost_set.py', 'memcost_analysis.py', 'confirm_set.py', 'confirm_decide.py',
+            'confirm_analysis.py')
 HL_SNAPSHOT = ('hl_run.py', 'hl_set.py', 'mem_set.py')
 
 _hl_prepare_one, _hl_prepare_all = hl_run.prepare_one, hl_run.prepare_all
@@ -123,42 +95,28 @@ def prepare_all(output, workers):
     protocol = json.loads((output / 'protocol.json').read_text())
     protocol['snapshot_hashes'].update({name: file_hash(output / name) for name in SNAPSHOT
                                         if (output / name).exists()})
-    if hasattr(hl_run.hl, 'protocol_extra'):
-        protocol.update(hl_run.hl.protocol_extra())
-    else:
-        protocol.update(factors=mix_set.FACTORS, set_factors=[mix_set.factors(k) for k in range(mix_set.SETS)],
-                        seed_base=mix_set.SEED_BASE)
+    protocol.update(hl_run.hl.protocol_extra())
     protocol.update(placements=hl_run.hl.PLACEMENTS, pairs=hl_run.PAIRS)
     write_json(output / 'protocol.json', protocol)
 
 
+DESIGNS = {'task-count': (taskcount_set, TASKCOUNT_RUNS, TASKCOUNT_PAIRS),
+           'small-memory-load': (loadmem_set, TASKCOUNT_RUNS, TASKCOUNT_PAIRS),
+           'deadline-small': (deadline_set, DEADLINE_RUNS, DEADLINE_PAIRS),
+           'deadline-big': (deadline_big_set, DEADLINE_RUNS, DEADLINE_PAIRS),
+           'deadline-small-caas': (deadline_caas_set, CAAS_RUNS, CAAS_PAIRS),
+           'deadline-big-caas': (deadline_big_caas_set, CAAS_RUNS, CAAS_PAIRS),
+           'memory-cost': (memcost_set, MEMCOST_RUNS, MEMCOST_PAIRS),
+           **{name: (design, CONFIRM_RUNS, CONFIRM_PAIRS) for name, design in confirm_set.DESIGNS.items()}}
+
+
 def main():
-    hl_run.DESIGNS.update({name: (design, CONFIRM_RUNS, CONFIRM_PAIRS) for name, design in confirm_set.DESIGNS.items()})
-    hl_run.DESIGNS['memory-cost'] = (memcost_set, MEMCOST_RUNS, MEMCOST_PAIRS)
-    hl_run.DESIGNS[DESIGN] = (mix_set, RUNS, PAIRS)
-    hl_run.DESIGNS['policy-mix-cls'] = (mix_cls_set, CLS_RUNS, CLS_PAIRS)
-    hl_run.DESIGNS['policy-boundary'] = (boundary_set, BOUNDARY_RUNS, BOUNDARY_PAIRS)
-    hl_run.DESIGNS['task-count'] = (taskcount_set, TASKCOUNT_RUNS, TASKCOUNT_PAIRS)
-    hl_run.DESIGNS['small-memory'] = (smallmem_set, TASKCOUNT_RUNS, TASKCOUNT_PAIRS)
-    hl_run.DESIGNS['cls-spread'] = (clsspread_set, SPREAD_RUNS, SPREAD_PAIRS)
-    hl_run.DESIGNS['small-memory-load'] = (loadmem_set, TASKCOUNT_RUNS, TASKCOUNT_PAIRS)
-    hl_run.DESIGNS['conflict-cls'] = (conflictcls_set, TASKCOUNT_RUNS, TASKCOUNT_PAIRS)
-    hl_run.DESIGNS['random-small-memory'] = (rnd_smallmem_set, RANDOM_RUNS, RANDOM_PAIRS)
-    hl_run.DESIGNS['random-task-count'] = (rnd_taskcount_set, RANDOM_RUNS, RANDOM_PAIRS)
-    hl_run.DESIGNS['random-cls-spread'] = (rnd_spread_set, RANDOM_RUNS, RANDOM_PAIRS)
-    hl_run.DESIGNS['random-small-memory-load'] = (rnd_loadmem_set, RANDOM_RUNS, RANDOM_PAIRS)
-    hl_run.DESIGNS['random-conflict-cls'] = (rnd_conflict_set, RANDOM_RUNS, RANDOM_PAIRS)
-    hl_run.DESIGNS['random-policy-boundary'] = (rnd_boundary_set, RANDOM_RUNS, RANDOM_PAIRS)
-    hl_run.DESIGNS['random-policy-mix'] = (rnd_mix_set, RANDOM_RUNS, RANDOM_PAIRS)
-    hl_run.DESIGNS['deadline-small'] = (deadline_set, DEADLINE_RUNS, DEADLINE_PAIRS)
-    hl_run.DESIGNS['deadline-big'] = (deadline_big_set, DEADLINE_RUNS, DEADLINE_PAIRS)
-    hl_run.DESIGNS['deadline-small-caas'] = (deadline_caas_set, CAAS_RUNS, CAAS_PAIRS)
-    hl_run.DESIGNS['deadline-big-caas'] = (deadline_big_caas_set, CAAS_RUNS, CAAS_PAIRS)
+    if '--design' not in sys.argv:
+        raise SystemExit(f"pm_run.py needs --design, one of {', '.join(DESIGNS)}")
+    hl_run.DESIGNS.update(DESIGNS)
     hl_run.SNAPSHOT = HL_SNAPSHOT
     # hl_run's stages look these up as module globals.
     hl_run.prepare_one, hl_run.prepare_all = prepare_one, prepare_all
-    if '--design' not in sys.argv:
-        sys.argv += ['--design', DESIGN]
     hl_run.main()
 
 

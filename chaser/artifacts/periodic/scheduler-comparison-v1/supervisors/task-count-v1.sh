@@ -11,7 +11,7 @@ O=$W/.cache/task-count-v1
 L=$W/.cache/task-count-v1-supervisor
 cd "$CODE" || exit 1
 export PYTHONPATH="$CODE" DISPLAY=165.246.44.80:90.0 PYTHONUNBUFFERED=1
-mkdir -p "$O" && cp "$W/.cache/policy-mix-v1/model-check.json" "$O/model-check.json" || exit 1
+mkdir -p "$O" && cp "$W/artifacts/periodic/scheduler-comparison-v1/results/deadline-small/model-check.json" "$O/model-check.json" || exit 1
 status=0
 # Resume after a stopped stage with e.g. STAGES="pilot full stats".
 for stage in ${STAGES:-prepare isolated pilot full stats}; do

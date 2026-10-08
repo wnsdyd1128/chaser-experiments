@@ -31,53 +31,26 @@ ROOT = HERE.parents[2]
 CACHE = ROOT / '.cache'
 RESULTS = HERE / 'results'
 STUDIES = {
-    'period-distribution': 'period-distribution-v2',
-    'release-aware-control': 'period-distribution-cohort-v2',
-    'cls-distribution': 'cls-distribution-v1',
-    'cache-affinity-o0': 'cache-affinity-v2',
-    'cache-affinity-o2': 'cache-affinity-o2-v1',
-    'cls-bimodal': 'cls-bimodal-v2',
-    'cls-bimodal-ext': 'cls-bimodal-v2-ext',
-    'load-level': 'load-level-v1',
-    'u-imbalance': 'u-imbalance-v1',
+    # Experiment 8: the shared-L2 and memory path probe.
     'l2-probe': 'l2-probe-v1',
-    'footprint': 'footprint-v1',
-    'high-load': 'high-load-v1',
-    'infeasible': 'infeasible-v1',
-    'memory-load': 'memory-load-v1',
-    'g-vs-c': 'g-vs-c-v1',
-    'g-vs-c-sync': 'g-vs-c-sync-v1',
-    'policy-mix': 'policy-mix-v1',
-    'policy-mix-cls': 'policy-mix-cls-v1',
-    'policy-boundary': 'policy-boundary-v1',
+    # Experiments 20 and 24: memory pressure and 32 KiB low-CLS tasks under load.
     'task-count': 'task-count-v1',
-    'small-memory': 'small-memory-v1',
-    'period-taskcount': 'period-taskcount-v1',
-    'period-taskcount-cohort': 'period-taskcount-cohort-v1',
-    'cls-spread': 'cls-spread-v1',
     'small-memory-load': 'small-memory-load-v1',
-    'conflict-cls': 'conflict-cls-v2',
-    'random-small-memory': 'random-small-memory-v1',
-    'random-task-count': 'random-task-count-v1',
-    'random-cls-spread': 'random-cls-spread-v1',
-    'random-small-memory-load': 'random-small-memory-load-v1',
-    'random-conflict-cls': 'random-conflict-cls-v1',
-    'random-policy-boundary': 'random-policy-boundary-v1',
-    'random-policy-mix': 'random-policy-mix-v1',
+    # Experiment 27 (pre-registered): CLS grouping against release-aware and random placements.
     'deadline-small': 'deadline-small-v1',
     'deadline-big': 'deadline-big-v1',
+    # Experiment 28 (pre-registered): CAAS Algorithm 1 against the CLS steps on experiment 27's sets.
     'deadline-small-caas': 'deadline-small-caas-v1',
     'deadline-big-caas': 'deadline-big-caas-v1',
-    # Re-analysis of the bundles above (feature-precheck/precheck.py); no simulation.
-    'feature-precheck': 'feature-precheck-v1',
-    # The 20 ms design whose pilot missed deadlines; kept as the reason for v2. Its .cache output
-    # was deleted on 2026-10-05, so results/cls-bimodal-v1-pilot cannot be re-exported.
-    'cls-bimodal-v1-pilot': 'cls-bimodal-v1',
+    # Experiment 41 (pre-registered): same CLS and U, memory tasks hitting L2 or going to memory.
     'memory-cost': 'memory-cost-v1',
+    # Experiment 44 (pre-registered): the frozen pre-run check on fresh sets of three types.
     'confirm-small': 'confirm-small-v1',
     'confirm-big': 'confirm-big-v1',
     'confirm-mem': 'confirm-mem-v1',
 }
+# The development and exploratory studies were removed from results/ and .cache on 2026-10-07 (EXPERIMENTS.md);
+# results/rf-model/training-rows.jsonl.gz keeps the RF's development rows.
 TOP_LEVEL = ('.json', '.jsonl', '.md')
 CALIBRATION = ('calibration.json', 'sweeps.json', 'sweep-cost.json', 'model.json', 'measured.json',
                'extend.json', 'model-before-extend.json')
@@ -85,7 +58,6 @@ PER_SET = ('configuration.json', 'cls.json', 'locality.json', 'summary.json')
 TOOLS = {
     'laysim': Path('/opt/laysim-gr740/laysim-gr740-cli'),
     'sparc-rtems6-gcc': Path('/opt/rtems/6/bin/sparc-rtems6-gcc'),
-    'yarda_cpp (CLS distribution, feat/cpp-backend a058a454)': CACHE / 'yarda-a058a454-build/backend/yarda_cpp',
     'yarda_cpp (CLS bimodal, feat/cpp-backend 374b2c9 + frontend 2670c6e)':
         CACHE / 'yarda-374b2c9-build/backend/yarda_cpp',
 }

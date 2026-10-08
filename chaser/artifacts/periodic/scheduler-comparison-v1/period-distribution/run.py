@@ -28,7 +28,7 @@ import taskset
 
 ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_OUTPUT = ROOT / '.cache/period-distribution-v2'
-SNAPSHOT = ('taskset.py', 'run.py', 'stats.py', 'test_taskset.py')
+SNAPSHOT = ('taskset.py', 'run.py', 'stats.py')
 # C2 is the (0, 1, 2, 2) topology of the patched code copy.
 ARCHITECTURES = ('g', 'c', 'p', 'c2')
 U_TOLERANCE = 0.05

@@ -348,4 +348,4 @@ hash 검사·parser 호출을 검증했다. 문서의 shell 문법과 이동 후
 이 검증은 host의 빌드·script 생성·로그 처리에 한정되며 HW 결과가 아니다.
 GRMON 명령은 공식 매뉴얼에 근거하지만 보드 접속·기동·시간 정확도·counter 동작은
 아직 검증하지 않았다. 첫 보드 작업은 접속 설정을 확정하고 짧은 smoke를 통과하는 것이다.
-과거 개별 시나리오의 결과는 [실험 기록](../../artifacts/periodic/memory-gap-v1/README.md)을 참고한다.
+과거 개별 시나리오의 결과 묶음(`artifacts/periodic/memory-gap-v1/`)과 raw는 연구 방향과 맞지 않아 2026-10-06에 삭제했다.

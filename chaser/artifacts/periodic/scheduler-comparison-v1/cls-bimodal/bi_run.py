@@ -29,8 +29,7 @@ import run as design
 import stats
 import yarda_counts
 
-SNAPSHOT = ('bimodal.py', 'bi_calibrate.py', 'bi_run.py', 'yarda_counts.py', 'test_bimodal.py',
-            'test_padding.py')
+SNAPSHOT = ('bimodal.py', 'bi_calibrate.py', 'bi_run.py', 'yarda_counts.py')
 RUNS = (('mixed', 'g', 'g'), ('mixed', 'c', 'c'), ('mixed', 'c2', 'c2'), ('mixed', 'p', 'p'),
         ('grouped', 'p', 'p_grp'))
 PAIRS = (('g', 'p'), ('c', 'p'), ('c2', 'p'), ('g', 'c'), ('g', 'c2'), ('c', 'c2'),

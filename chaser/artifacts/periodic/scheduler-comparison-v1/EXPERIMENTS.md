@@ -1,7 +1,10 @@
 # 스케줄링 아키텍처 비교 실험 — 실험별 설계와 재현 방법
 
-laysim(GR740)에서 Global, Clustered (1+3), Clustered (1+1+2), Partitioned EDF의
-TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 실험들의 문서다.
+laysim(GR740)에서 Partitioned 배치(비교용 Global·Clustered 포함)를 돌려, task별 캐시 친화도(CLS)·utilization·release 구조가
+최악 실행시간·마감·TET·TAT에 어떤 영향을 주는지 측정한 실험들의 문서다. 현재 연구 방향(캐시 친화도 기반 Partitioned 배치에
+utilization 균형과 release 고려를 더함, 연구 문서 PLAN 0절)의 근거로 쓰는 실험만 남겼다.
+이전 방향(G/C/P의 TAT/TET 격차, 학습 선택기)에만 쓰인 실험(6·7·12·16절)과 폐기한 설계 목록(14절)은
+현재 문서에서 제외했다(2026-10-06). 원문은 Git 커밋 `045d147`의 이 문서에 남아 있다. 절 번호는 실험 번호이므로 그대로 둔다.
 실험마다 개요, 목적, 변인(조작·통제·종속), 실험 방법, 재현 명령, 결과 파일을 적는다.
 결과 수치와 결론은 이 문서에 담지 않는다. 결과는 `results/<실험>/`에 있다. 예외로 5절에는
 트래픽 조건의 의미를 설명하려고 핵심 결과를 함께 적었다.
@@ -13,15 +16,11 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 3 | CLS 분포 | `cls-distribution/` | `cls-distribution-v1` | `cls-distribution` |
 | 4 | 캐시 친화성 | `cache-affinity/` | `cache-affinity-v2`(O0), `cache-affinity-o2-v1`(O2) | `cache-affinity-o0`, `cache-affinity-o2` |
 | 5 | CLS 양극단 | `cls-bimodal/` | `cls-bimodal-v2`, 확장 `cls-bimodal-v2-ext` | `cls-bimodal` |
-| 6 | 부하 수준 | `cls-bimodal/`(`--design load-level`) | `load-level-v1` | `load-level` |
-| 7 | task별 U 불균형 | `cls-bimodal/`(`--design u-imbalance`) | `u-imbalance-v1` | `u-imbalance` |
 | 8 | CLS × 작업 집합 | `footprint/` | `l2-probe-v1`, `footprint-v1` | `footprint` |
 | 9 | 고부하·큰 task | `high-load/` | `high-load-v1` | `high-load` |
 | 10 | Partitioned 배치 불가 영역 | `high-load/`(`--design infeasible`) | `infeasible-v1` | `infeasible` |
 | 11 | 고부하 + 메모리 경합 | `high-load/`(`--design memory`, `mem_check.py`) | `memory-load-v1` | `memory-load` |
-| 12 | 배치 불가 영역의 G 대 C(설계 실패) | `high-load/`(`--design g-vs-c`) | `g-vs-c-v1` | `g-vs-c` |
 | 13 | 배치 불가 영역의 G 대 C, 재설계 | `high-load/`(`--design g-vs-c-sync`) | `g-vs-c-sync-v1` | `g-vs-c-sync` |
-| 16 | Feature 사전 점검(실험 5–9 재분석, 시뮬레이션 없음) | `feature-precheck/` | `feature-precheck-v1` | `feature-precheck` |
 | 17 | 다요인 배치 정책 비교(P-first 후보 배치) | `policy-mix/` | `policy-mix-v1` | `policy-mix` |
 | 18 | CLS 기준 묶음 배치(17의 같은 set) | `policy-mix/`(`--design policy-mix-cls`) | `policy-mix-cls-v1` | `policy-mix-cls` |
 | 19 | 주기 분포 × 메모리 구성의 배치 경계 | `policy-mix/`(`--design policy-boundary`) | `policy-boundary-v1` | `policy-boundary` |
@@ -34,6 +33,23 @@ TET/TAT 격차가 task set 구성에 따라 어떻게 달라지는지 측정한 
 | 26 | 무작위 배치 기준선(21·20·23절, 확장 24·25·19·17절의 set) | `policy-mix/`(`--design random-*`) | `random-small-memory-v1`, `random-task-count-v1`, `random-cls-spread-v1` | `random-small-memory`, `random-task-count`, `random-cls-spread` |
 | 27 | 마감 위반 확증 실험(사전 등록, 새 set) | `policy-mix/`(`--design deadline-small`, `deadline-big`, `deadline_analysis.py`) | `deadline-small-v1`, `deadline-big-v1`, `deadline-confirm-v1` | `deadline-small`, `deadline-big`, `deadline-confirm` |
 | 28 | CAAS 대비 단계별 비교(27절의 set, 사전 등록) | `policy-mix/`(`--design deadline-small-caas`, `deadline-big-caas`, `algorithm1.py`, `ca_table.py`, `ladder_analysis.py`) | `deadline-small-caas-v1`, `deadline-big-caas-v1`, `deadline-ladder-v1` | `ca-csrd`, `deadline-small-caas`, `deadline-big-caas`, `deadline-ladder` |
+| 29 | 실험 24 set의 CLS + Algorithm 1(탐색, 저친화도 비율 대 task 종류) | `policy-mix/`(`--design small-memory-load-a1`, `share_check.py`) | `small-memory-load-a1-v1`, `share-check-v1` | `small-memory-load-a1`, `share-check` |
+| 30 | 주기 다양 조건의 마감 실패 분석(재분석, 시뮬레이션 없음) | `policy-mix/cv_miss_analysis.py` | `cv-miss-analysis-v1` | `cv-miss-analysis` |
+| 31 | 재분석: 마감 지표 분리, TET·TAT 비교, 친화도 지표의 실패 예측력(시뮬레이션 없음) | `policy-mix/`(`rt_metrics.py`, `rt_compare.py`, `timing_compare.py`, `affinity_auc.py`) | — | `rt-compare`, `timing-compare`, `affinity-auc` |
+| 32 | 요청량으로 제한한 CLS 묶음(탐색) | `policy-mix/`(`--design small-memory-load-k`, `task-count-k`) | `small-memory-load-k-v1`, `task-count-k-v1` | `small-memory-load-k`, `task-count-k` |
+| 33 | 개발 set의 C(1+3) run(RF 개발 자료) | `policy-mix/`(`--design *-c13`, `c13_sets.py`) | `small-memory-load-c13-v1`, `task-count-c13-v1`, `cls-spread-c13-v1`, `deadline-small-c13-v1`, `deadline-big-c13-v1` | 같은 이름(`-v1` 제외) |
+| 34 | RF 구성 추천 개발 점검(탐색, 시뮬레이션 없음) | `policy-mix/rf_devcheck.py` | `rf-devcheck-v1` | `rf-devcheck` |
+| 35 | P 배치 후보를 늘린 RF 구성 추천(탐색, 시뮬레이션 없음) | `policy-mix/rf_candidates.py` | `rf-candidates-v1` | `rf-candidates` |
+| 36 | 캐시 지표의 분포 통계를 더한 RF(탐색, 시뮬레이션 없음) | `policy-mix/rf_stats.py` | `rf-stats-v1` | `rf-stats` |
+| 37 | 위반 task의 캐시 성질과 마감 여유(재분석, 시뮬레이션 없음) | `policy-mix/task_slack_analysis.py` | `task-slack-v1` | `task-slack` |
+| 38 | 메모리 task의 주기만 바꾼 짝지은 비교(사전 등록) | `policy-mix/`(`--design period-swap`, `period_swap_set.py`, `period_swap_analysis.py`) | `period-swap-v1` | `period-swap` |
+| 39 | U 가중 (1 − CLS) 특징의 기여(재분석, 시뮬레이션 없음) | `results/cls-ablation/cls_ablation.py` | `cls-ablation-v1` | `cls-ablation` |
+| 40 | task 단위 예측: 어느 task가 늦나(재분석, 시뮬레이션 없음) | `policy-mix/task_level.py` | `task-level-v1` | `task-level` |
+| 41 | CLS·U는 같고 메모리 비용만 다른 짝지은 비교(사전 등록) | `policy-mix/`(`mem_calibrate.py`, `--design memory-cost`, `memcost_set.py`, `memcost_analysis.py`) | `mem-calibration-v1`, `memory-cost-v1` | `mem-calibration`, `memory-cost` |
+| 42 | 실행 전 점검: D + M 정적 규칙 대 RF(개발 점검, 시뮬레이션 없음) | `policy-mix/rf_occupancy.py` | `rf-occupancy-v1` | `rf-occupancy` |
+| 43 | RF 실행 전 점검 모델 동결(개발 자료, 시뮬레이션 없음) | `policy-mix/rf_freeze.py` | `rf-model-v1` | `rf-model` |
+| 44 | 실행 전 점검과 구성 추천의 확증(사전 등록, 새 set) | `policy-mix/`(`confirm_set.py`, `--design confirm-small`·`confirm-big`·`confirm-mem`, `confirm_decide.py`, `confirm_analysis.py`) | `confirm-small-v1`, `confirm-big-v1`, `confirm-mem-v1`, `confirm-analysis-v1` | `confirm-small`, `confirm-big`, `confirm-mem`, `confirm-analysis` |
+| 45 | 실제 커널 task set의 실행 전 점검(사전 등록, 새 set) | `policy-mix/`(`kernel_tasks.py`, `kernel_calibrate.py`, `kernel_set.py`, `kernel_run.py`, `confirm_analysis.py`) | `kernel-calibration-v2`, `real-kernels-v1`, `real-kernels-analysis-v1` | `kernel-calibration`, `real-kernels`, `real-kernels-analysis` |
 
 ---
 
@@ -462,126 +478,6 @@ python3 -m pytest -q -p no:cacheprovider --rootdir=$R/cls-bimodal $R/cls-bimodal
 
 ---
 
-## 6. 부하 수준(Utilization)
-
-### 개요
-task 구성과 job은 완전히 그대로 두고 주기만 바꿔 코어당 명목 U를 0.125에서 0.5까지 올린다.
-부하가 높아질 때 네 아키텍처와 두 가지 P 배치의 TET/TAT, 그리고 deadline을 지키는지를 비교한다.
-
-### 목적
-1. 부하가 높아질수록 아키텍처·배치 간 TET/TAT 격차가 커지는지 확인한다.
-2. 공동 실행 경합이 job을 늘려(5절 v1에서 최대 2.75배) schedulability를 깨는 부하 수준이
-   아키텍처·배치마다 다른지 확인한다. 예: 낮은 CLS task를 묶은 Partitioned가 더 높은 부하까지 버티는가.
-
-### 변인
-
-| 구분 | 내용 |
-|---|---|
-| 조작 변인 | 주기 ∈ {80, 40, 30, 20} ms(task U {0.03125, 0.0625, 0.0833, 0.125}, 코어당 명목 U {0.125, 0.25, 0.333, 0.5}); 아키텍처: Global, Clustered (1+3)·(1+1+2)(섞음 배치 기준), Partitioned 섞음, Partitioned 묶음 |
-| 통제 변인 | job 길이 2.5 ms(모든 주기에서 같은 수준표, 같은 job 코드); CLS 조건 고정: 높은 CLS 8개(중심 0.90) + 낮은 CLS 8개(중심 0.13), 모드 내 CV 0.1(경계까지 거리에 적용), 트래픽 그대로; workload O2, hot-cold; set 번호가 같으면 모든 주기에서 task 구성이 완전히 같고 주기만 다름(공통 난수, 시드 20261001 + set); 셀당 set 20개; warm-up·측정 job 각 10개(horizon = 주기 20개) |
-| 종속 변인 | TET, TAT(deadline miss가 없는 run); schedulable 여부(run에 deadline miss가 있는가); 최대 response time ÷ 주기(완료된 job 기준); 모드별 job CPU 증가율(단독 대비) |
-| 조작 확인 | yarda_cpp CLS가 설계식과 같음; 단독 U(job CPU는 주기와 무관하므로 수준마다 1회 실행, U = job CPU ÷ 주기, 게이트 3%); 주기 40 ms 수준은 5절 v2의 "트래픽 그대로, p = 0.5, CV 0.1" 셀과 입력이 같으므로 TET/TAT가 v2와 같아야 함(결정성 확인) |
-
-U를 job 길이로 바꾸지 않고 주기로 바꾼 이유: 주기를 고정하고 job을 늘리면 부하와 job 길이가
-함께 바뀐다. job 길이가 바뀌면 고정 스케줄링 비용의 비중(4절)과 job 안의 캐시 동작(sweep 수,
-수준 구조)도 달라져 부하 효과와 섞인다. 주기만 바꾸면 job 하나하나가 같으므로 차이를 부하에 돌릴 수 있다.
-
-### 실험 방법
-1. 5절과 같은 시간 모델(`calibration/model.json`)과 수준표를 쓴다. job 예산이 2.5 ms로 같으므로
-   보정을 다시 하지 않는다.
-2. `prepare`: 주기 4개 × set 20개를 빌드하고 모든 task를 yarda_cpp로 분석한다.
-3. `isolated`: 서로 다른 수준을 한 번씩 단독 실행하고, 각 set의 주기로 나눠 U를 구한다.
-   시작 단계 오류(`arm_phase`)만으로 실패한 수준은 모델 예측 U를 쓴다(5절과 같은 규칙).
-4. `pilot`(set 0) → `full`(4 × 20 × 5 = 400 run) → `stats`.
-   - pilot은 deadline miss와 시작 단계 오류를 허용하고, 그 밖의 실패에서만 멈춘다.
-   - deadline miss가 난 run은 실패로 버리지 않고 schedulable = 아니오로 집계한다.
-     deadline miss 뒤에는 job 기록이 끊기므로 TET/TAT는 deadline miss가 없는 run에서만 비교한다.
-   - TET/TAT: 주기별로 짝지은 Wilcoxon + Holm, 주기에 대한 Friedman·Page.
-   - schedulable 비율: (주기, 구성)별로 집계하고, 구성 쌍마다 exact McNemar 검정(Holm 보정).
-   - 최대 response time ÷ 주기: 짝지은 Wilcoxon.
-
-### 재현 명령
-```sh
-cd $C3 && export PYTHONPATH=$C3
-O=$W/.cache/load-level-v1
-mkdir -p $O/calibration && cp $R/results/cls-bimodal/calibration/model.json $R/results/cls-bimodal/calibration/measured.json $O/calibration/   # 5절 보정 결과
-for s in prepare isolated pilot full stats; do python3 $R/cls-bimodal/bi_run.py $s --design load-level --output $O; done
-python3 $R/figures/level_bars.py $O
-```
-
-### 결과 파일
-`results/load-level/`: `protocol.json`, `results.jsonl`(구성별 state, 최대 response time ÷ 주기 포함),
-`isolated-u.json`, `stats-load-level.json/md`(주기별 셀 검정, schedulable 집계, McNemar, 추세),
-그림 `load-level-{tet,tat,response}`(`figures/level_bars.py`), `per-set.jsonl.gz`.
-
----
-
-## 7. task별 U 불균형
-
-### 개요
-코어당 총 U는 고정하고, task별 U를 로그정규분포로 흩뜨려 task 크기가 불균형한 task set을 만든다.
-U를 고려하는 배치와 무시하는 배치를 포함한 Partitioned 네 가지와 Global·Clustered를 비교한다.
-
-### 목적
-1. task 크기가 불균형할 때 Partitioned의 코어 배치(bin-packing) 손실이 Global의 동적 분산 대비
-   얼마나 큰지 확인한다.
-2. CLS 기준 배치(경합)와 U 기준 배치(부하)가 충돌할 때 어느 쪽이 유리한지, 둘을 함께 고려한
-   배치가 가장 좋은지 확인한다.
-
-### 변인
-
-| 구분 | 내용 |
-|---|---|
-| 조작 변인 | task U의 CV ∈ {0, 0.25, 0.5, 0.75}(로그정규); 구성: Global, Clustered (1+3)·(1+1+2)(U 균형 배치 기준), Partitioned U 균형, Partitioned CLS 섞음, Partitioned CLS 묶음, Partitioned CLS 묶음 + U 균형 |
-| 통제 변인 | 주기 40 ms(모든 task 공통, job 길이 = U_i × 40 ms); 총 U = 1.0(코어당 명목 0.25); CLS 조건은 6절과 같음(높은 8 + 낮은 8, 모드 내 CV 0.1, 트래픽 그대로); U와 CLS 모드는 서로 독립으로 배정; O2, hot-cold; 공통 난수(set 번호마다 U용·CLS용 난수 고정, CV만 크기를 바꿈); 셀당 set 20개; warm-up·측정 job 각 10개 |
-| 종속 변인 | TET, TAT; schedulable 여부; 최대 response time ÷ 주기; 코어별 실측 CPU 합의 불균형(최대 ÷ 평균) |
-| 조작 확인 | 실현된 U의 CV; yarda_cpp CLS가 설계식과 같음; 단독 U(task별 목표 U 대비, 게이트 3%) |
-
-**U 추출.** 위치(task)마다 z ~ N(0, 1)을 ±2σ에서 자르고, w = exp(σ·z), σ = √ln(1 + CV²)로 둔다.
-U_i = 1.0 × w_i ÷ Σw로 합을 맞춘 뒤, job 예산(U_i × 40 ms)을 10 µs 단위로 반올림한다.
-±3σ가 아니라 ±2σ에서 자르는 이유는, CV 0.75에서 ±3σ면 task 하나의 U가 평균의 7배
-가까이(job 약 15 ms) 나올 수 있기 때문이다. ±2σ면 대략 평균의 0.26–3.8배다.
-- 자르기와 task 16개라는 표본 크기 때문에, 실현된 CV(set별 중앙값)는 목표보다 작다:
-  0.25 → 0.21, 0.5 → 0.40, 0.75 → 0.60.
-- job 예산은 0.52–7.63 ms 범위이고, 서로 다른 예산은 363개다.
-- 가장 짧은 job(0.6 ms 안팎)에서는 수준표가 성겨 목표 CLS와의 오차가 최대 약 0.015다.
-  실현 CLS는 yarda_cpp로 모든 task를 기록한다.
-
-**Partitioned 배치(모두 코어당 4개).**
-- U 균형: U가 큰 task부터, task가 4개 미만인 코어 중 U 합이 가장 작은 코어에 둔다(최악 적합 감소).
-- CLS 섞음 / CLS 묶음: 5절과 같은 규칙. U는 보지 않는다.
-- CLS 묶음 + U 균형: 낮은 CLS 8개를 코어 0·1에, 높은 CLS 8개를 코어 2·3에 두고, 각 그룹 안에서
-  U 균형 규칙을 적용한다.
-
-### 실험 방법
-1. **시간 모델 범위 확인**(`bi_calibrate.py extend`): 기존 모델은 job 1.0–2.75 ms로 보정했다.
-   - 이 설계가 실제로 쓸 수준 40개를 단독 실행해 예측 오차가 2% 이내인지 확인한다.
-     예산 범위(0.52–7.63 ms)에서 고르게 고르고, 높은·낮은 모드 중심을 번갈아 쓴다.
-   - 벗어나면 새 표본을 포함해 다시 맞춘다.
-   - 실제 결과: 최대 오차 0.41%라 다시 맞추지 않았고, CLS 설계식도 모두 일치했다(`calibration/extend.json`).
-2. 설계: task마다 자기 job 예산에 맞춘 수준표에서 목표 CLS에 가장 가까운 수준을 고른다.
-3. `prepare` → `isolated`(task별 목표 U 대비 3% 게이트; 시작 단계 오류만 난 수준은 모델 U) →
-   `pilot`(set 0, deadline miss 허용) → `full`(4 × 20 × 7 = 560 run) → `stats`.
-4. 통계: CV 수준별 짝지은 Wilcoxon + Holm, CV에 대한 Friedman·Page, schedulable 비율은 McNemar.
-
-### 재현 명령
-```sh
-cd $C3 && export PYTHONPATH=$C3
-O=$W/.cache/u-imbalance-v1
-mkdir -p $O/calibration && cp $R/results/cls-bimodal/calibration/model.json $R/results/cls-bimodal/calibration/measured.json $O/calibration/   # 5절 보정 결과
-python3 $R/cls-bimodal/bi_calibrate.py extend --output $O/calibration   # v2 보정 폴더는 건드리지 않음
-for s in prepare isolated pilot full stats; do python3 $R/cls-bimodal/bi_run.py $s --design u-imbalance --output $O; done
-python3 $R/figures/level_bars.py $O
-```
-
-### 결과 파일
-`results/u-imbalance/`: `calibration/{model,measured,extend}.json`, `protocol.json`, `results.jsonl`
-(구성별 state, 최대 response time ÷ 주기, 코어 부하 불균형 포함), `isolated-u.json`,
-`stats-u-imbalance.json/md`, 그림 `u-imbalance-{tet,tat,response,core-load}`(`figures/level_bars.py`),
-`per-set.jsonl.gz`.
-
----
-
 ## 8. CLS × 작업 집합(L2 용량 경합)
 
 ### 개요
@@ -814,64 +710,10 @@ python3 $R/figures/high_load_bars.py $O
 
 ---
 
-## 12. 배치 불가 영역의 G 대 C — 설계 실패(모든 run이 deadline miss)
-
-### 개요
-10절에서 배치가 불가능할 때 Global과 Clustered의 승자가 task set마다 갈렸다. 10절 데이터에서 그 차이와
-관련이 큰 특징이 **큰 task의 주기**였으므로, 이를 조작 변인으로 두고 C가 유리한 조건과 G가 유리한 조건을
-의도적으로 만들어 검증한다.
-
-### 10절 데이터에서 찾은 신호
-- 큰 task 6개(0.85)에서 Global 성공은 "주기 80 ms인 큰 task 0–2개"일 때 8/17, "3개 이상"일 때 11/13이었다.
-  큰 task의 주기가 짧으면 동시 release되는 짧은 구간에 큰 job이 몰리고, global EDF는 이 몰림에 약하다.
-- 단일 코어 클러스터에 혼자 둔 큰 task는 주기와 상관없이 U ≤ 1이면 deadline을 지킨다(단일 코어 EDF).
-  Clustered (1+1+2)의 2코어 클러스터에 들어간 큰 task가 모두 80 ms면 12/12, 모두 20 ms면 3/8 성공이었다.
-- 클러스터의 코어당 U가 1을 넘으면 Clustered는 항상 실패했다(큰 task 6개에서 (1+1+2) 0/30).
-
-### 목적
-1. 큰 task 5개·짧은 주기에서 Clustered (1+1+2)가 Global보다 유의하게 낫다(C 유리)는 것을 보인다.
-2. 큰 task 6개·긴 주기에서 Global이 Clustered보다 유의하게 낫다(G 유리)는 것을 보인다.
-3. 나머지 두 조합(5개·긴 주기, 6개·짧은 주기)을 함께 넣어, 승자가 "큰 task 수 × 큰 task 주기"로 갈리는지 본다.
-
-### 변인
-
-| 구분 | 내용 |
-|---|---|
-| 조작 변인 | 큰 task 수 ∈ {5, 6}; 큰 task 주기 ∈ {20 ms(모두 짧게), 80 ms(모두 길게)}; 구성 3개: Global, Clustered (1+3) 용량 기반, Clustered (1+1+2) 용량 기반 |
-| 통제 변인 | 10절과 같은 생성(코어당 0.85, 큰 task U 0.51–0.55, 작은 task Dirichlet(α = 8), 작은 task 주기는 {20, 40, 80} ms 무작위); **set 번호가 같으면 10절 set과 task U·위치·작은 task 주기가 같고 큰 task 주기만 다름**; 셀당 set 30개 |
-| 종속 변인 | schedulable 여부(주 지표); 최대 response time ÷ 주기; deadline을 모두 지킨 run의 TET·TAT |
-
-Partitioned는 배치가 불가능하므로 돌리지 않는다.
-
-### 실험 방법
-`prepare`(4 셀 × 30 set × 배치 3종) → `isolated`(각 셀 set 0) → `pilot`(set 0, 12 run) → `full`(360 run 중 나머지) → `stats`.
-- 통계: schedulable 비율은 셀별 McNemar(Holm 보정)로 검정한다.
-
-### 재현 명령
-```sh
-cd $C3 && export PYTHONPATH=$C3
-O=$W/.cache/g-vs-c-v1
-for s in prepare isolated pilot full stats; do python3 $R/high-load/hl_run.py $s --design g-vs-c --output $O; done
-python3 $R/figures/high_load_bars.py $O
-```
-
-### 결과: 설계 실패
-- 네 셀 모두 세 구성이 30/30 deadline을 놓쳤다(360 run, 모두 `deadline_miss`; 단독 U 게이트는 0.41% 이내로 통과).
-- 원인: 큰 task를 모두 **같은 주기**로 만들면서, 큰 job들이 매 주기 동시에 release되었다.
-  큰 job은 각각 주기의 절반 넘게 필요하므로(U > 0.5), 한 코어는 한 주기 안에 큰 job을 하나만 끝낼 수 있다.
-  큰 job 5–6개가 4개 코어에서 동시에 시작되면, 이 EDF 기반 스케줄러들은 모두 deadline을 지키지 못한다.
-- 10절 데이터를 다시 보면, 성공을 가른 것은 주기의 길이가 아니라 **같은 주기를 공유하는 큰 task의 수**였다.
-  큰 task 5개(0.85) 기준 Global 성공: 같은 주기 공유 최대 2개면 12/16, 3개면 5/11, 4개면 0/3.
-  6개에서는 2개 3/4, 3개 14/21, 4개 2/4, 5개 0/1.
-  "긴 주기가 유리하다"는 해석은 잘못이었다. 큰 task 주기가 섞여 release가 엇갈릴수록 유리하다.
-- 이 실험은 10절 결과를 보고 세운 가설을 같은 set 번호로 검증하려 한 것이라, 독립적인 확인도 아니었다.
-
----
-
 ## 13. 배치 불가 영역의 G 대 C — 재설계(독립 set)
 
 ### 개요
-12절의 실패 원인(큰 task를 모두 같은 주기로 만들어 큰 job이 동시에 몰림)을 고쳐, **같은 주기를 공유하는
+12절(`045d147`의 `EXPERIMENTS.md`)의 실패 원인(큰 task를 모두 같은 주기로 만들어 큰 job이 동시에 몰림)을 고쳐, **같은 주기를 공유하는
 큰 task 수**를 조작 변인으로 두고, 가설을 만든 10절과 겹치지 않는 **새 난수의 task set**으로 확인한다.
 
 ### 사전 등록한 주 가설과 표본 크기
@@ -935,22 +777,6 @@ python3 $R/figures/high_load_bars.py $O
 
 ---
 
-## 14. 폐기하거나 바꾼 설계
-
-2026-10-05에 `.cache` 정리로 `cache-affinity-v1`, `cls-bimodal-v1`(`calibration.failed-unroll-0` 포함), `conflict-cls-v1` 출력을 지웠다.
-같은 때 모든 빌드 폴더(`prepared/`)의 waf 라이브러리 사본(`.waf3-*`)도 지웠다. 이 사본은 manifest에 없고 waf를 실행하면 다시 풀린다.
-지운 목록은 `.cache/cleanup-2026-10-05.log`에 있다. 아래 표에서 지운 출력의 행은 기록으로만 남는다.
-
-| 출력(`.cache/`) | 내용 | 바꾼 이유 |
-|---|---|---|
-| `period-distribution-v1` | μ ∈ {20, 80, 320} ms, 격자 기준 20 | 기준 20인 격자가 μ = 50을 담지 못함 → 기준 10·격자 180(v2). 240 run 후 중단 |
-| `cls-distribution-v1/calibration` 1차 | R 격자 + 정수 S | 정수 반올림으로 U 오차가 최대 27% → (R, S) 공동 탐색으로 교체 |
-| `cache-affinity-v1` | 1 ms 주기에서 코어당 U 0.40 | pilot에서 G/C/C2 deadline miss → 1 ms 주기는 U ≤ 0.0625(v2) |
-| `cls-bimodal-v1` | 주기 20 ms, U 0.125 | pilot에서 낮은 CLS task가 많은 셀이 deadline miss(공동 실행 job CPU가 단독의 최대 2.75배) → 같은 job을 주기 40 ms로(v2). pilot 결과는 `results/cls-bimodal-v1-pilot/` |
-| `cls-bimodal-v1/calibration.failed-unroll-0` | 패딩 루프 펼침 방지 전 보정 | K ≤ 4 루프가 완전히 펼쳐져 시간 모델 검증 오차 12.8% → pragma와 3라운드 하한 추가 |
-
----
-
 ## 15. 결과 묶음 사용법
 
 - `python3 export_results.py <실험> ...`이 `.cache`의 출력에서 설계 입력과 결과만
@@ -971,51 +797,6 @@ python3 $R/figures/high_load_bars.py $O
 
 ---
 
-## 16. Feature 사전 점검 — 끝난 실험 재분석
-
-### 개요
-새 시뮬레이션 없이 실험 5–9의 결과 묶음에서 정적 task 정보만으로 feature를 만든다.
-그 feature로 RF가 "더 나은 배치·아키텍처"를 고르는지 비교한다.
-- 비교 대상은 계획의 RF 입력(R0: CLS 통계 + U 통계 11개)과 이를 넓힌 표현이다.
-- 넓힌 표현은 주기, 트래픽·작업 집합 통계, 하드웨어 기준 task 유형의 bag-of-words를 더한다.
-
-상세 설계와 결과는 [`feature-precheck/README.md`](feature-precheck/README.md)에 있다.
-
-### 목적
-1. R0로는 구분되지 않는데 결과가 다른 task set 쌍이 실제로 있는지 확인한다. 있다면 넓힌 표현이 그 쌍을 구분하는지 본다.
-2. Partitioned 배치 정책 선택(P-first)과 아키텍처 선택에서 표현을 넓히면 TAT regret이 줄어드는지 확인한다.
-
-### 변인
-
-| 구분 | 내용 |
-|---|---|
-| 조작 변인 | 입력 표현 6종(R0, CLP+U, R1–R4); 학습 방식 3종(하드 레이블, 손해 가중치, 선택지별 regret 회귀); 교차 검증 2종(set 번호 단위 10겹, 조건 하나씩 제외) |
-| 통제 변인 | 같은 표본과 레이블(측정 TAT 최소, 동률은 TET); 계획의 기준 RF 설정(트리 100, 깊이 제한 없음, max_features sqrt, 튜닝 없음); seed 42–46 |
-| 종속 변인 | 고른 선택지의 TAT regret(고른 TAT ÷ 최선 TAT − 1)의 평균·95백분위·최대; 정확도; deadline을 놓친 선택 수; feature가 1% 이내로 같은데 레이블이 다른 set 쌍의 수 |
-
-### 판단 대상
-- **placement:** Partitioned 묶음 대 섞음. 실험 5–8의 677 set이다. 실험 6의 40 ms와 실험 7의 U CV 0은 실험 5와 같은 실행이라 뺐다.
-- **hl-policy:** Partitioned WFD 대 정보 기반. 실험 9의 120 set이다.
-- **hl-family:** Partitioned·Clustered·Global 중 계열별 최선. 실험 9의 120 set이며, deadline을 놓친 구성은 고를 수 없는 선택지로 둔다.
-
-### 재현 명령
-```sh
-python3 -m pytest -q -p no:cacheprovider --rootdir=$R/feature-precheck $R/feature-precheck   # feature 명세 테스트
-python3 $R/feature-precheck/precheck.py --output $W/.cache/feature-precheck-v1 --jobs 6
-python3 $R/figures/feature_precheck_bars.py $W/.cache/feature-precheck-v1
-python3 $R/export_results.py feature-precheck
-```
-입력은 `results/`의 결과 묶음만 쓰므로 `.cache`의 원시 출력이 없어도 다시 돌릴 수 있다.
-
-### 결과 파일
-`results/feature-precheck/`에는 다음이 있다.
-- `protocol.json`(입력 묶음 SHA-256, 설정, 표본 수, 레이블 분포)
-- `samples.jsonl`, `results.json`, `predictions.jsonl`, `collisions.json`, `summary.md`
-- 스크립트 사본
-- 그림 `precheck-*`
-
----
-
 ## 17. 다요인 배치 정책 비교(P-first 후보 배치)
 
 ### 개요
@@ -1027,7 +808,7 @@ P-first 프레임워크의 후보 배치들을 여러 메커니즘이 한 task s
 ### 목적
 1. 결합 정책이 단일 정책(U 균형, 트래픽 묶음, release 고려)보다 나은지 확인한다.
 2. 가장 좋은 배치가 task set이나 요인 수준에 따라 달라지는지 확인한다. 달라져야 배치 선택기가 필요하다.
-3. 정적 feature로 그 차이를 예측할 수 있는지 확인한다(16절 사전 점검의 RF).
+3. 정적 feature로 그 차이를 예측할 수 있는지 확인한다(16절 사전 점검의 RF, `045d147`의 `EXPERIMENTS.md`).
 4. Global과 Clustered (1+1+2)가 가장 좋은 Partitioned 배치를 이기는 경우가 있는지 본다.
 
 ### 변인
@@ -1130,7 +911,7 @@ python3 $R/figures/policy_mix_cls_bars.py $O $W/.cache/policy-mix-v1
 
 ### 개요
 주기 분포의 크기와 메모리 위주 task의 구성을 함께 단계적으로 바꾸며, 어떤 Partitioned 배치가 이기는지를 본다.
-1–2절에서는 주기 분포가 클 때 release 고려 배치가 이겼고, 3·5·7·8절에서는 주기가 하나일 때 CLS 기준 묶음이
+1–2절에서는 주기 분포가 클 때 release 고려 배치가 이겼고, 3·5·7·8절(7절은 `045d147`의 `EXPERIMENTS.md`)에서는 주기가 하나일 때 CLS 기준 묶음이
 이겼다. 하지만 두 조건이 함께 바뀌는 실험은 없었다. 17·18절에서 묶음 규칙이 부하를 한 코어에 몰아넣었던 문제를
 고친 부하 균등 CLS 묶음(cgb)을 쓴다.
 
@@ -1139,7 +920,7 @@ python3 $R/figures/policy_mix_cls_bars.py $O $W/.cache/policy-mix-v1
 2. (가설 2) 주기 분포가 크고(CV 0.2, 0.3) 메모리 위주 task가 없으면 release 고려가 U 균형보다 TAT가 짧다.
 3. (가설 3) 부하 균등 CLS 묶음 안의 release 고려(결합)가 모든 셀에서 이기는지 확인한다. 모든 셀에서 이기면
    선택기 없이 정책 하나로 충분하다는 결론이고, 지는 셀이 있으면 선택기의 근거가 된다.
-4. yarda 정적 feature로 셀마다 다른 승자를 맞힐 수 있는지 확인한다(16절 RF, 셀 단위 교차 검증 포함).
+4. yarda 정적 feature로 셀마다 다른 승자를 맞힐 수 있는지 확인한다(16절 RF(`045d147`의 `EXPERIMENTS.md`), 셀 단위 교차 검증 포함).
 5. TAT를 주 지표로 하되 TET도 같은 방식으로 보고한다.
 
 ### 변인
@@ -1195,7 +976,7 @@ task 수를 12–20 사이에서 바꾸면서, 메모리 압박이 클 때 CLS �
    TAT·TET·deadline 준수에서 나은지 확인한다.
 2. 그 결과가 task 수(12–14, 15–17, 18–20)와 4의 배수 여부에 따라 달라지는지 확인한다.
 3. task 수가 적어 나눠 담기가 거칠 때 Global·Clustered (1+1+2)가 최선 Partitioned 배치를 이기는지 확인한다.
-4. yarda 정적 feature로 배치 승자를 맞힐 수 있는지 본다(16절 RF).
+4. yarda 정적 feature로 배치 승자를 맞힐 수 있는지 본다(16절 RF, `045d147`의 `EXPERIMENTS.md`).
 
 ### 변인
 
@@ -1681,23 +1462,6 @@ python3 $R/policy-mix/deadline_analysis.py analyze --small $W/.cache/deadline-sm
 | 1 | cls-a1: CLS + Algorithm 1 | 지표만 CLS로(임곗값 0.5, 균형 CLS 묶음의 기준과 같음) |
 | 2 | cgb(27절) | 격리 코어 수를 부하 한도(평균 × 1.05)로 정함 |
 | 3 | ra-cgb(27절) | 묶음 제약 안에서 release 시각 몰림을 줄임 |
-| 31 | 재분석: 마감 지표 분리, TET·TAT 비교, 친화도 지표의 실패 예측력(시뮬레이션 없음) | `policy-mix/`(`rt_metrics.py`, `rt_compare.py`, `timing_compare.py`, `affinity_auc.py`) | — | `rt-compare`, `timing-compare`, `affinity-auc` |
-| 32 | 요청량으로 제한한 CLS 묶음(탐색) | `policy-mix/`(`--design small-memory-load-k`, `task-count-k`) | `small-memory-load-k-v1`, `task-count-k-v1` | `small-memory-load-k`, `task-count-k` |
-| 33 | 개발 set의 C(1+3) run(RF 개발 자료) | `policy-mix/`(`--design *-c13`, `c13_sets.py`) | `small-memory-load-c13-v1`, `task-count-c13-v1`, `cls-spread-c13-v1`, `deadline-small-c13-v1`, `deadline-big-c13-v1` | 같은 이름(`-v1` 제외) |
-| 34 | RF 구성 추천 개발 점검(탐색, 시뮬레이션 없음) | `policy-mix/rf_devcheck.py` | `rf-devcheck-v1` | `rf-devcheck` |
-| 35 | P 배치 후보를 늘린 RF 구성 추천(탐색, 시뮬레이션 없음) | `policy-mix/rf_candidates.py` | `rf-candidates-v1` | `rf-candidates` |
-| 36 | 캐시 지표의 분포 통계를 더한 RF(탐색, 시뮬레이션 없음) | `policy-mix/rf_stats.py` | `rf-stats-v1` | `rf-stats` |
-| 37 | 위반 task의 캐시 성질과 마감 여유(재분석, 시뮬레이션 없음) | `policy-mix/task_slack_analysis.py` | `task-slack-v1` | `task-slack` |
-| 38 | 메모리 task의 주기만 바꾼 짝지은 비교(사전 등록) | `policy-mix/`(`--design period-swap`, `period_swap_set.py`, `period_swap_analysis.py`) | `period-swap-v1` | `period-swap` |
-| 39 | U 가중 (1 − CLS) 특징의 기여(재분석, 시뮬레이션 없음) | `results/cls-ablation/cls_ablation.py` | `cls-ablation-v1` | `cls-ablation` |
-| 40 | task 단위 예측: 어느 task가 늦나(재분석, 시뮬레이션 없음) | `policy-mix/task_level.py` | `task-level-v1` | `task-level` |
-| 30 | 주기 다양 조건의 마감 실패 분석(재분석, 시뮬레이션 없음) | `policy-mix/cv_miss_analysis.py` | `cv-miss-analysis-v1` | `cv-miss-analysis` |
-| 41 | CLS·U는 같고 메모리 비용만 다른 짝지은 비교(사전 등록) | `policy-mix/`(`mem_calibrate.py`, `--design memory-cost`, `memcost_set.py`, `memcost_analysis.py`) | `mem-calibration-v1`, `memory-cost-v1` | `mem-calibration`, `memory-cost` |
-| 43 | RF 실행 전 점검 모델 동결(개발 자료, 시뮬레이션 없음) | `policy-mix/rf_freeze.py` | `rf-model-v1` | `rf-model` |
-| 42 | 실행 전 점검: D + M 정적 규칙 대 RF(개발 점검, 시뮬레이션 없음) | `policy-mix/rf_occupancy.py` | `rf-occupancy-v1` | `rf-occupancy` |
-| 44 | 실행 전 점검과 구성 추천의 확증(사전 등록, 새 set) | `policy-mix/`(`confirm_set.py`, `--design confirm-small`·`confirm-big`·`confirm-mem`, `confirm_decide.py`, `confirm_analysis.py`) | `confirm-small-v1`, `confirm-big-v1`, `confirm-mem-v1`, `confirm-analysis-v1` | `confirm-small`, `confirm-big`, `confirm-mem`, `confirm-analysis` |
-| 45 | 실제 커널 task set의 실행 전 점검(사전 등록, 새 set) | `policy-mix/`(`kernel_tasks.py`, `kernel_calibrate.py`, `kernel_set.py`, `kernel_run.py`, `confirm_analysis.py`) | `kernel-calibration-v2`, `real-kernels-v1`, `real-kernels-analysis-v1` | `kernel-calibration`, `real-kernels`, `real-kernels-analysis` |
-| 29 | 실험 24 set의 CLS + Algorithm 1(탐색, 저친화도 비율 대 task 종류) | `policy-mix/`(`--design small-memory-load-a1`, `share_check.py`) | `small-memory-load-a1-v1`, `share-check-v1` | `small-memory-load-a1`, `share-check` |
 | 민감도 | cls-a1-cal: CLS + Algorithm 1, 같은 calibration의 동결 CLS 임곗값 0.887 | CAAS와 같은 출처의 임곗값 |
 
 Algorithm 1은 `chaser/policy/allocator.py`(CAAS Algorithm 1 구현)를 그대로 쓴다. 격리 코어가 가득 차서 놓을 수 없는 task가 있으면
@@ -1768,6 +1532,77 @@ python3 $R/policy-mix/ladder_analysis.py --small $W/.cache/deadline-small-v1 --s
 
 ---
 
+## 29. 실험 24 set의 CLS + Algorithm 1 (탐색: 저친화도 비율 대 task 종류)
+
+### 개요
+28절에서 단일 격리 코어(CLS + Algorithm 1)는 32 KiB task가 U의 50%일 때 균형 CLS 묶음보다 크게 나빴고, 768 KiB task가 U의 25%일 때는 같거나 나았다.
+그런데 비율과 task 종류가 함께 바뀌어 원인을 가를 수 없었다. 24절의 set은 32 KiB task를 U의 25%와 50%로 갖고(25% task는 50% task에 포함), 같은 set에서 비율만 다르다.
+이 set에 CLS + Algorithm 1을 덧붙인다. 24절의 결과를 이미 본 뒤의 설계이므로 **탐색**이다.
+
+### 변인
+
+| 구분 | 내용 |
+|---|---|
+| 조작 변인 | **배치**: cls-a1(CLS 0.5, 코어 0 격리, `algorithm1.py`), wfd(24절 재현 확인용) |
+| 통제 변인 | 24절의 set·task·주기·측정 구간 전부(설계 모듈이 24절 wfd 설정을 그대로 받고 코어만 바꾼다, 테스트로 확인) |
+| 비교 | 24절의 cgb·ra-cgb·ra·wfd 결과와 경우마다 짝지음. 27·28절(32 KiB 50%, 768 KiB 25%)도 같은 표로 정리 |
+| 종속 변인 | 배치 가능 여부, 배치되고 모든 마감을 지킴, 위반 job 비율(측정 계약 5-1절의 주의 참고), 최악 실행시간, TET |
+
+### 실험 방법
+1. `ca_table.py`로 24절의 CA-CSRD 표를 만든다(`algorithm1.py`가 요구, cls-a1은 쓰지 않음).
+2. `prepare`(wfd + cls-a1), `isolated`, `pilot`, `full`, `stats`, `rt`(`--builds wfd,cls-a1`). 288 경우 × 2 = 576 run.
+3. `share_check.py`가 24·27·28절을 비율·종류별로 한 표에 정리하고, wfd 재실행이 24절과 같은지 확인한다.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 $R/policy-mix/ca_table.py --output $W/.cache/small-memory-load-v1 --dest $R/results/ca-csrd/small-memory-load.json
+O=$W/.cache/small-memory-load-a1-v1
+mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design small-memory-load-a1 --output $O; done
+python3 $R/policy-mix/rt_metrics.py --output $O --builds wfd,cls-a1
+python3 $R/policy-mix/share_check.py --base24 $W/.cache/small-memory-load-v1 --a1 $O --small $W/.cache/deadline-small-v1 \
+    --small-caas $W/.cache/deadline-small-caas-v1 --big $W/.cache/deadline-big-v1 --big-caas $W/.cache/deadline-big-caas-v1 \
+    --dest $W/.cache/share-check-v1
+```
+실제 실행은 `supervisors/small-memory-load-a1-v1.sh`다.
+
+### 결과 파일
+- `results/small-memory-load-a1/`: `protocol.json`, `results.jsonl`, `isolated-u.json`, `rt-metrics.json`, `stats-*.json/md`, `per-set.jsonl.gz`
+- `results/share-check/`: `share-check.json/md`와 그림
+
+---
+
+## 30. 주기 다양 조건의 마감 실패 분석 (재분석, 시뮬레이션 없음)
+
+### 개요
+24·27절에서 CLS 배치는 주기가 같을 때(CV 0) release 고려보다 마감을 더 지켰지만, 주기가 다양할 때(CV 0.2)는 그렇지 않았다.
+27절 run의 원시 기록(job별 release·시작·완료·CPU 시간과 코어)을 다시 읽어 원인을 본다. 결과를 이미 본 자료이므로 **탐색**이다.
+
+### 분석 항목 (`policy-mix/cv_miss_analysis.py`)
+- 위반한 job: 늦은 job과 밀린 release를 task 역할(메모리/그 외)과 코어 종류(메모리 task를 가진 코어/그 외)로 나눔. 늦은 job이 warm-up에 있는지도 셈
+- 늦은 원인: 늦은 job의 시작 지연(시작 − release)과 실행 구간(완료 − 시작)을 주기로 나눈 값
+- 동시 실행: 메모리 task job이 동시에 실행되는 코어 수의 시간 평균과 3개 이상인 시간의 비율(job은 시작부터 완료까지 실행 중으로 봄, 선점 포함)
+- 코어 부하: 실효 U(측정 구간의 job CPU 합 ÷ 구간 길이)와 계획 U, 메모리 task를 가진 코어에 놓인 다른 task의 U
+- release 비용(`placement_lib.cohort_cost`)과 최악 실행시간
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 $R/policy-mix/cv_miss_analysis.py --output $W/.cache/deadline-small-v1 --loads 0.5,0.525,0.55 --dest $W/.cache/cv-miss-analysis-v1
+python3 $R/policy-mix/cv_miss_analysis.py --output $W/.cache/deadline-big-v1 --loads 0.35,0.4,0.45 --dest $W/.cache/cv-miss-analysis-v1
+python3 $R/figures/cv_miss_bars.py $W/.cache/cv-miss-analysis-v1 deadline-small-v1 deadline-big-v1
+# 4장용 탐색 자료(2026-10-06 추가): 실험 24·20
+python3 $R/policy-mix/cv_miss_analysis.py --output $W/.cache/small-memory-load-v1 --loads 0.5,0.55 --dest $W/.cache/cv-miss-analysis-v1
+python3 $R/policy-mix/cv_miss_analysis.py --output $W/.cache/task-count-v1 --loads 0.35,0.45 --dest $W/.cache/cv-miss-analysis-v1
+python3 $R/figures/cv_miss_bars.py $W/.cache/cv-miss-analysis-v1 small-memory-load-v1:cv00-low50,cv20-low50 task-count-v1:mem25
+```
+
+### 결과 파일
+`results/cv-miss-analysis/`: `cv-miss-<run>.json/md`와 그림(`cv-miss-core-load-<run>`, `cv-miss-memory-<run>`)
+
+---
+
 ## 31. 재분석: 마감 지표 분리, TET·TAT 비교, 친화도 지표의 실패 예측력 (시뮬레이션 없음)
 
 ### 개요
@@ -1820,8 +1655,6 @@ done
 ### 결과 파일
 `results/small-memory-load-k/`, `results/task-count-k/`. 기존 결과와의 비교는 `results/kgroup-check/`(`policy-mix/kgroup_check.py --pair <24절 출력>:<small-memory-load-k-v1> --pair <20절 출력>:<task-count-k-v1>`, 그림 `figures/kgroup_bars.py`, 코어 부하는 `cv_miss_analysis.py --builds cgk,ra-cgk`).
 
----
-
 ## 33. 개발 set의 C(1+3) run (RF 구성 추천의 개발 자료)
 
 ### 개요
@@ -1863,8 +1696,6 @@ done
 | `cls-spread-c13` | 223 | 100 | 1 |
 | `deadline-small-c13` | 117 | 134 | 1 |
 | `deadline-big-c13` | 78 | 66 | 0 |
-
----
 
 ## 34. RF 구성 추천 개발 점검 (탐색, 시뮬레이션 없음)
 
@@ -1919,8 +1750,6 @@ python3 $R/figures/rf_devcheck_bars.py $W/.cache/rf-devcheck-v1
 - 로지스틱 회귀(특징 3개 + 구성)는 실험 20과 27 768 KiB에서 RF보다 높다(0.969, 0.970).
 
 사전 기준에 따르면 RF 구성 추천을 주 방법으로 확증 실험에 넣지 않는다. 그 경우 P의 마감 준수 예측은 정적 규칙(D)으로 하고(G/C 추천은 없음), "항상 P"는 비교 기준으로 남는다. 판단 기준을 바꾸면 이 결과를 본 뒤의 변경으로 기록해야 한다. 후속 탐색은 35절.
-
----
 
 ## 35. P 배치 후보를 늘린 RF 구성 추천 (탐색, 시뮬레이션 없음)
 
@@ -2002,8 +1831,6 @@ group 5-fold에서는 P 후보를 늘리자 순 구제가 5에서 9로 늘었지
 사전 기준에 따라 P 후보 확장은 확증 실험 설계에 넣지 않고, 후보는 34절의 구성(ra-cgb + G/C)으로 둔다.
 살릴 수 있는 set이 1,792 중 61(3.4%)뿐이라, 구제 쪽 이득은 어떤 규칙으로도 작다. 결정 절차의 효과는 대부분 거절(잘못 수락 499 → 4–18, 대신 지킬 수 있던 132–205 set도 거절)에서 나온다.
 
----
-
 ## 36. 캐시 지표의 분포 통계를 더한 RF (탐색, 시뮬레이션 없음)
 
 ### 개요
@@ -2060,8 +1887,6 @@ python3 $R/figures/rf_stats_bars.py $W/.cache/rf-stats-v1
 - **특징 중요도(CLS·YARDA 네 지표, 모든 행):** 통계 40개의 합이 0.442(CLS 0.112, p_L1 0.098, p_mem 0.110, p_LLC 0.076, CA-CSRD 0.046)지만 개별 값은 0.029 이하이고,
   상위는 여전히 캐시 요구량 D 0.139, U 가중 (1 − CLS) 0.136이다. 서로 비슷한 특징이 중요도를 나눠 가진 것이라 정보가 늘었다는 뜻은 아니다.
 
----
-
 ## 37. 위반 task의 캐시 성질과 마감 여유 (재분석, 시뮬레이션 없음)
 
 ### 개요
@@ -2110,8 +1935,6 @@ P run 5,433개(위반 1,504), task 행 86,940개. 위반 task는 run마다 대�
 **해석:** 지금 자료에서 위반 여부는 메모리 task가 있는 코어의 부하가 정하고, 그 안에서 어느 task가 늦을지는 동시 release와 EDF 동률 순서가 크게 좌우한다.
 그래서 task별 캐시 지표나 여유가 합계 특징보다 나을 여지가 작았다. "접근 패턴이 나쁘고 여유가 적은 task"의 효과를 보려면 그런 task를 일부러 만들고 비교 대상과 짝지은 설계(2단계)가 필요하다.
 실행 환경의 RTEMS 주기 관리자는 주기를 EDF 마감으로 쓰므로(`rtems/periodic/init.c`, `rtems_rate_monotonic_period`), 마감 < 주기는 실행 환경을 고치지 않고는 만들 수 없다.
-
----
 
 ## 38. 메모리 task의 주기만 바꾼 짝지은 비교 (사전 등록)
 
@@ -2183,8 +2006,6 @@ python3 $R/policy-mix/period_swap_analysis.py --output $O --cache $W/.cache --de
 따라서 set 단위의 마감 준수 예측에는 코어 단위 합계 특징(캐시 요구량, 실효 부하)으로 충분하고, task별 캐시 지표 × 마감 여유는 "어느 task가 놓치나"를 정할 때 의미가 있다.
 이 결과는 32 KiB 유형, 메모리 task 50%, 부하 0.49–0.55에 한정된다.
 
----
-
 ## 39. U 가중 (1 − CLS) 특징의 기여 (재분석, 탐색)
 
 ### 개요
@@ -2205,8 +2026,6 @@ python3 $R/policy-mix/period_swap_analysis.py --output $O --cache $W/.cache --de
 - **모델 안에서는 다른 특징과 많이 겹친다.** 저친화도 U와 상관 0.956, D와 0.948이다. group 5-fold에서는 빼도 AUC가 같다(0.9949 대 0.9948).
 - **처음 보는 실험에서는 보정에 기여한다.** 빼면 Brier가 0.0408에서 0.0450으로 나빠지고(잡음 기준 차이 0.0001) 잘못 거절이 205에서 228로 는다. 실험별 AUC는 오르내림이 섞여 있다(17·18은 오히려 0.969 → 0.981).
 - 저친화도 U와 함께 빼면 Brier가 0.0629로 크게 나빠진다. 두 특징이 서로를 대신하므로, CLS에서 나온 set 특징 중 적어도 하나는 필요하다.
-
----
 
 ## 40. task 단위 예측: 어느 task가 늦나 (재분석, 탐색)
 
@@ -2251,38 +2070,6 @@ cd $C3 && PYTHONPATH=$C3 python3 $R/policy-mix/task_level.py --cache $W/.cache -
 - **T1(보조, 모든 run에서 이 task가 늦을 위험):** 자기 CLS를 넣으면 실험 하나를 뺀 전체 AUC가 0.845에서 0.871로, 실험 38에서 0.875에서 0.890으로 올랐다. 잡음(0.005)보다 큰 향상이 6개 중 5개 실험과 실험 38에서 나왔다(실험 24는 0.858 → 0.908).
   T1은 읽는 기준을 정하지 않은 보조 질문이라 기술적으로만 보고한다. 메모리 task 자신이 다른 task보다 자주 늦기 때문에(37절), 자기 CLS가 "위험한 task"를 가려낸다.
 - **YARDA 세부 지표(p_mem 등):** T1·T2 모두 CLS 너머로 도움이 되지 않았다(합성 task에서는 CLS와 함께 움직임).
-
----
-
-## 30. 주기 다양 조건의 마감 실패 분석 (재분석, 시뮬레이션 없음)
-
-### 개요
-24·27절에서 CLS 배치는 주기가 같을 때(CV 0) release 고려보다 마감을 더 지켰지만, 주기가 다양할 때(CV 0.2)는 그렇지 않았다.
-27절 run의 원시 기록(job별 release·시작·완료·CPU 시간과 코어)을 다시 읽어 원인을 본다. 결과를 이미 본 자료이므로 **탐색**이다.
-
-### 분석 항목 (`policy-mix/cv_miss_analysis.py`)
-- 위반한 job: 늦은 job과 밀린 release를 task 역할(메모리/그 외)과 코어 종류(메모리 task를 가진 코어/그 외)로 나눔. 늦은 job이 warm-up에 있는지도 셈
-- 늦은 원인: 늦은 job의 시작 지연(시작 − release)과 실행 구간(완료 − 시작)을 주기로 나눈 값
-- 동시 실행: 메모리 task job이 동시에 실행되는 코어 수의 시간 평균과 3개 이상인 시간의 비율(job은 시작부터 완료까지 실행 중으로 봄, 선점 포함)
-- 코어 부하: 실효 U(측정 구간의 job CPU 합 ÷ 구간 길이)와 계획 U, 메모리 task를 가진 코어에 놓인 다른 task의 U
-- release 비용(`placement_lib.cohort_cost`)과 최악 실행시간
-
-### 재현 명령
-```sh
-cd $C3 && export PYTHONPATH=$C3
-python3 $R/policy-mix/cv_miss_analysis.py --output $W/.cache/deadline-small-v1 --loads 0.5,0.525,0.55 --dest $W/.cache/cv-miss-analysis-v1
-python3 $R/policy-mix/cv_miss_analysis.py --output $W/.cache/deadline-big-v1 --loads 0.35,0.4,0.45 --dest $W/.cache/cv-miss-analysis-v1
-python3 $R/figures/cv_miss_bars.py $W/.cache/cv-miss-analysis-v1 deadline-small-v1 deadline-big-v1
-# 4장용 탐색 자료(2026-10-06 추가): 실험 24·20
-python3 $R/policy-mix/cv_miss_analysis.py --output $W/.cache/small-memory-load-v1 --loads 0.5,0.55 --dest $W/.cache/cv-miss-analysis-v1
-python3 $R/policy-mix/cv_miss_analysis.py --output $W/.cache/task-count-v1 --loads 0.35,0.45 --dest $W/.cache/cv-miss-analysis-v1
-python3 $R/figures/cv_miss_bars.py $W/.cache/cv-miss-analysis-v1 small-memory-load-v1:cv00-low50,cv20-low50 task-count-v1:mem25
-```
-
-### 결과 파일
-`results/cv-miss-analysis/`: `cv-miss-<run>.json/md`와 그림(`cv-miss-core-load-<run>`, `cv-miss-memory-<run>`)
-
----
 
 ## 41. CLS·U는 같고 메모리 비용만 다른 짝지은 비교 (사전 등록)
 
@@ -2354,45 +2141,6 @@ python3 $R/policy-mix/memcost_analysis.py --output $O --rows $R/results/rf-model
   문턱 1.0으로 자르면 실험 17–27에서 위반 1,607개 중 1,569개를 미리 잡고 잘못된 경보가 490개였다.
   결과를 본 뒤 고른 공식이므로 확증 실험에서 사전 등록해 확인해야 한다.
 
----
-
-## 43. RF 실행 전 점검 모델 동결 (개발 자료, 시뮬레이션 없음)
-
-### 개요
-42절 뒤 사용자 결정(2026-10-07)으로 실행 전 점검의 주 방법은 RF f35m이다. 확증 실험 전에 **확률 보정 방식을 정하고, 개발 자료 전체로 학습한 모델을 파일과 해시로 동결**한다.
-확증 실험 결과로 모델·특징·τ를 바꾸지 않는다.
-
-- **자료:** 42절과 같다(실험 17–25·27의 후보 행, 실험 33의 C1+3, 실험 41의 P run). 특징 f35m(28개), 라벨은 run 전체에서 모든 마감을 지켰나.
-- **비교하는 두 모델:** A: RF(500그루, 잎 최소 3, 시드 0), 보정 없음. B: 같은 RF에 isotonic 보정(학습 자료 안에서 (seed base, set 번호) group 5-fold로 보정).
-- **보정 선택 규칙(실행 전 고정, `choose_calibration`):** 실험 하나를 빼고 맞힌 모든 행의 Brier 점수가 B에서 A보다 0.001 이상 낮으면 B, 아니면 A(더 단순한 쪽).
-- **고정 값:** τ 0.8, 결정 후보는 CHASER 배치(ra-cgb) + G4·C1+3·C1+1+2, 결정 규칙은 35절(P 확률 ≥ τ이면 P, 아니면 τ 이상인 G/C 중 가장 높은 것, 없으면 거절).
-- **동결물:** 개발 자료 전체로 학습한 모델 파일(joblib)과 SHA-256, 특징 목록과 순서, 학습 자료 목록(각 `results.jsonl`의 SHA-256, 행 수), 개발 행 전체 예측 확률의 지문(소수 6자리로 반올림한 값의 SHA-256), scikit-learn·numpy 버전.
-- **확인:** 저장한 모델을 다시 읽어 개발 행 전체의 예측이 지문과 같은지 확인한다.
-
-### 재현 명령
-```sh
-cd $C3 && PYTHONPATH=$C3 python3 $R/policy-mix/rf_freeze.py --rows $R/results/rf-model/training-rows.jsonl.gz --dest $W/.cache/rf-model-v1  # 2026-10-08 정리 이후: 개발 실험 원본 대신 학습 행 표(rf_rows.py)를 읽는다. 원래 실행은 --cache $W/.cache
-```
-
-### 결과 파일
-`results/rf-model/`(`model-spec.json`, `model-spec.md`). 모델 파일은 67 MB라 `.cache/rf-model-v1/model.joblib`에만 두고 SHA-256과 예측 지문으로 확인한다. 2026-10-07 18:23 KST 실행.
-
-### 결과
-| 보정 | 처음 보는 실험의 Brier | AUC(모든 행) | τ 0.8 결정: 받아들여 지킴 / 잘못 수락 / 잘못 거절 / 살린 set / 잘못된 전환 |
-|---|---:|---:|---|
-| 없음 | 0.0337 | 0.9908 | 1,222 / 6 / 121 / 4 / 0 |
-| isotonic | **0.0318** | 0.9905 | 1,223 / 8 / 118 / 4 / 0 |
-
-- **보정 선택:** Brier 차이 0.0019로 기준(0.001)을 넘어 **isotonic**을 쓴다. 결정 결과는 두 방식이 거의 같다.
-- **동결값:** 행 11,733개, 특징 28개(f35m), τ 0.8, 모델 SHA-256 `ec847c8755efcff2ebb57f53e7b7c251eee6e049367dffc8e4b56fece75b8f36`, 예측 지문 `6d67762a2e4105d027b73944ad3ff265d877144951680fe831a465983715da21`, scikit-learn 1.7.2.
-  저장한 모델을 다시 읽은 예측으로 지문을 만들었다.
-- **프레임워크 코드 대조(`policy-mix/pfirst_check.py`, `results/pfirst-check/`):** 동결 모델을 쓰는 공용 구현 `chaser/policy/pfirst/`(입력·배치·특징·결정)를 개발 자료 전체에 적용했다.
-  set 2,248개·행 11,733개에서 U 균형 배치 1,896/1,896, CHASER 배치 1,892/1,892가 저장된 배치와 같았고(실험 17·18의 ra-cg와 실험 41은 비교에서 뺌), 특징값이 다른 행은 0개, 동결 모델 확률의 최대 차이는 1.8 × 10⁻¹⁴였다.
-  결정 한 번(배치 + RF 예측)은 중앙값 0.42초, 최대 0.71초였다. 단위 테스트는 `tests/policy/pfirst/`(200개).
-- **중요도(불순도 감소, 보정 모델 안의 RF 5개 평균):** D + M 0.295, D 0.143, U 가중 (1 − CLS) 0.135, 저친화도 U 0.106, M 0.103, 작업 집합 ÷ L2 0.070. 나머지는 각 0.025 이하.
-
----
-
 ## 42. 실행 전 점검: D + M 정적 규칙 대 RF (개발 점검, 시뮬레이션 없음)
 
 ### 개요
@@ -2445,7 +2193,40 @@ cd $C3 && PYTHONPATH=$C3 python3 $R/policy-mix/rf_occupancy.py --rows $R/results
 
 **사용자 결정(2026-10-07, 결과를 본 뒤):** 사전 고정 판단과 달리 **RF f35m(τ 0.8, CHASER + G/C)을 주 방법**으로 하고, D + M < 0.975 정적 규칙을 비교 대상으로 사전 등록한다. 근거는 같은 잘못 수락에서 잘못 거절이 적고(121 대 205), G/C 추천이 RF로만 가능하다는 점이다. 결과를 본 뒤 바꾼 결정이므로 확증 실험에서만 효과를 주장한다.
 
----
+## 43. RF 실행 전 점검 모델 동결 (개발 자료, 시뮬레이션 없음)
+
+### 개요
+42절 뒤 사용자 결정(2026-10-07)으로 실행 전 점검의 주 방법은 RF f35m이다. 확증 실험 전에 **확률 보정 방식을 정하고, 개발 자료 전체로 학습한 모델을 파일과 해시로 동결**한다.
+확증 실험 결과로 모델·특징·τ를 바꾸지 않는다.
+
+- **자료:** 42절과 같다(실험 17–25·27의 후보 행, 실험 33의 C1+3, 실험 41의 P run). 특징 f35m(28개), 라벨은 run 전체에서 모든 마감을 지켰나.
+- **비교하는 두 모델:** A: RF(500그루, 잎 최소 3, 시드 0), 보정 없음. B: 같은 RF에 isotonic 보정(학습 자료 안에서 (seed base, set 번호) group 5-fold로 보정).
+- **보정 선택 규칙(실행 전 고정, `choose_calibration`):** 실험 하나를 빼고 맞힌 모든 행의 Brier 점수가 B에서 A보다 0.001 이상 낮으면 B, 아니면 A(더 단순한 쪽).
+- **고정 값:** τ 0.8, 결정 후보는 CHASER 배치(ra-cgb) + G4·C1+3·C1+1+2, 결정 규칙은 35절(P 확률 ≥ τ이면 P, 아니면 τ 이상인 G/C 중 가장 높은 것, 없으면 거절).
+- **동결물:** 개발 자료 전체로 학습한 모델 파일(joblib)과 SHA-256, 특징 목록과 순서, 학습 자료 목록(각 `results.jsonl`의 SHA-256, 행 수), 개발 행 전체 예측 확률의 지문(소수 6자리로 반올림한 값의 SHA-256), scikit-learn·numpy 버전.
+- **확인:** 저장한 모델을 다시 읽어 개발 행 전체의 예측이 지문과 같은지 확인한다.
+
+### 재현 명령
+```sh
+cd $C3 && PYTHONPATH=$C3 python3 $R/policy-mix/rf_freeze.py --rows $R/results/rf-model/training-rows.jsonl.gz --dest $W/.cache/rf-model-v1  # 2026-10-08 정리 이후: 개발 실험 원본 대신 학습 행 표(rf_rows.py)를 읽는다. 원래 실행은 --cache $W/.cache
+```
+
+### 결과 파일
+`results/rf-model/`(`model-spec.json`, `model-spec.md`). 모델 파일은 67 MB라 `.cache/rf-model-v1/model.joblib`에만 두고 SHA-256과 예측 지문으로 확인한다. 2026-10-07 18:23 KST 실행.
+
+### 결과
+| 보정 | 처음 보는 실험의 Brier | AUC(모든 행) | τ 0.8 결정: 받아들여 지킴 / 잘못 수락 / 잘못 거절 / 살린 set / 잘못된 전환 |
+|---|---:|---:|---|
+| 없음 | 0.0337 | 0.9908 | 1,222 / 6 / 121 / 4 / 0 |
+| isotonic | **0.0318** | 0.9905 | 1,223 / 8 / 118 / 4 / 0 |
+
+- **보정 선택:** Brier 차이 0.0019로 기준(0.001)을 넘어 **isotonic**을 쓴다. 결정 결과는 두 방식이 거의 같다.
+- **동결값:** 행 11,733개, 특징 28개(f35m), τ 0.8, 모델 SHA-256 `ec847c8755efcff2ebb57f53e7b7c251eee6e049367dffc8e4b56fece75b8f36`, 예측 지문 `6d67762a2e4105d027b73944ad3ff265d877144951680fe831a465983715da21`, scikit-learn 1.7.2.
+  저장한 모델을 다시 읽은 예측으로 지문을 만들었다.
+- **프레임워크 코드 대조(`policy-mix/pfirst_check.py`, `results/pfirst-check/`):** 동결 모델을 쓰는 공용 구현 `chaser/policy/pfirst/`(입력·배치·특징·결정)를 개발 자료 전체에 적용했다.
+  set 2,248개·행 11,733개에서 U 균형 배치 1,896/1,896, CHASER 배치 1,892/1,892가 저장된 배치와 같았고(실험 17·18의 ra-cg와 실험 41은 비교에서 뺌), 특징값이 다른 행은 0개, 동결 모델 확률의 최대 차이는 1.8 × 10⁻¹⁴였다.
+  결정 한 번(배치 + RF 예측)은 중앙값 0.42초, 최대 0.71초였다. 단위 테스트는 `tests/policy/pfirst/`(200개).
+- **중요도(불순도 감소, 보정 모델 안의 RF 5개 평균):** D + M 0.295, D 0.143, U 가중 (1 − CLS) 0.135, 저친화도 U 0.106, M 0.103, 작업 집합 ÷ L2 0.070. 나머지는 각 0.025 이하.
 
 ## 44. 실행 전 점검과 구성 추천의 확증 (사전 등록, 새 set)
 
@@ -2513,8 +2294,6 @@ PYTHONPATH=$W:$R/policy-mix python3 $R/policy-mix/confirm_analysis.py --cache $W
 - **비용:** 결정 한 번(배치 + RF 예측) 중앙값 0.44초, 최대 0.66초.
 - **한계:** 개발 자료에 메모리 접근형(실험 41)과 같은 형태가 있었으므로 메모리 접근형 결과는 새 set이지만 새 형태는 아니다. G·C 추천의 이득은 확인하지 못했다.
 
----
-
 ## 45. 실제 커널 task set의 실행 전 점검 (사전 등록, 새 set)
 
 ### 개요
@@ -2564,44 +2343,23 @@ python3 $R/policy-mix/confirm_analysis.py --cache $W/.cache --outputs real-kerne
 ### 결과 파일
 `results/kernel-calibration/`, `results/real-kernels/`, `results/real-kernels-analysis/`(실행 후 작성).
 
----
+## 정리: 논문 실험만 남기기 (2026-10-08 KST)
 
-## 29. 실험 24 set의 CLS + Algorithm 1 (탐색: 저친화도 비율 대 task 종류)
+논문에 싣는 실험(8, 20, 24, 27, 28, 30, 41–45)과 그 입력만 남기고 개발·탐색 실험(17–26 중 20·24를 뺀 것, 29, 31–40), pilot, 무작위 기준선의 코드·결과 묶음·`.cache` 출력을 지운다. 삭제 목록은 `.cache/cleanup-2026-10-08/`(`delete-now.txt`, `delete-final-raw.txt`)에 있고, 이 절의 위쪽 실험 기록은 그대로 둔다(지운 실험의 재현 명령은 더는 실행되지 않는다).
 
-### 개요
-28절에서 단일 격리 코어(CLS + Algorithm 1)는 32 KiB task가 U의 50%일 때 균형 CLS 묶음보다 크게 나빴고, 768 KiB task가 U의 25%일 때는 같거나 나았다.
-그런데 비율과 task 종류가 함께 바뀌어 원인을 가를 수 없었다. 24절의 set은 32 KiB task를 U의 25%와 50%로 갖고(25% task는 50% task에 포함), 같은 set에서 비율만 다르다.
-이 set에 CLS + Algorithm 1을 덧붙인다. 24절의 결과를 이미 본 뒤의 설계이므로 **탐색**이다.
-
-### 변인
-
-| 구분 | 내용 |
+| 남기는 것 | 내용 |
 |---|---|
-| 조작 변인 | **배치**: cls-a1(CLS 0.5, 코어 0 격리, `algorithm1.py`), wfd(24절 재현 확인용) |
-| 통제 변인 | 24절의 set·task·주기·측정 구간 전부(설계 모듈이 24절 wfd 설정을 그대로 받고 코어만 바꾼다, 테스트로 확인) |
-| 비교 | 24절의 cgb·ra-cgb·ra·wfd 결과와 경우마다 짝지음. 27·28절(32 KiB 50%, 768 KiB 25%)도 같은 표로 정리 |
-| 종속 변인 | 배치 가능 여부, 배치되고 모든 마감을 지킴, 위반 job 비율(측정 계약 5-1절의 주의 참고), 최악 실행시간, TET |
+| 코드 | 논문 실험의 진입 스크립트에서 import로 닿는 모듈 58개(실험 스크립트의 테스트는 모두 지웠다. 프레임워크 테스트는 저장소 `tests/`에 있다), 그림 스크립트 8개, 실행 스크립트 8개, 빌드 정리·복구 도구 `prepared_builds.py`(27·28 원본의 실행 파일은 정리돼 있어 원본을 다시 읽으려면 복구가 필요하다). `pm_run.py`는 설계 10개(20, 24, 27, 28, 41, 44), `hl_run.py`는 기본 설계 2개만 등록한다 |
+| 결과 묶음 | `l2-probe`, `task-count`, `small-memory-load`, `cv-miss-analysis`, `mem-calibration`, `memory-cost`, `memory-cost-analysis`, `deadline-small`, `deadline-big`, `deadline-confirm`, `deadline-small-caas`, `deadline-big-caas`, `deadline-ladder`, `ca-csrd`, `rf-occupancy`, `rf-model`, `pfirst-check`, `confirm-small`, `confirm-big`, `confirm-mem`, `confirm-analysis`, `kernel-calibration`, `reproduction-check`, `environment.json`, `cls-bimodal/calibration/`(`mem_set`의 실행시간 모델) |
+| `.cache` | 실험 코드 사본 `period-distribution-code-4d03b93-c3`, 그 사본이 쓰는 `yarda-374b2c9-build`, 동결 모델 `rf-model-v1`(44절 판정에 쓴 파일) |
 
-### 실험 방법
-1. `ca_table.py`로 24절의 CA-CSRD 표를 만든다(`algorithm1.py`가 요구, cls-a1은 쓰지 않음).
-2. `prepare`(wfd + cls-a1), `isolated`, `pilot`, `full`, `stats`, `rt`(`--builds wfd,cls-a1`). 288 경우 × 2 = 576 run.
-3. `share_check.py`가 24·27·28절을 비율·종류별로 한 표에 정리하고, wfd 재실행이 24절과 같은지 확인한다.
+**스크립트 사본 묶기.** 실행 결과 묶음 10개(20, 24, 27, 28, 41, 44)의 실행 당시 스크립트 사본 444개를 묶음마다 `snapshot.tar.gz` 하나로 합쳤다. 압축 안의 파일은 원래 사본과 바이트까지 같다. MANIFEST.json의 `snapshot`에 스크립트별 SHA-256을 남겼고, 이 값은 실행 기록 `protocol.json`의 `snapshot_hashes`와 같다. 이후 `export_results.py`도 같은 형태로 내보낸다.
 
-### 재현 명령
-```sh
-cd $C3 && export PYTHONPATH=$C3
-python3 $R/policy-mix/ca_table.py --output $W/.cache/small-memory-load-v1 --dest $R/results/ca-csrd/small-memory-load.json
-O=$W/.cache/small-memory-load-a1-v1
-mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
-for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design small-memory-load-a1 --output $O; done
-python3 $R/policy-mix/rt_metrics.py --output $O --builds wfd,cls-a1
-python3 $R/policy-mix/share_check.py --base24 $W/.cache/small-memory-load-v1 --a1 $O --small $W/.cache/deadline-small-v1 \
-    --small-caas $W/.cache/deadline-small-caas-v1 --big $W/.cache/deadline-big-v1 --big-caas $W/.cache/deadline-big-caas-v1 \
-    --dest $W/.cache/share-check-v1
-```
-실제 실행은 `supervisors/small-memory-load-a1-v1.sh`다.
+**RF 학습 자료.** 동결 RF의 학습 행 11,733개(17–25, 27, 33, 41)를 `results/rf-model/training-rows.jsonl.gz`(`policy-mix/rf_rows.py`)로 내보냈다. 내보낼 때 원본 `results.jsonl` 18개의 해시가 `model-spec.json`의 기록과 같음을 확인했다. 표만으로 `rf_freeze.py`를 다시 돌리면 예측 지문·보정(isotonic)·행 수·특징 중요도가 같다. 모델 파일의 바이트는 다르고, 동결 파일과의 확률 차이는 최대 5×10⁻¹⁴(부동소수점 합 순서)이다. `rf_occupancy.py`(42)와 `memcost_analysis.py`의 예측 비교(41)도 표에서 다시 만들면 상대 10⁻¹⁶ 이내로 같고 보고서(md)는 그대로다. `pfirst_check.py`는 원본 YARDA 출력을 직접 읽는 일회성 점검이라 정리 후에는 다시 돌릴 수 없다(결과는 `results/pfirst-check/`).
 
-### 결과 파일
-- `results/small-memory-load-a1/`: `protocol.json`, `results.jsonl`, `isolated-u.json`, `rt-metrics.json`, `stats-*.json/md`, `per-set.jsonl.gz`
-- `results/share-check/`: `share-check.json/md`와 그림
+**재현 표본 점검.** 정리한 코드(`pm_run.py` 축소 후)로 27, 28, 41, 44의 설계마다 사례 1개(시드 20261007로 무작위 선택, 8개)를 다시 빌드하고 run 20개를 다시 돌려 원본과 비교했다(`results/reproduction-check/`).
+- run 20개 모두 기록의 모든 필드(job별 시각, 응답, 마감 성공·실패, 오류)가 원본과 같다. 다른 필드는 실행 파일 해시와 로그 해시뿐이다.
+- 빌드는 소스, 계획, 배치, 설정, `locality.json`(CLS)이 같다. 실행 파일과 오브젝트는 디버그 정보 속 빌드 경로만 다르다. 원본이 남은 41·44의 실행 파일 32개는 디버그 정보를 떼면 모두 같다(27·28의 실행 파일은 2026-10-06에 정리됨).
+- YARDA 출력은 실행 파일 해시에서 나오는 값(`elf_sha256`, `analysis_id`)만 다르다.
 
+**최종 실험의 `.cache` 원본(약 33 GB, `delete-final-raw.txt`).** 결과 묶음만으로 논문 표·그림을 다시 만들 수 있고 run은 위 점검대로 다시 만들어진다. 다만 job 단위 재분석에는 다시 실행해야 한다(27: 약 6시간 10분, 28: 2시간 10분, 41: 50분, 44: 3시간 30분).

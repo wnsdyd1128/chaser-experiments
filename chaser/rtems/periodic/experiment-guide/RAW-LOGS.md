@@ -34,10 +34,8 @@
 ```
 
 이전 실험의 N=20 spaced raw 경로는
-[G raw](../../../.cache/periodic-memory-gap-v1/l1-set-pressure-v1/n20-spaced/g/0.log),
-[C raw](../../../.cache/periodic-memory-gap-v1/l1-set-pressure-v1/n20-spaced/c/0.log),
-[P raw](../../../.cache/periodic-memory-gap-v1/l1-set-pressure-v1/n20-spaced/p/0.log)를
-이다. 이 worktree에는 없으므로 원본을 확보한 경우에 열 수 있다.
+`.cache/periodic-memory-gap-v1/l1-set-pressure-v1/n20-spaced/{g,c,p}/0.log`
+이었다. 이 출력은 2026-10-06에 삭제했으므로 위 구조는 경로 형식의 예로만 읽는다.
 `0.log`의 0은 task 번호가 아니라 **독립 실행 index**다.
 한 raw에 그 실행의 모든 task/job이 들어 있다.
 

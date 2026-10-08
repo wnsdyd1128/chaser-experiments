@@ -85,7 +85,7 @@ APE/YARDA, `run`은 laysim 환경을 사용한다. 독립 네이티브 검증은
 학습 데이터에 자동 편입하지 않는다.
 
 2026-09-29 YARDA `a058a45`·APE `c976301`로 다시 검증한 결과는
-[MEDIUM 재검증 증빙](../../../artifacts/periodic/polybench-medium-v3/README.md)에 보존한다.
+MEDIUM 재검증 증빙(`artifacts/periodic/polybench-medium-v3/`)에 보존했었다(결과 묶음은 연구 방향과 맞지 않아 2026-10-06에 삭제).
 원본·어댑터 네이티브 출력 비교와 G/C/P 빌드는 30종 모두 통과했다.
 YARDA 분석도 **30종 모두 통과**했으며 네이티브·G·C·P 합계 **120/120개 분석이 통과**했다.
 
@@ -95,11 +95,11 @@ YARDA 분석도 **30종 모두 통과**했으며 네이티브·G·C·P 합계 **
 모두 통과했다. SYRK·SYR2K·TRISOLV·Durbin은 원본 C에서 별도로 계산한 접근 횟수와도
 일치했다. 이 접근 수 검사는 전체 동적 접근 순서의 독립 검증을 대신하지 않는다.
 
-[시작값 지원 단계의 재검증](../../../artifacts/periodic/polybench-medium-v2/README.md)은
+시작값 지원 단계의 재검증(`artifacts/periodic/polybench-medium-v2/`, 2026-10-06 삭제)은
 YARDA `b33abc1`·APE `462ed4e`에서 21종 통과·9종 차단을 기록했다.
 당시 Correlation·Covariance·GramSchmidt·TRMM 4종이 먼저 통과했다.
 
-[이전 MEDIUM 검증](../../../artifacts/periodic/polybench-medium-v1/README.md)에서는
+이전 MEDIUM 검증(`artifacts/periodic/polybench-medium-v1/`, 2026-10-06 삭제)에서는
 17종이 통과하고 13종이 차단됐다. 당시 Floyd–Warshall은 120초 제한에 도달했고,
 600초로 재실행한 네이티브/G/C/P 네 경우는 약 191–193초에 정상 종료했다.
 이번 재검증에서도 600초 상한으로 네 경우 모두 통과했다.
