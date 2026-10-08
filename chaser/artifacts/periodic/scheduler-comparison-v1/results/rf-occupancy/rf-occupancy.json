@@ -1,0 +1,170 @@
+{
+ "rows": 11733,
+ "p_rows": 6893,
+ "threshold": 0.975,
+ "p_auc": {
+  "D": {
+   "17 and 18 mixed tasks": 0.8315876309276805,
+   "19 placement boundary": null,
+   "20 768 KiB": 0.9285026966204943,
+   "21 32 KiB": null,
+   "23 continuous CLS": 0.9994745608121505,
+   "24 32 KiB under load": 0.9939325337705682,
+   "25 conflict-miss": null,
+   "27 32 KiB": 0.9926777143257541,
+   "27 768 KiB": 0.7592979250946105,
+   "41 memory cost": 0.3587926271455097,
+   "all": 0.752243516856231
+  },
+  "D + M": {
+   "17 and 18 mixed tasks": 0.9720770942179338,
+   "19 placement boundary": null,
+   "20 768 KiB": 0.9893105187599427,
+   "21 32 KiB": null,
+   "23 continuous CLS": 0.9971001705198874,
+   "24 32 KiB under load": 0.9911859441193851,
+   "25 conflict-miss": null,
+   "27 32 KiB": 0.9865185859930631,
+   "27 768 KiB": 0.966375222932707,
+   "41 memory cost": 0.9861645758797155,
+   "all": 0.9766471979037273
+  },
+  "RF f35": {
+   "17 and 18 mixed tasks": 0.9660275479339049,
+   "19 placement boundary": null,
+   "20 768 KiB": 0.9540992511543087,
+   "21 32 KiB": null,
+   "23 continuous CLS": 0.9985228219058573,
+   "24 32 KiB under load": 0.9935579988181342,
+   "25 conflict-miss": null,
+   "27 32 KiB": 0.9940580877973584,
+   "27 768 KiB": 0.9265300796032886,
+   "41 memory cost": 0.8218830668900865,
+   "all": 0.9742451235719828
+  },
+  "RF f35m": {
+   "17 and 18 mixed tasks": 0.9848011399145065,
+   "19 placement boundary": null,
+   "20 768 KiB": 0.9803980910254919,
+   "21 32 KiB": null,
+   "23 continuous CLS": 0.9989788634651227,
+   "24 32 KiB under load": 0.9949396166426686,
+   "25 conflict-miss": null,
+   "27 32 KiB": 0.9941912202641628,
+   "27 768 KiB": 0.9581973987559267,
+   "41 memory cost": 0.982201893030207,
+   "all": 0.9909091428525719
+  },
+  "RF f35m (seed 1)": {
+   "17 and 18 mixed tasks": 0.9858760592955528,
+   "19 placement boundary": null,
+   "20 768 KiB": 0.9806308927947852,
+   "21 32 KiB": null,
+   "23 continuous CLS": 0.9985624776936195,
+   "24 32 KiB under load": 0.994993716135798,
+   "25 conflict-miss": null,
+   "27 32 KiB": 0.9938478786392461,
+   "27 768 KiB": 0.9589151333246335,
+   "41 memory cost": 0.9824283320501789,
+   "all": 0.9910858130198827
+  }
+ },
+ "judgment": {
+  "higher": 4,
+  "compared": 7,
+  "noise": 0.0010749193810463131,
+  "main": "static rule"
+ },
+ "p_acceptance": {
+  "D + M < 0.975": {
+   "rows": 6893,
+   "accepted": 4554,
+   "false_accept": 24,
+   "false_reject": 685
+  },
+  "RF f35m, tau 0.5": {
+   "rows": 6893,
+   "accepted": 5295,
+   "false_accept": 165,
+   "false_reject": 85
+  },
+  "RF f35m, tau 0.8": {
+   "rows": 6893,
+   "accepted": 4809,
+   "false_accept": 42,
+   "false_reject": 448
+  }
+ },
+ "simulation": {
+  "D + M < 0.975 (CHASER or reject)": {
+   "cases": 1792,
+   "accepted": 1149,
+   "accepted_met": 1142,
+   "false_accept": 7,
+   "rejected": 643,
+   "false_reject": 205,
+   "chose_other": 0,
+   "saved": 0,
+   "wrong_switch": 0,
+   "current_met": 1293,
+   "oracle_met": 1354,
+   "oracle_saves": 61
+  },
+  "RF f35m, tau 0.5": {
+   "cases": 1792,
+   "accepted": 1315,
+   "accepted_met": 1284,
+   "false_accept": 31,
+   "rejected": 477,
+   "false_reject": 47,
+   "chose_other": 951,
+   "saved": 21,
+   "wrong_switch": 8,
+   "current_met": 1293,
+   "oracle_met": 1354,
+   "oracle_saves": 61
+  },
+  "RF f35m, tau 0.8": {
+   "cases": 1792,
+   "accepted": 1229,
+   "accepted_met": 1220,
+   "false_accept": 9,
+   "rejected": 563,
+   "false_reject": 126,
+   "chose_other": 900,
+   "saved": 7,
+   "wrong_switch": 5,
+   "current_met": 1293,
+   "oracle_met": 1354,
+   "oracle_saves": 61
+  },
+  "RF f35m, tau 0.5, CHASER + G/C only": {
+   "cases": 1792,
+   "accepted": 1311,
+   "accepted_met": 1272,
+   "false_accept": 39,
+   "rejected": 481,
+   "false_reject": 46,
+   "chose_other": 7,
+   "saved": 4,
+   "wrong_switch": 1,
+   "current_met": 1293,
+   "oracle_met": 1348,
+   "oracle_saves": 55
+  },
+  "RF f35m, tau 0.8, CHASER + G/C only": {
+   "cases": 1792,
+   "accepted": 1228,
+   "accepted_met": 1222,
+   "false_accept": 6,
+   "rejected": 564,
+   "false_reject": 121,
+   "chose_other": 17,
+   "saved": 4,
+   "wrong_switch": 0,
+   "current_met": 1293,
+   "oracle_met": 1348,
+   "oracle_saves": 55
+  }
+ }
+}
