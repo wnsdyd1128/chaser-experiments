@@ -1,0 +1,35 @@
+/* Integer reimplementation of the PolyBench/C 4.2.1 MVT algorithm.
+ * Source: linear-algebra/kernels/mvt/mvt.c, kernel_mvt.
+ * See rtems/periodic/experiment-guide/INPUTS.md#polybench-kernels-2026-10 for the differences. */
+INLINE static void kernel_${task_id}(void) {
+    for (int i = 0; i < ${n}; ++i)
+        ${x1}[${x1_offset} + i * ${x1_step}] = 0;
+    for (int i = 0; i < ${n}; ++i)
+        ${x2}[${x2_offset} + i * ${x2_step}] = 0;
+    for (int i = 0; i < ${n}; ++i)
+        for (int j = 0; j < ${n}; ++j) {
+            uint32_t xv = ${x1}[${x1_offset} + i * ${x1_step}];
+            uint32_t av = ${A}[${A_offset} + i * ${A_row} + j * ${A_col}];
+            uint32_t yv = ${y1}[${y1_offset} + j * ${y1_step}];
+            ${x1}[${x1_offset} + i * ${x1_step}] = xv + av * yv;
+        }
+    for (int i = 0; i < ${n}; ++i)
+        for (int j = 0; j < ${n}; ++j) {
+            uint32_t xv = ${x2}[${x2_offset} + i * ${x2_step}];
+            uint32_t av = ${A}[${A_offset} + j * ${A_row} + i * ${A_col}];
+            uint32_t yv = ${y2}[${y2_offset} + j * ${y2_step}];
+            ${x2}[${x2_offset} + i * ${x2_step}] = xv + av * yv;
+        }
+}
+/** @brief Compute x1 = A y1 and x2 = A^T y2 with both outputs reset on every sweep.
+ * @return Word-wise FNV-1a hash of x1 then x2, computed inside the measured job. */
+ANALYZE uint32_t task_job_${task_id}(void) {
+    for (int t = 0; t < ${sweeps}; ++t)
+        kernel_${task_id}();
+    uint32_t h = 2166136261U;
+    for (int i = 0; i < ${n}; ++i)
+        h = (h ^ ${x1}[${x1_offset} + i * ${x1_step}]) * 16777619U;
+    for (int i = 0; i < ${n}; ++i)
+        h = (h ^ ${x2}[${x2_offset} + i * ${x2_step}]) * 16777619U;
+    return h;
+}

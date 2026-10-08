@@ -8,7 +8,7 @@ from collections.abc import Iterator
 from pathlib import Path
 
 from chaser.periodic.kernels.templates import render_template
-from chaser.periodic.workload import ArrayRegistry, KernelMetrics, NoParameters, ReferenceEvent, TaskSpec
+from chaser.periodic.workload import ArrayRegistry, KernelMetrics, MemoryFootprint, NoParameters, ReferenceEvent, TaskSpec
 
 
 def validate(task: TaskSpec[NoParameters], registry: ArrayRegistry) -> KernelMetrics:
@@ -66,6 +66,13 @@ def events(task: TaskSpec[NoParameters], registry: ArrayRegistry) -> Iterator[Re
                 yield event('y', j, operation='store')
     for j in range(n):
         yield event('y', j)
+
+
+def footprint(task: TaskSpec[NoParameters], registry: ArrayRegistry) -> MemoryFootprint:
+    """Every element of every view is accessed; counted without generating the reference stream."""
+    from chaser.periodic.kernels.polybench_views import footprint as view_footprint
+    m, n = registry[task.arrays['A'].array_id].shape
+    return view_footprint(task, registry, dict(A=(m, n), x=(n,), tmp=(m,), y=(n,)))
 
 
 def source(task: TaskSpec[NoParameters], registry: ArrayRegistry) -> list[str]:

@@ -1,0 +1,27 @@
+/* Integer reimplementation of the PolyBench/C 4.2.1 JACOBI-1D algorithm.
+ * Source: stencils/jacobi-1d/jacobi-1d.c, kernel_jacobi_1d.
+ * See rtems/periodic/experiment-guide/INPUTS.md#polybench-kernels-2026-10 for the differences. */
+INLINE static void kernel_${task_id}(void) {
+    for (int i = 1; i < ${last}; ++i) {
+        uint32_t a0 = ${A}[${A_offset} + (i - 1) * ${A_step}];
+        uint32_t a1 = ${A}[${A_offset} + i * ${A_step}];
+        uint32_t a2 = ${A}[${A_offset} + (i + 1) * ${A_step}];
+        ${B}[${B_offset} + i * ${B_step}] = (a0 + a1 + a2) / 3U;
+    }
+    for (int i = 1; i < ${last}; ++i) {
+        uint32_t b0 = ${B}[${B_offset} + (i - 1) * ${B_step}];
+        uint32_t b1 = ${B}[${B_offset} + i * ${B_step}];
+        uint32_t b2 = ${B}[${B_offset} + (i + 1) * ${B_step}];
+        ${A}[${A_offset} + i * ${A_step}] = (b0 + b1 + b2) / 3U;
+    }
+}
+/** @brief Advance the three-point stencil one time step per sweep; state carries across sweeps.
+ * @return Word-wise FNV-1a hash of A, computed inside the measured job. */
+ANALYZE uint32_t task_job_${task_id}(void) {
+    for (int t = 0; t < ${sweeps}; ++t)
+        kernel_${task_id}();
+    uint32_t h = 2166136261U;
+    for (int i = 0; i < ${n}; ++i)
+        h = (h ^ ${A}[${A_offset} + i * ${A_step}]) * 16777619U;
+    return h;
+}

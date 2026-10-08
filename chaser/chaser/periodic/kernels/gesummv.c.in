@@ -1,0 +1,32 @@
+/* Integer reimplementation of the PolyBench/C 4.2.1 GESUMMV algorithm.
+ * Source: linear-algebra/blas/gesummv/gesummv.c, kernel_gesummv.
+ * See rtems/periodic/experiment-guide/INPUTS.md#polybench-kernels-2026-10 for the differences. */
+INLINE static void kernel_${task_id}(void) {
+    for (int i = 0; i < ${n}; ++i) {
+        ${tmp}[${tmp_offset} + i * ${tmp_step}] = 0;
+        ${y}[${y_offset} + i * ${y_step}] = 0;
+        for (int j = 0; j < ${n}; ++j) {
+            uint32_t av = ${A}[${A_offset} + i * ${A_row} + j * ${A_col}];
+            uint32_t xv = ${x}[${x_offset} + j * ${x_step}];
+            uint32_t tv = ${tmp}[${tmp_offset} + i * ${tmp_step}];
+            ${tmp}[${tmp_offset} + i * ${tmp_step}] = av * xv + tv;
+            uint32_t bv = ${B}[${B_offset} + i * ${B_row} + j * ${B_col}];
+            uint32_t xw = ${x}[${x_offset} + j * ${x_step}];
+            uint32_t yv = ${y}[${y_offset} + i * ${y_step}];
+            ${y}[${y_offset} + i * ${y_step}] = bv * xw + yv;
+        }
+        uint32_t tv = ${tmp}[${tmp_offset} + i * ${tmp_step}];
+        uint32_t yv = ${y}[${y_offset} + i * ${y_step}];
+        ${y}[${y_offset} + i * ${y_step}] = ${alpha}U * tv + ${beta}U * yv;
+    }
+}
+/** @brief Compute y = 3 A x + 2 B x with scratch and output reset on every sweep.
+ * @return Word-wise FNV-1a hash of y, computed inside the measured job. */
+ANALYZE uint32_t task_job_${task_id}(void) {
+    for (int t = 0; t < ${sweeps}; ++t)
+        kernel_${task_id}();
+    uint32_t h = 2166136261U;
+    for (int i = 0; i < ${n}; ++i)
+        h = (h ^ ${y}[${y_offset} + i * ${y_step}]) * 16777619U;
+    return h;
+}

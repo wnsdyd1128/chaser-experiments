@@ -1,0 +1,32 @@
+/* Integer reimplementation of the PolyBench/C 4.2.1 BICG algorithm.
+ * Source: linear-algebra/kernels/bicg/bicg.c, kernel_bicg.
+ * See rtems/periodic/experiment-guide/INPUTS.md#polybench-kernels-2026-10 for the differences. */
+INLINE static void kernel_${task_id}(void) {
+    for (int j = 0; j < ${m}; ++j)
+        ${s}[${s_offset} + j * ${s_step}] = 0;
+    for (int i = 0; i < ${n}; ++i) {
+        ${q}[${q_offset} + i * ${q_step}] = 0;
+        for (int j = 0; j < ${m}; ++j) {
+            uint32_t sv = ${s}[${s_offset} + j * ${s_step}];
+            uint32_t rv = ${r}[${r_offset} + i * ${r_step}];
+            uint32_t av = ${A}[${A_offset} + i * ${A_row} + j * ${A_col}];
+            ${s}[${s_offset} + j * ${s_step}] = sv + rv * av;
+            uint32_t qv = ${q}[${q_offset} + i * ${q_step}];
+            uint32_t aw = ${A}[${A_offset} + i * ${A_row} + j * ${A_col}];
+            uint32_t pw = ${p}[${p_offset} + j * ${p_step}];
+            ${q}[${q_offset} + i * ${q_step}] = qv + aw * pw;
+        }
+    }
+}
+/** @brief Compute s = A^T r and q = A p with both outputs reset on every sweep.
+ * @return Word-wise FNV-1a hash of s then q, computed inside the measured job. */
+ANALYZE uint32_t task_job_${task_id}(void) {
+    for (int t = 0; t < ${sweeps}; ++t)
+        kernel_${task_id}();
+    uint32_t h = 2166136261U;
+    for (int j = 0; j < ${m}; ++j)
+        h = (h ^ ${s}[${s_offset} + j * ${s_step}]) * 16777619U;
+    for (int i = 0; i < ${n}; ++i)
+        h = (h ^ ${q}[${q_offset} + i * ${q_step}]) * 16777619U;
+    return h;
+}

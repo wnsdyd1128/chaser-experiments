@@ -9,7 +9,7 @@ from chaser.periodic.arrays import fields, integer, normalize_bindings
 from chaser.periodic.workload import (ArrayRegistry, GemmParameters, KernelMetrics,
     MemoryFootprint, NoParameters, ReadParameters, ReferenceEvent, TaskSpec)
 from chaser.periodic.kernels.templates import render_template
-from chaser.periodic.kernels import atax, gemm, reads
+from chaser.periodic.kernels import atax, bicg, gemm, gesummv, jacobi1d, jacobi2d, mvt, reads
 
 
 class KernelImplementation(Protocol):
@@ -60,6 +60,11 @@ KERNELS = {
     'paired-read': Kernel(reads, ('a', 'b'), ReadParameters),
     'gemm-u32': Kernel(gemm, ('A', 'B', 'C'), GemmParameters, write_roles=('C',)),
     'polybench-atax-u32': Kernel(atax, ('A', 'x', 'tmp', 'y'), write_roles=('tmp', 'y')),
+    'polybench-bicg-u32': Kernel(bicg, ('A', 's', 'q', 'p', 'r'), write_roles=('s', 'q')),
+    'polybench-mvt-u32': Kernel(mvt, ('A', 'x1', 'x2', 'y1', 'y2'), write_roles=('x1', 'x2')),
+    'polybench-gesummv-u32': Kernel(gesummv, ('A', 'B', 'tmp', 'x', 'y'), write_roles=('tmp', 'y')),
+    'polybench-jacobi1d-u32': Kernel(jacobi1d, ('A', 'B'), write_roles=('A', 'B')),
+    'polybench-jacobi2d-u32': Kernel(jacobi2d, ('A', 'B'), write_roles=('A', 'B')),
 }
 
 
