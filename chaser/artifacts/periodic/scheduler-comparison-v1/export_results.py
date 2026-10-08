@@ -2,8 +2,10 @@
 
 Rebuildable outputs (prepared ELFs, YARDA events, raw run directories) stay in
 .cache. Per study, results/<name>/ receives:
-  - top-level files of the run output: protocol, results, statistics,
-    isolated/empty controls and the script snapshots the run used
+  - top-level files of the run output: protocol, results, statistics and
+    isolated/empty controls
+  - snapshot.tar.gz: the script snapshots the run used (the top-level .py
+    files; their SHA-256 under "snapshot" in MANIFEST.json, as in protocol.json)
   - calibration tables and fitted models
   - figures/*.png and *.csv
   - per-set.jsonl.gz: every configuration.json, cls.json, locality.json and
@@ -21,6 +23,7 @@ import platform
 import shutil
 import subprocess
 import sys
+import tarfile
 from datetime import datetime, timezone
 
 HERE = Path(__file__).resolve().parent
@@ -75,7 +78,7 @@ STUDIES = {
     'confirm-big': 'confirm-big-v1',
     'confirm-mem': 'confirm-mem-v1',
 }
-TOP_LEVEL = ('.json', '.jsonl', '.md', '.py')
+TOP_LEVEL = ('.json', '.jsonl', '.md')
 CALIBRATION = ('calibration.json', 'sweeps.json', 'sweep-cost.json', 'model.json', 'measured.json',
                'extend.json', 'model-before-extend.json')
 PER_SET = ('configuration.json', 'cls.json', 'locality.json', 'summary.json')
@@ -90,6 +93,17 @@ TOOLS = {
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def write_snapshot(scripts, path: Path) -> dict:
+    """Write the scripts into a tar.gz whose bytes depend only on their names and contents; return name -> SHA-256."""
+    with gzip.GzipFile(path, 'wb', mtime=0) as stream, tarfile.open(fileobj=stream, mode='w', format=tarfile.PAX_FORMAT) as archive:
+        for script in sorted(scripts, key=lambda p: p.name):
+            info = tarfile.TarInfo(script.name)
+            info.size, info.mode = script.stat().st_size, 0o644
+            with script.open('rb') as data:
+                archive.addfile(info, data)
+    return {p.name: sha256(p) for p in sorted(scripts, key=lambda p: p.name)}
 
 
 def first_line(argv: list[str]) -> str:
@@ -124,6 +138,8 @@ def export(name: str) -> None:
         destination = target / path.relative_to(source)
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(path, destination)
+    snapshot = write_snapshot([p for p in source.iterdir() if p.is_file() and p.suffix == '.py'],
+                              target / 'snapshot.tar.gz')
     per_set = sorted(p for p in source.rglob('*.json') if p.name in PER_SET
                      and 'prepared' not in p.relative_to(source).parts)
     with gzip.open(target / 'per-set.jsonl.gz', 'wt') as stream:
@@ -133,7 +149,7 @@ def export(name: str) -> None:
     files = sorted(p for p in target.rglob('*') if p.is_file())
     (target / 'MANIFEST.json').write_text(json.dumps(dict(
         source=str(source.relative_to(ROOT)), exported_utc=datetime.now(timezone.utc).isoformat(),
-        per_set_files=len(per_set), files={str(p.relative_to(target)): sha256(p) for p in files}),
+        per_set_files=len(per_set), files={str(p.relative_to(target)): sha256(p) for p in files}, snapshot=snapshot),
         indent=2) + '\n')
     size = sum(p.stat().st_size for p in target.rglob('*') if p.is_file())
     print(f'{name}: {len(files)} files, {len(per_set)} per-set records, {size / 2**20:.1f} MiB')
