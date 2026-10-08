@@ -1681,6 +1681,7 @@ python3 $R/policy-mix/deadline_analysis.py analyze --small $W/.cache/deadline-sm
 | 1 | cls-a1: CLS + Algorithm 1 | 지표만 CLS로(임곗값 0.5, 균형 CLS 묶음의 기준과 같음) |
 | 2 | cgb(27절) | 격리 코어 수를 부하 한도(평균 × 1.05)로 정함 |
 | 3 | ra-cgb(27절) | 묶음 제약 안에서 release 시각 몰림을 줄임 |
+| 31 | 재분석: 마감 지표 분리, TET·TAT 비교, 친화도 지표의 실패 예측력(시뮬레이션 없음) | `policy-mix/`(`rt_metrics.py`, `rt_compare.py`, `timing_compare.py`, `affinity_auc.py`) | — | `rt-compare`, `timing-compare`, `affinity-auc` |
 | 민감도 | cls-a1-cal: CLS + Algorithm 1, 같은 calibration의 동결 CLS 임곗값 0.887 | CAAS와 같은 출처의 임곗값 |
 
 Algorithm 1은 `chaser/policy/allocator.py`(CAAS Algorithm 1 구현)를 그대로 쓴다. 격리 코어가 가득 차서 놓을 수 없는 task가 있으면
@@ -1748,3 +1749,30 @@ python3 $R/policy-mix/ladder_analysis.py --small $W/.cache/deadline-small-v1 --s
 - `results/ca-csrd/`: 두 유형의 task별 CA-CSRD 표와 원본 분석 파일 해시
 - `results/deadline-small-caas/`, `results/deadline-big-caas/`: `protocol.json`, `results.jsonl`, `isolated-u.json`, `rt-metrics.json`, `stats-*.json/md`, `per-set.jsonl.gz`
 - `results/deadline-ladder/`: `ladder.json/md`(사전 등록한 판정)와 그림
+
+---
+
+## 31. 재분석: 마감 지표 분리, TET·TAT 비교, 친화도 지표의 실패 예측력 (시뮬레이션 없음)
+
+### 개요
+30절에서 마감을 놓친 run의 늦은 job은 거의 모두 첫 hyperperiod(동시 release)에 있고, "위반 job"의 대부분은 그 뒤 밀린 release라는 것을 확인했다.
+4장 근거를 탐색 자료로 정리하려고 다음 세 가지를 기존 출력에서 다시 계산한다. 모두 결과를 본 자료라 **탐색**이다.
+
+### 분석 항목
+1. **마감 지표 분리:** `rt_metrics.py`에 run 전체(warm-up 포함)의 늦은 job 수(`late_jobs_all`), 그중 warm-up의 수, 첫 늦은 job의 release 시각을 추가했다.
+   `rt_compare.py`는 짝지은 비교에서 늦은 job 수를 밀린 release와 따로 보고한다. 17–26절 출력에 다시 적용했다.
+2. **TET·TAT 짝지은 비교(`timing_compare.py`):** 19·20·21·23·24·25절과 무작위 기준에서 배치 쌍마다 둘 다 마감을 지킨 경우의 TET·TAT 중앙값 변화, Wilcoxon p(보정 없음, 서술용).
+3. **친화도 지표의 실패 예측력(`affinity_auc.py`):** set마다 Σ U(1 − CLS), Σ U(1 − CA-CSRD), 정적 L2 요청량, 메모리 task U로 U 균형 배치의 마감 실패를 예측한 AUC. 20·23·24·17절.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 $R/policy-mix/rt_metrics.py --output $W/.cache/<출력> --builds <그 출력의 P 빌드>   # 17–26절 출력마다
+python3 $R/policy-mix/rt_compare.py --cache $W/.cache --output $R/results/rt-compare
+python3 $R/policy-mix/timing_compare.py --cache $W/.cache --dest $R/results/timing-compare
+python3 $R/policy-mix/affinity_auc.py --cache $W/.cache --runs task-count-v1,cls-spread-v1,small-memory-load-v1,policy-mix-v1 --dest $R/results/affinity-auc
+```
+
+### 결과 파일
+`results/rt-compare/`(갱신), `results/timing-compare/`, `results/affinity-auc/`. 17–26절의 결과 묶음은 새 `rt-metrics.json`으로 다시 내보냈다.
+

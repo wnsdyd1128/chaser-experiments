@@ -12,6 +12,11 @@ builds pruned by prepared_builds.py need no restore) and writes <output>/rt-metr
   lost_jobs             expected jobs missing from the record: a late job postpones the task's next
                         release (RTEMS rate monotonic), so some releases never happen before the horizon
   missed_jobs           late_jobs + lost_jobs, the deadline violations of the run
+  late_jobs_all         late jobs of the whole run, warm-up included (2026-10-06: the misses of the
+                        deadline runs start at the synchronous release of the first hyperperiod, so
+                        missed_jobs is mostly releases postponed after them; see the measurement contract)
+  late_jobs_warmup      the late jobs among them released in the warm-up
+  first_late_ms         release time (ms) of the earliest late job, or null
 Inflations come from runs that met every deadline; a missed deadline leaves them null.
 Usage: python3 rt_metrics.py --output <run output dir> --builds wfd,cgb,ra,ra-cgb [--jobs N]
 Run with PYTHONPATH set to the c3 code copy.
@@ -26,6 +31,14 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'cls-bimodal'))
 
 import bi_run
+
+
+def late_summary(tasks, jobs, warmup_ticks) -> dict:
+    late = [j for j in jobs if j.get('completion_ns') is None
+            or j['completion_ns'] - j['release_ns'] > tasks[j['task']]['period_ticks'] * 1e6]
+    return dict(late_jobs_all=len(late),
+                late_jobs_warmup=sum(j['job'] < warmup_ticks // tasks[j['task']]['period_ticks'] for j in late),
+                first_late_ms=min(j['release_ns'] for j in late) / 1e6 if late else None)
 
 
 def metrics(job):
@@ -43,7 +56,8 @@ def metrics(job):
                or j['completion_ns'] - j['release_ns'] > tasks[j['task']]['period_ticks'] * 1e6 for j in measured)
     entry = dict(state=bi_run.run_state(result), max_response_ratio=bi_run.max_response_ratio(result, config),
                  worst_inflation=None, worst_memory_inflation=None, expected_jobs=expected, late_jobs=late,
-                 lost_jobs=max(0, expected - len(measured)), missed_jobs=late + max(0, expected - len(measured)))
+                 lost_jobs=max(0, expected - len(measured)), missed_jobs=late + max(0, expected - len(measured)),
+                 **late_summary(tasks, result['jobs'], warm))
     if entry['state'] != 'ok':
         return entry
     worst = {}
