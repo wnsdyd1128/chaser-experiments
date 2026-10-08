@@ -1692,6 +1692,7 @@ python3 $R/policy-mix/deadline_analysis.py analyze --small $W/.cache/deadline-sm
 | 39 | U 가중 (1 − CLS) 특징의 기여(재분석, 시뮬레이션 없음) | `results/cls-ablation/cls_ablation.py` | `cls-ablation-v1` | `cls-ablation` |
 | 40 | task 단위 예측: 어느 task가 늦나(재분석, 시뮬레이션 없음) | `policy-mix/task_level.py` | `task-level-v1` | `task-level` |
 | 30 | 주기 다양 조건의 마감 실패 분석(재분석, 시뮬레이션 없음) | `policy-mix/cv_miss_analysis.py` | `cv-miss-analysis-v1` | `cv-miss-analysis` |
+| 41 | CLS·U는 같고 메모리 비용만 다른 짝지은 비교(사전 등록) | `policy-mix/`(`mem_calibrate.py`, `--design memory-cost`, `memcost_set.py`, `memcost_analysis.py`) | `mem-calibration-v1`, `memory-cost-v1` | `mem-calibration`, `memory-cost` |
 | 민감도 | cls-a1-cal: CLS + Algorithm 1, 같은 calibration의 동결 CLS 임곗값 0.887 | CAAS와 같은 출처의 임곗값 |
 
 Algorithm 1은 `chaser/policy/allocator.py`(CAAS Algorithm 1 구현)를 그대로 쓴다. 격리 코어가 가득 차서 놓을 수 없는 task가 있으면
@@ -2275,4 +2276,76 @@ python3 $R/figures/cv_miss_bars.py $W/.cache/cv-miss-analysis-v1 small-memory-lo
 
 ### 결과 파일
 `results/cv-miss-analysis/`: `cv-miss-<run>.json/md`와 그림(`cv-miss-core-load-<run>`, `cv-miss-memory-<run>`)
+
+---
+
+## 41. CLS·U는 같고 메모리 비용만 다른 짝지은 비교 (사전 등록)
+
+### 개요
+36–40절에서 YARDA 세부 지표(p_mem 등)는 CLS와 캐시 요구량 D 너머로 거의 도움이 되지 않았다. 합성 task에서 메모리 비용이 CLS와 함께 움직였기 때문으로 본다.
+이 실험은 **CLS와 U가 같고 메모리 비용만 다른 task**를 만들어, CLS·D로는 구분되지 않는 차이가 마감에 나타나는지, YARDA의 메모리 지표가 그것을 잡는지 본다(2026-10-07 사용자 결정). 2026-10-07 등록, 실행 전.
+
+**시뮬레이터 사실(측정):** 공유 L2와 메모리는 각각 요청을 하나씩 처리한다(L2 약 48 ns, 메모리 약 220 ns, 8절 probe). 4096 B 간격·640줄 이상의 메모리 접근형 task는 혼자 실행해도 접근당 약 215 ns이고(32 KiB 저친화도 task는 약 68 ns), YARDA에서 LLC 적중 0, CLS는 계산식과 정확히 같다(2026-10-07 probe).
+
+**새 task 형태와 보정:** `mem_calibrate.py`가 메모리 접근형 수준(hot 1–4줄, 반복 2–60, cold 640–704줄, 4096 B 간격)을 혼자 실행해 기존 실행시간 모델의 계수(job당, sweep당, 영역 반복당, L1 적중당, miss당)를 보정하고, 따로 뽑은 검증 수준 24개에서 오차 2% 이내를 확인한다. 통과해야 본 실험을 시작한다.
+
+### 설계
+| 항목 | 내용 |
+|---|---|
+| set | 새 seed(20264101–), set 24개, task 12–20개, U 몫 Dirichlet(8), task U ≤ 0.35, 주기 CV 0.2(실험 27의 주기 규칙) |
+| 메모리 task | 총 U의 25%, set당 최대 4개(메모리 접근형 task 하나가 데이터 2.6–2.9 MiB, 실행 환경 한도 16 MiB) |
+| 그룹(칸) | `l2`: 메모리 task가 실험 27의 32 KiB 저친화도 형태(L1 miss가 L2에서 적중). `mem`: 메모리 접근형 형태로, 같은 budget에서 CLS가 `l2` task와 가장 가깝게 고르고 같은 U를 채운다 |
+| 같게 두는 것 | 모든 task의 목표 U와 주기, 친화도 높은 task, CLS(메모리 task는 차이 ≤ 0.005로 맞춤), 코어 배정 |
+| 다른 것 | 메모리 task가 L1을 벗어난 접근을 L2에서 처리하느냐 메모리에서 처리하느냐. 같은 U에서 `mem` task는 L1 miss가 약 3분의 1이라 **캐시 요구량 D는 더 낮다** |
+| 부하 | 코어당 0.45, 0.5, 0.55, 0.6(실험 24의 25% 칸은 이 범위에서 모두 마감 준수) |
+| 배치 | wfd, cgb |
+| run | 2 × 4 × 24 × 2 = 384개(+ 단독 실행 게이트, pilot) |
+
+**경쟁하는 예측:** PB: `mem`에서 메모리 task가 여러 코어에서 동시에 실행되면 메모리 줄이 길어져 실행시간이 크게 늘어 더 위반한다(CLS·D는 같거나 더 안전하다고 본다). P0: 이 부하에서는 메모리 줄이 병목이 되지 않아 차이가 없다.
+
+**검정(사전 고정, `memcost_analysis.py`):**
+- 주 검정: 배치마다 (부하, set)로 짝지은 96쌍에서 "모든 마감을 지킴"의 불일치를 정확 McNemar(양측)로 검정하고, 두 배치에 Holm 보정(α 0.05).
+- 보조 1(지표 비교): 이 실험의 P run에서 마감 위반을 맞히는 AUC를 비교한다. 캐시 요구량 D(정적 규칙), YARDA 메모리 수요를 더한 max(D, M), 실험 35 주 모델(f35), f35 + p_mem 분포 통계(36절 `p_mem`)를 쓰고, 두 RF는 실험 17–27로 학습한다.
+  M = Σ U × 메모리 접근률 ÷ (1 µs당 1000/220)이고, 메모리 접근률은 YARDA의 L1 miss 요청률 × p_mem ÷ (1 − p_L1)이다.
+- 보조 2: run 전체 늦은 job의 부호 검정, 그룹별 실제 D와 M, 늦은 task의 분류.
+
+**판정:** 주 검정이 한 배치라도 유의하고 `mem`이 더 위반하면 "CLS와 U가 같아도 메모리 비용이 마감을 바꾼다"로 읽는다.
+그때 보조 1에서 max(D, M)의 AUC가 D보다 두 배치 모두에서 높으면 "YARDA 메모리 지표가 CLS·D가 놓치는 정보를 준다"로 읽는다. 주 검정이 유의하지 않으면 P0와 맞는 것으로 읽는다.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 $R/policy-mix/mem_calibrate.py measure --output $W/.cache/mem-calibration-v1
+python3 $R/policy-mix/mem_calibrate.py fit --output $W/.cache/mem-calibration-v1   # results/mem-calibration/로 내보냄
+O=$W/.cache/memory-cost-v1
+mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+for s in prepare isolated pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design memory-cost --output $O; done
+python3 $R/policy-mix/rt_metrics.py --output $O --builds wfd,cgb
+python3 $R/policy-mix/memcost_analysis.py --output $O --rows $R/results/rf-model/training-rows.jsonl.gz --dest $W/.cache/memory-cost-analysis-v1  # 2026-10-08 정리 이후: 개발 실험 원본 대신 학습 행 표(rf_rows.py)를 읽는다. 원래 실행은 --cache $W/.cache
+```
+실제 실행은 `supervisors/memory-cost-v1.sh`다.
+
+### 결과 파일
+`results/mem-calibration/`(보정, 검증 최대 오차 0.10%, 보정 전 −72%~−69%), `results/memory-cost/`(run 묶음), `results/memory-cost-analysis/`(판정 `memory-cost.md`, 그림 `figures/memory-cost-met`, `memory-cost-auc`, `memory-cost-who`, 결과를 본 뒤의 진단 `posthoc_occupancy.py`·`posthoc-occupancy.*`, 그림 `figures/occupancy-auc`).
+2026-10-07 03:45–04:35 KST 실행, exit 0. 단독 실행 게이트 최대 오차 0.34%. 시작 실패 2건은 결측.
+
+### 결과: 주 검정 유의(PB 지지)
+
+| 배치 | 쌍 | 둘 다 지킴 | l2만 지킴 | mem만 지킴 | 둘 다 놓침 | McNemar p | Holm p |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| wfd | 95 | 62 | 33 | 0 | 0 | < 0.0001 | < 0.0001 |
+| cgb | 95 | 57 | 38 | 0 | 0 | < 0.0001 | < 0.0001 |
+
+- **주 검정:** 두 배치 모두 유의하고, 메모리 접근형(`mem`)만 마감을 놓쳤다. `l2`는 192 run 모두 지켰다. 부하 0.55에서 `mem`이 지킨 set은 wfd 15, cgb 12, 0.6에서는 각 1개다. **CLS와 U가 같아도 메모리 비용이 마감을 바꾼다.**
+- **늦은 job:** `l2` 0, `mem` wfd 80·cgb 108(부호 검정 p < 0.0001).
+- **누가 늦나:** `mem`에서 늦은 task는 대부분 **메모리 task가 없는 코어의 task**였다(wfd 55, cgb 106). 메모리 task 자신은 8·2개, 같은 코어의 다른 task는 17·0개다.
+  메모리 접근이 공유 L2를 오래 붙잡아 다른 코어의 L2 요청까지 늦추는 것으로 보인다. CLS 묶음(cgb)은 메모리 task를 한 코어에 모아도 이 지연을 막지 못했다.
+- **보조 1(사전 등록 판정):** max(D, M)의 AUC가 D보다 두 배치 모두에서 높아(wfd 0.495 대 0.371, cgb 0.483 대 0.347) 형식상 기준을 충족한다.
+  그러나 max(D, M)은 우연 수준(0.49)이고, D가 우연보다 낮아서(0.36, 메모리 접근형이 D가 더 낮음) 넘은 것이다. **이 판정만으로 "YARDA 메모리 지표가 정보를 준다"고 주장하기에는 약하다.**
+  RF는 p_mem 분포 통계를 넣었을 때 AUC 0.865(f35 0.822)였고, `mem` set의 평균 마감 준수 확률을 0.618로 낮췄다(f35는 0.972로 거의 안전하다고 봄).
+- **결과를 본 뒤의 진단(`posthoc_occupancy.py`, 판정에 쓰지 않음):** 메모리 접근이 L2를 약 220 ns 붙잡는다고 보면, 공유 메모리 계통의 점유는 D + M(L2 요청 × 48 ns + 메모리 접근 × 220 ns, 1 µs당)이다.
+  파라미터를 학습하지 않은 이 점수의 AUC는 실험 41에서 0.986(D 0.359), **실험 17–27의 P run 6,511개에서 0.977(D 0.770)**이었다.
+  D가 약했던 실험에서 크게 나아졌고(17·18: 0.832 → 0.972, 20: 0.929 → 0.989, 27 768 KiB: 0.759 → 0.966), D가 이미 잘 맞히던 실험에서는 거의 같았다(23·24·27 32 KiB: 0.99 수준, 차이 ≤ 0.006).
+  문턱 1.0으로 자르면 실험 17–27에서 위반 1,607개 중 1,569개를 미리 잡고 잘못된 경보가 490개였다.
+  결과를 본 뒤 고른 공식이므로 확증 실험에서 사전 등록해 확인해야 한다.
 

@@ -1,0 +1,1081 @@
+{
+  "alpha": 8.0,
+  "core_cap": 0.95,
+  "design": "memory-cost",
+  "heaviness": [
+    "l2-low25",
+    "mem-low25"
+  ],
+  "heavy": 0,
+  "heavy_range": null,
+  "hyperperiod": 240,
+  "light_cap": 0.35,
+  "loads": [
+    0.45,
+    0.5,
+    0.55,
+    0.6
+  ],
+  "max_memory": 4,
+  "measured_hyperperiods": 3,
+  "mem_model_path": "results/mem-calibration/mem-model.json",
+  "mem_stride": 4096,
+  "memory_role": "low",
+  "memory_tasks": {
+    "0": [
+      10,
+      9,
+      5,
+      7
+    ],
+    "1": [
+      4,
+      11,
+      10,
+      7
+    ],
+    "10": [
+      14,
+      5,
+      4,
+      0
+    ],
+    "11": [
+      1,
+      5,
+      3
+    ],
+    "12": [
+      17,
+      16,
+      14,
+      12
+    ],
+    "13": [
+      5,
+      0,
+      12
+    ],
+    "14": [
+      1,
+      9,
+      7
+    ],
+    "15": [
+      1,
+      16,
+      2,
+      8
+    ],
+    "16": [
+      9,
+      11,
+      6,
+      8
+    ],
+    "17": [
+      14,
+      0,
+      8,
+      2
+    ],
+    "18": [
+      7,
+      6,
+      4
+    ],
+    "19": [
+      1,
+      0,
+      14,
+      9
+    ],
+    "2": [
+      12,
+      10,
+      9,
+      13
+    ],
+    "20": [
+      13,
+      9,
+      6
+    ],
+    "21": [
+      13,
+      15,
+      11,
+      12
+    ],
+    "22": [
+      13,
+      4,
+      11
+    ],
+    "23": [
+      1,
+      0,
+      6,
+      4
+    ],
+    "3": [
+      16,
+      15,
+      1,
+      17
+    ],
+    "4": [
+      12,
+      2,
+      13,
+      16
+    ],
+    "5": [
+      9,
+      8,
+      19,
+      4
+    ],
+    "6": [
+      6,
+      5,
+      12,
+      9
+    ],
+    "7": [
+      7,
+      1
+    ],
+    "8": [
+      3,
+      11,
+      8,
+      14
+    ],
+    "9": [
+      10,
+      0,
+      7
+    ]
+  },
+  "model_check_ns": {
+    "high": [
+      240000,
+      43170000
+    ],
+    "low": [
+      230000,
+      18120000
+    ],
+    "mem": [
+      500000,
+      17000000
+    ]
+  },
+  "mu": 40,
+  "pairs": [
+    [
+      "p_cgb",
+      "p"
+    ]
+  ],
+  "period_cv": 0.2,
+  "period_menu": [
+    20,
+    24,
+    30,
+    40,
+    48,
+    60,
+    80,
+    120
+  ],
+  "periods": [
+    20,
+    24,
+    30,
+    40,
+    48,
+    60,
+    80,
+    120
+  ],
+  "placements": [
+    "wfd",
+    "cgb"
+  ],
+  "prepared_manifest_hashes": {
+    "l2-low25/u045/s00": {
+      "cgb": "27464d1aeb83d22a86fc18292e4fe086ceb6a10424046dc2d4f92e99b028ae17",
+      "wfd": "5dd4fae12d518e84b2225541ac53a7abc03163ec0d76bcf992277e5d3eab3fb8"
+    },
+    "l2-low25/u045/s01": {
+      "cgb": "a7e5421c2c871e52ca71e51d14a1a8e668031d940d5466b2b41052b1e6063439",
+      "wfd": "2944cb6e56c39fd42b3ff638eb716a92e2dd982d0a9b1b9596beaf4da3e89205"
+    },
+    "l2-low25/u045/s02": {
+      "cgb": "bae4ff7bc1da3665de6129b0d176384a383587f023515689f324c94330319f8b",
+      "wfd": "d81cf768aa839735a66ef9e18a3a77f8b31ef6e38722d78e8cf8ecb4ebc599f9"
+    },
+    "l2-low25/u045/s03": {
+      "cgb": "8fa671c8f7f08310c0a48b8c7099bab73206c20b5facad182e4006b028901d7a",
+      "wfd": "bba60ba7b949a24b50bba4c20c134815e7157d9e4a0289e4018776d362d1732d"
+    },
+    "l2-low25/u045/s04": {
+      "cgb": "a5cf90a6db6c33fee63c25817dd093cd111d3ae0f0c139d06832b5ad58dfd17c",
+      "wfd": "4b2f92cbc3cb2a4122262f0e0691fcfe8dfa2997b2d8d364badb37605221f011"
+    },
+    "l2-low25/u045/s05": {
+      "cgb": "7fba0505fe1deb323f861c06b2508e2b18a7e3ae21cfa46abf84847b4bee5aad",
+      "wfd": "0be25a1b0408ab117795d427d90da9060610afa1d63058fbf01b4f667c87380e"
+    },
+    "l2-low25/u045/s06": {
+      "cgb": "d4836fd443fbddc94c885dca2c4952e6b55f57f0009729b6df3dd6280ad78d9a",
+      "wfd": "064da7c051dc14e682406b56308089cd91024231854c3153e62152497c811789"
+    },
+    "l2-low25/u045/s07": {
+      "cgb": "b249b8198627f3a57954c132b3204d41dcffb0e9767f7361dcab205601e24157",
+      "wfd": "40a610cf07dce25aec8f5b5c5b81e4be3bb3bfea2795c64378d281c85afef23a"
+    },
+    "l2-low25/u045/s08": {
+      "cgb": "fce1d47de7c402cdf9274d946671657067b1ad7f526b23767f187beb89c2b09f",
+      "wfd": "f2284d75fbb6e09c6582ea7dd724bbbfaed4fa7103848b86506ebee6236f87c2"
+    },
+    "l2-low25/u045/s09": {
+      "cgb": "b70ab1f2426722b264c36e769d3c5fd8f864fb8953f751e14c6052d5616867ed",
+      "wfd": "a8c78293827bad3cb105be50c2116b909a83fbcdbe0651be27da1f88699c1225"
+    },
+    "l2-low25/u045/s10": {
+      "cgb": "b93030a2cbfe550abd492ba2c01e7ea25d392ff9196c3001880aefc454cc158e",
+      "wfd": "389280401fe0da278338679e1f0386e458d564c90a4420249b940e4007fbbb02"
+    },
+    "l2-low25/u045/s11": {
+      "cgb": "7ac8c30dbd46a65d41b62fd5c4ae7f4655da794408a9a034ac9e0befbada5ee2",
+      "wfd": "aa5750b8524c8c7521e88d90c35ccfffeb75cf9a2fb896ac78edf2c2e10dda26"
+    },
+    "l2-low25/u045/s12": {
+      "cgb": "a9e81f1482658ef58eaf16a3a97b5b5d8185a51a98b869fde90a6101a70f84b2",
+      "wfd": "481498fa7b16bc358d34653bec1e3261bf6fad5c0ff0e07db95a96533b030d22"
+    },
+    "l2-low25/u045/s13": {
+      "cgb": "c85d6aaa28a96ce3c90d1fb24f0963caa5eb8b18402059ae9b3ca019058bc7a5",
+      "wfd": "ef68d3f2979bf75723556bc5ec890aa66a1fbed74319d7ca805a40f69bbbea66"
+    },
+    "l2-low25/u045/s14": {
+      "cgb": "038071c1dc67c7adccf904828ce84e3c9f942ebb93334749c13251bbca189239",
+      "wfd": "2d91b8b57340207d7ce6bc2297c76df18db256a49e8a65a0da3b7597f0d371b7"
+    },
+    "l2-low25/u045/s15": {
+      "cgb": "9c8092e6e6b7180a2080798894947c1a8647ca1602c53e8b6bb854cea0cac2d5",
+      "wfd": "36b3c1434eb621c5e89a487022086ba5b54ca7cc82ac150aafad3865159ea2ad"
+    },
+    "l2-low25/u045/s16": {
+      "cgb": "6e7624bfd5db44031381dae8ad6d51945203929e0e1b1fc67397a680816d8e3b",
+      "wfd": "1e8384d8d4bd297fdf97f70f30087e131f3fd1a4ed3cf09721f8351091b842f0"
+    },
+    "l2-low25/u045/s17": {
+      "cgb": "8e97fdbea38654295d8df6a3835c83b50139f5cda3b8cce198bdde8d430207fb",
+      "wfd": "6320b95aab78185b48b1ebb2e8991538f308ebc9dafbf2335f65bde417e52acf"
+    },
+    "l2-low25/u045/s18": {
+      "cgb": "f7fa8bdb35c509f82fae0cc157b12b9b755827eed2b763a5692356eeb1296da2",
+      "wfd": "b5f390e0a3040161dabfbe652b8a87223ec99940d9214eb4939544c8de210a9b"
+    },
+    "l2-low25/u045/s19": {
+      "cgb": "6ab06a3de9462c192f98407bd3d2b1ee649686698a4f5f16cd9098b30dfb9529",
+      "wfd": "02738f1276a19b9c28904a7344dfe41997fd19c6c49a64c4c40dc3084f84e78d"
+    },
+    "l2-low25/u045/s20": {
+      "cgb": "319b09eddac703198ad8b078556455675f624e8dfa828c718473e133d8baf6aa",
+      "wfd": "b2e7cfdc2564973623a7157210dd03aaaa4fd6d01823dcf604938075b7eb8a82"
+    },
+    "l2-low25/u045/s21": {
+      "cgb": "d194109d2f34468f5116a1515dc63d36e7a2d271199dd11c306945498925e482",
+      "wfd": "103cf74e5992cf8a1265a184c7f43b42fc92e2b704caf8a9967b9af252ef24e7"
+    },
+    "l2-low25/u045/s22": {
+      "cgb": "211c951eef4f218c01c8e65295bb01366fc58b304d122d4cfe2807ac03fdc867",
+      "wfd": "8959bc4be7f52110d5ccd746e7ee39df367e6e040f0ce92f5b72d33d40c12a1d"
+    },
+    "l2-low25/u045/s23": {
+      "cgb": "a738c5f0acc4feb46bcf2ab91f848f6f28efe2261d675abbba73112b5ef07321",
+      "wfd": "11d8138325958f11fd22bea73811ebce41876d52a8dd6552f800722206f433f5"
+    },
+    "l2-low25/u050/s00": {
+      "cgb": "8ecda78fe66d7f8e4a4797459b588641c9d228007cf3f08547fe0bdbc7edd8ae",
+      "wfd": "e34502adcd5aadb6f14930fe8a3b191602ebcd5be95ca865d7dcb06b00923bdc"
+    },
+    "l2-low25/u050/s01": {
+      "cgb": "78ed2d7b7eeddc07814f8a15c82b1ae1d3007456a0eda4f44dd21d06fd3e8a86",
+      "wfd": "b6b10e2f05501d271753839abf7ae4d5ab58048bceafc4e67649dbb6cd5b19c3"
+    },
+    "l2-low25/u050/s02": {
+      "cgb": "78f660a8cf88e572bbe0d1d9285339abff17bdc71421d5dfc3a3f037ed27c2ad",
+      "wfd": "9098c832b3c5ec508545f9a0d4387b3e42f0d54bf6b84f7404da4d55a491d1ca"
+    },
+    "l2-low25/u050/s03": {
+      "cgb": "e36b7befd7ff2e9cd4ea8f022e23cc8adba77c0acfa7ed47594521e44d38b1f2",
+      "wfd": "ba3b0c558fc509e6a807349f2ac3dd16d0895459efe23deb1bc710be2f59d525"
+    },
+    "l2-low25/u050/s04": {
+      "cgb": "1c2ee023b41fea7bd5e092ce1b51e40d6199962e301022ae95f4e77df8302e94",
+      "wfd": "5d969ff1c1e9803b2b6b04ab1e3a0859edd5a97493a5a13d6183daaa5647c78d"
+    },
+    "l2-low25/u050/s05": {
+      "cgb": "ad3011ba4d6d5eaa218a03a2cb9a7bed401d37858bed8fee123d5ee8a1794109",
+      "wfd": "b182683a88d0c6f6d7f829183b60e3053be900d7055a90ccb826855642bfaa2e"
+    },
+    "l2-low25/u050/s06": {
+      "cgb": "98b41e824e95030de56efd8453a58205d16532e3ecef7c4b9d91efe48177341b",
+      "wfd": "16d2f1bba70ee58edd40cc3d54e2c702c08b384da27641f02368fd5bcdea46a7"
+    },
+    "l2-low25/u050/s07": {
+      "cgb": "41c61f351ed91a47611ccb22e478ebffa25193f55a8b427ab795d4fec3384d62",
+      "wfd": "caf47cb437a77d5c572bc966e22e8f6524e8d7f3064c659781a28dfbc890c672"
+    },
+    "l2-low25/u050/s08": {
+      "cgb": "7b5ff83b1312fb8542849b12b45bc6f28337d97f6c615ca879acbaaf77f3d86c",
+      "wfd": "04fc29f9baf7a788ae5f2553ef098497deed438c3650bdd830face01097bbc32"
+    },
+    "l2-low25/u050/s09": {
+      "cgb": "5e8ab18e6c22d7357a1ea839364b9f43a351c7f4f2ee829a600bd10b85a2afbd",
+      "wfd": "a2348cb43d0f487b7e71227dcf6f2913cbbac187e078d9c93ce90143aa38ece5"
+    },
+    "l2-low25/u050/s10": {
+      "cgb": "96ecd7b683f918b53c0338012a63ab90e3514bb6868bfc2fe866da7766a3b034",
+      "wfd": "d151a87e70d1d917a42b041c0f8e3fefb390b6e2f451b8486d1984a42aee5787"
+    },
+    "l2-low25/u050/s11": {
+      "cgb": "3802b41b7f6067b50d70dcc473a3fbcf5d1aa2d1675c7a786852d7976ecd7411",
+      "wfd": "afff0cd119506b7dc04471e8dceb38eadb552e686e21a89ef5b7f9d42bb91b01"
+    },
+    "l2-low25/u050/s12": {
+      "cgb": "59b95598cedbdc46df1a9a909b362504b5155a2c3be2ea812f12e6a3825ae8d5",
+      "wfd": "9d5f1a5daed3eff316b897d4819ea401324ca014bb987a610c69599aa8d024ae"
+    },
+    "l2-low25/u050/s13": {
+      "cgb": "174761755a173efe4d5d7a4ab6583f524c08c84457d84ae5295f26082c73b260",
+      "wfd": "1584e94dc6671a7cbda618c283ce4de423151cb4b5014158352345ab45911008"
+    },
+    "l2-low25/u050/s14": {
+      "cgb": "60a830fb61cc747bf3faf80ef8016a54d9804b71bc4bac2e62b840dec483fd49",
+      "wfd": "d45af0b1569b2fc4ff5bc0ad4c8fef254696dcc2ed12c7cd82011c9ed89bc44f"
+    },
+    "l2-low25/u050/s15": {
+      "cgb": "fb6771d0743c098821c3644fc98a2cb35cf85929193baa28585e0b9479410ce2",
+      "wfd": "4ffe86791d8ecee4145dbf5458257ea1993a2c6dc3ffdc3824021da40706373e"
+    },
+    "l2-low25/u050/s16": {
+      "cgb": "6d445079673c78fe24f9d832dbc6d9e9d2fc04460b4e1c53ca20f5bf5b3dc622",
+      "wfd": "d3958daae4bb4ef7861d7e4749b1cd8994a586876410a1b69b371638df6d2d27"
+    },
+    "l2-low25/u050/s17": {
+      "cgb": "32b32c54e285939ed5c7ad018d010179c69be509184ccc388b173a79c6a28b1d",
+      "wfd": "2b8e0fb85cd28098c72d35577018f1ded818b3407599540eb193e87ed0f67f40"
+    },
+    "l2-low25/u050/s18": {
+      "cgb": "8d54c6fa821f2b0a8edf0c5fdffdff1957e0e26035315028ceeeea09c7c7b314",
+      "wfd": "4e343f76b44f12931d57a4488def490f7f07ae85cfac4012806499fbbfb5bdf5"
+    },
+    "l2-low25/u050/s19": {
+      "cgb": "7104b33fefbe17712e454153e73a2a8e047ee9d2a9cb7f1aab8b9325c05926fa",
+      "wfd": "cdd60045fbdfd85bd18d918f3a2721853ddbfa18a022d79eba7d29f8917a0e30"
+    },
+    "l2-low25/u050/s20": {
+      "cgb": "bd5eccb34d01f693867e6f00cc48ccf244147177b791c72164d8ff8de2efcbd7",
+      "wfd": "45e9d75057e360e0b06aa593cd5519f3c2b678844d70c503c9bf8e13b9f45850"
+    },
+    "l2-low25/u050/s21": {
+      "cgb": "58dc451ef7c607597b815c078913e275310959d92db6004f6eecad118db78746",
+      "wfd": "7ff2cc7fabfab2e79734811ee4890a38f2aa46ac65586905cc9638856a90fb24"
+    },
+    "l2-low25/u050/s22": {
+      "cgb": "bae367c875502b50f2990ab9a5fbca505856adfa667bf665baf56b11889af827",
+      "wfd": "d9945f2cbf8f27417abb2fb94f0bada0dfae5cebf7e29bdf037a9cf96e902f6b"
+    },
+    "l2-low25/u050/s23": {
+      "cgb": "d628afb96945d191d4a8f209697310ed69c33b6ef4ef5db1bea6559beb1cadde",
+      "wfd": "ca4234f1a23ad83637fc24f09ff8869d987e22caf6d4a1390d4e76ff06f22127"
+    },
+    "l2-low25/u055/s00": {
+      "cgb": "8c1a6cbcd62eb39d0a09250134a5b11bee90f4fcfeef523e85fff3abab5496eb",
+      "wfd": "437dab864c97329e307bb1f22ff3aff067935a1f8edfb3fffd2fdc6cca7cf594"
+    },
+    "l2-low25/u055/s01": {
+      "cgb": "f76ec841eee550f8c0b8dc3f0265dfe2150af8cbd7b71855c3aac054e5a192db",
+      "wfd": "b50f9ab7830887f25328e26a64a534120a498a318124b429aa45ece363f0dea7"
+    },
+    "l2-low25/u055/s02": {
+      "cgb": "2cb9e1fb6bc17ec542634530c87e0add9559db1005939032c2ea6c0c85eb1569",
+      "wfd": "eac097ee5e6e15396c4539b32f74473d9483d3f212b9559a0754331c22e09cac"
+    },
+    "l2-low25/u055/s03": {
+      "cgb": "8cee2acb4a5603b6ee777724f50099d440610159b6119845268fccc5e85cd1c7",
+      "wfd": "cf38dd11830e4072b08d147becb9924b753cb8f3be2a0bdfc5c625cc381032b1"
+    },
+    "l2-low25/u055/s04": {
+      "cgb": "b5a0e0ae4349c07b190305bd5d915bf7067f1bc0fabb666bef4c015aef4b6d37",
+      "wfd": "bf78d1014023a9fe6267daf6ed2e51d2a5863bd1e53c691f33c93b66ac156882"
+    },
+    "l2-low25/u055/s05": {
+      "cgb": "9f47035d9868d90b8eca124cc08c3bf75162a6043203e087642d59c8f9216dfb",
+      "wfd": "2d8619028475489803cc91cf6b7c269bb53bd90fee906df6bbe73c70944a3364"
+    },
+    "l2-low25/u055/s06": {
+      "cgb": "a944d1c579a47979f426720b19f3406115861017378eedf62740b50e148314fe",
+      "wfd": "6f7a4acc7c077ebe5a1a95bf15c8665e1f000673ad8b385c0d06442bb5cfdcb1"
+    },
+    "l2-low25/u055/s07": {
+      "cgb": "3395e25d5ced793fc938233f8cb3bb195d524162b068988f72b5597b93fb8f29",
+      "wfd": "4a0982ee5a70059cf30d07e30822ce22ce79c7fd39d1aac4a626ee198fcfbb6b"
+    },
+    "l2-low25/u055/s08": {
+      "cgb": "fc55d069262f5f46e975749c63c122582c05001171fb3bf251330aaeb102dcd5",
+      "wfd": "fcadd0a49e2e2425a31c697587c29ff31cdf907806c280039d5df51ee43b0759"
+    },
+    "l2-low25/u055/s09": {
+      "cgb": "ecec33278bf9b6707e96dc5619c0730e351065a64e602d6d106653e47cc7cac9",
+      "wfd": "e03e8498dc2c6e4f9c7a84181c07eca0dcde0471661aefcbd9c1f08236784a0e"
+    },
+    "l2-low25/u055/s10": {
+      "cgb": "1118b52e74dd0350fe1537c07a29c126548240bc16adce10071928578a6b74b6",
+      "wfd": "76ee5a1fe7f407138e8d7e1198271a1b58ce3ab8ef58b37048d1265600972cb2"
+    },
+    "l2-low25/u055/s11": {
+      "cgb": "49b10feea43ad199d0b9e1048499b246cac2f64e2b5e69bb7ac4c78b14daff3e",
+      "wfd": "66386dae97e4621e2dd875f2d1ea4340010264750e06b2bbeb29a5bb899b1c21"
+    },
+    "l2-low25/u055/s12": {
+      "cgb": "b6c024acd09996a1a28d058b6f49d4c29e09f67c56f81aa567df3b6c4b869f2d",
+      "wfd": "507639317a6dfe566169961add8e662b44101a68de28eeddb8f123c890db384e"
+    },
+    "l2-low25/u055/s13": {
+      "cgb": "b430bf5860c6c0f773ae464657763d1cd7ff9ff454a169ef0497c8ad317b3c8f",
+      "wfd": "8a315dde1b8ff72ca19606ed77ae0e0d99b59265625eeafe7c24ea201b18b743"
+    },
+    "l2-low25/u055/s14": {
+      "cgb": "1142e315ccbd90e1f4d1a1acf194ad843fceb827635a737b22934659a104994d",
+      "wfd": "3cee412221bb94192bcd0647511131a55d9a5f6e7a65ec7a41f737d19892bbbd"
+    },
+    "l2-low25/u055/s15": {
+      "cgb": "337ebbc5580ecf6f39dd5cd2d935403a69ffa1092c993f184f3069033884ec10",
+      "wfd": "09ad3a7658b6ecdbc8de7d5df1725c1459b9136fd740b73755ab6136b334125a"
+    },
+    "l2-low25/u055/s16": {
+      "cgb": "09be25b51c932db3211fd5815cfb770c4e169bff7d7c2ef8921fd287d10b18d3",
+      "wfd": "c87d45d6dca4e980765beb40f7b6a59e1cce5e7de07969b98f21bed71e328d64"
+    },
+    "l2-low25/u055/s17": {
+      "cgb": "aff53428491bddf772d9343c80e54dd15a7b020c2ca220a0c39eaffcff7bc495",
+      "wfd": "e065e76c8957990df2281375ab5c287414f6bd265c1fcdfd4f5ddd9f89707c23"
+    },
+    "l2-low25/u055/s18": {
+      "cgb": "ba71f6858419c2a3dd8d081fb7a4877b10268870b7cd548088a212b249dc13a6",
+      "wfd": "50bea88669bd9630d5d4ab7c69e67b09d642bde6ea016c69a499a0f826328298"
+    },
+    "l2-low25/u055/s19": {
+      "cgb": "98dd20e645d9ab5a861bc122ca5ea65f752fcd34609c8b4e2f7b7198b94f229e",
+      "wfd": "3e14482447e17f320d1b5b53f5d50bf151c7595d7d07047cda8c5968f2c5ca75"
+    },
+    "l2-low25/u055/s20": {
+      "cgb": "3d7458f5b6e5e0d87c14cbc9d416f6b7eb65d74a3c1b59225e84284f1ab4070d",
+      "wfd": "fe98f6fc4561ed2c682fd50728c049cf29b2bd42c7badf7b2a918e3129d91394"
+    },
+    "l2-low25/u055/s21": {
+      "cgb": "98f100aec95116138f1183b03daf840dfcd3121157d3b6c47204cac04ac33600",
+      "wfd": "233e2b23350f45287b6fd07e9b7b3d5b8c2e1a1f87bf5ad836971007686b2b18"
+    },
+    "l2-low25/u055/s22": {
+      "cgb": "63ff08a95f35ed572933a5a49f4d5bfd1928d5c3a742996031bf1f54fb46476a",
+      "wfd": "0769029f49c24f5c23128eeb569272372e863235ea6a41fb8617fa16b097121a"
+    },
+    "l2-low25/u055/s23": {
+      "cgb": "4973c663267022d4d19390152f83b4392c4cf581a06cf6c20d60979515ca9805",
+      "wfd": "ba2e46c6ae0ce14d83303116ddc44ac7f432deac8c468dcd03592b3128f78150"
+    },
+    "l2-low25/u060/s00": {
+      "cgb": "2e2f00873caa18e14077bbb4f133d8e97dcff24ecaa3c21ee8425cb785b0f3db",
+      "wfd": "4a83722dd7e1fa483b5a44b44124d9ffca1ed64649e35926f0a25e4a844cbda6"
+    },
+    "l2-low25/u060/s01": {
+      "cgb": "a244cac2306b24e00b9c5a055ccdd281c36c5e163fd04e6434255ab97c772a94",
+      "wfd": "d5b7a7a729256c5c360eb0776f15b03be4a3d9dd487e91e30a86d22759266a37"
+    },
+    "l2-low25/u060/s02": {
+      "cgb": "5c25ef2a166127ad118040a3cca03a6e04fb7ff7d1441527e62f38dc1b53d4ba",
+      "wfd": "255b445339d555dfeeeccf6f1415ea47e0b6072842a40c8ce9ef298696cfcdfe"
+    },
+    "l2-low25/u060/s03": {
+      "cgb": "d564b609d076e2c8d0118e0abf9a74a93d0cd10395b422c8c866df58f49734bc",
+      "wfd": "0293b57bfae6a7d396ebe3da0277b93d858e223597642fbd03de1f0a87661192"
+    },
+    "l2-low25/u060/s04": {
+      "cgb": "30a29d0379f7f314f2db40665bd72a09e720a1f435088e29bfb1f639e55b55d2",
+      "wfd": "7abdf2a194c22fbde32f88f24a0a7b6cc2fcff6bbe1b4aa89e7b16b4c6febf31"
+    },
+    "l2-low25/u060/s05": {
+      "cgb": "98c0d537d498a16cef062d08d2cb07693bde43b1144267ae30a98bfcc5758bba",
+      "wfd": "c2d74a6f14ffcf6c068d281b22edd9dc70c02e134dc6692ec8bc72cdf19baf12"
+    },
+    "l2-low25/u060/s06": {
+      "cgb": "a9ab5af0d356b2d41ceae40cd0447e32e686ecc221b477b12175dbdbd8115f8a",
+      "wfd": "29f4405c2389d345b7ca1e0eb08d3070722d3f957c9f086a9cb34dfa5a3c3cde"
+    },
+    "l2-low25/u060/s07": {
+      "cgb": "5285e6c6f36503559d9aa1634752868f96c7b2306d298f7b95d94fd7ee18c098",
+      "wfd": "c1142ced5f01e2de85ef1f80b756c5b05b2e78ae06a9da51b771b90ee129f31d"
+    },
+    "l2-low25/u060/s08": {
+      "cgb": "f34e519a0122d81bdf428955c31a9d13377f000eb3d790f5dce5691abce06b77",
+      "wfd": "3b27b82108991d6f19d897d3e2dcfb75ba82fb0862692c249c2c0e1a5c6bdd76"
+    },
+    "l2-low25/u060/s09": {
+      "cgb": "672e2d45fe7c7c4e574c77788cd6604b961d12d2ff5888e7ed5899acaab8a33d",
+      "wfd": "7ff9d15b5b957e52616feb46e6d515a1916f4eeb21e3db360dc1bb6bed5bcd6e"
+    },
+    "l2-low25/u060/s10": {
+      "cgb": "e1ad3c33b576720331d2e102c34623b399be3c58857d351355c132f1c3769c57",
+      "wfd": "03cf1a6dd17509389b90829c87eea60c701188bc7e5fec2fb918fb4f8a0246d7"
+    },
+    "l2-low25/u060/s11": {
+      "cgb": "987d34cec4a88de7a21302009b954997027698d4f09eb1a043c8e28dc4972fbf",
+      "wfd": "c89e1238fb346d59c4a2e3eabc4ac481139e74052504870eacb80ef748c85992"
+    },
+    "l2-low25/u060/s12": {
+      "cgb": "548e0ef68404be95c3c5d03ab516dd52e4da9782ceb56ea7bb3c638919c128a7",
+      "wfd": "d575c8b586304cbb675c39c6de22e1ae1b9f0694873aed66203b66c031699c5b"
+    },
+    "l2-low25/u060/s13": {
+      "cgb": "a237b4aed1c7f9d36bb2c4a2a976a8ade08ca5dd12d876e05f8bf04dd499cb2f",
+      "wfd": "8e3ada76e38bc768e722d7c1fd7d9acf5b115a29d44c7f4b89eba209f4a0ee27"
+    },
+    "l2-low25/u060/s14": {
+      "cgb": "1aa43d1c7b4d3239117a6d948499ce99ab2940fd67063f52f2537b623a288085",
+      "wfd": "cf1bff740fb16a415a916f42f699284c13819e7a9b2f8a5826cc9d204359d757"
+    },
+    "l2-low25/u060/s15": {
+      "cgb": "b7f4b0f243d6989e25234f2313644e56c61ca58ca29e0121de968e5c5a6f862e",
+      "wfd": "841cd5aa852849109012094424c8067b9ddebfc7e7365976d5bd536e204280e9"
+    },
+    "l2-low25/u060/s16": {
+      "cgb": "56b8bdbd4ee7d9adbc508f39939b32092299ad69f584bb259633f5ed928ce3ac",
+      "wfd": "363d20629501fcf419012db1df1115bff86a7882d5a0edd1e1723736e05f89cc"
+    },
+    "l2-low25/u060/s17": {
+      "cgb": "15ef5b740bc714884f5952249f45d28573864bfabd4e971d622caf6c07785233",
+      "wfd": "21ddd64e600f2dac39f5c9b71ef6f69dbd3b865b83e663ea87f06f508a57f907"
+    },
+    "l2-low25/u060/s18": {
+      "cgb": "1c7f6506e73c47ca84ca6f1dda175e21bdc15dfcd9c3c4fc99dfec689313d8e8",
+      "wfd": "97017b51572e9d85eda31d14980ba9f28b230cb6cc208dce60e2e7d5ce15952c"
+    },
+    "l2-low25/u060/s19": {
+      "cgb": "aa41fe5f038646126a441efd922337d56a3029e188065b3b625ad32d528685a9",
+      "wfd": "4b575ed3146bb2dab4fdcacdeaacebde7123df9e6737f242af7db16b1d737689"
+    },
+    "l2-low25/u060/s20": {
+      "cgb": "0fd20e7af67fab0632eb0172f80fca27ebb577e7895c14d55d87d521e689d4f4",
+      "wfd": "fc328c9b3f3a0c78b777d54f0d0e1bd6f3ac4499cb24f7ef61b2095b41222d96"
+    },
+    "l2-low25/u060/s21": {
+      "cgb": "71fb33f4602fbef45a8c8f01a247e6341ca0a54a20a99655faf472c351545f61",
+      "wfd": "4265199be0127a68101a9740095d730fa1e23b02b86a06ab435c6a36e37e3631"
+    },
+    "l2-low25/u060/s22": {
+      "cgb": "2358da73eb3d32d3d8a669a1d532a5e0cead06eae316e6f0c54e60030b234fa0",
+      "wfd": "60cc81f0aa72866c9ed72d6e3c2ade7ec16883e46bb6cc14a4ca9e524e682bde"
+    },
+    "l2-low25/u060/s23": {
+      "cgb": "475ba538c7cf9cf7c4667f60c55b3c29aba829719c38e92e528357a6f3620104",
+      "wfd": "f9ecd2bacd19bf82079a8ad7154a3bc755228484fd10e5cf8874671a731e0144"
+    },
+    "mem-low25/u045/s00": {
+      "cgb": "2c956852160898c3922f51833a0e8478243793d247d88eb2538bfb5a7ce68a25",
+      "wfd": "f7c50e7ea22168174cdab70afa099dec762c9db9862b255277a79597d61bd6cf"
+    },
+    "mem-low25/u045/s01": {
+      "cgb": "5b5469004cc5072ab9dd9b1bc4ce7586e4a3a0085890e504893ce60b6ee93bdd",
+      "wfd": "bfc6a8b7d4eea79958f312887de3e8e3445cdd31ae64d54bba9c1408c5a39f1c"
+    },
+    "mem-low25/u045/s02": {
+      "cgb": "4aa6008fa238c80c9427a232942939858143be10116cbc98d3af76bc519455ef",
+      "wfd": "d1a1adc1f58081b0e3acb2ee1fd0aa9cd88542e609a074a277742f4355e474eb"
+    },
+    "mem-low25/u045/s03": {
+      "cgb": "445b236d5ce6aeae30b59c609202ca39654c3a031132fa5b53c9ad48ea3b475b",
+      "wfd": "1f7b028660b700b7ae06d4875fc33866ed6c7fd8fc6ad0970a299a1f736dc625"
+    },
+    "mem-low25/u045/s04": {
+      "cgb": "58dce588aeff290cf88f87f30c857b1dd48af2f51f8897703d30e7d060d557a5",
+      "wfd": "9db322c385b0a4387841cae916509b86dca88e3ec95c5a248657f3784afcc74a"
+    },
+    "mem-low25/u045/s05": {
+      "cgb": "04640fbd0b0070e1fc99662b527c7b67f782c2b29ee813b404039a3b86d2dc53",
+      "wfd": "c5103a68775dbbdf3251b1bd747f3abc96a53160c7aeb77282b0d59604156b84"
+    },
+    "mem-low25/u045/s06": {
+      "cgb": "4c27cec10101e335c07e1e85f4468314c1c2acc48e6df6b1fde7104c6c8dd590",
+      "wfd": "c6bc3301d05118095216b24c587aea6b017818073bead0b0350e643f8c3caa82"
+    },
+    "mem-low25/u045/s07": {
+      "cgb": "ccf366d335387d44c80ee9cea08f71108933b6a96f287bafcf93e174f1c290d2",
+      "wfd": "e262f648eb163a043b440559afbec293b01be58864f7ea5e44ab71acf95d78de"
+    },
+    "mem-low25/u045/s08": {
+      "cgb": "04709f5382de90aad96e7205917eed650ea08bcf67c953ce035beac456acdc19",
+      "wfd": "db4ce6e423a9ec4b146ebca9c361711e7721ec4aa037e2f03ee60a93a0fc19df"
+    },
+    "mem-low25/u045/s09": {
+      "cgb": "40af8be24ecf4ea5fe0b4b9e5ac778e37ab75e1ec9272f143d7f92d82b781f07",
+      "wfd": "6453337cadc4c3b37c7032a09116ecc6ea59c0023a4db1bf3371550a39a37da3"
+    },
+    "mem-low25/u045/s10": {
+      "cgb": "fba924fec64b58d300ac18c6989efd6545cc5c7bd07c5b2c3b2bf65dff9df2a6",
+      "wfd": "9f9531aa1eb6a995779afd6b7b264a5fac7ff248e3da86bd76ba0f8b8eded4d3"
+    },
+    "mem-low25/u045/s11": {
+      "cgb": "b5a4c976f282c6377b60a7247dc93fa20d545465695a179b0473f41edff5002e",
+      "wfd": "adc6d01148e2f31af5699a8d04e88a6c02ecce26668e39e050a6a5b0b56c8f87"
+    },
+    "mem-low25/u045/s12": {
+      "cgb": "b4268acd979ebe3704d0be149d33be9a7e5c2577728d38de0954f69fb5c1f234",
+      "wfd": "cf5f84afcfd02724b1477cc7094dafd09e1f344c5d2c59957565e285bacd557d"
+    },
+    "mem-low25/u045/s13": {
+      "cgb": "ca83b3f43d4867605169f159259b01399ce84e08406775ae93d1ddaa0463bcdc",
+      "wfd": "6fc4a80ce849548f719e53114148e973bb2cd61483729ff0c6a5c3f82c3cbea9"
+    },
+    "mem-low25/u045/s14": {
+      "cgb": "95f2b663bdaa0fceccb0becd01586528765c0a1fbe28eda88d98bca604b86f0b",
+      "wfd": "7027786deb004a96df8bb261f5315a2a2216d62885b1f6b8c6e2cb7113c637ff"
+    },
+    "mem-low25/u045/s15": {
+      "cgb": "c1d2218d60908ac1ca91867e53e724595905f0d7fb2aba844e9b5b82f0094579",
+      "wfd": "d93a4ea76edcaaf3410440092b1495d3cf3865f054e3fbd797818a8b41b36f4a"
+    },
+    "mem-low25/u045/s16": {
+      "cgb": "bf38af1088de69059427fdbbac64563e45251676ee52e11028337867dfe7e9e0",
+      "wfd": "7a73e84c61b71e81b465cbd88649ec4ad64b3285701eb3bcf697c6c5a40f1cc3"
+    },
+    "mem-low25/u045/s17": {
+      "cgb": "2caa939029827e8966fcae690b31359b052c39de56a19bdb40819f88046c4d66",
+      "wfd": "d4e993e86377c1cc5eb21cd2fd270b70251ff94e467dd58791f8fd25d8a1a547"
+    },
+    "mem-low25/u045/s18": {
+      "cgb": "f3bdcd3856e53c9ebc6e829d5fe95eb2c4a4cf09933c3a6eb488a84fe8f9e6f8",
+      "wfd": "58413f3cb2b34c4a205443fe40212f3dbd51a8675b71dd7cd5fd8b7d1ebac274"
+    },
+    "mem-low25/u045/s19": {
+      "cgb": "1c5f8f61bde04fc780ea45e252960a2b0f6188ea340b0b9fe62dd6460e7410bb",
+      "wfd": "104c07ffcdbf5f29eb47f0e8dad00219434e619e28a3eb4f8881f47dcd0efbdb"
+    },
+    "mem-low25/u045/s20": {
+      "cgb": "81ecd48f6d564e45008f87aec59fe645dd0d66595c8311eaed75a142bc56e7f7",
+      "wfd": "be3f3a4659e2992e01e6140dc5a8afd380779f62a3a0ca06b602fb5bf4c589ad"
+    },
+    "mem-low25/u045/s21": {
+      "cgb": "20a9cf8cdc71c52848486181ad96e860e94800005fde2c2af68d59043f1f3f5d",
+      "wfd": "ed7e9aeb20f913c32a832ce52f3e6007eb1b12b6b44d63be59f4005824898dc5"
+    },
+    "mem-low25/u045/s22": {
+      "cgb": "66cf4c5c167288ee7fd4c590c90da1f13161baac6eeaf162cc92f6cce4936352",
+      "wfd": "6eeba94a03151dbd507b951780893dbbebe3f7654684920c2120ef4bca85649f"
+    },
+    "mem-low25/u045/s23": {
+      "cgb": "9ce013c68f757f32cf3e188840af384be52a6f2efa294146370f0dd9f7b8a423",
+      "wfd": "709b8445b06761866e2107dd80570e5d08643088923f1356e8acaff52f8e2302"
+    },
+    "mem-low25/u050/s00": {
+      "cgb": "d234104b1804d2a54547a3247023dd2e2d47b690e1643e190843b5d1eaae8336",
+      "wfd": "257a7744a70f8aad2bbe63bc683a5273a53c3b031b0a2728f169b8c1c7d1a9bd"
+    },
+    "mem-low25/u050/s01": {
+      "cgb": "e8205c5f0d0039a08f8de5e8969c2940f8a479c5c5c1552a4dac8f55eabe5ba6",
+      "wfd": "cef3f177203e17acf65dea077a8637a7a425c23f562d4e634d0101409cba0c36"
+    },
+    "mem-low25/u050/s02": {
+      "cgb": "6415e4e629a7a5b8946f99cd3a8d6a5a6f8278332d2a508c0a798c0fdaebdf7a",
+      "wfd": "53f2c425907131423e2540c9876b84fbc53258782f115ff62119960d3033785d"
+    },
+    "mem-low25/u050/s03": {
+      "cgb": "69ea5d3f5f37657e7c0ee7612d355c0af33054e0393e8ac75ad80fc9eede8509",
+      "wfd": "2b1803a49b53205449b2a62324992072dad0ba3fb3a7f1724940d17360092e62"
+    },
+    "mem-low25/u050/s04": {
+      "cgb": "1f7a28fea56321d8736efdbdd38420e1523b28650985f0943b384e7f05d32ca4",
+      "wfd": "f19dd43a9487d02bc2ea2fa907c6e5a5bafabf39b608cdd74b9b6f7d5867d969"
+    },
+    "mem-low25/u050/s05": {
+      "cgb": "ed9e0fbbdc6af4109856aa4fa657bba37b2df605cb7a729180ec22b1742df832",
+      "wfd": "f0573c337b69ff84589d332b4a0a9a981bfbf2133f1da327ff2103f551e8d78c"
+    },
+    "mem-low25/u050/s06": {
+      "cgb": "6f60cd9cfa2509315b536accdb10595c1d09564b44875e83bd209b783960ab55",
+      "wfd": "d0b1095db2437952f288ff05b6af91a717b091bc6b6c30c94dfb7b4caf5a3720"
+    },
+    "mem-low25/u050/s07": {
+      "cgb": "0a3fb088ecdb365e5578ab45b4036f464819ad243964de856f54e3a9bb16e7b1",
+      "wfd": "52415d562b66639d34c067c917413ae683b1cb59497f780612f6c1d8f8c9512d"
+    },
+    "mem-low25/u050/s08": {
+      "cgb": "1f91f145117635b5fb338c33770b6fb98b7dd75c5c11e93a1c5bb2b805c0737c",
+      "wfd": "2710409e639cb7446f061973599eda76b8fb5de78b1a1310687c14f60d4e027f"
+    },
+    "mem-low25/u050/s09": {
+      "cgb": "0722ae6d8fdc66a957636c3a3539f718e76985a6d52fbc51f5a83949d5e6d4b6",
+      "wfd": "acc2365cd6bf862b7f3729110a5f45ad7c7adcab1a01cdfb73098c0f8c447395"
+    },
+    "mem-low25/u050/s10": {
+      "cgb": "ce41d76d0b76cc164e1d8ec318c624dd0614eb9417ca9d9c04b6b330af8e43fa",
+      "wfd": "2f7b1bc7ac8a2eda4bbb45c9287e105839b84b67321cd4f908a7e99254832957"
+    },
+    "mem-low25/u050/s11": {
+      "cgb": "1f66b3ebd06f84c1488c5618404487d1a1aeb8d9119ee44693ec4b2e74dcc090",
+      "wfd": "b826ff33211bc19ed27444f864f52d2ac64f30e81046fe7cb02e5109b6672dbe"
+    },
+    "mem-low25/u050/s12": {
+      "cgb": "2d2e8030659d2b329e7f1c2f54188fe8306defb3df62a596b06c38a2db4b7465",
+      "wfd": "c10531d47602dbb125dd7b48c488eb4a9c0a4a067f09afa10788a279284c3bb7"
+    },
+    "mem-low25/u050/s13": {
+      "cgb": "ddb0ef82a13693cb97a6b871331aafd071450d3c2399a7a78e4026a445ae524b",
+      "wfd": "432d6579e83b21b3c9712a0a0197b3345d3cf58a13d94a4d07690658c7b3515b"
+    },
+    "mem-low25/u050/s14": {
+      "cgb": "057a494290b63c434139b20fe6ee4b031d977b1d2e80af018bd9be3eaf2bed37",
+      "wfd": "eb96ab00fea7059ad3d2d516e765dd2a21ff142f455ef125e72b1f9a55742839"
+    },
+    "mem-low25/u050/s15": {
+      "cgb": "b6977233bb583914e63a153ca20ad6cc4ceb86fdd2e024145388b85a0893f59a",
+      "wfd": "3e4daacbf860564c8de3d6becd4abfe310716c1326204a6c794e52cb1b212ea5"
+    },
+    "mem-low25/u050/s16": {
+      "cgb": "69d3591e18eccc020fe0c10223f0abedb63fb3246c85147296707ac64693a70e",
+      "wfd": "673fd5a610cf29f10c8cf928162c3b9fb80c240a542cd310a0e2356fa7d20fe2"
+    },
+    "mem-low25/u050/s17": {
+      "cgb": "9be2f6b6518c3c1178972b2564740e1baf10bc73b3c4c635d7353f0751a2c5e7",
+      "wfd": "144c02e54fb537a1c7d64860aecc9200152a5f1b6f9771cc7ceead9148877033"
+    },
+    "mem-low25/u050/s18": {
+      "cgb": "5f220f079493bc17aea6408f54ae4a309dc60e06b45ce6f5d5d68a40f9a7b58e",
+      "wfd": "0c904cda858d7f7192d8972ec0e39f120fb8dc7ae47bd10e6fe174d97a366858"
+    },
+    "mem-low25/u050/s19": {
+      "cgb": "4eeb768350ec70c0a13cf03f5d4c6e0e810f800656d8e8bfe16c31496ae87dfa",
+      "wfd": "85eac81112510b84ab58d5ab3ebf360a3b32453272505906ef7600fb76e9c5aa"
+    },
+    "mem-low25/u050/s20": {
+      "cgb": "84e0babd826d3e95614fbb735c46e37415f12442a67be8656fd171a95a0a21f7",
+      "wfd": "9f6a04398eda94c95e76bf245cfd1d0930a7a261cd29d1df52c735fc4d9f9d85"
+    },
+    "mem-low25/u050/s21": {
+      "cgb": "46e72d562c3a6b1ab1c76ca6b3cf62e0d572b96675ab19ae024966d092e10b32",
+      "wfd": "438cc57cb494b1a1caeca305fee0b240c50cfadd4afae92977dc467167eb26fb"
+    },
+    "mem-low25/u050/s22": {
+      "cgb": "c6e42a14fd3a265bb17ec82ea85b655a76c46bd23f36f90c4a69a55b1be97f2c",
+      "wfd": "0047bb021b614ff6e42a4e99f8ac7ee21db28cb06b42e5cc0f0abb0c342c7d77"
+    },
+    "mem-low25/u050/s23": {
+      "cgb": "bed73e05b230408f311a41cec0036e68e23fca8dc42fea2ae493ac833f86b5a8",
+      "wfd": "0993b2d37b7dfb668fbf014924cb35c96989c42b6cde0f560f9917552e5e83ed"
+    },
+    "mem-low25/u055/s00": {
+      "cgb": "5191a1ffad39f02241d623472dadfbdb7e7c270f8ab61af0a56cce07c432443a",
+      "wfd": "0827ac4da169a441129d0eb91761d1b3c9c8942fec39be7b6e665e2bbe256546"
+    },
+    "mem-low25/u055/s01": {
+      "cgb": "e6147354f530b462203f18837cbbd24cce3f10b536430310d70be9e6629172c0",
+      "wfd": "eaa9fbef789895d18a6523af5da6cbc0281a5aff887448e217b890ef6a61735a"
+    },
+    "mem-low25/u055/s02": {
+      "cgb": "7963261794ea54ce90c835fa09b3f33b4ffbcf86750d7d3834e7d6a90c4648d3",
+      "wfd": "78f990c58335b99fca23acd0ac1b79b8e1bf23ca164c70c1914ad9690d7d49c1"
+    },
+    "mem-low25/u055/s03": {
+      "cgb": "d6d53f59e8cd56a29572777ca6a8812b310388f0cd775c4e417691eba3353a1e",
+      "wfd": "3eae9fbe02c34970e5b977716d12924225fb30fd736bf4c67eaa1ec49282c1c3"
+    },
+    "mem-low25/u055/s04": {
+      "cgb": "63ffe56349576f5036aaf22c5123a3b3a8499615d296793d9568da220197af07",
+      "wfd": "a4d253f454a2a33926ca567d494088d2e3890beb2aa60d330d327becb3c8554d"
+    },
+    "mem-low25/u055/s05": {
+      "cgb": "3766ef1adfbcff5e96f9a3a7ec08b3e9f9aa31999e7e43fc18fec260752f02b2",
+      "wfd": "3c7e66417f7295acb427d0a59304037d63c5dd49e6a99d036043350679557368"
+    },
+    "mem-low25/u055/s06": {
+      "cgb": "fc23a332e25e150ddc262b28a21fa1d06cb9730351fed3569a1da18301b59618",
+      "wfd": "9a9c8c87d821ae8f48b98afec94296202b1f01dd396ec322a601455ee8b73492"
+    },
+    "mem-low25/u055/s07": {
+      "cgb": "407795eb1d76fa0e47f2fc85c1843acd03cc7b0843070ee26e2c47797d63796e",
+      "wfd": "c2aa9fd43947bef90f9c542accfa784c37530d2f7202f31bd69da6315207fd80"
+    },
+    "mem-low25/u055/s08": {
+      "cgb": "096b8c354429bc60692de8058e7e619df7634f2cb85d7faf3e34761066acc00c",
+      "wfd": "3b02ded54e1d3ee05d676cff629087e047b99e07420f0f1877054550dff62a98"
+    },
+    "mem-low25/u055/s09": {
+      "cgb": "7e7b0234bf542abedf41b237ae4d53abe67a49efa0ef966ff7a618ce3b84a00b",
+      "wfd": "591df3ceb87befc2c46daa7bd241ceca44834edf549004f32087b0be3c0fc3b3"
+    },
+    "mem-low25/u055/s10": {
+      "cgb": "d4bcc68e0dd5b4e5332cc4d2acd58b2f8dd4d2e13d447558440ba39bbf686481",
+      "wfd": "7c7e33bce9196b3272b7b5674e9b4dd58571532d1baabf1909dc717e0f567d37"
+    },
+    "mem-low25/u055/s11": {
+      "cgb": "10842b5a554f9792cbabcc760506b3ba6c901f0d38e6925ace0af6add5295a60",
+      "wfd": "0e56df22bf59e7ad487cbf063d1683cee0ec6a6e6464d04b69b03a6b01259688"
+    },
+    "mem-low25/u055/s12": {
+      "cgb": "b47dd4e47183505e77ce5ebf2285f83a68c78ee9efcb7801fde05073e1b68eb1",
+      "wfd": "0c41e4c3953176b1ed08d84536df96d3a5183a293920d01ac6c72778de3dc3bd"
+    },
+    "mem-low25/u055/s13": {
+      "cgb": "2280d039617442099a003fa4c3ff6d24e90250f061ad686dd9b86f25201e1a0b",
+      "wfd": "712d092e528a7a96fded64f960dd2fa65114e10266b103bd1875f59fa9a96c10"
+    },
+    "mem-low25/u055/s14": {
+      "cgb": "308d17202f98f82f0fa3fc844efb55a84eeb65f028f95bf569a2e2c9a9819cd7",
+      "wfd": "8edfc9c129c05008f2a1aa627b5223def76cfd0cd0c5fd88bc3c00f3a3071827"
+    },
+    "mem-low25/u055/s15": {
+      "cgb": "5d5ff0a103f2e1cc9315ea66db9e542b718108aa6f247614ccf2db3793f55307",
+      "wfd": "608b15b2333ec0a8db40356ed9b7ba15f13003bcb6a728c38190ededd3d6cef4"
+    },
+    "mem-low25/u055/s16": {
+      "cgb": "9e3a33aacb99605fc006ea79184b70ef2469f0d668628ec14caa86e930119f3f",
+      "wfd": "bfdaeac2e846e0bfc2be153af62db8da92150b0fc0fafe3a8f33a0194b3c1901"
+    },
+    "mem-low25/u055/s17": {
+      "cgb": "59f07a186a5f4bd69160d3b32f4ae997bd0fbde27ac1e464d46bc9b0f3a769fb",
+      "wfd": "a81e66f0c3741f8a1affe74bbc23025d66b736e006b0ef934ae56a0e2aa86ce2"
+    },
+    "mem-low25/u055/s18": {
+      "cgb": "f93c457940c171dc4473ef544f62f330e036594a4b686792edbfaae2bbe79d1a",
+      "wfd": "46e7ffdee26d7c9a9a27c8a3fc652ce16e7517385d0a6e360820f30f5809149c"
+    },
+    "mem-low25/u055/s19": {
+      "cgb": "fa33212d2839017124aafc44293b9ec76e1d0202b35e7d14eb2c58126b2e5c5b",
+      "wfd": "0af2dd4495236aab40ec6aff9d2d23dd37d2bd1f559abdc259309c84bef58c87"
+    },
+    "mem-low25/u055/s20": {
+      "cgb": "3a06536a9ba9072653ba33db1ee51711f61afed255dc604e423c1f79b23f0a31",
+      "wfd": "67d5d3bec3c475958236534985babb332f78a23146a28959b4ea83176c7a26c5"
+    },
+    "mem-low25/u055/s21": {
+      "cgb": "83e4ec42444cf1df116a335d2e96d43843c1b2191706306345ad7eee0ef67255",
+      "wfd": "94360d00f60ac8455e99fb6b85ff41253cfecc520466b30d561de642903f4ccf"
+    },
+    "mem-low25/u055/s22": {
+      "cgb": "d620feaae8d724176d1a4c5334b758a98c39a3aa33e3225017834e0b2a4740fb",
+      "wfd": "e8d025861d46039f3b1c089880f0f18cb5f61517ef662d5d63549aebc3d11d51"
+    },
+    "mem-low25/u055/s23": {
+      "cgb": "3a10e6705ffa0a8a8ef439ad55da341ad93644424e9b63b62469a57c64994142",
+      "wfd": "a6b1a7550d37a5f2bb6f6651752e2768dd5311bd7073338afec3e07360b867d6"
+    },
+    "mem-low25/u060/s00": {
+      "cgb": "56796392b968838a2613ceec0fdd869dd187e552ee2045b90f14c65467d98e3f",
+      "wfd": "66ad4b6bd0e942c93e378438a91c221795964071c6eeeae59f49f396748db2bc"
+    },
+    "mem-low25/u060/s01": {
+      "cgb": "e65d8f6bcb32774534dc0be0606a176c91e58ec5113d1bae70f40a96daa3bffc",
+      "wfd": "c47ff3f5c0196777b7b3982c9b0ec190f35506375f38ae8614c5d9e15978dd6c"
+    },
+    "mem-low25/u060/s02": {
+      "cgb": "b68aea66e6673b77ea5c3c8f0ea27cefd6fabed7c405a476049d4fe6e455a6a2",
+      "wfd": "64e63fede1f4597a6ec48b01f23f7f925f8ed5928391b9481a6755d15dca170a"
+    },
+    "mem-low25/u060/s03": {
+      "cgb": "597488cb6f2d15a0a123e9fe4d63aee645e80d96cb8be987f966e0f99c5fdb4f",
+      "wfd": "36fac3216c96dc826617c3494b4c5b19a5a99add50166d48f18e1eb8689a9d0a"
+    },
+    "mem-low25/u060/s04": {
+      "cgb": "2c12789dc5fbb506f181e896b2b32981445a5ddf44e77e1c606cca4b2a8c27d0",
+      "wfd": "344f8c077fa31c0b700a522a32bf6444907a36c3f2bbd055c4ec5ec3c1ecf57e"
+    },
+    "mem-low25/u060/s05": {
+      "cgb": "0d53a50906fcd2f333fed24358ebb56f285936f1e453561d526bd468ecbea94b",
+      "wfd": "37035d762e5332339fd24c67e44212b2dc96e4920b59fe7eeee13f63b8559388"
+    },
+    "mem-low25/u060/s06": {
+      "cgb": "50f9b02be2346afdc57a4ae6f1e1d91b65f96ce8751bfe980d0323d1c6425b8c",
+      "wfd": "22c7ccc8d008a72c49a3475073cc301d16f0fae137aa5b59416e827e11a3885b"
+    },
+    "mem-low25/u060/s07": {
+      "cgb": "00d1b5427a5b7289a572d05d7e3b064cd604c0d0822d164e73956827c223bbb8",
+      "wfd": "23f09f2c913171190e2c1fa6de2f393e7d52c28c1c5e1bcbc14b6869c61d3992"
+    },
+    "mem-low25/u060/s08": {
+      "cgb": "67ac5e6aa3044eec849c91ea407a5e8e90ebbfa8af989d8ca984f59f37097bd8",
+      "wfd": "cea5c9126d6954efacb4e96774d77726a437e0ba86f3dca6670eff30d7744c98"
+    },
+    "mem-low25/u060/s09": {
+      "cgb": "3e619100eacde36db68b0b24bf2dbf89782b54b452eedce85a9fc5eab200f822",
+      "wfd": "2e8b55afe9cb7c57a0137c836b49cd924aced01915a5866daefeaaea2d8f0628"
+    },
+    "mem-low25/u060/s10": {
+      "cgb": "77d843a5ff14ecb86f730ae811eb0c4b0a7ddda0c4d2762f080a93f666ff4576",
+      "wfd": "9ac0f9d57fb41ff6a200f03d24457371dde1a6c57b4a0d7c7af524f16b8ead57"
+    },
+    "mem-low25/u060/s11": {
+      "cgb": "739029bf5600f78b52ea7f0defa137a7b9d87555d40ff7c5c5540581365ab12c",
+      "wfd": "989d2f599e334e9a55ec790ea4eefa924df17b47ac1b098c26178bde052ffd21"
+    },
+    "mem-low25/u060/s12": {
+      "cgb": "ba02b1b921d4f1ccb73153fcc793e0faecff61defa978b7bd74d8f81b00911d4",
+      "wfd": "c85c6e522644ed2ae9127861dc1f1341f2283093a2919666400c6ae29b598142"
+    },
+    "mem-low25/u060/s13": {
+      "cgb": "bc0456e0c229d1bcb000d013be5fffe69e5d905f8cd0e541b867f42364848595",
+      "wfd": "01bc2ae10b85aa701ce6dd0f3f8467ab531bf5948dbac06077ab2ee51d18c404"
+    },
+    "mem-low25/u060/s14": {
+      "cgb": "6bef352e3f9a8d43d70775452d8af6ffa5ce75c60c3575f490b3be4a0a791e12",
+      "wfd": "41886a72c316cd793109e33b1d30cb9d232dd6a9d4ec9a4c580e193d0726c289"
+    },
+    "mem-low25/u060/s15": {
+      "cgb": "e3a41cd33752fe5f29c37ede7fa562185f7022bf60da093eb6ad8a4a3c90d19e",
+      "wfd": "8793c53d3f2e4d0978581e6a488afb216cd8ed37764f890945717e734596347d"
+    },
+    "mem-low25/u060/s16": {
+      "cgb": "b4054552ce8a5d9e3b28779d5af332c049f6b67fc998a352395318ca0a88a490",
+      "wfd": "ea1da88644b111c167909727ae3618bece3eb6b05a168a16cb63bdb37246d963"
+    },
+    "mem-low25/u060/s17": {
+      "cgb": "f500ace9a68de30b653863163fedaba54274106c8c265ba8fab835ce2719d296",
+      "wfd": "657e5cddfb0ddd3de3d1774a91d8810aa86b58b8f8afae335c25f2c425505198"
+    },
+    "mem-low25/u060/s18": {
+      "cgb": "2281f2d56d172521514f2d7ceb7354a651b1a1776c6c58d3c92d1d207175cbe2",
+      "wfd": "4958cc3af66bf5901edb0c0289702a6a6cee489a7b619d4a9b7b17177e4b11d4"
+    },
+    "mem-low25/u060/s19": {
+      "cgb": "5c0cd2a8236d880d3265ad8c61850850407b30dbf7eac64d0fa289557bc9c047",
+      "wfd": "02d09d0ba152749555487fcd2414a61045052633f0e874817047196f77042b57"
+    },
+    "mem-low25/u060/s20": {
+      "cgb": "26808457ddee9c9fff69a3c4fbc70118ac84e6f66889ae9c42ff154f0fef7ce1",
+      "wfd": "3be8157b2a0223c50d78b42858e726003affa9c1c6f35b7d75dcfd15c73b4969"
+    },
+    "mem-low25/u060/s21": {
+      "cgb": "a26131385ef27a6f89bceadf0c9c88850204d58a59e0a14fdc776ccc7759ba2f",
+      "wfd": "86f118da18214091966ac73375d23428bf5d3fb1451fef455ee9b212241369b2"
+    },
+    "mem-low25/u060/s22": {
+      "cgb": "20b74e3433586d27fed9ac2362744be14ce2c1b0053c1a5b27c14d7f18b682aa",
+      "wfd": "c6b299e982b16e27083b76a18d87ab9df33c19ff47270a2ea4371d61254a722b"
+    },
+    "mem-low25/u060/s23": {
+      "cgb": "f2185547888733f53534da76fa54307935264d387b0b9c8c1750ed1fd0c9ac66",
+      "wfd": "0b4761839a7b043e72e51f6a1c81f45ba2a91806990390fcc6d659c01bb7d031"
+    }
+  },
+  "runs": [
+    "p",
+    "p_cgb"
+  ],
+  "seed_base": 20264101,
+  "sets": 24,
+  "shapes": [
+    "l2",
+    "mem"
+  ],
+  "snapshot_hashes": {
+    "algorithm1.py": "2490ac646bd7369c8bcee0008fffd55049a1106c6fb14a949a8f02cf469a1aa6",
+    "boundary_set.py": "ce5ad333983f0f51e214a506aa75b5563b875e13eaf02a4cc876c1f374237b53",
+    "c13_sets.py": "b7bf89c3a16f1b13807d5dbf9e5266884767915f3a75405c53c2d4e9cb4da04a",
+    "ca_table.py": "8992bff0fca38ce69b83fabe062c823edd8ccaa889f2c370e2d83d17a227dd09",
+    "clsspread_set.py": "070af19fec1b261587e7a959dac6c1568992d7d862e637c969f8300b0fd9de9b",
+    "conflictcls_set.py": "4392c04615fdc72d4e26ca61ba731137e8bc86c7aefc37e765574239ce2fa594",
+    "deadline_analysis.py": "55de28d255bd3a90e03a1bcd8ec36cb47a695a5adbeb6e32bbf0e360c5381a5b",
+    "deadline_big_caas_set.py": "6dd2f42efd6eaed6ebe44029fe5b8f3ab7e4c6e6f26eca2c239df589f4269001",
+    "deadline_big_set.py": "375a7fab6ea0c298c508e04552a0be918860d834e13a1d5fea0c2a6f97a0e327",
+    "deadline_caas_set.py": "6246cb7d3384011d3c96ff5bfaa4f758cda05d7f2ef94377c5be67d4c3028077",
+    "deadline_set.py": "9090fe408fcffa1a71a7313e1d905b1fbf55e58e9848e2be28c77019a14d41be",
+    "hl_run.py": "820763c5a345924c7c0438ded3f9d09a244321d26c2f0336d3a7661cc2a3dfff",
+    "hl_set.py": "36de622e58b661ff0d4853c2eaa47315bb27fa389aa978542a1d63270444df51",
+    "ladder_analysis.py": "90e6c86c4a1cc629565d05819f4ca0838501b2aa59427a699e248f95c877353d",
+    "loadmem_a1_set.py": "3fbcd46d61b09a0bb0ba0f908a474caf8934a7f73c94cb90bd6545c6277bfb99",
+    "loadmem_k_set.py": "d70757c7c0f3d02080e23e44aeb5e4867a45c38fff252097dc1b0a984d36cfac",
+    "loadmem_set.py": "c727ed15f0c70ed21d8a492f9a6ab275e835cbf2dcc1331e040b6ae18682d92a",
+    "mem_calibrate.py": "2bf1115839e7f617622a30e56ceaea36bbadab8e13d252ed16e47ea85f1c20cd",
+    "mem_set.py": "112932366343231343679f6e5499c0f657a58d68e6f0a9aa6edc02480166c0c2",
+    "memcost_analysis.py": "fc28b05a4668b8f12449a353a8b9292b2b9cf22d46d918bca0385418c0bd65c0",
+    "memcost_set.py": "dfe57495837549d35fa42b592536fd3877658f66c4d517bca8d2b2b0f65d2e36",
+    "mix_cls_set.py": "82002fda165e197b722e6895b4b16aeb4d39621548e8e6a901079afa30965727",
+    "mix_set.py": "e9dc2e9cb78306bd3e4dd52e3a06e93d60c99b9a68313a138036a1c73b4dd04b",
+    "period_swap_analysis.py": "9b1641a0697009bc28064156c4972e3ddbc3d9abc45e9840701ca2e917334078",
+    "period_swap_set.py": "862d0900eeac49209f7aea739d5a2e51df9fa925404faa17a1bc11686797ab51",
+    "placement_lib.py": "644c8c2068905c3a1cd8861b2b81236e1b1b884e89e0322bb46831d72bd71a31",
+    "pm_check.py": "5f0375403ff620872882a5a6d6e6f50c2f33691305158454f6393537bb00dfb0",
+    "pm_run.py": "6e407368c979db2d5d86baf9795cd532ca57d1a7b51fc186cd21efea631b8cc2",
+    "rnd_boundary_set.py": "2297ea4e46e2d9031968a8b461221672b52b9e43c6b929d086b3a874b806a377",
+    "rnd_conflict_set.py": "c6df35b3aa43ba96ecabc2a4a161624b06a64fb83976f3270a3e3fc4cf9909d9",
+    "rnd_loadmem_set.py": "8fdd6ab9283d8a176a8f866cd40048b38f16295566ec873613def0545e1b42b0",
+    "rnd_mix_set.py": "4353f91e4afef3e9569675bdc326fb2a8e7024114c69e1d4e1007f019e6f2490",
+    "rnd_smallmem_set.py": "0f49388f0ae343c0021728f4add47e305be1f8f14b810e55d746d26682d06420",
+    "rnd_spread_set.py": "d31640ad89ad306a9da6de0e51a8d54ec50028d8f83509d8cd74cb0fa5b159c3",
+    "rnd_taskcount_set.py": "a8c1ab5b772be9609a0c4f1353427098453e05dfbf2ebc765e24b8d4ff76acda",
+    "rt_metrics.py": "bcd851e91b53f4e9cdb698fff9aa08fd91d32c5e01c5489f480c5b9c10658767",
+    "smallmem_set.py": "9280f2760ccafa991111b40cbe7d0ea21e22ce7515a61b585b95eb6ddab9a34a",
+    "taskcount_k_set.py": "2055ff8703333f5ddeaa0d78c8ef5721fe28128b66d6a994aa1b7b75c0882bc0",
+    "taskcount_set.py": "cefe69e4e9baff11415bd8f58f760ade3558757c459e27875de6a74ef87c182a",
+    "test_algorithm1.py": "a4b839e0b64402554dd86e97ca42db79d458fc4ba2a9568fad16b174c722daff",
+    "test_boundary_set.py": "e93054fb910d9d31fee51228da2847b4722c935b4d92c7a8fd441f1cc4429cdf",
+    "test_c13_sets.py": "aa67ce17bc9a5de10edf78681e993963530d501f115eb6dba3fe6a128e056bd2",
+    "test_clsspread_set.py": "ecb51d94b0c67ef883e4415ca01d48b428dfc94ecbe9587a3f2974db3baac309",
+    "test_conflictcls_set.py": "ffb647294d96c4ef2486a19de838a4866deb0040ed4e1815266dbcb0d3a7a839",
+    "test_deadline_analysis.py": "9148b3e416eb7d19810c8f029eeea439791681b2075bef0952f1eaf5b7108988",
+    "test_deadline_set.py": "89d2ef7a7146ac488196f55e15051502af6816c4f01042aac270e65eaf80e09f",
+    "test_kgroup_sets.py": "87a9723198796506a2b997b688b47e84686494dae6419f7444971d5fd610faeb",
+    "test_ladder_analysis.py": "52e5d629a3362b1f24152e829a4d75580204d2ce7005523a5ebe855cda1b7cb7",
+    "test_loadmem_a1_set.py": "a53c0e070b17ed9ab18ec8e530b3a5a1ee847c7fab28ae277734801f62cb258e",
+    "test_loadmem_set.py": "dd1d00a9baadc643b5aef9af877f5ae542eea39fd4f68beb41eb2022844a583a",
+    "test_memcost_analysis.py": "42f4278ff6b39c427db955d73f24eb281154f8e0bfa2aec21515a7bafa3d1d9d",
+    "test_memcost_set.py": "8ff850574bf0962ec11681c2eafdd102c64becb17ab9f8895cf658fda3525e07",
+    "test_mix_set.py": "e1b65db3d0c5b53b5b672690fe1550fb780656313d9eba534fd2cbd37b5add21",
+    "test_period_swap_analysis.py": "2a11aa1a0387846eb8f996a8026b930b1306db06259cf9e579c5baa335bd52fa",
+    "test_period_swap_set.py": "a4579582bdd84589bd99b943f7dbd04b923f4466844e702dc0cfdfe7907e2329",
+    "test_placement_lib.py": "742ea07c61de8b843ccf544bb92bb57fc05bd851c3e66666d22b2442c3996873",
+    "test_random_sets.py": "11d61ccd78e9f1ae79069592abc474d912da7d8c4885de185e9a1821ee13cd8f",
+    "test_smallmem_set.py": "3a889afc28ec9266470a88b1658a135f2b74bf696ad3bd2752c5150983ed06c3",
+    "test_taskcount_set.py": "2e1da09cbb376ec9d08ebe594bda0b89eaa96df7f76c5393aa86f1ba865b98d4"
+  },
+  "task_counts": [
+    15,
+    13,
+    15,
+    19,
+    18,
+    20,
+    16,
+    12,
+    20,
+    12,
+    16,
+    17,
+    19,
+    14,
+    12,
+    18,
+    13,
+    17,
+    13,
+    16,
+    15,
+    17,
+    14,
+    14
+  ],
+  "tasks": [
+    12,
+    20
+  ],
+  "u_min": 0.0125,
+  "warmup_hyperperiods": 1,
+  "workload_optimization": "O2"
+}

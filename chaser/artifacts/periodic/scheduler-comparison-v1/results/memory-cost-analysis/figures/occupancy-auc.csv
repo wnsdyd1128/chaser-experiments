@@ -1,0 +1,17 @@
+experiment,score,auc
+17 and 18 mixed tasks,d,0.8316
+20 768 KiB,d,0.9285
+23 continuous CLS,d,0.9995
+24 32 KiB under load,d,0.9939
+27 32 KiB,d,0.9927
+27 768 KiB,d,0.7593
+17-27 pooled,d,0.7704
+41,d,0.3588
+17 and 18 mixed tasks,d_plus_m,0.9721
+20 768 KiB,d_plus_m,0.9893
+23 continuous CLS,d_plus_m,0.9971
+24 32 KiB under load,d_plus_m,0.9912
+27 32 KiB,d_plus_m,0.9865
+27 768 KiB,d_plus_m,0.9664
+17-27 pooled,d_plus_m,0.9769
+41,d_plus_m,0.9862

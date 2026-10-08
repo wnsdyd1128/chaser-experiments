@@ -1,0 +1,184 @@
+{
+ "primary": {
+  "wfd": {
+   "pairs": 95,
+   "only_l2_met": 33,
+   "only_mem_met": 0,
+   "both_met": 62,
+   "neither_met": 0,
+   "p": 2.3283064365386963e-10,
+   "holm_p": 2.3283064365386963e-10,
+   "significant": true
+  },
+  "cgb": {
+   "pairs": 95,
+   "only_l2_met": 38,
+   "only_mem_met": 0,
+   "both_met": 57,
+   "neither_met": 0,
+   "p": 7.275957614183426e-12,
+   "holm_p": 1.4551915228366852e-11,
+   "significant": true
+  }
+ },
+ "by_load": {
+  "wfd 0.45": {
+   "pairs": 23,
+   "l2_met": 23,
+   "mem_met": 23
+  },
+  "wfd 0.5": {
+   "pairs": 24,
+   "l2_met": 24,
+   "mem_met": 23
+  },
+  "wfd 0.55": {
+   "pairs": 24,
+   "l2_met": 24,
+   "mem_met": 15
+  },
+  "wfd 0.6": {
+   "pairs": 24,
+   "l2_met": 24,
+   "mem_met": 1
+  },
+  "cgb 0.45": {
+   "pairs": 24,
+   "l2_met": 24,
+   "mem_met": 24
+  },
+  "cgb 0.5": {
+   "pairs": 23,
+   "l2_met": 23,
+   "mem_met": 20
+  },
+  "cgb 0.55": {
+   "pairs": 24,
+   "l2_met": 24,
+   "mem_met": 12
+  },
+  "cgb 0.6": {
+   "pairs": 24,
+   "l2_met": 24,
+   "mem_met": 1
+  }
+ },
+ "late_jobs": {
+  "wfd": {
+   "pairs": 95,
+   "fewer_in_l2": 33,
+   "fewer_in_mem": 0,
+   "late_l2": 0,
+   "late_mem": 80,
+   "p": 2.3283064365386963e-10
+  },
+  "cgb": {
+   "pairs": 95,
+   "fewer_in_l2": 38,
+   "fewer_in_mem": 0,
+   "late_l2": 0,
+   "late_mem": 108,
+   "p": 7.275957614183426e-12
+  }
+ },
+ "who_late": {
+  "l2-low25 wfd": {
+   "memory": {
+    "tasks": 348,
+    "late_tasks": 0
+   },
+   "other-with-memory": {
+    "tasks": 636,
+    "late_tasks": 0
+   },
+   "other-without-memory": {
+    "tasks": 516,
+    "late_tasks": 0
+   }
+  },
+  "l2-low25 cgb": {
+   "memory": {
+    "tasks": 348,
+    "late_tasks": 0
+   },
+   "other-with-memory": {
+    "tasks": 144,
+    "late_tasks": 0
+   },
+   "other-without-memory": {
+    "tasks": 1008,
+    "late_tasks": 0
+   }
+  },
+  "mem-low25 wfd": {
+   "memory": {
+    "tasks": 344,
+    "late_tasks": 8
+   },
+   "other-with-memory": {
+    "tasks": 630,
+    "late_tasks": 17
+   },
+   "other-without-memory": {
+    "tasks": 513,
+    "late_tasks": 55
+   }
+  },
+  "mem-low25 cgb": {
+   "memory": {
+    "tasks": 344,
+    "late_tasks": 2
+   },
+   "other-with-memory": {
+    "tasks": 138,
+    "late_tasks": 0
+   },
+   "other-without-memory": {
+    "tasks": 1000,
+    "late_tasks": 106
+   }
+  }
+ },
+ "predictors": {
+  "auc": {
+   "pooled": {
+    "cache demand D": 0.35879262714550975,
+    "max(D, M)": 0.48849689778542643,
+    "f35": 0.8218830668900865,
+    "f35 + p_mem statistics": 0.8650423440967347
+   },
+   "wfd": {
+    "cache demand D": 0.3714998082086689,
+    "max(D, M)": 0.49462984273110855,
+    "f35": 0.79957805907173,
+    "f35 + p_mem statistics": 0.8605677023398544
+   },
+   "cgb": {
+    "cache demand D": 0.347265221878225,
+    "max(D, M)": 0.4831441348469212,
+    "f35": 0.8572411420708634,
+    "f35 + p_mem statistics": 0.871689026487788
+   }
+  },
+  "cells": {
+   "l2-low25": {
+    "rows": 192,
+    "missed": 0,
+    "mean_d": 0.6746798208333333,
+    "mean_m": 0.1032523689236111,
+    "mean_cls_weighted": 0.6055869673017548,
+    "mean probability, f35": 0.9913018609737358,
+    "mean probability, f35 + p_mem statistics": 0.9899238557449496
+   },
+   "mem-low25": {
+    "rows": 190,
+    "missed": 71,
+    "mean_d": 0.42001127789473686,
+    "mean_m": 0.5309693583333333,
+    "mean_cls_weighted": 0.6061412214040972,
+    "mean probability, f35": 0.9724556851501587,
+    "mean probability, f35 + p_mem statistics": 0.6180313879257092
+   }
+  }
+ }
+}

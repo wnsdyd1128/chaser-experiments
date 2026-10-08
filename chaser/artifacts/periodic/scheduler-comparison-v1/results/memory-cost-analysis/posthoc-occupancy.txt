@@ -1,0 +1,19 @@
+experiment 41 runs: 382 missed 71
+AUC D 0.359 | max(D, M) 0.488 | D + M 0.986
+l2-low25 mean D 0.675 mean M 0.103 mean D + M 0.778 missed 0
+mem-low25 mean D 0.42 mean M 0.531 mean D + M 0.951 missed 71
+within mem cell: AUC D 0.938 | D + M 0.967
+experiments 17-27 P rows: 6511 | AUC D 0.77 | D + M 0.977
+per experiment (P rows): AUC D | D + M | rows, missed
+  17 and 18 mixed tasks    0.832 | 0.972 | 476 109
+  19 placement boundary    - | - | 718 0
+  20 768 KiB               0.929 | 0.989 | 718 363
+  21 32 KiB                - | - | 969 0
+  23 continuous CLS        0.999 | 0.997 | 970 302
+  24 32 KiB under load     0.994 | 0.991 | 1151 274
+  25 conflict-miss         - | - | 322 0
+  27 32 KiB                0.993 | 0.987 | 756 365
+  27 768 KiB               0.759 | 0.966 | 431 194
+  D + M >= 0.8: predicted miss 3940, missed 1607, correct miss 1607, false alarm 2333, missed but predicted ok 0
+  D + M >= 0.9: predicted miss 2886, missed 1607, correct miss 1600, false alarm 1286, missed but predicted ok 7
+  D + M >= 1.0: predicted miss 2059, missed 1607, correct miss 1569, false alarm 490, missed but predicted ok 38

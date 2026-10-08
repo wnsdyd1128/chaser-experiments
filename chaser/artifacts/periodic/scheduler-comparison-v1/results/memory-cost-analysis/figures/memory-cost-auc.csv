@@ -1,0 +1,13 @@
+runs,predictor,auc
+pooled,cache demand D,0.35879262714550975
+wfd,cache demand D,0.3714998082086689
+cgb,cache demand D,0.347265221878225
+pooled,max(D, M),0.48849689778542643
+wfd,max(D, M),0.49462984273110855
+cgb,max(D, M),0.4831441348469212
+pooled,f35,0.8218830668900865
+wfd,f35,0.79957805907173
+cgb,f35,0.8572411420708634
+pooled,f35 + p_mem statistics,0.8650423440967347
+wfd,f35 + p_mem statistics,0.8605677023398544
+cgb,f35 + p_mem statistics,0.871689026487788

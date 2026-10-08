@@ -70,6 +70,7 @@ STUDIES = {
     # The 20 ms design whose pilot missed deadlines; kept as the reason for v2. Its .cache output
     # was deleted on 2026-10-05, so results/cls-bimodal-v1-pilot cannot be re-exported.
     'cls-bimodal-v1-pilot': 'cls-bimodal-v1',
+    'memory-cost': 'memory-cost-v1',
 }
 TOP_LEVEL = ('.json', '.jsonl', '.md', '.py')
 CALIBRATION = ('calibration.json', 'sweeps.json', 'sweep-cost.json', 'model.json', 'measured.json',
