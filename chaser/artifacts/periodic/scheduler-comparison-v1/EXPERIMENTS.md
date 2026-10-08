@@ -1696,6 +1696,7 @@ python3 $R/policy-mix/deadline_analysis.py analyze --small $W/.cache/deadline-sm
 | 43 | RF 실행 전 점검 모델 동결(개발 자료, 시뮬레이션 없음) | `policy-mix/rf_freeze.py` | `rf-model-v1` | `rf-model` |
 | 42 | 실행 전 점검: D + M 정적 규칙 대 RF(개발 점검, 시뮬레이션 없음) | `policy-mix/rf_occupancy.py` | `rf-occupancy-v1` | `rf-occupancy` |
 | 44 | 실행 전 점검과 구성 추천의 확증(사전 등록, 새 set) | `policy-mix/`(`confirm_set.py`, `--design confirm-small`·`confirm-big`·`confirm-mem`, `confirm_decide.py`, `confirm_analysis.py`) | `confirm-small-v1`, `confirm-big-v1`, `confirm-mem-v1`, `confirm-analysis-v1` | `confirm-small`, `confirm-big`, `confirm-mem`, `confirm-analysis` |
+| 45 | 실제 커널 task set의 실행 전 점검(사전 등록, 새 set) | `policy-mix/`(`kernel_tasks.py`, `kernel_calibrate.py`, `kernel_set.py`, `kernel_run.py`, `confirm_analysis.py`) | `kernel-calibration-v2`, `real-kernels-v1`, `real-kernels-analysis-v1` | `kernel-calibration`, `real-kernels`, `real-kernels-analysis` |
 | 민감도 | cls-a1-cal: CLS + Algorithm 1, 같은 calibration의 동결 CLS 임곗값 0.887 | CAAS와 같은 출처의 임곗값 |
 
 Algorithm 1은 `chaser/policy/allocator.py`(CAAS Algorithm 1 구현)를 그대로 쓴다. 격리 코어가 가득 차서 놓을 수 없는 task가 있으면
@@ -2510,4 +2511,55 @@ PYTHONPATH=$W:$R/policy-mix python3 $R/policy-mix/confirm_analysis.py --cache $W
 - **해석:** RF는 항상 CHASER로 돌리는 것보다 받아들여 지킨 set이 27개 적지만, 마감을 놓칠 set을 받아들이는 경우를 139개에서 2개로 줄였다. 정적 규칙보다는 같은 안전 수준에서 지킬 수 있던 set을 31개 덜 거절했다(잘못 거절 100 → 69). 차이는 주로 32 KiB(정적 규칙이 부하 0.4875에서 지킬 set 10개를 거절)와 768 KiB에서 났다.
 - **비용:** 결정 한 번(배치 + RF 예측) 중앙값 0.44초, 최대 0.66초.
 - **한계:** 개발 자료에 메모리 접근형(실험 41)과 같은 형태가 있었으므로 메모리 접근형 결과는 새 set이지만 새 형태는 아니다. G·C 추천의 이득은 확인하지 못했다.
+
+---
+
+## 45. 실제 커널 task set의 실행 전 점검 (사전 등록, 새 set)
+
+### 개요
+44절은 합성 task(hot-cold 접근)로 만든 새 set에서 동결 RF를 확증했다. 이 실험은 **학습 자료에 없던 실제 커널 task**로 같은 질문을 한다(2026-10-08 사용자 결정: PolyBench 커널 이식, C1+1+2 공용 구현 이식).
+모델·τ·결정 규칙은 43절 그대로이고 다시 학습하지 않는다. 2026-10-08 등록, 실행 전.
+
+**준비(완료):**
+- 공용 실행 경로(`chaser/periodic/`)에 C1+1+2(코어 {0}, {1}, {2,3})를 이식했다. 주 패키지 테스트 792개 통과, 시뮬레이터 실행에서 코어 2 배정 task가 코어 3에서 실행됨을 확인.
+- PolyBench/C 4.2.1 커널 5종(BICG, MVT, GESUMMV, JACOBI-1D, JACOBI-2D)을 uint32 schema v2 커널로 이식했다(기존 GEMM, ATAX와 함께 7종). 커널마다 접근 수, 닫힌식 checksum, 임의 입력에서 독립 Python 계산과의 일치, 실제 RTEMS ELF의 YARDA 접근 순서 대조를 테스트한다(`tests/periodic/multi_array/test_polybench_kernels.py`).
+- 실행시간 보정(`kernel_calibrate.py`): 커널 7종 × sweep {1, 2, 4} × 차원 12단계를 혼자 실행해 job 시간을 재고, 차원에 대해 로그-로그 보간한다. 따로 뽑은 검증 수준 42개에서 오차 2% 이내여야 진행한다.
+  **실행 전 수정(2026-10-08 02:40 KST, 어떤 run 결과도 보기 전):** 보간 검증 오차가 최대 19.5%(MVT, sweep 1, n = 87; 열 방향 접근이 n에 따라 L1 세트 충돌을 다르게 일으켜 실행시간이 n에 대해 매끄럽지 않음)로 기준을 넘었다.
+  그래서 보간 모델은 n을 고르는 데만 쓰고, **각 task의 계획 U는 고른 (커널, sweep, n)을 같은 방식으로 혼자 실행해 직접 잰 job 시간**으로 한다(`kernel_calibrate.py tasks`, 1,315 조합, `results/kernel-calibration/task-times.json`). set 안의 단독 실행 게이트(3%)는 그대로 둔다.
+  크기별 측정에서 묶음 하나(`tasks-032`, GESUMMV 19개)가 실행 파일 단위 시작 실패(arm_phase·release_mismatch, 주기 시작이 tick 경계를 넘음)로 모두 실패해, 순서를 뒤집어 다시 빌드한 묶음도 같은 실패를 보였고, 둘로 나눈 두 묶음은 모두 정상이어서 그 묶음만 절반씩 나눠 측정했다(task가 아니라 그 실행 파일의 시작 시각 문제).
+  같은 이유로 실행기의 단독 실행 게이트도 `hl_run`처럼 시작 실패 task를 기록하고 건너뛴다(오차 판정에서 제외).
+
+### 설계
+| 항목 | 내용 |
+|---|---|
+| task | 커널 하나를 job마다 sweep 수만큼 실행. 커널은 7종에서 균등 추출, sweep은 {1, 2, 4}에서 균등 추출, 차원 n은 보정 모델로 budget(= U 몫 × 부하 × 4 × 주기)에 가장 가까운 값. 배열은 task마다 따로 둔다 |
+| set | 새 seed 20264501–, set 24개, task 12–20개, U 몫 Dirichlet(8), 주기 CV 0.2(27절 주기 규칙), 부하가 달라도 같은 커널·주기·sweep(공통 난수). 데이터 16 MiB·배열 96개 한도를 넘는 추출은 정해진 순서로 다시 뽑는다 |
+| 부하(코어당) | 0.40, 0.475, 0.55, 0.625, 0.70 |
+| 배치 | U 균형(wfd)으로 빌드한 실행 파일을 YARDA로 분석하고, 그 CLS로 `pfirst`가 CHASER 배치(ra-cgb)를 계산해 따로 빌드한다 |
+| run | 모든 set에서 CHASER(P), G4, C1+3, C1+1+2. 5 부하 × 24 set × 4 = **480 run**. warm-up 1 + 측정 3 hyperperiod. 공용 구현(`kernel_run.py`)으로 실행 |
+| 게이트 | 부하마다 set 0의 모든 task를 혼자 실행해 계획 U와의 오차 3% 이내 |
+| 결정(run 전) | 44절과 같다. 동결 RF(τ 0.8)의 P / fallback_gc / rejected / deferred, 비교용 D + M < 0.975, `decisions.json`과 해시. measured run이 있으면 거부 |
+
+### 가설과 판정 (사전 고정, `confirm_analysis.py --outputs real-kernels-v1`)
+44절의 H1–H4와 같은 정의·검정·판정 기준을 쓴다(H1: RF 대 D의 AUC 차이 bootstrap, H2: 잘못 수락 ≤ 2%이고 95% 상한 ≤ 5%, H3: D + M 규칙 대비 성공 set McNemar, H1·H3 Holm, H4: G·C 추천의 살린 set 대 잘못된 전환).
+**기술 보고:** 실제 커널 task의 CLS·p_mem·요청률 분포(합성 task와 비교), 부하별 결과, CHASER 배치가 U 균형 배치와 달라진 set 수.
+
+**예상과 한계(실행 전 기록):** 이 시간 규모(주기 20–120 ms)에서 실제 커널의 데이터는 수 KiB–2 MiB이므로 대부분 L1·L2에 머물고, 메모리까지 가는 비율은 첫 접근 정도다.
+uint32 행 우선 접근은 공간 지역성이 커서 CLS가 높게 나올 가능성이 크고(친화도 묶음이 거의 작동하지 않을 수 있음), 열 접근(MVT의 두 번째 단계)이 CLS를 낮춘다. 처음 보는 task 형태에 대한 일반화를 시험하는 것이 목적이다.
+
+### 재현 명령
+```sh
+cd $W && export PYTHONPATH=$W:$R/policy-mix:$R/period-distribution
+python3 $R/policy-mix/kernel_calibrate.py measure --output $W/.cache/kernel-calibration-v2
+python3 $R/policy-mix/kernel_calibrate.py fit --output $W/.cache/kernel-calibration-v2   # results/kernel-calibration/로 내보냄
+O=$W/.cache/real-kernels-v1
+for s in prepare isolated; do python3 $R/policy-mix/kernel_run.py $s --output $O; done
+python3 $R/policy-mix/kernel_run.py decide --output $O --policy $W/.cache/rf-model-v1
+for s in full summarize; do python3 $R/policy-mix/kernel_run.py $s --output $O; done
+python3 $R/policy-mix/confirm_analysis.py --cache $W/.cache --outputs real-kernels-v1 --dest $W/.cache/real-kernels-analysis-v1
+```
+실제 실행은 `supervisors/real-kernels-v1.sh`다. 첫 보정 측정(`kernel-calibration-v1`)은 workload의 배열 96개 한도를 넘는 묶음에서 멈춰 버렸고, 묶음을 배열 수로도 나눠 v2로 다시 측정했다.
+
+### 결과 파일
+`results/kernel-calibration/`, `results/real-kernels/`, `results/real-kernels-analysis/`(실행 후 작성).
 

@@ -1,0 +1,2651 @@
+{
+ "period": 100,
+ "rows": [
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 13,
+   "task_id": "k00",
+   "accesses": 4732,
+   "job_ns": 115695.66666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 16,
+   "task_id": "k01",
+   "accesses": 8704,
+   "job_ns": 206287.0
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 19,
+   "task_id": "k02",
+   "accesses": 14440,
+   "job_ns": 335882.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 23,
+   "task_id": "k03",
+   "accesses": 25392,
+   "job_ns": 583245.6666666665
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 27,
+   "task_id": "k04",
+   "accesses": 40824,
+   "job_ns": 930458.6666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 33,
+   "task_id": "k05",
+   "accesses": 74052,
+   "job_ns": 1681822.666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 40,
+   "task_id": "k06",
+   "accesses": 131200,
+   "job_ns": 2979888.3333333335
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 48,
+   "task_id": "k07",
+   "accesses": 225792,
+   "job_ns": 5109434.999999999
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 57,
+   "task_id": "k08",
+   "accesses": 376884,
+   "job_ns": 8583225.333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 69,
+   "task_id": "k09",
+   "accesses": 666540,
+   "job_ns": 16498537.333333336
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 83,
+   "task_id": "k10",
+   "accesses": 1157352,
+   "job_ns": 29382703.333333332
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 100,
+   "task_id": "k11",
+   "accesses": 2020000,
+   "job_ns": 51152982.666666664
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 2,
+   "n": 10,
+   "task_id": "k12",
+   "accesses": 4300,
+   "job_ns": 106413.0
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 2,
+   "n": 12,
+   "task_id": "k13",
+   "accesses": 7344,
+   "job_ns": 175820.33333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 2,
+   "n": 15,
+   "task_id": "k14",
+   "accesses": 14175,
+   "job_ns": 330946.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 2,
+   "n": 18,
+   "task_id": "k15",
+   "accesses": 24300,
+   "job_ns": 559298.0
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 2,
+   "n": 21,
+   "task_id": "k16",
+   "accesses": 38367,
+   "job_ns": 875447.0000000001
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 2,
+   "n": 26,
+   "task_id": "k17",
+   "accesses": 72332,
+   "job_ns": 1640618.333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 2,
+   "n": 31,
+   "task_id": "k18",
+   "accesses": 122047,
+   "job_ns": 2757504.0
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 2,
+   "n": 37,
+   "task_id": "k19",
+   "accesses": 206719,
+   "job_ns": 4658800.999999999
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 2,
+   "n": 45,
+   "task_id": "k20",
+   "accesses": 370575,
+   "job_ns": 8335100.333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 2,
+   "n": 54,
+   "task_id": "k21",
+   "accesses": 638604,
+   "job_ns": 14347315.0
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 2,
+   "n": 65,
+   "task_id": "k22",
+   "accesses": 1111175,
+   "job_ns": 25864036.333333336
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 2,
+   "n": 79,
+   "task_id": "k23",
+   "accesses": 1990879,
+   "job_ns": 50484937.333333336
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 8,
+   "task_id": "k00",
+   "accesses": 4416,
+   "job_ns": 110432.0
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 10,
+   "task_id": "k01",
+   "accesses": 8500,
+   "job_ns": 204176.00000000003
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 12,
+   "task_id": "k02",
+   "accesses": 14544,
+   "job_ns": 341842.00000000006
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 14,
+   "task_id": "k03",
+   "accesses": 22932,
+   "job_ns": 531712.0
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 17,
+   "task_id": "k04",
+   "accesses": 40749,
+   "job_ns": 933265.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 20,
+   "task_id": "k05",
+   "accesses": 66000,
+   "job_ns": 1505241.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 24,
+   "task_id": "k06",
+   "accesses": 113472,
+   "job_ns": 2571193.3333333335
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 29,
+   "task_id": "k07",
+   "accesses": 199317,
+   "job_ns": 4495235.333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 35,
+   "task_id": "k08",
+   "accesses": 349125,
+   "job_ns": 7847309.333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 43,
+   "task_id": "k09",
+   "accesses": 645301,
+   "job_ns": 14472839.0
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 51,
+   "task_id": "k10",
+   "accesses": 1074213,
+   "job_ns": 24088969.0
+  },
+  {
+   "group": "fit",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 62,
+   "task_id": "k11",
+   "accesses": 1925844,
+   "job_ns": 43774218.333333336
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 23,
+   "task_id": "k12",
+   "accesses": 4301,
+   "job_ns": 65499.33333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 30,
+   "task_id": "k13",
+   "accesses": 7290,
+   "job_ns": 106288.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 40,
+   "task_id": "k14",
+   "accesses": 12920,
+   "job_ns": 183244.00000000003
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 53,
+   "task_id": "k15",
+   "accesses": 22631,
+   "job_ns": 320313.33333333326
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 70,
+   "task_id": "k16",
+   "accesses": 39410,
+   "job_ns": 575804.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 93,
+   "task_id": "k17",
+   "accesses": 69471,
+   "job_ns": 1013359.6666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 123,
+   "task_id": "k18",
+   "accesses": 121401,
+   "job_ns": 1758881.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 163,
+   "task_id": "k19",
+   "accesses": 213041,
+   "job_ns": 3082568.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 216,
+   "task_id": "k20",
+   "accesses": 373896,
+   "job_ns": 5398237.333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 286,
+   "task_id": "k21",
+   "accesses": 655226,
+   "job_ns": 9448731.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 378,
+   "task_id": "k22",
+   "accesses": 1144206,
+   "job_ns": 16487669.999999998
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 500,
+   "task_id": "k23",
+   "accesses": 2001500,
+   "job_ns": 28832832.33333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 16,
+   "task_id": "k00",
+   "accesses": 4176,
+   "job_ns": 63790.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 21,
+   "task_id": "k01",
+   "accesses": 7161,
+   "job_ns": 104747.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 28,
+   "task_id": "k02",
+   "accesses": 12684,
+   "job_ns": 180125.33333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 37,
+   "task_id": "k03",
+   "accesses": 22089,
+   "job_ns": 308708.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 49,
+   "task_id": "k04",
+   "accesses": 38661,
+   "job_ns": 536942.6666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 65,
+   "task_id": "k05",
+   "accesses": 67925,
+   "job_ns": 963403.3333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 87,
+   "task_id": "k06",
+   "accesses": 121539,
+   "job_ns": 1762105.3333333335
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 115,
+   "task_id": "k07",
+   "accesses": 212175,
+   "job_ns": 3071888.333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 152,
+   "task_id": "k08",
+   "accesses": 370424,
+   "job_ns": 5350853.666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 201,
+   "task_id": "k09",
+   "accesses": 647421,
+   "job_ns": 9340577.666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 266,
+   "task_id": "k10",
+   "accesses": 1133426,
+   "job_ns": 16337943.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 353,
+   "task_id": "k11",
+   "accesses": 1995509,
+   "job_ns": 28744481.999999996
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 4,
+   "n": 12,
+   "task_id": "k12",
+   "accesses": 4716,
+   "job_ns": 71675.33333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 4,
+   "n": 16,
+   "task_id": "k13",
+   "accesses": 8336,
+   "job_ns": 121364.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 4,
+   "n": 21,
+   "task_id": "k14",
+   "accesses": 14301,
+   "job_ns": 203136.99999999997
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 4,
+   "n": 27,
+   "task_id": "k15",
+   "accesses": 23571,
+   "job_ns": 329404.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 4,
+   "n": 36,
+   "task_id": "k16",
+   "accesses": 41796,
+   "job_ns": 577883.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 4,
+   "n": 48,
+   "task_id": "k17",
+   "accesses": 74160,
+   "job_ns": 1022098.6666666665
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 4,
+   "n": 63,
+   "task_id": "k18",
+   "accesses": 127575,
+   "job_ns": 1775546.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 4,
+   "n": 83,
+   "task_id": "k19",
+   "accesses": 221195,
+   "job_ns": 3205787.6666666665
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 4,
+   "n": 109,
+   "task_id": "k20",
+   "accesses": 381173,
+   "job_ns": 5511080.666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 4,
+   "n": 144,
+   "task_id": "k21",
+   "accesses": 664848,
+   "job_ns": 9597599.333333336
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 4,
+   "n": 190,
+   "task_id": "k22",
+   "accesses": 1156910,
+   "job_ns": 16684240.666666668
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 4,
+   "n": 250,
+   "task_id": "k23",
+   "accesses": 2002250,
+   "job_ns": 28853812.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 23,
+   "task_id": "k00",
+   "accesses": 4324,
+   "job_ns": 51489.333333333336
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 30,
+   "task_id": "k01",
+   "accesses": 7320,
+   "job_ns": 82236.66666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 40,
+   "task_id": "k02",
+   "accesses": 12960,
+   "job_ns": 140872.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 53,
+   "task_id": "k03",
+   "accesses": 22684,
+   "job_ns": 242535.00000000003
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 70,
+   "task_id": "k04",
+   "accesses": 39480,
+   "job_ns": 440536.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 93,
+   "task_id": "k05",
+   "accesses": 69564,
+   "job_ns": 768073.6666666665
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 123,
+   "task_id": "k06",
+   "accesses": 121524,
+   "job_ns": 1338652.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 163,
+   "task_id": "k07",
+   "accesses": 213204,
+   "job_ns": 2338529.3333333335
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 216,
+   "task_id": "k08",
+   "accesses": 374112,
+   "job_ns": 4093262.3333333335
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 286,
+   "task_id": "k09",
+   "accesses": 655512,
+   "job_ns": 7157594.666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 378,
+   "task_id": "k10",
+   "accesses": 1144584,
+   "job_ns": 12480247.333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 500,
+   "task_id": "k11",
+   "accesses": 2002000,
+   "job_ns": 21806383.666666668
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 2,
+   "n": 16,
+   "task_id": "k12",
+   "accesses": 4192,
+   "job_ns": 50168.33333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 2,
+   "n": 21,
+   "task_id": "k13",
+   "accesses": 7182,
+   "job_ns": 80764.33333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 2,
+   "n": 28,
+   "task_id": "k14",
+   "accesses": 12712,
+   "job_ns": 136949.66666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 2,
+   "n": 37,
+   "task_id": "k15",
+   "accesses": 22126,
+   "job_ns": 232436.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 2,
+   "n": 49,
+   "task_id": "k16",
+   "accesses": 38710,
+   "job_ns": 403550.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 2,
+   "n": 65,
+   "task_id": "k17",
+   "accesses": 67990,
+   "job_ns": 729709.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 2,
+   "n": 87,
+   "task_id": "k18",
+   "accesses": 121626,
+   "job_ns": 1340502.6666666665
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 2,
+   "n": 115,
+   "task_id": "k00",
+   "accesses": 212290,
+   "job_ns": 2330425.3333333335
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 2,
+   "n": 152,
+   "task_id": "k01",
+   "accesses": 370576,
+   "job_ns": 4056773.6666666665
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 2,
+   "n": 201,
+   "task_id": "k02",
+   "accesses": 647622,
+   "job_ns": 7074450.333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 2,
+   "n": 266,
+   "task_id": "k03",
+   "accesses": 1133692,
+   "job_ns": 12364113.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 2,
+   "n": 353,
+   "task_id": "k04",
+   "accesses": 1995862,
+   "job_ns": 21742233.666666668
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 12,
+   "task_id": "k05",
+   "accesses": 4728,
+   "job_ns": 56247.66666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 16,
+   "task_id": "k06",
+   "accesses": 8352,
+   "job_ns": 93063.66666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 21,
+   "task_id": "k07",
+   "accesses": 14322,
+   "job_ns": 153695.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 27,
+   "task_id": "k08",
+   "accesses": 23598,
+   "job_ns": 247694.66666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 36,
+   "task_id": "k09",
+   "accesses": 41832,
+   "job_ns": 432654.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 48,
+   "task_id": "k10",
+   "accesses": 74208,
+   "job_ns": 760206.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 63,
+   "task_id": "k11",
+   "accesses": 127638,
+   "job_ns": 1336304.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 83,
+   "task_id": "k12",
+   "accesses": 221278,
+   "job_ns": 2431237.6666666665
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 109,
+   "task_id": "k13",
+   "accesses": 381282,
+   "job_ns": 4177423.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 144,
+   "task_id": "k14",
+   "accesses": 664992,
+   "job_ns": 7267808.666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 190,
+   "task_id": "k15",
+   "accesses": 1157100,
+   "job_ns": 12625042.333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 250,
+   "task_id": "k16",
+   "accesses": 2002500,
+   "job_ns": 21824409.333333332
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 23,
+   "task_id": "k17",
+   "accesses": 4324,
+   "job_ns": 67669.66666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 30,
+   "task_id": "k18",
+   "accesses": 7320,
+   "job_ns": 108876.33333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 40,
+   "task_id": "k00",
+   "accesses": 12960,
+   "job_ns": 185713.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 53,
+   "task_id": "k01",
+   "accesses": 22684,
+   "job_ns": 322934.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 70,
+   "task_id": "k02",
+   "accesses": 39480,
+   "job_ns": 587049.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 93,
+   "task_id": "k03",
+   "accesses": 69564,
+   "job_ns": 1350896.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 123,
+   "task_id": "k04",
+   "accesses": 121524,
+   "job_ns": 1863924.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 163,
+   "task_id": "k05",
+   "accesses": 213204,
+   "job_ns": 3274193.3333333335
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 216,
+   "task_id": "k06",
+   "accesses": 374112,
+   "job_ns": 5719316.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 286,
+   "task_id": "k07",
+   "accesses": 655512,
+   "job_ns": 10022373.666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 378,
+   "task_id": "k08",
+   "accesses": 1144584,
+   "job_ns": 17831917.333333332
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 500,
+   "task_id": "k09",
+   "accesses": 2002000,
+   "job_ns": 36616605.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 16,
+   "task_id": "k10",
+   "accesses": 4192,
+   "job_ns": 65103.99999999999
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 21,
+   "task_id": "k11",
+   "accesses": 7182,
+   "job_ns": 106959.66666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 28,
+   "task_id": "k12",
+   "accesses": 12712,
+   "job_ns": 182996.66666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 37,
+   "task_id": "k13",
+   "accesses": 22126,
+   "job_ns": 312149.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 49,
+   "task_id": "k14",
+   "accesses": 38710,
+   "job_ns": 539808.3333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 65,
+   "task_id": "k15",
+   "accesses": 67990,
+   "job_ns": 971502.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 87,
+   "task_id": "k16",
+   "accesses": 121626,
+   "job_ns": 1847816.9999999998
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 115,
+   "task_id": "k17",
+   "accesses": 212290,
+   "job_ns": 3255076.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 152,
+   "task_id": "k18",
+   "accesses": 370576,
+   "job_ns": 5667265.333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 201,
+   "task_id": "k00",
+   "accesses": 647622,
+   "job_ns": 9909161.333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 266,
+   "task_id": "k01",
+   "accesses": 1133692,
+   "job_ns": 17736830.33333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 353,
+   "task_id": "k02",
+   "accesses": 1995862,
+   "job_ns": 30611629.333333332
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 4,
+   "n": 12,
+   "task_id": "k03",
+   "accesses": 4728,
+   "job_ns": 74234.66666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 4,
+   "n": 16,
+   "task_id": "k04",
+   "accesses": 8352,
+   "job_ns": 124488.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 4,
+   "n": 21,
+   "task_id": "k05",
+   "accesses": 14322,
+   "job_ns": 206764.99999999997
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 4,
+   "n": 27,
+   "task_id": "k06",
+   "accesses": 23598,
+   "job_ns": 334083.66666666674
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 4,
+   "n": 36,
+   "task_id": "k07",
+   "accesses": 41832,
+   "job_ns": 583614.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 4,
+   "n": 48,
+   "task_id": "k08",
+   "accesses": 74208,
+   "job_ns": 1029625.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 4,
+   "n": 63,
+   "task_id": "k09",
+   "accesses": 127638,
+   "job_ns": 1794673.9999999998
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 4,
+   "n": 83,
+   "task_id": "k10",
+   "accesses": 221278,
+   "job_ns": 3370637.666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 4,
+   "n": 109,
+   "task_id": "k11",
+   "accesses": 381282,
+   "job_ns": 5821044.333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 4,
+   "n": 144,
+   "task_id": "k12",
+   "accesses": 664992,
+   "job_ns": 10166070.666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 4,
+   "n": 190,
+   "task_id": "k13",
+   "accesses": 1157100,
+   "job_ns": 17692390.666666668
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 4,
+   "n": 250,
+   "task_id": "k14",
+   "accesses": 2002500,
+   "job_ns": 30587719.33333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 1,
+   "n": 23,
+   "task_id": "k15",
+   "accesses": 4370,
+   "job_ns": 46534.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 1,
+   "n": 30,
+   "task_id": "k16",
+   "accesses": 7380,
+   "job_ns": 74332.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 1,
+   "n": 40,
+   "task_id": "k17",
+   "accesses": 13040,
+   "job_ns": 133714.66666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 1,
+   "n": 53,
+   "task_id": "k18",
+   "accesses": 22790,
+   "job_ns": 251518.33333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 1,
+   "n": 70,
+   "task_id": "k00",
+   "accesses": 39620,
+   "job_ns": 431959.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 1,
+   "n": 93,
+   "task_id": "k01",
+   "accesses": 69750,
+   "job_ns": 753631.3333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 1,
+   "n": 123,
+   "task_id": "k02",
+   "accesses": 121770,
+   "job_ns": 1313807.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 1,
+   "n": 163,
+   "task_id": "k03",
+   "accesses": 213530,
+   "job_ns": 2295753.333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 1,
+   "n": 216,
+   "task_id": "k04",
+   "accesses": 374544,
+   "job_ns": 4018881.333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 1,
+   "n": 286,
+   "task_id": "k05",
+   "accesses": 656084,
+   "job_ns": 7028361.666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 1,
+   "n": 378,
+   "task_id": "k06",
+   "accesses": 1145340,
+   "job_ns": 12256289.666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 1,
+   "n": 500,
+   "task_id": "k07",
+   "accesses": 2003000,
+   "job_ns": 21697736.333333332
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 16,
+   "task_id": "k08",
+   "accesses": 4272,
+   "job_ns": 45766.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 21,
+   "task_id": "k09",
+   "accesses": 7287,
+   "job_ns": 73406.66666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 28,
+   "task_id": "k10",
+   "accesses": 12852,
+   "job_ns": 124468.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 37,
+   "task_id": "k11",
+   "accesses": 22311,
+   "job_ns": 212849.33333333337
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 49,
+   "task_id": "k12",
+   "accesses": 38955,
+   "job_ns": 420694.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 65,
+   "task_id": "k13",
+   "accesses": 68315,
+   "job_ns": 738702.3333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 87,
+   "task_id": "k14",
+   "accesses": 122061,
+   "job_ns": 1317514.6666666665
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 115,
+   "task_id": "k15",
+   "accesses": 212865,
+   "job_ns": 2289669.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 152,
+   "task_id": "k16",
+   "accesses": 371336,
+   "job_ns": 3985748.3333333335
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 201,
+   "task_id": "k17",
+   "accesses": 648627,
+   "job_ns": 6946589.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 266,
+   "task_id": "k18",
+   "accesses": 1135022,
+   "job_ns": 12148911.666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 353,
+   "task_id": "k00",
+   "accesses": 1997627,
+   "job_ns": 21365991.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 12,
+   "task_id": "k01",
+   "accesses": 4860,
+   "job_ns": 51026.666666666664
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 16,
+   "task_id": "k02",
+   "accesses": 8528,
+   "job_ns": 84997.33333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 21,
+   "task_id": "k03",
+   "accesses": 14553,
+   "job_ns": 139876.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 27,
+   "task_id": "k04",
+   "accesses": 23895,
+   "job_ns": 224797.66666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 36,
+   "task_id": "k05",
+   "accesses": 42228,
+   "job_ns": 396815.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 48,
+   "task_id": "k06",
+   "accesses": 74736,
+   "job_ns": 776517.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 63,
+   "task_id": "k07",
+   "accesses": 128331,
+   "job_ns": 1385794.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 83,
+   "task_id": "k08",
+   "accesses": 222191,
+   "job_ns": 2390948.3333333335
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 109,
+   "task_id": "k09",
+   "accesses": 382481,
+   "job_ns": 4107376.0000000005
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 144,
+   "task_id": "k10",
+   "accesses": 666576,
+   "job_ns": 7145227.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 190,
+   "task_id": "k11",
+   "accesses": 1159190,
+   "job_ns": 12411050.999999998
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 250,
+   "task_id": "k12",
+   "accesses": 2005250,
+   "job_ns": 21453445.333333332
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 500,
+   "task_id": "k13",
+   "accesses": 4484,
+   "job_ns": 89829.33333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 880,
+   "task_id": "k14",
+   "accesses": 7904,
+   "job_ns": 153965.33333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 1548,
+   "task_id": "k15",
+   "accesses": 13916,
+   "job_ns": 269717.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 2723,
+   "task_id": "k16",
+   "accesses": 24491,
+   "job_ns": 504336.3333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 4791,
+   "task_id": "k17",
+   "accesses": 43103,
+   "job_ns": 900478.3333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 8429,
+   "task_id": "k18",
+   "accesses": 75845,
+   "job_ns": 1588964.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 14830,
+   "task_id": "k19",
+   "accesses": 133454,
+   "job_ns": 2790617.3333333335
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 26091,
+   "task_id": "k20",
+   "accesses": 234803,
+   "job_ns": 4906078.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 45905,
+   "task_id": "k21",
+   "accesses": 413129,
+   "job_ns": 8630743.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 80764,
+   "task_id": "k22",
+   "accesses": 726860,
+   "job_ns": 15182894.666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 142095,
+   "task_id": "k23",
+   "accesses": 1278839,
+   "job_ns": 26705061.33333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 250000,
+   "task_id": "k00",
+   "accesses": 2249984,
+   "job_ns": 47029073.333333336
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 250,
+   "task_id": "k01",
+   "accesses": 4218,
+   "job_ns": 81221.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 440,
+   "task_id": "k02",
+   "accesses": 7448,
+   "job_ns": 138957.66666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 774,
+   "task_id": "k03",
+   "accesses": 13126,
+   "job_ns": 240838.99999999997
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 1362,
+   "task_id": "k04",
+   "accesses": 23122,
+   "job_ns": 420738.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 2395,
+   "task_id": "k05",
+   "accesses": 40683,
+   "job_ns": 787149.3333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 4214,
+   "task_id": "k06",
+   "accesses": 71606,
+   "job_ns": 1419566.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 7415,
+   "task_id": "k07",
+   "accesses": 126023,
+   "job_ns": 2508493.6666666665
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 13046,
+   "task_id": "k08",
+   "accesses": 221750,
+   "job_ns": 4410098.333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 22952,
+   "task_id": "k09",
+   "accesses": 390152,
+   "job_ns": 7752837.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 40382,
+   "task_id": "k10",
+   "accesses": 686462,
+   "job_ns": 13638710.000000002
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 71048,
+   "task_id": "k11",
+   "accesses": 1207784,
+   "job_ns": 23995026.666666668
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 125000,
+   "task_id": "k12",
+   "accesses": 2124968,
+   "job_ns": 42211014.00000001
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 125,
+   "task_id": "k13",
+   "accesses": 4061,
+   "job_ns": 76763.66666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 220,
+   "task_id": "k14",
+   "accesses": 7196,
+   "job_ns": 131403.33333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 387,
+   "task_id": "k15",
+   "accesses": 12707,
+   "job_ns": 227765.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 681,
+   "task_id": "k16",
+   "accesses": 22409,
+   "job_ns": 397509.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 1198,
+   "task_id": "k17",
+   "accesses": 39470,
+   "job_ns": 695886.3333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 2107,
+   "task_id": "k18",
+   "accesses": 69467,
+   "job_ns": 1255537.666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 3707,
+   "task_id": "k19",
+   "accesses": 122267,
+   "job_ns": 2356734.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 6523,
+   "task_id": "k20",
+   "accesses": 215195,
+   "job_ns": 4161778.3333333335
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 11476,
+   "task_id": "k21",
+   "accesses": 378644,
+   "job_ns": 7316845.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 20191,
+   "task_id": "k22",
+   "accesses": 666239,
+   "job_ns": 12866257.666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 35524,
+   "task_id": "k23",
+   "accesses": 1172228,
+   "job_ns": 22635775.666666668
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 62500,
+   "task_id": "k00",
+   "accesses": 2062436,
+   "job_ns": 39820174.666666664
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 19,
+   "task_id": "k01",
+   "accesses": 3829,
+   "job_ns": 76660.66666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 25,
+   "task_id": "k02",
+   "accesses": 6973,
+   "job_ns": 137992.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 33,
+   "task_id": "k03",
+   "accesses": 12621,
+   "job_ns": 243590.66666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 44,
+   "task_id": "k04",
+   "accesses": 23104,
+   "job_ns": 448070.66666666674
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 58,
+   "task_id": "k05",
+   "accesses": 40996,
+   "job_ns": 821039.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 77,
+   "task_id": "k06",
+   "accesses": 73429,
+   "job_ns": 1491225.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 101,
+   "task_id": "k07",
+   "accesses": 127813,
+   "job_ns": 2584233.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 134,
+   "task_id": "k08",
+   "accesses": 227044,
+   "job_ns": 4577653.000000001
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 177,
+   "task_id": "k09",
+   "accesses": 398829,
+   "job_ns": 8027744.999999999
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 234,
+   "task_id": "k10",
+   "accesses": 700644,
+   "job_ns": 14081256.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 309,
+   "task_id": "k11",
+   "accesses": 1226469,
+   "job_ns": 24621532.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 408,
+   "task_id": "k12",
+   "accesses": 2144496,
+   "job_ns": 43023698.66666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 13,
+   "task_id": "k13",
+   "accesses": 3073,
+   "job_ns": 63105.333333333336
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 17,
+   "task_id": "k14",
+   "accesses": 5689,
+   "job_ns": 110606.33333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 23,
+   "task_id": "k15",
+   "accesses": 11113,
+   "job_ns": 208915.66666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 30,
+   "task_id": "k16",
+   "accesses": 19716,
+   "job_ns": 364869.6666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 40,
+   "task_id": "k17",
+   "accesses": 36256,
+   "job_ns": 667633.6666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 53,
+   "task_id": "k18",
+   "accesses": 65233,
+   "job_ns": 1265904.3333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 70,
+   "task_id": "k19",
+   "accesses": 115876,
+   "job_ns": 2260289.6666666665
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 93,
+   "task_id": "k20",
+   "accesses": 207393,
+   "job_ns": 4037668.666666667
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 124,
+   "task_id": "k21",
+   "accesses": 372592,
+   "job_ns": 7233337.333333332
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 164,
+   "task_id": "k22",
+   "accesses": 656752,
+   "job_ns": 12726285.333333336
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 217,
+   "task_id": "k23",
+   "accesses": 1156489,
+   "job_ns": 22386757.333333332
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 288,
+   "task_id": "k00",
+   "accesses": 2046048,
+   "job_ns": 39570586.333333336
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 10,
+   "task_id": "k01",
+   "accesses": 3172,
+   "job_ns": 62197.99999999999
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 13,
+   "task_id": "k02",
+   "accesses": 5977,
+   "job_ns": 114313.33333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 17,
+   "task_id": "k03",
+   "accesses": 11089,
+   "job_ns": 205518.66666666663
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 23,
+   "task_id": "k04",
+   "accesses": 21697,
+   "job_ns": 394285.33333333326
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 30,
+   "task_id": "k05",
+   "accesses": 38532,
+   "job_ns": 693269.6666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 39,
+   "task_id": "k06",
+   "accesses": 67233,
+   "job_ns": 1209636.333333333
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 52,
+   "task_id": "k07",
+   "accesses": 122704,
+   "job_ns": 2337520.0
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 68,
+   "task_id": "k08",
+   "accesses": 213712,
+   "job_ns": 4079500.333333334
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 90,
+   "task_id": "k09",
+   "accesses": 379812,
+   "job_ns": 7235271.999999999
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 118,
+   "task_id": "k10",
+   "accesses": 659812,
+   "job_ns": 12543324.666666666
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 155,
+   "task_id": "k11",
+   "accesses": 1147657,
+   "job_ns": 21785977.666666668
+  },
+  {
+   "group": "fit",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 204,
+   "task_id": "k12",
+   "accesses": 2000208,
+   "job_ns": 37930879.666666664
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 32,
+   "task_id": "k13",
+   "accesses": 33088,
+   "job_ns": 343484.6666666667
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 366,
+   "task_id": "k14",
+   "accesses": 6190,
+   "job_ns": 116429.33333333331
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 15976,
+   "task_id": "k15",
+   "accesses": 527144,
+   "job_ns": 10183658.333333334
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 314,
+   "task_id": "k16",
+   "accesses": 5306,
+   "job_ns": 100665.99999999999
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 87,
+   "task_id": "k17",
+   "accesses": 60900,
+   "job_ns": 929671.6666666666
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 7010,
+   "task_id": "k18",
+   "accesses": 63074,
+   "job_ns": 1322998.0000000002
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 47,
+   "task_id": "k19",
+   "accesses": 35861,
+   "job_ns": 374097.33333333326
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 5324,
+   "task_id": "k20",
+   "accesses": 175628,
+   "job_ns": 3396832.0000000005
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 157,
+   "task_id": "k21",
+   "accesses": 197820,
+   "job_ns": 2171018.3333333335
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 260,
+   "task_id": "k22",
+   "accesses": 1083160,
+   "job_ns": 16544807.333333334
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 2,
+   "n": 35,
+   "task_id": "k23",
+   "accesses": 19985,
+   "job_ns": 191028.66666666666
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 32,
+   "task_id": "k00",
+   "accesses": 16544,
+   "job_ns": 232491.66666666666
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 2,
+   "n": 28,
+   "task_id": "k01",
+   "accesses": 12712,
+   "job_ns": 182882.00000000003
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 1,
+   "n": 57,
+   "task_id": "k02",
+   "accesses": 26220,
+   "job_ns": 283624.6666666667
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 48,
+   "task_id": "k03",
+   "accesses": 18624,
+   "job_ns": 266683.3333333333
+  },
+  {
+   "group": "validation",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 46,
+   "task_id": "k04",
+   "accesses": 198904,
+   "job_ns": 4501961.333333333
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 2,
+   "n": 53,
+   "task_id": "k05",
+   "accesses": 45209,
+   "job_ns": 627871.6666666666
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 52,
+   "task_id": "k06",
+   "accesses": 21788,
+   "job_ns": 307806.3333333333
+  },
+  {
+   "group": "validation",
+   "kernel": "gemm-u32",
+   "sweeps": 1,
+   "n": 60,
+   "task_id": "k07",
+   "accesses": 439200,
+   "job_ns": 10007210.666666666
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 172,
+   "task_id": "k08",
+   "accesses": 5612,
+   "job_ns": 103547.33333333333
+  },
+  {
+   "group": "validation",
+   "kernel": "gemm-u32",
+   "sweeps": 2,
+   "n": 27,
+   "task_id": "k09",
+   "accesses": 80919,
+   "job_ns": 1833058.6666666665
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 109,
+   "task_id": "k10",
+   "accesses": 286657,
+   "job_ns": 5569338.0
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 2,
+   "n": 172,
+   "task_id": "k11",
+   "accesses": 723184,
+   "job_ns": 14013120.333333336
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 348,
+   "task_id": "k12",
+   "accesses": 1557696,
+   "job_ns": 31261926.666666668
+  },
+  {
+   "group": "validation",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 28,
+   "task_id": "k13",
+   "accesses": 179536,
+   "job_ns": 4053449.6666666665
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 141,
+   "task_id": "k14",
+   "accesses": 251733,
+   "job_ns": 5075472.0
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 196,
+   "task_id": "k15",
+   "accesses": 1844944,
+   "job_ns": 34994789.666666664
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-mvt-u32",
+   "sweeps": 1,
+   "n": 325,
+   "task_id": "k16",
+   "accesses": 846300,
+   "job_ns": 12953804.333333336
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 1,
+   "n": 166,
+   "task_id": "k17",
+   "accesses": 220946,
+   "job_ns": 3195014.6666666665
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 265,
+   "task_id": "k18",
+   "accesses": 900253,
+   "job_ns": 18083977.33333333
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 29,
+   "task_id": "k19",
+   "accesses": 27521,
+   "job_ns": 258199.0
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 1,
+   "n": 55,
+   "task_id": "k20",
+   "accesses": 36733,
+   "job_ns": 735448.3333333334
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-gesummv-u32",
+   "sweeps": 4,
+   "n": 25,
+   "task_id": "k21",
+   "accesses": 20525,
+   "job_ns": 193760.66666666666
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 2,
+   "n": 55366,
+   "task_id": "k22",
+   "accesses": 941190,
+   "job_ns": 18697173.0
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 2,
+   "n": 28,
+   "task_id": "k23",
+   "accesses": 12712,
+   "job_ns": 135958.6666666667
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 1,
+   "n": 1672,
+   "task_id": "k00",
+   "accesses": 15032,
+   "job_ns": 290868.3333333333
+  },
+  {
+   "group": "validation",
+   "kernel": "gemm-u32",
+   "sweeps": 4,
+   "n": 62,
+   "task_id": "k01",
+   "accesses": 1925844,
+   "job_ns": 43827638.666666664
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 124,
+   "task_id": "k02",
+   "accesses": 729808,
+   "job_ns": 13867082.0
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi1d-u32",
+   "sweeps": 4,
+   "n": 1209,
+   "task_id": "k03",
+   "accesses": 39833,
+   "job_ns": 702194.6666666666
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-bicg-u32",
+   "sweeps": 4,
+   "n": 21,
+   "task_id": "k04",
+   "accesses": 14322,
+   "job_ns": 153410.66666666666
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-jacobi2d-u32",
+   "sweeps": 4,
+   "n": 32,
+   "task_id": "k05",
+   "accesses": 44224,
+   "job_ns": 794476.6666666667
+  },
+  {
+   "group": "validation",
+   "kernel": "polybench-atax-u32",
+   "sweeps": 4,
+   "n": 47,
+   "task_id": "k06",
+   "accesses": 71111,
+   "job_ns": 981971.6666666666
+  }
+ ]
+}
