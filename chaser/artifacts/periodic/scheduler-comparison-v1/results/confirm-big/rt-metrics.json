@@ -1,0 +1,1807 @@
+{
+ "builds": [
+  "ra-cgb"
+ ],
+ "cases": {
+  "cv20-big25/u030/s00": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.619526975,
+    "worst_inflation": 3.025469633898672,
+    "worst_memory_inflation": 3.025469633898672,
+    "expected_jobs": 231,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s01": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.41894638333333334,
+    "worst_inflation": 3.2003218145995773,
+    "worst_memory_inflation": 3.2003218145995773,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s02": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.7812890625,
+    "worst_inflation": 4.716426713137363,
+    "worst_memory_inflation": 4.716426713137363,
+    "expected_jobs": 303,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s03": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.6671491666666667,
+    "worst_inflation": 4.141077883019664,
+    "worst_memory_inflation": 4.141077883019664,
+    "expected_jobs": 267,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s04": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.6553513125,
+    "worst_inflation": 4.50989973704686,
+    "worst_memory_inflation": 4.50989973704686,
+    "expected_jobs": 249,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s05": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.5357513,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 375,
+    "late_jobs": 0,
+    "lost_jobs": 24,
+    "missed_jobs": 24,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 199.0
+   }
+  },
+  "cv20-big25/u030/s06": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.6779307666666666,
+    "worst_inflation": 4.038965542792833,
+    "worst_memory_inflation": 4.038965542792833,
+    "expected_jobs": 396,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s07": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.7571018333333334,
+    "worst_inflation": 3.9296537508452603,
+    "worst_memory_inflation": 3.9296537508452603,
+    "expected_jobs": 294,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s08": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.5932276458333333,
+    "worst_inflation": 3.790058503477756,
+    "worst_memory_inflation": 3.790058503477756,
+    "expected_jobs": 225,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s09": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.590817575,
+    "worst_inflation": 3.5965706383727403,
+    "worst_memory_inflation": 3.5965706383727403,
+    "expected_jobs": 231,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s10": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.86039255,
+    "worst_inflation": 6.098580656575927,
+    "worst_memory_inflation": 6.098580656575927,
+    "expected_jobs": 303,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s11": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.6042557,
+    "worst_inflation": 5.115523322421759,
+    "worst_memory_inflation": 5.115523322421759,
+    "expected_jobs": 330,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s12": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.722407475,
+    "worst_inflation": 6.349396340668251,
+    "worst_memory_inflation": 6.349396340668251,
+    "expected_jobs": 321,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s13": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.400186575,
+    "worst_inflation": 1.5405167963056823,
+    "worst_memory_inflation": 1.5405167963056823,
+    "expected_jobs": 213,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s14": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.48142647916666664,
+    "worst_inflation": 3.9800450090417034,
+    "worst_memory_inflation": 3.9800450090417034,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s15": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.761017675,
+    "worst_inflation": 3.393735571133541,
+    "worst_memory_inflation": 3.393735571133541,
+    "expected_jobs": 333,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s16": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.6225397291666667,
+    "worst_inflation": 4.869140669729618,
+    "worst_memory_inflation": 4.869140669729618,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s17": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.562672275,
+    "worst_inflation": 3.0037118224113066,
+    "worst_memory_inflation": 3.0037118224113066,
+    "expected_jobs": 237,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s18": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.6978803125,
+    "worst_inflation": 4.04050847659996,
+    "worst_memory_inflation": 4.04050847659996,
+    "expected_jobs": 375,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s19": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.789232675,
+    "worst_inflation": 3.785113537296285,
+    "worst_memory_inflation": 3.785113537296285,
+    "expected_jobs": 330,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s20": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.44594314583333333,
+    "worst_inflation": 2.991606146500012,
+    "worst_memory_inflation": 2.991606146500012,
+    "expected_jobs": 273,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s21": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.6104719583333333,
+    "worst_inflation": 4.175049414024418,
+    "worst_memory_inflation": 4.175049414024418,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s22": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.707241075,
+    "worst_inflation": 3.6548909501912283,
+    "worst_memory_inflation": 3.6548909501912283,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u030/s23": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.7979771458333333,
+    "worst_inflation": 4.060895459722909,
+    "worst_memory_inflation": 4.060895459722909,
+    "expected_jobs": 327,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s00": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.651848275,
+    "worst_inflation": 2.7368127046303328,
+    "worst_memory_inflation": 2.7368127046303328,
+    "expected_jobs": 231,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s01": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.45404131666666664,
+    "worst_inflation": 2.824324099233165,
+    "worst_memory_inflation": 2.824324099233165,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s02": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.8213461458333333,
+    "worst_inflation": 4.241811951078078,
+    "worst_memory_inflation": 4.241811951078078,
+    "expected_jobs": 303,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s03": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.7572329,
+    "worst_inflation": 3.858177290536075,
+    "worst_memory_inflation": 3.858177290536075,
+    "expected_jobs": 267,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s04": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.686830275,
+    "worst_inflation": 4.213842792974922,
+    "worst_memory_inflation": 4.213842792974922,
+    "expected_jobs": 249,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s05": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.5901765,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 375,
+    "late_jobs": 0,
+    "lost_jobs": 24,
+    "missed_jobs": 24,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 170.0
+   }
+  },
+  "cv20-big25/u034/s06": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.7580375666666667,
+    "worst_inflation": 3.7985503669339695,
+    "worst_memory_inflation": 3.7985503669339695,
+    "expected_jobs": 396,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s07": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.7686892291666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 294,
+    "late_jobs": 0,
+    "lost_jobs": 24,
+    "missed_jobs": 24,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 314.0
+   }
+  },
+  "cv20-big25/u034/s08": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.7379825625,
+    "worst_inflation": 3.49634268774034,
+    "worst_memory_inflation": 3.49634268774034,
+    "expected_jobs": 225,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s09": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.640643875,
+    "worst_inflation": 3.300526696735099,
+    "worst_memory_inflation": 3.300526696735099,
+    "expected_jobs": 231,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s10": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.86513255,
+    "worst_inflation": 5.600937810711375,
+    "worst_memory_inflation": 5.600937810711375,
+    "expected_jobs": 303,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s11": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.694828375,
+    "worst_inflation": 5.0267033808347605,
+    "worst_memory_inflation": 5.0267033808347605,
+    "expected_jobs": 330,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s12": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.742396775,
+    "worst_inflation": 5.651579274027205,
+    "worst_memory_inflation": 5.651579274027205,
+    "expected_jobs": 321,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s13": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.475928775,
+    "worst_inflation": 1.6171110603392016,
+    "worst_memory_inflation": 1.6171110603392016,
+    "expected_jobs": 213,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s14": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.6266219666666667,
+    "worst_inflation": 4.143610726677476,
+    "worst_memory_inflation": 4.143610726677476,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s15": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.842536975,
+    "worst_inflation": 3.4377858018890706,
+    "worst_memory_inflation": 3.4377858018890706,
+    "expected_jobs": 333,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s16": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.6930240625,
+    "worst_inflation": 4.356189771126032,
+    "worst_memory_inflation": 4.356189771126032,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s17": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.618615775,
+    "worst_inflation": 2.774507897807704,
+    "worst_memory_inflation": 2.774507897807704,
+    "expected_jobs": 237,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s18": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.8010417,
+    "worst_inflation": 3.5604729480942447,
+    "worst_memory_inflation": 3.5604729480942447,
+    "expected_jobs": 375,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s19": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.784319875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 330,
+    "late_jobs": 0,
+    "lost_jobs": 24,
+    "missed_jobs": 24,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 197.0
+   }
+  },
+  "cv20-big25/u034/s20": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.46604172916666664,
+    "worst_inflation": 2.953699878775165,
+    "worst_memory_inflation": 2.953699878775165,
+    "expected_jobs": 273,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s21": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.636725125,
+    "worst_inflation": 3.936364327854559,
+    "worst_memory_inflation": 3.936364327854559,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s22": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.751107375,
+    "worst_inflation": 3.4903666851783566,
+    "worst_memory_inflation": 3.4903666851783566,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u034/s23": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.8640336458333333,
+    "worst_inflation": 3.759327096227799,
+    "worst_memory_inflation": 3.759327096227799,
+    "expected_jobs": 327,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u038/s00": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.708634175,
+    "worst_inflation": 2.5546458562093073,
+    "worst_memory_inflation": 2.5546458562093073,
+    "expected_jobs": 231,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u038/s01": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.547481975,
+    "worst_inflation": 3.176378577150111,
+    "worst_memory_inflation": 3.176378577150111,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u038/s02": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.652734475,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 303,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 225.0
+   }
+  },
+  "cv20-big25/u038/s03": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.8365170333333334,
+    "worst_inflation": 3.851350604750842,
+    "worst_memory_inflation": 3.851350604750842,
+    "expected_jobs": 267,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u038/s04": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.704444275,
+    "worst_inflation": 3.8204969203063657,
+    "worst_memory_inflation": 3.8204969203063657,
+    "expected_jobs": 249,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u038/s05": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.4103974791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 375,
+    "late_jobs": 0,
+    "lost_jobs": 48,
+    "missed_jobs": 48,
+    "late_jobs_all": 2,
+    "late_jobs_warmup": 2,
+    "first_late_ms": 139.0
+   }
+  },
+  "cv20-big25/u038/s06": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.8277375666666666,
+    "worst_inflation": 3.437628752477825,
+    "worst_memory_inflation": 3.437628752477825,
+    "expected_jobs": 396,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u038/s07": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.5756233958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 294,
+    "late_jobs": 0,
+    "lost_jobs": 36,
+    "missed_jobs": 36,
+    "late_jobs_all": 2,
+    "late_jobs_warmup": 2,
+    "first_late_ms": 225.0
+   }
+  },
+  "cv20-big25/u038/s08": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.8241782291666667,
+    "worst_inflation": 3.2566902740591006,
+    "worst_memory_inflation": 3.2566902740591006,
+    "expected_jobs": 225,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u038/s09": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.705092375,
+    "worst_inflation": 3.0654971639247415,
+    "worst_memory_inflation": 3.0654971639247415,
+    "expected_jobs": 231,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u038/s10": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.35999339583333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 303,
+    "late_jobs": 0,
+    "lost_jobs": 75,
+    "missed_jobs": 75,
+    "late_jobs_all": 3,
+    "late_jobs_warmup": 3,
+    "first_late_ms": 153.0
+   }
+  },
+  "cv20-big25/u038/s11": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.49060864583333336,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 330,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 178.0
+   }
+  },
+  "cv20-big25/u038/s12": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.573275075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 321,
+    "late_jobs": 0,
+    "lost_jobs": 69,
+    "missed_jobs": 69,
+    "late_jobs_all": 3,
+    "late_jobs_warmup": 3,
+    "first_late_ms": 154.0
+   }
+  },
+  "cv20-big25/u038/s13": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.510662775,
+    "worst_inflation": 1.5745150680285576,
+    "worst_memory_inflation": 1.5745150680285576,
+    "expected_jobs": 213,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u038/s14": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.6669909,
+    "worst_inflation": 3.4307806992569105,
+    "worst_memory_inflation": 3.4307806992569105,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u038/s15": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.673713375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 333,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 268.0
+   }
+  },
+  "cv20-big25/u038/s16": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.8262794583333334,
+    "worst_inflation": 3.950558358805061,
+    "worst_memory_inflation": 3.950558358805061,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u038/s17": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.661022775,
+    "worst_inflation": 2.540727754077469,
+    "worst_memory_inflation": 2.540727754077469,
+    "expected_jobs": 237,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u038/s18": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.5505009791666666,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 375,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 230.0
+   }
+  },
+  "cv20-big25/u038/s19": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.562298375,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 330,
+    "late_jobs": 0,
+    "lost_jobs": 42,
+    "missed_jobs": 42,
+    "late_jobs_all": 2,
+    "late_jobs_warmup": 2,
+    "first_late_ms": 147.0
+   }
+  },
+  "cv20-big25/u038/s20": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.5447120625,
+    "worst_inflation": 2.98948333933946,
+    "worst_memory_inflation": 2.98948333933946,
+    "expected_jobs": 273,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u038/s21": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.3838528958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 180.0
+   }
+  },
+  "cv20-big25/u038/s22": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.6310846458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 227.0
+   }
+  },
+  "cv20-big25/u038/s23": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.649586875,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 327,
+    "late_jobs": 0,
+    "lost_jobs": 18,
+    "missed_jobs": 18,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 266.0
+   }
+  },
+  "cv20-big25/u041/s00": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.786740575,
+    "worst_inflation": 2.743062459597829,
+    "worst_memory_inflation": 2.743062459597829,
+    "expected_jobs": 231,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u041/s01": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.598308175,
+    "worst_inflation": 3.0465026928750185,
+    "worst_memory_inflation": 3.0465026928750185,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u041/s02": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.802340075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 303,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 106.0
+   }
+  },
+  "cv20-big25/u041/s03": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.9117269,
+    "worst_inflation": 3.6869682185635395,
+    "worst_memory_inflation": 3.6869682185635395,
+    "expected_jobs": 267,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u041/s04": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.740053175,
+    "worst_inflation": 3.5150721127439417,
+    "worst_memory_inflation": 3.5150721127439417,
+    "expected_jobs": 249,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u041/s05": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.41242039583333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 375,
+    "late_jobs": 0,
+    "lost_jobs": 81,
+    "missed_jobs": 81,
+    "late_jobs_all": 4,
+    "late_jobs_warmup": 4,
+    "first_late_ms": 140.0
+   }
+  },
+  "cv20-big25/u041/s06": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.7340743125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 396,
+    "late_jobs": 0,
+    "lost_jobs": 42,
+    "missed_jobs": 42,
+    "late_jobs_all": 2,
+    "late_jobs_warmup": 2,
+    "first_late_ms": 228.0
+   }
+  },
+  "cv20-big25/u041/s07": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.461675175,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 294,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72,
+    "late_jobs_all": 4,
+    "late_jobs_warmup": 4,
+    "first_late_ms": 153.0
+   }
+  },
+  "cv20-big25/u041/s08": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.8215805625,
+    "worst_inflation": 3.1240658175101306,
+    "worst_memory_inflation": 3.1240658175101306,
+    "expected_jobs": 225,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u041/s09": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.772638675,
+    "worst_inflation": 3.197187518603821,
+    "worst_memory_inflation": 3.197187518603821,
+    "expected_jobs": 231,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u041/s10": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.37777239583333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 303,
+    "late_jobs": 0,
+    "lost_jobs": 75,
+    "missed_jobs": 75,
+    "late_jobs_all": 3,
+    "late_jobs_warmup": 3,
+    "first_late_ms": 153.0
+   }
+  },
+  "cv20-big25/u041/s11": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.5315243958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 330,
+    "late_jobs": 0,
+    "lost_jobs": 78,
+    "missed_jobs": 78,
+    "late_jobs_all": 3,
+    "late_jobs_warmup": 3,
+    "first_late_ms": 130.0
+   }
+  },
+  "cv20-big25/u041/s12": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.4130034791666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 321,
+    "late_jobs": 0,
+    "lost_jobs": 87,
+    "missed_jobs": 87,
+    "late_jobs_all": 4,
+    "late_jobs_warmup": 4,
+    "first_late_ms": 146.0
+   }
+  },
+  "cv20-big25/u041/s13": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.571289275,
+    "worst_inflation": 1.6158203044472637,
+    "worst_memory_inflation": 1.6158203044472637,
+    "expected_jobs": 213,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u041/s14": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.7931802333333333,
+    "worst_inflation": 4.598723698760623,
+    "worst_memory_inflation": 4.598723698760623,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u041/s15": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.694627975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 333,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 108.0
+   }
+  },
+  "cv20-big25/u041/s16": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.9629074583333334,
+    "worst_inflation": 3.532832498565466,
+    "worst_memory_inflation": 3.532832498565466,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u041/s17": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.721655675,
+    "worst_inflation": 2.3950338790637984,
+    "worst_memory_inflation": 2.3950338790637984,
+    "expected_jobs": 237,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u041/s18": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.45263589583333336,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 375,
+    "late_jobs": 0,
+    "lost_jobs": 57,
+    "missed_jobs": 57,
+    "late_jobs_all": 3,
+    "late_jobs_warmup": 3,
+    "first_late_ms": 157.0
+   }
+  },
+  "cv20-big25/u041/s19": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.3889177833333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 330,
+    "late_jobs": 0,
+    "lost_jobs": 60,
+    "missed_jobs": 60,
+    "late_jobs_all": 3,
+    "late_jobs_warmup": 3,
+    "first_late_ms": 147.0
+   }
+  },
+  "cv20-big25/u041/s20": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.5607607291666666,
+    "worst_inflation": 2.9701190861414504,
+    "worst_memory_inflation": 2.9701190861414504,
+    "expected_jobs": 273,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u041/s21": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.37220297916666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72,
+    "late_jobs_all": 3,
+    "late_jobs_warmup": 3,
+    "first_late_ms": 114.0
+   }
+  },
+  "cv20-big25/u041/s22": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.678118075,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 107.0
+   }
+  },
+  "cv20-big25/u041/s23": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.812418275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 327,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 107.0
+   }
+  },
+  "cv20-big25/u045/s00": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.861586475,
+    "worst_inflation": 2.6198093996550265,
+    "worst_memory_inflation": 2.6198093996550265,
+    "expected_jobs": 231,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u045/s01": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.6625681,
+    "worst_inflation": 2.742404931116434,
+    "worst_memory_inflation": 2.742404931116434,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u045/s02": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.505941975,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 303,
+    "late_jobs": 0,
+    "lost_jobs": 33,
+    "missed_jobs": 33,
+    "late_jobs_all": 2,
+    "late_jobs_warmup": 2,
+    "first_late_ms": 105.0
+   }
+  },
+  "cv20-big25/u045/s03": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.568525675,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 267,
+    "late_jobs": 0,
+    "lost_jobs": 24,
+    "missed_jobs": 24,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 176.0
+   }
+  },
+  "cv20-big25/u045/s04": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.803436275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 249,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 110.0
+   }
+  },
+  "cv20-big25/u045/s05": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.4371408958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 375,
+    "late_jobs": 0,
+    "lost_jobs": 81,
+    "missed_jobs": 81,
+    "late_jobs_all": 4,
+    "late_jobs_warmup": 4,
+    "first_late_ms": 109.0
+   }
+  },
+  "cv20-big25/u045/s06": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.4938068958333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 396,
+    "late_jobs": 0,
+    "lost_jobs": 39,
+    "missed_jobs": 39,
+    "late_jobs_all": 2,
+    "late_jobs_warmup": 2,
+    "first_late_ms": 156.0
+   }
+  },
+  "cv20-big25/u045/s07": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.509662775,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 294,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72,
+    "late_jobs_all": 4,
+    "late_jobs_warmup": 4,
+    "first_late_ms": 105.0
+   }
+  },
+  "cv20-big25/u045/s08": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.47582372916666665,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 225,
+    "late_jobs": 0,
+    "lost_jobs": 24,
+    "missed_jobs": 24,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 114.0
+   }
+  },
+  "cv20-big25/u045/s09": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.831927575,
+    "worst_inflation": 3.054444701532128,
+    "worst_memory_inflation": 3.054444701532128,
+    "expected_jobs": 231,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u045/s10": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.41432422916666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 303,
+    "late_jobs": 0,
+    "lost_jobs": 75,
+    "missed_jobs": 75,
+    "late_jobs_all": 3,
+    "late_jobs_warmup": 3,
+    "first_late_ms": 104.0
+   }
+  },
+  "cv20-big25/u045/s11": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.6101631458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 330,
+    "late_jobs": 0,
+    "lost_jobs": 78,
+    "missed_jobs": 78,
+    "late_jobs_all": 3,
+    "late_jobs_warmup": 3,
+    "first_late_ms": 131.0
+   }
+  },
+  "cv20-big25/u045/s12": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.45885614583333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 321,
+    "late_jobs": 0,
+    "lost_jobs": 42,
+    "missed_jobs": 42,
+    "late_jobs_all": 2,
+    "late_jobs_warmup": 2,
+    "first_late_ms": 135.0
+   }
+  },
+  "cv20-big25/u045/s13": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.632626275,
+    "worst_inflation": 1.5819780160100951,
+    "worst_memory_inflation": 1.5819780160100951,
+    "expected_jobs": 213,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u045/s14": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.8528302333333333,
+    "worst_inflation": 4.270704230927716,
+    "worst_memory_inflation": 4.270704230927716,
+    "expected_jobs": 288,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u045/s15": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.757371275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 333,
+    "late_jobs": 0,
+    "lost_jobs": 15,
+    "missed_jobs": 15,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 108.0
+   }
+  },
+  "cv20-big25/u045/s16": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.6074718958333334,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 309,
+    "late_jobs": 0,
+    "lost_jobs": 30,
+    "missed_jobs": 30,
+    "late_jobs_all": 1,
+    "late_jobs_warmup": 1,
+    "first_late_ms": 113.0
+   }
+  },
+  "cv20-big25/u045/s17": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.781429975,
+    "worst_inflation": 2.471288964995485,
+    "worst_memory_inflation": 2.471288964995485,
+    "expected_jobs": 237,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u045/s18": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.4341058125,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 375,
+    "late_jobs": 0,
+    "lost_jobs": 72,
+    "missed_jobs": 72,
+    "late_jobs_all": 4,
+    "late_jobs_warmup": 4,
+    "first_late_ms": 149.0
+   }
+  },
+  "cv20-big25/u045/s19": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.4018015166666667,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 330,
+    "late_jobs": 0,
+    "lost_jobs": 93,
+    "missed_jobs": 93,
+    "late_jobs_all": 5,
+    "late_jobs_warmup": 5,
+    "first_late_ms": 147.0
+   }
+  },
+  "cv20-big25/u045/s20": {
+   "ra-cgb": {
+    "state": "ok",
+    "max_response_ratio": 0.6135153,
+    "worst_inflation": 2.889923852416487,
+    "worst_memory_inflation": 2.889923852416487,
+    "expected_jobs": 273,
+    "late_jobs": 0,
+    "lost_jobs": 0,
+    "missed_jobs": 0,
+    "late_jobs_all": 0,
+    "late_jobs_warmup": 0,
+    "first_late_ms": null
+   }
+  },
+  "cv20-big25/u045/s21": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.4155885625,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 234,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54,
+    "late_jobs_all": 2,
+    "late_jobs_warmup": 2,
+    "first_late_ms": 108.0
+   }
+  },
+  "cv20-big25/u045/s22": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.4860996458333333,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 324,
+    "late_jobs": 0,
+    "lost_jobs": 54,
+    "missed_jobs": 54,
+    "late_jobs_all": 3,
+    "late_jobs_warmup": 3,
+    "first_late_ms": 107.0
+   }
+  },
+  "cv20-big25/u045/s23": {
+   "ra-cgb": {
+    "state": "deadline",
+    "max_response_ratio": 0.556154275,
+    "worst_inflation": null,
+    "worst_memory_inflation": null,
+    "expected_jobs": 327,
+    "late_jobs": 0,
+    "lost_jobs": 33,
+    "missed_jobs": 33,
+    "late_jobs_all": 2,
+    "late_jobs_warmup": 2,
+    "first_late_ms": 106.0
+   }
+  }
+ }
+}

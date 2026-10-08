@@ -1,0 +1,498 @@
+{
+  "alpha": 0.05,
+  "cell_keys": {
+    "cv": "heaviness index + 1 in ('cv20-big25',)",
+    "mean": "per-core load"
+  },
+  "cells": [
+    {
+      "cv": 1,
+      "failures": {
+        "c": 1,
+        "g": 0,
+        "p": 24
+      },
+      "holm_p": 3.5762786865234375e-06,
+      "mean": 0.3,
+      "mean_gap": 0.1288601392887216,
+      "median": 0.11830268585229528,
+      "median_ci95": [
+        0.06927281820316497,
+        0.17547734730138767
+      ],
+      "metric": "tet_ns",
+      "n": 23,
+      "pair": "g-p_racgb",
+      "positive": 22,
+      "significant": true,
+      "wilcoxon_p": 7.152557373046875e-07
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 1,
+        "g": 0,
+        "p": 24
+      },
+      "holm_p": 1.1444091796875e-05,
+      "mean": 0.3375,
+      "mean_gap": 0.11402795412324189,
+      "median": 0.11485580216799818,
+      "median_ci95": [
+        0.06544931917237792,
+        0.14384870610179462
+      ],
+      "metric": "tet_ns",
+      "n": 21,
+      "pair": "g-p_racgb",
+      "positive": 20,
+      "significant": true,
+      "wilcoxon_p": 2.86102294921875e-06
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 7,
+        "g": 5,
+        "p": 24
+      },
+      "holm_p": 0.00146484375,
+      "mean": 0.375,
+      "mean_gap": 0.09407296526762145,
+      "median": 0.07781206590016035,
+      "median_ci95": [
+        0.03821239865411444,
+        0.10222023873126687
+      ],
+      "metric": "tet_ns",
+      "n": 12,
+      "pair": "g-p_racgb",
+      "positive": 12,
+      "significant": true,
+      "wilcoxon_p": 0.00048828125
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 13,
+        "g": 12,
+        "p": 24
+      },
+      "holm_p": 0.00390625,
+      "mean": 0.4125,
+      "mean_gap": 0.06296839787638388,
+      "median": 0.0642071547633082,
+      "median_ci95": [
+        0.03527047419610618,
+        0.08477874233375189
+      ],
+      "metric": "tet_ns",
+      "n": 10,
+      "pair": "g-p_racgb",
+      "positive": 10,
+      "significant": true,
+      "wilcoxon_p": 0.001953125
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 16,
+        "g": 17,
+        "p": 24
+      },
+      "holm_p": 0.03125,
+      "mean": 0.45,
+      "mean_gap": 0.06909400300897393,
+      "median": 0.0668486032341846,
+      "median_ci95": [
+        0.03634721385578949,
+        0.10408619193694771
+      ],
+      "metric": "tet_ns",
+      "n": 6,
+      "pair": "g-p_racgb",
+      "positive": 6,
+      "significant": true,
+      "wilcoxon_p": 0.03125
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 1,
+        "g": 0,
+        "p": 24
+      },
+      "holm_p": 0.019370317459106445,
+      "mean": 0.3,
+      "mean_gap": -0.04804227930725896,
+      "median": -0.026088804238092133,
+      "median_ci95": [
+        -0.05957350760895231,
+        -0.00048316622746421303
+      ],
+      "metric": "tat_ns",
+      "n": 23,
+      "pair": "g-p_racgb",
+      "positive": 7,
+      "significant": true,
+      "wilcoxon_p": 0.003874063491821289
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 1,
+        "g": 0,
+        "p": 24
+      },
+      "holm_p": 0.6285362243652344,
+      "mean": 0.3375,
+      "mean_gap": -0.01900938836251492,
+      "median": -0.015710575750677767,
+      "median_ci95": [
+        -0.06447152928808274,
+        0.004642910756421795
+      ],
+      "metric": "tat_ns",
+      "n": 21,
+      "pair": "g-p_racgb",
+      "positive": 7,
+      "significant": false,
+      "wilcoxon_p": 0.1571340560913086
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 7,
+        "g": 5,
+        "p": 24
+      },
+      "holm_p": 1.0,
+      "mean": 0.375,
+      "mean_gap": 0.00809403901008258,
+      "median": 0.015522558925992355,
+      "median_ci95": [
+        -0.0297206656875974,
+        0.08113537707065212
+      ],
+      "metric": "tat_ns",
+      "n": 12,
+      "pair": "g-p_racgb",
+      "positive": 6,
+      "significant": false,
+      "wilcoxon_p": 0.5185546875
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 13,
+        "g": 12,
+        "p": 24
+      },
+      "holm_p": 1.0,
+      "mean": 0.4125,
+      "mean_gap": 0.0007381410180026246,
+      "median": 0.0004477855471183073,
+      "median_ci95": [
+        -0.052002880342779834,
+        0.06509641034307848
+      ],
+      "metric": "tat_ns",
+      "n": 10,
+      "pair": "g-p_racgb",
+      "positive": 5,
+      "significant": false,
+      "wilcoxon_p": 0.921875
+    },
+    {
+      "cv": 1,
+      "failures": {
+        "c": 16,
+        "g": 17,
+        "p": 24
+      },
+      "holm_p": 1.0,
+      "mean": 0.45,
+      "mean_gap": 0.014172002820978401,
+      "median": 0.0010348899464042468,
+      "median_ci95": [
+        -0.0627536616235828,
+        0.10423478014011375
+      ],
+      "metric": "tat_ns",
+      "n": 6,
+      "pair": "g-p_racgb",
+      "positive": 3,
+      "significant": false,
+      "wilcoxon_p": 0.84375
+    }
+  ],
+  "load_trends": [
+    {
+      "blocks": 6,
+      "factor": "load",
+      "fixed": "heaviness=cv20-big25",
+      "friedman_p": 0.21996785493825916,
+      "level_medians": [
+        0.047876071229531976,
+        0.05503312582584266,
+        0.04896714207689798,
+        0.05275098080129548,
+        0.0668486032341846
+      ],
+      "levels": [
+        0.3,
+        0.3375,
+        0.375,
+        0.4125,
+        0.45
+      ],
+      "metric": "tet_ns",
+      "page_decreasing_p": 0.8950522788963369,
+      "page_increasing_p": 0.12071601645152821,
+      "pair": "g-p_racgb"
+    },
+    {
+      "blocks": 6,
+      "factor": "load",
+      "fixed": "heaviness=cv20-big25",
+      "friedman_p": 0.40600584970983794,
+      "level_medians": [
+        -0.001973825435804421,
+        -0.006468625284375666,
+        0.015897858392281878,
+        -0.0003449358530044121,
+        0.0010348899464042468
+      ],
+      "levels": [
+        0.3,
+        0.3375,
+        0.375,
+        0.4125,
+        0.45
+      ],
+      "metric": "tat_ns",
+      "page_decreasing_p": 0.8950522788963369,
+      "page_increasing_p": 0.12071601645152821,
+      "pair": "g-p_racgb"
+    }
+  ],
+  "max_response_ratio_tests": [
+    {
+      "cell": "cv20-big25/u030",
+      "holm_p": 1.0,
+      "median": 0.00011315416666668465,
+      "n": 23,
+      "pair": "g-p_racgb",
+      "significant": false,
+      "wilcoxon_p": 0.7539846897125244
+    },
+    {
+      "cell": "cv20-big25/u034",
+      "holm_p": 1.0,
+      "median": 0.003348600000000035,
+      "n": 21,
+      "pair": "g-p_racgb",
+      "significant": false,
+      "wilcoxon_p": 0.35541629791259766
+    },
+    {
+      "cell": "cv20-big25/u038",
+      "holm_p": 1.0,
+      "median": 0.005350022916666697,
+      "n": 12,
+      "pair": "g-p_racgb",
+      "significant": false,
+      "wilcoxon_p": 1.0
+    },
+    {
+      "cell": "cv20-big25/u041",
+      "holm_p": 1.0,
+      "median": 0.02154297708333336,
+      "n": 10,
+      "pair": "g-p_racgb",
+      "significant": false,
+      "wilcoxon_p": 0.625
+    },
+    {
+      "cell": "cv20-big25/u045",
+      "holm_p": 1.0,
+      "median": 0.06508238333333333,
+      "n": 6,
+      "pair": "g-p_racgb",
+      "significant": false,
+      "wilcoxon_p": 0.3125
+    }
+  ],
+  "pairs": [
+    [
+      "g",
+      "p_racgb"
+    ]
+  ],
+  "primary_tests": [],
+  "schedulability_tests": [
+    {
+      "cell": "cv20-big25/u030",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 1,
+      "only_b_schedulable": 0,
+      "pair": "g-p_racgb",
+      "sets": 24,
+      "significant": false
+    },
+    {
+      "cell": "cv20-big25/u034",
+      "exact_p": 0.25,
+      "holm_p": 1.0,
+      "only_a_schedulable": 3,
+      "only_b_schedulable": 0,
+      "pair": "g-p_racgb",
+      "sets": 24,
+      "significant": false
+    },
+    {
+      "cell": "cv20-big25/u038",
+      "exact_p": 0.015625,
+      "holm_p": 0.078125,
+      "only_a_schedulable": 7,
+      "only_b_schedulable": 0,
+      "pair": "g-p_racgb",
+      "sets": 24,
+      "significant": false
+    },
+    {
+      "cell": "cv20-big25/u041",
+      "exact_p": 0.5,
+      "holm_p": 1.0,
+      "only_a_schedulable": 2,
+      "only_b_schedulable": 0,
+      "pair": "g-p_racgb",
+      "sets": 23,
+      "significant": false
+    },
+    {
+      "cell": "cv20-big25/u045",
+      "exact_p": 1.0,
+      "holm_p": 1.0,
+      "only_a_schedulable": 1,
+      "only_b_schedulable": 1,
+      "pair": "g-p_racgb",
+      "sets": 24,
+      "significant": false
+    }
+  ],
+  "schedulable": {
+    "cv20-big25/u030": {
+      "c": {
+        "deadline": 1,
+        "excluded": 0,
+        "ok": 23
+      },
+      "c2": {
+        "deadline": 0,
+        "excluded": 0,
+        "ok": 24
+      },
+      "g": {
+        "deadline": 0,
+        "excluded": 0,
+        "ok": 24
+      },
+      "p_racgb": {
+        "deadline": 1,
+        "excluded": 0,
+        "ok": 23
+      }
+    },
+    "cv20-big25/u034": {
+      "c": {
+        "deadline": 1,
+        "excluded": 0,
+        "ok": 23
+      },
+      "c2": {
+        "deadline": 1,
+        "excluded": 0,
+        "ok": 23
+      },
+      "g": {
+        "deadline": 0,
+        "excluded": 0,
+        "ok": 24
+      },
+      "p_racgb": {
+        "deadline": 3,
+        "excluded": 0,
+        "ok": 21
+      }
+    },
+    "cv20-big25/u038": {
+      "c": {
+        "deadline": 7,
+        "excluded": 0,
+        "ok": 17
+      },
+      "c2": {
+        "deadline": 7,
+        "excluded": 0,
+        "ok": 17
+      },
+      "g": {
+        "deadline": 5,
+        "excluded": 0,
+        "ok": 19
+      },
+      "p_racgb": {
+        "deadline": 12,
+        "excluded": 0,
+        "ok": 12
+      }
+    },
+    "cv20-big25/u041": {
+      "c": {
+        "deadline": 13,
+        "excluded": 0,
+        "ok": 11
+      },
+      "c2": {
+        "deadline": 12,
+        "excluded": 0,
+        "ok": 12
+      },
+      "g": {
+        "deadline": 11,
+        "excluded": 1,
+        "ok": 12
+      },
+      "p_racgb": {
+        "deadline": 13,
+        "excluded": 0,
+        "ok": 11
+      }
+    },
+    "cv20-big25/u045": {
+      "c": {
+        "deadline": 16,
+        "excluded": 0,
+        "ok": 8
+      },
+      "c2": {
+        "deadline": 14,
+        "excluded": 0,
+        "ok": 10
+      },
+      "g": {
+        "deadline": 17,
+        "excluded": 0,
+        "ok": 7
+      },
+      "p_racgb": {
+        "deadline": 17,
+        "excluded": 0,
+        "ok": 7
+      }
+    }
+  },
+  "task_sets": 120
+}

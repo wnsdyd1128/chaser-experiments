@@ -1,0 +1,604 @@
+{
+ "sets": 357,
+ "h1": {
+  "auc_a": 0.9822948980265329,
+  "auc_b": 0.7463533760147845,
+  "difference": 0.23594152201174845,
+  "low": 0.18699038341416174,
+  "high": 0.28779731749306975,
+  "p": 0.0,
+  "holm_p": 0.0,
+  "supported": true
+ },
+ "h1_vs_occupancy": {
+  "auc_a": 0.9822948980265329,
+  "auc_b": 0.9599036367236485,
+  "difference": 0.02239126130288438,
+  "low": 0.011194921515688298,
+  "high": 0.035202792927853735,
+  "p": 0.0
+ },
+ "h2": {
+  "accepted": 193,
+  "false_accepts": 2,
+  "rate": 0.010362694300518135,
+  "upper_95": 0.03225954724846232,
+  "holds": true
+ },
+ "h3": {
+  "only_a": 35,
+  "only_b": 1,
+  "p": 1.076841726899147e-09,
+  "direction_holds": true,
+  "holm_p": 1.076841726899147e-09,
+  "supported": true
+ },
+ "h4": {
+  "switched": 10,
+  "saved": 2,
+  "wrong_switch": 0,
+  "p": 0.5
+ },
+ "rf_main_supported": true,
+ "overall": {
+  "rf": {
+   "success": 191,
+   "false_accept": 2,
+   "false_reject": 69,
+   "true_reject": 95
+  },
+  "static": {
+   "success": 157,
+   "false_accept": 5,
+   "false_reject": 100,
+   "true_reject": 95
+  },
+  "always": {
+   "success": 218,
+   "false_accept": 139,
+   "false_reject": 0,
+   "true_reject": 0
+  },
+  "sets": 357,
+  "chaser_met": 218,
+  "any_met": 262,
+  "status": {
+   "P": 183,
+   "fallback_gc": 10,
+   "rejected": 164,
+   "deferred": 0
+  }
+ },
+ "groups": {
+  "confirm-small-v1": {
+   "rf": {
+    "success": 59,
+    "false_accept": 0,
+    "false_reject": 11,
+    "true_reject": 50
+   },
+   "static": {
+    "success": 39,
+    "false_accept": 0,
+    "false_reject": 31,
+    "true_reject": 50
+   },
+   "always": {
+    "success": 65,
+    "false_accept": 55,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 120,
+   "chaser_met": 65,
+   "any_met": 70,
+   "status": {
+    "P": 57,
+    "fallback_gc": 2,
+    "rejected": 61,
+    "deferred": 0
+   }
+  },
+  "confirm-small-v1 0.45": {
+   "rf": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 24,
+   "any_met": 24,
+   "status": {
+    "P": 24,
+    "fallback_gc": 0,
+    "rejected": 0,
+    "deferred": 0
+   }
+  },
+  "confirm-small-v1 0.4875": {
+   "rf": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 14,
+    "false_accept": 0,
+    "false_reject": 10,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 24,
+   "any_met": 24,
+   "status": {
+    "P": 24,
+    "fallback_gc": 0,
+    "rejected": 0,
+    "deferred": 0
+   }
+  },
+  "confirm-small-v1 0.525": {
+   "rf": {
+    "success": 11,
+    "false_accept": 0,
+    "false_reject": 9,
+    "true_reject": 4
+   },
+   "static": {
+    "success": 1,
+    "false_accept": 0,
+    "false_reject": 19,
+    "true_reject": 4
+   },
+   "always": {
+    "success": 16,
+    "false_accept": 8,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 16,
+   "any_met": 20,
+   "status": {
+    "P": 9,
+    "fallback_gc": 2,
+    "rejected": 13,
+    "deferred": 0
+   }
+  },
+  "confirm-small-v1 0.5625": {
+   "rf": {
+    "success": 0,
+    "false_accept": 0,
+    "false_reject": 2,
+    "true_reject": 22
+   },
+   "static": {
+    "success": 0,
+    "false_accept": 0,
+    "false_reject": 2,
+    "true_reject": 22
+   },
+   "always": {
+    "success": 1,
+    "false_accept": 23,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 1,
+   "any_met": 2,
+   "status": {
+    "P": 0,
+    "fallback_gc": 0,
+    "rejected": 24,
+    "deferred": 0
+   }
+  },
+  "confirm-small-v1 0.6": {
+   "rf": {
+    "success": 0,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 24
+   },
+   "static": {
+    "success": 0,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 24
+   },
+   "always": {
+    "success": 0,
+    "false_accept": 24,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 0,
+   "any_met": 0,
+   "status": {
+    "P": 0,
+    "fallback_gc": 0,
+    "rejected": 24,
+    "deferred": 0
+   }
+  },
+  "confirm-big-v1": {
+   "rf": {
+    "success": 63,
+    "false_accept": 1,
+    "false_reject": 29,
+    "true_reject": 26
+   },
+   "static": {
+    "success": 49,
+    "false_accept": 1,
+    "false_reject": 43,
+    "true_reject": 26
+   },
+   "always": {
+    "success": 73,
+    "false_accept": 46,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 119,
+   "chaser_met": 73,
+   "any_met": 93,
+   "status": {
+    "P": 62,
+    "fallback_gc": 2,
+    "rejected": 55,
+    "deferred": 0
+   }
+  },
+  "confirm-big-v1 0.3": {
+   "rf": {
+    "success": 21,
+    "false_accept": 0,
+    "false_reject": 3,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 16,
+    "false_accept": 0,
+    "false_reject": 8,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 23,
+    "false_accept": 1,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 23,
+   "any_met": 24,
+   "status": {
+    "P": 21,
+    "fallback_gc": 0,
+    "rejected": 3,
+    "deferred": 0
+   }
+  },
+  "confirm-big-v1 0.3375": {
+   "rf": {
+    "success": 17,
+    "false_accept": 1,
+    "false_reject": 6,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 14,
+    "false_accept": 1,
+    "false_reject": 9,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 21,
+    "false_accept": 3,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 21,
+   "any_met": 24,
+   "status": {
+    "P": 17,
+    "fallback_gc": 1,
+    "rejected": 6,
+    "deferred": 0
+   }
+  },
+  "confirm-big-v1 0.375": {
+   "rf": {
+    "success": 11,
+    "false_accept": 0,
+    "false_reject": 10,
+    "true_reject": 3
+   },
+   "static": {
+    "success": 9,
+    "false_accept": 0,
+    "false_reject": 12,
+    "true_reject": 3
+   },
+   "always": {
+    "success": 12,
+    "false_accept": 12,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 12,
+   "any_met": 21,
+   "status": {
+    "P": 10,
+    "fallback_gc": 1,
+    "rejected": 13,
+    "deferred": 0
+   }
+  },
+  "confirm-big-v1 0.4125": {
+   "rf": {
+    "success": 8,
+    "false_accept": 0,
+    "false_reject": 5,
+    "true_reject": 10
+   },
+   "static": {
+    "success": 7,
+    "false_accept": 0,
+    "false_reject": 6,
+    "true_reject": 10
+   },
+   "always": {
+    "success": 10,
+    "false_accept": 13,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 23,
+   "chaser_met": 10,
+   "any_met": 13,
+   "status": {
+    "P": 8,
+    "fallback_gc": 0,
+    "rejected": 15,
+    "deferred": 0
+   }
+  },
+  "confirm-big-v1 0.45": {
+   "rf": {
+    "success": 6,
+    "false_accept": 0,
+    "false_reject": 5,
+    "true_reject": 13
+   },
+   "static": {
+    "success": 3,
+    "false_accept": 0,
+    "false_reject": 8,
+    "true_reject": 13
+   },
+   "always": {
+    "success": 7,
+    "false_accept": 17,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 7,
+   "any_met": 11,
+   "status": {
+    "P": 6,
+    "fallback_gc": 0,
+    "rejected": 18,
+    "deferred": 0
+   }
+  },
+  "confirm-mem-v1": {
+   "rf": {
+    "success": 69,
+    "false_accept": 1,
+    "false_reject": 29,
+    "true_reject": 19
+   },
+   "static": {
+    "success": 69,
+    "false_accept": 4,
+    "false_reject": 26,
+    "true_reject": 19
+   },
+   "always": {
+    "success": 80,
+    "false_accept": 38,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 118,
+   "chaser_met": 80,
+   "any_met": 99,
+   "status": {
+    "P": 64,
+    "fallback_gc": 6,
+    "rejected": 48,
+    "deferred": 0
+   }
+  },
+  "confirm-mem-v1 0.45": {
+   "rf": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 24,
+   "any_met": 24,
+   "status": {
+    "P": 24,
+    "fallback_gc": 0,
+    "rejected": 0,
+    "deferred": 0
+   }
+  },
+  "confirm-mem-v1 0.4875": {
+   "rf": {
+    "success": 23,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 23,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 23,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 23,
+   "chaser_met": 23,
+   "any_met": 23,
+   "status": {
+    "P": 23,
+    "fallback_gc": 0,
+    "rejected": 0,
+    "deferred": 0
+   }
+  },
+  "confirm-mem-v1 0.525": {
+   "rf": {
+    "success": 15,
+    "false_accept": 1,
+    "false_reject": 7,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 14,
+    "false_accept": 3,
+    "false_reject": 6,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 19,
+    "false_accept": 4,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 23,
+   "chaser_met": 19,
+   "any_met": 23,
+   "status": {
+    "P": 12,
+    "fallback_gc": 4,
+    "rejected": 7,
+    "deferred": 0
+   }
+  },
+  "confirm-mem-v1 0.5625": {
+   "rf": {
+    "success": 5,
+    "false_accept": 0,
+    "false_reject": 15,
+    "true_reject": 4
+   },
+   "static": {
+    "success": 6,
+    "false_accept": 1,
+    "false_reject": 13,
+    "true_reject": 4
+   },
+   "always": {
+    "success": 12,
+    "false_accept": 12,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 12,
+   "any_met": 20,
+   "status": {
+    "P": 3,
+    "fallback_gc": 2,
+    "rejected": 19,
+    "deferred": 0
+   }
+  },
+  "confirm-mem-v1 0.6": {
+   "rf": {
+    "success": 2,
+    "false_accept": 0,
+    "false_reject": 7,
+    "true_reject": 15
+   },
+   "static": {
+    "success": 2,
+    "false_accept": 0,
+    "false_reject": 7,
+    "true_reject": 15
+   },
+   "always": {
+    "success": 2,
+    "false_accept": 22,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 2,
+   "any_met": 9,
+   "status": {
+    "P": 2,
+    "fallback_gc": 0,
+    "rejected": 22,
+    "deferred": 0
+   }
+  }
+ },
+ "decide_seconds": {
+  "median": 0.4426920413970947,
+  "max": 0.6614880366250873
+ },
+ "excluded": {
+  "confirm-big-v1": 1,
+  "confirm-mem-v1": 2
+ }
+}

@@ -45,6 +45,7 @@ sys.path.insert(0, str(HERE.parent / 'cls-bimodal'))
 from tools.rtems_smoke import file_hash, write_json
 
 import bi_run
+import confirm_set
 import memcost_set
 import boundary_set
 import clsspread_set
@@ -90,7 +91,9 @@ CAAS_RUNS = (('caas', 'p', 'p_caas'), ('cls-a1', 'p', 'p_clsa1'), ('cls-a1-cal',
 CAAS_PAIRS = (('p_clsa1', 'p_caas'), ('p_clsa1cal', 'p_caas'), ('p_clsa1cal', 'p_clsa1'))
 MEMCOST_RUNS = (('wfd', 'p', 'p'), ('cgb', 'p', 'p_cgb'))
 MEMCOST_PAIRS = (('p_cgb', 'p'),)
-SNAPSHOT = ('placement_lib.py', 'mix_set.py', 'mix_cls_set.py', 'boundary_set.py', 'taskcount_set.py', 'smallmem_set.py', 'clsspread_set.py', 'loadmem_set.py', 'conflictcls_set.py', 'pm_check.py', 'pm_run.py', 'test_placement_lib.py', 'test_mix_set.py', 'test_boundary_set.py', 'test_taskcount_set.py', 'test_smallmem_set.py', 'test_clsspread_set.py', 'test_loadmem_set.py', 'test_conflictcls_set.py', 'rnd_smallmem_set.py', 'rnd_taskcount_set.py', 'rnd_spread_set.py', 'rnd_loadmem_set.py', 'rnd_conflict_set.py', 'rnd_boundary_set.py', 'rnd_mix_set.py', 'test_random_sets.py', 'deadline_set.py', 'deadline_big_set.py', 'deadline_analysis.py', 'rt_metrics.py', 'test_deadline_set.py', 'test_deadline_analysis.py', 'algorithm1.py', 'ca_table.py', 'deadline_caas_set.py', 'deadline_big_caas_set.py', 'ladder_analysis.py', 'test_algorithm1.py', 'test_ladder_analysis.py', 'mem_calibrate.py', 'memcost_set.py', 'memcost_analysis.py')
+CONFIRM_RUNS = (('ra-cgb', 'p', 'p_racgb'), ('wfd', 'g', 'g'), ('wfd', 'c', 'c'), ('wfd', 'c2', 'c2'))
+CONFIRM_PAIRS = (('g', 'p_racgb'),)
+SNAPSHOT = ('placement_lib.py', 'mix_set.py', 'mix_cls_set.py', 'boundary_set.py', 'taskcount_set.py', 'smallmem_set.py', 'clsspread_set.py', 'loadmem_set.py', 'conflictcls_set.py', 'pm_check.py', 'pm_run.py', 'test_placement_lib.py', 'test_mix_set.py', 'test_boundary_set.py', 'test_taskcount_set.py', 'test_smallmem_set.py', 'test_clsspread_set.py', 'test_loadmem_set.py', 'test_conflictcls_set.py', 'rnd_smallmem_set.py', 'rnd_taskcount_set.py', 'rnd_spread_set.py', 'rnd_loadmem_set.py', 'rnd_conflict_set.py', 'rnd_boundary_set.py', 'rnd_mix_set.py', 'test_random_sets.py', 'deadline_set.py', 'deadline_big_set.py', 'deadline_analysis.py', 'rt_metrics.py', 'test_deadline_set.py', 'test_deadline_analysis.py', 'algorithm1.py', 'ca_table.py', 'deadline_caas_set.py', 'deadline_big_caas_set.py', 'ladder_analysis.py', 'test_algorithm1.py', 'test_ladder_analysis.py', 'mem_calibrate.py', 'memcost_set.py', 'memcost_analysis.py', 'confirm_set.py', 'confirm_decide.py', 'confirm_analysis.py')
 HL_SNAPSHOT = ('hl_run.py', 'hl_set.py', 'mem_set.py')
 
 _hl_prepare_one, _hl_prepare_all = hl_run.prepare_one, hl_run.prepare_all
@@ -130,6 +133,7 @@ def prepare_all(output, workers):
 
 
 def main():
+    hl_run.DESIGNS.update({name: (design, CONFIRM_RUNS, CONFIRM_PAIRS) for name, design in confirm_set.DESIGNS.items()})
     hl_run.DESIGNS['memory-cost'] = (memcost_set, MEMCOST_RUNS, MEMCOST_PAIRS)
     hl_run.DESIGNS[DESIGN] = (mix_set, RUNS, PAIRS)
     hl_run.DESIGNS['policy-mix-cls'] = (mix_cls_set, CLS_RUNS, CLS_PAIRS)

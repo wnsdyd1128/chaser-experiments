@@ -71,6 +71,9 @@ STUDIES = {
     # was deleted on 2026-10-05, so results/cls-bimodal-v1-pilot cannot be re-exported.
     'cls-bimodal-v1-pilot': 'cls-bimodal-v1',
     'memory-cost': 'memory-cost-v1',
+    'confirm-small': 'confirm-small-v1',
+    'confirm-big': 'confirm-big-v1',
+    'confirm-mem': 'confirm-mem-v1',
 }
 TOP_LEVEL = ('.json', '.jsonl', '.md', '.py')
 CALIBRATION = ('calibration.json', 'sweeps.json', 'sweep-cost.json', 'model.json', 'measured.json',

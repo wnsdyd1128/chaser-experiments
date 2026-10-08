@@ -1695,6 +1695,7 @@ python3 $R/policy-mix/deadline_analysis.py analyze --small $W/.cache/deadline-sm
 | 41 | CLS·U는 같고 메모리 비용만 다른 짝지은 비교(사전 등록) | `policy-mix/`(`mem_calibrate.py`, `--design memory-cost`, `memcost_set.py`, `memcost_analysis.py`) | `mem-calibration-v1`, `memory-cost-v1` | `mem-calibration`, `memory-cost` |
 | 43 | RF 실행 전 점검 모델 동결(개발 자료, 시뮬레이션 없음) | `policy-mix/rf_freeze.py` | `rf-model-v1` | `rf-model` |
 | 42 | 실행 전 점검: D + M 정적 규칙 대 RF(개발 점검, 시뮬레이션 없음) | `policy-mix/rf_occupancy.py` | `rf-occupancy-v1` | `rf-occupancy` |
+| 44 | 실행 전 점검과 구성 추천의 확증(사전 등록, 새 set) | `policy-mix/`(`confirm_set.py`, `--design confirm-small`·`confirm-big`·`confirm-mem`, `confirm_decide.py`, `confirm_analysis.py`) | `confirm-small-v1`, `confirm-big-v1`, `confirm-mem-v1`, `confirm-analysis-v1` | `confirm-small`, `confirm-big`, `confirm-mem`, `confirm-analysis` |
 | 민감도 | cls-a1-cal: CLS + Algorithm 1, 같은 calibration의 동결 CLS 임곗값 0.887 | CAAS와 같은 출처의 임곗값 |
 
 Algorithm 1은 `chaser/policy/allocator.py`(CAAS Algorithm 1 구현)를 그대로 쓴다. 격리 코어가 가득 차서 놓을 수 없는 task가 있으면
@@ -2441,4 +2442,72 @@ cd $C3 && PYTHONPATH=$C3 python3 $R/policy-mix/rf_occupancy.py --rows $R/results
 **사전 고정 판단에 따른 결정:** 확증 실험의 주 방법은 D + M < 0.975 정적 규칙, RF f35m은 비교 대상.
 
 **사용자 결정(2026-10-07, 결과를 본 뒤):** 사전 고정 판단과 달리 **RF f35m(τ 0.8, CHASER + G/C)을 주 방법**으로 하고, D + M < 0.975 정적 규칙을 비교 대상으로 사전 등록한다. 근거는 같은 잘못 수락에서 잘못 거절이 적고(121 대 205), G/C 추천이 RF로만 가능하다는 점이다. 결과를 본 뒤 바꾼 결정이므로 확증 실험에서만 효과를 주장한다.
+
+---
+
+## 44. 실행 전 점검과 구성 추천의 확증 (사전 등록, 새 set)
+
+### 개요
+CHASER의 실행 전 점검(동결 RF, 43절)이 **처음 보는 set에서** 마감 준수를 맞히고, 받아들일 set과 거절할 set, Global·Clustered로 바꿀 set을 제대로 고르는지 확증한다.
+결정은 run을 하나도 하지 않은 상태에서 공용 구현(`chaser/policy/pfirst/`)과 동결 모델로 내리고 파일로 고정한 뒤, 모든 후보 구성을 실제로 돌려 판정한다. 2026-10-07 등록, 실행 전.
+배치 자체의 효과(U 균형·release 고려·CAAS 대비)는 27·28절에서 확증했으므로 여기서 다시 묻지 않는다.
+
+### 설계
+| 항목 | 내용 |
+|---|---|
+| task 유형(설계 3개) | `confirm-small`: 32 KiB 저친화도 task가 총 U의 50%(27절 32 KiB 규칙). `confirm-big`: 768 KiB task가 25%(27절 768 KiB 규칙). `confirm-mem`: 메모리 접근형 task가 25%, set당 최대 4개(41절 형태) |
+| set | 유형마다 새 seed 24개(20264401–, 20264431–, 20264461–), task 12–20개, U 몫 Dirichlet(8), 주기 CV 0.2(27절 주기 규칙), 친화도 높은 task는 CLS 중심 0.90 |
+| 부하(코어당) | small·mem: 0.45, 0.4875, 0.525, 0.5625, 0.6. big: 0.30, 0.3375, 0.375, 0.4125, 0.45(개발 자료의 경계 구간) |
+| 배치 | CHASER 배치(ra-cgb)와 U 균형(wfd, G·C의 기준 배치). `placement_lib`으로 만들고, 결정 단계에서 `pfirst`의 배치와 같은지 확인한다(다르면 중단) |
+| run | 모든 set에서 CHASER(P), G4, C1+3, C1+1+2. 3 유형 × 5 부하 × 24 set × 4 = **1,440 run**. warm-up 1 + 측정 3 hyperperiod |
+| 결정(run 전, `confirm_decide.py`) | set마다 YARDA 출력 → `pfirst.decision.decide`(동결 RF, isotonic, τ 0.8) → P / fallback_gc / rejected / deferred와 후보별 확률, 비교용 D + M < 0.975 정적 규칙, D·M 값. 모든 결정을 `decisions.json`에 쓰고 해시를 남긴다. measured run이 하나라도 있으면 거부한다 |
+
+### 결과 정의
+- set의 결과는 네 구성 각각의 "run 전체에서 모든 마감을 지킴"이다. 네 run 중 하나라도 시작 실패 등으로 결측이면 그 set을 판정에서 빼고 수를 보고한다.
+- **성공:** 받아들인 구성(P면 CHASER, fallback_gc면 그 구성)이 모든 마감을 지킴. **잘못 수락:** 받아들인 구성이 놓침. **잘못 거절:** 거절했지만 네 구성 중 하나라도 지킴.
+  정적 규칙은 CHASER 수락 또는 거절만 하고, "항상 CHASER"는 모든 set에서 CHASER를 받아들인다.
+
+### 가설과 판정 (사전 고정, `confirm_analysis.py`)
+- **H1(예측력, 주):** CHASER run의 마감 준수를 맞히는 AUC가 RF 확률(P 후보)에서 기존 정적 규칙 D보다 높다. set 단위 bootstrap(2,000회, 시드 20264400)으로 AUC 차이의 95% 신뢰구간을 구해 하한 > 0이면 지지. 보조로 RF − (D + M)의 구간도 보고한다(판정 없음).
+- **H2(안전, 기준):** RF가 받아들인 set 중 잘못 수락의 비율이 2% 이하이고, 단측 95% Clopper–Pearson 상한이 5% 이하면 충족.
+- **H3(정적 규칙 대비, 주):** RF의 성공 set이 D + M 정적 규칙보다 많다. set마다 성공 여부를 짝지어 정확 McNemar(양측), 방향이 RF 쪽이면 지지.
+- H1·H3에 Holm 보정(α 0.05). H1의 p는 bootstrap 양측 p(= 2 × min(차이 ≤ 0인 비율, 차이 ≥ 0인 비율))이고, 보정 후 p < 0.05이고 차이 > 0이면 지지한다(95% 구간도 보고). 결론에서 RF를 주 방법으로 주장하려면 H1·H3 지지와 H2 충족이 모두 필요하다(2026-10-07 실행 전 명확화).
+- **H4(G·C 추천, 보조):** RF가 G·C로 바꾼 set 중 살린 set(CHASER는 놓치고 고른 구성은 지킴)이 잘못된 전환(CHASER는 지키고 고른 구성은 놓침)보다 많다. 정확 이항 검정(양측), Holm 대상 아님.
+- **기술 보고:** 유형별·부하별 결과, 항상 CHASER 대비 성공·잘못 수락, 보류 수, 결정 시간.
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+for d in confirm-small confirm-big confirm-mem; do
+    O=$W/.cache/$d-v1; mkdir -p $O && cp $W/.cache/policy-mix-v1/model-check.json $O/
+    for s in prepare isolated; do python3 $R/policy-mix/pm_run.py $s --design $d --output $O; done
+    PYTHONPATH=$W:$R/policy-mix python3 $R/policy-mix/confirm_decide.py --output $O --policy $W/.cache/rf-model-v1
+    for s in pilot full stats; do python3 $R/policy-mix/pm_run.py $s --design $d --output $O; done
+done
+PYTHONPATH=$W:$R/policy-mix python3 $R/policy-mix/confirm_analysis.py --cache $W/.cache --dest $W/.cache/confirm-analysis-v1
+```
+실제 실행은 `supervisors/confirm-v1.sh`다.
+
+### 결과 파일
+`results/confirm-small/`, `results/confirm-big/`, `results/confirm-mem/`(run 묶음, `decisions.json`·`decisions.sha256` 포함), `results/confirm-analysis/`(판정 `confirm.md`, 그림 `figures/confirm-outcomes`, `figures/confirm-auc`).
+2026-10-07 19:20–22:49 KST 실행, exit 0. 단독 실행 게이트 최대 오차 0.15%·0.23%·0.37%. 결정 단계에서 `pfirst` 배치가 준비된 ra-cgb·wfd 배치와 모든 set에서 같았다. 시작 실패 3건(768 KiB 1, 메모리 접근형 2)의 set은 판정에서 뺐다(357 set 판정).
+
+### 결과: H1·H3 지지, H2 충족 → RF를 주 방법으로 주장할 수 있음
+
+- **H1(지지):** CHASER 배치의 마감 준수를 맞히는 AUC가 RF 0.982, 기존 정적 규칙 D 0.746. 차이 +0.236(95% +0.187~+0.288), Holm p < 0.0001.
+  보고만 하는 비교로 RF − (D + M)은 +0.022(95% +0.011~+0.035, D + M 0.960)로 RF가 D + M보다도 높았다.
+  유형별(기술): 32 KiB는 RF 0.997·D 0.997·D + M 0.986, 768 KiB는 0.979·0.763·0.955, 메모리 접근형은 0.963·0.933·0.961.
+- **H2(충족):** RF가 받아들인 193 set 중 잘못 수락 2(1.0%, 단측 95% 상한 3.2%).
+- **H3(지지):** RF만 성공한 set 35, D + M 규칙만 성공한 set 1, McNemar Holm p < 0.0001.
+- **H4(보조, 유의하지 않음):** RF가 G·C로 바꾼 10 set 중 살린 set 2, 잘못된 전환 0(p 0.5). 어느 구성이든 지킨 set은 262로 CHASER만(218)보다 44 많았지만, RF가 G·C로 살린 것은 2개다.
+
+| 방법 (357 set) | 받아들여 지킴 | 잘못 수락 | 잘못 거절 | 바르게 거절 |
+|---|---:|---:|---:|---:|
+| RF(동결, τ 0.8) | 191 | 2 | 69 | 95 |
+| D + M < 0.975 정적 규칙 | 157 | 5 | 100 | 95 |
+| 항상 CHASER 배치 | 218 | 139 | 0 | 0 |
+
+- **해석:** RF는 항상 CHASER로 돌리는 것보다 받아들여 지킨 set이 27개 적지만, 마감을 놓칠 set을 받아들이는 경우를 139개에서 2개로 줄였다. 정적 규칙보다는 같은 안전 수준에서 지킬 수 있던 set을 31개 덜 거절했다(잘못 거절 100 → 69). 차이는 주로 32 KiB(정적 규칙이 부하 0.4875에서 지킬 set 10개를 거절)와 768 KiB에서 났다.
+- **비용:** 결정 한 번(배치 + RF 예측) 중앙값 0.44초, 최대 0.66초.
+- **한계:** 개발 자료에 메모리 접근형(실험 41)과 같은 형태가 있었으므로 메모리 접근형 결과는 새 set이지만 새 형태는 아니다. G·C 추천의 이득은 확인하지 못했다.
 
