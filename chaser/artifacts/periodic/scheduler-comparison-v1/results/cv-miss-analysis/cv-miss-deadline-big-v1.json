@@ -1,0 +1,224 @@
+{
+ "run": "deadline-big-v1",
+ "loads": "0.35,0.4,0.45",
+ "summary": {
+  "cv00-big25": {
+   "cgb": {
+    "runs": 54,
+    "met": 21,
+    "missed": 1152,
+    "split": {
+     "other-nongroup": 18,
+     "memory-group": 828,
+     "other-group": 306
+    },
+    "late_jobs": 64,
+    "late_in_warmup": 64,
+    "start_delay": 0.846205875,
+    "execution_span": 0.24720725,
+    "memory_cores": 0.8018533055555556,
+    "memory_three": 0.0,
+    "max_load": 0.8351632,
+    "group_load": 0.813820192361111,
+    "other_load": 0.6812762274305555,
+    "planned_group": 0.4047466835717869,
+    "planned_other": 0.3975252298591264,
+    "other_u_on_group": 0.05337145214831026,
+    "release_cost": 16.579524364378535,
+    "inflation": 3.274333559059455,
+    "group_cores": 1.0
+   },
+   "ra": {
+    "runs": 54,
+    "met": 23,
+    "missed": 1800,
+    "split": {
+     "other-nongroup": 54,
+     "other-group": 1026,
+     "memory-group": 720
+    },
+    "late_jobs": 100,
+    "late_in_warmup": 100,
+    "start_delay": 0.8767548249999999,
+    "execution_span": 0.2155938,
+    "memory_cores": 0.9748861055555555,
+    "memory_three": 0.0,
+    "max_load": 0.8190294194444444,
+    "group_load": 0.7848026755787036,
+    "other_load": 0.7261547763888889,
+    "planned_group": 0.40002726369533076,
+    "planned_other": 0.39973002766201804,
+    "other_u_on_group": 0.736342447966153,
+    "release_cost": 16.023796659545873,
+    "inflation": 3.7498495143213546,
+    "group_cores": 3.0
+   },
+   "ra-cgb": {
+    "runs": 54,
+    "met": 21,
+    "missed": 1134,
+    "split": {
+     "other-nongroup": 18,
+     "memory-group": 810,
+     "other-group": 306
+    },
+    "late_jobs": 63,
+    "late_in_warmup": 63,
+    "start_delay": 0.860436875,
+    "execution_span": 0.243942,
+    "memory_cores": 0.798904163888889,
+    "memory_three": 0.0,
+    "max_load": 0.8192785763888888,
+    "group_load": 0.8111805597222221,
+    "other_load": 0.6794679905092593,
+    "planned_group": 0.4013046691813011,
+    "planned_other": 0.3993993283754844,
+    "other_u_on_group": 0.04848867397103507,
+    "release_cost": 16.154422633328213,
+    "inflation": 3.274333559059455,
+    "group_cores": 1.0
+   },
+   "wfd": {
+    "runs": 54,
+    "met": 27,
+    "missed": 1675,
+    "split": {
+     "other-group": 1045,
+     "memory-group": 612,
+     "other-nongroup": 18
+    },
+    "late_jobs": 94,
+    "late_in_warmup": 93,
+    "start_delay": 0.8644087250000001,
+    "execution_span": 0.20913690000000001,
+    "memory_cores": 1.0428879944444445,
+    "memory_three": 0.0,
+    "max_load": 0.8384091895833333,
+    "group_load": 0.7884287342592593,
+    "other_load": 0.7285451666666667,
+    "planned_group": 0.4000587864369448,
+    "planned_other": 0.3921079581660852,
+    "other_u_on_group": 0.8308434055109208,
+    "release_cost": 16.974484567950167,
+    "inflation": 3.6969681140431128,
+    "group_cores": 3.0
+   }
+  },
+  "cv20-big25": {
+   "cgb": {
+    "runs": 54,
+    "met": 29,
+    "missed": 1377,
+    "split": {
+     "other-nongroup": 0,
+     "memory-group": 1104,
+     "other-group": 273
+    },
+    "late_jobs": 67,
+    "late_in_warmup": 67,
+    "start_delay": 0.8157347291666667,
+    "execution_span": 0.29603586666666665,
+    "memory_cores": 0.7363517916666666,
+    "memory_three": 0.0,
+    "max_load": 0.767212136111111,
+    "group_load": 0.7317227041666666,
+    "other_load": 0.5980389435185185,
+    "planned_group": 0.40308147517232296,
+    "planned_other": 0.3985234882027743,
+    "other_u_on_group": 0.056121112888563765,
+    "release_cost": 152.02377778227964,
+    "inflation": 3.0311397040234915,
+    "group_cores": 1.0
+   },
+   "ra": {
+    "runs": 54,
+    "met": 27,
+    "missed": 1794,
+    "split": {
+     "other-group": 1008,
+     "memory-group": 786,
+     "other-nongroup": 0
+    },
+    "late_jobs": 87,
+    "late_in_warmup": 86,
+    "start_delay": 0.837676375,
+    "execution_span": 0.2479795,
+    "memory_cores": 1.0166504,
+    "memory_three": 0.0,
+    "max_load": 0.809654957638889,
+    "group_load": 0.7489602071759258,
+    "other_load": 0.7075150097222223,
+    "planned_group": 0.3981992768581244,
+    "planned_other": 0.3970584279096959,
+    "other_u_on_group": 0.7560400957566198,
+    "release_cost": 120.63965228705206,
+    "inflation": 3.8290846867819868,
+    "group_cores": 3.0
+   },
+   "ra-cgb": {
+    "runs": 54,
+    "met": 26,
+    "missed": 1514,
+    "split": {
+     "other-nongroup": 0,
+     "other-group": 396,
+     "memory-group": 1118
+    },
+    "late_jobs": 75,
+    "late_in_warmup": 74,
+    "start_delay": 0.8300653,
+    "execution_span": 0.27802106666666665,
+    "memory_cores": 0.7458529159722223,
+    "memory_three": 0.0,
+    "max_load": 0.7548470451388889,
+    "group_load": 0.7257453791666667,
+    "other_load": 0.5972782875,
+    "planned_group": 0.4252018128716625,
+    "planned_other": 0.3937699652409914,
+    "other_u_on_group": 0.09084952797080703,
+    "release_cost": 129.8609850935979,
+    "inflation": 3.055412002354811,
+    "group_cores": 1.0
+   },
+   "wfd": {
+    "runs": 54,
+    "met": 26,
+    "missed": 2325,
+    "split": {
+     "other-group": 1395,
+     "memory-group": 930,
+     "other-nongroup": 0
+    },
+    "late_jobs": 117,
+    "late_in_warmup": 117,
+    "start_delay": 0.841876375,
+    "execution_span": 0.2517628333333333,
+    "memory_cores": 0.8677241263888889,
+    "memory_three": 0.0,
+    "max_load": 0.7361135791666666,
+    "group_load": 0.6515526347222222,
+    "other_load": 0.5910579680555555,
+    "planned_group": 0.4001060055241922,
+    "planned_other": 0.39210864712153004,
+    "other_u_on_group": 0.8308850946243551,
+    "release_cost": 157.95802329459912,
+    "inflation": 3.505928243681451,
+    "group_cores": 3.0
+   }
+  }
+ },
+ "release_cost_ratio": {
+  "cv00-big25": {
+   "wfd": 1.0531150166651404,
+   "cgb": 1.0313834292301256,
+   "ra": 1.0,
+   "ra-cgb": 1.006763749797425
+  },
+  "cv20-big25": {
+   "wfd": 1.315922092712405,
+   "cgb": 1.2797057375210334,
+   "ra": 1.0,
+   "ra-cgb": 1.063347228148661
+  }
+ }
+}

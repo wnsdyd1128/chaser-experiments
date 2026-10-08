@@ -1,0 +1,324 @@
+{
+ "run": "task-count-v1",
+ "loads": "0.35,0.45",
+ "summary": {
+  "mem00": {
+   "cgb": {
+    "runs": 71,
+    "met": 71,
+    "missed": 0,
+    "split": {
+     "other-nongroup": 0
+    },
+    "late_jobs": 0,
+    "late_in_warmup": 0,
+    "start_delay": null,
+    "execution_span": null,
+    "memory_cores": 0.0,
+    "memory_three": 0.0,
+    "max_load": 0.507230315625,
+    "group_load": null,
+    "other_load": 0.4937904101562499,
+    "planned_group": null,
+    "planned_other": 0.4497627943239328,
+    "other_u_on_group": 0,
+    "release_cost": 45.08806119676741,
+    "inflation": null,
+    "group_cores": 0
+   },
+   "ra": {
+    "runs": 72,
+    "met": 72,
+    "missed": 0,
+    "split": {
+     "other-nongroup": 0
+    },
+    "late_jobs": 0,
+    "late_in_warmup": 0,
+    "start_delay": null,
+    "execution_span": null,
+    "memory_cores": 0.0,
+    "memory_three": 0.0,
+    "max_load": 0.507992475,
+    "group_load": null,
+    "other_load": 0.456022026953125,
+    "planned_group": null,
+    "planned_other": 0.39996440059229144,
+    "other_u_on_group": 0.0,
+    "release_cost": 37.32360677727655,
+    "inflation": null,
+    "group_cores": 0.0
+   },
+   "ra-cgb": {
+    "runs": 72,
+    "met": 72,
+    "missed": 0,
+    "split": {
+     "other-nongroup": 0
+    },
+    "late_jobs": 0,
+    "late_in_warmup": 0,
+    "start_delay": null,
+    "execution_span": null,
+    "memory_cores": 0.0,
+    "memory_three": 0.0,
+    "max_load": 0.507992475,
+    "group_load": null,
+    "other_load": 0.456022026953125,
+    "planned_group": null,
+    "planned_other": 0.39996440059229144,
+    "other_u_on_group": 0.0,
+    "release_cost": 37.32360677727655,
+    "inflation": null,
+    "group_cores": 0.0
+   },
+   "wfd": {
+    "runs": 71,
+    "met": 71,
+    "missed": 0,
+    "split": {
+     "other-nongroup": 0
+    },
+    "late_jobs": 0,
+    "late_in_warmup": 0,
+    "start_delay": null,
+    "execution_span": null,
+    "memory_cores": 0.0,
+    "memory_three": 0.0,
+    "max_load": 0.507230315625,
+    "group_load": null,
+    "other_load": 0.4937904101562499,
+    "planned_group": null,
+    "planned_other": 0.4497627943239328,
+    "other_u_on_group": 0,
+    "release_cost": 45.08806119676741,
+    "inflation": null,
+    "group_cores": 0
+   }
+  },
+  "mem25": {
+   "cgb": {
+    "runs": 72,
+    "met": 37,
+    "missed": 1152,
+    "split": {
+     "other-nongroup": 64,
+     "other-group": 500,
+     "memory-group": 588
+    },
+    "late_jobs": 87,
+    "late_in_warmup": 87,
+    "start_delay": 0.9268433875,
+    "execution_span": 0.2542492,
+    "memory_cores": 0.79557553125,
+    "memory_three": 0.0,
+    "max_load": 0.7257563484375,
+    "group_load": 0.6975032859375001,
+    "other_load": 0.6379301057291666,
+    "planned_group": 0.38599792176110553,
+    "planned_other": 0.39917415975161896,
+    "other_u_on_group": 0.0,
+    "release_cost": 45.04897026047996,
+    "inflation": 3.3433131582849933,
+    "group_cores": 1.0
+   },
+   "ra": {
+    "runs": 72,
+    "met": 25,
+    "missed": 2868,
+    "split": {
+     "other-nongroup": 176,
+     "other-group": 2043,
+     "memory-group": 649
+    },
+    "late_jobs": 226,
+    "late_in_warmup": 224,
+    "start_delay": 0.977241925,
+    "execution_span": 0.1786088,
+    "memory_cores": 0.9409233859374999,
+    "memory_three": 0.0,
+    "max_load": 0.68961886875,
+    "group_load": 0.6395919692708334,
+    "other_load": 0.6337973296874999,
+    "planned_group": 0.3948997185517377,
+    "planned_other": 0.4041767890344309,
+    "other_u_on_group": 0.737781429474355,
+    "release_cost": 37.32426232687979,
+    "inflation": 4.084304645998539,
+    "group_cores": 3.0
+   },
+   "ra-cgb": {
+    "runs": 72,
+    "met": 37,
+    "missed": 1168,
+    "split": {
+     "other-nongroup": 0,
+     "memory-group": 656,
+     "other-group": 512
+    },
+    "late_jobs": 86,
+    "late_in_warmup": 86,
+    "start_delay": 0.9212828500000001,
+    "execution_span": 0.2506468,
+    "memory_cores": 0.79897695,
+    "memory_three": 0.0,
+    "max_load": 0.7313467921875,
+    "group_load": 0.678046740625,
+    "other_load": 0.62184365625,
+    "planned_group": 0.3972479141638774,
+    "planned_other": 0.39234355404674126,
+    "other_u_on_group": 0.058623977700905584,
+    "release_cost": 39.239182274851615,
+    "inflation": 3.2902050723326703,
+    "group_cores": 1.0
+   },
+   "wfd": {
+    "runs": 72,
+    "met": 29,
+    "missed": 2352,
+    "split": {
+     "other-group": 1612,
+     "other-nongroup": 136,
+     "memory-group": 604
+    },
+    "late_jobs": 184,
+    "late_in_warmup": 184,
+    "start_delay": 0.965457625,
+    "execution_span": 0.2094876,
+    "memory_cores": 0.9406489328125,
+    "memory_three": 0.00442469375,
+    "max_load": 0.7185025015625,
+    "group_load": 0.6473845874999999,
+    "other_load": 0.6157132875,
+    "planned_group": 0.4013064102776184,
+    "planned_other": 0.3697352969079502,
+    "other_u_on_group": 0.7158922075377187,
+    "release_cost": 44.90338155376634,
+    "inflation": 3.71361344177183,
+    "group_cores": 3.0
+   }
+  },
+  "mem50": {
+   "cgb": {
+    "runs": 72,
+    "met": 0,
+    "missed": 6216,
+    "split": {
+     "other-group": 912,
+     "memory-group": 4012,
+     "other-nongroup": 1292
+    },
+    "late_jobs": 610,
+    "late_in_warmup": 610,
+    "start_delay": 0.97450649375,
+    "execution_span": 0.348581225,
+    "memory_cores": 0.8106991593749999,
+    "memory_three": 0.0,
+    "max_load": 0.392049278125,
+    "group_load": 0.14987479453125002,
+    "other_load": 0.38357528750000003,
+    "planned_group": 0.3996225659038313,
+    "planned_other": 0.39602004063352253,
+    "other_u_on_group": 0.040999359563034285,
+    "release_cost": 46.05830619862094,
+    "inflation": null,
+    "group_cores": 2.0
+   },
+   "ra": {
+    "runs": 72,
+    "met": 0,
+    "missed": 9868,
+    "split": {
+     "other-group": 5460,
+     "memory-group": 4216,
+     "other-nongroup": 192
+    },
+    "late_jobs": 945,
+    "late_in_warmup": 945,
+    "start_delay": 1.058118975,
+    "execution_span": 0.3287929,
+    "memory_cores": 0.88669856875,
+    "memory_three": 0.1760337796875,
+    "max_load": 0.16423818125,
+    "group_load": 0.11554565156249999,
+    "other_load": 0.35516787109375,
+    "planned_group": 0.4051814733156345,
+    "planned_other": 0.3957063653500891,
+    "other_u_on_group": 0.7280424371476703,
+    "release_cost": 37.32437238463369,
+    "inflation": null,
+    "group_cores": 4.0
+   },
+   "ra-cgb": {
+    "runs": 72,
+    "met": 0,
+    "missed": 6556,
+    "split": {
+     "other-nongroup": 720,
+     "memory-group": 4084,
+     "other-group": 1752
+    },
+    "late_jobs": 638,
+    "late_in_warmup": 638,
+    "start_delay": 1.0249397125000002,
+    "execution_span": 0.3553234,
+    "memory_cores": 0.7835812531249999,
+    "memory_three": 0.0,
+    "max_load": 0.3786661015625,
+    "group_load": 0.14264020546875,
+    "other_load": 0.3603079,
+    "planned_group": 0.43449638344452174,
+    "planned_other": 0.36322509314350393,
+    "other_u_on_group": 0.11737069377185053,
+    "release_cost": 38.51438001698403,
+    "inflation": null,
+    "group_cores": 2.0
+   },
+   "wfd": {
+    "runs": 72,
+    "met": 0,
+    "missed": 9424,
+    "split": {
+     "other-group": 5084,
+     "memory-group": 4104,
+     "other-nongroup": 236
+    },
+    "late_jobs": 887,
+    "late_in_warmup": 887,
+    "start_delay": 1.03870275,
+    "execution_span": 0.3178573,
+    "memory_cores": 0.885064503125,
+    "memory_three": 0.15283804843749998,
+    "max_load": 0.20334061875,
+    "group_load": 0.1388278296875,
+    "other_load": 0.3405257703125,
+    "planned_group": 0.4013059388754481,
+    "planned_other": 0.3591707180444068,
+    "other_u_on_group": 0.7292221788333808,
+    "release_cost": 44.668970323709175,
+    "inflation": null,
+    "group_cores": 4.0
+   }
+  }
+ },
+ "release_cost_ratio": {
+  "mem00": {
+   "wfd": 1.2499310024620036,
+   "cgb": 1.2499310024620036,
+   "ra": 1.0,
+   "ra-cgb": 1.0
+  },
+  "mem25": {
+   "wfd": 1.2368718642029386,
+   "cgb": 1.2911165456002525,
+   "ra": 1.0,
+   "ra-cgb": 1.0426797124215268
+  },
+  "mem50": {
+   "wfd": 1.2448512698385024,
+   "cgb": 1.2626798760822178,
+   "ra": 1.0,
+   "ra-cgb": 1.0520041773573892
+  }
+ }
+}

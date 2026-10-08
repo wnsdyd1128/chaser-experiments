@@ -1691,6 +1691,7 @@ python3 $R/policy-mix/deadline_analysis.py analyze --small $W/.cache/deadline-sm
 | 38 | 메모리 task의 주기만 바꾼 짝지은 비교(사전 등록) | `policy-mix/`(`--design period-swap`, `period_swap_set.py`, `period_swap_analysis.py`) | `period-swap-v1` | `period-swap` |
 | 39 | U 가중 (1 − CLS) 특징의 기여(재분석, 시뮬레이션 없음) | `results/cls-ablation/cls_ablation.py` | `cls-ablation-v1` | `cls-ablation` |
 | 40 | task 단위 예측: 어느 task가 늦나(재분석, 시뮬레이션 없음) | `policy-mix/task_level.py` | `task-level-v1` | `task-level` |
+| 30 | 주기 다양 조건의 마감 실패 분석(재분석, 시뮬레이션 없음) | `policy-mix/cv_miss_analysis.py` | `cv-miss-analysis-v1` | `cv-miss-analysis` |
 | 민감도 | cls-a1-cal: CLS + Algorithm 1, 같은 calibration의 동결 CLS 임곗값 0.887 | CAAS와 같은 출처의 임곗값 |
 
 Algorithm 1은 `chaser/policy/allocator.py`(CAAS Algorithm 1 구현)를 그대로 쓴다. 격리 코어가 가득 차서 놓을 수 없는 task가 있으면
@@ -2244,4 +2245,34 @@ cd $C3 && PYTHONPATH=$C3 python3 $R/policy-mix/task_level.py --cache $W/.cache -
 - **T1(보조, 모든 run에서 이 task가 늦을 위험):** 자기 CLS를 넣으면 실험 하나를 뺀 전체 AUC가 0.845에서 0.871로, 실험 38에서 0.875에서 0.890으로 올랐다. 잡음(0.005)보다 큰 향상이 6개 중 5개 실험과 실험 38에서 나왔다(실험 24는 0.858 → 0.908).
   T1은 읽는 기준을 정하지 않은 보조 질문이라 기술적으로만 보고한다. 메모리 task 자신이 다른 task보다 자주 늦기 때문에(37절), 자기 CLS가 "위험한 task"를 가려낸다.
 - **YARDA 세부 지표(p_mem 등):** T1·T2 모두 CLS 너머로 도움이 되지 않았다(합성 task에서는 CLS와 함께 움직임).
+
+---
+
+## 30. 주기 다양 조건의 마감 실패 분석 (재분석, 시뮬레이션 없음)
+
+### 개요
+24·27절에서 CLS 배치는 주기가 같을 때(CV 0) release 고려보다 마감을 더 지켰지만, 주기가 다양할 때(CV 0.2)는 그렇지 않았다.
+27절 run의 원시 기록(job별 release·시작·완료·CPU 시간과 코어)을 다시 읽어 원인을 본다. 결과를 이미 본 자료이므로 **탐색**이다.
+
+### 분석 항목 (`policy-mix/cv_miss_analysis.py`)
+- 위반한 job: 늦은 job과 밀린 release를 task 역할(메모리/그 외)과 코어 종류(메모리 task를 가진 코어/그 외)로 나눔. 늦은 job이 warm-up에 있는지도 셈
+- 늦은 원인: 늦은 job의 시작 지연(시작 − release)과 실행 구간(완료 − 시작)을 주기로 나눈 값
+- 동시 실행: 메모리 task job이 동시에 실행되는 코어 수의 시간 평균과 3개 이상인 시간의 비율(job은 시작부터 완료까지 실행 중으로 봄, 선점 포함)
+- 코어 부하: 실효 U(측정 구간의 job CPU 합 ÷ 구간 길이)와 계획 U, 메모리 task를 가진 코어에 놓인 다른 task의 U
+- release 비용(`placement_lib.cohort_cost`)과 최악 실행시간
+
+### 재현 명령
+```sh
+cd $C3 && export PYTHONPATH=$C3
+python3 $R/policy-mix/cv_miss_analysis.py --output $W/.cache/deadline-small-v1 --loads 0.5,0.525,0.55 --dest $W/.cache/cv-miss-analysis-v1
+python3 $R/policy-mix/cv_miss_analysis.py --output $W/.cache/deadline-big-v1 --loads 0.35,0.4,0.45 --dest $W/.cache/cv-miss-analysis-v1
+python3 $R/figures/cv_miss_bars.py $W/.cache/cv-miss-analysis-v1 deadline-small-v1 deadline-big-v1
+# 4장용 탐색 자료(2026-10-06 추가): 실험 24·20
+python3 $R/policy-mix/cv_miss_analysis.py --output $W/.cache/small-memory-load-v1 --loads 0.5,0.55 --dest $W/.cache/cv-miss-analysis-v1
+python3 $R/policy-mix/cv_miss_analysis.py --output $W/.cache/task-count-v1 --loads 0.35,0.45 --dest $W/.cache/cv-miss-analysis-v1
+python3 $R/figures/cv_miss_bars.py $W/.cache/cv-miss-analysis-v1 small-memory-load-v1:cv00-low50,cv20-low50 task-count-v1:mem25
+```
+
+### 결과 파일
+`results/cv-miss-analysis/`: `cv-miss-<run>.json/md`와 그림(`cv-miss-core-load-<run>`, `cv-miss-memory-<run>`)
 
