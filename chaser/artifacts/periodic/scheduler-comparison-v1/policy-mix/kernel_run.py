@@ -1,14 +1,17 @@
-"""Experiment 45 runner: real-kernel task sets on the main chaser package, with the frozen pre-run check.
+"""Experiment 45 and 46 runner: real-kernel task sets on the main chaser package, with the frozen pre-run check.
 
 Stages (EXPERIMENTS.md 45):
   prepare    per case: build the U-balanced (wfd) mapping, analyze its P ELF with YARDA hierarchy-rd (kernel_yarda),
              place CHASER's ra-cgb with chaser.policy.pfirst on the YARDA CLS, build that mapping too
   isolated   every task of set 0 of each load alone (P, mode i+1): measured U within U_TOLERANCE of the planned U
-  decide     chaser.policy.pfirst.decision.decide per case before any measured run -> decisions.json (+ sha256)
+  decide     chaser.policy.pfirst.decision.decide per case before any measured run -> decisions.json (+ sha256);
+             with --compare-policy, that policy's status and choice are recorded too (experiment 46's run recorded
+             the dropped policy v2 as status and v1 under compare, EXPERIMENTS.md 46)
   full       CHASER under P and the wfd build under G4, C1+3, C1+1+2 for every case
   summarize  results.jsonl rows (heaviness 'real', load, set_id, p_racgb, g, c, c2 states) for confirm_analysis
+--design selects kernel_set's design: real-kernels (experiment 45, default) or heldout-kernels (experiment 46).
 Run with PYTHONPATH=<workspace>:policy-mix:period-distribution.
-Usage: python3 kernel_run.py <stage> --output <dir> [--policy <frozen policy dir>] [--workers N]
+Usage: python3 kernel_run.py <stage> --output <dir> [--design NAME] [--policy <dir>] [--compare-policy <dir>] [--workers N]
 """
 
 import argparse
@@ -103,10 +106,11 @@ def measured_runs(output: Path) -> list[Path]:
     return [p for p in output.glob('*/u*/s*/*/*/measurements.jsonl') if p.parent.parent.name != 'isolated']
 
 
-def decide(output: Path, policy_dir: Path) -> None:
+def decide(output: Path, policy_dir: Path, compare_dir: Path | None = None) -> None:
     if measured_runs(output):
         raise SystemExit(f'{output}: measured runs exist; decisions must precede every run')
     policy = decision.Policy(policy_dir.resolve())
+    compare = decision.Policy(compare_dir.resolve()) if compare_dir else None
     cases = {}
     for case in ks.cases():
         target = case_dir(output, case)
@@ -127,8 +131,14 @@ def decide(output: Path, policy_dir: Path) -> None:
                                      cache_demand=demand['cache_demand'], memory_demand=demand['memory_demand'],
                                      occupancy=demand['occupancy'], decide_seconds=seconds,
                                      task_values=[{k: v[k] for k in ('task_id', 'cls', 'rate', 'p_mem', 'working_set_kib')} for v in values])
+        if compare:
+            other = decision.decide(values, compare, meta['seed'])
+            cases[ks.label(case)]['compare'] = dict(status=other['status'], choice=other['choice'],
+                                                    probabilities=other['probabilities'])
     path = output / 'decisions.json'
-    write_json(path, dict(policy=str(policy_dir), model_sha256=policy.spec['model_sha256'], tau=policy.tau,
+    write_json(path, dict(design=ks.DESIGN, policy=str(policy_dir), policy_spec=policy.spec,
+                          compare_policy=str(compare_dir) if compare else None,
+                          compare_spec=compare.spec if compare else None, model_sha256=policy.spec['model_sha256'], tau=policy.tau,
                           static_threshold=decision.STATIC_THRESHOLD, decided_utc=datetime.now(timezone.utc).isoformat(), cases=cases))
     (output / 'decisions.sha256').write_text(hashlib.sha256(path.read_bytes()).hexdigest() + '\n')
     counts = {}
@@ -178,15 +188,18 @@ def main():
     parser.add_argument('stage', choices=('prepare', 'isolated', 'decide', 'full', 'summarize'))
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--policy', type=Path)
+    parser.add_argument('--compare-policy', type=Path)
+    parser.add_argument('--design', default='real-kernels', choices=tuple(ks.DESIGNS))
     parser.add_argument('--workers', type=int, default=design.MAX_WORKERS)
     args = parser.parse_args()
+    ks.select(args.design)
     output = args.output.resolve()
     if args.stage == 'prepare':
         prepare_all(output, min(args.workers, 32))
     elif args.stage == 'isolated':
         isolated(output, args.workers)
     elif args.stage == 'decide':
-        decide(output, args.policy)
+        decide(output, args.policy, args.compare_policy)
     elif args.stage == 'full':
         full(output, args.workers)
     else:

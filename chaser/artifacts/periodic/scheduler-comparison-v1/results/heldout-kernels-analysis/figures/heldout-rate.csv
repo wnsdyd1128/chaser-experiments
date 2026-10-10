@@ -1,0 +1,15 @@
+source,l1_misses_per_us
+GEMM,0.1621
+ATAX,1.0947
+BICG,1.4554
+GESUMMV,2.9294
+Jacobi-1D,3.3292
+Jacobi-2D,2.3896
+MVT,2.0933
+2MM,0.1314
+DOITGEN,0.0806
+SYRK,0.1042
+TRMM,0.0825
+32 KiB (synthetic),4.9598
+768 KiB (synthetic),4.3316
+Memory-bound (synthetic),4.0669

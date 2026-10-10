@@ -10,8 +10,9 @@ planned U of every task comes from the tasks stage, which runs each needed (kern
 Stages:
   measure   run the grid and validation levels, write <output>/measured.json
   fit       write <output>/kernel-model.json with the validation errors (reported, not a gate)
-  tasks     run every (kernel, sweeps, n) the experiment 45 sets need (kernel_set.needed), write <output>/task-times.json
-Usage: python3 kernel_calibrate.py measure|fit|tasks --output <dir> [--workers N]
+  tasks     run every (kernel, sweeps, n) the design's sets need (kernel_set.needed), write <output>/task-times.json
+--design selects kernel_set's design: real-kernels (experiment 45, default) or heldout-kernels (experiment 46).
+Usage: python3 kernel_calibrate.py measure|fit|tasks --output <dir> [--design NAME] [--workers N]
 Run with PYTHONPATH=<workspace>:policy-mix:period-distribution (the main chaser package).
 """
 
@@ -36,7 +37,9 @@ CHUNK_BYTES, CHUNK_TASKS, CHUNK_ARRAYS = 14 * 1024 ** 2, 24, 96  # the workload 
 
 def accesses(kernel: str, n: int, sweeps: int) -> int:
     """Approximate source accesses of one job (bounds only; the plan holds the exact count)."""
-    per = {'gemm-u32': 2 * n ** 3, 'polybench-jacobi1d-u32': 8 * n, 'polybench-jacobi2d-u32': 12 * n * n}.get(kernel, 8 * n * n)
+    per = {'gemm-u32': 2 * n ** 3, 'polybench-jacobi1d-u32': 8 * n, 'polybench-jacobi2d-u32': 12 * n * n,
+           'polybench-2mm-u32': 8 * n ** 3, 'polybench-syrk-u32': 2 * n ** 3, 'polybench-trmm-u32': 2 * n ** 3,
+           'polybench-doitgen-u32': 4 * n ** 4}.get(kernel, 8 * n * n)
     return sweeps * per
 
 
@@ -53,11 +56,11 @@ def grid(kernel: str, sweeps: int) -> list[int]:
     return sorted({round(lo * (hi / lo) ** (i / (GRID_POINTS - 1))) for i in range(GRID_POINTS)})
 
 
-def levels() -> list[dict]:
-    out = [dict(group='fit', kernel=k, sweeps=s, n=n) for k in kt.KERNELS for s in SWEEPS for n in grid(k, s)]
+def levels(kernels) -> list[dict]:
+    out = [dict(group='fit', kernel=k, sweeps=s, n=n) for k in kernels for s in SWEEPS for n in grid(k, s)]
     rng = random.Random(VALIDATION_SEED)
     for _ in range(VALIDATION_LEVELS):
-        k, s = rng.choice(kt.KERNELS), rng.choice(SWEEPS)
+        k, s = rng.choice(kernels), rng.choice(SWEEPS)
         lo, hi = bounds(k, s)
         out.append(dict(group='validation', kernel=k, sweeps=s, n=round(lo * (hi / lo) ** rng.random())))
     return out
@@ -131,7 +134,8 @@ def measure_levels(output: Path, rows: list[dict], workers: int, prefix: str) ->
 
 
 def measure(output: Path, workers: int) -> None:
-    rows = measure_levels(output, levels(), workers, 'chunk')
+    import kernel_set
+    rows = measure_levels(output, levels(kernel_set.KERNELS), workers, 'chunk')
     (output / 'measured.json').write_text(json.dumps(dict(period=PERIOD, rows=rows), indent=1) + '\n')
 
 
@@ -167,7 +171,10 @@ def main():
     parser.add_argument('stage', choices=('measure', 'fit', 'tasks'))
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--workers', type=int, default=48)
+    parser.add_argument('--design', default='real-kernels')
     args = parser.parse_args()
+    import kernel_set
+    kernel_set.select(args.design)
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
     if args.stage == 'measure':

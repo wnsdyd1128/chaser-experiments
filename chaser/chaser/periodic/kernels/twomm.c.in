@@ -1,0 +1,40 @@
+/* Integer reimplementation of the PolyBench/C 4.2.1 2MM algorithm.
+ * Source: linear-algebra/kernels/2mm/2mm.c, kernel_2mm.
+ * See rtems/periodic/experiment-guide/INPUTS.md#polybench-kernels-2026-10 for the differences. */
+INLINE static void kernel_${task_id}(void) {
+    for (int i = 0; i < ${n}; ++i)
+        for (int j = 0; j < ${n}; ++j) {
+            ${tmp}[${tmp_offset} + i * ${tmp_row} + j * ${tmp_col}] = 0;
+            for (int k = 0; k < ${n}; ++k) {
+                uint32_t tv = ${tmp}[${tmp_offset} + i * ${tmp_row} + j * ${tmp_col}];
+                uint32_t av = ${A}[${A_offset} + i * ${A_row} + k * ${A_col}];
+                uint32_t bv = ${B}[${B_offset} + k * ${B_row} + j * ${B_col}];
+                ${tmp}[${tmp_offset} + i * ${tmp_row} + j * ${tmp_col}] = tv + ${alpha}U * av * bv;
+            }
+        }
+    for (int i = 0; i < ${n}; ++i)
+        for (int j = 0; j < ${n}; ++j) {
+            uint32_t dv = ${D}[${D_offset} + i * ${D_row} + j * ${D_col}];
+            ${D}[${D_offset} + i * ${D_row} + j * ${D_col}] = dv * ${beta}U;
+            for (int k = 0; k < ${n}; ++k) {
+                uint32_t dw = ${D}[${D_offset} + i * ${D_row} + j * ${D_col}];
+                uint32_t tv = ${tmp}[${tmp_offset} + i * ${tmp_row} + k * ${tmp_col}];
+                uint32_t cv = ${C}[${C_offset} + k * ${C_row} + j * ${C_col}];
+                ${D}[${D_offset} + i * ${D_row} + j * ${D_col}] = dw + tv * cv;
+            }
+        }
+}
+/** @brief Reset D to its initial value, then compute tmp = ALPHA A B and D = BETA D + tmp C per sweep.
+ * @return Word-wise FNV-1a hash of all of D (row-major), computed inside the measured job. */
+ANALYZE uint32_t task_job_${task_id}(void) {
+    for (int i = 0; i < ${n}; ++i)
+        for (int j = 0; j < ${n}; ++j)
+            ${D}[${D_offset} + i * ${D_row} + j * ${D_col}] = ${D_initial}U;
+    for (int t = 0; t < ${sweeps}; ++t)
+        kernel_${task_id}();
+    uint32_t h = 2166136261U;
+    for (int i = 0; i < ${n}; ++i)
+        for (int j = 0; j < ${n}; ++j)
+            h = (h ^ ${D}[${D_offset} + i * ${D_row} + j * ${D_col}]) * 16777619U;
+    return h;
+}

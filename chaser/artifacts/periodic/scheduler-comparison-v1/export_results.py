@@ -50,6 +50,8 @@ STUDIES = {
     'confirm-mem': 'confirm-mem-v1',
     # Experiment 45 (pre-registered): the frozen pre-run check on real-kernel task sets (policy-mix/kernel_run.py).
     'real-kernels': 'real-kernels-v1',
+    # Experiment 46 (pre-registered): policy v2 on held-out kernels (kernel_run.py --design heldout-kernels).
+    'heldout-kernels': 'heldout-kernels-v1',
 }
 # The development and exploratory studies were removed from results/ and .cache on 2026-10-07 (EXPERIMENTS.md);
 # results/rf-model/training-rows.jsonl.gz keeps the RF's development rows.

@@ -1,0 +1,206 @@
+{
+ "sets": 144,
+ "false_accepts": {
+  "accepted": 144,
+  "false_accepts": 0,
+  "rate": 0.0,
+  "upper_95": 0.02058879229949585,
+  "holds": true
+ },
+ "auc_rf_vs_d": null,
+ "success_vs_static": {
+  "only_a": 0,
+  "only_b": 0,
+  "p": 1.0,
+  "direction_holds": false
+ },
+ "gc": {
+  "switched": 0,
+  "saved": 0,
+  "wrong_switch": 0,
+  "p": 1.0
+ },
+ "overall": {
+  "rf": {
+   "success": 144,
+   "false_accept": 0,
+   "false_reject": 0,
+   "true_reject": 0
+  },
+  "static": {
+   "success": 144,
+   "false_accept": 0,
+   "false_reject": 0,
+   "true_reject": 0
+  },
+  "always": {
+   "success": 144,
+   "false_accept": 0,
+   "false_reject": 0,
+   "true_reject": 0
+  },
+  "sets": 144,
+  "chaser_met": 144,
+  "any_met": 144,
+  "status": {
+   "P": 144,
+   "fallback_gc": 0,
+   "rejected": 0,
+   "deferred": 0
+  }
+ },
+ "loads": {
+  "0.4": {
+   "rf": {
+    "success": 29,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 29,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 29,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 29,
+   "chaser_met": 29,
+   "any_met": 29,
+   "status": {
+    "P": 29,
+    "fallback_gc": 0,
+    "rejected": 0,
+    "deferred": 0
+   }
+  },
+  "0.475": {
+   "rf": {
+    "success": 30,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 30,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 30,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 30,
+   "chaser_met": 30,
+   "any_met": 30,
+   "status": {
+    "P": 30,
+    "fallback_gc": 0,
+    "rejected": 0,
+    "deferred": 0
+   }
+  },
+  "0.55": {
+   "rf": {
+    "success": 30,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 30,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 30,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 30,
+   "chaser_met": 30,
+   "any_met": 30,
+   "status": {
+    "P": 30,
+    "fallback_gc": 0,
+    "rejected": 0,
+    "deferred": 0
+   }
+  },
+  "0.625": {
+   "rf": {
+    "success": 28,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 28,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 28,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 28,
+   "chaser_met": 28,
+   "any_met": 28,
+   "status": {
+    "P": 28,
+    "fallback_gc": 0,
+    "rejected": 0,
+    "deferred": 0
+   }
+  },
+  "0.7": {
+   "rf": {
+    "success": 27,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 27,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 27,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 27,
+   "chaser_met": 27,
+   "any_met": 27,
+   "status": {
+    "P": 27,
+    "fallback_gc": 0,
+    "rejected": 0,
+    "deferred": 0
+   }
+  }
+ },
+ "decide_seconds": {
+  "median": 0.578291124664247,
+  "max": 0.7920391913503408
+ },
+ "excluded": {
+  "heldout-kernels-v1": 6
+ }
+}

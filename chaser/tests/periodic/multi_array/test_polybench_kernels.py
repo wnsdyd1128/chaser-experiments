@@ -1,4 +1,5 @@
-"""uint32 PolyBench/C adaptations (BICG, MVT, GESUMMV, JACOBI-1D, JACOBI-2D): counts, native oracles, real streams."""
+"""uint32 PolyBench/C adaptations (BICG, MVT, GESUMMV, JACOBI-1D, JACOBI-2D, 2MM, SYRK, TRMM, DOITGEN): counts,
+native oracles, real streams."""
 
 import ctypes
 import json
@@ -21,7 +22,14 @@ SHAPES = {
     'polybench-gesummv-u32': (dict(A=[3, 3], B=[3, 3], tmp=[3], x=[3], y=[3]), ('y',)),
     'polybench-jacobi1d-u32': (dict(A=[6], B=[6]), ('A',)),
     'polybench-jacobi2d-u32': (dict(A=[5, 5], B=[5, 5]), ('A',)),
+    'polybench-2mm-u32': (dict(A=[3, 3], B=[3, 3], tmp=[3, 3], C=[3, 3], D=[3, 3]), ('D',)),
+    'polybench-syrk-u32': (dict(A=[4, 4], C=[4, 4]), ('C',)),
+    'polybench-trmm-u32': (dict(A=[4, 4], B=[4, 4]), ('B',)),
+    'polybench-doitgen-u32': (dict(A=[9, 3], C4=[3, 3], sum=[3]), ('A',)),
 }
+SCRATCH = ('tmp', 'sum')  # written but not hashed
+# In-place outputs each job first resets to the array's initial value, so every job computes the same result.
+RESET = {'polybench-2mm-u32': 'D', 'polybench-syrk-u32': 'C', 'polybench-trmm-u32': 'B', 'polybench-doitgen-u32': 'A'}
 
 
 def config(patterns=tuple(SHAPES), sweeps=2, initial=None, optimization='O0'):
@@ -59,6 +67,30 @@ def view(lib, plan, task, role):
 
 def reference(pattern, v, steps):
     """Independent Python oracle: live-out values per role after steps time steps (sweeps)."""
+    if pattern == 'polybench-2mm-u32':
+        A, B, C, D, n = v['A'], v['B'], v['C'], [list(r) for r in v['D']], len(v['A'])
+        tmp = [[sum(3 * A[i][k] * B[k][j] for k in range(n)) % M32 for j in range(n)] for i in range(n)]
+        for _ in range(steps):
+            D = [[(2 * D[i][j] + sum(tmp[i][k] * C[k][j] for k in range(n))) % M32 for j in range(n)] for i in range(n)]
+        return dict(D=D)
+    if pattern == 'polybench-syrk-u32':
+        A, C, n = v['A'], [list(r) for r in v['C']], len(v['A'])
+        for _ in range(steps):
+            C = [[(2 * C[i][j] + sum(3 * A[i][k] * A[j][k] for k in range(n))) % M32 if j <= i else C[i][j]
+                  for j in range(n)] for i in range(n)]
+        return dict(C=C)
+    if pattern == 'polybench-trmm-u32':
+        A, B, n = v['A'], [list(r) for r in v['B']], len(v['A'])
+        for _ in range(steps):
+            old = [list(r) for r in B]
+            B = [[3 * (old[i][j] + sum(A[k][i] * old[k][j] for k in range(i + 1, n))) % M32 for j in range(n)]
+                 for i in range(n)]
+        return dict(B=B)
+    if pattern == 'polybench-doitgen-u32':
+        A, C4, n = [list(r) for r in v['A']], v['C4'], len(v['C4'])
+        for _ in range(steps):
+            A = [[sum(row[s] * C4[s][p] for s in range(n)) % M32 for p in range(n)] for row in A]
+        return dict(A=A)
     if pattern == 'polybench-bicg-u32':
         A, p, r = v['A'], v['p'], v['r']
         return dict(s=[sum(r[i] * A[i][j] for i in range(len(A))) % M32 for j in range(len(A[0]))],
@@ -110,19 +142,31 @@ def test_constant_initialization_gives_the_closed_form_checksum(pattern, optimiz
 
 @pytest.mark.parametrize('optimization', ['O0', 'O2'])
 @pytest.mark.parametrize('pattern', list(SHAPES))
+def test_every_job_returns_the_closed_form_checksum(pattern, optimization, tmp_path):
+    plan = make_plan(config((pattern,), optimization=optimization), 2)
+    lib = compile_lib(plan, tmp_path, optimization)
+    job = getattr(lib, 'task_job_k0')
+    job.restype = ctypes.c_uint32
+    assert [job() for _ in range(3)] == [plan['tasks'][0]['expected_checksum']] * 3
+
+
+@pytest.mark.parametrize('optimization', ['O0', 'O2'])
+@pytest.mark.parametrize('pattern', list(SHAPES))
 def test_nonuniform_inputs_match_the_independent_oracle(pattern, optimization, tmp_path):
     plan = make_plan(config((pattern,), sweeps=2), 2)
     task = plan['tasks'][0]
     lib = compile_lib(plan, tmp_path, optimization)
     rng = random.Random(pattern)
     shapes, outs = SHAPES[pattern]
-    stateful = pattern.startswith('polybench-jacobi')
+    stateful = pattern.startswith('polybench-jacobi')  # integer division: small values, B changes but is not hashed
     values = {}
     for role, shape in shapes.items():
         data = view(lib, plan, task, role)
         count = shape[0] * (shape[1] if len(shape) == 2 else 1)
         flat = [rng.randrange(1000) if stateful else rng.choice((0, 1, 7, 2**31 + 5, M32 - 1, rng.randrange(M32)))
                 for _ in range(count)]
+        if RESET.get(pattern) == role:  # the job overwrites it with the initial value first
+            flat = [next(a for a in plan['arrays'] if a['array_id'] == task['arrays'][role]['array_id'])['initial_value']] * count
         for i, x in enumerate(flat):
             data[i] = x
         values[role] = flat if len(shape) == 1 else [flat[i * shape[1]:(i + 1) * shape[1]] for i in range(shape[0])]
@@ -131,7 +175,7 @@ def test_nonuniform_inputs_match_the_independent_oracle(pattern, optimization, t
     for call in (1, 2):
         result = job()
         copy = {r: [list(x) if isinstance(x, list) else x for x in v] for r, v in values.items()}
-        expected = reference(pattern, copy, task['sweeps'] * call)
+        expected = reference(pattern, copy, task['sweeps'] * (1 if pattern in RESET else call))
         hashed = []
         for role in outs:
             want = expected[role] if len(shapes[role]) == 1 else sum(expected[role], [])
@@ -139,7 +183,7 @@ def test_nonuniform_inputs_match_the_independent_oracle(pattern, optimization, t
             hashed += want
         assert result == fnv(hashed), call
         if not stateful:
-            for role in set(shapes) - set(outs) - {'tmp'}:
+            for role in set(shapes) - set(outs) - set(SCRATCH):
                 flat = values[role] if len(shapes[role]) == 1 else sum(values[role], [])
                 assert list(view(lib, plan, task, role))[:len(flat)] == flat, role
 
@@ -173,7 +217,7 @@ def test_invalid_inputs_are_rejected(pattern, change):
         make_plan(c, 2)
 
 
-def test_all_five_kernels_in_one_real_elf_pass_the_yarda_stream_check(tmp_path):
+def test_all_kernels_in_one_real_elf_pass_the_yarda_stream_check(tmp_path):
     from chaser.periodic.analysis import analyze
     prepared = tmp_path / 'prepared'
     prepare(config(optimization='O2', sweeps=1), prepared)

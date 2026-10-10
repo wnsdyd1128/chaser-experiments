@@ -189,6 +189,39 @@ python3 -m tools.rtems_periodic run .cache/periodic-multi-array/my-atax-v1/prepa
 G/C 실행은 아래 §2.3처럼 architecture와 output을 바꾼다.
 이 예제도 cold task-local 진단용이며 RF label 편입 대상은 아니다.
 
+<a id="polybench-kernels-2026-10"></a>
+
+#### PolyBench 기반 정수 커널 9종 (2026-10)
+
+ATAX와 같은 규칙으로 PolyBench/C 4.2.1의 커널 9종을 uint32로 재구현했다(실제 커널 실험 45·46).
+공통 규칙은 다음과 같다.
+- 자료형은 `uint32_t`이고 연산은 modulo 2^32다. 원본의 실수 상수는 정수로 바꾼다(ALPHA 3, BETA 2).
+- 초기값은 JSON의 배열별 상수다. 그래서 checksum을 닫힌식으로 계산할 수 있다.
+- volatile load 순서는 원본 연산자 순서대로 C의 개별 문장으로 고정한다.
+- 마지막 sweep 뒤 출력 배열을 row-major로 읽는 FNV-1a hash를 job 안에서 계산한다. 주기 실행은 job마다 같은 hash를 요구하므로,
+  결과를 제자리에서 갱신하는 커널은 job 시작에 그 배열을 초기값으로 되돌린다(Jacobi는 상수 초기값이 변하지 않아 필요 없다).
+- 정사각 크기 n 하나로 모양을 정하며, 별도 task 매개변수는 받지 않는다.
+
+| pattern | 원본 | 상태와 차이 |
+|---|---|---|
+| `polybench-bicg-u32` | `kernel_bicg` | s, q를 sweep마다 0으로 초기화 |
+| `polybench-mvt-u32` | `kernel_mvt` | x1, x2를 sweep마다 0으로 초기화(원본은 입력에 누적) |
+| `polybench-gesummv-u32` | `kernel_gesummv` | tmp, y를 sweep마다 초기화 |
+| `polybench-jacobi1d-u32` | `kernel_jacobi_1d` | 평균은 정수 나눗셈 3. 한 sweep이 한 time step이고 상태가 이어짐. A, B가 같은 초기값이어야 함 |
+| `polybench-jacobi2d-u32` | `kernel_jacobi_2d` | 평균은 정수 나눗셈 5. 그 밖은 JACOBI-1D와 같음 |
+| `polybench-2mm-u32` | `kernel_2mm` | job 시작에 D를 초기값으로 되돌림. tmp는 sweep마다 초기화, D는 원본처럼 BETA를 곱하고 누적(한 job의 sweep 사이에 상태가 이어짐) |
+| `polybench-syrk-u32` | `kernel_syrk` | job 시작에 C를 초기값으로 되돌림. C의 아래 삼각만 갱신(sweep 사이에 상태가 이어짐). 루프 순서는 원본(k 바깥, j 안쪽) |
+| `polybench-trmm-u32` | `kernel_trmm` | job 시작에 B를 초기값으로 되돌림. B를 제자리에서 원본 순서로 갱신(sweep 사이에 상태가 이어짐). A는 대각선 아래만 읽음 |
+| `polybench-doitgen-u32` | `kernel_doitgen` | 3차원 A[r][q][p]를 (n²×n) 행렬로 둔다(행 r·n+q). job 시작에 A를 초기값으로 되돌림. A는 제자리 갱신, sum은 임시 |
+
+모양, 접근 수, 닫힌식 checksum은 각 모듈(`chaser/periodic/kernels/<이름>.py`, 2MM은 `twomm.py`)의 `validate`에 있다.
+테스트(`tests/periodic/multi_array/test_polybench_kernels.py`)는 커널마다 다음을 확인한다.
+- 선언한 접근 수
+- 닫힌식 checksum(O0·O2)
+- 임의 입력에서 독립 Python 계산과의 일치
+- footprint
+- 실제 RTEMS 실행 파일에서 YARDA가 본 접근 흐름
+
 ### 2.3. 다중 배열 smoke 실행
 
 현재 workspace root에서 실행하고, 이미 존재하지 않는 output 이름을 선택한다.

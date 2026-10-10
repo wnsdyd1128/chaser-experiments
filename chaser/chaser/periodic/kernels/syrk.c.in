@@ -1,0 +1,32 @@
+/* Integer reimplementation of the PolyBench/C 4.2.1 SYRK algorithm.
+ * Source: linear-algebra/blas/syrk/syrk.c, kernel_syrk.
+ * See rtems/periodic/experiment-guide/INPUTS.md#polybench-kernels-2026-10 for the differences. */
+INLINE static void kernel_${task_id}(void) {
+    for (int i = 0; i < ${n}; ++i) {
+        for (int j = 0; j <= i; ++j) {
+            uint32_t cv = ${C}[${C_offset} + i * ${C_row} + j * ${C_col}];
+            ${C}[${C_offset} + i * ${C_row} + j * ${C_col}] = cv * ${beta}U;
+        }
+        for (int k = 0; k < ${n}; ++k)
+            for (int j = 0; j <= i; ++j) {
+                uint32_t cv = ${C}[${C_offset} + i * ${C_row} + j * ${C_col}];
+                uint32_t av = ${A}[${A_offset} + i * ${A_row} + k * ${A_col}];
+                uint32_t aw = ${A}[${A_offset} + j * ${A_row} + k * ${A_col}];
+                ${C}[${C_offset} + i * ${C_row} + j * ${C_col}] = cv + ${alpha}U * av * aw;
+            }
+    }
+}
+/** @brief Reset C to its initial value, then update its lower triangle with BETA C + ALPHA A A^T per sweep.
+ * @return Word-wise FNV-1a hash of all of C (row-major), computed inside the measured job. */
+ANALYZE uint32_t task_job_${task_id}(void) {
+    for (int i = 0; i < ${n}; ++i)
+        for (int j = 0; j < ${n}; ++j)
+            ${C}[${C_offset} + i * ${C_row} + j * ${C_col}] = ${C_initial}U;
+    for (int t = 0; t < ${sweeps}; ++t)
+        kernel_${task_id}();
+    uint32_t h = 2166136261U;
+    for (int i = 0; i < ${n}; ++i)
+        for (int j = 0; j < ${n}; ++j)
+            h = (h ^ ${C}[${C_offset} + i * ${C_row} + j * ${C_col}]) * 16777619U;
+    return h;
+}

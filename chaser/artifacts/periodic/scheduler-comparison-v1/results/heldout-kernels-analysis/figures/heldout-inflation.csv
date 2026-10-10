@@ -1,0 +1,23 @@
+kernel,experiment,statistic,ratio,tasks
+gemm-u32,experiment 45,median,1.0394,89
+gemm-u32,experiment 45,p95,1.1088,89
+polybench-atax-u32,experiment 45,median,1.4520,107
+polybench-atax-u32,experiment 45,p95,1.9080,107
+polybench-bicg-u32,experiment 45,median,1.4933,131
+polybench-bicg-u32,experiment 45,p95,2.1443,131
+polybench-mvt-u32,experiment 45,median,1.4068,103
+polybench-mvt-u32,experiment 45,p95,1.8387,103
+polybench-gesummv-u32,experiment 45,median,1.8181,90
+polybench-gesummv-u32,experiment 45,p95,2.5016,90
+polybench-jacobi1d-u32,experiment 45,median,1.4659,105
+polybench-jacobi1d-u32,experiment 45,p95,1.8325,105
+polybench-jacobi2d-u32,experiment 45,median,1.3129,106
+polybench-jacobi2d-u32,experiment 45,p95,1.6526,106
+polybench-2mm-u32,experiment 46,median,1.0160,226
+polybench-2mm-u32,experiment 46,p95,1.0409,226
+polybench-syrk-u32,experiment 46,median,1.0164,226
+polybench-syrk-u32,experiment 46,p95,1.0423,226
+polybench-trmm-u32,experiment 46,median,1.0174,210
+polybench-trmm-u32,experiment 46,p95,1.0496,210
+polybench-doitgen-u32,experiment 46,median,1.0174,200
+polybench-doitgen-u32,experiment 46,p95,1.0350,200

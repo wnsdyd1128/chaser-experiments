@@ -1,0 +1,35 @@
+/* Integer reimplementation of the PolyBench/C 4.2.1 DOITGEN algorithm.
+ * Source: linear-algebra/kernels/doitgen/doitgen.c, kernel_doitgen.
+ * See rtems/periodic/experiment-guide/INPUTS.md#polybench-kernels-2026-10 for the differences. */
+INLINE static void kernel_${task_id}(void) {
+    for (int r = 0; r < ${n}; ++r)
+        for (int q = 0; q < ${n}; ++q) {
+            for (int p = 0; p < ${n}; ++p) {
+                ${sum}[${sum_offset} + p * ${sum_step}] = 0;
+                for (int s = 0; s < ${n}; ++s) {
+                    uint32_t sv = ${sum}[${sum_offset} + p * ${sum_step}];
+                    uint32_t av = ${A}[${A_offset} + (r * ${n} + q) * ${A_row} + s * ${A_col}];
+                    uint32_t cv = ${C4}[${C4_offset} + s * ${C4_row} + p * ${C4_col}];
+                    ${sum}[${sum_offset} + p * ${sum_step}] = sv + av * cv;
+                }
+            }
+            for (int p = 0; p < ${n}; ++p) {
+                uint32_t sv = ${sum}[${sum_offset} + p * ${sum_step}];
+                ${A}[${A_offset} + (r * ${n} + q) * ${A_row} + p * ${A_col}] = sv;
+            }
+        }
+}
+/** @brief Reset A to its initial value, then replace every A[r][q][:] with A[r][q][:] C4 per sweep.
+ * @return Word-wise FNV-1a hash of all of A (row-major), computed inside the measured job. */
+ANALYZE uint32_t task_job_${task_id}(void) {
+    for (int i = 0; i < ${n} * ${n}; ++i)
+        for (int j = 0; j < ${n}; ++j)
+            ${A}[${A_offset} + i * ${A_row} + j * ${A_col}] = ${A_initial}U;
+    for (int t = 0; t < ${sweeps}; ++t)
+        kernel_${task_id}();
+    uint32_t h = 2166136261U;
+    for (int i = 0; i < ${n} * ${n}; ++i)
+        for (int j = 0; j < ${n}; ++j)
+            h = (h ^ ${A}[${A_offset} + i * ${A_row} + j * ${A_col}]) * 16777619U;
+    return h;
+}

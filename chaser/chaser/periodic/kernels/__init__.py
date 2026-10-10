@@ -9,7 +9,7 @@ from chaser.periodic.arrays import fields, integer, normalize_bindings
 from chaser.periodic.workload import (ArrayRegistry, GemmParameters, KernelMetrics,
     MemoryFootprint, NoParameters, ReadParameters, ReferenceEvent, TaskSpec)
 from chaser.periodic.kernels.templates import render_template
-from chaser.periodic.kernels import atax, bicg, gemm, gesummv, jacobi1d, jacobi2d, mvt, reads
+from chaser.periodic.kernels import atax, bicg, doitgen, gemm, gesummv, jacobi1d, jacobi2d, mvt, reads, syrk, trmm, twomm
 
 
 class KernelImplementation(Protocol):
@@ -65,6 +65,10 @@ KERNELS = {
     'polybench-gesummv-u32': Kernel(gesummv, ('A', 'B', 'tmp', 'x', 'y'), write_roles=('tmp', 'y')),
     'polybench-jacobi1d-u32': Kernel(jacobi1d, ('A', 'B'), write_roles=('A', 'B')),
     'polybench-jacobi2d-u32': Kernel(jacobi2d, ('A', 'B'), write_roles=('A', 'B')),
+    'polybench-2mm-u32': Kernel(twomm, ('A', 'B', 'tmp', 'C', 'D'), write_roles=('tmp', 'D')),
+    'polybench-syrk-u32': Kernel(syrk, ('A', 'C'), write_roles=('C',)),
+    'polybench-trmm-u32': Kernel(trmm, ('A', 'B'), write_roles=('B',)),
+    'polybench-doitgen-u32': Kernel(doitgen, ('A', 'C4', 'sum'), write_roles=('A', 'sum')),
 }
 
 

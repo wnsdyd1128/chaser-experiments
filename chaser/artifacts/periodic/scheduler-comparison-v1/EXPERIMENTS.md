@@ -50,6 +50,7 @@ utilization 균형과 release 고려를 더함, 연구 문서 PLAN 0절)의 근�
 | 43 | RF 실행 전 점검 모델 동결(개발 자료, 시뮬레이션 없음) | `policy-mix/rf_freeze.py` | `rf-model-v1` | `rf-model` |
 | 44 | 실행 전 점검과 구성 추천의 확증(사전 등록, 새 set) | `policy-mix/`(`confirm_set.py`, `--design confirm-small`·`confirm-big`·`confirm-mem`, `confirm_decide.py`, `confirm_analysis.py`) | `confirm-small-v1`, `confirm-big-v1`, `confirm-mem-v1`, `confirm-analysis-v1` | `confirm-small`, `confirm-big`, `confirm-mem`, `confirm-analysis` |
 | 45 | 실제 커널 task set의 실행 전 점검(사전 등록, 새 set) | `policy-mix/`(`kernel_tasks.py`, `kernel_calibrate.py`, `kernel_set.py`, `kernel_run.py`, `confirm_analysis.py`) | `kernel-calibration-v2`, `real-kernels-v1`, `real-kernels-analysis-v1` | `kernel-calibration`, `real-kernels`, `real-kernels-analysis` |
+| 46 | 학습에 없던 커널 4종에서의 실행 전 점검 v1(새 set) | `policy-mix/`(`kernel_tasks.py`, `kernel_calibrate.py`, `kernel_set.py`, `kernel_run.py`, `heldout_analysis.py`, `kernel_report.py`) | `kernel-calibration-heldout-v2`, `heldout-kernels-v1`, `heldout-kernels-analysis-v1` | `kernel-calibration-heldout`, `heldout-kernels`, `heldout-kernels-analysis` |
 
 ---
 
@@ -2389,6 +2390,83 @@ python3 $R/policy-mix/confirm_analysis.py --cache $W/.cache --outputs real-kerne
 - `results/kernel-calibration/`: 실행시간 보정(`kernel-model.json`, `task-times.json`, `measured.json`)
 - `results/real-kernels/`: `decisions.json`·`decisions.sha256`, `results.jsonl`, `isolated-u.json`, `per-set.jsonl.gz`(set별 `design.json`)
 - `results/real-kernels-analysis/`: 판정 `confirm.json/md`, 기술 보고 `report.json/md`, 그림 `figures/kernel-*`(`figures/kernel_bars.py`)
+
+## 46. 학습에 없던 커널 4종에서의 실행 전 점검 v1 (새 set)
+
+### 개요
+45절의 커널 7종에 더해, RF 학습 자료에도 45절에도 없던 PolyBench/C 커널 4종(2MM, SYRK, TRMM, DOITGEN)으로 동결 RF(v1, 43절)를 평가한다. 2026-10-08 실행.
+
+**경위:**
+- 이 run은 원래 정책 v2를 시험하려고 사전 등록했다(2026-10-08 20:14 KST). v2는 v1에 학습 분포 밖 감지와, 45절 자료로 맞춘 분포 밖 확률 재보정을 더한 것이다.
+- 결과적으로 v2는 마감을 지킬 수 있던 47 set을 거절했고(v1은 0), 등록한 결론("v2가 v1보다 안전")은 성립하지 않았다.
+- 사용자 결정(2026-10-09 06:44 KST)으로 v2를 버리고 v1을 주 방법으로 둔다. v2의 코드, 정책 파일, 결과 묶음은 지웠다.
+- v1의 결정은 같은 run에서 측정 전에 함께 기록했다(`decisions.json`의 `compare`). 이 절은 그 결정을 44절과 같은 정의로 보고한다. 다만 v1에 대해 사전 등록한 분석은 아니다.
+- v1은 PolyBench 기반 커널 자료로 학습하거나 보정한 적이 없으므로, 45·46절의 커널 11종은 모두 v1에게 처음 보는 평가 자료다.
+
+### 새 커널
+- PolyBench/C 4.2.1의 2MM, SYRK, TRMM, DOITGEN을 uint32로 이식했다(`chaser/periodic/kernels/{twomm,syrk,trmm,doitgen}`, 차이는 `rtems/periodic/experiment-guide/INPUTS.md#polybench-kernels-2026-10`).
+- 45절의 7종과 같은 테스트를 한다: 접근 수, 닫힌식 checksum, 임의 입력에서 독립 Python 계산과의 일치, footprint, 실제 ELF에서 YARDA가 본 접근 흐름.
+- 네 커널은 RF 학습 자료에도 45절에도 없다. 45절 커널은 대부분 행렬-벡터 연산(O(n²))이었지만, 이번 커널은 행렬-행렬·텐서 연산(O(n³)–O(n⁴))이고, 2MM·SYRK·TRMM·DOITGEN은 결과를 제자리에서 갱신한다.
+
+### 실행 전 수정 1 (2026-10-08 20:17 KST, 마감 결과가 하나도 없을 때)
+- 보정 측정을 시작한 직후(20:14 KST) 2MM task가 checksum 오류로 실패했다. 첫 job은 맞고 둘째 job부터 달랐다.
+- 원인: 제자리 갱신 커널은 다음 job이 이전 job이 바꾼 값에서 시작해 job마다 결과가 달랐다. 실행 환경은 job마다 같은 checksum을 요구한다. 테스트는 job 사이에 상태가 이어진다고 가정해 이를 놓쳤다.
+- 수정: 네 커널은 job 시작에 제자리 갱신 배열(2MM의 D, SYRK의 C, TRMM의 B, DOITGEN의 A)을 초기값으로 되돌린다. 그 배열의 store가 job당 한 번 더해진다. "job마다 같은 checksum" 테스트를 추가했다.
+- 보정 측정은 멈추고 새 출력(`kernel-calibration-heldout-v2`)에서 다시 시작했다. 멈춘 측정의 출력(`kernel-calibration-heldout-v1`)은 쓰지 않는다.
+- set 설계는 바꾸지 않았다.
+
+### 설계 (45절과 같은 규칙, 커널과 seed만 다름)
+| 항목 | 내용 |
+|---|---|
+| task | 커널 4종 균등 추출, sweep {1, 2, 4} 균등 추출, 차원 n은 보정 모델로 budget에 가장 가까운 값. 계획 U는 고른 (커널, sweep, n)을 혼자 실행해 잰 job 시간(45절 실행 전 수정과 같음) |
+| set | 새 seed 20264601–, 부하마다 set 30개, task 12–20개, U 몫 Dirichlet(8), 주기 CV 0.2, 부하가 달라도 같은 커널·주기·sweep(공통 난수) |
+| 부하(코어당) | 0.40, 0.475, 0.55, 0.625, 0.70 |
+| 실행시간 보정 | `kernel_calibrate.py --design heldout-kernels`: 커널 4 × sweep 3 × n 최대 12단계(중복 크기 제외 142 수준) + 검증 42 수준(총 184 수준), 이어서 쓰이는 모든 크기를 혼자 실행 → `results/kernel-calibration-heldout/` |
+| 배치·run | 45절과 같다. 모든 set에서 CHASER(P), G4, C1+3, C1+1+2. 5 × 30 × 4 = **600 run**, warm-up 1 + 측정 3 hyperperiod |
+| 게이트 | 부하마다 set 0의 모든 task를 혼자 실행해 계획 U와의 오차 3% 이내 |
+| 결정(run 전) | v1의 결정을 `decisions.json`에 기록하고 해시를 남긴다(실제 run은 v2를 `status`, v1을 `compare`로 기록). measured run이 있으면 거부 |
+
+### 실행 기록
+2026-10-08 20:17–21:55 KST 실행(`supervisors/heldout-kernels-v1.sh`, 두 번째 시작).
+- 보정: 검증 최대 오차 2.2%, set에 쓰이는 크기 301개를 혼자 실행해 계획 U를 잼, 크기 범위 밖으로 잘린 task 0.
+- 단독 실행 게이트 최대 오차 0.07%(기준 3%). `decisions.json` 해시는 결과 묶음의 사본과 같다.
+- run 600개: CHASER(P) 지킴 148·시작 실패 2, G4 지킴 149·시작 실패 1, C1+3 지킴 150, C1+1+2 지킴 147·시작 실패 3. **마감 위반은 하나도 없었다.**
+- 시작 실패가 있는 6 set을 빼고 144 set을 판정했다.
+
+### 결과: v1은 144 set을 모두 받아들였고 모두 마감을 지킴
+| 방법 (144 set) | 받아들여 지킴 | 잘못 수락 | 잘못 거절 | 바르게 거절 |
+|---|---:|---:|---:|---:|
+| RF v1(동결, τ 0.8) | 144 | 0 | 0 | 0 |
+| D + M < 0.975 정적 규칙 | 144 | 0 | 0 | 0 |
+| 항상 CHASER 배치 | 144 | 0 | 0 | 0 |
+
+- 잘못 수락 0/144(단측 95% 상한 2.1%). 마감을 놓친 set이 없었으므로, 이 자료는 안전성보다 "쉬운 새 커널을 괜히 거절하지 않는다"는 점을 보여 준다.
+- 모든 CHASER run이 마감을 지켜 AUC는 계산할 수 없다. D + M 규칙과의 차이도 없다(한쪽만 성공한 set 0). v1이 G·C를 고른 set은 0이다.
+- RF의 CHASER 확률은 부하 0.70에서도 최소 0.879로 모두 τ 0.8 이상이었다. 결정 시간은 중앙값 0.58초다.
+- **기술 보고(`report.md`):**
+  - task 2,355개의 CLS 중앙값은 0.998이고, L1 miss 요청률 중앙값은 0.10회/µs다(45절 커널 2.08, 44절 합성 task 4.1–5.0). 작업 집합 중앙값은 13 KiB다.
+  - 친화도 묶음은 작동하지 않았다(CLS 0.5 이하 0). D는 부하 0.70에서 평균 0.027로 45절(0.268)의 약 1/10이다.
+
+**실행 후 코드 수정(결과 불변):** 모든 CHASER run이 같은 결과여서 AUC가 정의되지 않아 분석이 멈췄다. 이 경우 "계산 불가"로 보고하도록 고쳤다. 기술 보고의 제목이 "Experiment 45"로 고정돼 있던 것도 고쳤다.
+
+**사후 진단(결과를 본 뒤, 주장에 쓰지 않음, `figures/heldout-inflation`):**
+- 부하 0.625·0.70에서 CHASER 배치로 실행한 task의 "가장 긴 job ÷ 계획 시간"을 비교했다.
+  - 46절 커널은 중앙값 1.02(95번째 백분위수 1.03–1.05)로, 함께 실행해도 job이 거의 늘지 않았다.
+  - 45절 커널은 1.31–1.82(95번째 백분위수 1.65–2.50)였다. GEMM만 1.04로 46절 커널과 비슷했다.
+- 가장 바쁜 코어의 실제 이용률은 46절이 중앙값 0.72로 계획(0.71)과 거의 같았다. 45절은 계획 0.72에서 실제 0.95로 커졌다.
+- 45절의 잘못 수락은 함께 실행할 때 job이 늘어 생겼다. 46절 커널은 L2 요청이 적어 그런 증가가 없었다.
+
+### 재현 명령
+```sh
+cd $W && export PYTHONPATH=$W:$R/policy-mix:$R/period-distribution
+sh $R/supervisors/heldout-kernels-v1.sh   # 보정(measure, fit, tasks) → prepare → isolated → decide(v1) → full → summarize → 분석·기술 보고
+python3 $R/figures/heldout_bars.py $W/.cache/heldout-kernels-analysis-v1 $W/.cache $R/results/real-kernels-analysis
+```
+
+### 결과 파일
+- `results/kernel-calibration-heldout/`: 실행시간 보정
+- `results/heldout-kernels/`: `decisions.json`(run 당시 기록: v2 결정과 `compare`의 v1 결정)·`decisions.sha256`, `results.jsonl`, `isolated-u.json`, `per-set.jsonl.gz`
+- `results/heldout-kernels-analysis/`: v1 결과 `heldout.json/md`, 기술 보고 `report.json/md`, 그림 `figures/heldout-*`(`figures/heldout_bars.py`)
 
 ## 정리: 논문 실험만 남기기 (2026-10-08 KST)
 

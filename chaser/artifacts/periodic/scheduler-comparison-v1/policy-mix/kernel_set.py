@@ -9,7 +9,8 @@ The planned U is the measured isolated job time of the chosen (kernel, sweeps, n
 results/kernel-calibration/task-times.json) over the period; the interpolation model only chooses n (real kernels are
 not smooth in n; 2026-10-08, before any run). A draw whose largest load
 exceeds the workload data or array limit is redrawn with the next attempt index (deterministic).
-Designs (DESIGNS, select): 'real-kernels' is experiment 45 (kernel_tasks.KERNELS, the default).
+Designs (DESIGNS, select): 'real-kernels' is experiment 45 (kernel_tasks.KERNELS, the default); 'heldout-kernels' is
+experiment 46 (kernel_tasks.HELD_OUT, new seeds, 30 sets per load, its own calibration in results/kernel-calibration-heldout).
 """
 
 from functools import cache
@@ -27,6 +28,8 @@ import kernel_tasks as kt
 HERE = Path(__file__).resolve().parent
 DESIGNS = {
     'real-kernels': dict(kernels=kt.KERNELS, seed_base=20264501, sets=24, heaviness='real', calibration='kernel-calibration'),
+    'heldout-kernels': dict(kernels=kt.HELD_OUT, seed_base=20264601, sets=30, heaviness='heldout',
+                            calibration='kernel-calibration-heldout'),
 }
 LOADS = (0.40, 0.475, 0.55, 0.625, 0.70)
 TASK_RANGE = (12, 20)
@@ -149,8 +152,9 @@ def needed() -> set[tuple[str, int, int]]:
 def configuration(load: float, set_id: int, cores: list[int]) -> dict:
     planned = tasks(load, set_id)
     pairs = [kt.task(t['kernel'], t['task_id'], t['n'], t['sweeps'], c, t['period']) for t, c in zip(planned, cores)]
-    return kt.configuration(f'real-kernels-u{round(load * 1000):04d}-s{set_id:02d}', pairs,
-                            (WARMUP_HYPERPERIODS + MEASURED_HYPERPERIODS) * HYPERPERIOD, WARMUP_HYPERPERIODS * HYPERPERIOD)
+    return kt.configuration(f'{DESIGN}-u{round(load * 1000):04d}-s{set_id:02d}', pairs,
+                            (WARMUP_HYPERPERIODS + MEASURED_HYPERPERIODS) * HYPERPERIOD, WARMUP_HYPERPERIODS * HYPERPERIOD,
+                            family=f'{DESIGN}-v1')
 
 
 def cases() -> list[tuple[float, int]]:
