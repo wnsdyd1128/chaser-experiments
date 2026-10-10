@@ -39,8 +39,8 @@
     "results.jsonl": "eedaf3b7adbc5b9d30b76c0ec38413997acebcf727d577fb80f8cf5860c8bc91",
     "rt-metrics.json": "686f038652e08103ba1590003d4d04aa0e915196b268f78c77543e0813fc74b0",
     "snapshot.tar.gz": "a54bbe3322018a0f8951f0d5cd78db2bc30d955fdc952b0231039423217429b1",
-    "stats-task-count.json": "27a0f1341eb1f9b96ae6a2be3f2e99bd0963c6770b9ef0d13240f233a88e2988",
-    "stats-task-count.md": "902efb7b01ee0d8e9b861bdae37a955172ef10ba26513f3474bf365e8c11d4e1",
+    "stats-task-count.json": "094c7c30eedce52cc5bfb0b5240cb80eca3aa22082bea81042c4eceaf965568a",
+    "stats-task-count.md": "1cf55a1ea24e5521d863816e58135b73ff49087a177f3b97fab0a51ba4bd3496",
     "task-count-analysis.json": "50879a6e1304a8977abb0d58e144e4cf04d2f5d2f6c02594010a9d0075cef55b",
     "task-count-analysis.md": "e15dcb34fd9bec076b2879eac063691d6df3ab3843b0c7dcd34e2a4e7060c6c5"
   },
@@ -60,5 +60,6 @@
     "test_mix_set.py": "e1b65db3d0c5b53b5b672690fe1550fb780656313d9eba534fd2cbd37b5add21",
     "test_placement_lib.py": "85e560cfa63f2075999625d7cf4ce045d7ff94999300f654b9c9055e003eca02",
     "test_taskcount_set.py": "2e1da09cbb376ec9d08ebe594bda0b89eaa96df7f76c5393aa86f1ba865b98d4"
-  }
+  },
+  "note": "2026-10-09: stats-task-count.* regenerated from results.jsonl after fixing period-distribution/stats.py (cells whose paired differences are all zero now get no Wilcoxon test; their NaN had set later Holm values of the family to 1). Only the four families with such cells changed (EXPERIMENTS.md 20)."
 }

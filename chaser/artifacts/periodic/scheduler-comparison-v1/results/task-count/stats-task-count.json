@@ -124,20 +124,13 @@
         "g": 0,
         "p": 1
       },
-      "holm_p": 1.0,
       "mean": 0.35,
       "mean_gap": 0.0,
       "median": 0.0,
-      "median_ci95": [
-        0.0,
-        0.0
-      ],
       "metric": "tet_ns",
       "n": 36,
       "pair": "p_racgb-p_ra",
-      "positive": 0,
-      "significant": false,
-      "wilcoxon_p": NaN
+      "positive": 0
     },
     {
       "cv": 2,
@@ -146,7 +139,7 @@
         "g": 12,
         "p": 15
       },
-      "holm_p": 1.0,
+      "holm_p": 1.52587890625e-05,
       "mean": 0.35,
       "mean_gap": -0.1001346877408969,
       "median": -0.07648434160514304,
@@ -158,7 +151,7 @@
       "n": 19,
       "pair": "p_racgb-p_ra",
       "positive": 1,
-      "significant": false,
+      "significant": true,
       "wilcoxon_p": 7.62939453125e-06
     },
     {
@@ -180,20 +173,13 @@
         "g": 1,
         "p": 0
       },
-      "holm_p": 1.0,
       "mean": 0.45,
       "mean_gap": 0.0,
       "median": 0.0,
-      "median_ci95": [
-        0.0,
-        0.0
-      ],
       "metric": "tet_ns",
       "n": 36,
       "pair": "p_racgb-p_ra",
-      "positive": 0,
-      "significant": false,
-      "wilcoxon_p": NaN
+      "positive": 0
     },
     {
       "cv": 2,
@@ -202,7 +188,7 @@
         "g": 27,
         "p": 28
       },
-      "holm_p": 1.0,
+      "holm_p": 0.03125,
       "mean": 0.45,
       "mean_gap": -0.08242959178043632,
       "median": -0.07945865343019234,
@@ -214,7 +200,7 @@
       "n": 6,
       "pair": "p_racgb-p_ra",
       "positive": 0,
-      "significant": false,
+      "significant": true,
       "wilcoxon_p": 0.03125
     },
     {
@@ -348,20 +334,13 @@
         "g": 0,
         "p": 1
       },
-      "holm_p": 1.0,
       "mean": 0.35,
       "mean_gap": 0.0,
       "median": 0.0,
-      "median_ci95": [
-        0.0,
-        0.0
-      ],
       "metric": "tet_ns",
       "n": 35,
       "pair": "p_cgb-p",
-      "positive": 0,
-      "significant": false,
-      "wilcoxon_p": NaN
+      "positive": 0
     },
     {
       "cv": 2,
@@ -370,7 +349,7 @@
         "g": 12,
         "p": 15
       },
-      "holm_p": 1.0,
+      "holm_p": 0.06414936248047728,
       "mean": 0.35,
       "mean_gap": -0.037891048039666066,
       "median": -0.05327586864339394,
@@ -404,20 +383,13 @@
         "g": 1,
         "p": 0
       },
-      "holm_p": 1.0,
       "mean": 0.45,
       "mean_gap": 0.0,
       "median": 0.0,
-      "median_ci95": [
-        0.0,
-        0.0
-      ],
       "metric": "tet_ns",
       "n": 36,
       "pair": "p_cgb-p",
-      "positive": 0,
-      "significant": false,
-      "wilcoxon_p": NaN
+      "positive": 0
     },
     {
       "cv": 2,
@@ -426,7 +398,7 @@
         "g": 27,
         "p": 28
       },
-      "holm_p": 1.0,
+      "holm_p": 0.0625,
       "mean": 0.45,
       "mean_gap": -0.06204064615031547,
       "median": -0.07074622606754329,
@@ -1006,20 +978,13 @@
         "g": 0,
         "p": 1
       },
-      "holm_p": 1.0,
       "mean": 0.35,
       "mean_gap": 0.0,
       "median": 0.0,
-      "median_ci95": [
-        0.0,
-        0.0
-      ],
       "metric": "tat_ns",
       "n": 36,
       "pair": "p_racgb-p_ra",
-      "positive": 0,
-      "significant": false,
-      "wilcoxon_p": NaN
+      "positive": 0
     },
     {
       "cv": 2,
@@ -1028,7 +993,7 @@
         "g": 12,
         "p": 15
       },
-      "holm_p": 1.0,
+      "holm_p": 0.057861328125,
       "mean": 0.35,
       "mean_gap": -0.09007295465907253,
       "median": -0.06566658218330498,
@@ -1062,20 +1027,13 @@
         "g": 1,
         "p": 0
       },
-      "holm_p": 1.0,
       "mean": 0.45,
       "mean_gap": 0.0,
       "median": 0.0,
-      "median_ci95": [
-        0.0,
-        0.0
-      ],
       "metric": "tat_ns",
       "n": 36,
       "pair": "p_racgb-p_ra",
-      "positive": 0,
-      "significant": false,
-      "wilcoxon_p": NaN
+      "positive": 0
     },
     {
       "cv": 2,
@@ -1084,7 +1042,7 @@
         "g": 27,
         "p": 28
       },
-      "holm_p": 1.0,
+      "holm_p": 0.84375,
       "mean": 0.45,
       "mean_gap": -0.02016031888665543,
       "median": -0.002634475609331187,
@@ -1230,20 +1188,13 @@
         "g": 0,
         "p": 1
       },
-      "holm_p": 1.0,
       "mean": 0.35,
       "mean_gap": 0.0,
       "median": 0.0,
-      "median_ci95": [
-        0.0,
-        0.0
-      ],
       "metric": "tat_ns",
       "n": 35,
       "pair": "p_cgb-p",
-      "positive": 0,
-      "significant": false,
-      "wilcoxon_p": NaN
+      "positive": 0
     },
     {
       "cv": 2,
@@ -1286,20 +1237,13 @@
         "g": 1,
         "p": 0
       },
-      "holm_p": 1.0,
       "mean": 0.45,
       "mean_gap": 0.0,
       "median": 0.0,
-      "median_ci95": [
-        0.0,
-        0.0
-      ],
       "metric": "tat_ns",
       "n": 36,
       "pair": "p_cgb-p",
-      "positive": 0,
-      "significant": false,
-      "wilcoxon_p": NaN
+      "positive": 0
     },
     {
       "cv": 2,

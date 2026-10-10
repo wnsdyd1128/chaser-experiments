@@ -61,7 +61,9 @@ def cell_tests(rows):
                 if values:
                     entry.update(median=median(values), mean_gap=mean(values),
                                  positive=sum(v > 0 for v in values))
-                if len(values) >= 6:
+                # All-zero differences (identical placements) have no Wilcoxon p-value; a NaN would turn
+                # min(1.0, nan) into 1.0 and set every later Holm value of the family to 1 (fixed 2026-10-09).
+                if len(values) >= 6 and any(values):
                     entry['median_ci95'] = median_ci(values)
                     entry['wilcoxon_p'] = float(stats.wilcoxon(values).pvalue)
                 group.append(entry)

@@ -1018,6 +1018,13 @@ python3 $R/figures/task_count_bars.py $O
 - 그림 `task-count-{tat,tet}-mem*-u*`, `task-count-schedulable-u*`
 - `per-set.jsonl.gz`
 
+**통계 수정(2026-10-09):**
+- **버그:** `period-distribution/stats.py`의 칸별 검정에서, 짝지은 차이가 모두 0인 칸(친화도가 낮은 task가 없어 두 배치가 같은 0% 칸)의 Wilcoxon p가 NaN이었다. Python의 `min(1.0, nan)`은 1.0이므로, 같은 Holm 묶음에서 그 뒤 순서의 보정값이 모두 1이 됐다.
+- **수정:** 그런 칸은 검정하지 않게 고쳤다(`hl_run`의 응답시간 검정과 같은 처리). `results.jsonl`에서 `stats-task-count.json/md`를 다시 만들었다.
+- **바뀐 값:** NaN이 있던 네 묶음(TET·TAT의 ra-cgb 대 ra, cgb 대 wfd)만 바뀌었다. 예를 들어 768 KiB 25% 칸의 ra-cgb 대 ra TET는 Holm 1 → 1.5 × 10⁻⁵(부하 0.35, 19쌍)와 0.031(부하 0.45, 6쌍)이 됐다.
+- **확인:** 고치기 전 코드로 다시 만들면 기존 파일과 바이트까지 같았다. 같은 함수를 쓰는 다른 결과 묶음 9개(24, 27, 28, 41, 44절)는 고친 코드로 다시 만들어도 바이트까지 같다.
+- `task-count-analysis.md`는 다른 범위(CLS 고려 배치 대 ra)로 보정해서 값이 다르다.
+
 ---
 
 ## 21. 작은 작업 집합의 저-CLS task × 주기 분포 × task 수
