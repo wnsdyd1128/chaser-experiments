@@ -9,6 +9,7 @@ The planned U is the measured isolated job time of the chosen (kernel, sweeps, n
 results/kernel-calibration/task-times.json) over the period; the interpolation model only chooses n (real kernels are
 not smooth in n; 2026-10-08, before any run). A draw whose largest load
 exceeds the workload data or array limit is redrawn with the next attempt index (deterministic).
+Designs (DESIGNS, select): 'real-kernels' is experiment 45 (kernel_tasks.KERNELS, the default).
 """
 
 from functools import cache
@@ -24,11 +25,10 @@ import kernel_calibrate as kc
 import kernel_tasks as kt
 
 HERE = Path(__file__).resolve().parent
-MODEL_PATH = HERE.parent / 'results/kernel-calibration/kernel-model.json'
-TIMES_PATH = HERE.parent / 'results/kernel-calibration/task-times.json'
-SEED_BASE, SETS = 20264501, 24
+DESIGNS = {
+    'real-kernels': dict(kernels=kt.KERNELS, seed_base=20264501, sets=24, heaviness='real', calibration='kernel-calibration'),
+}
 LOADS = (0.40, 0.475, 0.55, 0.625, 0.70)
-HEAVINESS = 'real'
 TASK_RANGE = (12, 20)
 ALPHA, LIGHT_CAP, U_MIN = 8.0, 0.35, 0.0125
 PERIOD_MENU, MU, PERIOD_CV, HYPERPERIOD = (20, 24, 30, 40, 48, 60, 80, 120), 40, 0.2, 240
@@ -36,6 +36,17 @@ WARMUP_HYPERPERIODS, MEASURED_HYPERPERIODS = 1, 3
 SWEEPS = kc.SWEEPS
 DATA_LIMIT, ARRAY_LIMIT = 16 * 1024 ** 2, 96  # the workload limits of chaser.periodic
 CORES = 4
+
+
+def select(name: str) -> None:
+    """Make `name` the design every function of this module uses."""
+    global DESIGN, KERNELS, SEED_BASE, SETS, HEAVINESS, MODEL_PATH, TIMES_PATH
+    d = DESIGNS[name]
+    DESIGN, KERNELS, SEED_BASE, SETS, HEAVINESS = name, d['kernels'], d['seed_base'], d['sets'], d['heaviness']
+    MODEL_PATH = HERE.parent / 'results' / d['calibration'] / 'kernel-model.json'
+    TIMES_PATH = HERE.parent / 'results' / d['calibration'] / 'task-times.json'
+    for f in (model, times, _counts, draw_attempt):
+        f.cache_clear()
 
 
 @cache
@@ -96,7 +107,7 @@ def _draw(set_id: int, attempt: int):
     n = _counts()[set_id]
     rng = np.random.default_rng([SEED_BASE, set_id, attempt])
     periods = [_menu(MU * (1 + PERIOD_CV * z)) for z in _normals(rng, n)]
-    kernels = [kt.KERNELS[int(i)] for i in rng.integers(0, len(kt.KERNELS), n)]
+    kernels = [KERNELS[int(i)] for i in rng.integers(0, len(KERNELS), n)]
     sweeps = [SWEEPS[int(i)] for i in rng.integers(0, len(SWEEPS), n)]
     while True:
         w = rng.dirichlet(np.full(n, ALPHA))
@@ -157,3 +168,6 @@ def realized(load: float, set_id: int) -> dict:
     return dict(total_u=sum(t['u'] for t in planned), clamped=sum(t['clamped'] for t in planned),
                 period_cv=statistics.pstdev(periods) / statistics.mean(periods),
                 data_mib=sum(t['data_bytes'] for t in planned) / 1024 ** 2)
+
+
+select('real-kernels')

@@ -1,0 +1,255 @@
+{
+ "sets": 118,
+ "h1": {
+  "auc_a": 0.9812973484848485,
+  "auc_b": 0.9005681818181818,
+  "difference": 0.08072916666666674,
+  "low": 0.031118958647775745,
+  "high": 0.13564978593324048,
+  "p": 0.001,
+  "holm_p": 0.002,
+  "supported": true
+ },
+ "h1_vs_occupancy": {
+  "auc_a": 0.9812973484848485,
+  "auc_b": 0.9734848484848484,
+  "difference": 0.007812500000000111,
+  "low": -0.006992168613898586,
+  "high": 0.025442239602111536,
+  "p": 0.332
+ },
+ "h2": {
+  "accepted": 112,
+  "false_accepts": 16,
+  "rate": 0.14285714285714285,
+  "upper_95": 0.20885750133949596,
+  "holds": false
+ },
+ "h3": {
+  "only_a": 0,
+  "only_b": 0,
+  "p": 1.0,
+  "direction_holds": false,
+  "holm_p": 1.0,
+  "supported": false
+ },
+ "h4": {
+  "switched": 0,
+  "saved": 0,
+  "wrong_switch": 0,
+  "p": 1.0
+ },
+ "rf_main_supported": false,
+ "overall": {
+  "rf": {
+   "success": 96,
+   "false_accept": 16,
+   "false_reject": 0,
+   "true_reject": 6
+  },
+  "static": {
+   "success": 96,
+   "false_accept": 22,
+   "false_reject": 0,
+   "true_reject": 0
+  },
+  "always": {
+   "success": 96,
+   "false_accept": 22,
+   "false_reject": 0,
+   "true_reject": 0
+  },
+  "sets": 118,
+  "chaser_met": 96,
+  "any_met": 103,
+  "status": {
+   "P": 112,
+   "fallback_gc": 0,
+   "rejected": 6,
+   "deferred": 0
+  }
+ },
+ "groups": {
+  "real-kernels-v1": {
+   "rf": {
+    "success": 96,
+    "false_accept": 16,
+    "false_reject": 0,
+    "true_reject": 6
+   },
+   "static": {
+    "success": 96,
+    "false_accept": 22,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 96,
+    "false_accept": 22,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 118,
+   "chaser_met": 96,
+   "any_met": 103,
+   "status": {
+    "P": 112,
+    "fallback_gc": 0,
+    "rejected": 6,
+    "deferred": 0
+   }
+  },
+  "real-kernels-v1 0.4": {
+   "rf": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 24,
+   "any_met": 24,
+   "status": {
+    "P": 24,
+    "fallback_gc": 0,
+    "rejected": 0,
+    "deferred": 0
+   }
+  },
+  "real-kernels-v1 0.475": {
+   "rf": {
+    "success": 23,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 23,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 23,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 23,
+   "chaser_met": 23,
+   "any_met": 23,
+   "status": {
+    "P": 23,
+    "fallback_gc": 0,
+    "rejected": 0,
+    "deferred": 0
+   }
+  },
+  "real-kernels-v1 0.55": {
+   "rf": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "static": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 24,
+    "false_accept": 0,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 24,
+   "any_met": 24,
+   "status": {
+    "P": 24,
+    "fallback_gc": 0,
+    "rejected": 0,
+    "deferred": 0
+   }
+  },
+  "real-kernels-v1 0.625": {
+   "rf": {
+    "success": 16,
+    "false_accept": 6,
+    "false_reject": 0,
+    "true_reject": 1
+   },
+   "static": {
+    "success": 16,
+    "false_accept": 7,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 16,
+    "false_accept": 7,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 23,
+   "chaser_met": 16,
+   "any_met": 19,
+   "status": {
+    "P": 22,
+    "fallback_gc": 0,
+    "rejected": 1,
+    "deferred": 0
+   }
+  },
+  "real-kernels-v1 0.7": {
+   "rf": {
+    "success": 9,
+    "false_accept": 10,
+    "false_reject": 0,
+    "true_reject": 5
+   },
+   "static": {
+    "success": 9,
+    "false_accept": 15,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "always": {
+    "success": 9,
+    "false_accept": 15,
+    "false_reject": 0,
+    "true_reject": 0
+   },
+   "sets": 24,
+   "chaser_met": 9,
+   "any_met": 13,
+   "status": {
+    "P": 19,
+    "fallback_gc": 0,
+    "rejected": 5,
+    "deferred": 0
+   }
+  }
+ },
+ "decide_seconds": {
+  "median": 0.4772346639074385,
+  "max": 0.6823034854605794
+ },
+ "excluded": {
+  "real-kernels-v1": 2
+ }
+}

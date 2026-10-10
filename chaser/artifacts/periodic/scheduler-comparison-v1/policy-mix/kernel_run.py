@@ -1,8 +1,8 @@
 """Experiment 45 runner: real-kernel task sets on the main chaser package, with the frozen pre-run check.
 
 Stages (EXPERIMENTS.md 45):
-  prepare    per case: build the U-balanced (wfd) mapping, analyze it with YARDA (chaser.periodic.analysis), place
-             CHASER's ra-cgb with chaser.policy.pfirst on the YARDA CLS, build that mapping too
+  prepare    per case: build the U-balanced (wfd) mapping, analyze its P ELF with YARDA hierarchy-rd (kernel_yarda),
+             place CHASER's ra-cgb with chaser.policy.pfirst on the YARDA CLS, build that mapping too
   isolated   every task of set 0 of each load alone (P, mode i+1): measured U within U_TOLERANCE of the planned U
   decide     chaser.policy.pfirst.decision.decide per case before any measured run -> decisions.json (+ sha256)
   full       CHASER under P and the wfd build under G4, C1+3, C1+1+2 for every case
@@ -20,8 +20,8 @@ from pathlib import Path
 import time
 
 import kernel_set as ks
+import kernel_yarda
 import run as design
-from chaser.periodic.analysis import analyze
 from chaser.periodic.build import prepare
 from chaser.policy.pfirst import decision, features, inputs, placement
 from tools.rtems_smoke import write_json
@@ -45,7 +45,7 @@ def prepare_one(output: Path, case) -> None:
     planned = ks.tasks(load, k)
     wfd = placement.wfd([dict(u=t['u'], period=t['period'], cls=1.0) for t in planned])
     prepare(ks.configuration(load, k, wfd), target / 'wfd' / 'prepared')
-    analyze(target / 'wfd' / 'prepared')
+    kernel_yarda.analyze(target / 'wfd' / 'prepared')
     values = inputs.load_analysis(target / 'wfd' / 'prepared', plan_tasks(planned))
     chaser = placement.release_aware_grouped(values, ks.SEED_BASE + k)
     prepare(ks.configuration(load, k, chaser), target / 'ra-cgb' / 'prepared')

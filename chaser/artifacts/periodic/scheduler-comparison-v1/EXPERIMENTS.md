@@ -2315,6 +2315,10 @@ PYTHONPATH=$W:$R/policy-mix python3 $R/policy-mix/confirm_analysis.py --cache $W
   그래서 보간 모델은 n을 고르는 데만 쓰고, **각 task의 계획 U는 고른 (커널, sweep, n)을 같은 방식으로 혼자 실행해 직접 잰 job 시간**으로 한다(`kernel_calibrate.py tasks`, 1,315 조합, `results/kernel-calibration/task-times.json`). set 안의 단독 실행 게이트(3%)는 그대로 둔다.
   크기별 측정에서 묶음 하나(`tasks-032`, GESUMMV 19개)가 실행 파일 단위 시작 실패(arm_phase·release_mismatch, 주기 시작이 tick 경계를 넘음)로 모두 실패해, 순서를 뒤집어 다시 빌드한 묶음도 같은 실패를 보였고, 둘로 나눈 두 묶음은 모두 정상이어서 그 묶음만 절반씩 나눠 측정했다(task가 아니라 그 실행 파일의 시작 시각 문제).
   같은 이유로 실행기의 단독 실행 게이트도 `hl_run`처럼 시작 실패 task를 기록하고 건너뛴다(오차 판정에서 제외).
+- **실행 전 수정 2(2026-10-08 12:05 KST, run 전):** 준비 단계의 YARDA 분석을 `chaser.periodic.analysis.analyze`(네 실행 파일 모두, 접근 이벤트 내보내기와 참조 순서 대조)에서 `kernel_yarda.py`(P 실행 파일 하나, hierarchy-rd만, 이벤트 내보내기 없음)로 바꿨다.
+  첫 준비 시도는 task·실행 파일당 이벤트가 최대 240 MB라 12% 진행에 121 GB를 써서 멈췄고, 그 부분 출력은 run 없이 지웠다(같은 출력 이름 `real-kernels-v1`로 새로 준비한다).
+  결정에 쓰는 값은 P 실행 파일의 hierarchy-rd 결과뿐이라 판정 내용은 그대로다. 커널 7종을 하나씩 담은 set에서 두 분석의 `pfirst` 입력(CLS, 요청률, working set, p_L1, p_mem)이 7 task 모두 같았다(분석 3.6초·37 MB 대 0.2초·0.4 MB).
+  `kernel_yarda`는 task마다 YARDA가 모델링한 접근 수가 계획의 접근 수와 같고 coverage가 완전하며 불변식이 통과해야 진행한다. 접근 순서의 전체 대조는 `tests/periodic/multi_array`의 커널 테스트가 맡는다.
 
 ### 설계
 | 항목 | 내용 |
@@ -2322,7 +2326,7 @@ PYTHONPATH=$W:$R/policy-mix python3 $R/policy-mix/confirm_analysis.py --cache $W
 | task | 커널 하나를 job마다 sweep 수만큼 실행. 커널은 7종에서 균등 추출, sweep은 {1, 2, 4}에서 균등 추출, 차원 n은 보정 모델로 budget(= U 몫 × 부하 × 4 × 주기)에 가장 가까운 값. 배열은 task마다 따로 둔다 |
 | set | 새 seed 20264501–, set 24개, task 12–20개, U 몫 Dirichlet(8), 주기 CV 0.2(27절 주기 규칙), 부하가 달라도 같은 커널·주기·sweep(공통 난수). 데이터 16 MiB·배열 96개 한도를 넘는 추출은 정해진 순서로 다시 뽑는다 |
 | 부하(코어당) | 0.40, 0.475, 0.55, 0.625, 0.70 |
-| 배치 | U 균형(wfd)으로 빌드한 실행 파일을 YARDA로 분석하고, 그 CLS로 `pfirst`가 CHASER 배치(ra-cgb)를 계산해 따로 빌드한다 |
+| 배치 | U 균형(wfd)으로 빌드한 P 실행 파일을 YARDA hierarchy-rd로 분석하고(`kernel_yarda.py`), 그 CLS로 `pfirst`가 CHASER 배치(ra-cgb)를 계산해 따로 빌드한다 |
 | run | 모든 set에서 CHASER(P), G4, C1+3, C1+1+2. 5 부하 × 24 set × 4 = **480 run**. warm-up 1 + 측정 3 hyperperiod. 공용 구현(`kernel_run.py`)으로 실행 |
 | 게이트 | 부하마다 set 0의 모든 task를 혼자 실행해 계획 U와의 오차 3% 이내 |
 | 결정(run 전) | 44절과 같다. 동결 RF(τ 0.8)의 P / fallback_gc / rejected / deferred, 비교용 D + M < 0.975, `decisions.json`과 해시. measured run이 있으면 거부 |
@@ -2347,8 +2351,44 @@ python3 $R/policy-mix/confirm_analysis.py --cache $W/.cache --outputs real-kerne
 ```
 실제 실행은 `supervisors/real-kernels-v1.sh`다. 첫 보정 측정(`kernel-calibration-v1`)은 workload의 배열 96개 한도를 넘는 묶음에서 멈춰 버렸고, 묶음을 배열 수로도 나눠 v2로 다시 측정했다.
 
+### 실행 기록
+2026-10-08 12:08–13:32 KST 실행, exit 0(`supervisors/real-kernels-v1.sh`).
+- 준비 120 경우, 단독 실행 게이트 최대 오차 0.05%(기준 3%).
+- run 전 결정: P 114, 거절 6, G·C 0, 보류 0. 결정 단계에서 `pfirst` 배치가 준비된 ra-cgb·wfd 빌드와 모든 set에서 같았다. `decisions.json` 해시는 결과 묶음의 사본과 같다.
+- run 480개: CHASER(P) 지킴 98·놓침 22, G4 지킴 100·놓침 18·시작 실패 2, C1+3 지킴 103·놓침 17, C1+1+2 지킴 100·놓침 20.
+- 시작 실패가 있는 2 set을 빼고 118 set을 판정했다.
+
+### 결과: H1 지지, H2 미충족, H3 지지 안 됨 → 이 워크로드에서는 RF를 주 방법으로 주장할 수 없음
+- **H1(지지):** CHASER 배치의 마감 준수를 맞히는 AUC가 RF 0.981, D 0.901. 차이 +0.081(95% +0.031~+0.136), Holm p 0.002. 보고만 하는 RF − (D + M)은 +0.008(95% −0.007~+0.025, D + M 0.973).
+- **H2(미충족):** RF가 받아들인 112 set 중 잘못 수락 16(14.3%, 단측 95% 상한 20.9%). 기준(2% 이하, 상한 5% 이하)을 넘었다.
+- **H3(지지 안 됨):** RF와 D + M 규칙의 성공 set이 96개로 같았고 한쪽만 성공한 set이 없었다(McNemar p 1.0).
+  D + M 규칙은 모든 set을 받아들였고(최댓값 0.945 < 0.975) 잘못 수락이 22였다. RF는 그중 6 set을 거절했고, 6 set 모두 어느 구성도 마감을 지키지 못한 set이었다.
+- **H4(보조):** RF가 G·C를 고른 set이 없었다.
+
+| 방법 (118 set) | 받아들여 지킴 | 잘못 수락 | 잘못 거절 | 바르게 거절 |
+|---|---:|---:|---:|---:|
+| RF(동결, τ 0.8) | 96 | 16 | 0 | 6 |
+| D + M < 0.975 정적 규칙 | 96 | 22 | 0 | 0 |
+| 항상 CHASER 배치 | 96 | 22 | 0 | 0 |
+
+부하별로는 0.40·0.475·0.55의 71 set에서 CHASER 배치가 모두 마감을 지켰고 RF도 모두 받아들였다. 잘못 수락은 0.625(23 set 중 6)와 0.70(24 set 중 10)에서만 나왔다.
+
+**기술 보고(사전 등록, `kernel_report.py`, `results/real-kernels-analysis/report.md`):**
+- task 1,875개의 CLS 중앙값 0.971(5–95%: 0.937–0.997)이고 0.5 이하는 0개였다. 그래서 친화도 묶음은 작동하지 않았고, CHASER 배치는 120 set 모두에서 U 균형 배치에 release 고려만 더한 배치였다(U 균형과 다름 120/120).
+- 메모리까지 가는 비율 p_mem 중앙값 0.008, L1 miss 요청률 중앙값 2.08회/µs(실험 44 합성 task 4.1–5.0회/µs), 작업 집합 중앙값 94.5 KiB(5–95%: 15–355 KiB).
+- 커널별 CLS 중앙값은 GEMM 0.996, ATAX·BICG 0.985, MVT·GESUMMV 0.970, Jacobi-2D 0.957, Jacobi-1D 0.938이다.
+
+**사후 진단(판정을 본 뒤, 주장에 쓰지 않음):** RF 확률 구간별 실제 마감 준수율을 실험 44와 비교했다(`report.md`의 calibration 표, `figures/kernel-calibration`).
+- 확률 0.95 이상인 90 set은 모두 지켰다.
+- 0.80–0.95 구간의 22 set은 6 set만 지켰다. 실험 44에서 같은 구간은 45 set 중 43 set이 지켰다.
+- 즉 순위(AUC)는 유지됐지만, 실제 커널에서는 0.8–0.95 구간의 확률이 실제보다 높았다. 미리 고정한 τ 0.8이 이 구간을 받아들여 잘못 수락이 생겼다. 다른 τ나 재보정의 효과는 새 자료로 확인하기 전에는 주장하지 않는다.
+
+**비용:** 결정 한 번 중앙값 0.48초, 최대 0.68초. 준비 단계의 HARA 분석(`kernel_yarda`)은 set당 중앙값 1.76초(최대 2.33초), task당 0.11초였다(실행 뒤 같은 입력으로 다시 재어 집계, 결과는 120 set 모두 실행 때와 같음).
+
 ### 결과 파일
-`results/kernel-calibration/`, `results/real-kernels/`, `results/real-kernels-analysis/`(실행 후 작성).
+- `results/kernel-calibration/`: 실행시간 보정(`kernel-model.json`, `task-times.json`, `measured.json`)
+- `results/real-kernels/`: `decisions.json`·`decisions.sha256`, `results.jsonl`, `isolated-u.json`, `per-set.jsonl.gz`(set별 `design.json`)
+- `results/real-kernels-analysis/`: 판정 `confirm.json/md`, 기술 보고 `report.json/md`, 그림 `figures/kernel-*`(`figures/kernel_bars.py`)
 
 ## 정리: 논문 실험만 남기기 (2026-10-08 KST)
 

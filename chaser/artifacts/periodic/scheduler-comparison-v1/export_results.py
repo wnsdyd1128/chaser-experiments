@@ -8,8 +8,8 @@ Rebuildable outputs (prepared ELFs, YARDA events, raw run directories) stay in
     files; their SHA-256 under "snapshot" in MANIFEST.json, as in protocol.json)
   - calibration tables and fitted models
   - figures/*.png and *.csv
-  - per-set.jsonl.gz: every configuration.json, cls.json, locality.json and
-    summary.json outside prepared/ builds, one {"path", "content"} line each
+  - per-set.jsonl.gz: every configuration.json, cls.json, locality.json,
+    summary.json and design.json outside prepared/ builds, one {"path", "content"} line each
   - MANIFEST.json: SHA-256 of every exported file
 results/environment.json records the simulator, toolchain and analyzer builds.
 Usage: python3 export_results.py <study> [<study> ...]   (names: see STUDIES)
@@ -48,13 +48,15 @@ STUDIES = {
     'confirm-small': 'confirm-small-v1',
     'confirm-big': 'confirm-big-v1',
     'confirm-mem': 'confirm-mem-v1',
+    # Experiment 45 (pre-registered): the frozen pre-run check on real-kernel task sets (policy-mix/kernel_run.py).
+    'real-kernels': 'real-kernels-v1',
 }
 # The development and exploratory studies were removed from results/ and .cache on 2026-10-07 (EXPERIMENTS.md);
 # results/rf-model/training-rows.jsonl.gz keeps the RF's development rows.
-TOP_LEVEL = ('.json', '.jsonl', '.md')
+TOP_LEVEL = ('.json', '.jsonl', '.md', '.sha256')
 CALIBRATION = ('calibration.json', 'sweeps.json', 'sweep-cost.json', 'model.json', 'measured.json',
                'extend.json', 'model-before-extend.json')
-PER_SET = ('configuration.json', 'cls.json', 'locality.json', 'summary.json')
+PER_SET = ('configuration.json', 'cls.json', 'locality.json', 'summary.json', 'design.json')
 TOOLS = {
     'laysim': Path('/opt/laysim-gr740/laysim-gr740-cli'),
     'sparc-rtems6-gcc': Path('/opt/rtems/6/bin/sparc-rtems6-gcc'),
@@ -96,9 +98,9 @@ def environment() -> dict:
 
 def export(name: str) -> None:
     source = CACHE / STUDIES[name]
-    # A study output has protocol.json; the L2 probe writes probe.json instead.
-    if not any((source / marker).exists() for marker in ('protocol.json', 'probe.json')):
-        raise SystemExit(f'{name}: {source} has no protocol.json or probe.json')
+    # A study output has protocol.json; the L2 probe writes probe.json and kernel_run decisions.json instead.
+    if not any((source / marker).exists() for marker in ('protocol.json', 'probe.json', 'decisions.json')):
+        raise SystemExit(f'{name}: {source} has no protocol.json, probe.json or decisions.json')
     target = RESULTS / name
     if target.exists():
         shutil.rmtree(target)
@@ -110,8 +112,8 @@ def export(name: str) -> None:
         destination = target / path.relative_to(source)
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(path, destination)
-    snapshot = write_snapshot([p for p in source.iterdir() if p.is_file() and p.suffix == '.py'],
-                              target / 'snapshot.tar.gz')
+    scripts = [p for p in source.iterdir() if p.is_file() and p.suffix == '.py']
+    snapshot = write_snapshot(scripts, target / 'snapshot.tar.gz') if scripts else {}
     per_set = sorted(p for p in source.rglob('*.json') if p.name in PER_SET
                      and 'prepared' not in p.relative_to(source).parts)
     with gzip.open(target / 'per-set.jsonl.gz', 'wt') as stream:

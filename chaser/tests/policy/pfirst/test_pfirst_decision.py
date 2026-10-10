@@ -74,3 +74,14 @@ def test_inputs_also_come_from_the_periodic_analysis_layout(tmp_path):
     assert t['cls'] == 0.4 and t['rate'] == pytest.approx(3000 / (0.1 * 20 * 1000)) and t['working_set_kib'] == 2.0
     with pytest.raises(inputs.MissingInput):
         inputs.load_analysis(tmp_path, [dict(task_id='k1', u=0.1, period=20)])
+
+
+def test_inputs_take_the_job_wrapper_entry_when_the_export_also_lists_its_helpers(tmp_path):
+    (tmp_path / 'analysis/p/k0').mkdir(parents=True)
+    (tmp_path / 'analysis/locality.json').write_text(json.dumps(dict(cases=dict(k0=dict(cls={'0.5': 0.4})))))
+    entry = lambda name, misses: dict(task_id=name, l1_first_hit_ratio=0.4, all_cache_miss_ratio=0.1,
+                                      l1=dict(misses=misses, unique_lines=64))
+    (tmp_path / 'analysis/p/k0/hierarchy.json').write_text(json.dumps(dict(tasks=[
+        entry('kernel_k0', 100), entry('task_job_k0', 3000)])))
+    t = inputs.load_analysis(tmp_path, [dict(task_id='k0', u=0.1, period=20)])[0]
+    assert t['rate'] == pytest.approx(3000 / (0.1 * 20 * 1000))
