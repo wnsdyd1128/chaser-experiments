@@ -158,8 +158,7 @@ bars = (('planned_group', 'Planned U, cores with grouped low-CLS tasks', LIGHT_V
         ('planned_other', 'Planned U, other cores', LIGHT_BLUE, '/', BLUE),
         ('effective_group', 'Effective U, cores with grouped low-CLS tasks', VERMILLION, '', 'black'),
         ('effective_other', 'Effective U, other cores', BLUE, '', 'black'))
-placements = (('cgb', 'Partitioned (balanced CLS grouping)'),
-              ('ra-cgb', 'Partitioned (release-aware within\nbalanced CLS grouping)'))
+placements = (('cgb', 'CGB'), ('ra-cgb', 'RA-CGB'))
 fig, axes = plt.subplots(2, 1, figsize=(WIDTH, 5.4), sharey=True)
 table, width = [], 0.2
 for ax, (cell, title) in zip(axes, (('cv00-low50', 'Period CV 0'), ('cv20-low50', 'Period CV 0.2'))):
@@ -188,7 +187,7 @@ kinds = (('l2_met', 'Low-CLS tasks hit the shared L2', BLUE, ''),
          ('mem_met', 'Low-CLS tasks go to memory (matched CLS within 0.005 and target U)', VERMILLION, '/'))
 fig, axes = plt.subplots(1, 2, figsize=(WIDTH, 3.0), sharey=True)
 table, width = [], 0.38
-for ax, (placement, title) in zip(axes, (('wfd', 'Partitioned (U-balanced, WFD)'), ('cgb', 'Partitioned (balanced CLS grouping)'))):
+for ax, (placement, title) in zip(axes, (('wfd', 'WFD'), ('cgb', 'CGB'))):
     keys = sorted((k for k in cost['by_load'] if k.startswith(placement + ' ')), key=lambda k: float(k.split()[1]))
     for i, k in enumerate(keys):
         entry = cost['by_load'][k]
@@ -213,7 +212,7 @@ classes = (('memory', 'Low-CLS tasks'),
            ('other-without-memory', 'Tasks on a core\nwithout low-CLS tasks'))
 fig, axes = plt.subplots(2, 1, figsize=(WIDTH, 5.0), sharey=True)
 table, width = [], 0.38
-for ax, (placement, title) in zip(axes, (('wfd', 'Partitioned (U-balanced, WFD)'), ('cgb', 'Partitioned (balanced CLS grouping)'))):
+for ax, (placement, title) in zip(axes, (('wfd', 'WFD'), ('cgb', 'CGB'))):
     for i, (cls, _) in enumerate(classes):
         for j, (cell, color, hatch) in enumerate((('l2-low25', BLUE, ''), ('mem-low25', VERMILLION, '/'))):
             w = cost['who_late'][f'{cell} {placement}'][cls]
