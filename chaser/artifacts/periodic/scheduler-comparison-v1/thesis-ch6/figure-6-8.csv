@@ -1,0 +1,49 @@
+panel,method,outcome,sets
+All types (357 sets),rf,success,191
+All types (357 sets),rf,false_accept,2
+All types (357 sets),rf,false_reject,69
+All types (357 sets),rf,true_reject,95
+All types (357 sets),static,success,157
+All types (357 sets),static,false_accept,5
+All types (357 sets),static,false_reject,100
+All types (357 sets),static,true_reject,95
+All types (357 sets),always,success,218
+All types (357 sets),always,false_accept,139
+All types (357 sets),always,false_reject,0
+All types (357 sets),always,true_reject,0
+32 KiB type (120 sets),rf,success,59
+32 KiB type (120 sets),rf,false_accept,0
+32 KiB type (120 sets),rf,false_reject,11
+32 KiB type (120 sets),rf,true_reject,50
+32 KiB type (120 sets),static,success,39
+32 KiB type (120 sets),static,false_accept,0
+32 KiB type (120 sets),static,false_reject,31
+32 KiB type (120 sets),static,true_reject,50
+32 KiB type (120 sets),always,success,65
+32 KiB type (120 sets),always,false_accept,55
+32 KiB type (120 sets),always,false_reject,0
+32 KiB type (120 sets),always,true_reject,0
+768 KiB type (119 sets),rf,success,63
+768 KiB type (119 sets),rf,false_accept,1
+768 KiB type (119 sets),rf,false_reject,29
+768 KiB type (119 sets),rf,true_reject,26
+768 KiB type (119 sets),static,success,49
+768 KiB type (119 sets),static,false_accept,1
+768 KiB type (119 sets),static,false_reject,43
+768 KiB type (119 sets),static,true_reject,26
+768 KiB type (119 sets),always,success,73
+768 KiB type (119 sets),always,false_accept,46
+768 KiB type (119 sets),always,false_reject,0
+768 KiB type (119 sets),always,true_reject,0
+Memory-bound type (118 sets),rf,success,69
+Memory-bound type (118 sets),rf,false_accept,1
+Memory-bound type (118 sets),rf,false_reject,29
+Memory-bound type (118 sets),rf,true_reject,19
+Memory-bound type (118 sets),static,success,69
+Memory-bound type (118 sets),static,false_accept,4
+Memory-bound type (118 sets),static,false_reject,26
+Memory-bound type (118 sets),static,true_reject,19
+Memory-bound type (118 sets),always,success,80
+Memory-bound type (118 sets),always,false_accept,38
+Memory-bound type (118 sets),always,false_reject,0
+Memory-bound type (118 sets),always,true_reject,0
