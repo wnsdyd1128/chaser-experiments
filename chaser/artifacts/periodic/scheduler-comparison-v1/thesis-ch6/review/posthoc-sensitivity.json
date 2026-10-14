@@ -1,0 +1,241 @@
+{
+  "analysis_status": "post-hoc sensitivity; not preregistered",
+  "resampling": "paired base-set bootstrap; all valid loads retained; percentile linear quantiles",
+  "synthetic_pooled": {
+    "cases": 357,
+    "base_groups": 72,
+    "positives": 218,
+    "strata": [
+      72
+    ],
+    "seed": 20264400,
+    "replicates": 2000,
+    "auc": {
+      "rf": 0.9822948980265329,
+      "d": 0.7463533760147845,
+      "dm": 0.9599036367236486
+    },
+    "rf_minus_d": {
+      "difference": 0.23594152201174845,
+      "ci95": [
+        0.1948702815211333,
+        0.27504502400003894
+      ]
+    },
+    "rf_minus_dm": {
+      "difference": 0.02239126130288427,
+      "ci95": [
+        0.01048812555913876,
+        0.03491200199245434
+      ]
+    },
+    "nonpositive_replicates": [
+      0,
+      0
+    ]
+  },
+  "synthetic_stratified": {
+    "cases": 357,
+    "base_groups": 72,
+    "positives": 218,
+    "strata": [
+      24,
+      24,
+      24
+    ],
+    "seed": 20264400,
+    "replicates": 2000,
+    "auc": {
+      "rf": 0.9822948980265329,
+      "d": 0.7463533760147845,
+      "dm": 0.9599036367236486
+    },
+    "rf_minus_d": {
+      "difference": 0.23594152201174845,
+      "ci95": [
+        0.2006061951188017,
+        0.27435076461674995
+      ]
+    },
+    "rf_minus_dm": {
+      "difference": 0.02239126130288427,
+      "ci95": [
+        0.010546121276083698,
+        0.03551883049502535
+      ]
+    },
+    "nonpositive_replicates": [
+      0,
+      0
+    ]
+  },
+  "kernels": {
+    "cases": 118,
+    "base_groups": 24,
+    "positives": 96,
+    "strata": [
+      24
+    ],
+    "seed": 20264400,
+    "replicates": 2000,
+    "auc": {
+      "rf": 0.9812973484848485,
+      "d": 0.9005681818181818,
+      "dm": 0.9734848484848485
+    },
+    "rf_minus_d": {
+      "difference": 0.08072916666666674,
+      "ci95": [
+        0.03340318270165208,
+        0.13483987101334038
+      ]
+    },
+    "rf_minus_dm": {
+      "difference": 0.0078125,
+      "ci95": [
+        -0.007995982720411318,
+        0.02320738000101798
+      ]
+    },
+    "nonpositive_replicates": [
+      0,
+      299
+    ]
+  },
+  "placement": {
+    "time_metrics": [
+      {
+        "type": "small",
+        "reference": "ra",
+        "metric": "tet_ns",
+        "pairs": 122,
+        "base_groups": 18,
+        "median_change": -0.05669617966209095,
+        "decreased_groups": 16,
+        "increased_groups": 2
+      },
+      {
+        "type": "small",
+        "reference": "ra",
+        "metric": "worst_memory_inflation",
+        "pairs": 122,
+        "base_groups": 18,
+        "median_change": -0.161604362567212,
+        "decreased_groups": 17,
+        "increased_groups": 1
+      },
+      {
+        "type": "small",
+        "reference": "wfd",
+        "metric": "tet_ns",
+        "pairs": 117,
+        "base_groups": 18,
+        "median_change": -0.07772953953882866,
+        "decreased_groups": 17,
+        "increased_groups": 1
+      },
+      {
+        "type": "small",
+        "reference": "wfd",
+        "metric": "worst_memory_inflation",
+        "pairs": 117,
+        "base_groups": 18,
+        "median_change": -0.14164050080979695,
+        "decreased_groups": 18,
+        "increased_groups": 0
+      },
+      {
+        "type": "big",
+        "reference": "ra",
+        "metric": "tet_ns",
+        "pairs": 71,
+        "base_groups": 15,
+        "median_change": -0.08997583569617706,
+        "decreased_groups": 15,
+        "increased_groups": 0
+      },
+      {
+        "type": "big",
+        "reference": "ra",
+        "metric": "worst_memory_inflation",
+        "pairs": 71,
+        "base_groups": 15,
+        "median_change": -0.25022268604918696,
+        "decreased_groups": 14,
+        "increased_groups": 1
+      },
+      {
+        "type": "big",
+        "reference": "wfd",
+        "metric": "tet_ns",
+        "pairs": 70,
+        "base_groups": 15,
+        "median_change": -0.07580270036224324,
+        "decreased_groups": 14,
+        "increased_groups": 1
+      },
+      {
+        "type": "big",
+        "reference": "wfd",
+        "metric": "worst_memory_inflation",
+        "pairs": 70,
+        "base_groups": 15,
+        "median_change": -0.16128048698359465,
+        "decreased_groups": 14,
+        "increased_groups": 1
+      }
+    ],
+    "tat_equivalence": [
+      {
+        "type": "small",
+        "pairs": 122,
+        "base_groups": 18,
+        "median_ratio": 0.9968120042869221,
+        "p_upper": 0.000164031982421875,
+        "p_lower": 3.814697265625e-05,
+        "p": 0.000164031982421875,
+        "holm_p": 0.00032806396484375
+      },
+      {
+        "type": "big",
+        "pairs": 71,
+        "base_groups": 15,
+        "median_ratio": 1.043396538937042,
+        "p_upper": 0.976043701171875,
+        "p_lower": 3.0517578125e-05,
+        "p": 0.976043701171875,
+        "holm_p": 0.976043701171875
+      }
+    ]
+  },
+  "success_sign": {
+    "positive": 32,
+    "negative": 1,
+    "ties": 39,
+    "net_cases": 34,
+    "p": 7.916241884231567e-09
+  },
+  "sources_sha256": {
+    "results/confirm-big/decisions.json": "891f67bc320a477dfba30dac251d57f1cb62bf8c7ae76af3f85731af078980b7",
+    "results/confirm-big/protocol.json": "a52cd0aa8ef29a569f20f85548128fa65468d12baca4b441b09636d95169cd0e",
+    "results/confirm-big/results.jsonl": "a41c09a881756bd3553b3f3ad7e5c089c8d375fca5b48aa74bbbccfc3a8e3b8b",
+    "results/confirm-mem/decisions.json": "18c7c93bf747455bc1236413c70dde98b9d17cf79c15b20936f6ccfc9df703a3",
+    "results/confirm-mem/protocol.json": "90e3d7c9a2a9b0a9b97b6726271b48b55be76e25edbfb9eb19325a4acd1bbf9b",
+    "results/confirm-mem/results.jsonl": "b0cd6213abf74a1076298ff7f36d6abd519d126cab2118a5c441002e4fd19429",
+    "results/confirm-small/decisions.json": "7ae6aeee7f8a5365be82429bf1d2f1cbe2091ef24c123044fd3676ddb0a90987",
+    "results/confirm-small/protocol.json": "0d84cff9dd96d53d50b1e8ce989a0794395d8e7757fbd8163851f05508ea8938",
+    "results/confirm-small/results.jsonl": "e433d17b8615a28d3cc761e06ce6f1a6542526de4539894251668f71640aa8a9",
+    "results/deadline-big/results.jsonl": "caf75e97f2e602f8be9192e9d125634551cda20d09888e522769f6fc57b1ff95",
+    "results/deadline-big/rt-metrics.json": "9a71265a95c929dd03dd904da9b5efb9b937a14c01d5873da83cd5a21ac50950",
+    "results/deadline-small/results.jsonl": "1e0192b8154ec0b3821dde56d4b2f0c80075b4f806f6dffa5ddfeb683ec50152",
+    "results/deadline-small/rt-metrics.json": "16b0b10400205a475cfc1f2e7caa8fdd310abe51ce2c23adac105c4e751c3083",
+    "results/real-kernels/decisions.json": "9e5bab8210f18e7df56e334b223100a43ad274610a7612bc0edc1ce6e4f8d9e8",
+    "results/real-kernels/per-set.jsonl.gz": "29b818c61fd45ec13d85bafc952f41e1ed4160a7540f2e6917f5699052e468e7",
+    "results/real-kernels/results.jsonl": "ced40d2fe4cf602b3a6c8366ca8836fd9f6185e0d1f5c0691b500c03cb78e5fe"
+  },
+  "implementation_sha256": "e3855bfd14304916606bb5f0a3df239917446b259ef75acec3a91689c3697773",
+  "versions": {
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  }
+}
