@@ -9,7 +9,8 @@ from chaser.periodic.arrays import fields, integer, normalize_bindings
 from chaser.periodic.workload import (ArrayRegistry, GemmParameters, KernelMetrics,
     MemoryFootprint, NoParameters, ReadParameters, ReferenceEvent, TaskSpec)
 from chaser.periodic.kernels.templates import render_template
-from chaser.periodic.kernels import atax, bicg, doitgen, gemm, gesummv, jacobi1d, jacobi2d, mvt, reads, syrk, trmm, twomm
+from chaser.periodic.kernels import (atax, bicg, cornerturn, doitgen, gemm, gesummv, jacobi1d, jacobi2d, mvt, reads,
+    syrk, transpose, trmm, twomm)
 
 
 class KernelImplementation(Protocol):
@@ -69,6 +70,8 @@ KERNELS = {
     'polybench-syrk-u32': Kernel(syrk, ('A', 'C'), write_roles=('C',)),
     'polybench-trmm-u32': Kernel(trmm, ('A', 'B'), write_roles=('B',)),
     'polybench-doitgen-u32': Kernel(doitgen, ('A', 'C4', 'sum'), write_roles=('A', 'sum')),
+    'transpose-u32': Kernel(transpose, ('A', 'B'), write_roles=('B',)),
+    'cornerturn-u32': Kernel(cornerturn, ('Ar', 'Ai', 'Br', 'Bi'), write_roles=('Br', 'Bi')),
 }
 
 

@@ -1,0 +1,23 @@
+/* Naive corner turn of planar complex data: rows of Ar and Ai are read, columns of Br and Bi are written.
+ * See rtems/periodic/experiment-guide/INPUTS.md#low-locality-kernels-2026-10. */
+INLINE static void kernel_${task_id}(void) {
+    for (int i = 0; i < ${rows}; ++i)
+        for (int j = 0; j < ${cols}; ++j) {
+            uint32_t re = ${Ar}[${Ar_offset} + i * ${Ar_row} + j * ${Ar_col}];
+            uint32_t im = ${Ai}[${Ai_offset} + i * ${Ai_row} + j * ${Ai_col}];
+            ${Br}[${Br_offset} + j * ${Br_row} + i * ${Br_col}] = re;
+            ${Bi}[${Bi_offset} + j * ${Bi_row} + i * ${Bi_col}] = im;
+        }
+}
+/** @brief Turn Ar and Ai into Br and Bi on every sweep.
+ * @return Word-wise FNV-1a hash of the first columns of Br then Bi, computed inside the measured job. */
+ANALYZE uint32_t task_job_${task_id}(void) {
+    for (int t = 0; t < ${sweeps}; ++t)
+        kernel_${task_id}();
+    uint32_t h = 2166136261U;
+    for (int j = 0; j < ${cols}; ++j)
+        h = (h ^ ${Br}[${Br_offset} + j * ${Br_row}]) * 16777619U;
+    for (int j = 0; j < ${cols}; ++j)
+        h = (h ^ ${Bi}[${Bi_offset} + j * ${Bi_row}]) * 16777619U;
+    return h;
+}

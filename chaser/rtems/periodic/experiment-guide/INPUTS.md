@@ -222,6 +222,22 @@ ATAX와 같은 규칙으로 PolyBench/C 4.2.1의 커널 9종을 uint32로 재구
 - footprint
 - 실제 RTEMS 실행 파일에서 YARDA가 본 접근 흐름
 
+<a id="low-locality-kernels-2026-10"></a>
+
+#### 저지역성 전치 커널 (2026-10)
+
+`transpose-u32`는 R×n 입력 `A`를 n×R 출력 `B`로 전치한다.
+`cornerturn-u32`는 실수부·허수부를 별도 uint32 배열로 두고,
+R×n 입력 `Ar`, `Ai`를 n×R 출력 `Br`, `Bi`로 같은 반복문에서 전치한다.
+두 커널은 입력을 행 방향으로 읽고 출력을 열 방향으로 쓴다.
+각 sweep이 출력 전체를 덮어쓰므로 job마다 같은 checksum을 낸다.
+
+job 안 checksum은 출력 배열마다 첫 열만 FNV-1a로 해시한다.
+출력 전체를 해시하는 행 방향 접근이 전치의 접근 패턴을 바꾸지 않도록 한 계약이다.
+전체 출력과 입력·padding 보존은 `tests/periodic/multi_array/test_polybench_kernels.py`의
+독립 계산으로 확인하며, checksum 접근도 reference stream에 포함한다.
+R=256과 커널별 n 범위는 실험 47의 조건이며 공용 커널의 형상 제한은 아니다.
+
 ### 2.3. 다중 배열 smoke 실행
 
 현재 workspace root에서 실행하고, 이미 존재하지 않는 output 이름을 선택한다.

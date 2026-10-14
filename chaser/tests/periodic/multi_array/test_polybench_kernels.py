@@ -1,5 +1,5 @@
-"""uint32 PolyBench/C adaptations (BICG, MVT, GESUMMV, JACOBI-1D, JACOBI-2D, 2MM, SYRK, TRMM, DOITGEN): counts,
-native oracles, real streams."""
+"""uint32 PolyBench/C adaptations (BICG, MVT, GESUMMV, JACOBI-1D, JACOBI-2D, 2MM, SYRK, TRMM, DOITGEN) and the
+transpose and planar corner turn kernels: counts, native oracles, real streams."""
 
 import ctypes
 import json
@@ -26,10 +26,14 @@ SHAPES = {
     'polybench-syrk-u32': (dict(A=[4, 4], C=[4, 4]), ('C',)),
     'polybench-trmm-u32': (dict(A=[4, 4], B=[4, 4]), ('B',)),
     'polybench-doitgen-u32': (dict(A=[9, 3], C4=[3, 3], sum=[3]), ('A',)),
+    'transpose-u32': (dict(A=[3, 5], B=[5, 3]), ('B',)),
+    'cornerturn-u32': (dict(Ar=[3, 5], Ai=[3, 5], Br=[5, 3], Bi=[5, 3]), ('Br', 'Bi')),
 }
 SCRATCH = ('tmp', 'sum')  # written but not hashed
 # In-place outputs each job first resets to the array's initial value, so every job computes the same result.
 RESET = {'polybench-2mm-u32': 'D', 'polybench-syrk-u32': 'C', 'polybench-trmm-u32': 'B', 'polybench-doitgen-u32': 'A'}
+# The transposes hash only the first column of each output inside the job (the whole output is checked against the oracle).
+FIRST_COLUMN = ('transpose-u32', 'cornerturn-u32')
 
 
 def config(patterns=tuple(SHAPES), sweeps=2, initial=None, optimization='O0'):
@@ -67,6 +71,10 @@ def view(lib, plan, task, role):
 
 def reference(pattern, v, steps):
     """Independent Python oracle: live-out values per role after steps time steps (sweeps)."""
+    if pattern == 'transpose-u32':
+        return dict(B=[list(col) for col in zip(*v['A'])])
+    if pattern == 'cornerturn-u32':
+        return dict(Br=[list(col) for col in zip(*v['Ar'])], Bi=[list(col) for col in zip(*v['Ai'])])
     if pattern == 'polybench-2mm-u32':
         A, B, C, D, n = v['A'], v['B'], v['C'], [list(r) for r in v['D']], len(v['A'])
         tmp = [[sum(3 * A[i][k] * B[k][j] for k in range(n)) % M32 for j in range(n)] for i in range(n)]
@@ -180,7 +188,7 @@ def test_nonuniform_inputs_match_the_independent_oracle(pattern, optimization, t
         for role in outs:
             want = expected[role] if len(shapes[role]) == 1 else sum(expected[role], [])
             assert list(view(lib, plan, task, role))[:len(want)] == want, (role, call)
-            hashed += want
+            hashed += [row[0] for row in expected[role]] if pattern in FIRST_COLUMN else want
         assert result == fnv(hashed), call
         if not stateful:
             for role in set(shapes) - set(outs) - set(SCRATCH):
