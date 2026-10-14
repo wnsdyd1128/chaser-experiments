@@ -10,7 +10,7 @@ Stages (EXPERIMENTS.md 47):
   full       the four builds under P for every case
   summarize  results.jsonl rows (heaviness, load, set_id; p, p_cgb, p_ra, p_racgb with state, tet_ns, tat_ns)
 Run with PYTHONPATH=<workspace>:policy-mix:period-distribution.
-Usage: python3 lowloc_run.py <stage> --output <dir> [--workers N]
+Usage: python3 lowloc_run.py <stage> --output <dir> [--design NAME] [--workers N]   (lowloc_set.DESIGNS)
 """
 
 import argparse
@@ -158,7 +158,9 @@ def main():
     parser.add_argument('stage', choices=('prepare', 'isolated', 'full', 'summarize'))
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--workers', type=int, default=design.MAX_WORKERS)
+    parser.add_argument('--design', default='lowloc-kernels', choices=sorted(ls.DESIGNS))
     args = parser.parse_args()
+    ls.select(args.design)
     output = args.output.resolve()
     if args.stage == 'prepare':
         prepare_all(output, min(args.workers, 32))

@@ -33,6 +33,13 @@ DESIGNS = {
     # Experiment 47 builds its sets in lowloc_set; this entry only gives kernel_calibrate the kernels to fit.
     'lowloc-kernels': dict(kernels=kt.LOW_LOCALITY, seed_base=20264701, sets=24, heaviness='lowloc',
                            calibration='kernel-calibration-lowloc'),
+    # The capped lowloc_set designs reuse experiments 45 and 47's models; kernel_calibrate runs only their tasks stage.
+    'lowloc-small': dict(kernels=kt.LOW_LOCALITY, seed_base=20264801, sets=24, heaviness='lowloc',
+                         calibration='kernel-calibration-lowloc'),
+    'lowloc-small-pilot': dict(kernels=kt.LOW_LOCALITY, seed_base=20264881, sets=3, heaviness='lowloc',
+                               calibration='kernel-calibration-lowloc'),
+    'lowloc-small-pilot2': dict(kernels=kt.LOW_LOCALITY, seed_base=20264882, sets=3, heaviness='lowloc',
+                                calibration='kernel-calibration-lowloc'),
 }
 LOADS = (0.40, 0.475, 0.55, 0.625, 0.70)
 TASK_RANGE = (12, 20)

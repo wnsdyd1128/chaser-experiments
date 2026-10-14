@@ -12,7 +12,8 @@ Stages:
   fit       write <output>/kernel-model.json with the validation errors (reported, not a gate)
   tasks     run every (kernel, sweeps, n) the design's sets need (kernel_set.needed), write <output>/task-times.json
 --design selects kernel_set's design: real-kernels (experiment 45, default), heldout-kernels (experiment 46) or
-lowloc-kernels (experiment 47: measure fits the low-locality kernels; tasks measures every size lowloc_set needs).
+lowloc-kernels (experiment 47: measure fits the low-locality kernels; tasks measures every size lowloc_set needs),
+or a capped lowloc_set design (tasks only).
 Usage: python3 kernel_calibrate.py measure|fit|tasks --output <dir> [--design NAME] [--workers N]
 Run with PYTHONPATH=<workspace>:policy-mix:period-distribution (the main chaser package).
 """
@@ -145,8 +146,9 @@ def measure(output: Path, workers: int) -> None:
 
 def measure_tasks(output: Path, workers: int) -> None:
     import kernel_set
-    if kernel_set.DESIGN == 'lowloc-kernels':
+    if kernel_set.DESIGN.startswith('lowloc'):
         import lowloc_set
+        lowloc_set.select(kernel_set.DESIGN)
         needed = lowloc_set.needed()
     else:
         needed = kernel_set.needed()

@@ -54,6 +54,8 @@ STUDIES = {
     'heldout-kernels': 'heldout-kernels-v1',
     # Experiment 47 (pre-registered): CHASER's placement on real low-locality kernels (policy-mix/lowloc_run.py).
     'lowloc-kernels': 'lowloc-kernels-v1',
+    # Experiment 48 (pre-registered): experiment 47 with every task's data capped (lowloc_run.py --design lowloc-small).
+    'lowloc-small': 'lowloc-small-v1',
 }
 # The development and exploratory studies were removed from results/ and .cache on 2026-10-07 (EXPERIMENTS.md);
 # results/rf-model/training-rows.jsonl.gz keeps the RF's development rows.

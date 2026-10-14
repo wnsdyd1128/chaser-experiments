@@ -10,7 +10,7 @@ deadline_analysis' functions (alpha 0.05, Holm within each family):
   V6  TET, RA-CGB against WFD and against RA (log ratio over the pairs where both met)
   secondary (one Holm family): V2 and V3 per period-CV cell, and CGB against WFD for V2, V3 and V6
 A hypothesis is supported when every test of its family is significant in the stated direction (V4: equivalent).
-Usage: python3 lowloc_analysis.py --output <lowloc-kernels output> --dest <dir>
+Usage: python3 lowloc_analysis.py --output <lowloc-kernels output> --dest <dir> [--title TEXT]
 Run with PYTHONPATH=<c3 code copy>:policy-mix:period-distribution (the analysis reads JSON only).
 """
 
@@ -72,8 +72,8 @@ def fmt(v, spec):
     return '-' if v is None else format(v, spec)
 
 
-def markdown(result) -> str:
-    lines = ['# Experiment 47: CHASER placement on real low-locality kernels (pre-registered)', '',
+def markdown(result, title='Experiment 47: CHASER placement on real low-locality kernels (pre-registered)') -> str:
+    lines = [f'# {title}', '',
              f"{result['cases']} cases; candidate {result['candidate']} against {', '.join(result['references'])}; alpha {result['alpha']}", '',
              '## V2: violated jobs (ratio of released jobs)', '',
              '| reference | pairs | violating | fewer ra-cgb / ref | median difference | only ra-cgb / only ref met | McNemar p | Holm p | significant |',
@@ -108,11 +108,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--dest', type=Path, required=True)
+    parser.add_argument('--title', default=markdown.__defaults__[0])
     args = parser.parse_args()
     result = judge(load(args.output.resolve()))
     args.dest.mkdir(parents=True, exist_ok=True)
     (args.dest / 'lowloc.json').write_text(json.dumps(result, indent=1) + '\n')
-    (args.dest / 'lowloc.md').write_text(markdown(result))
+    (args.dest / 'lowloc.md').write_text(markdown(result, args.title))
     print('wrote', args.dest / 'lowloc.md')
 
 

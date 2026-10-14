@@ -1,13 +1,15 @@
-"""Thesis-style figures for experiment 47 (real low-locality kernels: naive transpose, planar complex corner turn).
+"""Thesis-style figures for experiments 47 and 48 (real low-locality kernels: naive transpose, planar complex corner
+turn; 48 caps every task's data).
 
 Measured values, abbreviated placement names (WFD, RA, CGB, RA-CGB), no in-figure title; 16 cm text width.
 Each figure has one panel per period CV (0 and 0.2) and a bar group per per-core load:
-  lowloc-met         task sets meeting every deadline (a bar reads met/measured when a run failed to start)
+  lowloc-met         task sets meeting every deadline (a bar reads met above /measured when a run failed to start)
   lowloc-violated    violated jobs (missed / released over the measured window) of all measured runs, in %
-  lowloc-corun-low   low-CLS tasks: per task, the median CPU time of its completed jobs (warm-up included) over its
-                     planned budget; bars are the median over the tasks of all sets, whiskers IQR (post hoc: no set met
-                     every deadline under all four placements, so the pre-registered worst inflation and TET over such
-                     sets have no pairs and are not drawn)
+  lowloc-inflation   worst low-CLS job CPU / planned budget (V3), median over the sets where all four met, whiskers IQR
+  lowloc-tet         TET (V6, CPU time of every measured job), the same sets
+                     (these two are drawn only when some set met every deadline under all four placements: none in 47)
+  lowloc-corun-low   post hoc: low-CLS tasks of all measured runs; per task, the median CPU time of its completed jobs
+                     (warm-up included) over its planned budget; bars are the median over the tasks, whiskers IQR
   lowloc-corun-high  the same for the high-CLS tasks
 Usage: python3 lowloc_bars.py <lowloc-kernels output> <dest dir>
 Run with PYTHONPATH=<c3 code copy>:policy-mix:period-distribution (as lowloc_analysis.py).
@@ -85,7 +87,7 @@ def met_bars(ax, group, i):
     for j, (build, _, color, hatch) in enumerate(PLACEMENTS):
         runs = [c['runs'][build] for c in group]
         met, measured = sum(da.met(r) for r in runs), sum(da.measured(r) for r in runs)
-        bar(ax, i + (j - 1.5) * BAR, met, color, hatch, f'{met}' if measured == len(runs) else f'{met}/{measured}')
+        bar(ax, i + (j - 1.5) * BAR, met, color, hatch, f'{met}' if measured == len(runs) else f'{met}\n/{measured}')
         rows.append((build, met, measured, len(runs)))
     return rows, f'{len(group)} sets'
 
@@ -99,6 +101,24 @@ def violated_bars(ax, group, i):
         bar(ax, i + (j - 1.5) * BAR, share, color, hatch, f'{share:.0f}')
         rows.append((build, missed, expected, share))
     return rows, f'{len(group)} sets'
+
+
+def median_bars(field, scale, fmt):
+    def draw(ax, group, i):
+        both = [c for c in group if all(da.met(c['runs'][b]) for b, *_ in PLACEMENTS)]
+        rows = []
+        for j, (build, _, color, hatch) in enumerate(PLACEMENTS):
+            if not both:
+                continue
+            q1, m, q3 = np.percentile([c['runs'][build][field] * scale for c in both], [25, 50, 75])
+            x = i + (j - 1.5) * BAR
+            bar(ax, x, m, color, hatch, '')
+            ax.errorbar(x, m, yerr=[[m - q1], [q3 - m]], fmt='none', ecolor='black', elinewidth=0.6, capsize=1.5, zorder=5)
+            ax.annotate(format(m, fmt), (x, q3), xytext=(0, 1.5), textcoords='offset points', ha='center', va='bottom',
+                        fontsize=LABEL)
+            rows.append((build, len(both), m, q1, q3))
+        return rows, f'{len(both)} sets, all met'
+    return draw
 
 
 def corun(case, build, role) -> list[float]:
@@ -118,7 +138,7 @@ def corun_bars(role):
     def draw(ax, group, i):
         rows = []
         for j, (build, _, color, hatch) in enumerate(PLACEMENTS):
-            values = [v for c in group for v in corun(c, build, role)]
+            values = [v for c in group if da.measured(c['runs'][build]) for v in corun(c, build, role)]
             q1, m, q3 = np.percentile(values, [25, 50, 75])
             x = i + (j - 1.5) * BAR
             bar(ax, x, m, color, hatch, '')
@@ -132,6 +152,10 @@ def corun_bars(role):
 
 figure('lowloc-met', 'Task sets meeting\nevery deadline', met_bars, 'cell,load,placement,sets_met,measured,sets')
 figure('lowloc-violated', 'Violated jobs (%)', violated_bars, 'cell,load,placement,missed_jobs,expected_jobs,percent')
+if any(all(da.met(c['runs'][b]) for b, *_ in PLACEMENTS) for c in cases):
+    figure('lowloc-inflation', 'Worst low-CLS job CPU\n/ planned budget', median_bars('worst_memory_inflation', 1, '.2f'),
+           'cell,load,placement,sets,median,q1,q3')
+    figure('lowloc-tet', 'TET (s)', median_bars('tet_ns', 1e-9, '.2f'), 'cell,load,placement,sets,median_s,q1_s,q3_s')
 for role, name in (('low', 'Low-CLS'), ('high', 'High-CLS')):
     figure(f'lowloc-corun-{role}', f'{name} job CPU\n/ planned budget', corun_bars(role),
            'cell,load,placement,tasks,median,q1,q3')
