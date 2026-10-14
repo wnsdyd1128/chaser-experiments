@@ -40,7 +40,10 @@ def config_header(plan: dict | PolicyHeader) -> str:
              f'#define ARCHITECTURE {header.architecture}',
              f'#define CHASER_CONTRACT_ID "{header.contract_id}"',
              f'#define CHASER_PLAN_HASH "{header.plan_hash}"']
-    for key, macro in (('period_ticks', 'PERIODS'), ('job_count', 'JOB_COUNTS'), ('core', 'CORES')):
+    keys = [('period_ticks', 'PERIODS'), ('job_count', 'JOB_COUNTS'), ('core', 'CORES')]
+    if any(t.suspend_ticks for t in tasks):  # only then, so a plan without suspension keeps its header
+        keys.append(('suspend_ticks', 'SUSPENDS'))
+    for key, macro in keys:
         lines.append('#define CHASER_' + macro + ' {' + ', '.join(str(getattr(t, key)) for t in tasks) + '}')
     return '\n'.join(lines) + '\n'
 

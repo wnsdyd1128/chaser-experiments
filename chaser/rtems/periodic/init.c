@@ -14,6 +14,18 @@ volatile uint32_t chaser_empty = 0x43454d50;
 static const unsigned periods[TASK_COUNT] = CHASER_PERIODS;
 static const unsigned job_counts[TASK_COUNT] = CHASER_JOB_COUNTS;
 static const unsigned cores[TASK_COUNT] = CHASER_CORES;
+#ifdef CHASER_SUSPENDS
+/* Self-suspending jobs (task field suspend_ticks): the first segment (workload_jobs), then
+ * rtems_task_wake_after, then the resumed segment, all inside the measured bracket. The job
+ * reports the resumed segment's checksum; a wrong first-segment checksum is reported as a
+ * checksum error. Defined only when some task suspends, so other builds are unchanged. */
+static const unsigned suspends[TASK_COUNT] = CHASER_SUSPENDS;
+extern uint32_t (*const workload_resume_jobs[])(void);
+extern const uint32_t workload_suspend_expected[];
+#endif
+/* Restore the original numbering: require() records __LINE__, so builds without suspension
+ * keep the same code as before suspension support. */
+#line 17
 static rtems_id coordinator, start_barrier, tasks[TASK_COUNT];
 static uint64_t t0_ns;
 static uint32_t t0_tick;
@@ -109,6 +121,16 @@ static rtems_task worker(rtems_task_argument argument)
         read_status(period, &jobs[i][j].before);
         jobs[i][j].status_before_end = rtems_clock_get_uptime_nanoseconds();
         jobs[i][j].checksum = job();
+#ifdef CHASER_SUSPENDS
+        if (!chaser_empty && suspends[i]) {
+            uint32_t first = jobs[i][j].checksum;
+            require(rtems_task_wake_after(suspends[i]));
+            jobs[i][j].checksum = workload_resume_jobs[i]();
+            if (first != workload_suspend_expected[i])
+                jobs[i][j].checksum = ~workload_expected[i];
+        }
+#endif
+#line 112
         jobs[i][j].status_after_start = rtems_clock_get_uptime_nanoseconds();
         read_status(period, &jobs[i][j].after);
         jobs[i][j].completion = rtems_clock_get_uptime_nanoseconds();

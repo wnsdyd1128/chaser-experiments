@@ -1,6 +1,6 @@
 """Register explicit-array kernels with typed source and reference contracts."""
 
-from dataclasses import MISSING, dataclass, fields as dataclass_fields
+from dataclasses import MISSING, dataclass, fields as dataclass_fields, replace
 from copy import deepcopy
 from collections.abc import Iterator
 from typing import Protocol
@@ -75,6 +75,10 @@ KERNELS = {
 }
 
 
+SUSPENSION = ('suspend_ticks', 'suspend_after_sweeps')
+RESUME = 'resume_'  # the resumed segment of task t runs as task_job_resume_t
+
+
 def kernel_for(pattern: str) -> Kernel:
     """Resolve an explicitly registered pattern; JSON cannot import Python."""
     if not isinstance(pattern, str) or pattern not in KERNELS:
@@ -95,7 +99,7 @@ def normalize_task(value: dict, registry: ArrayRegistry) -> TaskSpec:
         raise ValueError('Task must be an object')
     kernel = kernel_for(value.get('pattern'))
     common = ('task_id', 'pattern', 'arrays', 'sweeps', 'core', 'period_ticks')
-    fields(value, common + kernel.parameters, common + kernel.required_parameters)
+    fields(value, common + kernel.parameters + SUSPENSION, common + kernel.required_parameters)
     parameters = {name: deepcopy(value[name]) for name in kernel.parameters if name in value}
     # None denotes an omitted, inferable GEMM dimension, not an accepted JSON value.
     if kernel.parameter_type is GemmParameters and any(v is None for v in parameters.values()):
@@ -105,9 +109,24 @@ def normalize_task(value: dict, registry: ArrayRegistry) -> TaskSpec:
                     sweeps=integer(value['sweeps'], 'sweeps', 1, 1_000_000),
                     core=value['core'], period_ticks=value['period_ticks'],
                     parameters=kernel.parameter_type(**parameters))
+    task.suspend_ticks = integer(value.get('suspend_ticks', 0), 'suspend_ticks', 0)
+    if task.suspend_ticks:
+        if 'suspend_after_sweeps' not in value:
+            raise ValueError('suspend_after_sweeps is required with suspend_ticks')
+        task.suspend_after_sweeps = integer(value['suspend_after_sweeps'], 'suspend_after_sweeps', 1, task.sweeps - 1)
+    elif 'suspend_after_sweeps' in value:
+        raise ValueError('suspend_after_sweeps requires suspend_ticks')
     task.metrics = kernel.module.validate(task, registry)
     if not isinstance(task.metrics, KernelMetrics):
         raise ValueError('Kernel validate must return KernelMetrics')
+    segments = segment_tasks(task, registry)
+    if len(segments) > 1:
+        task.metrics = KernelMetrics(
+            source_loads=sum(s.metrics.source_loads for s in segments),
+            source_stores=sum(s.metrics.source_stores for s in segments),
+            expected_checksum=segments[-1].metrics.expected_checksum,
+            checksum_kind=segments[-1].metrics.checksum_kind,
+            loop_iterations=sum(s.metrics.loop_iterations for s in segments))
     for name in ('source_loads', 'source_stores', 'expected_checksum', 'loop_iterations'):
         integer(getattr(task.metrics, name), name, 0)
     if not isinstance(task.metrics.checksum_kind, str) or not task.metrics.checksum_kind:
@@ -130,15 +149,37 @@ def normalize_task(value: dict, registry: ArrayRegistry) -> TaskSpec:
     return task
 
 
+def segment_tasks(task: TaskSpec, registry: ArrayRegistry) -> tuple[TaskSpec, ...]:
+    """The task itself, or, when it suspends, its first and resumed segments.
+
+    The first segment keeps the task ID (task_job_<id>) and runs suspend_after_sweeps
+    sweeps; the resumed one (task_job_resume_<id>) runs the remaining sweeps. Each is a
+    complete job of its own sweeps (its template's set-up and checksum included), so
+    its metrics come from the kernel's validation; the job reports the resumed
+    segment's checksum. Requires a normalized task.
+    """
+    if not task.suspend_ticks:
+        return (task,)
+    out = []
+    for task_id, sweeps in ((task.task_id, task.suspend_after_sweeps),
+                            (RESUME + task.task_id, task.sweeps - task.suspend_after_sweeps)):
+        segment = replace(task, task_id=task_id, sweeps=sweeps, parameters=deepcopy(task.parameters),
+                          metrics=None, footprint=None, suspend_ticks=0, suspend_after_sweeps=0)
+        segment.metrics = kernel_for(task.pattern).module.validate(segment, registry)
+        out.append(segment)
+    return tuple(out)
+
+
 def reference_events(task: TaskSpec, registry: ArrayRegistry) -> Iterator[ReferenceEvent]:
-    """Check each typed reference and the full-job declared load/store totals."""
+    """Check each typed reference and the full-job declared load/store totals
+    (a suspending job's stream is its first segment's, then its resumed segment's)."""
     if task.metrics is None:
         raise ValueError('Task metrics must be validated before reference events')
     kernel = kernel_for(task.pattern)
     allowed = {b.array_id for b in task.arrays.values()}
     writable = {task.arrays[r].array_id for r in kernel.write_roles}
     loads = stores = 0
-    for event in kernel.module.events(task, registry):
+    for event in (e for segment in segment_tasks(task, registry) for e in kernel.module.events(segment, registry)):
         if not isinstance(event, ReferenceEvent):
             raise ValueError('Kernel events must yield ReferenceEvent')
         name, operation = event.array_id, event.operation

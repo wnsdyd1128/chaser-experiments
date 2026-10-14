@@ -101,7 +101,8 @@ G/C도 각 architecture와 output을 바꾼다. DISPLAY 설정은
 
 현재 공용 JSON에는 임의 C 함수 삽입, FPU 연산 비율, task별 phase,
 C의 2+2 topology를 지정하는 옵션이 없다. Workload 최적화는
-`workload_optimization: "O0" | "O2"`로 지원한다. v2는 허용하지 않는 필드를
+`workload_optimization: "O0" | "O2"`로, job 중간 sleep은 `suspend_ticks`·`suspend_after_sweeps`로
+지원한다([입력 예제](INPUTS.md#self-suspending-jobs-2026-10)). v2는 허용하지 않는 필드를
 거부한다. 생성된 source·plan·
 실제 compile command에서 적용 여부를 확인한다.
 

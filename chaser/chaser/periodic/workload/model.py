@@ -221,6 +221,10 @@ class TaskSpec(Generic[Parameters]):
         metrics: Derived job contract, absent until kernel validation completes.
         footprint: Derived storage/access coverage, absent until normalization
             completes. Serialization requires both metrics and footprint.
+        suspend_ticks: Ticks the job sleeps (rtems_task_wake_after) between its
+            two segments; 0, the default, runs the job without suspending.
+        suspend_after_sweeps: Sweeps run before the suspension (1 to sweeps - 1);
+            the resumed segment runs the rest. 0 when the job does not suspend.
     """
     task_id: str
     pattern: str
@@ -231,6 +235,8 @@ class TaskSpec(Generic[Parameters]):
     parameters: Parameters
     metrics: KernelMetrics | None = None
     footprint: MemoryFootprint | None = None
+    suspend_ticks: int = 0
+    suspend_after_sweeps: int = 0
 
     @classmethod
     def from_dict(cls, value: dict, parameter_type: type[Parameters]) -> 'TaskSpec[Parameters]':
@@ -240,20 +246,25 @@ class TaskSpec(Generic[Parameters]):
                    sweeps=value['sweeps'], core=value['core'], period_ticks=value['period_ticks'],
                    parameters=parameter_type(**{f.name: deepcopy(value[f.name]) for f in fields(parameter_type)}),
                    metrics=KernelMetrics(**{f.name: value[f.name] for f in fields(KernelMetrics)}),
-                   footprint=MemoryFootprint(**{f.name: value[f.name] for f in fields(MemoryFootprint)}))
+                   footprint=MemoryFootprint(**{f.name: value[f.name] for f in fields(MemoryFootprint)}),
+                   suspend_ticks=value.get('suspend_ticks', 0),
+                   suspend_after_sweeps=value.get('suspend_after_sweeps', 0))
         if task.metrics.source_accesses != value['source_accesses']:
             raise ValueError('Plan source access count differs from kernel metrics')
         return task
 
     def to_dict(self) -> dict:
-        """Flatten typed parameters and results into the unchanged plan schema."""
+        """Flatten typed parameters and results into the plan schema; a task that does not
+        suspend omits the suspension fields, so its plan is unchanged."""
         if self.metrics is None or self.footprint is None:
             raise ValueError('Task must be normalized before serialization')
+        suspension = (dict(suspend_ticks=self.suspend_ticks, suspend_after_sweeps=self.suspend_after_sweeps)
+                      if self.suspend_ticks else {})
         return dict(task_id=self.task_id, pattern=self.pattern,
                     arrays={role: asdict(binding) for role, binding in self.arrays.items()},
                     sweeps=self.sweeps, core=self.core, period_ticks=self.period_ticks,
                     **asdict(self.parameters), **asdict(self.metrics),
-                    source_accesses=self.metrics.source_accesses, **asdict(self.footprint))
+                    source_accesses=self.metrics.source_accesses, **asdict(self.footprint), **suspension)
 
 
 ArrayRegistry = dict[str, ArraySpec]

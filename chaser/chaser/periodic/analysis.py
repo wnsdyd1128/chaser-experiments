@@ -12,7 +12,7 @@ from chaser.locality.cls import cls, DEFAULT_ALPHAS
 from chaser.periodic.event_storage import compress_events as archive_events
 from chaser.periodic.event_compression import EventCompressionQueue
 from chaser.periodic.build import YARDA, check_layout, read_symbols
-from chaser.periodic.kernels import reference_events, task_from_plan
+from chaser.periodic.kernels import reference_events, segment_tasks, task_from_plan
 from chaser.periodic.workload import ArraySpec
 from chaser.periodic.kernels.inputs import check_current_inputs
 from chaser.periodic.measurement import ARCHITECTURES
@@ -20,14 +20,16 @@ from chaser.locality.artifacts import read_analysis
 from tools.rtems_smoke import check_inputs, file_hash, write_json
 
 
-def check_stream(task: dict, events: list[dict], address: dict, *,
+def check_stream(task, events: list[dict], address: dict, *,
                  arrays: list[dict]) -> None:
-    """Require the full job's object, address, size and operation order."""
+    """Require the full job's object, address, size and operation order (task: a plan task,
+    or a normalized TaskSpec such as one segment of a suspending job)."""
     objects = [a if isinstance(a, ArraySpec) else ArraySpec.from_dict(a) for a in arrays]
     registry = {a.array_id: a for a in objects}
-    if len(events) != task['source_accesses']:
+    task = task_from_plan(task)
+    if len(events) != task.metrics.source_accesses:
         raise ValueError('Wrapper access count differs from the emitted workload')
-    for event, expected in zip(events, reference_events(task_from_plan(task), registry), strict=True):
+    for event, expected in zip(events, reference_events(task, registry), strict=True):
         symbol = registry[expected.array_id].symbol
         if (event['object_id'] != 'global::' + symbol
                 or event['linked_address'] != address[symbol] + expected.offset_bytes
@@ -56,6 +58,37 @@ def analyze(prepared: Path, *, timeout: float = 120, compress_events: bool = Fal
         raise ValueError('A compression queue requires compress_events=True')
     with ExitStack() as reservations:
         return _analyze(prepared, timeout, compress_events, compression_queue, reservations)
+
+
+def _merge(histograms: list[dict]) -> dict:
+    out = {}
+    for histogram in histograms:
+        for distance, count in histogram.items():
+            out[distance] = out.get(distance, 0) + count
+    return out
+
+
+def _case(results: dict, checked, accesses: int, caches: dict) -> dict:
+    return dict(ca_caas_element=ca_from_histogram(results['element']['program']['histogram']),
+                ca_global_line=ca_from_histogram(results['line']['program']['histogram']),
+                ca_csrd_l1=ca_csrd(checked.task), modeled_accesses=accesses,
+                clp=list(checked.counts.ratios),
+                cls={str(a): cls(checked.task, caches, a) for a in DEFAULT_ALPHAS})
+
+
+def _combined_case(parts: list[tuple[dict, object, int]], caches: dict) -> dict:
+    """One suspending job's case from its segments, each analyzed from a cold cache: histograms
+    and first-hit counts are summed, so CLP, CLS and CA describe the two analyses together."""
+    total = sum(accesses for _, _, accesses in parts)
+    counts = [sum(getattr(checked.counts, k) for _, checked, _ in parts) for k in ('l1', 'llc', 'miss')]
+    ratios = [c / total for c in counts]
+    profile = dict(modeled_accesses=total, l1_first_hit_ratio=ratios[0], llc_first_hit_ratio=ratios[1],
+                   all_cache_miss_ratio=ratios[2])
+    return dict(ca_caas_element=ca_from_histogram(_merge([r['element']['program']['histogram'] for r, _, _ in parts])),
+                ca_global_line=ca_from_histogram(_merge([r['line']['program']['histogram'] for r, _, _ in parts])),
+                ca_csrd_l1=ca_from_histogram(_merge([c.task['l1']['csrd_histogram'] for _, c, _ in parts])),
+                modeled_accesses=total, clp=ratios,
+                cls={str(a): cls(profile, caches, a) for a in DEFAULT_ALPHAS})
 
 
 def _analyze(prepared, timeout, compress_events, compression_queue, reservations):
@@ -96,75 +129,81 @@ def _analyze(prepared, timeout, compress_events, compression_queue, reservations
              'workload.ll', '-o', '/dev/null'], output / 'opt.log')
     raw = json.loads((output / 'workload_ape.json').read_text())
     cases, provenance, event_storage = {}, {}, {}
+    registry = {a['array_id']: ArraySpec.from_dict(a) for a in plan['arrays']}
     for task in plan['tasks']:
-        task_id, root = task['task_id'], 'task_job_' + task['task_id']
-        helper = 'kernel_' + task_id
-        functions = [f for f in raw['functions']
-                     if f['function'] in (root, helper)
-                     or f['function'].startswith(helper + '_')]
-        if not any(f['function'] == root for f in functions):
-            raise ValueError('Expected the emitted job wrapper and inline kernel')
-        ape = output / f'{task_id}.ape.json'
-        write_json(ape, {**raw, 'functions': functions})
-        accesses = task['source_accesses']
-        limit = task['loop_iterations'] + 10
+        task_id = task['task_id']
+        # A suspending job is analyzed per segment (task_job_<id>, task_job_resume_<id>), then combined.
+        segments = []
+        for segment in segment_tasks(task_from_plan(task), registry):
+            root, helper = 'task_job_' + segment.task_id, 'kernel_' + segment.task_id
+            functions = [f for f in raw['functions']
+                         if f['function'] in (root, helper)
+                         or f['function'].startswith(helper + '_')]
+            if not any(f['function'] == root for f in functions):
+                raise ValueError('Expected the emitted job wrapper and inline kernel')
+            ape = output / f'{segment.task_id}.ape.json'
+            write_json(ape, {**raw, 'functions': functions})
+            segments.append((segment, root, ape))
         for name in ARCHITECTURES:
-            reservation = (reservations.enter_context(compression_queue.reserve())
-                           if compression_queue is not None else None)
-            directory = output / name / task_id
-            directory.mkdir(parents=True)
             elf = prepared / f'build/{name}.exe'
             layout = check_layout(read_symbols(elf), plan['arrays'])
-            results = {}
-            for mode, flags in (
-                ('element', ['--mode', 'unroll', '--granularity', 'element']),
-                ('line', ['--mode', 'unroll', '--granularity', 'cache-line',
-                          '--cache', str(prepared / 'cache.yaml')]),
-                ('hierarchy', ['--analysis', 'hierarchy-rd', '--cache', str(prepared / 'cache.yaml'),
-                               '--elf', str(elf), '--max-source-accesses', str(accesses),
-                               '--max-line-references', str(accesses), '--export-events',
-                               str(directory / 'events.json'), '--event-limit', str(accesses)])):
-                path = directory / (mode + '.json')
-                execute([str(executable), str(ape), *flags, '--export', str(path),
-                         '--max-single-loop-iterations', str(limit),
-                         '--max-cumulative-loop-iterations', str(limit)], directory / (mode + '.log'))
-                results[mode] = json.loads(path.read_text())
-            hierarchy = results['hierarchy']
-            expected = dict(map_sha256=file_hash(ape), elf_sha256=file_hash(elf),
-                            cache_config_sha256=file_hash(prepared / 'cache.yaml'))
-            events = json.loads((directory / 'events.json').read_text())
-            checked = read_analysis(hierarchy, events, root, expected)
             address = {r['symbol']: r['address'] for r in layout}
-            check_stream(task, events['events'], address, arrays=plan['arrays'])
-            case = dict(ca_caas_element=ca_from_histogram(results['element']['program']['histogram']),
-                        ca_global_line=ca_from_histogram(results['line']['program']['histogram']),
-                        ca_csrd_l1=ca_csrd(checked.task), modeled_accesses=accesses,
-                        clp=list(checked.counts.ratios),
-                        cls={str(a): cls(checked.task, dict(l1_capacity=checked.l1.size_bytes,
-                                                         llc_capacity=checked.llc.size_bytes), a)
-                             for a in DEFAULT_ALPHAS})
+            parts = []
+            for segment, root, ape in segments:
+                reservation = (reservations.enter_context(compression_queue.reserve())
+                               if compression_queue is not None else None)
+                directory = output / name / segment.task_id
+                directory.mkdir(parents=True)
+                accesses = segment.metrics.source_accesses
+                limit = segment.metrics.loop_iterations + 10
+                results = {}
+                for mode, flags in (
+                    ('element', ['--mode', 'unroll', '--granularity', 'element']),
+                    ('line', ['--mode', 'unroll', '--granularity', 'cache-line',
+                              '--cache', str(prepared / 'cache.yaml')]),
+                    ('hierarchy', ['--analysis', 'hierarchy-rd', '--cache', str(prepared / 'cache.yaml'),
+                                   '--elf', str(elf), '--max-source-accesses', str(accesses),
+                                   '--max-line-references', str(accesses), '--export-events',
+                                   str(directory / 'events.json'), '--event-limit', str(accesses)])):
+                    path = directory / (mode + '.json')
+                    execute([str(executable), str(ape), *flags, '--export', str(path),
+                             '--max-single-loop-iterations', str(limit),
+                             '--max-cumulative-loop-iterations', str(limit)], directory / (mode + '.log'))
+                    results[mode] = json.loads(path.read_text())
+                hierarchy = results['hierarchy']
+                expected = dict(map_sha256=file_hash(ape), elf_sha256=file_hash(elf),
+                                cache_config_sha256=file_hash(prepared / 'cache.yaml'))
+                events = json.loads((directory / 'events.json').read_text())
+                checked = read_analysis(hierarchy, events, root, expected)
+                check_stream(segment, events['events'], address, arrays=plan['arrays'])
+                parts.append((results, checked, accesses))
+                if compress_events:
+                    event_path = directory / 'events.json'
+                    key = str(event_path.relative_to(output)) + '.xz'
+                    if reservation is not None:
+                        event_storage[key] = reservation.submit(event_path)
+                    else:
+                        event_storage[key] = archive_events(event_path)
+                        event_path.unlink()
+                del events
+            caches = dict(l1_capacity=checked.l1.size_bytes, llc_capacity=checked.llc.size_bytes)
+            single = [_case(results, checked, accesses, caches) for results, checked, accesses in parts]
+            case = single[0] if len(parts) == 1 else dict(
+                _combined_case(parts, caches), segments={s.task_id: c for (s, _, _), c in zip(segments, single)})
+            stream_hash = '+'.join(c.stream_hash for _, c, _ in parts)
             if task_id in cases and (cases[task_id] != case
-                    or provenance[task_id]['stream_hash'] != checked.stream_hash):
+                    or provenance[task_id]['stream_hash'] != stream_hash):
                 raise ValueError('G/C/P locality or linked access stream differs')
             cases[task_id] = case
             revision = re.search(r'git\.([0-9a-f]{40}(?:-dirty)?)', hierarchy['tool_version'])
             if revision is None:
                 raise ValueError('Analyzer revision is missing')
             entry = provenance.setdefault(task_id, dict(source_hash=file_hash(source),
-                ape_hash=file_hash(ape), stream_hash=checked.stream_hash,
+                ape_hash='+'.join(file_hash(a) for _, _, a in segments), stream_hash=stream_hash,
                 analyzer_commit=revision.group(1), cache_model_id=hierarchy['model_id'],
                 cache_config_hash=expected['cache_config_sha256'], model_hash=None,
                 elf_hash=expected['elf_sha256'], elf_hashes={}))
             entry['elf_hashes'][name] = expected['elf_sha256']
-            if compress_events:
-                event_path = directory / 'events.json'
-                key = str(event_path.relative_to(output)) + '.xz'
-                if reservation is not None:
-                    event_storage[key] = reservation.submit(event_path)
-                else:
-                    event_storage[key] = archive_events(event_path)
-                    event_path.unlink()
-            del events
     if compression_queue is not None:
         event_storage = {key: future.result() for key, future in event_storage.items()}
     check_inputs(prepared, manifest)

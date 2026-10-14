@@ -1,0 +1,117 @@
+{
+ "note": "laysim run (2026-10-14) of a P build where t0 sleeps 3 ticks between 80 and 120 of its 200 sweeps; recorded to lock the measured-job behaviour of suspension (tests/periodic/multi_array/test_suspension.py)",
+ "plan": {
+  "architecture": 2,
+  "arrays": [
+   {
+    "address": 16777216,
+    "alignment_bytes": 32,
+    "array_id": "r0",
+    "element_type": "uint32_t",
+    "initial_value": 3,
+    "itemsize": 4,
+    "length": 512,
+    "size_bytes": 2048,
+    "symbol": "data_r0"
+   },
+   {
+    "address": 16779264,
+    "alignment_bytes": 32,
+    "array_id": "r1",
+    "element_type": "uint32_t",
+    "initial_value": 5,
+    "itemsize": 4,
+    "length": 512,
+    "size_bytes": 2048,
+    "symbol": "data_r1"
+   }
+  ],
+  "checksum_boundary": "after-completion-before-next-period",
+  "cohort_rule_id": "same-nominal-release-v1",
+  "contract_id": "chaser-periodic-measurement-v3",
+  "core_mapping_hash": "83a718596476b3f91bffadaa31e2dfe2689411a8a5b505c97b80ee6267e2f142",
+  "execution_backend": "laysim-gr740",
+  "family_id": "suspend-diagnostic",
+  "horizon_ticks": 40,
+  "input_schema_version": 2,
+  "kernel_contract_id": "periodic-multi-array-v1",
+  "locality_scope": "one-cold-task-local-job",
+  "mapping_hash": "7ee70c14acd08cb8e3258d5b43d16e30b9dd6ea36977c83d31170271d96d9a9c",
+  "measurement_boundary_id": "public-workload-bracket-v1",
+  "measurement_jobs": 3,
+  "measurement_source": "measured",
+  "measurement_ticks": 20,
+  "plan_hash": "71e450c4c860556cff937b3b79c510a60562b0488f17ce979fe553a8ee91c113",
+  "policy_id": "explicit-core-map-v1",
+  "tasks": [
+   {
+    "allocation_bytes": 2048,
+    "arrays": {
+     "input": {
+      "array_id": "r0",
+      "offset_elements": 0
+     }
+    },
+    "checksum_kind": "u32-load-sum-v1",
+    "core": 0,
+    "distinct": 512,
+    "domain": [
+     0
+    ],
+    "expected_checksum": 184320,
+    "job_count": 4,
+    "loop_iterations": 102600,
+    "pattern": "cyclic",
+    "period_ticks": 10,
+    "source_accesses": 102400,
+    "source_loads": 102400,
+    "source_stores": 0,
+    "stride_bytes": 4,
+    "suspend_after_sweeps": 80,
+    "suspend_ticks": 3,
+    "sweeps": 200,
+    "task_id": "t0",
+    "unique_accessed_bytes": 2048,
+    "unique_cache_lines": 64,
+    "warmup_jobs": 2
+   },
+   {
+    "allocation_bytes": 2048,
+    "arrays": {
+     "input": {
+      "array_id": "r1",
+      "offset_elements": 0
+     }
+    },
+    "checksum_kind": "u32-load-sum-v1",
+    "core": 1,
+    "distinct": 512,
+    "domain": [
+     1
+    ],
+    "expected_checksum": 256000,
+    "job_count": 2,
+    "loop_iterations": 51300,
+    "pattern": "cyclic",
+    "period_ticks": 20,
+    "source_accesses": 51200,
+    "source_loads": 51200,
+    "source_stores": 0,
+    "stride_bytes": 4,
+    "sweeps": 100,
+    "task_id": "t1",
+    "unique_accessed_bytes": 2048,
+    "unique_cache_lines": 64,
+    "warmup_jobs": 1
+   }
+  ],
+  "tick_ns": 1000000,
+  "topology_id": "p-edfsmp-4x1-v1",
+  "u_repeats": 1,
+  "warmup_jobs": 3,
+  "warmup_ticks": 20,
+  "workload_id": "suspend-check",
+  "workload_optimization": "O2"
+ },
+ "log": "PERIODIC {\"kind\":\"run\",\"plan_hash\":\"71e450c4c860556cff937b3b79c510a60562b0488f17ce979fe553a8ee91c113\",\"contract_id\":\"chaser-periodic-measurement-v3\",\"cpus\":4,\"mode\":0,\"trace\":0,\"empty\":0,\"t0_ns\":20000000,\"t0_tick\":20,\"tick_ns\":1000000}\nPERIODIC {\"kind\":\"task\",\"task\":0,\"thread\":167837698,\"domain_mask\":1,\"affinity_mask\":15,\"scheduler_ok\":1,\"arm_before_tick\":20,\"arm_after_tick\":20}\nPERIODIC {\"kind\":\"job\",\"task\":0,\"job\":0,\"release_ns\":20000000,\"start_ns\":20147459,\"completion_ns\":25498731,\"cpu_before_ns\":67864,\"cpu_after_ns\":2563588,\"wall_before_ns\":102740,\"wall_after_ns\":5447132,\"status_before_end_ns\":20155511,\"status_after_start_ns\":25493887,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":0,\"end_core\":0,\"checksum\":184320}\nPERIODIC {\"kind\":\"job\",\"task\":0,\"job\":1,\"release_ns\":30000000,\"start_ns\":30023111,\"completion_ns\":35496179,\"cpu_before_ns\":8931,\"cpu_after_ns\":2494967,\"wall_before_ns\":23827,\"wall_after_ns\":5491947,\"status_before_end_ns\":30028251,\"status_after_start_ns\":35491623,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":0,\"end_core\":0,\"checksum\":184320}\nPERIODIC {\"kind\":\"job\",\"task\":0,\"job\":2,\"release_ns\":40000000,\"start_ns\":40023627,\"completion_ns\":45496531,\"cpu_before_ns\":9275,\"cpu_after_ns\":2495375,\"wall_before_ns\":25780,\"wall_after_ns\":5493528,\"status_before_end_ns\":40029083,\"status_after_start_ns\":45491975,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":0,\"end_core\":0,\"checksum\":184320}\nPERIODIC {\"kind\":\"job\",\"task\":0,\"job\":3,\"release_ns\":50000000,\"start_ns\":50019311,\"completion_ns\":55496259,\"cpu_before_ns\":8787,\"cpu_after_ns\":2494655,\"wall_before_ns\":21543,\"wall_after_ns\":5493591,\"status_before_end_ns\":50024403,\"status_after_start_ns\":55491703,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":0,\"end_core\":0,\"checksum\":184320}\nPERIODIC {\"kind\":\"task\",\"task\":1,\"thread\":167837699,\"domain_mask\":2,\"affinity_mask\":15,\"scheduler_ok\":1,\"arm_before_tick\":20,\"arm_after_tick\":20}\nPERIODIC {\"kind\":\"job\",\"task\":1,\"job\":0,\"release_ns\":20000000,\"start_ns\":20139087,\"completion_ns\":21396379,\"cpu_before_ns\":69519,\"cpu_after_ns\":1317396,\"wall_before_ns\":103452,\"wall_after_ns\":1351500,\"status_before_end_ns\":20150799,\"status_after_start_ns\":21391067,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":1,\"end_core\":1,\"checksum\":256000}\nPERIODIC {\"kind\":\"job\",\"task\":1,\"job\":1,\"release_ns\":40000000,\"start_ns\":40023631,\"completion_ns\":41267815,\"cpu_before_ns\":9848,\"cpu_after_ns\":1249199,\"wall_before_ns\":27247,\"wall_after_ns\":1266599,\"status_before_end_ns\":40028919,\"status_after_start_ns\":41263871,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":1,\"end_core\":1,\"checksum\":256000}\nPERIODIC {\"kind\":\"end\",\"complete\":1}\n"
+}
