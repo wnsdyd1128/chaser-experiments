@@ -51,6 +51,7 @@ utilization 균형과 release 고려를 더함, 연구 문서 PLAN 0절)의 근�
 | 44 | 실행 전 점검과 구성 추천의 확증(사전 등록, 새 set) | `policy-mix/`(`confirm_set.py`, `--design confirm-small`·`confirm-big`·`confirm-mem`, `confirm_decide.py`, `confirm_analysis.py`) | `confirm-small-v1`, `confirm-big-v1`, `confirm-mem-v1`, `confirm-analysis-v1` | `confirm-small`, `confirm-big`, `confirm-mem`, `confirm-analysis` |
 | 45 | 실제 커널 task set의 실행 전 점검(사전 등록, 새 set) | `policy-mix/`(`kernel_tasks.py`, `kernel_calibrate.py`, `kernel_set.py`, `kernel_run.py`, `confirm_analysis.py`) | `kernel-calibration-v2`, `real-kernels-v1`, `real-kernels-analysis-v1` | `kernel-calibration`, `real-kernels`, `real-kernels-analysis` |
 | 46 | 학습에 없던 커널 4종에서의 실행 전 점검 v1(새 set) | `policy-mix/`(`kernel_tasks.py`, `kernel_calibrate.py`, `kernel_set.py`, `kernel_run.py`, `heldout_analysis.py`, `kernel_report.py`) | `kernel-calibration-heldout-v2`, `heldout-kernels-v1`, `heldout-kernels-analysis-v1` | `kernel-calibration-heldout`, `heldout-kernels`, `heldout-kernels-analysis` |
+| 47 | 실제 저지역성 커널 task set에서의 CHASER 배치(사전 등록, 새 set) | `policy-mix/`(`lowloc_set.py`, `lowloc_run.py`, `lowloc_analysis.py`, `kernel_calibrate.py`, `kernel_tasks.py`), `chaser/periodic/kernels/{transpose,cornerturn}`, `figures/lowloc_bars.py` | `kernel-calibration-lowloc-v1`, `lowloc-kernels-v1`, `lowloc-kernels-analysis-v1` | `kernel-calibration-lowloc`, `lowloc-kernels`, `lowloc-kernels-analysis` |
 
 ---
 
@@ -2467,6 +2468,86 @@ python3 $R/figures/heldout_bars.py $W/.cache/heldout-kernels-analysis-v1 $W/.cac
 - `results/kernel-calibration-heldout/`: 실행시간 보정
 - `results/heldout-kernels/`: `decisions.json`(run 당시 기록: v2 결정과 `compare`의 v1 결정)·`decisions.sha256`, `results.jsonl`, `isolated-u.json`, `per-set.jsonl.gz`
 - `results/heldout-kernels-analysis/`: v1 결과 `heldout.json/md`, 기술 보고 `report.json/md`, 그림 `figures/heldout-*`(`figures/heldout_bars.py`)
+
+## 47. 실제 저지역성 커널 task set에서의 CHASER 배치 (사전 등록, 새 set)
+
+### 개요
+27절은 합성 task(32 KiB 저친화도 task, CLS 약 0.1)로 친화도 묶음 배치의 효과를 확증했다. 45·46절의 실제 커널(PolyBench 기반 11종)은 CLS가 모두 0.93 이상이라 묶음이 작동하지 않았다.
+이 실험은 **CLS가 0.5 아래인 실제 코드**를 저친화도 task로 써서, 27절과 같은 배치 비교가 실제 코드에서도 성립하는지 묻는다. 2026-10-13 06:14 KST 등록, 실험 set의 run 전(보정 측정은 06:12 KST에 시작, 보정 run은 set의 마감 결과를 포함하지 않는다).
+
+**후보 탐색(2026-10-13, 결과 묶음 밖 `.cache`):**
+- PolyBench 기반 11종: 실시간 task로 쓸 수 있는 크기(job당 접근 약 200만 이하)에서 HARA CLS 최저 0.87(MVT), 나머지 0.92–1.00(`.cache/low-cls-explore-2026-10-13/`). 열 방향 반복문이 있어도 같은 반복의 벡터·누적 접근과 행 방향 반복문이 L1에 맞기 때문이다.
+- TACLeBench 54개(커밋 c6a0d73): 호스트 빌드 + callgrind 캐시 시뮬레이션(GR740과 같은 데이터 캐시 설정)으로 모두 CLS 0.86 이상, 실질적인 크기의 프로그램은 0.98 이상(`.cache/tacle-screen-2026-10-13/`). Dhrystone·Whetstone은 데이터가 L1에 들어가는 계산 중심이고 힙 포인터·수학 라이브러리 때문에 HARA 분석 범위 밖이다.
+- CLS가 0.5 아래로 내려간 실제 연산은 행 길이가 2의 거듭제곱인 행렬의 단순 전치 계열(열 방향 쓰기가 L1의 몇 개 세트에 몰림)뿐이었다.
+
+### 새 커널 (프레임워크, TDD)
+- `chaser/periodic/kernels/transpose`: R×n 블록 A를 n×R B로 전치하는 단순 이중 반복문(A 행 방향 읽기, B 열 방향 쓰기).
+- `chaser/periodic/kernels/cornerturn`: 레이더·SAR의 corner turn. 실수부·허수부를 따로 둔 planar 복소 형식(Ar, Ai → Br, Bi). 프레임워크 원소 형식이 uint32뿐이라 8바이트 복소 원소 대신 이 형식을 쓴다.
+- job 안 checksum은 출력의 첫 열만 해시한다. 출력 전체를 해시하면 같은 크기의 행 방향 읽기가 더해져 커널의 접근 패턴이 흐려지기 때문이다. 출력 전체는 독립 계산과 비교하는 테스트로 확인한다.
+- 테스트(`tests/periodic/multi_array/test_polybench_kernels.py`): 접근 수, 닫힌식 checksum, job마다 같은 checksum, 임의 입력에서 독립 Python 계산과 일치, footprint, 실제 ELF에서 YARDA가 본 접근 흐름. 113개 통과(2026-10-13).
+- R = 256(행 길이 1 KiB). HARA CLS(sweep 1/2): 전치 n ≥ 24, corner turn n ≥ 16에서 0.475/0.481(L1 적중 0.437), 더 작은 n에서는 약 0.87(열 전체가 몰리는 몇 세트에 다 들어감). 그래서 n을 전치 24–256, corner turn 16–256으로 제한한다(상한은 데이터를 27절 저친화도 task처럼 L2 이내로 유지).
+
+### 설계 (27절 32 KiB 유형의 규칙, `lowloc_set.py`)
+| 항목 | 내용 |
+|---|---|
+| cell | 주기 CV {0, 0.2}(`cv00-lowloc50`, `cv20-lowloc50`). 주기는 평균 40 ms 격자(27절 규칙), CV 0이면 모두 40 ms |
+| set | 새 seed 20264701–, cell·부하마다 set 24개, task 12–20개(각 값이 고르게), U 몫 Dirichlet(8). 공통 난수: set k는 task 수·몫·주기 z·역할·커널·sweep을 모든 cell·부하에서 공유하고, 부하는 예산만 바꾼다 |
+| 역할 | set 순서의 앞쪽 task를 이용률 비중이 50%에 가장 가까워질 때까지 저친화도(전치·corner turn 균등)로, 나머지를 고친화도(45절 PolyBench 7종 균등)로 둔다. sweep {1, 2, 4} 균등 |
+| 크기 | 45절 규칙: 예산 = 몫 × 부하 × 4 × 주기, 보정 모델로 예산에 가장 가까운 n(저친화도는 위 범위). 계획 U는 고른 크기를 혼자 실행해 잰 job 시간(`results/kernel-calibration-lowloc/`) |
+| 부하(코어당) | 0.40, 0.45, 0.50, 0.55, 0.60 |
+| 배치 | WFD(U 균형), CGB(균형 CLS 묶음), RA(WFD에서 출발한 release 고려, 묶음 없음), RA-CGB(CHASER). WFD 빌드의 HARA 값으로 `chaser.policy.pfirst.placement`가 계산 |
+| run | 모든 case에서 네 배치를 Partitioned로: 2 × 5 × 24 × 4 = **960 run**, warm-up 1 + 측정 3 hyperperiod |
+| 조작 확인 | 준비 단계에서 저친화도 task의 HARA CLS ≤ 0.5, 고친화도 task > 0.5가 아니면 멈춘다. cell·부하마다 set 0의 모든 task를 혼자 실행해 계획 U와의 오차 3% 이내 |
+| 실행 환경 | 기존 laysim 실행기가 날짜 확인에서 멈춰, 날짜 우회(`LD_PRELOAD=/workspace/date_override.so`, `localtime()`의 날짜만 2021-10-21로 바꿈)로 실행한다. 2026-10-13 확인: 45절 run 4개를 같은 빌드로 다시 돌려 기록이 측정값·시뮬레이터 사이클 수까지 같았다(다른 것은 로그 속 경로와 호스트 시간). 빌드 코드에는 날짜 매크로가 없다 |
+
+### 가설과 판정 (사전 고정, `lowloc_analysis.py`: 27절 `deadline_analysis.py`의 검정 함수를 그대로 사용, 유의수준 0.05)
+| 가설 | 판정 |
+|---|---|
+| V2 | RA-CGB의 위반 job 비율이 WFD보다, 그리고 RA보다 적다. 한쪽이라도 위반한 쌍에서 차이의 양측 Wilcoxon, 두 검정에 Holm. 둘 다 유의하고, 중앙값 차이가 음수이며, RA-CGB가 적은 쌍이 더 많으면 지지. 마감 준수의 exact McNemar는 보고 |
+| V3 | 저친화도 task의 관측 최대 CPU 시간 증가(최대 job CPU ÷ 계획 예산)가 WFD, RA보다 작다. 둘 다 모든 마감을 지킨 쌍의 로그 비 양측 Wilcoxon, Holm. 둘 다 유의하고 중앙값 변화가 음수면 지지 |
+| V4 | RA-CGB의 TAT가 RA와 ±2% 안에서 같다(TOST) |
+| V6 | RA-CGB의 TET가 WFD, RA보다 작다(V3와 같은 방법) |
+| 보조 | V2·V3를 주기 CV cell별로, CGB 대 WFD의 V2·V3·V6. 한 묶음으로 Holm |
+
+- 27절과의 차이: 무작위 배치와 G·C는 돌리지 않는다(배치 효과만 본다). V1(정적 L2 요청량 기준)은 판정하지 않는다.
+- **실행 전 예상:** 저친화도 task의 L1 적중이 0.44로 27절 합성 task(약 0.1)보다 높아 L2 요청이 덜 잦으므로, 효과는 27절보다 작을 수 있다. 결과가 유의하지 않아도 그대로 보고한다.
+- **주장 범위:** 지지되더라도 "L1 세트 충돌이 나는 2의 거듭제곱 크기 전치 계열 같은 실제 코드가 있으면 친화도 묶음이 효과가 있다"까지다. 일반 응용으로 일반화하지 않는다.
+
+### 재현 명령
+```sh
+sh supervisors/lowloc-kernels-v1.sh   # calibrate, tasks, prepare, isolated, full, summarize, analyze
+```
+
+### 실행 기록
+2026-10-13 06:12–10:09 KST 실행, exit 0(`supervisors/lowloc-kernels-v1.sh`, 날짜 우회 preload).
+- 보정: 저친화도 커널 job 시간 모델의 검증 최대 오차 3.80%(42 수준). 크기 측정 06:53 완료.
+- 준비 240 경우(06:53–09:20): 조작 확인을 모두 통과했다. 저친화도 task 1,840개의 HARA CLS 0.475–0.484, 고친화도 task 1,910개 0.867–0.999. 저친화도 task의 U 비중은 0.31–0.52(중앙값 0.44)이고, 크기가 범위 끝에 걸린 task가 3,750개 중 784개다.
+- 단독 실행 게이트 최대 오차 0.14%(기준 3%).
+- run 960개(09:23–10:09): 시작 실패 0. 모든 마감을 지킨 run은 5개뿐이다(CGB 2, RA 3, 모두 주기 CV 0.2·부하 0.40). WFD와 RA-CGB는 240 run 모두 마감을 놓쳤다.
+
+### 결과: V2 지지, V3·V4·V6 판정 불가 → 이 부하 범위에서는 어떤 배치도 set을 마감 안에 돌리지 못함(바닥 효과)
+- **V2(지지):** 위반 job 비율이 RA-CGB가 WFD보다 적은 쌍 195, 많은 쌍 26(240쌍 모두 위반 있음), 중앙값 차이 −16.7%p, Holm p 6.5×10⁻³¹. RA보다 적은 쌍 205, 많은 쌍 14, 중앙값 −15.4%p, Holm p 1.2×10⁻³². 마감 준수 McNemar는 WFD와 0/0(p 1.0), RA와 0/3(p 0.25)이다.
+- **V3·V4·V6(판정 불가):** 두 배치가 모두 모든 마감을 지킨 쌍이 0개라 검정할 수 없었다. 사전 규칙상 지지는 아니지만 반대 결과가 나온 것도 아니다.
+- **보조:** cell별 V2 네 검정이 모두 유의하다(RA-CGB가 WFD·RA보다 13.3–18.2%p 적음, Holm p ≤ 4×10⁻¹⁴). CGB 대 WFD의 V2도 유의하다(−12.3%p, 192/22, Holm p 3.6×10⁻²⁷). V3·V6은 쌍이 0개다.
+
+| 위반 job 비율(%) | 부하 0.40 | 0.45 | 0.50 | 0.55 | 0.60 |
+|---|---:|---:|---:|---:|---:|
+| CV 0: WFD / RA / CGB / RA-CGB | 58 / 62 / 43 / 42 | 73 / 75 / 57 / 52 | 81 / 82 / 66 / 63 | 88 / 89 / 73 / 72 | 94 / 93 / 80 / 77 |
+| CV 0.2: WFD / RA / CGB / RA-CGB | 46 / 49 / 38 / 37 | 67 / 65 / 55 / 50 | 80 / 78 / 65 / 62 | 84 / 88 / 75 / 72 | 92 / 92 / 84 / 80 |
+
+묶음 배치(CGB, RA-CGB)는 마감을 놓치는 job을 모든 부하에서 줄였다. 그러나 묶음 배치로도 set이 마감을 지키지 못했으므로, 이 실험으로는 "실제 코드에서 묶음이 마감 준수를 늘린다"고 주장할 수 없다.
+
+**사후 진단(판정을 본 뒤, 주장에 쓰지 않음):**
+- **set 전체 데이터가 L2를 넘었다.** set당 데이터는 중앙값 4.3 MiB(부하 0.40)–5.3 MiB(0.60), 범위 3.1–7.9 MiB로 L2 2 MiB의 1.5–4배다. 사전 등록의 n 상한("27절처럼 L2 이내")은 task 하나 기준이었고 set 합계는 제한하지 않았다(작업부하 한도 16 MiB × 0.9만 적용). 27절 32 KiB 유형은 set 합계도 L2 안이었으므로, 이 실험의 저친화도 task는 27절보다 메모리까지 가는 조건에 가깝다.
+- **위반은 거의 첫 job에서 났다.** 위반이 있는 955 run 중 904개(95%)에서 처음 늦은 job이 t0에 함께 release된 첫 job이었다. 첫 job(캐시가 비어 있고 모든 task가 동시에 시작)의 CPU 시간은 계획 예산의 중앙값 3.4–4.6배(저친화도), 2.2–2.4배(고친화도)였다. 부하 0.40의 이후 job은 저친화도 2.4–2.9배, 고친화도 1.2–1.4배다. 즉 부하 0.40에서도 첫 주기의 실제 코어 부하가 1을 넘었다. 부하 격자를 co-run pilot 없이 27절에서 그대로 가져온 것이 원인이다.
+- **V2 차이의 내용.** 첫 마감을 놓친 task는 이후 job을 내지 않으므로 위반 job 비율이 커진다. 부하 0.40에서 task별 "기록된 job ÷ 예상 job"의 중앙값은 WFD 0.11, RA 0.10, CGB·RA-CGB 1.0이다. 묶음 배치에서는 대부분의 task가 끝까지 돌았고 일부 task만 멈췄다.
+- **co-run 실행시간 증가**(완료 job, warm-up 포함; 그림 `lowloc-corun-low/high`): 저친화도 task는 WFD·RA 3.3–4.6배, CGB·RA-CGB 3.0–3.4배이고, 고친화도 task는 WFD·RA 1.7–2.3배, CGB·RA-CGB 1.2–2.2배(중앙값)다.
+- 후속 실험을 한다면 별도로 사전 등록해야 한다. set 데이터 합계를 L2 이내로 제한하거나, co-run pilot으로 부하 범위를 다시 정해야 한다.
+
+### 결과 파일
+- `results/kernel-calibration-lowloc/`: 실행시간 보정(`kernel-model.json`, `measured.json`, `task-times.json`)
+- `results/lowloc-kernels/`: `results.jsonl`, `isolated-u.json`, `per-set.jsonl.gz`(set별 `design.json`, 빌드별 `configuration.json`)
+- `results/lowloc-kernels-analysis/`: 판정 `lowloc.json/md`, 그림 `figures/lowloc-*`(`figures/lowloc_bars.py`; `lowloc-corun-*`은 사후 진단)
 
 ## 정리: 논문 실험만 남기기 (2026-10-08 KST)
 

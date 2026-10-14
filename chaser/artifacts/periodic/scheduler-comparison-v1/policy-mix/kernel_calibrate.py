@@ -11,7 +11,8 @@ Stages:
   measure   run the grid and validation levels, write <output>/measured.json
   fit       write <output>/kernel-model.json with the validation errors (reported, not a gate)
   tasks     run every (kernel, sweeps, n) the design's sets need (kernel_set.needed), write <output>/task-times.json
---design selects kernel_set's design: real-kernels (experiment 45, default) or heldout-kernels (experiment 46).
+--design selects kernel_set's design: real-kernels (experiment 45, default), heldout-kernels (experiment 46) or
+lowloc-kernels (experiment 47: measure fits the low-locality kernels; tasks measures every size lowloc_set needs).
 Usage: python3 kernel_calibrate.py measure|fit|tasks --output <dir> [--design NAME] [--workers N]
 Run with PYTHONPATH=<workspace>:policy-mix:period-distribution (the main chaser package).
 """
@@ -39,7 +40,8 @@ def accesses(kernel: str, n: int, sweeps: int) -> int:
     """Approximate source accesses of one job (bounds only; the plan holds the exact count)."""
     per = {'gemm-u32': 2 * n ** 3, 'polybench-jacobi1d-u32': 8 * n, 'polybench-jacobi2d-u32': 12 * n * n,
            'polybench-2mm-u32': 8 * n ** 3, 'polybench-syrk-u32': 2 * n ** 3, 'polybench-trmm-u32': 2 * n ** 3,
-           'polybench-doitgen-u32': 4 * n ** 4}.get(kernel, 8 * n * n)
+           'polybench-doitgen-u32': 4 * n ** 4, 'transpose-u32': 2 * kt.ROWS * n,
+           'cornerturn-u32': 4 * kt.ROWS * n}.get(kernel, 8 * n * n)
     return sweeps * per
 
 
@@ -48,6 +50,8 @@ def bounds(kernel: str, sweeps: int) -> tuple[int, int]:
     lo = next(n for n in range(3, 10 ** 6) if accesses(kernel, n, sweeps) >= MIN_ACCESSES)
     hi = max(n for n in range(lo, 300_000) if accesses(kernel, n, sweeps) <= MAX_ACCESSES) if kernel != 'polybench-jacobi1d-u32' \
         else MAX_ACCESSES // (8 * sweeps)
+    if kernel in kt.LOW_LOCALITY:
+        lo, hi = max(lo, kt.MIN_N[kernel]), min(hi, kt.MAX_N)
     return lo, hi
 
 
@@ -141,7 +145,12 @@ def measure(output: Path, workers: int) -> None:
 
 def measure_tasks(output: Path, workers: int) -> None:
     import kernel_set
-    rows = [dict(group='task', kernel=k, sweeps=s, n=n) for k, s, n in sorted(kernel_set.needed())]
+    if kernel_set.DESIGN == 'lowloc-kernels':
+        import lowloc_set
+        needed = lowloc_set.needed()
+    else:
+        needed = kernel_set.needed()
+    rows = [dict(group='task', kernel=k, sweeps=s, n=n) for k, s, n in sorted(needed)]
     rows = measure_levels(output, rows, workers, 'tasks')
     (output / 'task-times.json').write_text(json.dumps(dict(period=PERIOD, times={
         f"{r['kernel']} {r['sweeps']} {r['n']}": r['job_ns'] for r in rows}), indent=1) + '\n')

@@ -52,6 +52,8 @@ STUDIES = {
     'real-kernels': 'real-kernels-v1',
     # Experiment 46 (pre-registered): policy v2 on held-out kernels (kernel_run.py --design heldout-kernels).
     'heldout-kernels': 'heldout-kernels-v1',
+    # Experiment 47 (pre-registered): CHASER's placement on real low-locality kernels (policy-mix/lowloc_run.py).
+    'lowloc-kernels': 'lowloc-kernels-v1',
 }
 # The development and exploratory studies were removed from results/ and .cache on 2026-10-07 (EXPERIMENTS.md);
 # results/rf-model/training-rows.jsonl.gz keeps the RF's development rows.
@@ -100,9 +102,11 @@ def environment() -> dict:
 
 def export(name: str) -> None:
     source = CACHE / STUDIES[name]
-    # A study output has protocol.json; the L2 probe writes probe.json and kernel_run decisions.json instead.
-    if not any((source / marker).exists() for marker in ('protocol.json', 'probe.json', 'decisions.json')):
-        raise SystemExit(f'{name}: {source} has no protocol.json, probe.json or decisions.json')
+    # A study output has protocol.json; the L2 probe writes probe.json, kernel_run decisions.json and lowloc_run
+    # isolated-u.json instead.
+    markers = ('protocol.json', 'probe.json', 'decisions.json', 'isolated-u.json')
+    if not any((source / marker).exists() for marker in markers):
+        raise SystemExit(f'{name}: {source} has none of {", ".join(markers)}')
     target = RESULTS / name
     if target.exists():
         shutil.rmtree(target)

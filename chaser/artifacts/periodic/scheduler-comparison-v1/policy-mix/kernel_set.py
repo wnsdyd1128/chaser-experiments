@@ -30,6 +30,9 @@ DESIGNS = {
     'real-kernels': dict(kernels=kt.KERNELS, seed_base=20264501, sets=24, heaviness='real', calibration='kernel-calibration'),
     'heldout-kernels': dict(kernels=kt.HELD_OUT, seed_base=20264601, sets=30, heaviness='heldout',
                             calibration='kernel-calibration-heldout'),
+    # Experiment 47 builds its sets in lowloc_set; this entry only gives kernel_calibrate the kernels to fit.
+    'lowloc-kernels': dict(kernels=kt.LOW_LOCALITY, seed_base=20264701, sets=24, heaviness='lowloc',
+                           calibration='kernel-calibration-lowloc'),
 }
 LOADS = (0.40, 0.475, 0.55, 0.625, 0.70)
 TASK_RANGE = (12, 20)
