@@ -1,0 +1,67 @@
+{
+ "experiment_27": {
+  "small": {
+   "RA": {
+    "base_sets": 18,
+    "tet_lower": 16,
+    "tat_median_ratio": 0.9968120042869221,
+    "tat_tost_p": 0.000164031982421875,
+    "tat_equivalent": true
+   },
+   "WFD": {
+    "base_sets": 18,
+    "tet_lower": 17
+   }
+  },
+  "big": {
+   "RA": {
+    "base_sets": 15,
+    "tet_lower": 15,
+    "tat_median_ratio": 1.043396538937042,
+    "tat_tost_p": 0.976043701171875,
+    "tat_equivalent": false
+   },
+   "WFD": {
+    "base_sets": 15,
+    "tet_lower": 14
+   }
+  }
+ },
+ "experiment_44_sign_test": {
+  "base_sets": 72,
+  "rf_more": 32,
+  "static_more": 1,
+  "ties": 39,
+  "p": 7.916241884231567e-09
+ },
+ "auc_cluster_bootstrap": {
+  "experiment 44": {
+   "cache_demand": {
+    "base_sets": 72,
+    "difference": 0.23594152201174845,
+    "low": 0.1948702815211333,
+    "high": 0.27504502400003894
+   },
+   "occupancy": {
+    "base_sets": 72,
+    "difference": 0.02239126130288438,
+    "low": 0.010488125559138764,
+    "high": 0.03491200199245445
+   }
+  },
+  "experiment 45": {
+   "cache_demand": {
+    "base_sets": 24,
+    "difference": 0.08072916666666674,
+    "low": 0.03340318270165208,
+    "high": 0.1348398710133405
+   },
+   "occupancy": {
+    "base_sets": 24,
+    "difference": 0.007812500000000111,
+    "low": -0.007995982720411318,
+    "high": 0.02320738000101798
+   }
+  }
+ }
+}
