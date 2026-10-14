@@ -1,4 +1,7 @@
-"""Thesis chapter 4 figures 4.1-4.5 and table 4-tet (measured values, full names, no in-figure title).
+"""Thesis chapter 4 figures 4.1-4.5 and table 4-tet (measured values, abbreviated placement names, no in-figure title).
+
+Placements: WFD (U-balanced), RA (release-aware), CGB (CLS grouping with balancing), RA-CGB (release-aware CGB,
+CHASER's placement); the caption or text spells them out at first use.
 
 Figures are drawn at the final 16 cm text width, so the font sizes below are the printed sizes.
 figure-4-1  shared-L2 probe (results/l2-probe/probe.json): CPU time per load against concurrent tasks; (a) 32 KiB and
@@ -40,10 +43,8 @@ LABEL = 7  # bar and point value labels, printed size
 # Okabe-Ito colour-blind-safe palette (Wong, Nature Methods 8:441, 2011); light tints are 40 % colour on white.
 BLUE, VERMILLION, GREEN, ORANGE, PURPLE = '#0072B2', '#D55E00', '#009E73', '#E69F00', '#CC79A7'
 LIGHT_BLUE, LIGHT_VERMILLION = '#99C7E0', '#EEBF99'
-PLACEMENTS = (('p', 'Partitioned (U-balanced, WFD)', BLUE, ''),
-              ('p_ra', 'Partitioned (release-aware)', GREEN, '/'),
-              ('p_cgb', 'Partitioned (balanced CLS grouping)', ORANGE, '\\'),
-              ('p_racgb', 'Partitioned (release-aware within balanced CLS grouping)', PURPLE, 'x'))
+PLACEMENTS = (('p', 'WFD', BLUE, ''), ('p_ra', 'RA', GREEN, '/'), ('p_cgb', 'CGB', ORANGE, '\\'),
+              ('p_racgb', 'RA-CGB', PURPLE, 'x'))
 
 
 def save(fig, name, header, table):
@@ -148,7 +149,7 @@ for ax, (cell, title) in zip(axes, (('cv00-low50', 'Period CV 0'), ('cv20-low50'
     ax.set_title(title)
     grid(ax)
 fig.legend([swatch(c, h) for _, _, c, h in PLACEMENTS], [l for _, l, _, _ in PLACEMENTS],
-           loc='lower center', ncol=2, frameon=False, bbox_to_anchor=(0.5, 1.0))
+           loc='lower center', ncol=4, frameon=False, bbox_to_anchor=(0.5, 1.0))
 fig.tight_layout()
 save(fig, 'figure-4-2', 'cell,load,placement,sets_met,sets', table)
 

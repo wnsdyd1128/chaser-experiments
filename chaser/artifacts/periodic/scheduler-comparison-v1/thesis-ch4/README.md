@@ -10,6 +10,11 @@ python3 figures/thesis_ch4.py thesis-ch4
 각 그림은 `png`(300 dpi), `pdf`, `svg`와 그린 값을 담은 `csv`로 저장한다.
 색은 색각 이상에도 구분되는 Okabe-Ito palette(Wong, Nature Methods 8:441, 2011)이고, 흑백 인쇄를 위해 빗금을 함께 쓴다.
 그림 안에는 그림 제목과 아래 설명 문장을 넣지 않았다. 설명은 논문 캡션에 둔다.
+배치 이름은 약어로 쓴다(2026-10-12). 캡션이나 본문에서 처음 나올 때 풀어 쓴다.
+- WFD: U 균형 배치(Worst-Fit Decreasing)
+- RA: release 고려 배치(Release-Aware)
+- CGB: CLS Grouping with Balancing
+- RA-CGB: Release-Aware CGB, CHASER 배치
 
 | 파일 | 내용 | 입력(실험) |
 |---|---|---|
