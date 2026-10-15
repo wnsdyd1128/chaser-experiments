@@ -15,13 +15,16 @@ static const unsigned periods[TASK_COUNT] = CHASER_PERIODS;
 static const unsigned job_counts[TASK_COUNT] = CHASER_JOB_COUNTS;
 static const unsigned cores[TASK_COUNT] = CHASER_CORES;
 #ifdef CHASER_SUSPENDS
-/* Self-suspending jobs (task field suspend_ticks): the first segment (workload_jobs), then
- * rtems_task_wake_after, then the resumed segment, all inside the measured bracket. The job
- * reports the resumed segment's checksum; a wrong first-segment checksum is reported as a
+/* Self-suspending jobs (task fields suspend_ticks or suspend_points): the job's segments
+ * separated by rtems_task_wake_after, all inside the measured bracket. suspends[i] counts task
+ * i's sleeps; the flattened tables (workload.c) hold the segment run after each sleep, the
+ * checksum expected from the segment before it, and every job's ticks per sleep (point-major).
+ * The job reports its last segment's checksum; a wrong earlier checksum is reported as a
  * checksum error. Defined only when some task suspends, so other builds are unchanged. */
 static const unsigned suspends[TASK_COUNT] = CHASER_SUSPENDS;
 extern uint32_t (*const workload_resume_jobs[])(void);
 extern const uint32_t workload_suspend_expected[];
+extern const uint32_t workload_suspend_ticks[];
 #endif
 /* Restore the original numbering: require() records __LINE__, so builds without suspension
  * keep the same code as before suspension support. */
@@ -102,6 +105,15 @@ static rtems_task worker(rtems_task_argument argument)
     require(rtems_event_send(coordinator, 1U << i));
     require(rtems_event_receive(ARM, RTEMS_EVENT_ALL | RTEMS_WAIT,
                                 RTEMS_NO_TIMEOUT, &received));
+#ifdef CHASER_SUSPENDS
+    /* Task i's offsets in the flattened tables, outside every measured job. */
+    unsigned segment_base = 0, ticks_base = 0;
+    for (unsigned k = 0; k < i; ++k) {
+        segment_base += suspends[k];
+        ticks_base += suspends[k] * job_counts[k];
+    }
+#endif
+#line 93
     for (unsigned j = 0; j < job_counts[i]; ++j) {
         if (j == 0) placement[i].arm_before_tick = rtems_clock_get_ticks_since_boot();
         jobs[i][j].status = rtems_rate_monotonic_period(period, periods[i]);
@@ -123,11 +135,14 @@ static rtems_task worker(rtems_task_argument argument)
         jobs[i][j].checksum = job();
 #ifdef CHASER_SUSPENDS
         if (!chaser_empty && suspends[i]) {
-            uint32_t first = jobs[i][j].checksum;
-            require(rtems_task_wake_after(suspends[i]));
-            jobs[i][j].checksum = workload_resume_jobs[i]();
-            if (first != workload_suspend_expected[i])
-                jobs[i][j].checksum = ~workload_expected[i];
+            unsigned wrong = 0;
+            for (unsigned p = 0; p < suspends[i]; ++p) {
+                unsigned ticks = workload_suspend_ticks[ticks_base + p * job_counts[i] + j];
+                wrong |= jobs[i][j].checksum != workload_suspend_expected[segment_base + p];
+                if (ticks) require(rtems_task_wake_after(ticks));
+                jobs[i][j].checksum = workload_resume_jobs[segment_base + p]();
+            }
+            if (wrong) jobs[i][j].checksum = ~workload_expected[i];
         }
 #endif
 #line 112

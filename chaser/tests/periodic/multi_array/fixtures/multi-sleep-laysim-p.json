@@ -1,0 +1,219 @@
+{
+ "note": "laysim run (2026-10-15) of a P build, one task per core: t0 sleeps 2 then 3 ticks (suspend_points), t1 a seeded draw of 0-6 ticks, t2 the single-sleep shorthand (4 ticks), t3 none. Recorded to lock several and variable sleeps (tests/periodic/multi_array/test_suspension.py)",
+ "plan": {
+  "architecture": 2,
+  "arrays": [
+   {
+    "address": 16777216,
+    "alignment_bytes": 32,
+    "array_id": "r0",
+    "element_type": "uint32_t",
+    "initial_value": 1,
+    "itemsize": 4,
+    "length": 256,
+    "size_bytes": 1024,
+    "symbol": "data_r0"
+   },
+   {
+    "address": 16778240,
+    "alignment_bytes": 32,
+    "array_id": "r1",
+    "element_type": "uint32_t",
+    "initial_value": 2,
+    "itemsize": 4,
+    "length": 256,
+    "size_bytes": 1024,
+    "symbol": "data_r1"
+   },
+   {
+    "address": 16779264,
+    "alignment_bytes": 32,
+    "array_id": "r2",
+    "element_type": "uint32_t",
+    "initial_value": 3,
+    "itemsize": 4,
+    "length": 256,
+    "size_bytes": 1024,
+    "symbol": "data_r2"
+   },
+   {
+    "address": 16780288,
+    "alignment_bytes": 32,
+    "array_id": "r3",
+    "element_type": "uint32_t",
+    "initial_value": 4,
+    "itemsize": 4,
+    "length": 256,
+    "size_bytes": 1024,
+    "symbol": "data_r3"
+   }
+  ],
+  "checksum_boundary": "after-completion-before-next-period",
+  "cohort_rule_id": "same-nominal-release-v1",
+  "contract_id": "chaser-periodic-measurement-v3",
+  "core_mapping_hash": "ae622d56b997e56c30ed5f8db42b26f6a3e514dadd2f44813159f97de5bbcfc4",
+  "execution_backend": "laysim-gr740",
+  "family_id": "suspend-diagnostic",
+  "horizon_ticks": 80,
+  "input_schema_version": 2,
+  "kernel_contract_id": "periodic-multi-array-v1",
+  "locality_scope": "one-cold-task-local-job",
+  "mapping_hash": "b5f945d9716c73d80d893be1ca1410c59349b5c3e591348abe2375cafe12b48b",
+  "measurement_boundary_id": "public-workload-bracket-v1",
+  "measurement_jobs": 8,
+  "measurement_source": "measured",
+  "measurement_ticks": 40,
+  "plan_hash": "15ba74ddbff5e0f8a61b693611ad3726ce59b043fb6c1bee81f2a163bd5526dc",
+  "policy_id": "explicit-core-map-v1",
+  "tasks": [
+   {
+    "allocation_bytes": 1024,
+    "arrays": {
+     "input": {
+      "array_id": "r0",
+      "offset_elements": 0
+     }
+    },
+    "checksum_kind": "u32-load-sum-v1",
+    "core": 0,
+    "distinct": 256,
+    "domain": [
+     0
+    ],
+    "expected_checksum": 51200,
+    "job_count": 4,
+    "loop_iterations": 154200,
+    "pattern": "cyclic",
+    "period_ticks": 20,
+    "source_accesses": 153600,
+    "source_loads": 153600,
+    "source_stores": 0,
+    "stride_bytes": 4,
+    "suspend_points": [
+     {
+      "after_sweeps": 200,
+      "max_ticks": 2,
+      "min_ticks": 2,
+      "seed": 0
+     },
+     {
+      "after_sweeps": 400,
+      "max_ticks": 3,
+      "min_ticks": 3,
+      "seed": 0
+     }
+    ],
+    "sweeps": 600,
+    "task_id": "t0",
+    "unique_accessed_bytes": 1024,
+    "unique_cache_lines": 32,
+    "warmup_jobs": 2
+   },
+   {
+    "allocation_bytes": 1024,
+    "arrays": {
+     "input": {
+      "array_id": "r1",
+      "offset_elements": 0
+     }
+    },
+    "checksum_kind": "u32-load-sum-v1",
+    "core": 1,
+    "distinct": 256,
+    "domain": [
+     1
+    ],
+    "expected_checksum": 153600,
+    "job_count": 4,
+    "loop_iterations": 154200,
+    "pattern": "cyclic",
+    "period_ticks": 20,
+    "source_accesses": 153600,
+    "source_loads": 153600,
+    "source_stores": 0,
+    "stride_bytes": 4,
+    "suspend_points": [
+     {
+      "after_sweeps": 300,
+      "max_ticks": 6,
+      "min_ticks": 0,
+      "seed": 3
+     }
+    ],
+    "sweeps": 600,
+    "task_id": "t1",
+    "unique_accessed_bytes": 1024,
+    "unique_cache_lines": 32,
+    "warmup_jobs": 2
+   },
+   {
+    "allocation_bytes": 1024,
+    "arrays": {
+     "input": {
+      "array_id": "r2",
+      "offset_elements": 0
+     }
+    },
+    "checksum_kind": "u32-load-sum-v1",
+    "core": 2,
+    "distinct": 256,
+    "domain": [
+     2
+    ],
+    "expected_checksum": 230400,
+    "job_count": 4,
+    "loop_iterations": 154200,
+    "pattern": "cyclic",
+    "period_ticks": 20,
+    "source_accesses": 153600,
+    "source_loads": 153600,
+    "source_stores": 0,
+    "stride_bytes": 4,
+    "suspend_after_sweeps": 300,
+    "suspend_ticks": 4,
+    "sweeps": 600,
+    "task_id": "t2",
+    "unique_accessed_bytes": 1024,
+    "unique_cache_lines": 32,
+    "warmup_jobs": 2
+   },
+   {
+    "allocation_bytes": 1024,
+    "arrays": {
+     "input": {
+      "array_id": "r3",
+      "offset_elements": 0
+     }
+    },
+    "checksum_kind": "u32-load-sum-v1",
+    "core": 3,
+    "distinct": 256,
+    "domain": [
+     3
+    ],
+    "expected_checksum": 614400,
+    "job_count": 4,
+    "loop_iterations": 154200,
+    "pattern": "cyclic",
+    "period_ticks": 20,
+    "source_accesses": 153600,
+    "source_loads": 153600,
+    "source_stores": 0,
+    "stride_bytes": 4,
+    "sweeps": 600,
+    "task_id": "t3",
+    "unique_accessed_bytes": 1024,
+    "unique_cache_lines": 32,
+    "warmup_jobs": 2
+   }
+  ],
+  "tick_ns": 1000000,
+  "topology_id": "p-edfsmp-4x1-v1",
+  "u_repeats": 1,
+  "warmup_jobs": 8,
+  "warmup_ticks": 40,
+  "workload_id": "multi-sleep-check",
+  "workload_optimization": "O2"
+ },
+ "log": "PERIODIC {\"kind\":\"run\",\"plan_hash\":\"15ba74ddbff5e0f8a61b693611ad3726ce59b043fb6c1bee81f2a163bd5526dc\",\"contract_id\":\"chaser-periodic-measurement-v3\",\"cpus\":4,\"mode\":0,\"trace\":0,\"empty\":0,\"t0_ns\":20000000,\"t0_tick\":20,\"tick_ns\":1000000}\nPERIODIC {\"kind\":\"task\",\"task\":0,\"thread\":167837698,\"domain_mask\":1,\"affinity_mask\":15,\"scheduler_ok\":1,\"arm_before_tick\":20,\"arm_after_tick\":20}\nPERIODIC {\"kind\":\"job\",\"task\":0,\"job\":0,\"release_ns\":20000000,\"start_ns\":20183899,\"completion_ns\":28252463,\"cpu_before_ns\":49639,\"cpu_after_ns\":3799971,\"wall_before_ns\":103635,\"wall_after_ns\":8165720,\"status_before_end_ns\":20191551,\"status_after_start_ns\":28247619,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":0,\"end_core\":0,\"checksum\":51200}\nPERIODIC {\"kind\":\"job\",\"task\":0,\"job\":1,\"release_ns\":40000000,\"start_ns\":40040043,\"completion_ns\":48251643,\"cpu_before_ns\":10960,\"cpu_after_ns\":3749808,\"wall_before_ns\":39443,\"wall_after_ns\":8245683,\"status_before_end_ns\":40045747,\"status_after_start_ns\":48247071,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":0,\"end_core\":0,\"checksum\":51200}\nPERIODIC {\"kind\":\"job\",\"task\":0,\"job\":2,\"release_ns\":60000000,\"start_ns\":60029175,\"completion_ns\":68252419,\"cpu_before_ns\":10916,\"cpu_after_ns\":3749619,\"wall_before_ns\":30823,\"wall_after_ns\":8248656,\"status_before_end_ns\":60034923,\"status_after_start_ns\":68247847,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":0,\"end_core\":0,\"checksum\":51200}\nPERIODIC {\"kind\":\"job\",\"task\":0,\"job\":3,\"release_ns\":80000000,\"start_ns\":80028591,\"completion_ns\":88251779,\"cpu_before_ns\":10444,\"cpu_after_ns\":3749639,\"wall_before_ns\":30076,\"wall_after_ns\":8248060,\"status_before_end_ns\":80034499,\"status_after_start_ns\":88247207,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":0,\"end_core\":0,\"checksum\":51200}\nPERIODIC {\"kind\":\"task\",\"task\":1,\"thread\":167837699,\"domain_mask\":2,\"affinity_mask\":15,\"scheduler_ok\":1,\"arm_before_tick\":20,\"arm_after_tick\":20}\nPERIODIC {\"kind\":\"job\",\"task\":1,\"job\":0,\"release_ns\":20000000,\"start_ns\":20159587,\"completion_ns\":25872835,\"cpu_before_ns\":65692,\"cpu_after_ns\":3801180,\"wall_before_ns\":122976,\"wall_after_ns\":5827020,\"status_before_end_ns\":20172019,\"status_after_start_ns\":25868263,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":1,\"end_core\":1,\"checksum\":153600}\nPERIODIC {\"kind\":\"job\",\"task\":1,\"job\":1,\"release_ns\":40000000,\"start_ns\":40036855,\"completion_ns\":46867811,\"cpu_before_ns\":10379,\"cpu_after_ns\":3734832,\"wall_before_ns\":39068,\"wall_after_ns\":6864932,\"status_before_end_ns\":40042891,\"status_after_start_ns\":46863223,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":1,\"end_core\":1,\"checksum\":153600}\nPERIODIC {\"kind\":\"job\",\"task\":1,\"job\":2,\"release_ns\":60000000,\"start_ns\":60025839,\"completion_ns\":68867199,\"cpu_before_ns\":9668,\"cpu_after_ns\":3734079,\"wall_before_ns\":29051,\"wall_after_ns\":8865499,\"status_before_end_ns\":60031839,\"status_after_start_ns\":68862771,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":1,\"end_core\":1,\"checksum\":153600}\nPERIODIC {\"kind\":\"job\",\"task\":1,\"job\":3,\"release_ns\":80000000,\"start_ns\":80026303,\"completion_ns\":84867523,\"cpu_before_ns\":9767,\"cpu_after_ns\":3733944,\"wall_before_ns\":29596,\"wall_after_ns\":4865852,\"status_before_end_ns\":80032151,\"status_after_start_ns\":84863095,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":1,\"end_core\":1,\"checksum\":153600}\nPERIODIC {\"kind\":\"task\",\"task\":2,\"thread\":167837700,\"domain_mask\":4,\"affinity_mask\":15,\"scheduler_ok\":1,\"arm_before_tick\":20,\"arm_after_tick\":20}\nPERIODIC {\"kind\":\"job\",\"task\":2,\"job\":0,\"release_ns\":20000000,\"start_ns\":20168527,\"completion_ns\":27872995,\"cpu_before_ns\":60363,\"cpu_after_ns\":3792559,\"wall_before_ns\":115336,\"wall_after_ns\":7812524,\"status_before_end_ns\":20178459,\"status_after_start_ns\":27868423,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":2,\"end_core\":2,\"checksum\":230400}\nPERIODIC {\"kind\":\"job\",\"task\":2,\"job\":1,\"release_ns\":40000000,\"start_ns\":40036727,\"completion_ns\":46868119,\"cpu_before_ns\":10360,\"cpu_after_ns\":3734896,\"wall_before_ns\":38912,\"wall_after_ns\":6865192,\"status_before_end_ns\":40043035,\"status_after_start_ns\":46863515,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":2,\"end_core\":2,\"checksum\":230400}\nPERIODIC {\"kind\":\"job\",\"task\":2,\"job\":2,\"release_ns\":60000000,\"start_ns\":60025759,\"completion_ns\":66866799,\"cpu_before_ns\":10152,\"cpu_after_ns\":3734407,\"wall_before_ns\":29247,\"wall_after_ns\":6865291,\"status_before_end_ns\":60032075,\"status_after_start_ns\":66862371,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":2,\"end_core\":2,\"checksum\":230400}\nPERIODIC {\"kind\":\"job\",\"task\":2,\"job\":3,\"release_ns\":80000000,\"start_ns\":80026159,\"completion_ns\":86866827,\"cpu_before_ns\":9980,\"cpu_after_ns\":3734223,\"wall_before_ns\":29587,\"wall_after_ns\":6865363,\"status_before_end_ns\":80032003,\"status_after_start_ns\":86862399,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":2,\"end_core\":2,\"checksum\":230400}\nPERIODIC {\"kind\":\"task\",\"task\":3,\"thread\":167837701,\"domain_mask\":8,\"affinity_mask\":15,\"scheduler_ok\":1,\"arm_before_tick\":20,\"arm_after_tick\":20}\nPERIODIC {\"kind\":\"job\",\"task\":3,\"job\":0,\"release_ns\":20000000,\"start_ns\":20176939,\"completion_ns\":23905087,\"cpu_before_ns\":53051,\"cpu_after_ns\":3774132,\"wall_before_ns\":107460,\"wall_after_ns\":3829236,\"status_before_end_ns\":20185607,\"status_after_start_ns\":23900003,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":3,\"end_core\":3,\"checksum\":614400}\nPERIODIC {\"kind\":\"job\",\"task\":3,\"job\":1,\"release_ns\":40000000,\"start_ns\":40037319,\"completion_ns\":43758143,\"cpu_before_ns\":10848,\"cpu_after_ns\":3726748,\"wall_before_ns\":39563,\"wall_after_ns\":3755668,\"status_before_end_ns\":40043343,\"status_after_start_ns\":43754103,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":3,\"end_core\":3,\"checksum\":614400}\nPERIODIC {\"kind\":\"job\",\"task\":3,\"job\":2,\"release_ns\":60000000,\"start_ns\":60024243,\"completion_ns\":63745131,\"cpu_before_ns\":9724,\"cpu_after_ns\":3725464,\"wall_before_ns\":27779,\"wall_after_ns\":3743800,\"status_before_end_ns\":60030203,\"status_after_start_ns\":63741091,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":3,\"end_core\":3,\"checksum\":614400}\nPERIODIC {\"kind\":\"job\",\"task\":3,\"job\":3,\"release_ns\":80000000,\"start_ns\":80023803,\"completion_ns\":83744687,\"cpu_before_ns\":9543,\"cpu_after_ns\":3725448,\"wall_before_ns\":27396,\"wall_after_ns\":3743520,\"status_before_end_ns\":80029719,\"status_after_start_ns\":83740647,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":3,\"end_core\":3,\"checksum\":614400}\nPERIODIC {\"kind\":\"end\",\"complete\":1}\n"
+}

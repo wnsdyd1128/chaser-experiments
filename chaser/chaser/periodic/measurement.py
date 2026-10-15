@@ -6,7 +6,7 @@ import json
 import re
 
 from chaser.periodic.arrays import fields, normalize_arrays, validate_ownership
-from chaser.periodic.kernels import RESUME, kernel_for, normalize_task
+from chaser.periodic.kernels import kernel_for, normalize_task, segment_id, sleep_points
 
 CONTRACT = 'chaser-periodic-measurement-v3'
 TOPOLOGIES = ('g-edfsmp-4-v1', 'c-edfsmp-1-3-v1', 'p-edfsmp-4x1-v1', 'c2-edfsmp-1-1-2-v1')
@@ -84,15 +84,15 @@ def schedule_plan(configuration: dict, architecture: int, normalized_tasks: list
                 raise ValueError(f'Invalid {key}')
         if horizon % task['period_ticks']:
             raise ValueError('Every period must divide the common horizon')
-        if task.get('suspend_ticks', 0) >= task['period_ticks']:
-            raise ValueError('suspend_ticks must be below period_ticks')
+        if sum(p['max_ticks'] for p in sleep_points(task)) >= task['period_ticks']:
+            raise ValueError('The sleep of a job (suspend_ticks, or the max_ticks of suspend_points) must be below its period')
         task['job_count'] = horizon // task['period_ticks']
         task['domain'] = (list(range(4)) if architecture == 0 else
                           ([0] if task['core'] == 0 else [1, 2, 3]) if architecture == 1
                           else ([task['core']] if task['core'] < 2 else [2, 3]) if architecture == 3
                           else [task['core']])
         tasks.append(task)
-    names = [t['task_id'] for t in tasks] + [RESUME + t['task_id'] for t in tasks if t.get('suspend_ticks')]
+    names = [segment_id(t['task_id'], n) for t in tasks for n in range(len(sleep_points(t)) + 1)]
     if len(set(names)) != len(names):
         raise ValueError('Task IDs and resumed-segment names must be unique')
     if sum(t['job_count'] for t in tasks) > 4096:

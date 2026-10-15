@@ -242,25 +242,38 @@ R=256과 커널별 n 범위는 실험 47의 조건이며 공용 커널의 형상
 
 #### job 중간 sleep (2026-10)
 
-schema v2 task에 두 항목을 넣으면 job이 계산 도중 스스로 잠든다(I/O 대기를 흉내 낸 self-suspension).
+schema v2 task에 sleep 항목을 넣으면 job이 계산 도중 스스로 잠든다(I/O 대기를 흉내 낸 self-suspension).
+두 가지 형식 중 하나를 쓴다(함께 쓰면 거부).
 
 | 항목 | 뜻 | 범위 |
 |---|---|---|
-| `suspend_ticks` | job 중간에 `rtems_task_wake_after`로 잠드는 tick 수 | 생략하거나 0이면 잠들지 않는다. 그 밖에는 1 ≤ S < `period_ticks` |
-| `suspend_after_sweeps` | 전체 `sweeps` 중 잠들기 전에 실행할 sweep 수 k | S > 0일 때만, 1 ≤ k < `sweeps` |
+| `suspend_ticks`, `suspend_after_sweeps` | 한 번, 고정 길이 sleep: 앞 k sweep 뒤에 S tick | S ≥ 1, 1 ≤ k < `sweeps` |
+| `suspend_points` | 여러 번·가변 sleep: 지점 목록 | 비어 있지 않은 목록, `after_sweeps`가 증가 순 |
 
-- 생성 코드는 task마다 두 구간 함수를 만든다. `task_job_<id>`가 앞 k sweep, `task_job_resume_<id>`가 나머지
-  `sweeps − k` sweep을 실행한다. 구간마다 커널 템플릿 전체(설정·checksum 포함)를 렌더링하므로,
-  각 구간은 그 sweep 수의 완전한 job이다(job 시작에 배열을 초기화하는 커널은 두 번째 구간에서도 초기화한다).
-- `init.c`는 측정 구간 안에서 "앞 구간 → `rtems_task_wake_after(S)` → 뒤 구간"을 실행한다.
-  job의 checksum은 뒤 구간의 것이고, 앞 구간 checksum이 틀리면 checksum 오류로 기록된다.
-  job CPU 시간에는 잠든 시간이 들어가지 않고, 응답 시간·TAT에는 들어간다.
-  sleep은 tick 경계에서 끝나므로 실제로 CPU를 떠난 시간은 (S − 1, S] tick이다.
-- 정적 분석(`chaser.periodic.analysis`)은 두 구간을 각각 빈 캐시에서 분석하고, 접근 수·first-hit 수·
+`suspend_points`의 각 지점은 `{"after_sweeps": k, "ticks": S}`(고정, S ≥ 1) 또는
+`{"after_sweeps": k, "min_ticks": a, "max_ticks": b, "seed": n}`(가변, 0 ≤ a ≤ b, b ≥ 1, `seed` 생략 시 0)이다.
+`after_sweeps`는 그 sleep 전까지 끝낸 누적 sweep 수다. 한 job의 sleep 합(가변은 `max_ticks` 합)은 주기보다 작아야 한다.
+
+```json
+"suspend_points": [{"after_sweeps": 200, "ticks": 2},
+                   {"after_sweeps": 400, "min_ticks": 0, "max_ticks": 6, "seed": 3}]
+```
+
+- 가변 길이는 job마다 [a, b]에서 균등하게 뽑는다. 난수는 SHA-256("<task_id>/<지점 번호>/<seed>")로 정하므로
+  같은 설정은 언제나 같은 길이를 낸다(`chaser.periodic.kernels.suspend_schedule`가 plan task에서 job별 값을 준다).
+  0 tick이 뽑히면 그 job은 그 지점에서 잠들지 않는다.
+- 생성 코드는 sleep 사이 구간마다 함수를 만든다. `task_job_<id>`가 첫 구간, `task_job_resume_<id>`,
+  `task_job_resume2_<id>`, …가 그다음 구간이다. 구간마다 커널 템플릿 전체(설정·checksum 포함)를 렌더링하므로,
+  각 구간은 그 sweep 수의 완전한 job이다(job 시작에 배열을 초기화하는 커널은 다음 구간에서도 초기화한다).
+- `init.c`는 측정 구간 안에서 구간 → `rtems_task_wake_after(그 job의 tick)` → 구간을 반복한다. job의 checksum은
+  마지막 구간의 것이고, 앞 구간 checksum이 틀리면 checksum 오류로 기록된다. job CPU 시간에는 잠든 시간이 들어가지
+  않고, 응답 시간·TAT에는 들어간다. sleep은 tick 경계에서 끝나므로 S tick sleep이 CPU를 떠난 시간은 (S − 1, S] tick이다.
+- 정적 분석(`chaser.periodic.analysis`)은 구간마다 빈 캐시에서 분석하고, 접근 수·first-hit 수·
   재사용 거리 histogram을 합쳐 task의 CLP·CLS·CA를 낸다(`cases.<id>.segments`에 구간별 값).
 - sleep이 없는 task와 set의 plan, `config.h`, `workload.c`, 실행 파일 코드는 이 기능 전과 같다
-  (`init.c`의 `#line`이 `require()`의 줄 번호를 보존한다. 2026-10-14 실험 48 set으로 디버그 정보를 뗀 ELF 4개가 같음을 확인).
-- 아직 반영하지 않은 것: `chaser.policy.pfirst`(명목 판정·배치·특징)는 sleep 시간을 쓰지 않는다.
+  (`init.c`의 `#line`이 `require()`의 줄 번호를 보존한다. 2026-10-15 실험 48 set으로 디버그 정보를 뗀 ELF 4개가 같음을 확인).
+- 아직 반영하지 않은 것: 경량 분석 경로(`policy-mix/kernel_yarda.py`, `chaser.policy.pfirst.inputs`)는 첫 구간만 읽고,
+  `chaser.policy.pfirst`(명목 판정·배치·특징)는 sleep 시간을 쓰지 않는다.
 
 <a id="soft-deadline-runs-2026-10"></a>
 

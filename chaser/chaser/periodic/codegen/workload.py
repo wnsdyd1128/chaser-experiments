@@ -3,7 +3,7 @@
 from pathlib import Path
 from string import Template
 
-from chaser.periodic.kernels import RESUME, kernel_source, segment_tasks, task_from_plan
+from chaser.periodic.kernels import kernel_source, segment_tasks, suspend_schedule, task_from_plan
 from chaser.periodic.codegen.model import ArrayDeclaration, JobDefinition
 from chaser.periodic.workload import ArraySpec, TaskSpec
 
@@ -42,11 +42,16 @@ def workload_source(tasks: list[dict] | list[TaskSpec], *,
         definitions='\n'.join(definitions), initializers='\n'.join(initializers),
         jobs='\n'.join(f'    task_job_{job.task_id},' for job in jobs),
         checksums=', '.join(str(job.expected_checksum) + 'U' for job in jobs))
-    if any(t.suspend_ticks for t in workloads):
-        # Read by init.c under CHASER_SUSPENDS: the resumed segment per task (0 if the job does not
-        # suspend) and the first segment's expected checksum. Absent otherwise, so sources are unchanged.
+    if any(len(parts) > 1 for parts in segments):
+        # Read by init.c under CHASER_SUSPENDS, flattened in task order over the sleeping tasks: the segment
+        # run after each sleep, the checksum expected from the segment before it, and every job's ticks for
+        # each sleep point (point-major, job_count entries each). Absent otherwise, so sources are unchanged.
+        if not all(isinstance(t, dict) for t in tasks):
+            raise ValueError('Sleep tables need plan tasks (job_count)')
+        ticks = [v for t in tasks for row in suspend_schedule(t) for v in row]
         source += ('uint32_t (*const workload_resume_jobs[])(void) = {\n'
-                   + ''.join(f'    task_job_{RESUME}{t.task_id},\n' if t.suspend_ticks else '    0,\n' for t in workloads)
+                   + ''.join(f'    task_job_{s.task_id},\n' for parts in segments for s in parts[1:])
                    + '};\nconst uint32_t workload_suspend_expected[] = {'
-                   + ', '.join(f'{p[0].metrics.expected_checksum if len(p) > 1 else 0}U' for p in segments) + '};\n')
+                   + ', '.join(f'{s.metrics.expected_checksum}U' for parts in segments for s in parts[:-1]) + '};\n'
+                   + 'const uint32_t workload_suspend_ticks[] = {' + ', '.join(f'{v}U' for v in ticks) + '};\n')
     return source

@@ -2,6 +2,8 @@
 
 from dataclasses import MISSING, dataclass, fields as dataclass_fields, replace
 from copy import deepcopy
+from hashlib import sha256
+import random
 from collections.abc import Iterator
 from typing import Protocol
 
@@ -75,8 +77,60 @@ KERNELS = {
 }
 
 
-SUSPENSION = ('suspend_ticks', 'suspend_after_sweeps')
-RESUME = 'resume_'  # the resumed segment of task t runs as task_job_resume_t
+SUSPENSION = ('suspend_ticks', 'suspend_after_sweeps', 'suspend_points')
+RESUME = 'resume_'  # segment n >= 1 of task t runs as task_job_resume_t (n = 1) or task_job_resume<n>_t
+
+
+def segment_id(task_id: str, index: int) -> str:
+    """Name of segment `index` of a task's job: the task itself, then its resumed segments."""
+    return task_id if index == 0 else RESUME + task_id if index == 1 else f'resume{index}_{task_id}'
+
+
+def sleep_points(task) -> tuple[dict, ...]:
+    """A plan task's or TaskSpec's sleeps as normalized points (after_sweeps, min_ticks, max_ticks, seed);
+    the single-sleep fields give one fixed point."""
+    get = task.get if isinstance(task, dict) else (lambda key, default=None: getattr(task, key, default))
+    if get('suspend_ticks', 0):
+        ticks = get('suspend_ticks')
+        return (dict(after_sweeps=get('suspend_after_sweeps'), min_ticks=ticks, max_ticks=ticks, seed=0),)
+    return tuple(get('suspend_points', ()) or ())
+
+
+def suspend_schedule(task: dict) -> list[list[int]]:
+    """Each sleep point's ticks for every job of a plan task (job_count jobs). A fixed point repeats its
+    ticks; a range draws uniformly per job from random.Random seeded with SHA-256 of
+    "<task_id>/<point index>/<seed>", so a plan always yields the same sleeps."""
+    out = []
+    for index, point in enumerate(sleep_points(task)):
+        low, high = point['min_ticks'], point['max_ticks']
+        if low == high:
+            out.append([low] * task['job_count'])
+            continue
+        digest = sha256(f"{task['task_id']}/{index}/{point['seed']}".encode()).digest()
+        rng = random.Random(int.from_bytes(digest[:8], 'big'))
+        out.append([rng.randint(low, high) for _ in range(task['job_count'])])
+    return out
+
+
+def normalize_points(points, sweeps: int) -> tuple[dict, ...]:
+    """Validate suspend_points: a nonempty list in increasing after_sweeps order (1 to sweeps - 1), each
+    with fixed ticks (>= 1) or a range min_ticks (>= 0) to max_ticks (>= 1) and an optional seed."""
+    if not isinstance(points, list) or not points:
+        raise ValueError('suspend_points must be a nonempty list')
+    out, last = [], 0
+    for point in points:
+        if isinstance(point, dict) and 'ticks' in point:
+            fields(point, ('after_sweeps', 'ticks'), ('after_sweeps', 'ticks'))
+            low = high = integer(point['ticks'], 'ticks', 1)
+            seed = 0
+        else:
+            fields(point, ('after_sweeps', 'min_ticks', 'max_ticks', 'seed'), ('after_sweeps', 'min_ticks', 'max_ticks'))
+            low = integer(point['min_ticks'], 'min_ticks', 0)
+            high = integer(point['max_ticks'], 'max_ticks', max(low, 1))
+            seed = integer(point.get('seed', 0), 'seed', 0)
+        last = integer(point['after_sweeps'], 'after_sweeps', last + 1, sweeps - 1)
+        out.append(dict(after_sweeps=last, min_ticks=low, max_ticks=high, seed=seed))
+    return tuple(out)
 
 
 def kernel_for(pattern: str) -> Kernel:
@@ -116,6 +170,10 @@ def normalize_task(value: dict, registry: ArrayRegistry) -> TaskSpec:
         task.suspend_after_sweeps = integer(value['suspend_after_sweeps'], 'suspend_after_sweeps', 1, task.sweeps - 1)
     elif 'suspend_after_sweeps' in value:
         raise ValueError('suspend_after_sweeps requires suspend_ticks')
+    if 'suspend_points' in value:
+        if task.suspend_ticks:
+            raise ValueError('suspend_points and the single-sleep fields are exclusive')
+        task.suspend_points = normalize_points(value['suspend_points'], task.sweeps)
     task.metrics = kernel.module.validate(task, registry)
     if not isinstance(task.metrics, KernelMetrics):
         raise ValueError('Kernel validate must return KernelMetrics')
@@ -150,21 +208,23 @@ def normalize_task(value: dict, registry: ArrayRegistry) -> TaskSpec:
 
 
 def segment_tasks(task: TaskSpec, registry: ArrayRegistry) -> tuple[TaskSpec, ...]:
-    """The task itself, or, when it suspends, its first and resumed segments.
+    """The task itself, or, when it suspends, its segments between sleeps.
 
-    The first segment keeps the task ID (task_job_<id>) and runs suspend_after_sweeps
-    sweeps; the resumed one (task_job_resume_<id>) runs the remaining sweeps. Each is a
-    complete job of its own sweeps (its template's set-up and checksum included), so
-    its metrics come from the kernel's validation; the job reports the resumed
+    The first segment keeps the task ID (task_job_<id>); the others are named by segment_id
+    (task_job_resume_<id>, task_job_resume2_<id>, ...). A segment runs the sweeps between two
+    sleep points and is a complete job of those sweeps (its template's set-up and checksum
+    included), so its metrics come from the kernel's validation; the job reports the last
     segment's checksum. Requires a normalized task.
     """
-    if not task.suspend_ticks:
+    points = sleep_points(task)
+    if not points:
         return (task,)
+    cuts = [0] + [p['after_sweeps'] for p in points] + [task.sweeps]
     out = []
-    for task_id, sweeps in ((task.task_id, task.suspend_after_sweeps),
-                            (RESUME + task.task_id, task.sweeps - task.suspend_after_sweeps)):
-        segment = replace(task, task_id=task_id, sweeps=sweeps, parameters=deepcopy(task.parameters),
-                          metrics=None, footprint=None, suspend_ticks=0, suspend_after_sweeps=0)
+    for index in range(len(cuts) - 1):
+        segment = replace(task, task_id=segment_id(task.task_id, index), sweeps=cuts[index + 1] - cuts[index],
+                          parameters=deepcopy(task.parameters), metrics=None, footprint=None,
+                          suspend_ticks=0, suspend_after_sweeps=0, suspend_points=())
         segment.metrics = kernel_for(task.pattern).module.validate(segment, registry)
         out.append(segment)
     return tuple(out)

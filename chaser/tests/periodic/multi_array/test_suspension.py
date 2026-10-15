@@ -1,4 +1,4 @@
-"""Self-suspending jobs: k sweeps, rtems_task_wake_after(S), then the remaining sweeps (schema v2 task fields)."""
+"""Self-suspending jobs: sweeps split by sleeps (rtems_task_wake_after) at one or more points (schema v2 task fields)."""
 from copy import deepcopy
 import re
 
@@ -6,7 +6,7 @@ import pytest
 
 from chaser.periodic.codegen import workload_source
 from chaser.periodic.codegen.project import config_header
-from chaser.periodic.kernels import reference_events, segment_tasks, task_from_plan
+from chaser.periodic.kernels import reference_events, segment_tasks, suspend_schedule, task_from_plan
 from chaser.periodic.measurement import make_plan
 from chaser.periodic.workload import ArraySpec
 
@@ -26,6 +26,12 @@ def reads():
 def suspended(config, ticks=3, after=2):
     config = deepcopy(config)
     config['tasks'][0].update(suspend_ticks=ticks, suspend_after_sweeps=after)
+    return config
+
+
+def pointed(config, points):
+    config = deepcopy(config)
+    config['tasks'][0]['suspend_points'] = points
     return config
 
 
@@ -98,14 +104,78 @@ def test_source_emits_both_segments_and_resume_tables(reads):
     resumed = source[source.index('uint32_t task_job_resume_t0(void)'):]
     assert re.search(r's < 2;', first[:first.index('return')])
     assert re.search(r's < 3;', resumed[:resumed.index('return')])
-    assert 'workload_resume_jobs[])(void) = {\n    task_job_resume_t0,\n    0,\n};' in source
-    assert 'workload_suspend_expected[] = {96U, 0U};' in source
+    # Flattened over the suspending tasks: the segment after each sleep, the checksum expected before it,
+    # and each job's sleep (t0 runs 4 jobs in the 40-tick horizon).
+    assert 'workload_resume_jobs[])(void) = {\n    task_job_resume_t0,\n};' in source
+    assert 'workload_suspend_expected[] = {96U};' in source
+    assert 'workload_suspend_ticks[] = {3U, 3U, 3U, 3U};' in source
     assert 'workload_expected[] = {\n144U, 80U\n};' in source
 
 
-def test_config_header_lists_suspensions_only_when_a_task_suspends(reads):
+def test_config_header_counts_sleep_points_only_when_a_task_suspends(reads):
     assert 'CHASER_SUSPENDS' not in config_header(make_plan(reads, 0))
-    assert '#define CHASER_SUSPENDS {3, 0}' in config_header(make_plan(suspended(reads), 0))
+    assert '#define CHASER_SUSPENDS {1, 0}' in config_header(make_plan(suspended(reads), 0))
+    points = [dict(after_sweeps=1, ticks=2), dict(after_sweeps=3, ticks=1)]
+    assert '#define CHASER_SUSPENDS {2, 0}' in config_header(make_plan(pointed(reads, points), 0))
+
+
+def test_several_points_split_the_sweeps_in_order(reads):
+    plan = make_plan(pointed(reads, [dict(after_sweeps=1, ticks=2), dict(after_sweeps=3, ticks=1)]), 2)
+    task = plan['tasks'][0]
+    assert task['suspend_points'] == [dict(after_sweeps=1, min_ticks=2, max_ticks=2, seed=0),
+                                      dict(after_sweeps=3, min_ticks=1, max_ticks=1, seed=0)]
+    registry = {a['array_id']: ArraySpec.from_dict(a) for a in plan['arrays']}
+    segments = segment_tasks(task_from_plan(task), registry)
+    assert [(s.task_id, s.sweeps) for s in segments] == [('t0', 1), ('resume_t0', 2), ('resume2_t0', 2)]
+    assert task['source_loads'] == 5 * 16 and task['expected_checksum'] == 2 * 16 * 3
+    assert len(list(reference_events(task_from_plan(task), registry))) == 5 * 16
+    assert suspend_schedule(task) == [[2, 2, 2, 2], [1, 1, 1, 1]]
+
+
+def test_variable_sleep_is_drawn_per_job_from_a_seeded_range(reads):
+    point = dict(after_sweeps=2, min_ticks=0, max_ticks=4, seed=7)
+    ticks = suspend_schedule(make_plan(pointed(reads, [point]), 2)['tasks'][0])
+    assert len(ticks) == 1 and len(ticks[0]) == 4 and all(0 <= t <= 4 for t in ticks[0])
+    assert suspend_schedule(make_plan(pointed(reads, [point]), 0)['tasks'][0]) == ticks  # same on every topology
+    other = suspend_schedule(make_plan(pointed(reads, [dict(point, seed=8)]), 2)['tasks'][0])
+    assert other != ticks
+
+
+def test_source_lists_every_segment_and_each_jobs_sleep(reads):
+    points = [dict(after_sweeps=1, ticks=2), dict(after_sweeps=3, min_ticks=0, max_ticks=4, seed=7)]
+    plan = make_plan(pointed(reads, points), 2)
+    source = workload_source(plan['tasks'], arrays=plan['arrays'])
+    assert 'workload_resume_jobs[])(void) = {\n    task_job_resume_t0,\n    task_job_resume2_t0,\n};' in source
+    assert 'workload_suspend_expected[] = {48U, 96U};' in source   # 1 then 2 sweeps x 16 loads x 3
+    ticks = [t for row in suspend_schedule(plan['tasks'][0]) for t in row]
+    assert 'workload_suspend_ticks[] = {' + ', '.join(f'{t}U' for t in ticks) + '};' in source
+
+
+@pytest.mark.parametrize('points, message', [
+    ([], 'suspend_points'),
+    ([dict(after_sweeps=3, ticks=1), dict(after_sweeps=1, ticks=1)], 'after_sweeps'),   # not increasing
+    ([dict(after_sweeps=5, ticks=1)], 'after_sweeps'),                                  # no sweep left after it
+    ([dict(after_sweeps=1, ticks=6), dict(after_sweeps=2, ticks=4)], 'period'),         # 10 ticks of a 10-tick period
+    ([dict(after_sweeps=1, min_ticks=3, max_ticks=2)], 'max_ticks'),
+    ([dict(after_sweeps=1, ticks=0)], 'ticks'),
+    ([dict(after_sweeps=1, ticks=2, min_ticks=1, max_ticks=2)], 'fields'),
+    ([dict(after_sweeps=1, ticks=2, extra=1)], 'fields'),
+])
+def test_invalid_points_are_rejected(reads, points, message):
+    with pytest.raises(ValueError, match=message):
+        make_plan(pointed(reads, points), 2)
+
+
+def test_points_and_the_single_sleep_shorthand_are_exclusive(reads):
+    with pytest.raises(ValueError, match='suspend_points'):
+        make_plan(pointed(suspended(reads), [dict(after_sweeps=1, ticks=2)]), 2)
+
+
+def test_every_resumed_function_name_must_be_unique(reads):
+    reads = pointed(reads, [dict(after_sweeps=1, ticks=2), dict(after_sweeps=3, ticks=1)])
+    reads['tasks'][1]['task_id'] = 'resume2_t0'
+    with pytest.raises(ValueError, match='unique'):
+        make_plan(reads, 2)
 
 
 def test_recorded_laysim_run_keeps_the_sleep_inside_the_measured_job():
@@ -136,9 +206,10 @@ def test_suspended_build_links_both_segments_into_every_elf(reads, tmp_path):
     from chaser.periodic.build import prepare, read_symbols
     prepare(suspended(reads), tmp_path / 'prepared')
     for name in ('g', 'c', 'p', 'c2'):
-        assert '#define CHASER_SUSPENDS {3, 0}' in (tmp_path / f'prepared/{name}/config.h').read_text()
+        assert '#define CHASER_SUSPENDS {1, 0}' in (tmp_path / f'prepared/{name}/config.h').read_text()
         symbols = read_symbols(tmp_path / f'prepared/build/{name}.exe')
-        assert {'task_job_t0', 'task_job_resume_t0', 'workload_resume_jobs', 'workload_suspend_expected'} <= set(symbols)
+        assert {'task_job_t0', 'task_job_resume_t0', 'workload_resume_jobs', 'workload_suspend_expected',
+                'workload_suspend_ticks'} <= set(symbols)
 
 
 @pytest.mark.skipif(not (SDK / 'bin/sparc-rtems6-gcc').exists() or __import__('shutil').which('clang-14') is None,
@@ -158,3 +229,24 @@ def test_analysis_combines_both_cold_segments_of_a_suspending_task(reads, tmp_pa
     profile = dict(modeled_accesses=80, l1_first_hit_ratio=0.6, llc_first_hit_ratio=0, all_cache_miss_ratio=0.4)
     assert cases['t0']['cls']['0.5'] == cls(profile, dict(l1_capacity=16384, llc_capacity=2 * 1024 ** 2), 0.5)
     assert 'segments' not in cases['t1']
+
+
+def test_recorded_laysim_run_sleeps_every_point_with_its_scheduled_ticks():
+    # Recorded laysim run (fixture note). Each sleep ends at a tick boundary: S scheduled ticks keep the
+    # job off the CPU for (S - 1, S] ticks, and a 0-tick draw skips the call.
+    from pathlib import Path
+    import json
+    from chaser.periodic.measurement import parse_log
+    fixture = json.loads((Path(__file__).parent / 'fixtures/multi-sleep-laysim-p.json').read_text())
+    plan = fixture['plan']
+    result = parse_log(fixture['log'], plan)
+    assert result['execution_status'] == 'ok', result['errors']
+    tick = plan['tick_ns']
+    schedules = [suspend_schedule(t) for t in plan['tasks']]
+    assert schedules[0] == [[2] * 4, [3] * 4] and schedules[2] == [[4] * 4] and schedules[3] == []
+    for job in result['jobs']:
+        ticks = [row[job['job']] for row in schedules[job['task']]]
+        off_cpu = job['completion_ns'] - job['start_ns'] - (job['cpu_after_ns'] - job['cpu_before_ns'])
+        assert job['checksum'] == plan['tasks'][job['task']]['expected_checksum']
+        assert (sum(ticks) - sum(t > 0 for t in ticks)) * tick < off_cpu + tick // 20
+        assert off_cpu < sum(ticks) * tick + tick // 20

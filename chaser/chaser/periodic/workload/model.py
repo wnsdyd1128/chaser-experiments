@@ -225,6 +225,9 @@ class TaskSpec(Generic[Parameters]):
             two segments; 0, the default, runs the job without suspending.
         suspend_after_sweeps: Sweeps run before the suspension (1 to sweeps - 1);
             the resumed segment runs the rest. 0 when the job does not suspend.
+        suspend_points: Several or variable sleeps instead of the single-sleep fields:
+            normalized dicts (after_sweeps, min_ticks, max_ticks, seed) in increasing
+            after_sweeps order; each job sleeps a seeded draw in [min, max] ticks there.
     """
     task_id: str
     pattern: str
@@ -237,6 +240,7 @@ class TaskSpec(Generic[Parameters]):
     footprint: MemoryFootprint | None = None
     suspend_ticks: int = 0
     suspend_after_sweeps: int = 0
+    suspend_points: tuple = ()
 
     @classmethod
     def from_dict(cls, value: dict, parameter_type: type[Parameters]) -> 'TaskSpec[Parameters]':
@@ -248,7 +252,8 @@ class TaskSpec(Generic[Parameters]):
                    metrics=KernelMetrics(**{f.name: value[f.name] for f in fields(KernelMetrics)}),
                    footprint=MemoryFootprint(**{f.name: value[f.name] for f in fields(MemoryFootprint)}),
                    suspend_ticks=value.get('suspend_ticks', 0),
-                   suspend_after_sweeps=value.get('suspend_after_sweeps', 0))
+                   suspend_after_sweeps=value.get('suspend_after_sweeps', 0),
+                   suspend_points=tuple(dict(p) for p in value.get('suspend_points', ())))
         if task.metrics.source_accesses != value['source_accesses']:
             raise ValueError('Plan source access count differs from kernel metrics')
         return task
@@ -259,7 +264,8 @@ class TaskSpec(Generic[Parameters]):
         if self.metrics is None or self.footprint is None:
             raise ValueError('Task must be normalized before serialization')
         suspension = (dict(suspend_ticks=self.suspend_ticks, suspend_after_sweeps=self.suspend_after_sweeps)
-                      if self.suspend_ticks else {})
+                      if self.suspend_ticks else
+                      dict(suspend_points=[dict(p) for p in self.suspend_points]) if self.suspend_points else {})
         return dict(task_id=self.task_id, pattern=self.pattern,
                     arrays={role: asdict(binding) for role, binding in self.arrays.items()},
                     sweeps=self.sweeps, core=self.core, period_ticks=self.period_ticks,
