@@ -53,6 +53,7 @@ utilization 균형과 release 고려를 더함, 연구 문서 PLAN 0절)의 근�
 | 46 | 학습에 없던 커널 4종에서의 실행 전 점검 v1(새 set) | `policy-mix/`(`kernel_tasks.py`, `kernel_calibrate.py`, `kernel_set.py`, `kernel_run.py`, `heldout_analysis.py`, `kernel_report.py`) | `kernel-calibration-heldout-v2`, `heldout-kernels-v1`, `heldout-kernels-analysis-v1` | `kernel-calibration-heldout`, `heldout-kernels`, `heldout-kernels-analysis` |
 | 47 | 실제 저지역성 커널 task set에서의 CHASER 배치(사전 등록, 새 set) | `policy-mix/`(`lowloc_set.py`, `lowloc_run.py`, `lowloc_analysis.py`, `kernel_calibrate.py`, `kernel_tasks.py`), `chaser/periodic/kernels/{transpose,cornerturn}`, `figures/lowloc_bars.py` | `kernel-calibration-lowloc-v1`, `lowloc-kernels-v1`, `lowloc-kernels-analysis-v1` | `kernel-calibration-lowloc`, `lowloc-kernels`, `lowloc-kernels-analysis` |
 | 48 | 데이터를 줄인 실제 저지역성 커널 task set에서의 CHASER 배치(사전 등록, 새 set) | `policy-mix/`(`lowloc_set.py`의 `lowloc-small` 설계, `lowloc_run.py`, `lowloc_analysis.py`), `supervisors/lowloc-small-v1.sh`, `figures/lowloc_bars.py` | `kernel-calibration-lowloc-small-v1`, `lowloc-small-v1`, `lowloc-small-analysis-v1`, pilot `lowloc-small-pilot{,2}-v1` | `kernel-calibration-lowloc-small`, `lowloc-small`, `lowloc-small-analysis` |
+| 49 | 탐색: 실행 전 판단·구조 선택 재검토와 job 중간 sleep pilot(사후, 결과 묶음 없음) | `.cache/c-correction-2026-10-14/`, `.cache/global-pilot-2026-10-14/`, `.cache/suspend-pilot-2026-10-14/`(각 `README.md`), 프레임워크 `suspend_ticks` | 왼쪽 폴더 | — |
 
 ---
 
@@ -2607,12 +2608,98 @@ DESIGN=lowloc-small-pilot sh supervisors/lowloc-small-v1.sh    # pilot 1 (and lo
 - 처음 늦은 job이 t0에 함께 release된 첫 job인 run이 WFD 119/144, RA 95/142, CGB 93/121, RA-CGB 86/132다.
 - CGB·RA-CGB에서는 저친화도 task가 2–3개 코어에 모였고, 처음 늦은 job이 그 묶음 코어에서 난 run이 CGB 115/121, RA-CGB 132/132다. 늦은 task가 저친화도 task인 run은 CGB 78/121, RA-CGB 114/132다. 즉 묶음 배치에서는 묶음 코어가 먼저 넘친다(4.3절 그림 4.3의 묶음 코어 실효 이용률과 같은 방향).
 - WFD에서는 저친화도 task가 3–4개 코어에 흩어져 있고, 처음 늦은 task는 고친화도 task인 run이 99/144다.
+- t0 비율의 해석(2026-10-14 보충): 47절과 달리 첫 job이 특별히 느리지 않았다(주기 CV 0, 부하 0.70의 job CPU ÷ 예산 중앙값: WFD 저친화도 1.67 → 이후 1.66, RA-CGB 1.42 → 1.40). CV 0에서는 매 주기가 t0와 같은 동시 release이므로, t0 위반은 코어의 주기당 실제 부하가 처음부터 1을 넘는다는 뜻이다. 첫 주기 실제 부하(첫 job CPU 합 ÷ 40 ms, 코어 중앙값)는 부하 0.70에서 CGB 묶음 코어 1.00·다른 코어 0.88, RA-CGB 0.98·0.87이었고, 부하 0.65–0.70의 48 run에서 가장 바쁜 코어가 묶음 코어인 run이 CGB 41, RA-CGB 45였다.
 
 ### 결과 파일
 - `results/kernel-calibration-lowloc-small/`: 크기별 단독 실행 job 시간(`task-times.json`)
 - `results/lowloc-small/`: `results.jsonl`, `isolated-u.json`, `per-set.jsonl.gz`(set별 `design.json`, 빌드별 `configuration.json`)
 - `results/lowloc-small-analysis/`: 판정 `lowloc.json/md`, 그림 `figures/lowloc-*`(`figures/lowloc_bars.py`; `lowloc-corun-*`은 사후 진단)
 - pilot 출력은 결과 묶음에 넣지 않고 `.cache/lowloc-small-pilot{,2}-v1`, `.cache/lowloc-small-pilot{,2}-analysis-v1`에 둔다.
+
+## 49. 탐색: 실행 전 판단과 구조 선택 재검토, job 중간 sleep pilot (2026-10-14, 사후)
+
+판정을 본 자료를 다시 읽은 분석과 작은 pilot이다. 주장에는 쓰지 않고, 다음 방향을 정하는 근거로만 쓴다. 결과는 결과 묶음에 넣지 않고 `.cache`의 세 폴더(각 `README.md`)에 있다.
+
+### 49.1 G·C 추천이 거의 쓰이지 않은 이유 (44·45절 결정 기록)
+- 44절: CHASER 배치가 놓쳤지만 G·C 중 하나가 지킨 set 44개의 결정은 거절 40, G·C 전환 2, P(잘못 수락) 2였다. 그 set들의 가장 높은 G·C 확률은 중앙값 0.46이고 0.8 이상은 4개다.
+- 확률 자체는 대체로 맞았다(P 확률 < 0.8인 set, 가장 높은 G·C 확률 구간별 실제 준수: 0–0.1 2/77, 0.1–0.3 5/25, 0.3–0.5 14/25, 0.5–0.7 24/28, 0.7–0.8 8/9, 0.8 이상 10/10). 같은 set의 G·C 확률과 P 확률 차이는 중앙값 0.0085로, RF는 구성 사이 차이를 거의 구분하지 못했다(P가 놓친 set에서 "G·C 확률 − P 확률"의 AUC 0.753).
+- G·C 문턱만 0.6으로 낮추면 G·C로 지킨 set 10 → 24, 전체 잘못 수락 1.0% → 1.9%(상한 4.3%)였다(결과를 보고 고른 값).
+- 45절: 살릴 수 있던 7 set 모두 P 확률 0.88–0.95로 P를 골라 G·C를 보지 않았다.
+
+### 49.2 실행시간 보정(C') + EDF 판정 (개발 자료 20·24·27·41, 실험 하나씩 뺀 검증)
+- 자료: 1,092 case, Partitioned run 5,165(지킴 2,717), task 행 82,506. 목표값은 task의 최악 job CPU ÷ 계획 예산(첫 위반 시각까지). 판정: 코어마다 Σ U × C'/C ≤ 1.
+- RF와 같은 run 3,078개(지킴 1,914)의 혼동 행렬:
+
+| 방법 | AUC | 받아들여 지킴 | 잘못 수락 | 잘못 거절 | 바르게 거절 |
+|---|---:|---:|---:|---:|---:|
+| RF(동결 설정, 실험별 재학습, τ 0.8) | 0.988 | 1,749 | 50 | 165 | 1,114 |
+| C' XGBoost 50% 분위 | 0.970 | 1,607 | 55 | 307 | 1,109 |
+| C' XGBoost 60% 분위 | 0.974 | 1,478 | 30 | 436 | 1,134 |
+| C' XGBoost 90% 분위 | 0.963 | 997 | 0 | 917 | 1,164 |
+| 측정 WCET(혼자 잰 C × 1.5) | 0.610 | 1,891 | 1,109 | 23 | 55 |
+| 정적 간섭 상한(요청마다 다른 코어 3개 대기) | 0.837 | 213 | 0 | 1,701 | 1,164 |
+
+- XGBoost: `reg:quantileerror`, 트리 300, 깊이 6, 학습률 0.05, 특징 23개(정적 값과 배치만, release 몰림 특징 포함)와 단조 제약. HGB보다 조금 나았다.
+- 계수를 고정한 경합 식은 과소 추정했다(평균 경합: task 2%만 덮음, 잘못 수락 37%). 분위 회귀 계수(50%: ι = 1.13 + 2.0 × L2 항 + 3.9 × 메모리 항)는 경합이 U 가정보다 2–4배 세게 작용함을 보였다.
+- 실험 단위 보정(conformal)은 분포가 다른 실험 41에서 분위를 맞추지 못했고(덮는 비율 0.69–0.79) 수락만 줄였다.
+- 정적 간섭 상한은 768 KiB·메모리 접근형 task에서 실제 증가를 27–43% 넘지 못했다(상한도 아님). C'도 WCET가 아니다(60% 분위가 task의 약 60%만 덮음). 안전성은 run 단위 잘못 수락률로만 말할 수 있다.
+
+### 49.3 D = βT 재판정 (기록된 job으로, 마감을 지킨 run만 다시 판정)
+- 주기가 다양한 cell(CV 0.2와 실험 20의 조화 주기)을 모은 RA 대 WFD(한쪽만 지킨 set): D = T 29 대 15(WFD가 나음, p 0.049), 0.9T 18 대 37(p 0.014), 0.8T 11 대 53(p 1×10⁻⁷). D < T에서는 RA가 유리하다.
+- 원인(48절 CV 0.2, 부하 0.65·0.70): RA는 코어 사이 계획 U 차이를 넓히고(WFD 0.081 → RA 0.138, CGB 0.078 → RA-CGB 0.159) 실제 부하가 가장 큰 코어를 1 위로 올리지만(0.975 → 1.009, 0.958 → 1.013), 마감을 지킨 run의 최악 응답 ÷ 주기를 줄인다(0.879 → 0.812, 0.887 → 0.826).
+- 실제 run은 D = T의 EDF였으므로 주기가 다양한 cell은 근사다. CV 0은 정확하다.
+
+### 49.4 Global이 유리한 조건 (44·48절 자료, 48절 set에 G4 추가 run)
+- 44절(D = T): G4 245, CHASER P 218 set(G4만 33, P만 6, p 1×10⁻⁵). G4만 지킨 set에서는 P의 job이 다른 코어가 노는 동안 기다린 시간이 가장 길었다(중앙값 399 대 둘 다 놓친 set 167 ms/초). 선점 비율은 차이가 없었다(12.4% 대 13.3%).
+- 48절 set 240개 G4 run(15:17–15:45 KST): 주기 CV 0에서는 G4가 가장 나빴다(부하 0.65: 5/24, RA-CGB 21). CV 0.2에서는 RA-CGB보다 나았고(G4만 16, RA-CGB만 2) CGB와는 비슷했다(0.60–0.75 합 60 대 61).
+- 개발 자료 895 set(실험 20·24·27): CHASER P가 놓친 372 set 중 G4가 지킨 것 30개, P만 지킨 것 42개. C'로 예측한 네 코어 평균 부하가 G4가 지킬 set을 가려냈고(AUC 0.90), 불균형은 아니었다(0.43). "P가 불가하면 평균 U' ≤ 0.85일 때 G4" 규칙은 41 set을 G4로 보냈지만(37 지킴) 그중 36은 P로도 지켰을 set이었다.
+- 선점: 주기 CV 0에서는 0%, CV 0.2에서는 job의 P 3–5%, C 5–7%, G 8.6%. 실험 48 CV 0.2에서 짧은 주기 job이 긴 주기 job 실행 중에 release된 18,401번 중 EDF가 선점한 것은 2,585번(14%)이다(RMS였다면 모두 선점).
+
+### 49.5 job 중간 sleep (프레임워크와 pilot 두 번)
+- 프레임워크(커밋 e145324): schema v2 task의 `suspend_ticks`(S)와 `suspend_after_sweeps`(k). 앞 k sweep → `rtems_task_wake_after(S)` → 나머지 sweep. 사용법과 계약은 `rtems/periodic/experiment-guide/INPUTS.md`의 "job 중간 sleep". sleep이 없는 set은 plan·헤더·소스·디버그 정보를 뗀 ELF가 이전과 같다.
+- pilot(`.cache/suspend-pilot-2026-10-14/`): L1에 들어가는 계산 위주 task 12–16개 중 절반이 job 중간에 주기의 σ만큼 잔다. 구성은 P(CPU U 기준 WFD), P-S(U + S/T 기준 WFD), G4, C1+1+2. D = T.
+  - pilot 1(부하 0.5–0.8, σ 0·0.2·0.4, 384 run): 부하 0.7까지는 모든 구성이 거의 다 지켰다.
+  - pilot 2(부하 0.8–0.9, σ 0·0.3·0.5, 조건별 6 set, 432 run): 주기가 섞이면 G4가 P보다 적게 지킨 조건이 없었고(G4만 8, P만 0), 놓친 job이 가장 적었다(σ 0.5·부하 0.9: G4 15.5%, P 33.5%). 주기가 모두 같고 sleep이 없으면 P가 나았다(P만 8, G4만 0). P-S는 거의 모든 조건에서 가장 나빴다.
+  - TAT(둘 다 지킨 set, P 대비): 주기가 섞이면 G4가 −3~−10%(예: pilot 1 σ 0 −10.4%, 16/0), 주기가 같고 sleep이 없으면 +6.6%, sleep이 길면 −4~−5%. TET는 G4가 +0.1–0.2%. 비교 기준 P는 release 고려 배치(RA)가 아닌 WFD다.
+
+### 49.6 성능 지표로 본 구조·배치 비교 (2026-10-15)
+사용자 방향(2026-10-15)에 따라 마감 준수 대신 성능 지표로 비교했다. 지표는 측정 구간 job의 응답비((완료 − 명목 release) ÷ 주기)의 평균과 95번째 백분위, TAT, TET다. 같은 set끼리 기준 구성 대비 비의 중앙값이고, 괄호는 (기준보다 작아진 set / 커진 set)이다.
+
+**48절 set(저친화도 실제 커널, 부하 0.60–0.70, 기존 모드라 다섯 구성이 모두 지킨 set만), WFD 대비**
+
+| 주기 | 구성 | 평균 응답비 | 95% 응답비 | TET | TAT |
+|---|---|---|---|---|---|
+| CV 0 (22 set) | RA | −0.1% | −0.4% | +0.1% | −0.5% |
+| | CGB | −8.7% (17/5) | −4.8% | −5.0% | −3.6% |
+| | RA-CGB | −9.1% (19/3) | −4.6% (21/1) | −5.0% | −5.0% |
+| | G4 | −3.0% | +1.6% (5/17) | −0.4% | +2.7% (2/20) |
+| CV 0.2 (35 set) | RA | −3.8% | −7.3% | +0.3% | −15.1% (34/1) |
+| | CGB | −7.6% (30/5) | −5.5% | −3.0% | −6.1% |
+| | RA-CGB | −6.9% (31/4) | −8.0% | −2.9% | −17.6% (32/3) |
+| | G4 | −5.6% | −9.3% | +1.9% (8/27) | −12.2% |
+
+**sleep pilot 3(계산 위주 L1 task, 부하 0.7–0.9, 조건별 18 set, 288 run을 늦어도 계속 실행 모드로 다시 돌려 모든 set 비교), P(WFD) 대비**
+설계: 주기 "섞임"(20/40/80 ms, set의 주기 CV 0.45–0.64)과 "아주 넓음"(5–160 ms, 0.83–1.40), σ 0·0.3, 구성 P(WFD)·RA·G4·C1+1+2, seed 20261016(`.cache/suspend-pilot-2026-10-14/out3s`, 기존 모드 결과 `out3`).
+
+| 주기 | sleep | 구성 | 평균 응답비 | 95% 응답비 | TAT | TET | 모든 마감 준수(참고) |
+|---|---|---|---|---|---|---|---|
+| 섞임 | 없음 | G4 | −8.2% (18/0) | −10.8% | −7.9% | +0.1% | 18 |
+| | | RA | −6.8% (18/0) | −7.7% | −10.9% | +0.0% | 18 |
+| 섞임 | 30% | G4 | −10.3% (18/0) | −5.9% | −8.2% | +0.1% | 14 (P 12) |
+| | | RA | −7.5% (15/3) | +1.3% | −2.1% | +0.0% | 12 |
+| 아주 넓음 | 없음 | G4 | −16.2% (18/0) | −24.6% | −6.5% | +0.2% | 18 |
+| | | RA | −13.5% (16/2) | −28.3% | −5.1% | +0.1% | 18 |
+| 아주 넓음 | 30% | G4 | −13.6% (18/0) | −22.0% | −9.4% | +0.6% | 17 (P 13) |
+| | | RA | −9.3% (15/3) | −13.8% | −1.7% | +0.1% | 11 |
+
+C1+1+2는 평균 응답비 −1.8~−4.4%, 95% 응답비 ±0%였다.
+- 캐시를 많이 쓰는 task가 섞이면 친화도 묶음(CGB·RA-CGB)이 응답(−7~−9%)과 TET(−3~−5%)를 함께 줄였다. G4는 주기가 같으면 느렸고(95% 응답비 +1.6%), 주기가 다양하면 꼬리 응답이 가장 빨랐지만 TET가 늘었다(+1.9%).
+- 계산 위주 task에서는 주기가 넓게 퍼질수록 P(WFD) 대비 이득이 커졌다. sleep이 없으면 RA가 G4와 비슷했고(95% 응답비는 RA가 더 작음), sleep이 있으면 G4가 앞섰다. 깨어난 task가 Global에서는 노는 코어를 바로 쓰기 때문으로 보인다.
+- 늦어도 계속 실행 모드는 실행 파일 코드가 달라 같은 set의 값이 조금 다르다(둘 다 지킨 set의 TET 차이 중앙값 −0.01%, 최대 0.1%). 두 모드의 결과를 한 표에 섞지 않는다.
+- 측정 장치(2026-10-15, 커밋 전): 설정의 `continue_after_miss: true`면 늦은 완료·밀린 release에서도 task를 멈추지 않는다(`rtems/periodic/experiment-guide/INPUTS.md`의 "마감을 놓쳐도 계속 실행"). 마감을 놓친 run 2,383개(27·44·47·48절)의 첫 위반은 실험마다 98.8–100%가 warm-up 안이었다(첫 release 시각 45–95%). 기존 모드에서는 그 한 번으로 측정 구간 전체가 기록되지 않았다.
+
+### 49.7 읽는 법
+- 지금까지의 확증 실험(27·44·45·48)은 캐시를 많이 쓰는 task, D = T, sleep 없음으로 구성되어 P가 유리한 쪽이었다. 구조마다 이기는 조건이 다른 task set 유형을 함께 평가해야 구조·배치 선택의 효과를 보일 수 있다([연구 계획](../../../system-prompt-extraction/plan/PLAN.md) 0절, 2026-10-15 사용자 방향).
 
 ## 정리: 논문 실험만 남기기 (2026-10-08 KST)
 
