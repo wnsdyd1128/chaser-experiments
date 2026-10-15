@@ -45,6 +45,8 @@ def config_header(plan: dict | PolicyHeader) -> str:
         keys.append(('suspend_ticks', 'SUSPENDS'))
     for key, macro in keys:
         lines.append('#define CHASER_' + macro + ' {' + ', '.join(str(getattr(t, key)) for t in tasks) + '}')
+    if header.continue_after_miss:
+        lines.append('#define CHASER_CONTINUE_AFTER_MISS 1')
     return '\n'.join(lines) + '\n'
 
 

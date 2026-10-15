@@ -140,6 +140,15 @@ static rtems_task worker(rtems_task_argument argument)
         if (!chaser_empty) jobs[i][j].checksum = workload_checksum(i);
 #endif
         placement[i].count++;
+#ifdef CHASER_CONTINUE_AFTER_MISS
+        /* Soft-deadline run: a late completion, a postponed release (RTEMS_TIMEOUT) and an
+         * expired period are recorded and the worker goes on; a wrong checksum or another
+         * period status still stops it, keeping that final record. */
+        if ((jobs[i][j].status != RTEMS_SUCCESSFUL && jobs[i][j].status != RTEMS_TIMEOUT)
+                || jobs[i][j].checksum != (chaser_empty ? 0 : workload_expected[i]))
+            break;
+#else
+#line 121
         /* Preserve the offending final record, including a final-job miss. */
         if (jobs[i][j].status != RTEMS_SUCCESSFUL
                 || jobs[i][j].after.state != RATE_MONOTONIC_ACTIVE
@@ -147,6 +156,8 @@ static rtems_task worker(rtems_task_argument argument)
                 || jobs[i][j].completion > t0_ns + (uint64_t)(j + 1) * periods[i] * TICK_NS
                 || jobs[i][j].checksum != (chaser_empty ? 0 : workload_expected[i]))
             break;
+#endif
+#line 128
     }
     /* Keep object-allocator lock contention and teardown dispatches outside
      * every worker's measurement interval, not only this worker's last job. */

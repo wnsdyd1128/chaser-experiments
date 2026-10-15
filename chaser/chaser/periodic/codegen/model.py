@@ -75,15 +75,18 @@ class PolicyHeader:
         plan_hash: Canonical plan identity used to bind runtime data to its plan.
         tasks: Scheduling records in worker-index order, matching the generated
             job function and expected-checksum tables.
+        continue_after_miss: Soft-deadline run: workers keep running after a late
+            completion or a postponed release instead of stopping.
     """
     architecture: int
     contract_id: str
     plan_hash: str
     tasks: tuple[TaskSchedule, ...]
+    continue_after_miss: bool = False
 
     @classmethod
     def from_plan(cls, plan: dict) -> 'PolicyHeader':
         """Read only the fields needed by the RTEMS configuration header."""
         return cls(plan['architecture'], plan['contract_id'], plan['plan_hash'], tuple(
             TaskSchedule(t['period_ticks'], t['job_count'], t['core'], t.get('suspend_ticks', 0))
-            for t in plan['tasks']))
+            for t in plan['tasks']), plan.get('continue_after_miss', False))

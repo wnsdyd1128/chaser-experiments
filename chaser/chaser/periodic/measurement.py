@@ -41,7 +41,7 @@ def make_plan(configuration: dict, architecture: int) -> dict:
         raise ValueError('Unknown input schema version')
     fields(configuration, ('schema_version', 'workload_id', 'family_id', 'policy_id',
         'measurement_contract_id', 'horizon_ticks', 'warmup_ticks', 'u_repeats',
-        'workload_optimization', 'arrays', 'tasks'),
+        'workload_optimization', 'continue_after_miss', 'arrays', 'tasks'),
         ('workload_id', 'family_id', 'policy_id', 'horizon_ticks', 'arrays', 'tasks'))
     if not isinstance(configuration['tasks'], list):
         raise ValueError('Tasks must be a list')
@@ -106,6 +106,9 @@ def schedule_plan(configuration: dict, architecture: int, normalized_tasks: list
         raise ValueError('warmup_ticks must divide every task period and precede measurement')
     if type(repeats) is not int or repeats < 1:
         raise ValueError('u_repeats must be positive')
+    soft = configuration.get('continue_after_miss', False)
+    if type(soft) is not bool:
+        raise ValueError('continue_after_miss must be a boolean')
     for task in tasks:
         task['warmup_jobs'] = warmup // task['period_ticks']
     plan = {k: configuration[k] for k in ('workload_id', 'family_id', 'policy_id')}
@@ -123,6 +126,8 @@ def schedule_plan(configuration: dict, architecture: int, normalized_tasks: list
                 measurement_boundary_id='public-workload-bracket-v1')
     plan['mapping_hash'] = digest({'topology': plan['topology_id'],
                                   'domains': {t['task_id']: t['domain'] for t in tasks}})
+    if soft:  # soft-deadline run: absent otherwise, so other plans keep their identity
+        plan['continue_after_miss'] = True
     return plan
 
 
@@ -203,6 +208,10 @@ def aggregate(records: list[dict], plan: dict, *, mode: int = 0,
                 errors.add('arm_phase')
         if header['t0_ns'] != header['t0_tick'] * plan['tick_ns']:
             errors.add('release_mismatch')
+        # Soft-deadline runs (continue_after_miss) record late completions, postponed releases
+        # (period status RTEMS_TIMEOUT, state EXPIRED) per job instead of failing the run.
+        soft = plan.get('continue_after_miss', False)
+        late_jobs = postponed_releases = 0
         tet, tat, completions, elapsed = 0, 0, [], []
         response_sum, starts, cohorts, warmup_count = 0, [], {}, 0
         for job in jobs:
@@ -219,7 +228,7 @@ def aggregate(records: list[dict], plan: dict, *, mode: int = 0,
             deadline = header['t0_tick'] + (job['job'] + 1) * task['period_ticks']
             if job['release_ns'] != release:
                 errors.add('release_mismatch')
-            _check_public_status(job, release, plan['tick_ns'], errors)
+            _check_public_status(job, release, plan['tick_ns'], errors, period_ns if soft else None)
             if trace:
                 if job['timer_before'] != deadline or job['timer_after'] != deadline:
                     errors.add('release_mismatch')
@@ -236,16 +245,18 @@ def aggregate(records: list[dict], plan: dict, *, mode: int = 0,
                 errors.add('unexpected_probe')
             if not release <= job['start_ns'] <= job['completion_ns']:
                 errors.add('timestamps')
-            if job['completion_ns'] > release + period_ns:
+            late = job['completion_ns'] > release + period_ns
+            if late and not soft:
                 errors.add('deadline_miss')
             cpu = job['cpu_after_ns'] - job['cpu_before_ns']
             if cpu < 0 or job['cpu_before_ns'] < 0 or cpu > job['completion_ns'] - job['start_ns']:
                 errors.add('cpu_accounting')
-            if job['state_before'] != 1 or job['state_after'] != 1:
+            states = (1, 2) if soft else (1,)  # RATE_MONOTONIC_ACTIVE, EXPIRED
+            if job['state_before'] not in states or job['state_after'] not in states:
                 errors.add('period_state')
-            if job['postponed_before'] or job['postponed_after']:
+            if (job['postponed_before'] or job['postponed_after']) and not soft:
                 errors.add('postponed_job')
-            if job['period_status']:
+            if job['period_status'] not in ((0, 6) if soft else (0,)):  # RTEMS_SUCCESSFUL, RTEMS_TIMEOUT
                 errors.add('period_status')
             if job['checksum'] != (0 if empty else task['expected_checksum']):
                 errors.add('checksum')
@@ -256,6 +267,8 @@ def aggregate(records: list[dict], plan: dict, *, mode: int = 0,
                 warmup_count += 1
                 continue
             tet += cpu
+            late_jobs += late
+            postponed_releases += job['period_status'] == 6
             response_sum += job['completion_ns'] - release
             completions.append(job['completion_ns'])
             starts.append(job['start_ns'])
@@ -299,6 +312,8 @@ def aggregate(records: list[dict], plan: dict, *, mode: int = 0,
                                                         for row in cohort_rows),
                           run_release_span_ns=max(completions) - header['t0_ns'],
                           run_execution_span_ns=max(completions) - min(starts))
+            if soft:
+                result.update(late_jobs=late_jobs, postponed_releases=postponed_releases)
             result.update(tet_ns=tet, tat_ns=tat,
                           makespan_ns=max(completions) - header['t0_ns'],
                           mean_response_ns=response_sum / len(completions))
@@ -311,10 +326,16 @@ def aggregate(records: list[dict], plan: dict, *, mode: int = 0,
     return result
 
 
-def _check_public_status(job: dict, release: int, tick: int, errors: set) -> None:
+def _check_public_status(job: dict, release: int, tick: int, errors: set, period: int | None = None) -> None:
     # since_last_period is sampled inside get_status(), not at either uptime
     # endpoint. Keep an interval rather than inventing an exact kernel epoch.
+    # With period (soft-deadline runs), RTEMS keeps the epoch of the last on-time
+    # release while releases are postponed, so the epoch may be any earlier
+    # release of the task: release - m x period for an integer m >= 0.
     start, end = job['start_ns'], job['completion_ns']
+    if period:
+        epoch = start - job['wall_before_ns']
+        release -= max(0, round((release - epoch) / period)) * period
     before_end, after_start = job['status_before_end_ns'], job['status_after_start_ns']
     if not start <= before_end <= after_start <= end:
         errors.add('timestamps')

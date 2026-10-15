@@ -262,6 +262,22 @@ schema v2 task에 두 항목을 넣으면 job이 계산 도중 스스로 잠든�
   (`init.c`의 `#line`이 `require()`의 줄 번호를 보존한다. 2026-10-14 실험 48 set으로 디버그 정보를 뗀 ELF 4개가 같음을 확인).
 - 아직 반영하지 않은 것: `chaser.policy.pfirst`(명목 판정·배치·특징)는 sleep 시간을 쓰지 않는다.
 
+<a id="soft-deadline-runs-2026-10"></a>
+
+#### 마감을 놓쳐도 계속 실행 (2026-10)
+
+schema v2 설정의 최상위에 `continue_after_miss: true`를 넣으면, job이 늦거나 release가 밀려도 task를 멈추지 않고
+`job_count`까지 모두 실행한다(기본값 false는 이전처럼 첫 위반에서 그 task를 멈춘다).
+
+- `init.c`는 이 모드에서 checksum 오류와 `RTEMS_SUCCESSFUL`·`RTEMS_TIMEOUT`이 아닌 주기 상태에서만 멈춘다.
+- 측정 해석은 늦은 완료, 밀린 release(주기 상태 `RTEMS_TIMEOUT`), `EXPIRED` 주기를 run 오류로 보지 않고,
+  측정 구간의 `late_jobs`(완료 > release + 주기)와 `postponed_releases`를 결과에 더한다. 응답 시간은 명목 release
+  (t0 + j × 주기)부터 센다. 모든 job이 기록되므로 TET·TAT·응답 시간은 늦은 run에서도 정의된다.
+- release가 밀리는 동안 RTEMS는 주기의 회계 기준 시각을 마지막 제때 release에 둔다. 그래서 이 모드의 release 검사는
+  기준 시각이 그 task의 이전 release(release − m × 주기, m ≥ 0) 중 하나인지 본다.
+- 이 모드의 `execution_status: ok`는 "모든 job이 정상 기록됨"이지 "모든 마감을 지킴"이 아니다. 마감은 `late_jobs`로 본다.
+- 이 모드를 쓰지 않는 plan·`config.h`·실행 파일 코드는 이전과 같다(`init.c`의 `#line`, 2026-10-14 실험 48 set으로 확인).
+
 ### 2.3. 다중 배열 smoke 실행
 
 현재 workspace root에서 실행하고, 이미 존재하지 않는 output 이름을 선택한다.
