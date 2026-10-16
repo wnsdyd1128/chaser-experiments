@@ -9,6 +9,7 @@ import time
 
 from chaser.locality.ca import ca_csrd, ca_from_histogram
 from chaser.locality.cls import cls, DEFAULT_ALPHAS
+from chaser.locality.instructions import job_ir_counts
 from chaser.periodic.event_storage import compress_events as archive_events
 from chaser.periodic.event_compression import EventCompressionQueue
 from chaser.periodic.build import YARDA, check_layout, read_symbols
@@ -144,6 +145,14 @@ def _analyze(prepared, timeout, compress_events, compression_queue, reservations
             ape = output / f'{segment.task_id}.ape.json'
             write_json(ape, {**raw, 'functions': functions})
             segments.append((segment, root, ape))
+        # The job's static IR instructions (every segment) give the placement's memory intensity (mpki);
+        # None when a segment's loop trip counts are not constant.
+        counts = [job_ir_counts({'functions': json.loads(a.read_text())['functions']}, r) for _, r, a in segments]
+        instructions = None
+        if None not in counts:
+            if sum(m for _, m in counts) != sum(s.metrics.source_accesses for s, _, _ in segments):
+                raise ValueError('IR loads and stores differ from the emitted workload accesses')
+            instructions = sum(i for i, _ in counts)
         for name in ARCHITECTURES:
             elf = prepared / f'build/{name}.exe'
             layout = check_layout(read_symbols(elf), plan['arrays'])
@@ -190,6 +199,7 @@ def _analyze(prepared, timeout, compress_events, compression_queue, reservations
             single = [_case(results, checked, accesses, caches) for results, checked, accesses in parts]
             case = single[0] if len(parts) == 1 else dict(
                 _combined_case(parts, caches), segments={s.task_id: c for (s, _, _), c in zip(segments, single)})
+            case['ir_instructions'] = instructions
             stream_hash = '+'.join(c.stream_hash for _, c, _ in parts)
             if task_id in cases and (cases[task_id] != case
                     or provenance[task_id]['stream_hash'] != stream_hash):

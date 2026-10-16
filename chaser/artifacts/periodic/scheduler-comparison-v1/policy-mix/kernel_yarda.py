@@ -6,7 +6,9 @@ exactly the plan's source accesses with complete coverage and passing invariants
 chaser.periodic.analysis (every exported event against the reference order, on all four ELFs) stays covered by
 tests/periodic/multi_array; at experiment sizes it exports up to 240 MB of events per task and ELF (2026-10-08).
 A suspending job is analyzed per segment (task_job_<id>, task_job_resume_<id>, ...), each from a cold cache, and its
-case combines them as chaser.periodic.analysis does (first-hit counts summed), listing the segments.
+case combines them as chaser.periodic.analysis does (first-hit counts summed), listing the segments. Each case also
+records the job's static IR instructions (chaser.locality.instructions, every segment), the placement's mpki input,
+or None when a segment's loop trip counts are not constant.
 Writes <prepared>/analysis/locality.json ({cases: {task: {cls: {'0.5': ...}, clp, modeled_accesses[, segments]}}})
 and <prepared>/analysis/p/<segment>/hierarchy.json, the layout chaser.policy.pfirst.inputs.load_analysis reads.
 """
@@ -16,6 +18,7 @@ from pathlib import Path
 import subprocess
 
 from chaser.locality.cls import cls
+from chaser.locality.instructions import job_ir_counts
 from chaser.periodic.build import YARDA
 from chaser.periodic.kernels import segment_tasks, task_from_plan
 from chaser.periodic.workload import ArraySpec
@@ -38,7 +41,7 @@ def analyze(prepared: Path, timeout: float = 1800) -> dict:
     registry = {a['array_id']: ArraySpec.from_dict(a) for a in plan['arrays']}
     cases = {}
     for task in plan['tasks']:
-        parts = {}
+        parts, instructions = {}, 0
         for segment in segment_tasks(task_from_plan(task), registry):
             name = segment.task_id
             root, helper = 'task_job_' + name, 'kernel_' + name
@@ -47,6 +50,13 @@ def analyze(prepared: Path, timeout: float = 1800) -> dict:
                 raise ValueError(f'{name}: expected the emitted job wrapper and inline kernel')
             ape = output / f'{name}.ape.json'
             ape.write_text(json.dumps({**raw, 'functions': functions}))
+            counts = job_ir_counts({'functions': functions}, root)
+            if counts is None:
+                instructions = None
+            elif instructions is not None:
+                if counts[1] != segment.metrics.source_accesses:
+                    raise ValueError(f'{name}: IR loads and stores differ from the plan ({counts[1]} of {segment.metrics.source_accesses})')
+                instructions += counts[0]
             directory = output / 'p' / name
             directory.mkdir(parents=True)
             accesses, limit = segment.metrics.source_accesses, segment.metrics.loop_iterations + 10
@@ -75,6 +85,7 @@ def analyze(prepared: Path, timeout: float = 1800) -> dict:
             combined = dict(modeled_accesses=total, l1_first_hit_ratio=counts[0] / total,
                             llc_first_hit_ratio=counts[1] / total, all_cache_miss_ratio=counts[2] / total)
             cases[task['task_id']] = dict(case(combined), segments={n: case(e) for n, e in parts.items()})
+        cases[task['task_id']]['ir_instructions'] = instructions
     report = dict(cases=cases, scope='cold-task-local-job, P ELF, hierarchy-rd only (kernel_yarda)')
     (output / 'locality.json').write_text(json.dumps(report, indent=1) + '\n')
     return report

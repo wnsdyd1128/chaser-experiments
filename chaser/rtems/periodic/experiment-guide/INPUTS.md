@@ -342,6 +342,10 @@ sweep마다 `seed` 배열(`uint32_t`)에서 초깃값 하나를 읽고, 이어�
   `tests/periodic/multi_array/fixtures/compute-laysim-p.json`): 두 커널 모두 checksum이 맞았고, 반복 4배에 job CPU가
   3.9배였다(1,000번 × 4 sweep에 약 150 µs).
 - 메모리 접근은 sweep당 1번이라 HARA의 CLS는 sweep 수로만 정해진다(4 sweep이면 처음 1번만 miss해 0.75, 1 sweep이면 0).
+  그래서 분석은 job의 정적 IR 명령 수도 기록한다(`locality.json`의 `ir_instructions`, `chaser.locality.instructions`가 APE의
+  블록별 실행 횟수와 명령 종류로 셈, sleep 구간은 합침). IR load·store 수가 HARA 접근 수와 다르면 분석을 멈춘다.
+- 반복 횟수가 상수가 아닌 반복문(PolyBench SYRK·TRMM의 삼각형 반복문)은 YARDA가 블록 실행 횟수를 내지 않아
+  `ir_instructions`가 `null`이다.
 
 ### 2.3. 다중 배열 smoke 실행
 

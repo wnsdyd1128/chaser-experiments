@@ -111,3 +111,28 @@ def test_a_suspending_job_missing_a_segments_output_defers(tmp_path):
     suspending(tmp_path, [('k0', 100, 60, 10, 40, 64)])
     with pytest.raises(inputs.MissingInput):
         inputs.load_analysis(tmp_path, [dict(task_id='k0', u=0.1, period=20)])
+
+
+def test_inputs_give_the_static_l1_misses_per_thousand_ir_instructions(tmp_path):
+    (tmp_path / 'analysis/p/k0').mkdir(parents=True)
+    (tmp_path / 'analysis/locality.json').write_text(json.dumps(dict(cases=dict(k0=dict(cls={'0.5': 0.4}, ir_instructions=50_000)))))
+    (tmp_path / 'analysis/p/k0/hierarchy.json').write_text(json.dumps(dict(tasks=[dict(
+        l1_first_hit_ratio=0.4, all_cache_miss_ratio=0.1, l1=dict(misses=3000, unique_lines=64))])))
+    assert inputs.load_analysis(tmp_path, [dict(task_id='k0', u=0.1, period=20)])[0]['mpki'] == pytest.approx(60.0)
+
+
+def test_inputs_without_an_instruction_count_have_no_mpki(tmp_path):
+    (tmp_path / 'analysis/p/k0').mkdir(parents=True)
+    (tmp_path / 'analysis/locality.json').write_text(json.dumps(dict(cases=dict(k0=dict(cls={'0.5': 0.4})))))
+    (tmp_path / 'analysis/p/k0/hierarchy.json').write_text(json.dumps(dict(tasks=[dict(
+        l1_first_hit_ratio=0.4, all_cache_miss_ratio=0.1, l1=dict(misses=3000, unique_lines=64))])))
+    assert inputs.load_analysis(tmp_path, [dict(task_id='k0', u=0.1, period=20)])[0]['mpki'] is None
+
+
+def test_a_suspending_jobs_mpki_uses_its_segments_misses_over_the_jobs_instructions(tmp_path):
+    suspending(tmp_path, [('k0', 100, 60, 10, 40, 64), ('resume_k0', 300, 240, 20, 60, 32)])
+    path = tmp_path / 'analysis/locality.json'
+    report = json.loads(path.read_text())
+    report['cases']['k0']['ir_instructions'] = 4000
+    path.write_text(json.dumps(report))
+    assert inputs.load_analysis(tmp_path, [dict(task_id='k0', u=0.1, period=20)])[0]['mpki'] == pytest.approx(1000 * 100 / 4000)
