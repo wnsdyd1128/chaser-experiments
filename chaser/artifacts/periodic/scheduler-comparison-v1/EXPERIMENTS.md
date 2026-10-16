@@ -53,7 +53,7 @@ utilization 균형과 release 고려를 더함, 연구 문서 PLAN 0절)의 근�
 | 46 | 학습에 없던 커널 4종에서의 실행 전 점검 v1(새 set) | `policy-mix/`(`kernel_tasks.py`, `kernel_calibrate.py`, `kernel_set.py`, `kernel_run.py`, `heldout_analysis.py`, `kernel_report.py`) | `kernel-calibration-heldout-v2`, `heldout-kernels-v1`, `heldout-kernels-analysis-v1` | `kernel-calibration-heldout`, `heldout-kernels`, `heldout-kernels-analysis` |
 | 47 | 실제 저지역성 커널 task set에서의 CHASER 배치(사전 등록, 새 set) | `policy-mix/`(`lowloc_set.py`, `lowloc_run.py`, `lowloc_analysis.py`, `kernel_calibrate.py`, `kernel_tasks.py`), `chaser/periodic/kernels/{transpose,cornerturn}`, `figures/lowloc_bars.py` | `kernel-calibration-lowloc-v1`, `lowloc-kernels-v1`, `lowloc-kernels-analysis-v1` | `kernel-calibration-lowloc`, `lowloc-kernels`, `lowloc-kernels-analysis` |
 | 48 | 데이터를 줄인 실제 저지역성 커널 task set에서의 CHASER 배치(사전 등록, 새 set) | `policy-mix/`(`lowloc_set.py`의 `lowloc-small` 설계, `lowloc_run.py`, `lowloc_analysis.py`), `supervisors/lowloc-small-v1.sh`, `figures/lowloc_bars.py` | `kernel-calibration-lowloc-small-v1`, `lowloc-small-v1`, `lowloc-small-analysis-v1`, pilot `lowloc-small-pilot{,2}-v1` | `kernel-calibration-lowloc-small`, `lowloc-small`, `lowloc-small-analysis` |
-| 49 | 탐색: 실행 전 판단·구조 선택 재검토, job 중간 sleep pilot, W6 섞인 set pilot(사후, 결과 묶음 없음) | `.cache/c-correction-2026-10-14/`, `.cache/global-pilot-2026-10-14/`, `.cache/suspend-pilot-2026-10-14/`, `.cache/w6-pilot-2026-10-15/`(각 `README.md`), 프레임워크 `suspend_ticks` | 왼쪽 폴더 | — |
+| 49 | 탐색: 실행 전 판단·구조 선택 재검토, job 중간 sleep pilot, W6 섞인 set·W7 주기 양극화 pilot(사후, 결과 묶음 없음) | `.cache/c-correction-2026-10-14/`, `.cache/global-pilot-2026-10-14/`, `.cache/suspend-pilot-2026-10-14/`, `.cache/w6-pilot-2026-10-15/`, `.cache/w7-pilot-2026-10-16/`(각 `README.md`), 프레임워크 `suspend_ticks` | 왼쪽 폴더 | — |
 
 ---
 
@@ -2764,6 +2764,42 @@ C1+1+2는 평균 응답비 −1.8~−4.4%, 95% 응답비 ±0%였다.
   - 평균 응답비는 여전히 G4가 가장 좋았다. C1+3-CG는 G4 대비 +1.1%(11/25, p 0.002), TAT는 −1.8%(21/15, p 0.16)였다. CG 대비로는 두 지표 모두 좋았다(−3.4%, −3.7%).
 - sleep pilot 3 set(49.6, 늦어도 계속 실행 모드 `out3s`, 72 set)에 C1+3(WFD 배치) run 72개를 더했다(2026-10-16 07:40–08:05 KST, 오류 0). 캐시 task가 없는 이 유형에서 C1+3은 네 조건 모두 G4와 WFD 사이였고 C1+1+2보다 좋았다(평균 응답비, task 가중: G4 0.424·0.546·0.391·0.518, C1+3 0.445·0.564·0.409·0.546, WFD 0.455·0.595·0.437·0.586; 순서는 섞임·섞임+sleep·아주 넓음·아주 넓음+sleep). 1위는 없었다. 구성별 실측표는 `.cache/w6-pilot-2026-10-15/measured-table.csv`(`measured_table.py`, task 가중·job 가중 평균 응답비, 95% 응답비, TAT, TET).
 - 읽는 법: C1+3의 이득은 "캐시 task 묶음을 코어 하나에 따로 두고, 나머지를 Global로 돌린다"는 할당에서 나온다. 주기가 아주 넓을 때 효과가 컸고, 주기가 섞인 조건에서는 WFD 기반 C1+3과 비슷했다. 그림: `figures/w6e-{response,tat}-{mixed,wide}.png`.
+
+### 49.9 W7 pilot: 주기 양극화 (2026-10-16)
+짧은 주기 연산 task와 사실상 비주기인 긴 주기 task를 넣은 첫 pilot이다. 탐색이며 결과 묶음은 없다(`.cache/w7-pilot-2026-10-16/`, `README.md`).
+- task 유형
+  - 짧은 주기: 2·4·5 ms, 레지스터 연산 커널 `alu-u32`·`fpu-f64`를 번갈아 씀, U 0.02–0.15
+  - 긴 주기: 320 ms, 1 KiB 순환 읽기, U 0.03–0.25, 첫 release는 seed로 뽑은 offset
+  - 보통: 20·40·80 ms, 1 KiB 순환 읽기
+- 조건
+  - (a) polar: 짧은 주기 n // 4, 긴 주기 n // 5, 나머지 보통
+  - (b) mixed: W6의 캐시 집중·I/O·보통에 짧은 주기·긴 주기를 더해 n // 5씩
+  - 부하 0.6/0.7/0.8, 조건마다 6 set(seed 20261018), 36 set. horizon 960 ms, warm-up 320 ms, 늦어도 계속 실행 모드
+- 후보
+  - (a): WFD, RA, G4, C1+3
+  - (b): 여기에 CGB, RA-CGB, CG를 더함
+  - C1+3은 캐시 task 묶음(CLS ≤ 0.5 그리고 MPKI ≥ 1.2)을 코어 0에 담고, 묶음이 없으면 WFD 배치의 코어 0을 씀
+  - 짧은 주기 task는 CLS가 0.500이지만 MPKI가 0.006–0.018이라 묶이지 않았다
+- ALU·FPU 보정: job(2 sweep) = 5.2–5.8 µs + 72.3 ns × 반복(최대 오차 3.3%). 두 커널의 반복당 시간이 같다(laysim의 FPU 시간 모델, 실기 미확인).
+- 시작 실패와 수정
+  - 198 run 중 8개(모두 RA·RA-CGB 빌드)가 `arm_phase`·`release_mismatch`로 실패했다.
+  - 원인: Init이 t0까지 남은 tick을 계산한 뒤 `rtems_task_wake_after`가 타이머를 걸기 전에 tick이 넘어가, 한 tick 늦게 깨어났다. 실패 run은 t0 = 23인데 모든 task가 24에 주기를 시작했다.
+  - 수정: `init.c`가 실제로 깨어난 tick을 t0로 기록하게 했다(`INPUTS.md` "시작 시각(t0) 기록").
+  - 8개를 새 코드로 다시 빌드해 모두 정상으로 끝났다(t0 = 24, 시작 24). 이 8개만 측정 장치 코드가 다르다.
+
+결과(36 set, 1위 대비 손해 중앙값/평균/최대, 1위 수):
+
+| 조건 | 지표 | 1위 수 | G4 | 2위 고정 구성 |
+|---|---|---|---|---|
+| (a) polar | task 가중 평균 응답비 | G4 15, C1+3 3 | 0.0 / 0.1 / 0.8% | C1+3 2.2 / 2.8 / 7.9% |
+| (a) polar | TAT | G4 13, WFD 2, C1+3 2, RA 1 | 0.0 / 0.6 / 4.4% | C1+3 3.0 / 3.8 / 12.1% |
+| (b) mixed | task 가중 평균 응답비 | G4 13, C1+3 5 | 0.0 / 1.0 / 7.8% | C1+3 4.3 / 4.5 / 15.4% |
+| (b) mixed | TAT | G4 11, C1+3 5, 기타 2 | 0.0 / 0.9 / 3.8% | C1+3 2.9 / 5.9 / 25.1% |
+
+- 주기가 양극화되면 두 주 지표 모두 G4가 가장 좋은 고정 구성이었다.
+- P 배치(WFD·RA·CGB·RA-CGB·CG)의 응답비 손해는 중앙값 8–13%였다.
+- W6에서 TAT 1위가 많던 C1+3은 2위였다.
+- 그림: `figures/w7-{response,tat}-{polar,mixed}.png`. 수치: `analyze.log`, `summary.json`.
 
 ## 정리: 논문 실험만 남기기 (2026-10-08 KST)
 
