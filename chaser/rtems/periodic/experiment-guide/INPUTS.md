@@ -272,8 +272,11 @@ schema v2 task에 sleep 항목을 넣으면 job이 계산 도중 스스로 잠�
   재사용 거리 histogram을 합쳐 task의 CLP·CLS·CA를 낸다(`cases.<id>.segments`에 구간별 값).
 - sleep이 없는 task와 set의 plan, `config.h`, `workload.c`, 실행 파일 코드는 이 기능 전과 같다
   (`init.c`의 `#line`이 `require()`의 줄 번호를 보존한다. 2026-10-15 실험 48 set으로 디버그 정보를 뗀 ELF 4개가 같음을 확인).
-- 아직 반영하지 않은 것: 경량 분석 경로(`policy-mix/kernel_yarda.py`, `chaser.policy.pfirst.inputs`)는 첫 구간만 읽고,
-  `chaser.policy.pfirst`(명목 판정·배치·특징)는 sleep 시간을 쓰지 않는다.
+- 경량 분석 경로(`policy-mix/kernel_yarda.py`, P ELF·hierarchy-rd만)도 구간마다 분석해 같은 방식으로 합친다.
+  `chaser.policy.pfirst.inputs.load_analysis`는 `segments`에 적힌 구간을 모두 읽어 L1 miss 수와 first-hit 수를 더하고,
+  작업 집합은 가장 큰 구간의 값을 쓴다(구간들이 같은 배열을 다시 훑는다). 구간 출력이 하나라도 없으면 판단을 미룬다.
+  2026-10-15 실제 커널 5개(전치, corner turn, mvt, jacobi1d, gesummv)에 sleep을 넣은 set에서 두 경로의 결과가 같았다.
+- 아직 반영하지 않은 것: `chaser.policy.pfirst`(명목 판정·배치·특징)는 sleep 시간을 쓰지 않는다.
 
 <a id="soft-deadline-runs-2026-10"></a>
 

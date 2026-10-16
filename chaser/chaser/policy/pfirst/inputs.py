@@ -32,17 +32,33 @@ def task_values(plan_tasks, cls: dict, yarda: dict) -> list[dict]:
     return out
 
 
+def _combined(entries: list[dict]) -> dict:
+    """One suspending job's hierarchy-rd entry from its segments, each analyzed from a cold cache (as in
+    chaser.periodic.analysis): L1 misses and first-hit counts add up. The segments sweep the same arrays, so the
+    job's working set is the largest segment's, not their sum."""
+    if len(entries) == 1:
+        return entries[0]
+    total = sum(e['modeled_accesses'] for e in entries)
+    return dict(l1=dict(misses=sum(e['l1']['misses'] for e in entries),
+                        unique_lines=max(e['l1']['unique_lines'] for e in entries)),
+                l1_first_hit_ratio=sum(e['l1_first_hit_count'] for e in entries) / total,
+                all_cache_miss_ratio=sum(e['all_cache_miss_count'] for e in entries) / total)
+
+
 def load_analysis(prepared: Path, plan_tasks, alpha: str = '0.5') -> list[dict]:
     """Task values from chaser.periodic.analysis output of a prepared snapshot: analysis/locality.json (CLS at
-    alpha 0.5, the CLS of this study) and analysis/p/<task_id>/hierarchy.json (the P ELF's hierarchy-rd export)."""
+    alpha 0.5, the CLS of this study) and analysis/p/<segment>/hierarchy.json (the P ELF's hierarchy-rd export).
+    A suspending job's case lists its segments (task_id, resume_<task_id>, ...); all of them must be present."""
     cases = json.loads((prepared / 'analysis' / 'locality.json').read_text())['cases']
     cls = {tid: c['cls'][alpha] for tid, c in cases.items()}
     yarda = {}
     for t in plan_tasks:
-        path = prepared / 'analysis' / 'p' / t['task_id'] / 'hierarchy.json'
-        if path.exists():
-            entries = json.loads(path.read_text())['tasks']
-            yarda[t['task_id']] = next((e for e in entries if e.get('task_id') == 'task_job_' + t['task_id']), entries[0])
+        segments = list(cases.get(t['task_id'], {}).get('segments', [t['task_id']]))
+        paths = [prepared / 'analysis' / 'p' / s / 'hierarchy.json' for s in segments]
+        if all(p.exists() for p in paths):
+            entries = [json.loads(p.read_text())['tasks'] for p in paths]
+            yarda[t['task_id']] = _combined([next((e for e in es if e.get('task_id') == 'task_job_' + s), es[0])
+                                             for s, es in zip(segments, entries)])
     return task_values(plan_tasks, cls, yarda)
 
 

@@ -85,3 +85,29 @@ def test_inputs_take_the_job_wrapper_entry_when_the_export_also_lists_its_helper
         entry('kernel_k0', 100), entry('task_job_k0', 3000)])))
     t = inputs.load_analysis(tmp_path, [dict(task_id='k0', u=0.1, period=20)])[0]
     assert t['rate'] == pytest.approx(3000 / (0.1 * 20 * 1000))
+
+
+def suspending(tmp_path, segments):
+    """k0 sleeps once: segment k0 (100 accesses) and resume_k0 (300 accesses), each analyzed from a cold cache."""
+    (tmp_path / 'analysis').mkdir()
+    (tmp_path / 'analysis/locality.json').write_text(json.dumps(dict(cases=dict(k0=dict(
+        cls={'0.5': 0.7}, segments={s: dict(cls={'0.5': 0.0}) for s in ('k0', 'resume_k0')})))))
+    for name, accesses, l1, miss, misses, lines in segments:
+        (tmp_path / 'analysis/p' / name).mkdir(parents=True)
+        (tmp_path / 'analysis/p' / name / 'hierarchy.json').write_text(json.dumps(dict(tasks=[dict(
+            task_id='task_job_' + name, modeled_accesses=accesses, l1_first_hit_count=l1, llc_first_hit_count=accesses - l1 - miss,
+            all_cache_miss_count=miss, l1_first_hit_ratio=l1 / accesses, all_cache_miss_ratio=miss / accesses,
+            l1=dict(misses=misses, unique_lines=lines))])))
+
+
+def test_a_suspending_jobs_inputs_add_its_cold_segments_and_keep_the_largest_working_set(tmp_path):
+    suspending(tmp_path, [('k0', 100, 60, 10, 40, 64), ('resume_k0', 300, 240, 20, 60, 32)])
+    t = inputs.load_analysis(tmp_path, [dict(task_id='k0', u=0.1, period=20)])[0]
+    assert t['cls'] == 0.7 and t['rate'] == pytest.approx(100 / (0.1 * 20 * 1000)) and t['working_set_kib'] == 2.0
+    assert t['p_l1'] == pytest.approx(300 / 400) and t['p_mem'] == pytest.approx(30 / 400)
+
+
+def test_a_suspending_job_missing_a_segments_output_defers(tmp_path):
+    suspending(tmp_path, [('k0', 100, 60, 10, 40, 64)])
+    with pytest.raises(inputs.MissingInput):
+        inputs.load_analysis(tmp_path, [dict(task_id='k0', u=0.1, period=20)])
