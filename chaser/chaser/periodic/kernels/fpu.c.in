@@ -1,0 +1,13 @@
+INLINE static uint32_t kernel_${task_id}(void) {
+    double x = (double)(${seed}[${seed_offset}] % 1000U + 1U) / 1001.0;
+    for (int i = 0; i < ${iterations}; ++i)
+        x = 3.9 * x * (1.0 - x);
+    return (uint32_t)(x * 4294967296.0);
+}
+/** @brief Execute one job: every sweep reloads the seed and runs the chain. @return Sum of the sweeps' results. */
+ANALYZE uint32_t task_job_${task_id}(void) {
+    uint32_t sum = 0;
+    for (int s = 0; s < ${sweeps}; ++s)
+        sum += kernel_${task_id}();
+    return sum;
+}

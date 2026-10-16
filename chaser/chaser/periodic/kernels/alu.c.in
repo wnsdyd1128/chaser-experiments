@@ -1,0 +1,17 @@
+INLINE static uint32_t kernel_${task_id}(void) {
+    uint32_t x = ${seed}[${seed_offset}];
+    for (int i = 0; i < ${iterations}; ++i) {
+        x ^= x << 13;
+        x ^= x >> 17;
+        x ^= x << 5;
+        x *= 2654435761U;
+    }
+    return x;
+}
+/** @brief Execute one job: every sweep reloads the seed and runs the chain. @return Sum of the sweeps' results. */
+ANALYZE uint32_t task_job_${task_id}(void) {
+    uint32_t sum = 0;
+    for (int s = 0; s < ${sweeps}; ++s)
+        sum += kernel_${task_id}();
+    return sum;
+}

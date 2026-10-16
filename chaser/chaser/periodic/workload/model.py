@@ -176,6 +176,17 @@ class ReadParameters:
 
 
 @dataclass
+class ComputeParameters:
+    """Register-bound job (alu-u32, fpu-f64): each sweep loads one seed, then runs a dependent chain.
+
+    Attributes:
+        iterations: Steps of the dependent IU or FPU chain per sweep (1 to 1000000); the
+            chain stays in registers, so a sweep makes one memory access however long it is.
+    """
+    iterations: int
+
+
+@dataclass
 class GemmParameters:
     """Dimensions and row pitches for C = A @ B in a GEMM job.
 

@@ -1,0 +1,191 @@
+{
+ "note": "laysim run (2026-10-16) of a P build, one task per core: alu-u32 at 1000 and 4000 iterations, fpu-f64 at 1000 and 4000, 4 sweeps each. Recorded to lock the target checksums and the iteration scaling (tests/periodic/multi_array/test_compute_kernels.py)",
+ "plan": {
+  "architecture": 2,
+  "arrays": [
+   {
+    "address": 16777216,
+    "alignment_bytes": 32,
+    "array_id": "s0",
+    "element_type": "uint32_t",
+    "initial_value": 12345,
+    "itemsize": 4,
+    "length": 8,
+    "size_bytes": 32,
+    "symbol": "data_s0"
+   },
+   {
+    "address": 16777248,
+    "alignment_bytes": 32,
+    "array_id": "s1",
+    "element_type": "uint32_t",
+    "initial_value": 12346,
+    "itemsize": 4,
+    "length": 8,
+    "size_bytes": 32,
+    "symbol": "data_s1"
+   },
+   {
+    "address": 16777280,
+    "alignment_bytes": 32,
+    "array_id": "s2",
+    "element_type": "uint32_t",
+    "initial_value": 12347,
+    "itemsize": 4,
+    "length": 8,
+    "size_bytes": 32,
+    "symbol": "data_s2"
+   },
+   {
+    "address": 16777312,
+    "alignment_bytes": 32,
+    "array_id": "s3",
+    "element_type": "uint32_t",
+    "initial_value": 12348,
+    "itemsize": 4,
+    "length": 8,
+    "size_bytes": 32,
+    "symbol": "data_s3"
+   }
+  ],
+  "checksum_boundary": "after-completion-before-next-period",
+  "cohort_rule_id": "same-nominal-release-v1",
+  "contract_id": "chaser-periodic-measurement-v3",
+  "core_mapping_hash": "ae622d56b997e56c30ed5f8db42b26f6a3e514dadd2f44813159f97de5bbcfc4",
+  "execution_backend": "laysim-gr740",
+  "family_id": "compute-diagnostic",
+  "horizon_ticks": 40,
+  "input_schema_version": 2,
+  "kernel_contract_id": "periodic-multi-array-v1",
+  "locality_scope": "one-cold-task-local-job",
+  "mapping_hash": "b5f945d9716c73d80d893be1ca1410c59349b5c3e591348abe2375cafe12b48b",
+  "measurement_boundary_id": "public-workload-bracket-v1",
+  "measurement_jobs": 8,
+  "measurement_source": "measured",
+  "measurement_ticks": 20,
+  "plan_hash": "0c8b220e58a6e39edc6d1d1ce10132f2c032d249d1e53dd55e35e05c2dfac61b",
+  "policy_id": "explicit-core-map-v1",
+  "tasks": [
+   {
+    "allocation_bytes": 32,
+    "arrays": {
+     "seed": {
+      "array_id": "s0",
+      "offset_elements": 0
+     }
+    },
+    "checksum_kind": "u32-sum-xorshift-multiply-v1",
+    "core": 0,
+    "domain": [
+     0
+    ],
+    "expected_checksum": 1896864148,
+    "iterations": 1000,
+    "job_count": 4,
+    "loop_iterations": 4004,
+    "pattern": "alu-u32",
+    "period_ticks": 10,
+    "source_accesses": 4,
+    "source_loads": 4,
+    "source_stores": 0,
+    "sweeps": 4,
+    "task_id": "t0",
+    "unique_accessed_bytes": 4,
+    "unique_cache_lines": 1,
+    "warmup_jobs": 2
+   },
+   {
+    "allocation_bytes": 32,
+    "arrays": {
+     "seed": {
+      "array_id": "s1",
+      "offset_elements": 0
+     }
+    },
+    "checksum_kind": "u32-sum-xorshift-multiply-v1",
+    "core": 1,
+    "domain": [
+     1
+    ],
+    "expected_checksum": 2965443168,
+    "iterations": 4000,
+    "job_count": 4,
+    "loop_iterations": 16004,
+    "pattern": "alu-u32",
+    "period_ticks": 10,
+    "source_accesses": 4,
+    "source_loads": 4,
+    "source_stores": 0,
+    "sweeps": 4,
+    "task_id": "t1",
+    "unique_accessed_bytes": 4,
+    "unique_cache_lines": 1,
+    "warmup_jobs": 2
+   },
+   {
+    "allocation_bytes": 32,
+    "arrays": {
+     "seed": {
+      "array_id": "s2",
+      "offset_elements": 0
+     }
+    },
+    "checksum_kind": "u32-sum-logistic-map-f64-v1",
+    "core": 2,
+    "domain": [
+     2
+    ],
+    "expected_checksum": 3133329852,
+    "iterations": 1000,
+    "job_count": 4,
+    "loop_iterations": 4004,
+    "pattern": "fpu-f64",
+    "period_ticks": 10,
+    "source_accesses": 4,
+    "source_loads": 4,
+    "source_stores": 0,
+    "sweeps": 4,
+    "task_id": "t2",
+    "unique_accessed_bytes": 4,
+    "unique_cache_lines": 1,
+    "warmup_jobs": 2
+   },
+   {
+    "allocation_bytes": 32,
+    "arrays": {
+     "seed": {
+      "array_id": "s3",
+      "offset_elements": 0
+     }
+    },
+    "checksum_kind": "u32-sum-logistic-map-f64-v1",
+    "core": 3,
+    "domain": [
+     3
+    ],
+    "expected_checksum": 3734064092,
+    "iterations": 4000,
+    "job_count": 4,
+    "loop_iterations": 16004,
+    "pattern": "fpu-f64",
+    "period_ticks": 10,
+    "source_accesses": 4,
+    "source_loads": 4,
+    "source_stores": 0,
+    "sweeps": 4,
+    "task_id": "t3",
+    "unique_accessed_bytes": 4,
+    "unique_cache_lines": 1,
+    "warmup_jobs": 2
+   }
+  ],
+  "tick_ns": 1000000,
+  "topology_id": "p-edfsmp-4x1-v1",
+  "u_repeats": 1,
+  "warmup_jobs": 8,
+  "warmup_ticks": 20,
+  "workload_id": "compute-check",
+  "workload_optimization": "O2"
+ },
+ "log": "PERIODIC {\"kind\":\"run\",\"plan_hash\":\"0c8b220e58a6e39edc6d1d1ce10132f2c032d249d1e53dd55e35e05c2dfac61b\",\"contract_id\":\"chaser-periodic-measurement-v3\",\"cpus\":4,\"mode\":0,\"trace\":0,\"empty\":0,\"t0_ns\":20000000,\"t0_tick\":20,\"tick_ns\":1000000}\nPERIODIC {\"kind\":\"task\",\"task\":0,\"thread\":167837698,\"domain_mask\":1,\"affinity_mask\":15,\"scheduler_ok\":1,\"arm_before_tick\":20,\"arm_after_tick\":20}\nPERIODIC {\"kind\":\"job\",\"task\":0,\"job\":0,\"release_ns\":20000000,\"start_ns\":20179155,\"completion_ns\":20338115,\"cpu_before_ns\":48408,\"cpu_after_ns\":200619,\"wall_before_ns\":101168,\"wall_after_ns\":254119,\"status_before_end_ns\":20185655,\"status_after_start_ns\":20331679,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":0,\"end_core\":0,\"checksum\":1896864148}\nPERIODIC {\"kind\":\"job\",\"task\":0,\"job\":1,\"release_ns\":30000000,\"start_ns\":30047379,\"completion_ns\":30202763,\"cpu_before_ns\":11184,\"cpu_after_ns\":161363,\"wall_before_ns\":42664,\"wall_after_ns\":193000,\"status_before_end_ns\":30053267,\"status_after_start_ns\":30198455,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":0,\"end_core\":0,\"checksum\":1896864148}\nPERIODIC {\"kind\":\"job\",\"task\":0,\"job\":2,\"release_ns\":40000000,\"start_ns\":40028023,\"completion_ns\":40182803,\"cpu_before_ns\":10532,\"cpu_after_ns\":160112,\"wall_before_ns\":28867,\"wall_after_ns\":178528,\"status_before_end_ns\":40033347,\"status_after_start_ns\":40178435,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":0,\"end_core\":0,\"checksum\":1896864148}\nPERIODIC {\"kind\":\"job\",\"task\":0,\"job\":3,\"release_ns\":50000000,\"start_ns\":50027591,\"completion_ns\":50182187,\"cpu_before_ns\":10635,\"cpu_after_ns\":160112,\"wall_before_ns\":28584,\"wall_after_ns\":178156,\"status_before_end_ns\":50032795,\"status_after_start_ns\":50177883,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":0,\"end_core\":0,\"checksum\":1896864148}\nPERIODIC {\"kind\":\"task\",\"task\":1,\"thread\":167837699,\"domain_mask\":2,\"affinity_mask\":15,\"scheduler_ok\":1,\"arm_before_tick\":20,\"arm_after_tick\":20}\nPERIODIC {\"kind\":\"job\",\"task\":1,\"job\":0,\"release_ns\":20000000,\"start_ns\":20155703,\"completion_ns\":20751167,\"cpu_before_ns\":65184,\"cpu_after_ns\":651436,\"wall_before_ns\":120472,\"wall_after_ns\":706972,\"status_before_end_ns\":20167859,\"status_after_start_ns\":20746983,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":1,\"end_core\":1,\"checksum\":2965443168}\nPERIODIC {\"kind\":\"job\",\"task\":1,\"job\":1,\"release_ns\":30000000,\"start_ns\":30045259,\"completion_ns\":30632291,\"cpu_before_ns\":11828,\"cpu_after_ns\":593907,\"wall_before_ns\":45668,\"wall_after_ns\":627788,\"status_before_end_ns\":30050787,\"status_after_start_ns\":30628183,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":1,\"end_core\":1,\"checksum\":2965443168}\nPERIODIC {\"kind\":\"job\",\"task\":1,\"job\":2,\"release_ns\":40000000,\"start_ns\":40024199,\"completion_ns\":40610723,\"cpu_before_ns\":9896,\"cpu_after_ns\":591723,\"wall_before_ns\":27388,\"wall_after_ns\":609252,\"status_before_end_ns\":40029487,\"status_after_start_ns\":40606587,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":1,\"end_core\":1,\"checksum\":2965443168}\nPERIODIC {\"kind\":\"job\",\"task\":1,\"job\":3,\"release_ns\":50000000,\"start_ns\":50024055,\"completion_ns\":50610719,\"cpu_before_ns\":9684,\"cpu_after_ns\":591472,\"wall_before_ns\":27319,\"wall_after_ns\":609203,\"status_before_end_ns\":50029543,\"status_after_start_ns\":50606631,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":1,\"end_core\":1,\"checksum\":2965443168}\nPERIODIC {\"kind\":\"task\",\"task\":2,\"thread\":167837700,\"domain_mask\":4,\"affinity_mask\":15,\"scheduler_ok\":1,\"arm_before_tick\":20,\"arm_after_tick\":20}\nPERIODIC {\"kind\":\"job\",\"task\":2,\"job\":0,\"release_ns\":20000000,\"start_ns\":20163883,\"completion_ns\":20326023,\"cpu_before_ns\":56432,\"cpu_after_ns\":211915,\"wall_before_ns\":111792,\"wall_after_ns\":267579,\"status_before_end_ns\":20172207,\"status_after_start_ns\":20320939,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":2,\"end_core\":2,\"checksum\":3133329852}\nPERIODIC {\"kind\":\"job\",\"task\":2,\"job\":1,\"release_ns\":30000000,\"start_ns\":30045079,\"completion_ns\":30201299,\"cpu_before_ns\":12024,\"cpu_after_ns\":163280,\"wall_before_ns\":45651,\"wall_after_ns\":196991,\"status_before_end_ns\":30050571,\"status_after_start_ns\":30197167,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":2,\"end_core\":2,\"checksum\":3133329852}\nPERIODIC {\"kind\":\"job\",\"task\":2,\"job\":2,\"release_ns\":40000000,\"start_ns\":40023575,\"completion_ns\":40179263,\"cpu_before_ns\":9511,\"cpu_after_ns\":160495,\"wall_before_ns\":27035,\"wall_after_ns\":178172,\"status_before_end_ns\":40028643,\"status_after_start_ns\":40175119,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":2,\"end_core\":2,\"checksum\":3133329852}\nPERIODIC {\"kind\":\"job\",\"task\":2,\"job\":3,\"release_ns\":50000000,\"start_ns\":50024327,\"completion_ns\":50180391,\"cpu_before_ns\":10200,\"cpu_after_ns\":161479,\"wall_before_ns\":27592,\"wall_after_ns\":179071,\"status_before_end_ns\":50029975,\"status_after_start_ns\":50176303,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":2,\"end_core\":2,\"checksum\":3133329852}\nPERIODIC {\"kind\":\"task\",\"task\":3,\"thread\":167837701,\"domain_mask\":8,\"affinity_mask\":15,\"scheduler_ok\":1,\"arm_before_tick\":20,\"arm_after_tick\":20}\nPERIODIC {\"kind\":\"job\",\"task\":3,\"job\":0,\"release_ns\":20000000,\"start_ns\":20174803,\"completion_ns\":20766063,\"cpu_before_ns\":51756,\"cpu_after_ns\":637512,\"wall_before_ns\":104571,\"wall_after_ns\":690683,\"status_before_end_ns\":20181307,\"status_after_start_ns\":20761779,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":3,\"end_core\":3,\"checksum\":3734064092}\nPERIODIC {\"kind\":\"job\",\"task\":3,\"job\":1,\"release_ns\":30000000,\"start_ns\":30045323,\"completion_ns\":30633475,\"cpu_before_ns\":12192,\"cpu_after_ns\":595152,\"wall_before_ns\":45939,\"wall_after_ns\":629023,\"status_before_end_ns\":30050767,\"status_after_start_ns\":30629263,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":3,\"end_core\":3,\"checksum\":3734064092}\nPERIODIC {\"kind\":\"job\",\"task\":3,\"job\":2,\"release_ns\":40000000,\"start_ns\":40024515,\"completion_ns\":40612507,\"cpu_before_ns\":9676,\"cpu_after_ns\":592544,\"wall_before_ns\":27612,\"wall_after_ns\":610656,\"status_before_end_ns\":40030043,\"status_after_start_ns\":40608231,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":3,\"end_core\":3,\"checksum\":3734064092}\nPERIODIC {\"kind\":\"job\",\"task\":3,\"job\":3,\"release_ns\":50000000,\"start_ns\":50023327,\"completion_ns\":50611075,\"cpu_before_ns\":10019,\"cpu_after_ns\":592771,\"wall_before_ns\":27171,\"wall_after_ns\":610007,\"status_before_end_ns\":50028671,\"status_after_start_ns\":50606987,\"state_before\":1,\"state_after\":1,\"postponed_before\":0,\"postponed_after\":0,\"period_status\":0,\"start_core\":3,\"end_core\":3,\"checksum\":3734064092}\nPERIODIC {\"kind\":\"end\",\"complete\":1}\n"
+}

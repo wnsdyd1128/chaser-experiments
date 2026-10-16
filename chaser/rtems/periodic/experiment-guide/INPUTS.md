@@ -319,6 +319,30 @@ release되지 않게 할 때 쓴다. 무작위 시각이 필요하면 set을 만
   주기 40·offset 13 task가 정확히 7·27·47·67 ms와 13·53 ms에 release되어 0.03 ms 안에 시작했고, 7 ms에 release된 job은
   10 ms에 release된 더 이른 마감의 job에 선점됐다.
 
+<a id="register-bound-kernels-2026-10"></a>
+
+#### 레지스터 연산 커널과 정적 메모리 집중도 (2026-10)
+
+배열을 거의 읽지 않고 IU·FPU 연산만 하는 job(짧은 주기 제어·필터 task 같은 것)을 위한 커널 두 개다.
+sweep마다 `seed` 배열(`uint32_t`)에서 초깃값 하나를 읽고, 이어지는 연산을 `iterations`번 반복한다.
+배열이 `volatile`이라 O2 빌드도 sweep마다 초깃값을 다시 읽고 반복 전체를 실행한다.
+
+| pattern | 한 sweep의 연산 | sweep 결과 |
+|---|---|---|
+| `alu-u32` | `x ^= x << 13; x ^= x >> 17; x ^= x << 5; x *= 2654435761U` | x |
+| `fpu-f64` | x0 = (seed mod 1000 + 1) / 1001, 이후 `x = 3.9 * x * (1.0 - x)` | ⌊x × 2³²⌋ |
+
+```json
+{"task_id": "t0", "pattern": "fpu-f64", "arrays": {"seed": {"array_id": "s0", "offset_elements": 0}},
+ "iterations": 1000, "sweeps": 4, "core": 0, "period_ticks": 2}
+```
+
+- job은 sweep 결과의 합(32비트)을 checksum으로 낸다. 기댓값은 Python이 같은 순서의 연산으로 계산한다. FPU는 정확히
+  반올림되는 사칙연산만 쓰고 2³² 곱은 오차가 없어, 비트 단위로 같다. laysim 확인(2026-10-16, fixture
+  `tests/periodic/multi_array/fixtures/compute-laysim-p.json`): 두 커널 모두 checksum이 맞았고, 반복 4배에 job CPU가
+  3.9배였다(1,000번 × 4 sweep에 약 150 µs).
+- 메모리 접근은 sweep당 1번이라 HARA의 CLS는 sweep 수로만 정해진다(4 sweep이면 처음 1번만 miss해 0.75, 1 sweep이면 0).
+
 ### 2.3. 다중 배열 smoke 실행
 
 현재 workspace root에서 실행하고, 이미 존재하지 않는 output 이름을 선택한다.
