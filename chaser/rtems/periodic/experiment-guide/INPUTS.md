@@ -294,6 +294,31 @@ schema v2 설정의 최상위에 `continue_after_miss: true`를 넣으면, job�
 - 이 모드의 `execution_status: ok`는 "모든 job이 정상 기록됨"이지 "모든 마감을 지킴"이 아니다. 마감은 `late_jobs`로 본다.
 - 이 모드를 쓰지 않는 plan·`config.h`·실행 파일 코드는 이전과 같다(`init.c`의 `#line`, 2026-10-14 실험 48 set으로 확인).
 
+<a id="release-offsets-2026-10"></a>
+
+#### release offset (2026-10)
+
+schema v2 task에 `offset_ticks`(0 이상, 주기 미만의 정수 tick)를 넣으면 그 task의 job j는 t0 + `offset_ticks` + j × 주기에
+release된다. 기본값 0은 이전처럼 t0에 release한다. 주기가 아주 긴(사실상 비주기) task가 다른 task와 t0에 한꺼번에
+release되지 않게 할 때 쓴다. 무작위 시각이 필요하면 set을 만드는 스크립트가 seed로 offset을 뽑아 넣는다(프레임워크는
+정해진 값만 받는다).
+
+```json
+{"task_id": "t1", "pattern": "cyclic", "period_ticks": 320, "offset_ticks": 137, "...": "..."}
+```
+
+- `init.c`: offset이 있는 task는 t0에 길이 `offset_ticks`의 빈 주기로 `rtems_rate_monotonic_period`를 시작하고, 다음 호출부터
+  길이를 주기로 바꾼다. 기다리는 동안에도 주기 안에 있어 EDF가 마감을 매긴다. 주기 밖의 task는 EDF에서 배경 우선순위라,
+  `rtems_task_wake_after`로 기다린 뒤 주기를 시작하면 코어가 바쁠 때 release가 밀린다.
+- 측정 해석: release와 마감 검사, 응답 시간, TAT 묶음(같은 release 시각의 job)은 offset을 더한 release를 쓴다.
+  job 수(horizon ÷ 주기)와 warm-up job 수(warm-up ÷ 주기)는 offset과 관계없다. offset이 다른 task는 release 시각이
+  겹치지 않아 TAT 묶음이 따로 생긴다.
+- 쓰는 경우에만 plan(`offset_ticks`)과 `config.h`(`CHASER_OFFSETS`)에 나타난다. offset이 없는 set의 plan·`config.h`·실행
+  파일 코드는 이전과 같다(2026-10-16 실험 48 set으로 디버그 정보를 뗀 ELF 4개 확인).
+- laysim 확인(2026-10-16, fixture `tests/periodic/multi_array/fixtures/offset-laysim-p.json`): 주기 20·offset 7 task와
+  주기 40·offset 13 task가 정확히 7·27·47·67 ms와 13·53 ms에 release되어 0.03 ms 안에 시작했고, 7 ms에 release된 job은
+  10 ms에 release된 더 이른 마감의 job에 선점됐다.
+
 ### 2.3. 다중 배열 smoke 실행
 
 현재 workspace root에서 실행하고, 이미 존재하지 않는 output 이름을 선택한다.

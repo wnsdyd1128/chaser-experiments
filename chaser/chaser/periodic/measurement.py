@@ -84,6 +84,8 @@ def schedule_plan(configuration: dict, architecture: int, normalized_tasks: list
                 raise ValueError(f'Invalid {key}')
         if horizon % task['period_ticks']:
             raise ValueError('Every period must divide the common horizon')
+        if not task.get('offset_ticks', 0) < task['period_ticks']:
+            raise ValueError('offset_ticks must be below the period')
         if sum(p['max_ticks'] for p in sleep_points(task)) >= task['period_ticks']:
             raise ValueError('The sleep of a job (suspend_ticks, or the max_ticks of suspend_points) must be below its period')
         task['job_count'] = horizon // task['period_ticks']
@@ -224,8 +226,9 @@ def aggregate(records: list[dict], plan: dict, *, mode: int = 0,
                 errors.add('job_schema')
                 continue
             period_ns = task['period_ticks'] * plan['tick_ns']
-            release = header['t0_ns'] + job['job'] * period_ns
-            deadline = header['t0_tick'] + (job['job'] + 1) * task['period_ticks']
+            offset = task.get('offset_ticks', 0)  # job j is released at t0 + offset + j x period
+            release = header['t0_ns'] + offset * plan['tick_ns'] + job['job'] * period_ns
+            deadline = header['t0_tick'] + offset + (job['job'] + 1) * task['period_ticks']
             if job['release_ns'] != release:
                 errors.add('release_mismatch')
             _check_public_status(job, release, plan['tick_ns'], errors, period_ns if soft else None)

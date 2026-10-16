@@ -43,6 +43,8 @@ def config_header(plan: dict | PolicyHeader) -> str:
     keys = [('period_ticks', 'PERIODS'), ('job_count', 'JOB_COUNTS'), ('core', 'CORES')]
     if any(t.sleep_points for t in tasks):  # only then, so a plan without suspension keeps its header
         keys.append(('sleep_points', 'SUSPENDS'))
+    if any(t.offset_ticks for t in tasks):  # likewise for release offsets
+        keys.append(('offset_ticks', 'OFFSETS'))
     for key, macro in keys:
         lines.append('#define CHASER_' + macro + ' {' + ', '.join(str(getattr(t, key)) for t in tasks) + '}')
     if header.continue_after_miss:

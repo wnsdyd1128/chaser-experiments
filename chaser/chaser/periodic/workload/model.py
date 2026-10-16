@@ -228,6 +228,8 @@ class TaskSpec(Generic[Parameters]):
         suspend_points: Several or variable sleeps instead of the single-sleep fields:
             normalized dicts (after_sweeps, min_ticks, max_ticks, seed) in increasing
             after_sweeps order; each job sleeps a seeded draw in [min, max] ticks there.
+        offset_ticks: Release offset (0 to period_ticks - 1): job j is released at
+            t0 + offset_ticks + j x period_ticks. 0, the default, releases at t0.
     """
     task_id: str
     pattern: str
@@ -241,6 +243,7 @@ class TaskSpec(Generic[Parameters]):
     suspend_ticks: int = 0
     suspend_after_sweeps: int = 0
     suspend_points: tuple = ()
+    offset_ticks: int = 0
 
     @classmethod
     def from_dict(cls, value: dict, parameter_type: type[Parameters]) -> 'TaskSpec[Parameters]':
@@ -253,14 +256,16 @@ class TaskSpec(Generic[Parameters]):
                    footprint=MemoryFootprint(**{f.name: value[f.name] for f in fields(MemoryFootprint)}),
                    suspend_ticks=value.get('suspend_ticks', 0),
                    suspend_after_sweeps=value.get('suspend_after_sweeps', 0),
-                   suspend_points=tuple(dict(p) for p in value.get('suspend_points', ())))
+                   suspend_points=tuple(dict(p) for p in value.get('suspend_points', ())),
+                   offset_ticks=value.get('offset_ticks', 0))
         if task.metrics.source_accesses != value['source_accesses']:
             raise ValueError('Plan source access count differs from kernel metrics')
         return task
 
     def to_dict(self) -> dict:
         """Flatten typed parameters and results into the plan schema; a task that does not
-        suspend omits the suspension fields, so its plan is unchanged."""
+        suspend omits the suspension fields and one released at t0 omits offset_ticks, so
+        such plans are unchanged."""
         if self.metrics is None or self.footprint is None:
             raise ValueError('Task must be normalized before serialization')
         suspension = (dict(suspend_ticks=self.suspend_ticks, suspend_after_sweeps=self.suspend_after_sweeps)
@@ -270,7 +275,8 @@ class TaskSpec(Generic[Parameters]):
                     arrays={role: asdict(binding) for role, binding in self.arrays.items()},
                     sweeps=self.sweeps, core=self.core, period_ticks=self.period_ticks,
                     **asdict(self.parameters), **asdict(self.metrics),
-                    source_accesses=self.metrics.source_accesses, **asdict(self.footprint), **suspension)
+                    source_accesses=self.metrics.source_accesses, **asdict(self.footprint), **suspension,
+                    **(dict(offset_ticks=self.offset_ticks) if self.offset_ticks else {}))
 
 
 ArrayRegistry = dict[str, ArraySpec]

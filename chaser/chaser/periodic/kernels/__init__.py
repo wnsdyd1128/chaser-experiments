@@ -153,7 +153,7 @@ def normalize_task(value: dict, registry: ArrayRegistry) -> TaskSpec:
         raise ValueError('Task must be an object')
     kernel = kernel_for(value.get('pattern'))
     common = ('task_id', 'pattern', 'arrays', 'sweeps', 'core', 'period_ticks')
-    fields(value, common + kernel.parameters + SUSPENSION, common + kernel.required_parameters)
+    fields(value, common + kernel.parameters + SUSPENSION + ('offset_ticks',), common + kernel.required_parameters)
     parameters = {name: deepcopy(value[name]) for name in kernel.parameters if name in value}
     # None denotes an omitted, inferable GEMM dimension, not an accepted JSON value.
     if kernel.parameter_type is GemmParameters and any(v is None for v in parameters.values()):
@@ -174,6 +174,7 @@ def normalize_task(value: dict, registry: ArrayRegistry) -> TaskSpec:
         if task.suspend_ticks:
             raise ValueError('suspend_points and the single-sleep fields are exclusive')
         task.suspend_points = normalize_points(value['suspend_points'], task.sweeps)
+    task.offset_ticks = integer(value.get('offset_ticks', 0), 'offset_ticks', 0)  # below the period: schedule_plan
     task.metrics = kernel.module.validate(task, registry)
     if not isinstance(task.metrics, KernelMetrics):
         raise ValueError('Kernel validate must return KernelMetrics')

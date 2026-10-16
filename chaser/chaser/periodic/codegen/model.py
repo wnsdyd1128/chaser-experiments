@@ -58,11 +58,13 @@ class TaskSchedule:
         job_count: Total jobs in the experiment horizon, including warmup jobs.
         core: Logical core used to choose placement under the selected policy.
         sleep_points: Sleeps in each job (segments - 1); 0 if the job does not suspend.
+        offset_ticks: First release after t0 in ticks; 0 releases at t0.
     """
     period_ticks: int
     job_count: int
     core: int
     sleep_points: int = 0
+    offset_ticks: int = 0
 
 
 @dataclass(frozen=True)
@@ -89,5 +91,5 @@ class PolicyHeader:
     def from_plan(cls, plan: dict) -> 'PolicyHeader':
         """Read only the fields needed by the RTEMS configuration header."""
         return cls(plan['architecture'], plan['contract_id'], plan['plan_hash'], tuple(
-            TaskSchedule(t['period_ticks'], t['job_count'], t['core'], len(sleep_points(t)))
+            TaskSchedule(t['period_ticks'], t['job_count'], t['core'], len(sleep_points(t)), t.get('offset_ticks', 0))
             for t in plan['tasks']), plan.get('continue_after_miss', False))

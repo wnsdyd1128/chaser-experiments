@@ -26,8 +26,21 @@ extern uint32_t (*const workload_resume_jobs[])(void);
 extern const uint32_t workload_suspend_expected[];
 extern const uint32_t workload_suspend_ticks[];
 #endif
+#ifdef CHASER_OFFSETS
+/* Release offsets (task field offset_ticks): a task with an offset arms at t0 with an empty
+ * phase period of offsets[i] ticks, so its first job is released at t0 + offset and every later
+ * job a period after the previous one. While it waits it is inside a period, so EDF gives it a
+ * deadline instead of the background priority of a task without one. Defined only when some
+ * task has an offset, so other builds are unchanged. */
+static const unsigned offsets[TASK_COUNT] = CHASER_OFFSETS;
+#define ARMS_AT_T0(i, j) ((j) == 0 && !offsets[i])
+#define PHASE_NS(i) ((uint64_t)offsets[i] * TICK_NS)
+#else
+#define ARMS_AT_T0(i, j) ((j) == 0)
+#define PHASE_NS(i) 0
+#endif
 /* Restore the original numbering: require() records __LINE__, so builds without suspension
- * keep the same code as before suspension support. */
+ * or offsets keep the same code as before. */
 #line 17
 static rtems_id coordinator, start_barrier, tasks[TASK_COUNT];
 static uint64_t t0_ns;
@@ -115,9 +128,19 @@ static rtems_task worker(rtems_task_argument argument)
 #endif
 #line 93
     for (unsigned j = 0; j < job_counts[i]; ++j) {
-        if (j == 0) placement[i].arm_before_tick = rtems_clock_get_ticks_since_boot();
+#ifdef CHASER_OFFSETS
+        if (j == 0 && offsets[i]) {
+            placement[i].arm_before_tick = rtems_clock_get_ticks_since_boot();
+            require(rtems_rate_monotonic_period(period, offsets[i]));
+            placement[i].arm_after_tick = rtems_clock_get_ticks_since_boot();
+            require(rtems_event_send(coordinator, 1U << i));
+            require(rtems_barrier_wait(start_barrier, RTEMS_NO_TIMEOUT));
+        }
+#endif
+#line 94
+        if (ARMS_AT_T0(i, j)) placement[i].arm_before_tick = rtems_clock_get_ticks_since_boot();
         jobs[i][j].status = rtems_rate_monotonic_period(period, periods[i]);
-        if (j == 0) {
+        if (ARMS_AT_T0(i, j)) {
             placement[i].arm_after_tick = rtems_clock_get_ticks_since_boot();
             /* Every worker arms at t0, then blocks so other nonperiodic
              * workers on the same core can arm before EDF workload begins. */
@@ -168,7 +191,7 @@ static rtems_task worker(rtems_task_argument argument)
         if (jobs[i][j].status != RTEMS_SUCCESSFUL
                 || jobs[i][j].after.state != RATE_MONOTONIC_ACTIVE
                 || jobs[i][j].after.postponed
-                || jobs[i][j].completion > t0_ns + (uint64_t)(j + 1) * periods[i] * TICK_NS
+                || jobs[i][j].completion > t0_ns + PHASE_NS(i) + (uint64_t)(j + 1) * periods[i] * TICK_NS
                 || jobs[i][j].checksum != (chaser_empty ? 0 : workload_expected[i]))
             break;
 #endif
@@ -207,7 +230,7 @@ static void print_results(void)
                    ",\"status_after_start_ns\":%" PRIu64 ",\"state_before\":%u,\"state_after\":%u,"
                    "\"postponed_before\":%u,\"postponed_after\":%u,\"period_status\":%u,"
                    "\"start_core\":%u,\"end_core\":%u,\"checksum\":%u",
-                   i, j, t0_ns + (uint64_t)j * periods[i] * TICK_NS,
+                   i, j, t0_ns + PHASE_NS(i) + (uint64_t)j * periods[i] * TICK_NS,
                    jobs[i][j].start, jobs[i][j].completion,
                    jobs[i][j].before.cpu, jobs[i][j].after.cpu,
                    jobs[i][j].before.wall, jobs[i][j].after.wall,
