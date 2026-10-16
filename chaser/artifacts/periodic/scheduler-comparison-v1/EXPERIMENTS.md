@@ -53,7 +53,7 @@ utilization 균형과 release 고려를 더함, 연구 문서 PLAN 0절)의 근�
 | 46 | 학습에 없던 커널 4종에서의 실행 전 점검 v1(새 set) | `policy-mix/`(`kernel_tasks.py`, `kernel_calibrate.py`, `kernel_set.py`, `kernel_run.py`, `heldout_analysis.py`, `kernel_report.py`) | `kernel-calibration-heldout-v2`, `heldout-kernels-v1`, `heldout-kernels-analysis-v1` | `kernel-calibration-heldout`, `heldout-kernels`, `heldout-kernels-analysis` |
 | 47 | 실제 저지역성 커널 task set에서의 CHASER 배치(사전 등록, 새 set) | `policy-mix/`(`lowloc_set.py`, `lowloc_run.py`, `lowloc_analysis.py`, `kernel_calibrate.py`, `kernel_tasks.py`), `chaser/periodic/kernels/{transpose,cornerturn}`, `figures/lowloc_bars.py` | `kernel-calibration-lowloc-v1`, `lowloc-kernels-v1`, `lowloc-kernels-analysis-v1` | `kernel-calibration-lowloc`, `lowloc-kernels`, `lowloc-kernels-analysis` |
 | 48 | 데이터를 줄인 실제 저지역성 커널 task set에서의 CHASER 배치(사전 등록, 새 set) | `policy-mix/`(`lowloc_set.py`의 `lowloc-small` 설계, `lowloc_run.py`, `lowloc_analysis.py`), `supervisors/lowloc-small-v1.sh`, `figures/lowloc_bars.py` | `kernel-calibration-lowloc-small-v1`, `lowloc-small-v1`, `lowloc-small-analysis-v1`, pilot `lowloc-small-pilot{,2}-v1` | `kernel-calibration-lowloc-small`, `lowloc-small`, `lowloc-small-analysis` |
-| 49 | 탐색: 실행 전 판단·구조 선택 재검토와 job 중간 sleep pilot(사후, 결과 묶음 없음) | `.cache/c-correction-2026-10-14/`, `.cache/global-pilot-2026-10-14/`, `.cache/suspend-pilot-2026-10-14/`(각 `README.md`), 프레임워크 `suspend_ticks` | 왼쪽 폴더 | — |
+| 49 | 탐색: 실행 전 판단·구조 선택 재검토, job 중간 sleep pilot, W6 섞인 set pilot(사후, 결과 묶음 없음) | `.cache/c-correction-2026-10-14/`, `.cache/global-pilot-2026-10-14/`, `.cache/suspend-pilot-2026-10-14/`, `.cache/w6-pilot-2026-10-15/`(각 `README.md`), 프레임워크 `suspend_ticks` | 왼쪽 폴더 | — |
 
 ---
 
@@ -2700,6 +2700,70 @@ C1+1+2는 평균 응답비 −1.8~−4.4%, 95% 응답비 ±0%였다.
 
 ### 49.7 읽는 법
 - 지금까지의 확증 실험(27·44·45·48)은 캐시를 많이 쓰는 task, D = T, sleep 없음으로 구성되어 P가 유리한 쪽이었다. 구조마다 이기는 조건이 다른 task set 유형을 함께 평가해야 구조·배치 선택의 효과를 보일 수 있다([연구 계획](../../../system-prompt-extraction/plan/PLAN.md) 0절, 2026-10-15 사용자 방향).
+
+### 49.8 W6 pilot: 캐시 집중·계산 위주·I/O task를 섞은 set (2026-10-15)
+2026-10-15 사용자 결정(sleep은 job 중간 한 번, C는 C1+3만, 주 지표는 평균 응답비와 TAT 두 개)에 따른 첫 pilot이다. 탐색이며 결과 묶음은 없다(`.cache/w6-pilot-2026-10-15/`, `README.md`).
+- 설계: set마다 task 12–16개(Dirichlet(8) 이용률 몫). n // 3은 캐시 집중 task(48절의 데이터 축소 전치·corner turn, HARA CLS 0.48), n // 3은 I/O task(1 KiB 순환 읽기, 앞 절반 sweep 뒤 주기의 0.3만큼 한 번 sleep), 나머지는 계산 위주 task(1 KiB 순환 읽기)다. 주기는 섞임(20/40/80 ms)과 아주 넓음(5–160 ms), 코어당 CPU 부하 0.6/0.7/0.8, 조건마다 6 set(seed 20261017), 36 set. 같은 set 번호는 모든 조건에서 task 구성이 같다(공통 난수).
+- 후보 7개: P의 WFD, RA, CGB, RA-CGB, CG(CLS 묶음, `placement_lib.cls_grouped`), WFD 배치의 G4·C1+3. 배치는 CPU U와 WFD 빌드의 HARA CLS(경량 경로)를 쓴다. 252 run 모두 늦어도 계속 실행 모드로 끝까지 기록됐다(오류 0).
+- 첫 실행은 로그인 셸의 `DISPLAY=…:0.0`을 물려받아 laysim이 화면을 열지 못해 멈췄다. run 폴더를 `runs.aborted-display`로 옮기고 supervisor와 같은 `DISPLAY=…:90.0`으로 다시 돌렸다.
+- 손해 = set마다 7개 중 가장 좋은 값(oracle) 대비 그 구성의 값 ÷ oracle − 1. 분포가 치우쳐 있어 중앙값/평균/최대를 함께 쓴다.
+
+**전체(36 set): 고정 구성별 손해(중앙값/평균/최대)와 1위 수**(동점은 나눠 셈)
+
+| 구성 | 평균 응답비 손해 | 1위 | TAT 손해 | 1위 | 늦은 job(참고) |
+|---|---|---|---|---|---|
+| WFD | 8.5 / 9.5 / 22.6% | 1 | 8.1 / 9.7 / 28.6% | 1 | 33 |
+| RA | 5.2 / 7.4 / 46.9% | 2 | 7.9 / 10.4 / 60.2% | 4 | 142 |
+| CGB | 9.9 / 11.1 / 29.5% | 1 | 8.5 / 8.5 / 25.1% | 4.5 | 57 |
+| RA-CGB | 3.6 / 6.8 / 39.3% | 3 | 6.3 / 9.1 / 46.4% | 5 | 120 |
+| CG | 6.9 / 7.5 / 22.6% | 1 | 6.1 / 7.2 / 24.8% | 8.5 | 45 |
+| G4 | **0.0 / 0.7 / 7.0%** | 23 | **3.1 / 5.7 / 22.0%** | 7 | 10 |
+| C1+3 | 3.3 / 4.0 / 14.2% | 5 | 6.3 / 7.9 / 41.0% | 6 | 12 |
+
+늦은 job은 측정 job 11,079개 중의 수다. TET는 CG가 가장 작았다(WFD 대비 중앙값 −1.8%, 32/4 set).
+
+**조건별 TAT: 가장 좋은 고정 구성(손해 중앙값/평균/최대)과 G4**(평균 응답비는 모든 조건에서 G4가 가장 좋은 고정 구성, 손해 평균 0.3–1.2%)
+
+| 주기 | 부하 | 가장 좋은 고정 구성(평균 기준) | G4 |
+|---|---|---|---|
+| 섞임 | 0.6 | RA-CGB 3.3 / 4.1 / 11.9% | 3.6 / 6.0 / 14.6% |
+| 섞임 | 0.7 | RA-CGB 2.5 / 2.7 / 4.7% | 5.6 / 5.1 / 11.6% |
+| 섞임 | 0.8 | G4(중앙값 기준은 C1+3 1.2 / 9.5 / 41.0%) | 2.9 / 6.0 / 16.4% |
+| 아주 넓음 | 0.6 | CG 2.3 / 3.6 / 10.5% | 6.2 / 7.8 / 22.0% |
+| 아주 넓음 | 0.7 | CG 2.1 / 4.6 / 16.8%(중앙값 기준은 G4) | 1.8 / 5.6 / 16.5% |
+| 아주 넓음 | 0.8 | G4 | 2.3 / 3.8 / 10.8% |
+
+**읽는 법**
+- 평균 응답비는 G4가 거의 항상 가장 좋았다(36 set 중 30개에서 1위와 1% 안, WFD 대비 −7.9%, 34/2). 48절 set(캐시 집중, 주기 같음)에서는 같은 지표에서 G4가 가장 느렸으므로(49.6), 이 지표에서 선택의 이득은 유형 사이에서 난다.
+- TAT는 1위가 여섯 구성에 흩어졌고, 조건마다 가장 좋은 고정 구성이 RA-CGB, CG, G4로 바뀌었다. 같은 조건에서도 평균 기준과 중앙값 기준의 답이 다른 경우가 있다. 1위와 2위의 차이는 중앙값 1.3%로 작다(16 set은 1% 미만).
+- WFD는 1위가 드물지만(1·1 set) 크게 지지도 않았다(최대 22.6·28.6%, 늦은 job 33). RA·RA-CGB는 보통은 WFD보다 좋지만, 코어를 명목 한도(0.95)까지 채우기도 해서 가끔 크게 느려졌다(최대 39–60%, 늦은 job 120–142).
+- CG는 캐시 task 묶음을 코어 하나에 꽉 채워, 주기가 아주 넓은 조건의 TAT와 TET에서 좋았다. CGB는 캐시 task가 U의 약 1/3뿐인 이 유형에서 가장 약했다.
+- C1+3은 WFD 배치가 캐시 task를 코어 0에 모은 set(s05, 코어 0 부하 전부가 캐시 task)에서 TAT 1위를 했다(6 조건 중 5). 이때 G4는 최대 13.7% 느렸다.
+
+**정적 특징과 손해의 관계(36 set, Spearman, |ρ| ≥ 0.33이면 p < 0.05, `features.log`)**
+- C1+3의 손해는 "WFD 배치에서 코어 0 부하 중 캐시 task의 비율"이 클수록 작았다(TAT ρ −0.65, 평균 응답비 −0.57).
+- CG·CGB의 TAT 손해는 캐시 task 비중이 클수록 컸다(ρ 0.51, 0.47). RA·RA-CGB의 TAT 손해는 주기 CV가 클수록 컸다(ρ 0.47, 0.37). RA의 평균 응답비 손해는 부하가 클수록 컸다(ρ 0.64).
+- 한계: 같은 set 번호는 모든 조건에서 구성이 같아 실제로 다른 task 구성은 6개뿐이다. 캐시 task 비중(0.25–0.36)과 I/O 비중(0.32–0.37)의 범위가 좁고, sleep 길이는 하나(0.3)다. 개발 자료에서는 이 축들을 넓게 바꿔야 한다.
+- 그림: `.cache/w6-pilot-2026-10-15/figures/w6-{response,tat}-{mixed,wide}.png`(조건별 실측 평균). 수치: `summary.json`, `analyze.log`.
+
+**추가 후보 C1+3-CG(2026-10-15 23:21–23:32 KST, 같은 36 set, run 36개 오류 0)**
+- 구조는 C1+3 그대로이고, 할당만 "캐시 task(CLS ≤ 0.5)를 U가 큰 것부터 코어 0에 0.95까지, 나머지는 코어 1–3에 WFD"로 바꿨다(`pilot.py`의 `c13_grouped`, stage `extend`). 위 C1+3의 1위가 WFD 배치의 우연(s05)인지 할당 규칙의 효과인지 가리려는 시험이다.
+- C1+3 대비(짝지은 비, 중앙값, 작아진/커진 set, Wilcoxon p): TET −2.8%(36/0, p 3×10⁻¹¹), 95% 응답비 −4.8%(28/8, p 0.0003), TAT −2.3%(22/14, p 0.03), 평균 응답비 −1.4%(21/15, p 0.13). 늦은 job 12 → 0.
+  - 주기 아주 넓음: 평균 응답비 −3.9%(13/5), 95% 응답비 −8.8%(16/2), TAT −8.3%(14/4).
+  - 주기 섞임: TET −2.6%(18/0) 외에는 차이가 없었다(평균 응답비 +1.7%, TAT +1.0%, 둘 다 p > 0.3).
+- 8개 후보로 oracle을 다시 잡으면(`analyze.py out --eight`, `analyze-eight.log`, `summary-eight.json`):
+
+| 구성 | 평균 응답비 손해 | 1위 | TAT 손해 | 1위 |
+|---|---|---|---|---|
+| G4 | **0.4 / 1.0 / 7.0%** | 15 | 5.6 / 7.1 / 28.0% | 5 |
+| C1+3-CG | 1.7 / 2.7 / 11.1% | 10 | **3.1 / 4.6 / 21.8%** | 13 |
+| C1+3 | 3.3 / 4.3 / 14.4% | 5 | 8.3 / 9.3 / 41.0% | 4 |
+| CG | 7.0 / 7.8 / 22.6% | 0.5 | 6.6 / 8.5 / 24.8% | 2.5 |
+
+  - TAT의 가장 좋은 고정 구성이 G4에서 C1+3-CG로 바뀌었다. 주기 아주 넓음에서는 18 set 중 11개에서 1위였고, 손해는 중앙값 0.0%, 평균 2.4%, 최대 11.4%였다.
+  - 평균 응답비는 여전히 G4가 가장 좋았다. C1+3-CG는 G4 대비 +1.1%(11/25, p 0.002), TAT는 −1.8%(21/15, p 0.16)였다. CG 대비로는 두 지표 모두 좋았다(−3.4%, −3.7%).
+- sleep pilot 3 set(49.6, 늦어도 계속 실행 모드 `out3s`, 72 set)에 C1+3(WFD 배치) run 72개를 더했다(2026-10-16 07:40–08:05 KST, 오류 0). 캐시 task가 없는 이 유형에서 C1+3은 네 조건 모두 G4와 WFD 사이였고 C1+1+2보다 좋았다(평균 응답비, task 가중: G4 0.424·0.546·0.391·0.518, C1+3 0.445·0.564·0.409·0.546, WFD 0.455·0.595·0.437·0.586; 순서는 섞임·섞임+sleep·아주 넓음·아주 넓음+sleep). 1위는 없었다. 구성별 실측표는 `.cache/w6-pilot-2026-10-15/measured-table.csv`(`measured_table.py`, task 가중·job 가중 평균 응답비, 95% 응답비, TAT, TET).
+- 읽는 법: C1+3의 이득은 "캐시 task 묶음을 코어 하나에 따로 두고, 나머지를 Global로 돌린다"는 할당에서 나온다. 주기가 아주 넓을 때 효과가 컸고, 주기가 섞인 조건에서는 WFD 기반 C1+3과 비슷했다. 그림: `figures/w6e-{response,tat}-{mixed,wide}.png`.
 
 ## 정리: 논문 실험만 남기기 (2026-10-08 KST)
 
