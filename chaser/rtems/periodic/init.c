@@ -307,6 +307,13 @@ rtems_task Init(rtems_task_argument argument)
     t0_tick = rtems_clock_get_ticks_since_boot() + 20;
     t0_ns = (uint64_t)t0_tick * TICK_NS;
     require(rtems_task_wake_after(t0_tick - rtems_clock_get_ticks_since_boot()));
+    /* A tick can pass between reading the clock and rtems_task_wake_after inserting its watchdog; Init then wakes,
+     * and every worker arms, a tick after the planned epoch (the per-executable startup failure, arm_phase and
+     * release_mismatch, seen until 2026-10-16). The epoch is the tick Init actually woke at, read before any
+     * worker arms; a timely wake leaves it unchanged. */
+    t0_tick = rtems_clock_get_ticks_since_boot();
+    t0_ns = (uint64_t)t0_tick * TICK_NS;
+#line 239
     for (unsigned i = 0; i < TASK_COUNT; ++i)
         if (active(i)) require(rtems_event_send(tasks[i], ARM));
     require(rtems_event_receive(all, RTEMS_EVENT_ALL | RTEMS_WAIT, RTEMS_NO_TIMEOUT, &received));

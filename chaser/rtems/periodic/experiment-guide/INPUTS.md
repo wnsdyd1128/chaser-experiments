@@ -352,6 +352,16 @@ sweep마다 `seed` 배열(`uint32_t`)에서 초깃값 하나를 읽고, 이어�
 - 관측 MPKI(2026-10-16): 전치·corner turn 58–67, PolyBench(CLS 0.93–0.97) 4.4–8.7, 1 KiB 순환 읽기 0.002–0.32,
   ALU·FPU 0.005–0.03.
 
+<a id="startup-epoch-2026-10"></a>
+
+#### 시작 시각(t0) 기록 (2026-10)
+
+`init.c`의 Init은 모든 worker가 준비되면 약 20 tick 뒤를 t0로 정하고 `rtems_task_wake_after`로 기다린 뒤 worker들에게 주기를
+시작시킨다. 남은 tick을 계산한 뒤 `rtems_task_wake_after`가 타이머를 걸기 전에 tick이 하나 넘어가면 Init은 한 tick 늦게
+깨어나고, 모든 task가 t0 + 1 tick에 주기를 시작해 측정 해석이 `arm_phase`·`release_mismatch`로 실패했다(실행 파일마다
+결정적인 "시작 실패", 2026-10-16 W7 pilot에서 198 run 중 8개, 모두 RA·RA-CGB 빌드). 2026-10-16부터 Init은 실제로 깨어난
+tick을 t0로 기록한다(제때 깨어나면 값이 같다). 이 수정 이후의 빌드는 이전 빌드와 실행 파일 코드가 다르다.
+
 ### 2.3. 다중 배열 smoke 실행
 
 현재 workspace root에서 실행하고, 이미 존재하지 않는 output 이름을 선택한다.
