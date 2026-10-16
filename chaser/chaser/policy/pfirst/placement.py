@@ -12,6 +12,13 @@ import random
 CORES = 4
 CORE_CAP = 0.95  # nominal per-core capacity: a margin below 1 for scheduling overhead
 CLS_LOW = 0.5  # tasks at or below form the low-affinity group
+# ... if they also use memory: static L1 misses per thousand IR instructions (HARA + APE map extraction) at or above
+# MPKI_MIN. A register-bound job has a few cold misses only, so its CLS is near 0 although it barely touches the
+# shared cache. The value is the log-scale middle (sqrt(0.32 x 4.4)) between the most memory-intensive L1-resident
+# task seen (0.32, 1 KiB cyclic reads with sleeps, W6 pilot) and the least memory-intensive task that uses memory
+# (4.4, PolyBench mvt; 2026-10-16); any value between them gives the same groups. To be re-derived from the
+# development data and frozen before confirmation (user decision 2026-10-16).
+MPKI_MIN = 1.2
 BALANCE_SLACK = 0.05  # a group core may hold the mean core load x 1.05 (or the group's largest task)
 RESTARTS = 20
 
@@ -49,13 +56,15 @@ def nominal(tasks, cores=CORES, cap=CORE_CAP) -> dict:
     return dict(status='unknown', witness=None)
 
 
-def _low(task) -> bool:
-    return task['cls'] <= CLS_LOW
+def low_affinity(task) -> bool:
+    """Low CLS and, when the static memory intensity (mpki) is known, at least MPKI_MIN; without it, CLS alone."""
+    mpki = task.get('mpki')
+    return task['cls'] <= CLS_LOW and (mpki is None or mpki >= MPKI_MIN)
 
 
 def grouped_balanced(tasks, cores=CORES, cap=CORE_CAP) -> list[int]:
     """Low-CLS tasks by WFD onto the fewest cores under the balanced limit, the rest by WFD over all cores."""
-    group = [i for i, t in enumerate(tasks) if _low(t)]
+    group = [i for i, t in enumerate(tasks) if low_affinity(t)]
     if not group or len(group) == len(tasks):
         return wfd(tasks, cores)
     mean = sum(t['u'] for t in tasks) / cores
@@ -123,7 +132,7 @@ def release_aware_grouped(tasks, seed=0, cores=CORES, cap=CORE_CAP, restarts=RES
     """CHASER's placement (ra-cgb): local search from the balanced CLS grouping that lowers the release cost,
     low-CLS tasks kept on the group's cores; restarts from seeded random starts within the same constraint."""
     start = grouped_balanced(tasks, cores, cap)
-    group = {i for i, t in enumerate(tasks) if _low(t)}
+    group = {i for i, t in enumerate(tasks) if low_affinity(t)}
     used = sorted({start[i] for i in group}) if group and len(group) < len(tasks) else list(range(cores))
     allowed = [used if i in group else range(cores) for i in range(len(tasks))]
     table = _release_table(tasks)

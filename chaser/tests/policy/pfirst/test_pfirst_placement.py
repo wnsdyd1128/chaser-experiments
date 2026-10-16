@@ -56,3 +56,21 @@ def test_validator_rejects_missing_tasks_unknown_cores_and_overloads():
     assert not placement.valid(tasks, [0])
     assert not placement.valid(tasks, [0, 4])
     assert not placement.valid(tasks, [0, 0])
+
+
+def test_low_affinity_needs_a_low_cls_and_a_memory_intensity_at_or_above_the_threshold():
+    assert placement.low_affinity(dict(cls=0.48, mpki=67.0))
+    assert placement.low_affinity(dict(cls=0.48, mpki=placement.MPKI_MIN))
+    assert not placement.low_affinity(dict(cls=0.0, mpki=0.01))   # a register-bound job: two cold misses only
+    assert not placement.low_affinity(dict(cls=0.9, mpki=67.0))
+    assert placement.low_affinity(dict(cls=0.48))                  # without an instruction count: CLS alone
+    assert placement.low_affinity(dict(cls=0.48, mpki=None))
+
+
+def test_a_low_cls_task_with_negligible_memory_intensity_is_placed_like_a_high_affinity_task():
+    tasks = [dict(u=u, period=p, cls=c) for u, p, c in
+             ((0.3, 20, 0.45), (0.3, 40, 0.47), (0.2, 20, 0.9), (0.25, 40, 0.95), (0.2, 80, 0.9), (0.3, 20, 0.92))]
+    register_bound = [dict(t, cls=0.0, mpki=0.01) if i == 2 else t for i, t in enumerate(tasks)]
+    as_high = [dict(t, cls=1.0) if i == 2 else t for i, t in enumerate(tasks)]
+    assert placement.grouped_balanced(register_bound) == placement.grouped_balanced(as_high)
+    assert placement.release_aware_grouped(register_bound, 7) == placement.release_aware_grouped(as_high, 7)

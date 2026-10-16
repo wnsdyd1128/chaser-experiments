@@ -344,8 +344,13 @@ sweep마다 `seed` 배열(`uint32_t`)에서 초깃값 하나를 읽고, 이어�
 - 메모리 접근은 sweep당 1번이라 HARA의 CLS는 sweep 수로만 정해진다(4 sweep이면 처음 1번만 miss해 0.75, 1 sweep이면 0).
   그래서 분석은 job의 정적 IR 명령 수도 기록한다(`locality.json`의 `ir_instructions`, `chaser.locality.instructions`가 APE의
   블록별 실행 횟수와 명령 종류로 셈, sleep 구간은 합침). IR load·store 수가 HARA 접근 수와 다르면 분석을 멈춘다.
+  `chaser.policy.pfirst.inputs`는 이 값으로 MPKI(명령 1,000개당 L1 miss)를 계산하고, 배치는 CLS ≤ 0.5 **그리고**
+  MPKI ≥ `placement.MPKI_MIN`(1.2: L1 안에서 끝나는 task의 최대 0.32와 메모리를 쓰는 task의 최소 4.4의 로그 중간,
+  개발 자료로 다시 정해 확증 전에 동결)인 task만 캐시 task로 묶는다(MPKI를 모르면 CLS만 본다).
 - 반복 횟수가 상수가 아닌 반복문(PolyBench SYRK·TRMM의 삼각형 반복문)은 YARDA가 블록 실행 횟수를 내지 않아
   `ir_instructions`가 `null`이다.
+- 관측 MPKI(2026-10-16): 전치·corner turn 58–67, PolyBench(CLS 0.93–0.97) 4.4–8.7, 1 KiB 순환 읽기 0.002–0.32,
+  ALU·FPU 0.005–0.03.
 
 ### 2.3. 다중 배열 smoke 실행
 
